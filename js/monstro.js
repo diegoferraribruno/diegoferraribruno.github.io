@@ -4,7 +4,8 @@ var monstro = {
     left: 850,
     width: 160,
     height: 160,
-    scale: 0.25
+    scale: 0.25,
+    estado: ["deboas", "persegue"]
 
 }
 let monstrokeys = {
@@ -20,9 +21,9 @@ function newMonster() {
     let monstro = document.createElement("div")
     monstro.id = "monstro"
     monstro.style.display = "block"
-    monstro.style.position = "relative"
+    monstro.style.position = "absolute"
     monstro.style.scale = 0.5
-    document.getElementById("game").appendChild(monstro)
+    document.getElementById("map").appendChild(monstro)
 
     monstroimg.onload = function () {
         let monstr = document.getElementById("monstro")
@@ -36,6 +37,7 @@ function newMonster() {
 newMonster()
 
 function bot(inter) {
+    autoMoveMonstro()
     setTimeout(() => {
         let parado = Math.random() < 0.5 ? false : true;
         if (!parado) {

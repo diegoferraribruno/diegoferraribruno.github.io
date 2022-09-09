@@ -1,7 +1,7 @@
 .corpol {
     height: 32px;
     width: 32px;
-    background: url('/game/danca.png') 0px 0px;
+    background: url('./../game/danca.png') 0px 0px;
     margin: 48px 24px 24px 18px;
     padding: 0px 0px 0px 0px;
     position: absolute;
@@ -13,7 +13,7 @@
 .corpo {
     height: 32px;
     width: 32px;
-    background: url('/game/danca.png') 0px 0px;
+    background: url('./../game/danca.png') 0px 0px;
     margin: 48px 24px 24px 18px;
     padding: 0px 0px 0px 0px;
     position: absolute;
@@ -50,21 +50,23 @@
 }
 
 #bg1 {
-    background-image: url("/game/clouds.png");
+    background-image: url("./.././../game/clouds.png");
     background-color: rgb(171, 190, 215);
     background-attachment: fixed;
 }
 
 #bg2 {
-    background-image: url("/game/cidadebg.png");
+    background-image: url("./../game/cidadebg.png");
 }
 
 #game {
+    position: absolute;
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 1920px;
+    height: 1726px;
     background-position-y: bottom;
-    background-image: url("/game/grama.png");
+    background-image: url("./../game/grama.png");
+    top: 320px;
 }
 
 .player {
@@ -85,10 +87,4 @@
 .monstro {
     width: 128px;
     height: 128px;
-}
-
-#game {
-    position: relative;
-    top: 166px;
-    display: block;
 }

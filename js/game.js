@@ -39,6 +39,9 @@ let player = {
     width: 32,
     height: 100
 }
+var speed = 2
+container.style.width = screen.width + "px";
+container.style.height = screen.height + "px";
 
 src.addEventListener('touchstart', (e) => {
     document.documentElement.style.overflow = 'hidden';
@@ -49,8 +52,8 @@ src.addEventListener('touchstart', (e) => {
 src.addEventListener('onmousepress', (e) => {
     document.documentElement.style.overflow = 'hidden';
     // Cache the client X/Y coordinates
-    clientX = e.touches[0].clientX;
-    clientY = e.touches[0].clientY;
+    clientX = e.clientX;
+    clientY = e.clientY;
 }, false);
 
 src.addEventListener('touchmove', (e) => {
@@ -67,6 +70,7 @@ src.addEventListener('touchmove', (e) => {
     if (deltaY > 6) { keys.ArrowDown = true; send = true; } else { keys.ArrowDown = false };
     if (deltaX > 6) { keys.ArrowRight = true; send = true; } else { keys.ArrowRight = false };
     if (deltaX < -6) { keys.ArrowLeft = true; send = true; } else { keys.ArrowLeft = false };
+
     e.preventDefault();// < testar iphone.
     //document.getElementById('manche').innerHTML = "X: "+Math.floor(clientX)+" Y:"+Math.floor(clientY)+"<br />dX: "+Math.floor(deltaX)+" dY: "+Math.floor(deltaY)
     // Process the data…
@@ -96,7 +100,7 @@ function mouse_up(event) {
     let t = event.target.id
     if (t == 'game' && seguemouse == false) {
 
-        clickmove(event.layerX - player.width / 2, event.layerY - player.height)
+        clickmove(event.clientX - player.width / 2, event.clientY - player.height)
     }
     if (seguemouse == true) { seguemouse = false }
 
@@ -178,23 +182,23 @@ function keyUp(e) {
 var segue = 1
 var windowx = window.innerWidth
 var windowy = window.innerHeight
-setTimeout(() => {
+/*setTimeout(() => {
 
     container.style.width = windowx + "px";
     container.style.height = windowy + "px";
-})
+})*/
 document.getElementById('joypad').style.top = (windowy - 160) + "px";
 document.getElementById('joypad').style.left = (windowx / 2 - 100) + "px";
 //document.getElementById('chat').style.width = windowx + "px";
 
-
+/*
 window.addEventListener('resize', function (event) {
     windowx = window.innerWidth
     windowy = window.innerHeight
     container.style.width = screen.width + "px";
     container.style.height = screen.height + "px";
     document.getElementById('joypad').style.top = (windowy - 160) + "px";
-});
+});*/
 
 //ANIMATION
 var frame = 0
@@ -284,11 +288,11 @@ function movePlayer() {
     }
     if (keys.ArrowRight == true && keys.ArrowLeft == false || keys.d == true && keys.a == false) {
         move.x = 1
-        corpo.style.backgroundImage = "url('/game/andaR.png')";
+        corpo.style.backgroundImage = "url('game/andaR.png')";
     }
     if (keys.ArrowRight == false && keys.ArrowLeft == true || keys.a == true && keys.d == false) {
         move.x = -1
-        corpo.style.backgroundImage = "url('/game/andaR.png')";
+        corpo.style.backgroundImage = "url('game/andaR.png')";
     }
     if (move.x < 0) {
         document.getElementById("head-" + id).className = "headl";
@@ -331,9 +335,7 @@ function movePlayer() {
     }
 
 }
-var speed = 2
-container.style.width = screen.width + "px";
-container.style.height = screen.height + "px";
+
 
 function frontEnd(move) {
 
@@ -392,6 +394,6 @@ function insideX(quem = user) {
     else { return false }
 }
 function insideY(quem = user) {
-    if (quem.top < map.y - quem.height * 2 && quem.top > -quem.height) { return true }
+    if (quem.top < map.y - quem.height * 2 && quem.top > 0) { return true }
     else { return false }
 }
