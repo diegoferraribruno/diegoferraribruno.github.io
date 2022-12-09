@@ -137,9 +137,12 @@ height: 100%;
 onmousemove="mouse_position(event)"
 onmousedown="mouse_down(event)"
 onmouseup="mouse_up(event)"
+ontouchstart="mouse_down(event)"
+ontouchend="mouse_up(event)"
 >
+
 <div id="grid"></div>
-<div id="caixa-body" style="width:100%; height:100%; font-size:24px;" onclick="Regua()">📏</div>
+<div id="caixa-body" style="width:100%; height:100%; font-size:24px;" ontouchstart="Regua()" onclick="Regua()">📏</div>
 <div id="vruler" class="ruler"></div>
 <div id="hruler" class="ruler"></div>
 <div id="panels"></div>
@@ -309,6 +312,7 @@ function caixa(onde="caixa-header"){
     item.setAttribute("title",key)
     item.setAttribute("style","position:relative; float:left;")
     item.setAttribute("onclick",`${key}("${limpa}")`);
+    item.setAttribute("ontouchend",`${key}("${limpa}")`);
     item.innerHTML = menu[key]
     setTimeout(function(){document.getElementById(onde).appendChild(item)}, 80*count);
     count ++;
@@ -323,6 +327,7 @@ function WebFrame(id){
   let button = document.createElement("span")
   button.setAttribute("class","botao")
   button.setAttribute("onclick",`NewUrl("${id}")`)
+  button.setAttribute("ontouchend",`NewUrl("${id}")`)
   button.innerHTML = "Abrir"
   document.getElementById(id+"-header").innerHTML = "🌎";
   document.getElementById(id+"-header").appendChild(button)
@@ -406,6 +411,7 @@ function Titulo(id){
   let button = document.createElement("span")
   button.setAttribute("class","botao")
   button.setAttribute("onclick",`NewTitle("${id}")`)
+  button.setAttribute("ontouchend",`NewTitle("${id}")`)
   button.innerHTML = "ok"
   heade.appendChild(button)
   document.getElementById(id+"-menu").classList.toggle("hidden")
@@ -415,7 +421,7 @@ function NewTitle(id){
   let url = document.getElementById(id+"-endereco").value
   let content = `<h1>${url}</h1>`;
   document.getElementById(id+"-body").innerHTML =
-  `<span class='title' onclick="hideTitle('${id}')" > ${content} </span>`;
+  `<span class='title' onclick="hideTitle('${id}')" ontouchend="hideTitle('${id}')" > ${content} </span>`;
   hideHeader(id)
 //  document.getElementById(id+"-header").innerHTML =
 //   `<span class='menu' onclick="Mover('${id}')" >T</span> <span class='menu' onclick="Remover('${id}')">🗑️</span>`
@@ -435,6 +441,7 @@ function Lixo(id){
   let lixo = document.createElement("span")
   lixo.setAttribute("class","menu")
   lixo.setAttribute("onclick",`Remover("${id}")`)
+  lixo.setAttribute("ontouchend",`Remover("${id}")`)
   lixo.innerHTML = "❌"
   heade.appendChild(lixo)
 }
@@ -443,6 +450,8 @@ function MoveBot(id){
   let lixo = document.createElement("span")
   lixo.setAttribute("class","menu")
   lixo.setAttribute("onclick",`Mover("${id}")`)
+  lixo.setAttribute("ontouchstart",`Mover("${id}")`)
+  lixo.setAttribute("ontouchend",`Mover("${id}")`)
   lixo.innerHTML ="💠"
   heade.appendChild(lixo)
 }
