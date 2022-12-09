@@ -154,6 +154,8 @@ ontouchend="mouse_up(event)"
 <div id="guide"></div>
 <div id="menu-esquerdo">
   <div id="caixa">
+    <div onclick="menuCalc()" ontouchstart="menuCalc()" class="menu">➗</div>
+    <div onclick="menuAlfabeto()" ontouchstart="menuAlfabeto()" class="menu">🔫</div>
     <div id="caixa-header"></div>
   </div>
 </div>
@@ -162,6 +164,10 @@ ontouchend="mouse_up(event)"
 //document.addEventListener('touchmove', function(e) {e.preventDefault()}, false);
 ///--tool REGUA --/// 📏 ⚙️➗❌
 
+var menuEsq = {
+  "Alfabeto":"🔫",
+  "Calculadora":"➗",
+}
 var menu = {
   "Mover":"💠",
   "Remover":"❌",
@@ -207,6 +213,7 @@ let janela = [{
   inner:`<iframe class="xyz" url="#">endereço:</iframe>`,
 }]
 function mouse_position(e) {
+  e.preventDefault();
   pointer.x = Math.floor(e.pageX / gridSize) * gridSize;
   pointer.y = Math.floor(e.pageY / gridSize) * gridSize;
   if(mode === "criativo"){
@@ -258,38 +265,41 @@ function mouse_up(event) {
       criarPainel(elements,pointerstart.y,pointer.x,-largura,altura)
     }
 
-    function criarPainel(id,top,left,width,height){
-      var elemento_pai = document.getElementById("panels");
-      var janela = document.createElement('div');
-      janela.setAttribute("id", id);
-
-      var header = document.createElement("span");
-      header.setAttribute("id", id+"-header");
-      header.setAttribute("style", `width:${width}; height:30px; position:relative; left:"60px";`);
-      header.innerHTML = "";
-      janela.innerHTML =
-      `<span id="${id}-menu" onclick='hideHeader("${id}")' style="position:relative; float:left;" >⭕</span>`
-      janela.appendChild(header);
-      // Criar o nó de conteudo
-      var conteudo = document.createElement("div");
-      conteudo.setAttribute("id", id+"-body");
-      conteudo.setAttribute("style", `margin-top: 20px; width:98%; height:90%;`);
-      //conteudo.setAttribute("onclick",`caixa("${id}")`);
-      conteudo.innerHTML = " ";
-      janela.appendChild(conteudo);
-
-      elemento_pai.appendChild(janela);
-      caixa( id+"-header");
-      //hideHeader(id)
-      janela = document.getElementById(id);
-      janela.setAttribute("class", "panel");
-      janela.setAttribute("style", `top:${top}px; left:${left}px; width:${width}px; height:${height}px;`);
-      elements++;
-    }
     guide.style.visibility = "hidden";
     guide.style.top = "0px";
     guide.style.left = "0px";
   }
+}
+function criarPainel(id,top,left,width,height){
+  var elemento_pai = document.getElementById("panels");
+  if(!document.getElementById(id)){
+
+  var janela = document.createElement('div');
+  janela.setAttribute("id", id);
+
+  var header = document.createElement("span");
+  header.setAttribute("id", id+"-header");
+  header.setAttribute("style", `width:${width}; height:30px; position:relative; left:"60px";`);
+  header.innerHTML = "";
+  janela.innerHTML =
+  `<span id="${id}-menu" onclick='hideHeader("${id}")' style="position:relative; float:left;" >⭕</span>`
+  janela.appendChild(header);
+  // Criar o nó de conteudo
+  var conteudo = document.createElement("div");
+  conteudo.setAttribute("id", id+"-body");
+  conteudo.setAttribute("style", `margin-top: 20px; width:98%; height:90%;`);
+  //conteudo.setAttribute("onclick",`caixa("${id}")`);
+  conteudo.innerHTML = " ";
+  janela.appendChild(conteudo);
+
+  elemento_pai.appendChild(janela);
+  caixa( id+"-header");
+  //hideHeader(id)
+  janela = document.getElementById(id);
+  janela.setAttribute("class", "panel");
+  janela.setAttribute("style", `top:${top}px; left:${left}px; width:${width}px; height:${height}px;`);
+  elements++;
+}
 }
 function Regua(){
   if (mode != "criativo"){
@@ -377,9 +387,18 @@ function Calculadora(id){
   Lixo(id)
   Iframer(id, "calculadora.html")
   removeClass(id,"panel")
-
 }
-function Alfabeto(id){
+function menuCalc(){
+    let w = window.innerWidth/2-180;
+    let h = window.innerHeight/2-180;
+    let largura = 360;
+    let altura = 360;
+    let id = toString(elements)
+    criarPainel("calc",h,w,largura,altura)
+    setTimeout(function(){Calculadora("calc")},500)
+  }
+
+function Alfabeto(id=0){
   let pai = document.getElementById(id)
   pai.style.width = "360px";
   pai.style.height = "380px";
@@ -472,6 +491,16 @@ setInterval(function(){
     document.getElementById(alvo).style.left = (pointer.x-30) + "px";
     document.getElementById(alvo).style.top = (pointer.y-9) + "px";
   }},80)
+
+function menuAlfabeto(){
+    let w = window.innerWidth/2-180;
+    let h = window.innerHeight/2-180;
+    largura = 360;
+    altura = 360;
+    let id = toString(elements)
+    criarPainel("alfabeto",h,w,largura,altura)
+    setTimeout(function(){Alfabeto("alfabeto")},500)
+  }
     </script>
   </body>
 </html>
