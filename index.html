@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta http-equiv="Content-Security-Policy" content="default-src * gap: data: blob: 'unsafe-inline' 'unsafe-eval' ws: wss:;">
-  <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 <style>
 html {
   height: 100%;
@@ -141,6 +141,7 @@ height: 100%;
 onmousemove="mouse_position(event)"
 onmousedown="mouse_down(event)"
 onmouseup="mouse_up(event)"
+ontouchmove="mouse_position(event)"
 ontouchstart="mouse_down(event)"
 ontouchend="mouse_up(event)"
 >
@@ -418,6 +419,7 @@ function Titulo(id){
   button.setAttribute("ontouchend",`NewTitle("${id}")`)
   button.innerHTML = "ok"
   heade.appendChild(button)
+  heade.setAttribute("style","z-index:1;")
   document.getElementById(id+"-menu").classList.toggle("hidden")
 //  hideTitle(id)
 }
