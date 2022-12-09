@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <style>
 html {
-  height: 100%;
+  width: 360px;
+  height: 360px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background-color: #00000055;
 }
 *,
 *:before,
@@ -18,6 +20,8 @@ html {
   position: absolute;
 }
 body {
+  width: 360px;
+  height: 360px;
   overflow-x: hidden !important;
   overflow-y: hidden !important;
   margin: 0px;
@@ -45,43 +49,64 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 100vh;
     height: 100vh;
     background-color: rgb(0, 61, 0);
 }
 
 .clock{
   position: relative;
+  text-align: center;
 }
-#tempo{
-  width: 99vw;
-  font-size: 50px;
+.result{
+  margin-left: 60px;
+  width: 300px;
+  position: relative;
+  font-size: 16px;
   text-align: center;
 }
 #container {
   font-family: arial;
   font-size: 24px;;
-  width:99vw;
-  height: 300px;
-  /* Setup */
+  width:360px;
+  height: 360px;
   position: relative;
 }
 
 .child {
   width: 280px;
-  height: 40px;
+  height: 30px;
   background-color: purple;
-  /* Center vertically and horizontally */
   position: absolute;
   top: 50%;
   left: 50%;
-  margin: -25px 0 0 -140px; /* Apply negative top and left margins to truly center the element */
+  margin: -25px 0 0 -140px;
   text-align: center;
   border-radius: 16px;
 }
 #ultima{
-  width: 500px;
-  margin-left: -210px;
+  position: relative;
+  width: 360px;
+  height: 200px;
+  margin-left: 0px;
+  text-align: center;
+}
+#alfabeto{
+  width: 360px;
+  height: 360px;
+  overflow: hidden;
+  background-color: #00000055;
+}
+#tempo{
+  font-size: 30px;
+  width: 360px;
+  text-align: center;
+}
+li{display: block;
+list-style: square;
+margin-left: -20px;
+height: 20px;
+position: relative;
 }
 </style>
 <title>Pegue o Alfabeto</title>
@@ -91,14 +116,15 @@ body {
 <div id="tempo"><span id="hr" class="clock">00</span>:<span id="min"  class="clock">00</span>:<span id="sec"  class="clock">00</span>:<span id="count"  class="clock">00</span></div>
 <div id="alfabeto"></div>
 <div id="container">
-  <div class="child" onmousedown="jogar()" ontouchstart="jogar()">Jogar!
-    <div id="ultima"></div>
-  </div>
+  <ul id="ultima"></ul>
+  <div class="child" onmousedown="jogar()" ontouchstart="jogar()">Jogar!</div>
 </div>
 
 <script>
 
-const windowSize = {x:window.innerWidth, y:window.innerHeight}
+//const windowSize = {x:window.innerWidth, y:window.innerHeight}
+const windowSize = {x:360, y:360}
+
 var personagens = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var personagensS = 'abcdefghijklmnopqrstuvwxyz';
 var itens = ["🔫","🚕","🗺️","🚐"]
@@ -152,10 +178,15 @@ function clicou(quem){
     alfabeto(itens)
     alfabeto(numeros)
   }else if (count == 105) {
-    let result = document.getElementById("tempo").innerHTML
-    document.getElementById("ultima").innerHTML +=
-    `<small><span class='clock'>Partida ${partida} </span>${result}</small><br>`
+    let tempofinal =  document.getElementById('hr').innerHTML + ":" +
+        document.getElementById('min').innerHTML + ":" +
+        document.getElementById('sec').innerHTML  + ":" +
+        document.getElementById('count').innerHTML;
+    let result = document.createElement("li")
+    result.innerHTML =
+    `Partida ${partida} - ${tempofinal}`
     document.getElementById("container").style.visibility = "visible";
+    document.getElementById("ultima").appendChild(result)
     reset()
     count = 0;
     gameSpeed = 100;
@@ -171,14 +202,18 @@ setInterval(async function(){
     let divID =  document.getElementById(div.id)
     let divTop = parseInt(divID.style.top,10)
     let divLeft = parseInt(divID.style.left,10)
-    divID.style.top = (divTop+getRndInteger(-2,2)+impar)+"px"
-    let impar2 = impar * getRndInteger(-2,1)
-    divID.style.left = (divLeft+getRndInteger(-2,2)+impar2)+"px"
+    if (divLeft >= windowSize.x+50){divID.style.left = 30+"px"}
+    else if (divLeft <= -40){divID.style.left = windowSize.x+30+"px"}
+    else if (divTop <= -50){divID.style.top =  windowSize.y+30+"px"}
+    else if(divTop >= windowSize.y+50){divID.style.top = -30+"px"}
+    else{
+      divID.style.top = (divTop+getRndInteger(-2,2)+impar)+"px"
+      let impar2 = impar * getRndInteger(-2,1)
+      divID.style.left = (divLeft+getRndInteger(-2,2)+impar2)+"px"
 
-    if (divLeft >= windowSize.x+50){divID.style.left = '-48px'}
-    if (divLeft <= -50){divID.style.left = windowSize.x+30}
-    if (divTop <= -50){divID.style.top =  windowSize.y+40}
-    else if(divTop >= windowSize.y+120){divID.style.top = '-40px'}
+    }
+
+
 });
 },gameSpeed);
 
@@ -196,7 +231,7 @@ let hour = 00;
 let minute = 00;
 let second = 00;
 let countt = 00;
-let milesimos = 0;
+let milesimos = 00;
 
 
 function start(){
@@ -222,7 +257,10 @@ function tempo() {
             second++;
             milesimos = 0;
         }
-  
+/*hack! test score
+      if (second == 1) {
+       count=104;
+}*/
         if (second == 60) {
             minute++;
             second = 0;
@@ -265,6 +303,8 @@ function tempo() {
 function jogar(){
   document.getElementById("container").style.visibility = "hidden"
   timer = true;
+  document.getElementById("alfabeto").innerHTML = ""
+  count = 0;
   alfabeto(personagens);
   start()
   partida++

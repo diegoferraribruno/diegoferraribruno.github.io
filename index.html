@@ -39,7 +39,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   color: white;
-  background-image: url("https://raw.githubusercontent.com/diegoferraribruno/diegoferraribruno.github.io/main/bg.jpg");
+  background-image: url("./bg.jpg");
 }
 #vruler {
   border-width: 0px 1px 0px 0px;
@@ -88,7 +88,7 @@ body {
 
 }
 #grid{
-  background-image: url("https://raw.githubusercontent.com/diegoferraribruno/diegoferraribruno.github.io/main/grid.png");
+  background-image: url("./grid.png");
   width:100%;
   height:100%;
 }
@@ -358,8 +358,8 @@ function Iframer(id, url){
   ifra.setAttribute("id", id+"-iframe")
   ifra.setAttribute("class", "borderless")
   ifra.setAttribute("src", url)
-  ifra.setAttribute("width","98%")
-  ifra.setAttribute("height","320px")
+  ifra.setAttribute("width","360px")
+  ifra.setAttribute("height","480px")
   let corpo = document.getElementById(id+"-body")
   corpo.setAttribute("width",larg+"")
   corpo.innerHTML="";
@@ -379,9 +379,9 @@ function Calculadora(id){
 
 }
 function Alfabeto(id){
-  //let pai = document.getElementById(id)
-  //pai.style.width = "400px";
-  //pai.style.height = "500px";
+  let pai = document.getElementById(id)
+  pai.style.width = "360px";
+  pai.style.height = "380px";
   document.getElementById(id+"-header").innerHTML = "";
   MoveBot(id)
   Lixo(id)
