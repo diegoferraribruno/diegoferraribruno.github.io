@@ -11,29 +11,60 @@
   }
   #log {
     height: 40px;
-    width: 360px;
+    width: 320px;
     overflow: scroll;
+    visibility: hidden;
+  }
+  #paleta{
+    position: absolute;
+    float: left;
+    width: 220px;
+    margin: 30px;
+  }
+  .bloquinho{
+    width:22px;
+    height:22px;
+    border-style: solid;
+    border-radius: 4px;
+    border-color: gray;
+    border-width: thin;
+    display: block;
+    float:left;
+  }
+  canvas{
+    background-color: "#dddddddd";
   }
 
 </style>
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<div id="paleta"></div>
 <canvas id="canvas" width="320" height="320" style="border:solid black 1px;">
   Your browser does not support canvas element.
 </canvas>
 <br />
-<button id="pen" ontouchstart='mode("pen")'>Pen</button>
-<button id="eraser" ontouchstart='mode("eraser")'>Eraser</button>
+<a id="btn-cores"  ontouchstart='cor()' onclick="cor()">🎨</a>
+<button id="pen" ontouchstart='mode("pen")'>🖌️</button>
+<button id="eraser" ontouchstart='mode("eraser")'>✏️</button>
 <a id="btn-download">📥 Baixar</a>
+<span onclick='cor()' id ="mostraCor" class='bloquinho'  style='background-color:"hsl(0, 100%, 0%);"'> </span>
+<br /><div>
+  Ponta<input type="range" id="strokeSize" name="strokeSize" min="5" max="100"  oninput="strokeSize(this.value)"  value="2" /><br />
+  H<input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorH(this.value)"  value="0" /><br />
+  S<input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorS(this.value)"  value="100" /><br />
+  L<input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorL(this.value)"  value="50" /><br />
+  A<input type="range" id="A" name="cor" min="0" max="100"  oninput="mudaCorA(this.value)"  value="1" />
+</div>
 <pre id="log" style="border: 1px solid #ccc;"></pre>
 <script>
 var canvas=document.getElementById("canvas");
 var ctx=canvas.getContext("2d");
 var lastX;
 var lastY;
-var strokeColor="#00000088";
-var strokeWidth=4;
+var hsla = [10,100,50,1]
+var strokeColor=`hsla(${hsla[0]},${hsla[1]},${hsla[2]},${hsla[3]})`;
+var strokeWidth=2;
 var mouseX;
 var mouseY;
 var canvasOffset=$("#canvas").offset();
@@ -41,6 +72,77 @@ var offsetX=canvasOffset.left;
 var offsetY=canvasOffset.top;
 var isMouseDown=false;
 function mode(qual){ mode=qual; }
+
+function strokeSize(value){
+  strokeWidth = value/10;
+}
+
+function criaPaleta(){
+  i = 1
+  let paleta = "";
+  console.log (i)
+	while (i < 37){
+  	let cor = i*10
+  	paleta += `<span onclick='mudaCor("hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]});'> </span>`
+  	if (i/9 == 1 || i/9 == 2 || i/9 == 3){
+    	paleta += "<br />"
+    }
+    i++
+    document.getElementById("paleta").innerHTML = paleta;
+  }
+  document.getElementById("paleta").innerHTML +=
+  `<br /><span onclick='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`
+  document.getElementById("paleta").innerHTML +=
+  `<span onclick='mudaCor("B")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`
+}
+criaPaleta();
+
+function cor() {document.getElementById("paleta").style.visibility ="visible";};
+
+function mudaCorH(valor){
+  hsla[0] = valor;
+  setStrokeColor()
+  criaPaleta();
+}
+function mudaCorS(valor){
+  hsla[1] = valor;
+  setStrokeColor()
+  criaPaleta();
+}
+function mudaCorL(valor){
+  hsla[2] = valor;
+  setStrokeColor()
+  criaPaleta();
+}
+function mudaCorA(valor){
+  hsla[3] = valor/100;
+  setStrokeColor()
+  criaPaleta();
+}
+
+function setStrokeColor(){
+   strokeColor=`hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+   document.getElementById("mostraCor").style.backgroundColor = strokeColor
+}
+
+function mudaCor(valor){
+  if (valor == "P"){
+    strokeColor =  `hsl(0,100%,0%,${hsla[3]})`;
+    document.getElementById("mostraCor").style.color =strokeColor;
+    document.getElementById("paleta").style.visibility = "hidden";
+    document.getElementById("mostraCor").style.backgroundColor = strokeColor;
+  }else  if (valor == "B"){
+    strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
+    document.getElementById("mostraCor").style.color = strokeColor;
+    document.getElementById("paleta").style.visibility = "hidden";
+    document.getElementById("mostraCor").style.backgroundColor = strokeColor;
+  }else {
+    strokeColor = valor;
+    document.getElementById("mostraCor").style.backgroundColor = valor;
+    document.getElementById("paleta").style.visibility = "hidden";
+  }
+}
+
 function handleMouseDown(e){
   mouseX=parseInt(e.clientX-offsetX);
   mouseY=parseInt(e.clientY-offsetY);
@@ -73,6 +175,7 @@ function handleMouseMove(e){
 
   // Put your mousemove stuff here
   if(isMouseDown){
+    document.getElementById("paleta").style.visibility ="hidden";
     ctx.beginPath();
     if(mode=="pen"){
       ctx.globalCompositeOperation="source-over";
@@ -144,6 +247,7 @@ function handleMove(evt) {
 
     if (idx >= 0) {
       if(mode=="pen"){
+        ctx.globalCompositeOperation="source-over";
         //log(`continuing touch ${idx}`);
         ctx.beginPath();
         //log(`ctx.moveTo( ${ongoingTouches[idx].pageX}, ${ongoingTouches[idx].pageY} );`);
@@ -176,20 +280,21 @@ function handleEnd(evt) {
     let idx = ongoingTouchIndexById(touches[i].identifier);
 
     if (idx >= 0) {
-        if(mode=="pen"){
-
-      ctx.lineWidth = strokeWidth;
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-      ctx.lineTo(touches[i].pageX, touches[i].pageY);
-  //    ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8);  // and a square at the end
-      ongoingTouches.splice(idx, 1);  // remove it; we're done
-    }else{
-      ctx.globalCompositeOperation="destination-out";
-      ctx.arc(touches[i].pageX, touches[i].pageY,8,0,Math.PI*2,false);
-      ctx.fill();
-    }
+      document.getElementById("paleta").style.visibility ="hidden";
+      if(mode=="pen"){
+        ctx.globalCompositeOperation="source-over";
+        ctx.lineWidth = strokeWidth;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+        ctx.lineTo(touches[i].pageX, touches[i].pageY);
+    //    ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8);  // and a square at the end
+        ongoingTouches.splice(idx, 1);  // remove it; we're done
+      }else{
+        ctx.globalCompositeOperation="destination-out";
+        ctx.arc(touches[i].pageX, touches[i].pageY,8,0,Math.PI*2,false);
+        ctx.fill();
+      }
     } else {
       //log('can\'t figure out which touch to end');
     }
