@@ -23,10 +23,9 @@
   Your browser does not support canvas element.
 </canvas>
 <br />
-<button id="pen">Pen</button>
-<button id="eraser">Eraser</button>
+<button id="pen" ontouchstart='mode("pen")'>Pen</button>
+<button id="eraser" ontouchstart='mode("eraser")'>Eraser</button>
 <a id="btn-download">📥 Baixar</a>
-Log:
 <pre id="log" style="border: 1px solid #ccc;"></pre>
 <script>
 var canvas=document.getElementById("canvas");
@@ -41,7 +40,7 @@ var canvasOffset=$("#canvas").offset();
 var offsetX=canvasOffset.left;
 var offsetY=canvasOffset.top;
 var isMouseDown=false;
-
+function mode(qual){ mode=qual; }
 function handleMouseDown(e){
   mouseX=parseInt(e.clientX-offsetX);
   mouseY=parseInt(e.clientY-offsetY);
