@@ -119,6 +119,9 @@ height: 100%;
   display: block;
   float: left;
 }
+.icon{
+  font-size: 30px;
+}
 .title{
   min-width: 220px;
   position: relative;
@@ -144,18 +147,36 @@ onmouseup="mouse_up(event)"
 ontouchmove="mouse_position(event)"
 ontouchstart="mouse_down(event)"
 ontouchend="mouse_up(event)"
+width="100%";
 >
+<div id="sobre" style='color:#333322; width:320px; height: 300px; display:block; text-align:right;'>
+  <em>
+<pre>
+Este site é uma zona
+de experimentações e descobertas
+no mundo da programação e desenvolvimento
+de games em javascript.
+
+Assim que houver conteúdo definido,
+aqui haverá um video descritivo deste conteúdo.
+
+Diego Ferrari Bruno. (@diegofbrasil twitter)
+
+</pre>
+</em>
+</div>
 
 <div id="grid"></div>
-<div id="caixa-body" style="width:100%; height:100%; font-size:24px;" ontouchstart="Regua()" onclick="Regua()">📏</div>
+<div id="caixa-body" style="width:100%; height:100%; font-size:24px;" ontouchstart="Regua()" onclick="Regua()"></div>
 <div id="vruler" class="ruler"></div>
 <div id="hruler" class="ruler"></div>
 <div id="panels"></div>
 <div id="guide"></div>
 <div id="menu-esquerdo">
   <div id="caixa">
-    <div onclick="menuCalc()" ontouchstart="menuCalc()" class="menu">➗</div>
-    <div onclick="menuAlfabeto()" ontouchstart="menuAlfabeto()" class="menu">🔫</div>
+    <div onclick="menuCalc()" ontouchstart="menuCalc()" class="menu icon">➗</div>
+    <div onclick="menuAlfabeto()" ontouchstart="menuAlfabeto()" class="menu icon">🔫</div>
+    <div onclick="menuDesenho()" ontouchstart="menuDesenho()" class="menu icon">📝</div>
     <div id="caixa-header"></div>
   </div>
 </div>
@@ -167,6 +188,7 @@ ontouchend="mouse_up(event)"
 var menuEsq = {
   "Alfabeto":"🔫",
   "Calculadora":"➗",
+  "Desenho":"📝",
 }
 var menu = {
   "Mover":"💠",
@@ -279,21 +301,35 @@ function criarPainel(id,top,left,width,height){
 
   var header = document.createElement("span");
   header.setAttribute("id", id+"-header");
-  header.setAttribute("style", `width:${width}; height:30px; position:relative; left:"60px";`);
+  header.setAttribute("style", `width:${width}; height:30px; margin-bottom:12px; position:relative; left:"60px";`);
   header.innerHTML = "";
-  janela.innerHTML =
-  `<span id="${id}-menu" onclick='hideHeader("${id}")' style="position:relative; float:left;" >⭕</span>`
-  janela.appendChild(header);
-  // Criar o nó de conteudo
-  var conteudo = document.createElement("div");
-  conteudo.setAttribute("id", id+"-body");
-  conteudo.setAttribute("style", `margin-top: 20px; width:98%; height:90%;`);
-  //conteudo.setAttribute("onclick",`caixa("${id}")`);
-  conteudo.innerHTML = " ";
-  janela.appendChild(conteudo);
 
-  elemento_pai.appendChild(janela);
-  caixa( id+"-header");
+  var oMenu = document.createElement("span")
+  oMenu.setAttribute("id", id+"-menu");
+  oMenu.setAttribute("onclick",`hideHeader("${id}")`)
+  oMenu.setAttribute("style", "position:relative; float:left;")
+  oMenu.innerHTML = "⭕"
+  janela.appendChild(oMenu)
+
+  if (width>200){
+    // Criar o nó de conteudo
+    janela.appendChild(header);
+    var conteudo = document.createElement("div");
+    conteudo.setAttribute("id", id+"-body");
+    conteudo.setAttribute("style", `margin-top: 20px; width:98%; height:90%;`);
+    //conteudo.setAttribute("onclick",`caixa("${id}")`);
+    conteudo.innerHTML = " ";
+    janela.appendChild(conteudo);
+    elemento_pai.appendChild(janela);
+    caixa( id+"-header");
+  }
+  else{
+    janela.appendChild(header);
+    header.innerHTML = "";
+    elemento_pai.appendChild(janela);
+    Lixo(id);
+    Atalho(id)
+  }
   //hideHeader(id)
   janela = document.getElementById(id);
   janela.setAttribute("class", "panel");
@@ -320,7 +356,6 @@ function div(parametros="",conteudo){return `<div ${parametros}>${conteudo}</div
 
 function caixa(onde="caixa-header"){
   var limpa = onde.replace("-header","")
-  console.log("desenhando menu")
   let count = 0;
   Object.keys(menu).forEach(key => {
     let item = document.createElement("div")
@@ -358,7 +393,6 @@ function WebFrame(id){
 function NewUrl(id){
   let input = id+"-endereco"
   let url = document.getElementById(input).value
-  console.log(url)
   Iframer(id, url);
 }
 
@@ -409,6 +443,17 @@ function Alfabeto(id=0){
 //  removeClass(id,"panel")
 
 }
+function Desenho(id=0){
+  let pai = document.getElementById(id)
+  pai.style.width = "360px";
+  pai.style.height = "380px";
+  document.getElementById(id+"-header").innerHTML = "";
+  MoveBot(id)
+  Lixo(id)
+  Iframer(id, "desenho.html")
+//  removeClass(id,"panel")
+
+}
 var oldmode = "desenhar"
 function Mover(id){
   oldmode = mode;
@@ -448,9 +493,6 @@ function NewTitle(id){
   document.getElementById(id+"-body").innerHTML =
   `<span class='title' onclick="hideTitle('${id}')" ontouchend="hideTitle('${id}')" > ${content} </span>`;
   hideHeader(id)
-//  document.getElementById(id+"-header").innerHTML =
-//   `<span class='menu' onclick="Mover('${id}')" >T</span> <span class='menu' onclick="Remover('${id}')">🗑️</span>`
-
 }
 function hideTitle(id){
   document.getElementById(id+"-header").classList.toggle("hidden")
@@ -470,11 +512,25 @@ function Lixo(id){
   lixo.innerHTML = "❌"
   heade.appendChild(lixo)
 }
+
+//////////////////Atalho zone em desenvolvimento
+
+function Atalho(id){
+  let heade =  document.getElementById(id+"-header")
+  let lixo = document.createElement("span")
+  lixo.setAttribute("class","menu")
+  lixo.setAttribute("onclick",`criarAtalho("${id}")`)
+  lixo.setAttribute("ontouchend",`CriarAtalho("${id}")`)
+  lixo.innerHTML = "A"
+  heade.appendChild(lixo)
+}
+
 function MoveBot(id){
   let heade =  document.getElementById(id+"-header")
   let lixo = document.createElement("span")
   lixo.setAttribute("class","menu")
-  lixo.setAttribute("onclick",`Mover("${id}")`)
+  lixo.setAttribute("onmousedown",`Mover("${id}")`)
+  lixo.setAttribute("onmouseup",`Mover("${id}")`)
   lixo.setAttribute("ontouchstart",`Mover("${id}")`)
   lixo.setAttribute("ontouchend",`Mover("${id}")`)
   lixo.innerHTML ="💠"
@@ -500,6 +556,15 @@ function menuAlfabeto(){
     let id = toString(elements)
     criarPainel("alfabeto",h,w,largura,altura)
     setTimeout(function(){Alfabeto("alfabeto")},500)
+  }
+function menuDesenho(){
+    let w = window.innerWidth/2-180;
+    let h = window.innerHeight/2-180;
+    largura = 360;
+    altura = 360;
+    let id = toString(elements)
+    criarPainel("desenho",h,w,largura,altura)
+    setTimeout(function(){Desenho("desenho")},500)
   }
     </script>
   </body>
