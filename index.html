@@ -176,7 +176,7 @@ Diego Ferrari Bruno. (@diegofbrasil twitter)
   <div id="caixa">
     <div onclick="menuCalc()" ontouchstart="menuCalc()" class="menu icon">➗</div>
     <div onclick="menuAlfabeto()" ontouchstart="menuAlfabeto()" class="menu icon">🔫</div>
-    <div onclick="menuDesenho()" ontouchstart="menuDesenho()" class="menu icon">📝</div>
+    <div onclick="menuDesenho()" ontouchstart="menuDesenho()" class="menu icon">🎨</div>
     <div id="caixa-header"></div>
   </div>
 </div>
@@ -188,11 +188,12 @@ Diego Ferrari Bruno. (@diegofbrasil twitter)
 var menuEsq = {
   "Alfabeto":"🔫",
   "Calculadora":"➗",
-  "Desenho":"📝",
+  "Desenho":"🎨",
 }
 var menu = {
   "Mover":"💠",
   "Remover":"❌",
+  "Desenho":"🎨",
   "Alfabeto":"🔫",
   "Calculadora":"➗",
   "Titulo":"T",
@@ -445,8 +446,9 @@ function Alfabeto(id=0){
 }
 function Desenho(id=0){
   let pai = document.getElementById(id)
-  pai.style.width = "360px";
-  pai.style.height = "600px";
+  pai.style.width = "340px";
+  pai.style.height = "420px";
+  pai.style.scroll = "disableScroll"
   document.getElementById(id+"-header").innerHTML = "";
   MoveBot(id)
   Lixo(id)
