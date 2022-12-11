@@ -7,6 +7,8 @@
   body{
     padding: 0px 0px;
     margin: 0px 0px;
+    background-color: #00000022;
+    background-image: url("./grid.png");
 
   }
   #log {
@@ -19,7 +21,21 @@
     position: absolute;
     float: left;
     width: 220px;
-    margin: 30px;
+    display: block;
+  }
+  #menu{
+    position: absolute;
+    display: block;
+    float: left;
+    width: 220px;
+    height: 230px;
+    margin: 20px;
+    background-color: #ffffff55;
+    border-radius: 16px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dddddddd;
+    padding: 10px;
   }
   .bloquinho{
     width:22px;
@@ -31,40 +47,51 @@
     display: block;
     float:left;
   }
-  canvas{
-    background-color: "#dddddddd";
+  #canvas{
   }
 
 </style>
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<div id="paleta"></div>
+<div id="menu"> Cor <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorH(this.value)"  value="0" /><br />
+  Saturação<input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorS(this.value)"  value="100" /><br />
+  Luminosidade<input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorL(this.value)"  value="50" /><br />
+  Opacidade<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorA(this.value)"  step="0.1" value="1" />
+  <div id="paleta"></div>
+</div>
 <canvas id="canvas" width="320" height="320" style="border:solid black 1px;">
   Your browser does not support canvas element.
+
 </canvas>
+<div id="menu">
+Tamanho<input type="range" id="strokeSize" name="strokeSize" min="0.5" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" /><br />
 <br />
 <a id="btn-cores"  ontouchstart='cor()' onclick="cor()">🎨</a>
 <button id="pen" ontouchstart='mode("pen")'>🖌️</button>
 <button id="eraser" ontouchstart='mode("eraser")'>✏️</button>
 <a id="btn-download">📥 Baixar</a>
 <span onclick='cor()' id ="mostraCor" class='bloquinho'  style='background-color:"hsl(0, 100%, 0%);"'> </span>
-<br /><div>
-  Ponta<input type="range" id="strokeSize" name="strokeSize" min="5" max="100"  oninput="strokeSize(this.value)"  value="2" /><br />
-  H<input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorH(this.value)"  value="0" /><br />
-  S<input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorS(this.value)"  value="100" /><br />
-  L<input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorL(this.value)"  value="50" /><br />
-  A<input type="range" id="A" name="cor" min="0" max="100"  oninput="mudaCorA(this.value)"  value="1" />
+<br />
+<br />
+
+<div>  <span class="bloquinho" style="width:70px">Novo:</span>
+  <span onclick='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
+  <span onclick='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
+  <span onclick='mudaCorBG("#00000000")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> </span>
 </div>
+</div>
+
 <pre id="log" style="border: 1px solid #ccc;"></pre>
 <script>
 var canvas=document.getElementById("canvas");
 var ctx=canvas.getContext("2d");
 var lastX;
 var lastY;
-var hsla = [10,100,50,1]
+var hsla = [0,100,50,1]
 var strokeColor=`hsla(${hsla[0]},${hsla[1]},${hsla[2]},${hsla[3]})`;
-var strokeWidth=2;
+var strokeWidth=1;
+var estrokeWidth=8;
 var mouseX;
 var mouseY;
 var canvasOffset=$("#canvas").offset();
@@ -74,9 +101,19 @@ var isMouseDown=false;
 function mode(qual){ mode=qual; }
 
 function strokeSize(value){
-  strokeWidth = value/10;
+  if(mode=="pen"){
+    strokeWidth = value;
+  } else{
+    estrokeWidth = value;
+  }
 }
-
+function mudaCorBG(cor){
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = cor;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
 function criaPaleta(){
   i = 1
   let paleta = "";
@@ -97,12 +134,11 @@ function criaPaleta(){
 }
 criaPaleta();
 
-function cor() {document.getElementById("paleta").style.visibility ="visible";};
+function cor() {document.getElementById("menu").style.visibility ="visible";};
 
 function mudaCorH(valor){
   hsla[0] = valor;
   setStrokeColor()
-  criaPaleta();
 }
 function mudaCorS(valor){
   hsla[1] = valor;
@@ -115,7 +151,7 @@ function mudaCorL(valor){
   criaPaleta();
 }
 function mudaCorA(valor){
-  hsla[3] = valor/100;
+  hsla[3] = valor;
   setStrokeColor()
   criaPaleta();
 }
@@ -129,18 +165,40 @@ function mudaCor(valor){
   if (valor == "P"){
     strokeColor =  `hsl(0,100%,0%,${hsla[3]})`;
     document.getElementById("mostraCor").style.color =strokeColor;
-    document.getElementById("paleta").style.visibility = "hidden";
+    document.getElementById("menu").style.visibility = "hidden";
     document.getElementById("mostraCor").style.backgroundColor = strokeColor;
   }else  if (valor == "B"){
     strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
     document.getElementById("mostraCor").style.color = strokeColor;
-    document.getElementById("paleta").style.visibility = "hidden";
+    document.getElementById("menu").style.visibility = "hidden";
     document.getElementById("mostraCor").style.backgroundColor = strokeColor;
   }else {
     strokeColor = valor;
     document.getElementById("mostraCor").style.backgroundColor = valor;
-    document.getElementById("paleta").style.visibility = "hidden";
+    document.getElementById("menu").style.visibility = "hidden";
+
   }
+  const toHslaObject = hslaStr => {const [hue, saturation, lightness, alpha]= hslaStr.match(/\d+/g).map(Number);
+    hsla[0] = hue;
+    hsla[1] = saturation;
+    hsla[2]= lightness;
+    hsla[3]= alpha;
+  }
+  toHslaObject(strokeColor)
+
+  /*
+  regexp = /hsla\(\s*(\d+)\s*,\s*(\d+(?:\.\d+)?%)\s*,\s*(\d+(?:\.\d+)?%)\s*,\s*(\d+)\s*\)/g;
+  res = regexp.exec(strokeColor).slice(1);
+  hsla[0] = Number(res[0]);
+  hsla[1] = Number(res[1]);
+  hsla[2] = Number(res[2]);
+  hsla[3] = Number(res[3]);
+  console.log(hsla[3])
+  document.getElementById("H").value = hsla[0]
+  document.getElementById("S").value = hsla[1]
+  document.getElementById("L").value = hsla[2]
+  document.getElementById("A").value = hsla[3]*/
+
 }
 
 function handleMouseDown(e){
@@ -175,7 +233,7 @@ function handleMouseMove(e){
 
   // Put your mousemove stuff here
   if(isMouseDown){
-    document.getElementById("paleta").style.visibility ="hidden";
+    document.getElementById("menu").style.visibility ="hidden";
     ctx.beginPath();
     if(mode=="pen"){
       ctx.globalCompositeOperation="source-over";
@@ -186,7 +244,7 @@ function handleMouseMove(e){
       ctx.stroke();
     }else{
       ctx.globalCompositeOperation="destination-out";
-      ctx.arc(lastX,lastY,8,0,Math.PI*2,false);
+      ctx.arc(lastX,lastY,estrokeWidth,0,Math.PI*2,false);
       ctx.fill();
     }
     lastX=mouseX;
@@ -200,8 +258,14 @@ $("#canvas").mouseup(function(e){handleMouseUp(e);});
 $("#canvas").mouseout(function(e){handleMouseOut(e);});
 
 var mode="pen";
-$("#pen").click(function(){ mode="pen"; });
-$("#eraser").click(function(){ mode="eraser"; });
+$("#pen").click(function(){
+  mode="pen";
+  document.getElementById("strokeSize").value = strokeWidth
+});
+$("#eraser").click(function(){
+  mode="eraser";
+  document.getElementById("strokeSize").value = estrokeWidth
+});
 
 //from https://stackoverflow.com/questions/25907163/html5-canvas-eraser-tool-without-overdraw-white-color
 
@@ -280,7 +344,7 @@ function handleEnd(evt) {
     let idx = ongoingTouchIndexById(touches[i].identifier);
 
     if (idx >= 0) {
-      document.getElementById("paleta").style.visibility ="hidden";
+      document.getElementById("menu").style.visibility ="hidden";
       if(mode=="pen"){
         ctx.globalCompositeOperation="source-over";
         ctx.lineWidth = strokeWidth;
@@ -304,8 +368,8 @@ function handleCancel(evt) {
   evt.preventDefault();
   //log('touchcancel.');
   const touches = evt.changedTouches;
-
-  for (let i = 0; i < touches.length; i++) {
+  let toques =  touches.length
+  for (let i = 0; i < toques; i++) {
     let idx = ongoingTouchIndexById(touches[i].identifier);
     ongoingTouches.splice(idx, 1);  // remove it; we're done
   }
