@@ -446,7 +446,7 @@ function Alfabeto(id=0){
 function Desenho(id=0){
   let pai = document.getElementById(id)
   pai.style.width = "360px";
-  pai.style.height = "380px";
+  pai.style.height = "600px";
   document.getElementById(id+"-header").innerHTML = "";
   MoveBot(id)
   Lixo(id)
@@ -559,9 +559,9 @@ function menuAlfabeto(){
   }
 function menuDesenho(){
     let w = window.innerWidth/2-180;
-    let h = window.innerHeight/2-180;
+    let h = window.innerHeight/2-280;
     largura = 360;
-    altura = 360;
+    altura = 560;
     let id = toString(elements)
     criarPainel("desenho",h,w,largura,altura)
     setTimeout(function(){Desenho("desenho")},500)
