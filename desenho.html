@@ -3,494 +3,402 @@
 <head>
   <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<style>
-  body{
-    padding: 0px 0px;
-    margin: 0px 0px;
-    background-color: #00000022;
-    background-image: url("./grid.png");
-
-  }
-  #log {
-    height: 0px;
-    width: 320px;
-    overflow: scroll;
-    visibility: collapse;
-  }
-  #paleta{
-    position: absolute;
-    float: left;
-    width: 280px;
-    display: block;
-    top:10px;
-  }
-  #menu{
-    position: absolute;
-    display: block;
-    float: left;
-    width: 280px;
-    height: 90px;
-    padding-top: 160px;
-  }
-  #submenu{
-    position: absolute;
-    display: block;
-    float: left;
-    top:256px;
-    width: 280px;
-    height: 26px;
-    padding: 10px;
-  }
-  .fundobranco{
-    margin: 10px;
-    background-color: #ffffff55;
-    border-radius: 20px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #dddddddd;
-    padding: 10px;
-  }
-  .bloquinho{
-    width:20px;
-    height:20px;
-    border-style: solid;
-    border-radius: 20px;
-    border-color: gray;
-    border-width: thin;
-    display: block;
-    float:left;
-    padding: 2px;
-    font-size: 18px;
-    margin: 2px 2px;
-  }
-  #canvas{
-  }
-  #mostraCor{
-    width:2px;
-    height:2px;
-    border-style: solid;
-    border-radius: 100px;
-    border-color: gray;
-    border-width: thin;
-    display: block;
-    padding: 0px;
-    font-size: 18px;
-    float: right;
-  }
-
-</style>
-</head>
+      <style>
+      body{
+        padding: 0px 0px;
+        margin: 0px 0px;
+        background-color: #000000;
+        background-image: url("./grid.png");
+      }
+      #canvas_div {
+          text-align: center;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 322px;
+          height: 322px
+          border: 1px solid black;
+          border:solid gray 1px;
+          background-color:#33333333
+      }
+        #paleta{
+          position: absolute;
+          float: left;
+          width: 280px;
+          display: block;
+          top:10px;
+        }
+        #menu{
+          position: absolute;
+          display: block;
+          float: left;
+          width: 280px;
+          height: 90px;
+          padding-top: 160px;
+        }
+        #submenu{
+          position: absolute;
+          display: block;
+          float: left;
+          top:256px;
+          width: 280px;
+          height: 26px;
+          padding: 10px;
+        }
+        .fundobranco{
+          margin: 10px;
+          background-color: #ffffff55;
+          border-radius: 20px;
+          border-style: solid;
+          border-width: 1px;
+          border-color: #dddddddd;
+          padding: 10px;
+        }
+        .bloquinho{
+          width:20px;
+          height:20px;
+          border-style: solid;
+          border-radius: 20px;
+          border-color: gray;
+          border-width: thin;
+          display: block;
+          float:left;
+          padding: 2px;
+          font-size: 18px;
+          margin: 2px 2px;
+        }
+        #mostraCor{
+          width:40px;
+          height:40px;
+          border-style: solid;
+          border-radius: 100px;
+          border-color: gray;
+          border-width: thin;
+          display: block;
+          padding: 0px;
+          font-size: 18px;
+          float: right;
+        }
+        #mostraCor2{
+          width:2px;
+          height:2px;
+          border-style: solid;
+          border-radius: 100px;
+          border-color: gray;
+          border-width: thin;
+          display: block;
+          padding: 0px;
+          font-size: 18px;
+          float: right;
+        }
+      </style>
+      <title>Ver. 0.2.1</title>
+    </head>
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<div id="menu" class="fundobranco">
-  <div id="paleta"></div>
-  hue <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorH(this.value)"  value="0" /><br />
-  Saturação<input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorS(this.value)"  value="100" /><br />
-  Luminosidade<input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorL(this.value)"  value="50" /><br />
-  Opacidade<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorA(this.value)"  step="0.1" value="1" />
-</div>
-  <div id="submenu" class="fundobranco">
-  Tamanho<input type="range" id="strokeSize" name="strokeSize" min="0.5" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" />
-  <span onclick='esconde()' id ="mostraCor" style='background-color:"hsl(0, 100%, 0%);"'> </span>
-</div>
+  <div id="menu" class="fundobranco">
+    <div id="paleta"></div>
+    hue <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" /><br />
+    Saturação<input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorQ(1,this.value)"  value="100" /><br />
+    <span onclick='esconde("menu")' id ="mostraCor" style='background-color:"hsl(0, 100%, 0%)";float:right; margin-right:10px;'> </span>
+    Luminosidade<input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorQ(2,this.value)"  value="50" /><br />
+    Opacidade<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
+  </div>
+          <div id="submenu" class="fundobranco">
+          formato: / o<br>
+          Tamanho<input type="range" id="strokeSize" name="strokeSize" min="0.5" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" />
+          <span onclick='esconde()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
+        </div>
+
+        <div id="canvas_div" style="overflow-x: auto;">
+          <canvas id="canvas" width="320px" height="320px">
+            Your browser does not support canvas element.
+          </canvas>
+        </div>
+        <br />
+        <a id="btn-cores" class="bloquinho"   onmousedown=' esconde("menu")'>🎨</a>
+        <span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
+        <span   onmousedown='backPaint()' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> 🔃</span>
+        <span class="bloquinho" id="globalComposite" style="width:70px">por cima</span>
+        <span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
+          <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
+          <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
+          <span><a id="btn-download" class="bloquinho"  > 📥</a>
+            <span class="bloquinho" onclick='clearArea()'>🗑</span><span>
+
+        </span>
+<br>
+      </div>
+
+  <div class="licensing-title"><p>HTML Canvas Drawing With Mouse and Touch</p><p><a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/">
+    https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/</a></p></div>
+
+      <script>
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
+      let isDrawing = false;
+      let x = 0;
+      let y = 0;
+      var offsetX;
+      var offsetY;
+
+// comeca minha adaptacao
+
+      var globalComposite = 'source-over';
+      var favoritas = []
+      var strokeWidth=1;
+      var estrokeWidth=8;
+      var hsla = [0,100,50,1]
+      var strokeColor=`hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+      var mode="pen";
+
+// pausa na adaptacao funcoes novas ao fim
 
 
-<canvas id="canvas" width="320" height="320" style="border:solid gray 1px; background-color:#33333333">
-  Your browser does not support canvas element.
-</canvas>
-<br />
-<a id="btn-cores" class="bloquinho"   onmousedown='cor()'>🎨</a>
-<span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
-<span   onmousedown='backPaint()' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> 🔃</span>
-<span class="bloquinho" id="globalComposite" style="width:70px">por cima</span>
-<span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
-  <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
-  <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
-  <span><a id="btn-download" class="bloquinho"  > 📥</a>
-    <span class="bloquinho" onclick='limpa()'>🗑</span><span>
 
-</span>
-</div>
+      function startup() {
 
-<pre id="log" style="border: 1px solid #ccc;"></pre>
-<script>
-var canvas=document.getElementById("canvas");
-var ctx=canvas.getContext("2d");
-var lastX;
-var lastY;
-var hsla = [0,100,50,1]
-var strokeColor=`hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-var strokeWidth=1;
-var estrokeWidth=8;
-var mouseX;
-var mouseY;
-var canvasOffset=$("#canvas").offset();
-var offsetX=canvasOffset.left;
-var offsetY=canvasOffset.top;
-var isMouseDown=false;
-var globalComposite = 'source-over';
-var favoritas = []
+          esconde("menu")
+          esconde()
+        canvas.addEventListener('touchstart', handleStart);
+        canvas.addEventListener('touchend', handleEnd);
+        canvas.addEventListener('touchcancel', handleCancel);
+        canvas.addEventListener('touchmove', handleMove);
+        canvas.addEventListener('mousedown', (e) => {
+          x = e.offsetX;
+          y = e.offsetY;
+          isDrawing = true;
+        });
 
+        canvas.addEventListener('mousemove', (e) => {
+          if (isDrawing) {
+            drawLine(context, x, y, e.offsetX, e.offsetY);
+            x = e.offsetX;
+            y = e.offsetY;
+          }
+        });
 
-function esconde(quem="submenu"){
-  let subv = document.getElementById(quem).style.visibility
-  if (subv != "hidden"){
-    document.getElementById(quem).style.visibility = "hidden";
-  }else{
-    document.getElementById(quem).style.visibility = "visible";
-  }
-}
-
-function backPaint(){
-  if(globalComposite != 'destination-over'){
-    globalComposite = 'destination-over';
-    document.getElementById("globalComposite").innerHTML = "por baixo"
-  }else{
-    globalComposite = 'source-over';
-    document.getElementById("globalComposite").innerHTML = "por cima"
-  }
-  return ctx.globalCompositeOperation = globalComposite;
-}
-
-function modeTo(qual){ mode=qual; }
-
-function limpa(){  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#00000000";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
-function strokeSize(value){
-  let tamanho = document.getElementById("mostraCor");
-  if(mode=="pen"){
-    strokeWidth = value;
-    tamanho.style.width = strokeWidth+"px";
-    tamanho.style.height = strokeWidth+"px";
-    tamanho.style.backgroundColor = strokeColor;
-
-
-  } else{
-    estrokeWidth = value;
-    tamanho.style.width = estrokeWidth*2+"px";
-    tamanho.style.height = estrokeWidth*2+"px";
-
-  }
-}
-function mudaCorBG(cor){
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
-  //ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = cor;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
-function criaPaleta(){
-  i = 1
-  let paleta = "";
-  console.log (i)
-	while (i < 37){
-  	let cor = i*10
-  	paleta += `<span onclick='mudaCor("hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]});'> </span>`
-    i++
-  }
-  document.getElementById("paleta").innerHTML = paleta;
-  document.getElementById("paleta").innerHTML +=
-  `<br /><span onclick='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`
-  document.getElementById("paleta").innerHTML +=
-  `<span onclick='mudaCor("B")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`
-}
-criaPaleta();
-
-function cor() { esconde(quem="menu")};
-
-function mudaCorH(valor){
-  hsla[0] = valor;
-  setStrokeColor()
-}
-function mudaCorS(valor){
-  hsla[1] = valor;
-  setStrokeColor()
-  criaPaleta();
-}
-function mudaCorL(valor){
-  hsla[2] = valor;
-  setStrokeColor()
-  criaPaleta();
-}
-function mudaCorA(valor){
-  hsla[3] = valor;
-  setStrokeColor()
-  criaPaleta();
-}
-function setStrokeColor(){
-   strokeColor=`hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-   document.getElementById("mostraCor").style.backgroundColor = strokeColor
-}
-setStrokeColor()
-
-function mudaCor(valor){
-  if (valor == "P"){
-    strokeColor =  `hsl(0,100%,0%,${hsla[3]})`;
-    document.getElementById("mostraCor").style.color =strokeColor;
-    document.getElementById("menu").style.visibility = "hidden";
-    document.getElementById("mostraCor").style.backgroundColor = strokeColor;
-  }else  if (valor == "B"){
-    strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
-    document.getElementById("mostraCor").style.color = strokeColor;
-    document.getElementById("menu").style.visibility = "hidden";
-    document.getElementById("mostraCor").style.backgroundColor = strokeColor;
-  }else {
-    strokeColor = valor;
-    document.getElementById("mostraCor").style.backgroundColor = valor;
-    document.getElementById("menu").style.visibility = "hidden";
-
-  }
-  const toHslaObject = hslaStr => {const [hue, saturation, lightness, alpha]= hslaStr.match(/\d+/g).map(Number);
-    hsla[0] = hue;
-    hsla[1] = saturation;
-    hsla[2]= lightness;
-    hsla[3]= alpha;
-  }
-  toHslaObject(strokeColor)
-}
-
-function handleMouseDown(e){
-  mouseX=parseInt(e.clientX-offsetX);
-  mouseY=parseInt(e.clientY-offsetY);
-
-  // Put your mousedown stuff here
-  lastX=mouseX;
-  lastY=mouseY;
-  isMouseDown=true;
-}
-
-function handleMouseUp(e){
-  mouseX=parseInt(e.clientX-offsetX);
-  mouseY=parseInt(e.clientY-offsetY);
-
-  // Put your mouseup stuff here
-  isMouseDown=false;
-}
-
-function handleMouseOut(e){
-  mouseX=parseInt(e.clientX-offsetX);
-  mouseY=parseInt(e.clientY-offsetY);
-
-  // Put your mouseOut stuff here
-  isMouseDown=false;
-}
-
-function handleMouseMove(e){
-  mouseX=parseInt(e.clientX-offsetX);
-  mouseY=parseInt(e.clientY-offsetY);
-
-  // Put your mousemove stuff here
-  if(isMouseDown){
-    document.getElementById("menu").style.visibility ="hidden";
-    document.getElementById("submenu").style.visibility = "hidden";
-    ctx.beginPath();
-    if(mode=="pen"){
-      ctx.globalCompositeOperation = globalComposite;
-      ctx.moveTo(lastX,lastY);
-      ctx.lineTo(mouseX,mouseY);
-      ctx.lineWidth = strokeWidth;
-      ctx.strokeStyle = strokeColor;
-      ctx.stroke();
-    }else{
-      ctx.globalCompositeOperation="destination-out";
-      ctx.arc(lastX,lastY,estrokeWidth,0,Math.PI*2,false);
-      ctx.fill();
-    }
-    lastX=mouseX;
-    lastY=mouseY;
-  }
-}
-
-$("#canvas").mousedown(function(e){handleMouseDown(e);});
-$("#canvas").mousemove(function(e){handleMouseMove(e);});
-$("#canvas").mouseup(function(e){handleMouseUp(e);});
-$("#canvas").mouseout(function(e){handleMouseOut(e);});
-
-var mode="pen";
-$("#pen").click(function(){
-  mode="pen";
-  esconde()
-  strokeSize(strokeWidth)
-  document.getElementById("strokeSize").value = strokeWidth
-});
-$("#eraser").click(function(){
-  esconde()
-  mode="eraser";
-  strokeSize(estrokeWidth)
-  document.getElementById("strokeSize").value = estrokeWidth
-});
-
-//from https://stackoverflow.com/questions/25907163/html5-canvas-eraser-tool-without-overdraw-white-color
-
-// TOUCH DRAW
-  function startup() {
-    const el = document.getElementById('canvas');
-    el.addEventListener('touchstart', handleStart);
-    el.addEventListener('touchend', handleEnd);
-    el.addEventListener('touchcancel', handleCancel);
-    el.addEventListener('touchmove', handleMove);
-
-    //log('Initialized.');
-  }
-
-  document.addEventListener("DOMContentLoaded", startup);
-  const ongoingTouches = [];
-  function handleStart(evt) {
-  evt.preventDefault();
-  //log('touchstart.');
-  const el = document.getElementById('canvas');
-  const ctx = el.getContext('2d');
-  const touches = evt.changedTouches;
-
-  for (let i = 0; i < touches.length; i++) {
-    //log(`touchstart: ${i}.`);
-    ongoingTouches.push(copyTouch(touches[i]));
-    const color = colorForTouch(touches[i]);
-    //log(`color of touch with id ${touches[i].identifier} = ${color}`);
-    ctx.beginPath();
-  //  ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false);  // a circle at the start
-    ctx.fillStyle = color;
-    ctx.fill();
-  }
-}
-function handleMove(evt) {
-  evt.preventDefault();
-  const el = document.getElementById('canvas');
-  const ctx = el.getContext('2d');
-  const touches = evt.changedTouches;
-
-  for (let i = 0; i < touches.length; i++) {
-    const color = colorForTouch(touches[i]);
-    const idx = ongoingTouchIndexById(touches[i].identifier);
-
-    if (idx >= 0) {
-      if(mode=="pen"){
-        ctx.globalCompositeOperation = globalComposite;
-        //log(`continuing touch ${idx}`);
-        ctx.beginPath();
-        //log(`ctx.moveTo( ${ongoingTouches[idx].pageX}, ${ongoingTouches[idx].pageY} );`);
-        ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-        //log(`ctx.lineTo( ${touches[i].pageX}, ${touches[i].pageY} );`);
-        ctx.lineTo(touches[i].pageX, touches[i].pageY);
-        ctx.lineWidth = strokeWidth;
-        ctx.strokeStyle = strokeColor;
-        ctx.stroke();
-        ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
-      }else{
-        ctx.globalCompositeOperation="destination-out";
-        ctx.arc(touches[i].pageX, touches[i].pageY,8,0,Math.PI*2,false);
-        ctx.fill();
+        canvas.addEventListener('mouseup', (e) => {
+          if (isDrawing) {
+            drawLine(context, x, y, e.offsetX, e.offsetY);
+            x = 0;
+            y = 0;
+            isDrawing = false;
+          }
+        });
       }
-    } else {
-      //log('can\'t figure out which touch to continue');
-    }
-  }
-}
-function handleEnd(evt) {
-  evt.preventDefault();
-  //log("touchend");
-  const el = document.getElementById('canvas');
-  const ctx = el.getContext('2d');
-  const touches = evt.changedTouches;
 
-  for (let i = 0; i < touches.length; i++) {
-    const color = colorForTouch(touches[i]);
-    let idx = ongoingTouchIndexById(touches[i].identifier);
+      document.addEventListener("DOMContentLoaded", startup);
 
-    if (idx >= 0) {
-      document.getElementById("menu").style.visibility ="hidden";
-      if(mode=="pen"){
-        ctx.globalCompositeOperation = globalComposite;
-        ctx.lineWidth = strokeWidth;
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-        ctx.lineTo(touches[i].pageX, touches[i].pageY);
-    //    ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8);  // and a square at the end
-        ongoingTouches.splice(idx, 1);  // remove it; we're done
-        ongoingTouches = []
-      }else{
-        ctx.globalCompositeOperation="destination-out";
-        ctx.arc(touches[i].pageX, touches[i].pageY,8,0,Math.PI*2,false);
-        ctx.fill();
+      const ongoingTouches = [];
+
+      function handleStart(evt) {
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        offsetX = canvas.getBoundingClientRect().left;
+        offsetY = canvas.getBoundingClientRect().top;
+        for (let i = 0; i < touches.length; i++) {
+          ongoingTouches.push(copyTouch(touches[i]));
+
+        }
       }
-    } else {
-      //log('can\'t figure out which touch to end');
+
+      function handleMove(evt) {
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          const color = strokeColor;
+          const idx = ongoingTouchIndexById(touches[i].identifier);
+          if (idx >= 0) {
+            context.beginPath();
+            context.moveTo(ongoingTouches[idx].clientX - offsetX, ongoingTouches[idx].clientY - offsetY);
+            context.lineTo(touches[i].clientX - offsetX, touches[i].clientY - offsetY);
+            context.lineWidth = document.getElementById('selWidth').value;
+            context.strokeStyle = color;
+            context.lineJoin = "round";
+            context.closePath();
+            context.stroke();
+            ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
+          }
+        }
+      }
+
+      function handleEnd(evt) {
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          const color = strokeColor;
+          let idx = ongoingTouchIndexById(touches[i].identifier);
+          if (idx >= 0) {
+            context.lineWidth = strokeWidth;
+            context.fillStyle = color;
+            ongoingTouches.splice(idx, 1);  // remove it; we're done
+          }
+        }
+      }
+
+      function handleCancel(evt) {
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          let idx = ongoingTouchIndexById(touches[i].identifier);
+          ongoingTouches.splice(idx, 1);  // remove it; we're done
+        }
+      }
+
+      function copyTouch({ identifier, clientX, clientY }) {
+        return { identifier, clientX, clientY };
+      }
+
+      function ongoingTouchIndexById(idToFind) {
+        for (let i = 0; i < ongoingTouches.length; i++) {
+          const id = ongoingTouches[i].identifier;
+          if (id === idToFind) {
+            return i;
+          }
+        }
+        return -1;    // not found
+      }
+
+      function drawLine(context, x1, y1, x2, y2) {
+        context.beginPath();
+        context.strokeStyle = strokeColor;
+        context.lineWidth = strokeWidth;
+        context.lineJoin = "round";
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.closePath();
+        context.stroke();
+      }
+
+      function clearArea() {
+          context.setTransform(1, 0, 0, 1, 0, 0);
+          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      }
+
+// By diego
+
+function modeTo(qual){
+  mode=qual;
+    if(qual == "pen"){
+      strokeSize(strokeWidth)
+      document.getElementById("strokeSize").value = strokeWidth
+    }else if (mode="eraser"){
+      strokeSize(estrokeWidth)
+      document.getElementById("strokeSize").value = estrokeWidth
     }
-  }
-}
-function handleCancel(evt) {
-  evt.preventDefault();
-  //log('touchcancel.');
-  const touches = evt.changedTouches;
-  let toques =  touches.length
-  for (let i = 0; i < toques; i++) {
-    let idx = ongoingTouchIndexById(touches[i].identifier);
-    ongoingTouches.splice(idx, 1);  // remove it; we're done
-  }
-}
+    esconde()
+ }
+
+ function esconde(quem="submenu"){
+   let subv = document.getElementById(quem).style.visibility
+   if (subv != "hidden"){
+     document.getElementById(quem).style.visibility = "hidden";
+   }else{
+     document.getElementById(quem).style.visibility = "visible";
+   }
+ }
+ function backPaint(){
+   if(globalComposite != 'destination-over'){
+     globalComposite = 'destination-over';
+     document.getElementById("globalComposite").innerHTML = "por baixo"
+   }else{
+     globalComposite = 'source-over';
+     document.getElementById("globalComposite").innerHTML = "por cima"
+   }
+   return context.globalCompositeOperation = globalComposite;
+ }
+
+ function strokeSize(value){
+   let tamanho = document.getElementById("mostraCor2");
+   if(mode=="pen"){
+     strokeWidth = value;
+     tamanho.style.width = strokeWidth+"px";
+     tamanho.style.height = strokeWidth+"px";
+     tamanho.style.backgroundColor = strokeColor;
+     context.globalCompositeOperation=globalComposite;
 
 
-function colorForTouch(touch) {
-  /*
-  let r = touch.identifier % 16;
-  let g = Math.floor(touch.identifier / 3) % 16;
-  let b = Math.floor(touch.identifier / 7) % 16;
-  r = r.toString(16); // make it a hex digit
-  g = g.toString(16); // make it a hex digit
-  b = b.toString(16); // make it a hex digit
-  const color = `#${r}${g}${b}`;*/
-  return strokeColor;
+   } else{
+     context.globalCompositeOperation="destination-out";
+     estrokeWidth = value;
+     tamanho.style.width = estrokeWidth*2+"px";
+     tamanho.style.height = estrokeWidth*2+"px";
 
-}
 
-function copyTouch({ identifier, pageX, pageY }) {
-  return { identifier, pageX, pageY };
-}
+   }
+ }
+ function mudaCorBG(cor){
+   context.fillStyle = cor;
+   context.fillRect(0, 0, canvas.width, canvas.height);
+ }
+ function criaPaleta(){
+   i = 1
+   let paleta = "";
+ 	while (i < 44){
+   	//let cor = i*10
+     let cor = document.getElementById("H").value - (i*3)
+   	paleta += `<span onclick='mudaCor("hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]});'> </span>`
+     i++
+   }
+   document.getElementById("paleta").innerHTML = paleta;
+   document.getElementById("paleta").innerHTML +=
+   `<br /><span onclick='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`
+   document.getElementById("paleta").innerHTML +=
+   `<span onclick='mudaCor("B")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`
+ }
+ criaPaleta();
 
-function ongoingTouchIndexById(idToFind) {
-  for (let i = 0; i < ongoingTouches.length; i++) {
-    const id = ongoingTouches[i].identifier;
+ function mudaCorQ(q=0,valor){
+   hsla[q] = valor;
+   setStrokeColor()
+   criaPaleta();
+ }
+ function setStrokeColor(){
+    strokeColor=`hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+    document.getElementById("mostraCor").style.backgroundColor = strokeColor
+    document.getElementById("mostraCor2").style.backgroundColor = strokeColor
+    document.getElementById("globalComposite").style.backgroundColor = strokeColor
+ }
+ setStrokeColor()
 
-    if (id === idToFind) {
-      return i;
-    }
-  }
-  return -1;    // not found
-  ongoingTouches = [];
-}
+ function mudaCor(valor){
+   if (valor == "P"){
+     strokeColor =  `hsl(0,100%,0%,${hsla[3]})`;
+     document.getElementById("mostraCor").style.color =strokeColor;
+     document.getElementById("menu").style.visibility = "hidden";
+   }else  if (valor == "B"){
+     strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
+     document.getElementById("mostraCor").style.color = strokeColor;
+     document.getElementById("menu").style.visibility = "hidden";
+   }else {
+     strokeColor = valor;
+     document.getElementById("menu").style.visibility = "hidden";
+   }
+   document.getElementById("mostraCor").style.backgroundColor = strokeColor;
+   document.getElementById("mostraCor2").style.backgroundColor = strokeColor
+   document.getElementById("globalComposite").style.backgroundColor = strokeColor
+   const toHslaObject = hslaStr => {const [hue, saturation,  lightness, alpha]= hslaStr.match(/\d+/g).map(Number);
+     hsla[0] = hue;
+     hsla[1] = saturation;
+     hsla[2]= lightness;
+     hsla[3]= alpha;
+   }
+   toHslaObject(strokeColor)
+ }
 
-function log(msg) {
-  const container = document.getElementById('log');
-  container.textContent = `${msg} \n${container.textContent}`;
-}
 
-// Convert canvas to image
-document.getElementById('btn-download').addEventListener("click", function(e) {
-    var canvas = document.querySelector('canvas');
+ // Save | Download image
+ //function downloadImage(data, filename = 'untitled.jpeg') {
+ function downloadImage(data, filename = 'untitled.png') {
+     var a = document.createElement('a');
+     a.href = data;
+     a.download = filename;
+     document.body.appendChild(a);
+     a.click();
+ }
 
-    //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-    var dataURL = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      </script>
 
-    //downloadImage(dataURL, 'my-canvas.jpeg');
-    downloadImage(dataURL, 'my-canvas.png');
-});
-
-// Save | Download image
-//function downloadImage(data, filename = 'untitled.jpeg') {
-function downloadImage(data, filename = 'untitled.png') {
-    var a = document.createElement('a');
-    a.href = data;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-}
-
-</script>
 
 </body>
 </html>
