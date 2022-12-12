@@ -95,17 +95,17 @@
 </div>
 
 
-<canvas id="canvas" width="320" height="320" style="border:solid black 1px;">
+<canvas id="canvas" width="320" height="320" style="border:solid gray 1px; background-color:#33333333">
   Your browser does not support canvas element.
 </canvas>
 <br />
-<a id="btn-cores" class="bloquinho"   ontouchstart='cor()' onclick="cor()">🎨</a>
-<span id="pen" class="bloquinho"  ontouchstart='mode("pen")'>🖌️</span>
-<span onclick='backPaint()'   ontouchstart='backPaint()' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> 🔃</span>
+<a id="btn-cores" class="bloquinho"   onmousedown='cor()'>🎨</a>
+<span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
+<span   onmousedown='backPaint()' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> 🔃</span>
 <span class="bloquinho" id="globalComposite" style="width:70px">por cima</span>
-<span id="eraser" class="bloquinho"  ontouchstart='mode("eraser")'>🧻</span>
-  <span onclick='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
-  <span onclick='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
+<span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
+  <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
+  <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
   <span><a id="btn-download" class="bloquinho"  > 📥</a>
     <span class="bloquinho" onclick='limpa()'>🗑</span><span>
 
@@ -152,7 +152,7 @@ function backPaint(){
   return ctx.globalCompositeOperation = globalComposite;
 }
 
-function mode(qual){ mode=qual; }
+function modeTo(qual){ mode=qual; }
 
 function limpa(){  var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
@@ -251,20 +251,6 @@ function mudaCor(valor){
     hsla[3]= alpha;
   }
   toHslaObject(strokeColor)
-
-  /*
-  regexp = /hsla\(\s*(\d+)\s*,\s*(\d+(?:\.\d+)?%)\s*,\s*(\d+(?:\.\d+)?%)\s*,\s*(\d+)\s*\)/g;
-  res = regexp.exec(strokeColor).slice(1);
-  hsla[0] = Number(res[0]);
-  hsla[1] = Number(res[1]);
-  hsla[2] = Number(res[2]);
-  hsla[3] = Number(res[3]);
-  console.log(hsla[3])
-  document.getElementById("H").value = hsla[0]
-  document.getElementById("S").value = hsla[1]
-  document.getElementById("L").value = hsla[2]
-  document.getElementById("A").value = hsla[3]*/
-
 }
 
 function handleMouseDown(e){
@@ -400,7 +386,6 @@ function handleMove(evt) {
         ctx.fill();
       }
     } else {
-      ongoingTouches = []
       //log('can\'t figure out which touch to continue');
     }
   }
@@ -427,7 +412,7 @@ function handleEnd(evt) {
         ctx.lineTo(touches[i].pageX, touches[i].pageY);
     //    ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8);  // and a square at the end
         ongoingTouches.splice(idx, 1);  // remove it; we're done
-        ongoingTouches = [];
+        ongoingTouches = []
       }else{
         ctx.globalCompositeOperation="destination-out";
         ctx.arc(touches[i].pageX, touches[i].pageY,8,0,Math.PI*2,false);
@@ -476,6 +461,7 @@ function ongoingTouchIndexById(idToFind) {
     }
   }
   return -1;    // not found
+  ongoingTouches = [];
 }
 
 function log(msg) {
