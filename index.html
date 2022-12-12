@@ -177,6 +177,9 @@ Diego Ferrari Bruno. (@diegofbrasil twitter)
     <div onclick="menuCalc()" ontouchstart="menuCalc()" class="menu icon">➗</div>
     <div onclick="menuAlfabeto()" ontouchstart="menuAlfabeto()" class="menu icon">🔫</div>
     <div onclick="menuDesenho()" ontouchstart="menuDesenho()" class="menu icon">🎨</div>
+    <div id="dado" onclick="dado()" ontouchstart="dado()" class="menu icon">
+      <span style="float:left; display:block; width:20px; margin-left: 38px; position:absolute; color:white" id="sorte"></span>🎲</div>
+
     <div id="caixa-header"></div>
   </div>
 </div>
@@ -189,6 +192,7 @@ var menuEsq = {
   "Alfabeto":"🔫",
   "Calculadora":"➗",
   "Desenho":"🎨",
+  "cracha":"📛"
 }
 var menu = {
   "Mover":"💠",
@@ -219,6 +223,7 @@ let pointer = { x: 0, y: 0 };
 let pointerstart = { x: 0, y: 0 };
 let vruler = document.getElementById("vruler");
 let hruler = document.getElementById("hruler");
+let ultimoDado = 1;
 const gridSize = 10;
 const apps = {
   ferramentas:{
@@ -235,6 +240,7 @@ let janela = [{
   url:"#",
   inner:`<iframe class="xyz" url="#">endereço:</iframe>`,
 }]
+
 function mouse_position(e) {
   e.preventDefault();
   pointer.x = Math.floor(e.pageX / gridSize) * gridSize;
@@ -568,6 +574,25 @@ function menuDesenho(){
     criarPainel("desenho",h,w,largura,altura)
     setTimeout(function(){Desenho("desenho")},500)
   }
+function jogaDado(min=1, max=7) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+function dado(){
+  document.getElementById("dado").removeAttribute("onclick");
+  document.getElementById("dado").removeAttribute("ontouchstart");
+  var audio = new Audio('./diceThrow3.ogg');
+  audio.play();
+  setTimeout(function(){document.getElementById("sorte").innerHTML= jogaDado()},100)
+  setTimeout(function(){document.getElementById("sorte").innerHTML= jogaDado()},200)
+  setTimeout(function(){document.getElementById("sorte").innerHTML= jogaDado()},400)
+  ultimoDado = jogaDado();
+  setTimeout(function(){document.getElementById("sorte").innerHTML= ultimoDado},600)
+  setTimeout(function(){
+    document.getElementById("sorte").innerHTML="";
+   document.getElementById("dado").setAttribute("onclick","dado()");
+    document.getElementById("dado").setAttribute("ontouchstart","dado()");
+  },2000)
+}
     </script>
   </body>
 </html>
