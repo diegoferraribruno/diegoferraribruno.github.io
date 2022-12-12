@@ -212,7 +212,7 @@
             context.beginPath();
             context.moveTo(ongoingTouches[idx].clientX - offsetX, ongoingTouches[idx].clientY - offsetY);
             context.lineTo(touches[i].clientX - offsetX, touches[i].clientY - offsetY);
-            context.lineWidth = document.getElementById('selWidth').value;
+            context.lineWidth = strokeWidth;
             context.strokeStyle = color;
             context.lineJoin = "round";
             context.closePath();
