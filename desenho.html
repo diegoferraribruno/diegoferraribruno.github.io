@@ -20,60 +20,95 @@
   #paleta{
     position: absolute;
     float: left;
-    width: 260px;
+    width: 280px;
     display: block;
+    top:10px;
   }
   #menu{
     position: absolute;
     display: block;
     float: left;
     width: 280px;
-    height: 250px;
+    height: 90px;
+    padding-top: 160px;
+  }
+  #submenu{
+    position: absolute;
+    display: block;
+    float: left;
+    top:256px;
+    width: 280px;
+    height: 26px;
+    padding: 10px;
+  }
+  .fundobranco{
     margin: 10px;
     background-color: #ffffff55;
-    border-radius: 16px;
+    border-radius: 20px;
     border-style: solid;
     border-width: 1px;
     border-color: #dddddddd;
     padding: 10px;
   }
   .bloquinho{
-    width:22px;
-    height:22px;
+    width:20px;
+    height:20px;
     border-style: solid;
-    border-radius: 4px;
+    border-radius: 20px;
     border-color: gray;
     border-width: thin;
     display: block;
     float:left;
     padding: 2px;
+    font-size: 18px;
+    margin: 2px 2px;
   }
   #canvas{
+  }
+  #mostraCor{
+    width:2px;
+    height:2px;
+    border-style: solid;
+    border-radius: 100px;
+    border-color: gray;
+    border-width: thin;
+    display: block;
+    padding: 0px;
+    font-size: 18px;
+    float: right;
   }
 
 </style>
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<div id="menu"><span onclick='cor()' id ="mostraCor" class='bloquinho'  style='background-color:"hsl(0, 100%, 0%);"'> </span> Cor <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorH(this.value)"  value="0" /><br />
+<div id="menu" class="fundobranco">
+  <div id="paleta"></div>
+  hue <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorH(this.value)"  value="0" /><br />
   Saturação<input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorS(this.value)"  value="100" /><br />
   Luminosidade<input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorL(this.value)"  value="50" /><br />
   Opacidade<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorA(this.value)"  step="0.1" value="1" />
-  <br>Tamanho<input type="range" id="strokeSize" name="strokeSize" min="0.5" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" /><br />
-  <div id="paleta"></div>
-
 </div>
+  <div id="submenu" class="fundobranco">
+  Tamanho<input type="range" id="strokeSize" name="strokeSize" min="0.5" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" />
+  <span onclick='esconde()' id ="mostraCor" style='background-color:"hsl(0, 100%, 0%);"'> </span>
+</div>
+
+
 <canvas id="canvas" width="320" height="320" style="border:solid black 1px;">
   Your browser does not support canvas element.
 </canvas>
 <br />
 <a id="btn-cores" class="bloquinho"   ontouchstart='cor()' onclick="cor()">🎨</a>
-<span id="pen" class="bloquinho"  class="bloquinho"  ontouchstart='mode("pen")'>🖌️</span>
+<span id="pen" class="bloquinho"  ontouchstart='mode("pen")'>🖌️</span>
+<span onclick='backPaint()'   ontouchstart='backPaint()' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> 🔃</span>
+<span class="bloquinho" id="globalComposite" style="width:70px">por cima</span>
 <span id="eraser" class="bloquinho"  ontouchstart='mode("eraser")'>🧻</span>
-<a id="btn-download" class="bloquinho"  > 📥</a> <span class="bloquinho" style="width:70px">Novo:</span><span>
   <span onclick='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
   <span onclick='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
-  <span onclick='mudaCorBG("#00000000")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> </span>
+  <span><a id="btn-download" class="bloquinho"  > 📥</a>
+    <span class="bloquinho" onclick='limpa()'>🗑</span><span>
+
 </span>
 </div>
 
@@ -93,8 +128,38 @@ var canvasOffset=$("#canvas").offset();
 var offsetX=canvasOffset.left;
 var offsetY=canvasOffset.top;
 var isMouseDown=false;
+var globalComposite = 'source-over';
+var favoritas = []
+
+
+function esconde(quem="submenu"){
+  let subv = document.getElementById(quem).style.visibility
+  if (subv != "hidden"){
+    document.getElementById(quem).style.visibility = "hidden";
+  }else{
+    document.getElementById(quem).style.visibility = "visible";
+  }
+}
+
+function backPaint(){
+  if(globalComposite != 'destination-over'){
+    globalComposite = 'destination-over';
+    document.getElementById("globalComposite").innerHTML = "por baixo"
+  }else{
+    globalComposite = 'source-over';
+    document.getElementById("globalComposite").innerHTML = "por cima"
+  }
+  return ctx.globalCompositeOperation = globalComposite;
+}
+
 function mode(qual){ mode=qual; }
 
+function limpa(){  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#00000000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
 function strokeSize(value){
   let tamanho = document.getElementById("mostraCor");
   if(mode=="pen"){
@@ -106,15 +171,15 @@ function strokeSize(value){
 
   } else{
     estrokeWidth = value;
-    tamanho.style.width = estrokeWidth+"px";
-    tamanho.style.height = estrokeWidth+"px";
+    tamanho.style.width = estrokeWidth*2+"px";
+    tamanho.style.height = estrokeWidth*2+"px";
 
   }
 }
 function mudaCorBG(cor){
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = cor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
@@ -125,12 +190,9 @@ function criaPaleta(){
 	while (i < 37){
   	let cor = i*10
   	paleta += `<span onclick='mudaCor("hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]});'> </span>`
-  	if (i/9 == 1 || i/9 == 2 || i/9 == 3){
-    	paleta += "<br />"
-    }
     i++
-    document.getElementById("paleta").innerHTML = paleta;
   }
+  document.getElementById("paleta").innerHTML = paleta;
   document.getElementById("paleta").innerHTML +=
   `<br /><span onclick='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`
   document.getElementById("paleta").innerHTML +=
@@ -138,7 +200,7 @@ function criaPaleta(){
 }
 criaPaleta();
 
-function cor() {document.getElementById("menu").style.visibility = "visible";};
+function cor() { esconde(quem="menu")};
 
 function mudaCorH(valor){
   hsla[0] = valor;
@@ -238,9 +300,10 @@ function handleMouseMove(e){
   // Put your mousemove stuff here
   if(isMouseDown){
     document.getElementById("menu").style.visibility ="hidden";
+    document.getElementById("submenu").style.visibility = "hidden";
     ctx.beginPath();
     if(mode=="pen"){
-      ctx.globalCompositeOperation="source-over";
+      ctx.globalCompositeOperation = globalComposite;
       ctx.moveTo(lastX,lastY);
       ctx.lineTo(mouseX,mouseY);
       ctx.lineWidth = strokeWidth;
@@ -264,10 +327,14 @@ $("#canvas").mouseout(function(e){handleMouseOut(e);});
 var mode="pen";
 $("#pen").click(function(){
   mode="pen";
+  esconde()
+  strokeSize(strokeWidth)
   document.getElementById("strokeSize").value = strokeWidth
 });
 $("#eraser").click(function(){
+  esconde()
   mode="eraser";
+  strokeSize(estrokeWidth)
   document.getElementById("strokeSize").value = estrokeWidth
 });
 
@@ -316,7 +383,7 @@ function handleMove(evt) {
 
     if (idx >= 0) {
       if(mode=="pen"){
-        ctx.globalCompositeOperation="source-over";
+        ctx.globalCompositeOperation = globalComposite;
         //log(`continuing touch ${idx}`);
         ctx.beginPath();
         //log(`ctx.moveTo( ${ongoingTouches[idx].pageX}, ${ongoingTouches[idx].pageY} );`);
@@ -333,6 +400,7 @@ function handleMove(evt) {
         ctx.fill();
       }
     } else {
+      ongoingTouches = []
       //log('can\'t figure out which touch to continue');
     }
   }
@@ -351,7 +419,7 @@ function handleEnd(evt) {
     if (idx >= 0) {
       document.getElementById("menu").style.visibility ="hidden";
       if(mode=="pen"){
-        ctx.globalCompositeOperation="source-over";
+        ctx.globalCompositeOperation = globalComposite;
         ctx.lineWidth = strokeWidth;
         ctx.fillStyle = color;
         ctx.beginPath();
@@ -359,6 +427,7 @@ function handleEnd(evt) {
         ctx.lineTo(touches[i].pageX, touches[i].pageY);
     //    ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8);  // and a square at the end
         ongoingTouches.splice(idx, 1);  // remove it; we're done
+        ongoingTouches = [];
       }else{
         ctx.globalCompositeOperation="destination-out";
         ctx.arc(touches[i].pageX, touches[i].pageY,8,0,Math.PI*2,false);
