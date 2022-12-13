@@ -60,6 +60,7 @@
         .fundobranco{
           z-index: 3;
           margin: 10px;
+          min-height: 28px;
           background-color: #ffffff55;
           border-radius: 20px;
           border-style: solid;
@@ -78,7 +79,7 @@
           float:left;
           padding: 2px;
           font-size: 18px;
-          margin: 2px 2px;
+          margin: 2px 1px;
         }
         #mostraCor{
           width:40px;
@@ -148,17 +149,24 @@
             </span>
 
 
-            zoom: <input id="test" min="1" max="10" value='1' step="1" onchange="showVal(this.value)" type="range"/>
 
             </div>
-        <div id="canvas_window" style="overflow: scroll; width:342px; height:342px;">
+        <div id="canvas_window" style="overflow: scroll; width:342px; height:342px;  -webkit-touch-overflow:scroll">
         <div id="canvas_div" style="overflow:hidden;">
           <canvas id="canvas" width="320px" height="320px">
             Your browser does not support canvas element.
           </canvas>
         </div>
         </div>
-        <div class="licensing-title"><small><a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/">
+        <div class="licensing-title">
+          <span id="zoom" class="bloquinho"  onmousedown='modeTo("zoom")'>🔎</span>
+          <input id="tzoom" type="number" min="0.25" max="10" step="0.25" value=1 onchange="showVal(this.value)" style="width:26px;"></input>
+          <input id="zoombar" min="0.25" max="10" value='1' step="0.25" onchange="showVal(this.value)" type="range"/>
+          <span onmousedown="scrollCanva(-32,0)">⬅️</span>
+          <span onmousedown="scrollCanva(0,-32)">⬆️</span>
+          <span onmousedown="scrollCanva(0,32)">⬇️</span>
+          <span onmousedown="scrollCanva(32,0)">➡️</span>
+          <small><a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/">
           creditos</a> </small>
         </div>
 </div>
@@ -185,6 +193,7 @@
       var linejoin="round"
       var lineJoinsCount = 1
       const lineJoins=["round","miter"]
+      var zoomScale = 1;
 
 
 // pausa na adaptacao funcoes novas ao fim
@@ -230,9 +239,9 @@
       const ongoingTouches = [];
 
       function handleStart(evt) {
-        const touches = evt.changedTouches;
-        if(touches.length==1){
+        if(mode != "zoom"){
           evt.preventDefault();
+          const touches = evt.changedTouches;
           document.getElementById("menu").style.visibility = "hidden";
           document.getElementById("submenu").style.visibility = "hidden";
         offsetX = canvas.getBoundingClientRect().left;
@@ -245,10 +254,9 @@
     }
 
       function handleMove(evt) {
-//        evt.preventDefault();
-        const touches = evt.changedTouches;
-        if(touches.length==1){
+      if(mode != "zoom"){
           evt.preventDefault();
+          const touches = evt.changedTouches;
           for (let i = 0; i < touches.length; i++) {
             const color = strokeColor;
             const idx = ongoingTouchIndexById(touches[i].identifier);
@@ -268,10 +276,9 @@
       }
 
       function handleEnd(evt) {
-//        evt.preventDefault();
+      if(mode != "zoom"){
+        evt.preventDefault();
         const touches = evt.changedTouches;
-        if(touches.length==1){
-          evt.preventDefault();
           for (let i = 0; i < touches.length; i++) {
 
             const color = strokeColor;
@@ -286,11 +293,10 @@
       }
 
       function handleCancel(evt) {
-        const touches = evt.changedTouches;
-        if(touches.length==1){
+      if(mode != "zoom"){
         evt.preventDefault();
+        const touches = evt.changedTouches;
         for (let i = 0; i < touches.length; i++) {
-
           let idx = ongoingTouchIndexById(touches[i].identifier);
           ongoingTouches.splice(idx, 1);  // remove it; we're done
         }
@@ -329,18 +335,24 @@
 
 // By diego
 document.body.style.cursor = "pointer"
+
 function modeTo(qual){
+
   mode=qual;
+
     if(qual == "pen"){
       context.globalCompositeOperation=globalComposite;
       strokeSize(strokeWidth)
       document.getElementById("strokeSize").value = strokeWidth
-    }else if (qual="eraser"){
+      esconde()
+    }else if (qual=="eraser"){
       strokeSize(estrokeWidth)
       document.getElementById("strokeSize").value = estrokeWidth
       context.globalCompositeOperation="destination-out";
+      esconde()
+    }else if (qual=="zoom"){
+      document.getElementById("tzoom").value = zoomScale
     }
-    esconde()
  }
 
  function strokeSize(value){
@@ -352,16 +364,14 @@ function modeTo(qual){
      tamanho.style.marginTop = (strokeWidth*-1)+"px";
      tamanho.style.backgroundColor = strokeColor;
      stroke = strokeWidth
-     document.getElementById("tpx").value = strokeWidth
-
-   } else{
+   } else if(mode=="eraser"){
      estrokeWidth = value;
      tamanho.style.width = estrokeWidth+"px";
      tamanho.style.height = estrokeWidth+"px";
      tamanho.style.marginTop = (estrokeWidth*-1)+"px";
     stroke = estrokeWidth
-    document.getElementById("tpx").value = estrokeWidth
    }
+   document.getElementById("tpx").value = stroke
  }
 
  function esconde(quem="submenu"){
@@ -503,12 +513,22 @@ function setZoom(zoom,el) {
 }
 
 //setZoom(5,document.getElementsByClassName('container')[0]);
-var zoomScale = 1;
 
 function showVal(a){
     zoomScale = Number(a);
+    document.getElementById("zoombar").value= zoomScale
+    document.getElementById("tzoom").value= zoomScale
    setZoom(zoomScale,document.getElementById('canvas_div'))
 }
+
+
+//scrolling
+function scrollCanva(x,y){
+  document.getElementById('canvas_window').scrollTop += y;
+  document.getElementById('canvas_window').scrollLeft += x;
+}
+
+
       </script>
 
 
