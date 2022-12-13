@@ -138,7 +138,7 @@
           <span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
           <span  onmousedown='backPaint()' class="bloquinho" id="globalComposite" style="width:90px">
             <span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span>
-            <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:72px; marging-left:48px; margin-top:-3px;"><b>por cima</b></span>
+            <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:82px; marging-left:48px; margin-top:-3px;"><b>por cima</b></span>
           </span>
           <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
           <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
@@ -151,8 +151,8 @@
             zoom: <input id="test" min="1" max="10" value='1' step="1" onchange="showVal(this.value)" type="range"/>
 
             </div>
-        <div id="canvas_window" style="overflow-y: auto;">
-        <div id="canvas_div" style="overflow-y: auto;">
+        <div id="canvas_window" style="overflow: scroll; width:342px; height:342px;">
+        <div id="canvas_div" style="overflow:hidden;">
           <canvas id="canvas" width="320px" height="320px">
             Your browser does not support canvas element.
           </canvas>
@@ -230,10 +230,11 @@
       const ongoingTouches = [];
 
       function handleStart(evt) {
-        document.getElementById("menu").style.visibility = "hidden";
-        document.getElementById("submenu").style.visibility = "hidden";
         const touches = evt.changedTouches;
-        if(touches.length==1){evt.preventDefault();}
+        if(touches.length==1){
+          evt.preventDefault();
+          document.getElementById("menu").style.visibility = "hidden";
+          document.getElementById("submenu").style.visibility = "hidden";
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
         for (let i = 0; i < touches.length; i++) {
@@ -241,6 +242,7 @@
 
         }
       }
+    }
 
       function handleMove(evt) {
 //        evt.preventDefault();
@@ -374,11 +376,11 @@ function modeTo(qual){
    if(globalComposite != 'destination-over'){
      globalComposite = 'destination-over';
      document.getElementById("globalComposite").innerHTML =
-     `<span style="position:absolute; width:76px; display:block; color:white; margin-left:10px; padding-top:3px;"><b>por baixo</b></span><span style="position:relative; float:left; width:50px; display:block; color:black; left:0px; margin-top:-3px;">Pintar</span>`
+     `<span style="position:absolute; width:82px; display:block; color:white; margin-left:6px; padding-top:3px;"><b>por baixo</b></span><span style="position:relative; float:left; width:50px; display:block; color:black; left:0px; margin-top:-3px;">Pintar</span>`
    }else{
      globalComposite = 'source-over';
      document.getElementById("globalComposite").innerHTML =
-     `<span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:82px; margin-top:-3px;"><b>por cima</b></span> `
+     `<span style="position:absolute; float:right; width:60px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:82px; margin-top:-3px;"><b>por cima</b></span> `
    }
    return context.globalCompositeOperation = globalComposite;
  }
