@@ -284,9 +284,9 @@
       }
 
       function handleCancel(evt) {
-        //evt.preventDefault();
         const touches = evt.changedTouches;
         if(touches.length==1){
+        evt.preventDefault();
         for (let i = 0; i < touches.length; i++) {
 
           let idx = ongoingTouchIndexById(touches[i].identifier);
