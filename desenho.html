@@ -18,7 +18,7 @@
           width: 322px;
           height: 322px
           border: 1px solid black;
-          border:solid gray 1px;
+          border:solid gray 1px;eraser strokesize working f
           background-color:#33333333
       }
         #paleta{
@@ -279,7 +279,7 @@
       }
 
 // By diego
-
+document.body.style.cursor = "pointer"
 function modeTo(qual){
   mode=qual;
     if(qual == "pen"){
@@ -299,15 +299,16 @@ function modeTo(qual){
      strokeWidth = value;
      tamanho.style.width = strokeWidth+"px";
      tamanho.style.height = strokeWidth+"px";
+     tamanho.style.marginTop = (strokeWidth*-1)+"px";
      tamanho.style.backgroundColor = strokeColor;
      stroke = strokeWidth
-
 
    } else{
      context.globalCompositeOperation="destination-out";
      estrokeWidth = value;
-     tamanho.style.width = estrokeWidth*2+"px";
-     tamanho.style.height = estrokeWidth*2+"px";
+     tamanho.style.width = estrokeWidth+"px";
+     tamanho.style.height = estrokeWidth+"px";
+     tamanho.style.marginTop = (estrokeWidth*-1)+"px";
     stroke = estrokeWidth
    }
  }
@@ -323,7 +324,7 @@ function modeTo(qual){
  function backPaint(){
    if(globalComposite != 'destination-over'){
      globalComposite = 'destination-over';
-     document.getElementById("globalComposite").innerHTML = "por baistrokexo"
+     document.getElementById("globalComposite").innerHTML = "por baixo"
    }else{
      globalComposite = 'source-over';
      document.getElementById("globalComposite").innerHTML = "por cima"
@@ -400,6 +401,13 @@ function modeTo(qual){
      a.click();
  }
 
+ /*function lupa(){
+   canvas.width = 1080;
+   canvas.height = 1080;
+   context.scale(8, 8)
+ }
+ lupa()
+*/
       </script>
 
 
