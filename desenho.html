@@ -148,7 +148,7 @@
             </span>
 
 
-            zoom: <input id="test" min="0.25" max="10" value='1' step="0.25" onchange="showVal(this.value)" type="range"/>
+            zoom: <input id="test" min="1" max="10" value='1' step="1" onchange="showVal(this.value)" type="range"/>
 
             </div>
         <div id="canvas_window" style="overflow-y: auto;">
@@ -250,8 +250,8 @@
           const idx = ongoingTouchIndexById(touches[i].identifier);
           if (idx >= 0) {
             context.beginPath();
-            context.moveTo(ongoingTouches[idx].clientX - offsetX, ongoingTouches[idx].clientY - offsetY);
-            context.lineTo(touches[i].clientX - offsetX, touches[i].clientY - offsetY);
+            context.moveTo(ongoingTouches[idx].clientX/zoomScale - offsetX/zoomScale, ongoingTouches[idx].clientY/zoomScale - offsetY/zoomScale);
+            context.lineTo(touches[i].clientX/zoomScale - offsetX/zoomScale, touches[i].clientY/zoomScale - offsetY/zoomScale);
             context.lineWidth = stroke;
             context.strokeStyle = color;
             context.lineJoin = linejoin;
@@ -368,7 +368,7 @@ function modeTo(qual){
    }else{
      globalComposite = 'source-over';
      document.getElementById("globalComposite").innerHTML =
-     `<span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:76px; margin-top:-3px;"><b>por cima</b></span> `
+     `<span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:82px; margin-top:-3px;"><b>por cima</b></span> `
    }
    return context.globalCompositeOperation = globalComposite;
  }
@@ -491,9 +491,10 @@ function setZoom(zoom,el) {
 }
 
 //setZoom(5,document.getElementsByClassName('container')[0]);
+var zoomScale = 1;
 
 function showVal(a){
-   var zoomScale = Number(a);
+    zoomScale = Number(a);
    setZoom(zoomScale,document.getElementById('canvas_div'))
 }
       </script>
