@@ -230,10 +230,10 @@
       const ongoingTouches = [];
 
       function handleStart(evt) {
-        evt.preventDefault();
         document.getElementById("menu").style.visibility = "hidden";
         document.getElementById("submenu").style.visibility = "hidden";
         const touches = evt.changedTouches;
+        if(touches.length==1){evt.preventDefault();}
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
         for (let i = 0; i < touches.length; i++) {
@@ -243,46 +243,56 @@
       }
 
       function handleMove(evt) {
-        evt.preventDefault();
+//        evt.preventDefault();
         const touches = evt.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-          const color = strokeColor;
-          const idx = ongoingTouchIndexById(touches[i].identifier);
-          if (idx >= 0) {
-            context.beginPath();
-            context.moveTo(ongoingTouches[idx].clientX/zoomScale - offsetX/zoomScale, ongoingTouches[idx].clientY/zoomScale - offsetY/zoomScale);
-            context.lineTo(touches[i].clientX/zoomScale - offsetX/zoomScale, touches[i].clientY/zoomScale - offsetY/zoomScale);
-            context.lineWidth = stroke;
-            context.strokeStyle = color;
-            context.lineJoin = linejoin;
-            context.closePath();
-            context.stroke();
-            ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
+        if(touches.length==1){
+          evt.preventDefault();
+          for (let i = 0; i < touches.length; i++) {
+            const color = strokeColor;
+            const idx = ongoingTouchIndexById(touches[i].identifier);
+            if (idx >= 0) {
+              context.beginPath();
+              context.moveTo(ongoingTouches[idx].clientX/zoomScale - offsetX/zoomScale, ongoingTouches[idx].clientY/zoomScale - offsetY/zoomScale);
+              context.lineTo(touches[i].clientX/zoomScale - offsetX/zoomScale, touches[i].clientY/zoomScale - offsetY/zoomScale);
+              context.lineWidth = stroke;
+              context.strokeStyle = color;
+              context.lineJoin = linejoin;
+              context.closePath();
+              context.stroke();
+              ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
+            }
           }
         }
       }
 
       function handleEnd(evt) {
-        evt.preventDefault();
+//        evt.preventDefault();
         const touches = evt.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-          const color = strokeColor;
-          let idx = ongoingTouchIndexById(touches[i].identifier);
-          if (idx >= 0) {
-            context.lineWidth = strokeWidth;
-            context.fillStyle = color;
-            ongoingTouches.splice(idx, 1);  // remove it; we're done
+        if(touches.length==1){
+          evt.preventDefault();
+          for (let i = 0; i < touches.length; i++) {
+
+            const color = strokeColor;
+            let idx = ongoingTouchIndexById(touches[i].identifier);
+            if (idx >= 0) {
+              context.lineWidth = strokeWidth;
+              context.fillStyle = color;
+              ongoingTouches.splice(idx, 1);  // remove it; we're done
+            }
           }
         }
       }
 
       function handleCancel(evt) {
-        evt.preventDefault();
+        //evt.preventDefault();
         const touches = evt.changedTouches;
+        if(touches.length==1){
         for (let i = 0; i < touches.length; i++) {
+
           let idx = ongoingTouchIndexById(touches[i].identifier);
           ongoingTouches.splice(idx, 1);  // remove it; we're done
         }
+      }
       }
 
       function copyTouch({ identifier, clientX, clientY }) {
