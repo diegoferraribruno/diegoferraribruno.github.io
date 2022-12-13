@@ -7,7 +7,7 @@
       body{
         padding: 0px 0px;
         margin: 0px 0px;
-        background-color: #000000;
+        background-color: #00000022;
         background-image: url("./grid.png");
       }
       #canvas_div {
@@ -118,7 +118,7 @@
         <a id="btn-cores" class="bloquinho"   onmousedown=' esconde("menu")'>🎨</a>
         <span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
         <span   onmousedown='backPaint()' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> 🔃</span>
-        <span class="bloquinho" id="globalComposite" style="width:70px">por cima</span>
+        <span class="bloquinho" id="globalComposite" style="width:80px">por cima</span>
         <span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
           <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
           <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
@@ -145,6 +145,7 @@
 
       var globalComposite = 'source-over';
       var favoritas = []
+      var stroke =1
       var strokeWidth=1;
       var estrokeWidth=8;
       var hsla = [0,100,50,1]
@@ -157,8 +158,8 @@
 
       function startup() {
 
-          esconde("menu")
-          esconde()
+      document.getElementById("menu").style.visibility = "hidden";
+      document.getElementById("submenu").style.visibility = "hidden";
         canvas.addEventListener('touchstart', handleStart);
         canvas.addEventListener('touchend', handleEnd);
         canvas.addEventListener('touchcancel', handleCancel);
@@ -193,6 +194,8 @@
 
       function handleStart(evt) {
         evt.preventDefault();
+        document.getElementById("menu").style.visibility = "hidden";
+        document.getElementById("submenu").style.visibility = "hidden";
         const touches = evt.changedTouches;
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
@@ -212,7 +215,7 @@
             context.beginPath();
             context.moveTo(ongoingTouches[idx].clientX - offsetX, ongoingTouches[idx].clientY - offsetY);
             context.lineTo(touches[i].clientX - offsetX, touches[i].clientY - offsetY);
-            context.lineWidth = strokeWidth;
+            context.lineWidth = stroke;
             context.strokeStyle = color;
             context.lineJoin = "round";
             context.closePath();
@@ -262,7 +265,7 @@
       function drawLine(context, x1, y1, x2, y2) {
         context.beginPath();
         context.strokeStyle = strokeColor;
-        context.lineWidth = strokeWidth;
+        context.lineWidth = stroke;
         context.lineJoin = "round";
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
@@ -289,6 +292,26 @@ function modeTo(qual){
     esconde()
  }
 
+ function strokeSize(value){
+   let tamanho = document.getElementById("mostraCor2");
+   if(mode=="pen"){
+     context.globalCompositeOperation=globalComposite;
+     strokeWidth = value;
+     tamanho.style.width = strokeWidth+"px";
+     tamanho.style.height = strokeWidth+"px";
+     tamanho.style.backgroundColor = strokeColor;
+     stroke = strokeWidth
+
+
+   } else{
+     context.globalCompositeOperation="destination-out";
+     estrokeWidth = value;
+     tamanho.style.width = estrokeWidth*2+"px";
+     tamanho.style.height = estrokeWidth*2+"px";
+    stroke = estrokeWidth
+   }
+ }
+
  function esconde(quem="submenu"){
    let subv = document.getElementById(quem).style.visibility
    if (subv != "hidden"){
@@ -300,32 +323,12 @@ function modeTo(qual){
  function backPaint(){
    if(globalComposite != 'destination-over'){
      globalComposite = 'destination-over';
-     document.getElementById("globalComposite").innerHTML = "por baixo"
+     document.getElementById("globalComposite").innerHTML = "por baistrokexo"
    }else{
      globalComposite = 'source-over';
      document.getElementById("globalComposite").innerHTML = "por cima"
    }
    return context.globalCompositeOperation = globalComposite;
- }
-
- function strokeSize(value){
-   let tamanho = document.getElementById("mostraCor2");
-   if(mode=="pen"){
-     strokeWidth = value;
-     tamanho.style.width = strokeWidth+"px";
-     tamanho.style.height = strokeWidth+"px";
-     tamanho.style.backgroundColor = strokeColor;
-     context.globalCompositeOperation=globalComposite;
-
-
-   } else{
-     context.globalCompositeOperation="destination-out";
-     estrokeWidth = value;
-     tamanho.style.width = estrokeWidth*2+"px";
-     tamanho.style.height = estrokeWidth*2+"px";
-
-
-   }
  }
  function mudaCorBG(cor){
    context.fillStyle = cor;
