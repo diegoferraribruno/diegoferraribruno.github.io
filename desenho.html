@@ -14,6 +14,13 @@
 "emojione mozilla", "apple color emoji";
 
       }
+      #desenho_div {
+          text-align: center;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+                    width: 340px;
+        }
       #canvas_div {
           text-align: center;
           display: block;
@@ -95,10 +102,14 @@
           font-size: 18px;
           float: right;
         }
+        .disable-scroll{
+  overflow-y: hidden;
+}
       </style>
       <title>Ver. 0.2.1</title>
     </head>
 <body>
+  <div id="desenho_div" style="overflow-y: auto;">
   <div id="menu" class="fundobranco">
     <div id="paleta"></div>
     hue <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" /><br />
@@ -113,7 +124,7 @@
           <span onclick='esconde()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
         </div>
 
-        <div id="canvas_div" style="overflow-x: auto;">
+        <div id="canvas_div" style="overflow-y: auto;">
           <canvas id="canvas" width="320px" height="320px">
             Your browser does not support canvas element.
           </canvas>
@@ -121,8 +132,10 @@
         <br />
         <a id="btn-cores" class="bloquinho"   onmousedown=' esconde("menu")'>🎨</a>
         <span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
-        <span   onmousedown='backPaint()' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> 🔃</span>
-        <span class="bloquinho" id="globalComposite" style="width:80px">por cima</span>
+        <span  onmousedown='backPaint()' class="bloquinho" id="globalComposite" style="width:90px">
+    <span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span>
+    <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:60px; marging-left:48px; margin-top:-3px;">acima</span>
+        </span>
         <span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
           <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
           <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
@@ -131,10 +144,11 @@
 
         </span>
 <br>
-      </div>
 
-  <div class="licensing-title"><p>HTML Canvas Drawing With Mouse and Touch</p><p><a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/">
-    https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/</a></p></div>
+  <div class="licensing-title"><small>Base:<a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/">
+    HTML Canvas Drawing With Mouse and Touch</a>. </small></div>
+  </div>
+</div>
 
       <script>
       const canvas = document.getElementById('canvas');
@@ -172,6 +186,8 @@
           x = e.offsetX;
           y = e.offsetY;
           isDrawing = true;
+          document.getElementById("menu").style.visibility = "hidden";
+          document.getElementById("submenu").style.visibility = "hidden";
         });
 
         canvas.addEventListener('mousemove', (e) => {
@@ -221,7 +237,7 @@
             context.lineTo(touches[i].clientX - offsetX, touches[i].clientY - offsetY);
             context.lineWidth = stroke;
             context.strokeStyle = color;
-            context.lineJoin = "round";
+//            context.lineJoin = "round";
             context.closePath();
             context.stroke();
             ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
@@ -328,10 +344,12 @@ function modeTo(qual){
  function backPaint(){
    if(globalComposite != 'destination-over'){
      globalComposite = 'destination-over';
-     document.getElementById("globalComposite").innerHTML = "por baixo"
+     document.getElementById("globalComposite").innerHTML =
+     `<span style="position:absolute; width:60px; display:block; color:white; margin-left:30px; padding-top:3px;">abaixo</span><span style="position:relative; float:left; width:50px; display:block; color:black; left:0px; margin-top:-3px;">Pintar</span>`
    }else{
      globalComposite = 'source-over';
-     document.getElementById("globalComposite").innerHTML = "por cima"
+     document.getElementById("globalComposite").innerHTML =
+     `<span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:60px; margin-top:-3px;">acima</span> `
    }
    return context.globalCompositeOperation = globalComposite;
  }
