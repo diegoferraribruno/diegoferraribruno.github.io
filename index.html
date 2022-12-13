@@ -452,9 +452,9 @@ function Alfabeto(id=0){
 }
 function Desenho(id=0){
   let pai = document.getElementById(id)
-  pai.style.width = "340px";
-  pai.style.height = "420px";
-  pai.style.scroll = "disableScroll"
+  pai.style.width = "360px";
+  pai.style.height = "480px";
+  pai.style.overflowY = "hidden";
   document.getElementById(id+"-header").innerHTML = "";
   MoveBot(id)
   Lixo(id)

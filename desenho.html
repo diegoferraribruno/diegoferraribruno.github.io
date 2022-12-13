@@ -88,7 +88,11 @@
           display: block;
           padding: 0px;
           font-size: 18px;
-          float: right;
+          float: left;
+        }
+        .linha{
+          width: 1px;
+          border-radius: 0px;
         }
         #mostraCor2{
           width:2px;
@@ -100,11 +104,12 @@
           display: block;
           padding: 0px;
           font-size: 18px;
-          float: right;
+          float: left;
         }
         .disable-scroll{
   overflow-y: hidden;
 }
+
       </style>
       <title>Ver. 0.2.1</title>
     </head>
@@ -112,15 +117,15 @@
   <div id="desenho_div" style="overflow-y: auto;">
   <div id="menu" class="fundobranco">
     <div id="paleta"></div>
-    hue <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" /><br />
-    Saturação<input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorQ(1,this.value)"  value="100" /><br />
+    Cor (hue): <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" /><br />
+    Saturação: <input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorQ(1,this.value)"  value="100" /><br />
     <span onclick='esconde("menu")' id ="mostraCor" style='background-color:"hsl(0, 100%, 0%)";float:right; margin-right:10px;'> </span>
-    Luminosidade<input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorQ(2,this.value)"  value="50" /><br />
-    Opacidade<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
+    Brilho: <input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorQ(2,this.value)"  value="50" /><br />
+    Opacidade:<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
   </div>
           <div id="submenu" class="fundobranco">
-          formato: / o<br>
-          Tamanho<input type="range" id="strokeSize" name="strokeSize" min="0.5" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" />
+          &nbsp; Tamanho<input type="range" id="strokeSize" name="strokeSize" min="0.5" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" />
+          <span style="float:right; position:relative; width:70px;"onmousedown='changeLine()'>Traço:<span id="line">o</span></span> <br>
           <span onclick='esconde()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
         </div>
 
@@ -134,7 +139,7 @@
         <span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
         <span  onmousedown='backPaint()' class="bloquinho" id="globalComposite" style="width:90px">
     <span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span>
-    <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:60px; marging-left:48px; margin-top:-3px;">acima</span>
+    <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:72px; marging-left:48px; margin-top:-3px;"><b>por cima</b></span>
         </span>
         <span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
           <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
@@ -169,6 +174,20 @@
       var hsla = [0,100,50,1]
       var strokeColor=`hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
       var mode="pen";
+      var linejoin="round"
+      var lineJoinsCount = 1
+      const lineJoins=["round","miter"]
+
+function changeLine(){
+  lineJoinsCount++;
+  if (lineJoinsCount>1){lineJoinsCount=0}
+  linejoin = lineJoins[lineJoinsCount]
+  if (lineJoinsCount==0){
+    document.getElementById("line").innerHTML = "<b> o</b>"
+  }else{
+    document.getElementById("line").innerHTML = " <b>|</b>"
+  }
+}
 
 // pausa na adaptacao funcoes novas ao fim
 
@@ -237,7 +256,7 @@
             context.lineTo(touches[i].clientX - offsetX, touches[i].clientY - offsetY);
             context.lineWidth = stroke;
             context.strokeStyle = color;
-//            context.lineJoin = "round";
+            context.lineJoin = linejoin;
             context.closePath();
             context.stroke();
             ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
@@ -286,7 +305,7 @@
         context.beginPath();
         context.strokeStyle = strokeColor;
         context.lineWidth = stroke;
-        context.lineJoin = "round";
+        context.lineJoin = linejoin;
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
         context.closePath();
@@ -345,11 +364,11 @@ function modeTo(qual){
    if(globalComposite != 'destination-over'){
      globalComposite = 'destination-over';
      document.getElementById("globalComposite").innerHTML =
-     `<span style="position:absolute; width:60px; display:block; color:white; margin-left:30px; padding-top:3px;">abaixo</span><span style="position:relative; float:left; width:50px; display:block; color:black; left:0px; margin-top:-3px;">Pintar</span>`
+     `<span style="position:absolute; width:76px; display:block; color:white; margin-left:10px; padding-top:3px;"><b>por baixo</b></span><span style="position:relative; float:left; width:50px; display:block; color:black; left:0px; margin-top:-3px;">Pintar</span>`
    }else{
      globalComposite = 'source-over';
      document.getElementById("globalComposite").innerHTML =
-     `<span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:60px; margin-top:-3px;">acima</span> `
+     `<span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:76px; margin-top:-3px;"><b>por cima</b></span> `
    }
    return context.globalCompositeOperation = globalComposite;
  }
