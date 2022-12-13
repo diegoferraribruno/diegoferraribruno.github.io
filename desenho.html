@@ -9,6 +9,10 @@
         margin: 0px 0px;
         background-color: #00000022;
         background-image: url("./grid.png");
+        font-family: "segoe ui emoji", "noto color emoji", "android emoji",
+"emojisymbols", "segoe ui symbol" "twemoji mozilla",
+"emojione mozilla", "apple color emoji";
+
       }
       #canvas_div {
           text-align: center;
@@ -392,6 +396,15 @@ function modeTo(qual){
 
 
  // Save | Download image
+
+ // Convert canvas to image
+ document.getElementById('btn-download').addEventListener("click", function(e) {
+     //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+     var dataURL = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+     //downloadImage(dataURL, 'my-canvas.jpeg');
+     downloadImage(dataURL, 'desenho.png');
+ });
+
  //function downloadImage(data, filename = 'untitled.jpeg') {
  function downloadImage(data, filename = 'untitled.png') {
      var a = document.createElement('a');
