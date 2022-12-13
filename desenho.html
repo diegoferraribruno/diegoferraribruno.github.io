@@ -19,7 +19,7 @@
           display: block;
           margin-left: auto;
           margin-right: auto;
-                    width: 340px;
+                    width: 350px;
         }
       #canvas_div {
           text-align: center;
@@ -29,34 +29,36 @@
           width: 322px;
           height: 322px
           border: 1px solid black;
-          border:solid gray 1px;eraser strokesize working f
-          background-color:#33333333
+          border:solid gray 1px;
+          background-color:#33333333;
       }
         #paleta{
           position: absolute;
           float: left;
           width: 280px;
           display: block;
-          top:10px;
+          top:8px;
         }
         #menu{
           position: absolute;
           display: block;
           float: left;
           width: 280px;
-          height: 90px;
+          height: 84px;
           padding-top: 160px;
+          z-index: 3;
         }
         #submenu{
           position: absolute;
           display: block;
           float: left;
-          top:256px;
+          top:260px;
           width: 280px;
           height: 26px;
           padding: 10px;
         }
         .fundobranco{
+          z-index: 3;
           margin: 10px;
           background-color: #ffffff55;
           border-radius: 20px;
@@ -114,7 +116,7 @@
       <title>Ver. 0.2.1</title>
     </head>
 <body>
-  <div id="desenho_div" style="overflow-y: auto;">
+  <div id="desenho_div" style="overflow-y: hidden">
   <div id="menu" class="fundobranco">
     <div id="paleta"></div>
     Cor (hue): <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" /><br />
@@ -124,35 +126,41 @@
     Opacidade:<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
   </div>
           <div id="submenu" class="fundobranco">
-          &nbsp; Tamanho<input type="range" id="strokeSize" name="strokeSize" min="0.5" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" />
+          &nbsp;<input type="number" id="tpx" min="0.2" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:60px;"></input>
+          <input type="range" id="strokeSize" name="strokeSize" min="0.2" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" width="160px"/>
           <span style="float:right; position:relative; width:70px;"onmousedown='changeLine()'>Traço:<span id="line">o</span></span> <br>
           <span onclick='esconde()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
         </div>
 
-        <div id="canvas_div" style="overflow-y: auto;">
-          <canvas id="canvas" width="320px" height="320px">
-            Your browser does not support canvas element.
-          </canvas>
-        </div>
-        <br />
-        <a id="btn-cores" class="bloquinho"   onmousedown=' esconde("menu")'>🎨</a>
-        <span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
-        <span  onmousedown='backPaint()' class="bloquinho" id="globalComposite" style="width:90px">
-    <span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span>
-    <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:72px; marging-left:48px; margin-top:-3px;"><b>por cima</b></span>
-        </span>
-        <span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
+        <div class="fundobranco">
+          <a id="btn-cores" class="bloquinho"   onmousedown=' esconde("menu")'>🎨</a>
+          <span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
+          <span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
+          <span  onmousedown='backPaint()' class="bloquinho" id="globalComposite" style="width:90px">
+            <span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span>
+            <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:72px; marging-left:48px; margin-top:-3px;"><b>por cima</b></span>
+          </span>
           <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
           <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
           <span><a id="btn-download" class="bloquinho"  > 📥</a>
             <span class="bloquinho" onclick='clearArea()'>🗑</span><span>
 
-        </span>
-<br>
+            </span>
 
-  <div class="licensing-title"><small>Base:<a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/">
-    HTML Canvas Drawing With Mouse and Touch</a>. </small></div>
-  </div>
+
+            zoom: <input id="test" min="0.25" max="10" value='1' step="0.25" onchange="showVal(this.value)" type="range"/>
+
+            </div>
+        <div id="canvas_window" style="overflow-y: auto;">
+        <div id="canvas_div" style="overflow-y: auto;">
+          <canvas id="canvas" width="320px" height="320px">
+            Your browser does not support canvas element.
+          </canvas>
+        </div>
+        </div>
+        <div class="licensing-title"><small><a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/">
+          creditos</a> </small>
+        </div>
 </div>
 
       <script>
@@ -178,16 +186,6 @@
       var lineJoinsCount = 1
       const lineJoins=["round","miter"]
 
-function changeLine(){
-  lineJoinsCount++;
-  if (lineJoinsCount>1){lineJoinsCount=0}
-  linejoin = lineJoins[lineJoinsCount]
-  if (lineJoinsCount==0){
-    document.getElementById("line").innerHTML = "<b> o</b>"
-  }else{
-    document.getElementById("line").innerHTML = " <b>|</b>"
-  }
-}
 
 // pausa na adaptacao funcoes novas ao fim
 
@@ -322,11 +320,13 @@ document.body.style.cursor = "pointer"
 function modeTo(qual){
   mode=qual;
     if(qual == "pen"){
+      context.globalCompositeOperation=globalComposite;
       strokeSize(strokeWidth)
       document.getElementById("strokeSize").value = strokeWidth
-    }else if (mode="eraser"){
+    }else if (qual="eraser"){
       strokeSize(estrokeWidth)
       document.getElementById("strokeSize").value = estrokeWidth
+      context.globalCompositeOperation="destination-out";
     }
     esconde()
  }
@@ -334,21 +334,21 @@ function modeTo(qual){
  function strokeSize(value){
    let tamanho = document.getElementById("mostraCor2");
    if(mode=="pen"){
-     context.globalCompositeOperation=globalComposite;
      strokeWidth = value;
      tamanho.style.width = strokeWidth+"px";
      tamanho.style.height = strokeWidth+"px";
      tamanho.style.marginTop = (strokeWidth*-1)+"px";
      tamanho.style.backgroundColor = strokeColor;
      stroke = strokeWidth
+     document.getElementById("tpx").value = strokeWidth
 
    } else{
-     context.globalCompositeOperation="destination-out";
      estrokeWidth = value;
      tamanho.style.width = estrokeWidth+"px";
      tamanho.style.height = estrokeWidth+"px";
      tamanho.style.marginTop = (estrokeWidth*-1)+"px";
     stroke = estrokeWidth
+    document.getElementById("tpx").value = estrokeWidth
    }
  }
 
@@ -373,8 +373,10 @@ function modeTo(qual){
    return context.globalCompositeOperation = globalComposite;
  }
  function mudaCorBG(cor){
+   if(context.globalCompositeOperation != "destination-out"){
    context.fillStyle = cor;
    context.fillRect(0, 0, canvas.width, canvas.height);
+ }
  }
  function criaPaleta(){
    i = 1
@@ -451,6 +453,17 @@ function modeTo(qual){
      a.click();
  }
 
+ function changeLine(){
+   lineJoinsCount++;
+   if (lineJoinsCount>1){lineJoinsCount=0}
+   linejoin = lineJoins[lineJoinsCount]
+   if (lineJoinsCount==0){
+     document.getElementById("line").innerHTML = "<b> o</b>"
+   }else{
+     document.getElementById("line").innerHTML = " <b>|</b>"
+   }
+ }
+
  /*function lupa(){
    canvas.width = 1080;
    canvas.height = 1080;
@@ -458,6 +471,31 @@ function modeTo(qual){
  }
  lupa()
 */
+
+function setZoom(zoom,el) {
+
+      transformOrigin = [0,0];
+	    el = el || instance.getContainer();
+	    var p = ["webkit", "moz", "ms", "o"],
+            s = "scale(" + zoom + ")",
+            oString = (transformOrigin[0] * 100) + "% " + (transformOrigin[1] * 100) + "%";
+
+	    for (var i = 0; i < p.length; i++) {
+	        el.style[p[i] + "Transform"] = s;
+	        el.style[p[i] + "TransformOrigin"] = oString;
+	    }
+
+	    el.style["transform"] = s;
+	    el.style["transformOrigin"] = oString;
+
+}
+
+//setZoom(5,document.getElementsByClassName('container')[0]);
+
+function showVal(a){
+   var zoomScale = Number(a);
+   setZoom(zoomScale,document.getElementById('canvas_div'))
+}
       </script>
 
 

@@ -453,12 +453,13 @@ function Alfabeto(id=0){
 function Desenho(id=0){
   let pai = document.getElementById(id)
   pai.style.width = "360px";
-  pai.style.height = "480px";
+  pai.style.height = "500px";
   pai.style.overflowY = "hidden";
   document.getElementById(id+"-header").innerHTML = "";
   MoveBot(id)
   Lixo(id)
   Iframer(id, "desenho.html")
+  document.getElementById(id+"-iframe").setAttribute("scrolling","no");
 //  removeClass(id,"panel")
 
 }
