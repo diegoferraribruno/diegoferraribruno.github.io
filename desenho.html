@@ -26,10 +26,8 @@
           display: block;
           margin-left: auto;
           margin-right: auto;
-          width: 322px;
-          height: 322px
-          border: 1px solid black;
-          border:solid gray 1px;
+          width: 320px;
+          height: 320px;
           background-color:#33333333;
       }
         #paleta{
@@ -127,7 +125,7 @@
     Opacidade:<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
   </div>
           <div id="submenu" class="fundobranco">
-          &nbsp;<input type="number" id="tpx" min="0.2" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:60px;"></input>
+          &nbsp;<input type="number" id="tpx" min="0.2" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:50px; margin-left:8px;"></input>
           <input type="range" id="strokeSize" name="strokeSize" min="0.2" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" width="160px"/>
           <span style="float:right; position:relative; width:70px;"onmousedown='changeLine()'>Traço:<span id="line">o</span></span> <br>
           <span onclick='esconde()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
@@ -160,13 +158,13 @@
         </div>
         <div class="licensing-title">
           <span id="zoom" class="bloquinho"  onmousedown='modeTo("zoom")'>🔎</span>
-          <input id="tzoom" type="number" min="0.25" max="10" step="0.25" value=1 onchange="showVal(this.value)" style="width:26px;"></input>
-          <input id="zoombar" min="0.25" max="10" value='1' step="0.25" onchange="showVal(this.value)" type="range"/>
+          <input id="tzoom" type="number" min="0.50" max="10" step="0.50" value=1 onchange="ZOOM(this.value)" style="width:30px;"></input>
+          <input id="zoombar" min="0.50" max="10" value='1' step="0.50" onchange="ZOOM(this.value)" type="range"/>
           <span onmousedown="scrollCanva(-32,0)">⬅️</span>
           <span onmousedown="scrollCanva(0,-32)">⬆️</span>
           <span onmousedown="scrollCanva(0,32)">⬇️</span>
           <span onmousedown="scrollCanva(32,0)">➡️</span>
-          <small><a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/">
+          <small><a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
           creditos</a> </small>
         </div>
 </div>
@@ -221,6 +219,8 @@
             drawLine(context, x, y, e.offsetX, e.offsetY);
             x = e.offsetX;
             y = e.offsetY;
+            newTouch.y = e.offsetY;
+            newTouch.x = e.offsetX;
           }
         });
 
@@ -252,7 +252,7 @@
         }
       }
     }
-
+var newTouch = {x:160,y:160}
       function handleMove(evt) {
       if(mode != "zoom"){
           evt.preventDefault();
@@ -261,9 +261,12 @@
             const color = strokeColor;
             const idx = ongoingTouchIndexById(touches[i].identifier);
             if (idx >= 0) {
+
               context.beginPath();
               context.moveTo(ongoingTouches[idx].clientX/zoomScale - offsetX/zoomScale, ongoingTouches[idx].clientY/zoomScale - offsetY/zoomScale);
-              context.lineTo(touches[i].clientX/zoomScale - offsetX/zoomScale, touches[i].clientY/zoomScale - offsetY/zoomScale);
+              newTouch.x = touches[i].clientX/zoomScale - offsetX/zoomScale
+              newTouch.y = touches[i].clientY/zoomScale - offsetY/zoomScale
+              context.lineTo(newTouch.x,newTouch.y);
               context.lineWidth = stroke;
               context.strokeStyle = color;
               context.lineJoin = linejoin;
@@ -338,7 +341,6 @@ document.body.style.cursor = "pointer"
 
 function modeTo(qual){
 
-  mode=qual;
 
     if(qual == "pen"){
       context.globalCompositeOperation=globalComposite;
@@ -351,8 +353,10 @@ function modeTo(qual){
       context.globalCompositeOperation="destination-out";
       esconde()
     }else if (qual=="zoom"){
+      if ( mode == qual){ZOOM(1)}
       document.getElementById("tzoom").value = zoomScale
     }
+    mode=qual;
  }
 
  function strokeSize(value){
@@ -455,7 +459,6 @@ function modeTo(qual){
    toHslaObject(strokeColor)
  }
 
-
  // Save | Download image
 
  // Convert canvas to image
@@ -514,11 +517,14 @@ function setZoom(zoom,el) {
 
 //setZoom(5,document.getElementsByClassName('container')[0]);
 
-function showVal(a){
+function ZOOM(a){
+  setZoom(1,document.getElementById('canvas_div'))
     zoomScale = Number(a);
+    setTimeout(()=>scrollCanva((newTouch.x-10)*zoomScale,(newTouch.y-10)*zoomScale),200)
     document.getElementById("zoombar").value= zoomScale
     document.getElementById("tzoom").value= zoomScale
    setZoom(zoomScale,document.getElementById('canvas_div'))
+   scrollCanva(0,0)
 }
 
 
