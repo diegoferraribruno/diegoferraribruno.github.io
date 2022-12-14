@@ -28,7 +28,7 @@
           margin-right: auto;
           width: 320px;
           height: 320px;
-          background-color:#33333333;
+          background-color:#33333388;
       }
         #paleta{
           position: absolute;
@@ -67,8 +67,8 @@
           padding: 10px;
         }
         .bloquinho{
-          width:20px;
-          height:20px;
+          width:18px;
+          height:18px;
           border-style: solid;
           border-radius: 20px;
           border-color: gray;
@@ -89,7 +89,12 @@
           display: block;
           padding: 0px;
           font-size: 18px;
-          float: left;
+          float: right;
+          text-align: center;
+          background-color:"hsl(0, 100%, 0%)";
+          margin-right:10px;
+          font-size: 30px;
+          text-align: center;
         }
         .linha{
           width: 1px;
@@ -107,37 +112,67 @@
           font-size: 18px;
           float: left;
         }
+        #cursor{
+          pointer-events:none;
+      display: block;
+          position: absolute;
+          width:2px;
+          height:2px;
+          border-style: solid;
+          border-radius: 100px;
+          border-color: gray;
+          color: #00000022;
+          border-width: thin;
+          padding: 0px;
+          font-size: 18px;
+        }
         .disable-scroll{
   overflow-y: hidden;
 }
+.selected{
+  background-color: #00000044;
+  border-color: #dd5555;
+  border-width: 4px;
+  width: 14px;
+  height: 14px;
+  padding-left: -10px;
+  font-size: 20px;
+}
+.naotoque{
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
 
       </style>
-      <title>Ver. 0.2.1</title>
+      <title>Die Paint Ver. 0.2.3 - smartzoom + cursor</title>
     </head>
-<body>
-  <div id="desenho_div" style="overflow-y: hidden">
-  <div id="menu" class="fundobranco">
+<body  class="naotoque" >
+  <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
+  <div id="menu" class="fundobranco" onmouseover="mostra()">
     <div id="paleta"></div>
     Cor (hue): <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" /><br />
     Saturação: <input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorQ(1,this.value)"  value="100" /><br />
-    <span onclick='esconde("menu")' id ="mostraCor" style='background-color:"hsl(0, 100%, 0%)";float:right; margin-right:10px;'> </span>
+    <span onclick='esconde("menu"), esconde()' id ="mostraCor"> 🖌️</span>
     Brilho: <input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorQ(2,this.value)"  value="50" /><br />
     Opacidade:<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
   </div>
-          <div id="submenu" class="fundobranco">
+        <div id="submenu" class="fundobranco"  class="naotoque">
           &nbsp;<input type="number" id="tpx" min="0.2" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:50px; margin-left:8px;"></input>
           <input type="range" id="strokeSize" name="strokeSize" min="0.2" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" width="160px"/>
+           <br>
           <span style="float:right; position:relative; width:70px;"onmousedown='changeLine()'>Traço:<span id="line">o</span></span> <br>
-          <span onclick='esconde()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
+          <span onclick='esconde() esconde("menu")' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
         </div>
 
-        <div class="fundobranco">
-          <a id="btn-cores" class="bloquinho"   onmousedown=' esconde("menu")'>🎨</a>
-          <span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
+        <div class="fundobranco"  class="naotoque">
+          <span id="paint" class="bloquinho selected"  onmousedown='modeTo("paint")' >🎨️</span>
           <span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
-          <span  onmousedown='backPaint()' class="bloquinho" id="globalComposite" style="width:90px">
-            <span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span>
-            <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:82px; marging-left:48px; margin-top:-3px;"><b>por cima</b></span>
+          <span  onmousedown='backPaint()' class="bloquinho" id="globalComposite" style="width:100px">
+            <span style="position:absolute; float:right; width:60px; display:block; padding-top: 3px;">Pintar</span>
+            <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:90px; marging-left:48px; margin-top:-3px;"><b>por cima</b></span>
           </span>
           <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
           <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
@@ -149,17 +184,18 @@
 
 
             </div>
-        <div id="canvas_window" style="overflow: scroll; width:342px; height:342px;  -webkit-touch-overflow:scroll">
+        <div id="canvas_window" style="overflow: scroll; width:342px; height:342px;  -webkit-touch-overflow:scroll" >
+          <span id ="cursor" style='background-color:"hsla(0, 0%, 0%, 0);"' class="naotoque" onselectstart="return false;" ondragstart="return false;"> </span>
         <div id="canvas_div" style="overflow:hidden;">
-          <canvas id="canvas" width="320px" height="320px">
+          <canvas id="canvas" width="320px" height="320px"  onmousemove="cursorMove(event)" onmouseout="mostra()" >
             Your browser does not support canvas element.
           </canvas>
         </div>
         </div>
-        <div class="licensing-title">
+        <div class="licensing-title"  onmouseover="mostra()">
           <span id="zoom" class="bloquinho"  onmousedown='modeTo("zoom")'>🔎</span>
           <input id="tzoom" type="number" min="0.50" max="10" step="0.50" value=1 onchange="ZOOM(this.value)" style="width:30px;"></input>
-          <input id="zoombar" min="0.50" max="10" value='1' step="0.50" onchange="ZOOM(this.value)" type="range"/>
+          <input id="zoombar" min="0" max="5" value='1' step="1" onchange="ZOOMf(this.value)" type="range"/>
           <span onmousedown="scrollCanva(-32,0)">⬅️</span>
           <span onmousedown="scrollCanva(0,-32)">⬆️</span>
           <span onmousedown="scrollCanva(0,32)">⬇️</span>
@@ -168,6 +204,7 @@
           creditos</a> </small>
         </div>
 </div>
+
 
       <script>
       const canvas = document.getElementById('canvas');
@@ -187,11 +224,13 @@
       var estrokeWidth=8;
       var hsla = [0,100,50,1]
       var strokeColor=`hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-      var mode="pen";
+      var mode="paint";
       var linejoin="round"
       var lineJoinsCount = 1
       const lineJoins=["round","miter"]
-      var zoomScale = 1;
+      var zoomFactor = 1;
+      var zoomScale = [0.5,1,2,4,8,16];
+      var cursor = document.getElementById("cursor")
 
 
 // pausa na adaptacao funcoes novas ao fim
@@ -215,6 +254,7 @@
         });
 
         canvas.addEventListener('mousemove', (e) => {
+
           if (isDrawing) {
             drawLine(context, x, y, e.offsetX, e.offsetY);
             x = e.offsetX;
@@ -237,6 +277,38 @@
       document.addEventListener("DOMContentLoaded", startup);
 
       const ongoingTouches = [];
+
+    var tempX = 0;
+    var tempY = 0;
+      function cursorMove(e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        cursor.style.left = x+"px";
+        cursor.style.top = y+"px";
+        document.body.style.cursor = "none";
+}
+function mostra(){
+  document.body.style.cursor = "pointer";
+
+}
+  /*  function cursorMove(e){
+      if (IE) { // grab the x-y pos.s if browser is IE
+        tempX = event.clientX + document.body.scrollLeft;
+        tempY = event.clientY + document.body.scrollTop;
+      }
+      else {  // grab the x-y pos.s if browser is NS
+        tempX = e.pageX;
+        tempY = e.pageY;
+      }
+
+      if (tempX < 0){tempX = 0;}
+      if (tempY < 0){tempY = 0;}
+
+      cursor.style.left = tempX;
+      cursor.style.top = tempY;
+
+      return true;
+    }*/
 
       function handleStart(evt) {
         if(mode != "zoom"){
@@ -263,9 +335,9 @@ var newTouch = {x:160,y:160}
             if (idx >= 0) {
 
               context.beginPath();
-              context.moveTo(ongoingTouches[idx].clientX/zoomScale - offsetX/zoomScale, ongoingTouches[idx].clientY/zoomScale - offsetY/zoomScale);
-              newTouch.x = touches[i].clientX/zoomScale - offsetX/zoomScale
-              newTouch.y = touches[i].clientY/zoomScale - offsetY/zoomScale
+              context.moveTo(ongoingTouches[idx].clientX/zoomFactor - offsetX/zoomFactor, ongoingTouches[idx].clientY/zoomFactor - offsetY/zoomFactor);
+              newTouch.x = touches[i].clientX/zoomFactor - offsetX/zoomFactor
+              newTouch.y = touches[i].clientY/zoomFactor - offsetY/zoomFactor
               context.lineTo(newTouch.x,newTouch.y);
               context.lineWidth = stroke;
               context.strokeStyle = color;
@@ -337,43 +409,53 @@ var newTouch = {x:160,y:160}
       }
 
 // By diego
-document.body.style.cursor = "pointer"
+document.body.style.cursor = "pointer";
 
 function modeTo(qual){
 
 
-    if(qual == "pen"){
+    if(qual == "paint"){
       context.globalCompositeOperation=globalComposite;
       strokeSize(strokeWidth)
       document.getElementById("strokeSize").value = strokeWidth
+      document.getElementById("cursor").style.borderColor = strokeColor;
       esconde()
+      esconde("menu")
     }else if (qual=="eraser"){
       strokeSize(estrokeWidth)
       document.getElementById("strokeSize").value = estrokeWidth
       context.globalCompositeOperation="destination-out";
-      esconde()
+      document.getElementById("cursor").style.borderColor = "#cccccccc";
+      esconde();
     }else if (qual=="zoom"){
       if ( mode == qual){ZOOM(1)}
-      document.getElementById("tzoom").value = zoomScale
+      document.getElementById("tzoom").value = zoomFactor
     }
+    toggleSelect(qual)
     mode=qual;
  }
 
  function strokeSize(value){
-   let tamanho = document.getElementById("mostraCor2");
-   if(mode=="pen"){
-     strokeWidth = value;
-     tamanho.style.width = strokeWidth+"px";
-     tamanho.style.height = strokeWidth+"px";
-     tamanho.style.marginTop = (strokeWidth*-1)+"px";
-     tamanho.style.backgroundColor = strokeColor;
-     stroke = strokeWidth
-   } else if(mode=="eraser"){
-     estrokeWidth = value;
-     tamanho.style.width = estrokeWidth+"px";
-     tamanho.style.height = estrokeWidth+"px";
-     tamanho.style.marginTop = (estrokeWidth*-1)+"px";
-    stroke = estrokeWidth
+   let brushes = ["mostraCor2","cursor"]
+   for (i in brushes){
+     let tamanho = document.getElementById(brushes[i]);
+     if(mode=="paint"){
+       strokeWidth = value;
+       tamanho.style.width = strokeWidth*zoomFactor+"px";
+       tamanho.style.height = strokeWidth*zoomFactor+"px";
+       tamanho.style.marginTop = ((strokeWidth/2)*zoomFactor*-1)+"px";
+       tamanho.style.marginLeft = (strokeWidth*zoomFactor*-1)/2+"px";
+       if (i == 0){
+         tamanho.style.backgroundColor = strokeColor;
+       }
+       stroke = strokeWidth
+     } else if(mode=="eraser"){
+       estrokeWidth = value;
+       tamanho.style.width = estrokeWidth*zoomFactor+"px";
+       tamanho.style.height = estrokeWidth*zoomFactor+"px";
+       tamanho.style.marginTop = (estrokeWidth*zoomFactor*-1)+"px";
+       stroke = estrokeWidth
+     }
    }
    document.getElementById("tpx").value = stroke
  }
@@ -390,11 +472,11 @@ function modeTo(qual){
    if(globalComposite != 'destination-over'){
      globalComposite = 'destination-over';
      document.getElementById("globalComposite").innerHTML =
-     `<span style="position:absolute; width:82px; display:block; color:white; margin-left:6px; padding-top:3px;"><b>por baixo</b></span><span style="position:relative; float:left; width:50px; display:block; color:black; left:0px; margin-top:-3px;">Pintar</span>`
+     `<span style="position:absolute; width:90px; display:block; color:white; margin-left:6px; padding-top:3px;"><b>por baixo</b></span><span style="position:relative; float:left; width:60px; display:block; color:black; left:0px; margin-top:-3px;">Pintar</span>`
    }else{
      globalComposite = 'source-over';
      document.getElementById("globalComposite").innerHTML =
-     `<span style="position:absolute; float:right; width:60px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:82px; margin-top:-3px;"><b>por cima</b></span> `
+     `<span style="position:absolute; float:right; width:60px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:90px; margin-top:-3px;"><b>por cima</b></span> `
    }
    return context.globalCompositeOperation = globalComposite;
  }
@@ -431,6 +513,7 @@ function modeTo(qual){
     document.getElementById("mostraCor").style.backgroundColor = strokeColor
     document.getElementById("mostraCor2").style.backgroundColor = strokeColor
     document.getElementById("globalComposite").style.backgroundColor = strokeColor
+       document.getElementById("cursor").style.borderColor = strokeColor
  }
  setStrokeColor()
 
@@ -438,14 +521,14 @@ function modeTo(qual){
    if (valor == "P"){
      strokeColor =  `hsl(0,100%,0%,${hsla[3]})`;
      document.getElementById("mostraCor").style.color =strokeColor;
-     document.getElementById("menu").style.visibility = "hidden";
+//     document.getElementById("menu").style.visibility = "hidden";
    }else  if (valor == "B"){
      strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
      document.getElementById("mostraCor").style.color = strokeColor;
-     document.getElementById("menu").style.visibility = "hidden";
+//     document.getElementById("menu").style.visibility = "hidden";
    }else {
      strokeColor = valor;
-     document.getElementById("menu").style.visibility = "hidden";
+//     document.getElementById("menu").style.visibility = "hidden";
    }
    document.getElementById("mostraCor").style.backgroundColor = strokeColor;
    document.getElementById("mostraCor2").style.backgroundColor = strokeColor
@@ -515,16 +598,28 @@ function setZoom(zoom,el) {
 
 }
 
-//setZoom(5,document.getElementsByClassName('container')[0]);
+function toggleSelect(id="0"){
+  let selected = document.getElementsByClassName('selected');
+  console.log(selected[0].id)
+  document.getElementById(selected[0].id).classList.toggle('selected')
+  document.getElementById(id).classList.toggle('selected')
+}
 
+function ZOOMf(a){
+   let escala = zoomScale[a]
+    ZOOM(escala)
+}
 function ZOOM(a){
   setZoom(1,document.getElementById('canvas_div'))
-    zoomScale = Number(a);
-    setTimeout(()=>scrollCanva((newTouch.x-10)*zoomScale,(newTouch.y-10)*zoomScale),200)
-    document.getElementById("zoombar").value= zoomScale
-    document.getElementById("tzoom").value= zoomScale
-   setZoom(zoomScale,document.getElementById('canvas_div'))
+    zoomFactor = Number(a);
+    setTimeout(()=>scrollCanva(newTouch.x*zoomFactor-150,newTouch.y*zoomFactor-150),20)
+    document.getElementById("zoombar").value = zoomScale.indexOf(zoomFactor)
+    console.log( zoomScale.indexOf(zoomFactor))
+    document.getElementById("tzoom").value= zoomFactor
+   setZoom(1,document.getElementById('canvas_div'))
+   setZoom(zoomFactor,document.getElementById('canvas_div'))
    scrollCanva(0,0)
+   strokeSize(strokeWidth)
 }
 
 
