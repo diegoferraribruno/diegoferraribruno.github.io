@@ -8,9 +8,9 @@
         padding: 0px 0px;
         margin: 0px 0px;
         background-color: #00000022;
-        font-family: "segoe ui emoji", "noto color emoji", "android emoji",
+        font-family: "emojione mozilla","segoe ui emoji", "noto color emoji", "android emoji",
 "emojisymbols", "segoe ui symbol" "twemoji mozilla",
-"emojione mozilla", "apple color emoji";
+, "apple color emoji";
 
       }
       #desenho_div {
@@ -36,18 +36,23 @@
           display: block;
           top:8px;
           margin-left: -10px;
-          margin-top: 160px;
+          margin-top: 154px;
         }
         #menucores{
           width: 280px;
           height: 244px;
           z-index: 3;
         }
+        #menu{
+          margin-top: 16px;
+          margin-left: -10px;
+          width: 280px;
+        }
         .submenu{
           position: absolute;
           display: block;
           float: left;
-          top:48px;
+          top:56px;
           width: 280px;
           height: 26px;
           padding: 10px;
@@ -60,8 +65,8 @@
           background-color: #ffffff22;
           border-radius: 20px;
           border-style: solid;
-          border-width: 2px;
-          border-color: #dddddddd;
+          border-width: 3px;
+          border-color: #dddddd44;
           padding: 8px;
           display: inline-block;
         }
@@ -92,7 +97,7 @@
           width:40px;
           height:40px;
           border-style: solid;
-          border-radius: 100px;
+          border-radius: 200px;
           border-color: gray;
           border-width: thin;
           display: block;
@@ -113,7 +118,7 @@
           width:2px;
           height:2px;
           border-style: solid;
-          border-radius: 100px;
+          border-radius: 200px;
           border-color: gray;
           border-width: thin;
           display: block;
@@ -128,7 +133,7 @@
           width:2px;
           height:2px;
           border-style: solid;
-          border-radius: 100px;
+          border-radius: 200px;
           border-color: gray;
           color: #00000022;
           border-width: thin;
@@ -157,7 +162,7 @@ range{
 }
 
       </style>
-      <title>Pintando Diego Ver. 0.3.3 - smartzoom + cursor</title>
+      <title>Pintando Diego Ver. 0.3.4 - smartzoom + cursor</title>
     </head>
 <body  class="naotoque" >
   <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
@@ -170,7 +175,7 @@ range{
           <div id="menu" class="fundobranco "  onmouseover="mostra()">
             Cor (hue): <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" /><br />
             Saturação: <input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorQ(1,this.value)"  value="100" /><br />
-            <span onclick='removeClass()' id ="mostraCor"> </span>
+            <span onclick='removeClass()' id ="mostraCor" style="color:white; font-family: Arial, Helvetica, sans-serif; font-size:26px; font-weight:bold;">ok</span>
             Brilho: <input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorQ(2,this.value)"  value="50" /><br />
             Opacidade:<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
           </div>
@@ -202,7 +207,7 @@ range{
           <span id="pintar" class="bloquinho selected"  onmousedown='modeTo("pintar")' >🖌️</span>
         </div>
 
-          <span  onmousedown='backPaint()' class="fundobranco" id="globalComposite" style="width:32px">
+          <span  onmousedown='backPaint()' class="fundobranco" id="globalComposite" style="width:32px; height:28px; padding-top:10px;" >
             <span style="position:absolute; float:right; width:30px; display:block; padding-top: 0px;">🔲</span>
             <span style="color:white; position:relative;  display:block; float:left; width:20px; margin-top:-5px;">⭕</span>
           </span>
@@ -265,6 +270,7 @@ creditos</a>: lei mao, people from stack overflow, w3schools</small>
 document.addEventListener("DOMContentLoaded", startup);
 
 function startup() {
+  removeClass()
   canvas.addEventListener('touchstart', handleStart);
   canvas.addEventListener('touchend', handleEnd);
   canvas.addEventListener('touchcancel', handleCancel);
@@ -281,6 +287,7 @@ function startup() {
       y = e.offsetY;
       ultimoToque.y = e.offsetY;
       ultimoToque.x = e.offsetX;
+          removeClass()
     }
   });
   canvas.addEventListener('mouseup', (e) => {
@@ -324,7 +331,9 @@ function handleMove(evt) {
         context.closePath();
         context.stroke();
         ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
+        removeClass()
       }
+
     }
   }
 }
@@ -489,7 +498,7 @@ function strokeSize(value){
      estrokeWidth = value;
      tamanho.style.width = estrokeWidth*zoomFactor+"px";
      tamanho.style.height = estrokeWidth*zoomFactor+"px";
-     tamanho.style.marginTop = ((estrokeWidth)*zoomFactor*-1)+30+"px";
+     tamanho.style.marginTop = ((estrokeWidth/2)*zoomFactor*-1)+"px";
      tamanho.style.marginLeft = (estrokeWidth*zoomFactor*-1)/2+"px";
      stroke = estrokeWidth
      document.getElementById("tpx2").value = value;
