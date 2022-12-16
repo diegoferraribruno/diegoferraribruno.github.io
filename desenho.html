@@ -74,7 +74,7 @@
           border-color: gray;
           border-width: thin;
           display: block;
-          float:right;
+          float:left;
           padding: 2px;
           font-size: 18px;
           margin: 2px 1px;
@@ -151,9 +151,13 @@
 .cursorIndex{
   z-index: 0;
 }
+range{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
 
       </style>
-      <title>Pintando Diego Ver. 0.3.1 - smartzoom + cursor</title>
+      <title>Pintando Diego Ver. 0.3.3 - smartzoom + cursor</title>
     </head>
 <body  class="naotoque" >
   <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
@@ -161,7 +165,6 @@
 
         <div id="menupintar" class="fundobranco submenu aparece">
           <span style="float:center; position:relative; width:70px;"onmousedown='changeLine()'>estilo:<span id="line"> ⚫</span></span>
-          <span onclick='removeClass()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'>🖌️</span>
           <input type="number" id="tpx" min="0.2" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:50px; margin-left:8px;"></input>
           <input type="range" id="strokeSize" name="strokeSize" min="0.2" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" width="160px"/>
           <div id="menu" class="fundobranco "  onmouseover="mostra()">
@@ -172,6 +175,7 @@
             Opacidade:<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
           </div>
           <div id="paleta" class="fundobranco" ></div>
+          <span onclick='removeClass()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'>🖌️</span>
         </div>
 
         <div id="menuapagar" class="fundobranco submenu"  class="naotoque">
@@ -456,7 +460,7 @@ function criaPaleta(){
  while (i < 44){
    //let cor = i*10
     let cor = document.getElementById("H").value - (i*3)
-   paleta += `<span onclick='mudaCor("hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]});'> </span>`
+   paleta += `<span onclick='mudaCor("hsla(${cor},${hsla[1]}%,${hsla[2]}%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]}%,${hsla[2]}%,${hsla[3]});'> </span>`
     i++
   }
   document.getElementById("paleta").innerHTML = paleta;
@@ -516,7 +520,10 @@ function mudaCorBG(cor){
 }
 
 function mudaCorQ(q=0,valor){
- hsla[q] = valor;
+  console.log("valor ",valor);
+ hsla[q] = Number(valor);
+ console.log(q," hsla",hsla);
+
  setStrokeColor()
  criaPaleta();
 }
@@ -547,13 +554,15 @@ function mudaCor(valor){
  document.getElementById("mostraCor").style.backgroundColor = strokeColor;
  document.getElementById("mostraCor2").style.backgroundColor = strokeColor
  document.getElementById("pintar").style.backgroundColor = strokeColor
- const toHslaObject = hslaStr => {const [hue, saturation,  lightness, alpha]= hslaStr.match(/\d+/g).map(Number);
+ const toHslaObject = hslaStr => {const [hue, saturation, lightness, alpha]= hslaStr.match(/[\d\.]+/g).map(Number);
    hsla[0] = hue;
    hsla[1] = saturation;
    hsla[2]= lightness;
    hsla[3]= alpha;
+   console.log("tohsla alpha ",alpha )
  }
  toHslaObject(strokeColor)
+ setStrokeColor()
 }
 
 // Save | Download image from stackoverflow
