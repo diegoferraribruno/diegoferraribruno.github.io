@@ -192,7 +192,9 @@ var menuEsq = {
   "Alfabeto":"🔫",
   "Calculadora":"➗",
   "Desenho":"🎨",
-  "cracha":"📛"
+  "Identifica":"📛",
+  "Fundo":"🖼️"
+
 }
 var menu = {
   "Mover":"💠",
@@ -202,6 +204,7 @@ var menu = {
   "Calculadora":"➗",
   "Titulo":"T",
   "WebFrame":"🌎",
+  "Fundo":"🖼️"
 //  "Nota":"📝",
 //  "Regua":"📏",
 //  "BatePapo":"💬",
@@ -453,7 +456,7 @@ function Alfabeto(id=0){
 function Desenho(id=0){
   let pai = document.getElementById(id)
   pai.style.width = "360px";
-  pai.style.height = "500px";
+  pai.style.height = "520px";
   pai.style.overflowY = "hidden";
   document.getElementById(id+"-header").innerHTML = "";
   MoveBot(id)
@@ -570,7 +573,7 @@ function menuDesenho(){
     let w = window.innerWidth/2-180;
     let h = window.innerHeight/2-280;
     largura = 360;
-    altura = 560;
+    altura = 580;
     let id = toString(elements)
     criarPainel("desenho",h,w,largura,altura)
     setTimeout(function(){Desenho("desenho")},500)
@@ -578,6 +581,16 @@ function menuDesenho(){
 function jogaDado(min=1, max=7) {
     return Math.floor(Math.random() * (max - min) + min);
   }
+function Fundo(id=0){
+  var item = prompt("endereço da imagem de fundo", "https://pbs.twimg.com/profile_images/1532631961860247555/UeY1CMQF_400x400.jpg");
+  var elem = document.getElementById(id);
+        if (item == null || item == "") {
+            alert("fundo do app removido");
+            elem.style.backgroundImage = `none`;
+        } else {
+          elem.style.backgroundImage = `url(${item})`;
+        }
+}
 function dado(){
   document.getElementById("dado").removeAttribute("onclick");
   document.getElementById("dado").removeAttribute("ontouchstart");
