@@ -31,12 +31,12 @@
           background-color:#ffffff22;
       }
         #paleta{
-          position: absolute;
+          position: relative;
           width: 280px;
           display: block;
           top:8px;
           margin-left: -10px;
-          margin-top: 154px;
+          margin-top: 0px;
         }
         #menucores{
           width: 280px;
@@ -44,7 +44,7 @@
           z-index: 3;
         }
         #menu{
-          margin-top: 16px;
+          margin-top: 0px;
           margin-left: -10px;
           width: 280px;
         }
@@ -177,7 +177,7 @@ range{
             Saturação: <input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorQ(1,this.value)"  value="100" /><br />
             <span onclick='removeClass()' id ="mostraCor" style="color:white; font-family: Arial, Helvetica, sans-serif; font-size:26px; font-weight:bold;">ok</span>
             Brilho: <input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorQ(2,this.value)"  value="50" /><br />
-            Opacidade:<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
+            Opacidade:<input type="range" id="A" name="cor" min="0.01" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.01" value="1" />
           </div>
           <div id="paleta" class="fundobranco" ></div>
           <span onclick='removeClass()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'>🖌️</span>
@@ -466,10 +466,10 @@ function removeClass(qual="aparece"){
 function criaPaleta(){
   i = 1
   let paleta = "";
- while (i < 44){
-   //let cor = i*10
-    let cor = document.getElementById("H").value - (i*3)
-   paleta += `<span onclick='mudaCor("hsla(${cor},${hsla[1]}%,${hsla[2]}%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]}%,${hsla[2]}%,${hsla[3]});'> </span>`
+ while (i < 38){
+   let cor = i*10
+//    let cor = document.getElementById("H").value - (i*3)
+   paleta += `<span onclick='mudaCor("hsla(${cor},${hsla[1]}%,${hsla[2]}%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]}%,${hsla[2]}%,${(hsla[3]*2)+0.2});'> </span>`
     i++
   }
   document.getElementById("paleta").innerHTML = paleta;
@@ -563,15 +563,21 @@ function mudaCor(valor){
  document.getElementById("mostraCor").style.backgroundColor = strokeColor;
  document.getElementById("mostraCor2").style.backgroundColor = strokeColor
  document.getElementById("pintar").style.backgroundColor = strokeColor
+
  const toHslaObject = hslaStr => {const [hue, saturation, lightness, alpha]= hslaStr.match(/[\d\.]+/g).map(Number);
+   document.getElementById("H").value = hue;
+   document.getElementById("S").value = saturation;
+   document.getElementById("L").value = lightness;
+   document.getElementById("A").value = alpha;
    hsla[0] = hue;
    hsla[1] = saturation;
    hsla[2]= lightness;
    hsla[3]= alpha;
-   console.log("tohsla alpha ",alpha )
  }
+ console.log("stroke antes ", strokeColor )
  toHslaObject(strokeColor)
  setStrokeColor()
+ console.log("stroke depois ", strokeColor )
 }
 
 // Save | Download image from stackoverflow
@@ -637,7 +643,7 @@ function ZOOM(a){
     document.getElementById("tzoom").value= zoomFactor
    setZoom(1,document.getElementById('canvas_div'))
    setZoom(zoomFactor,document.getElementById('canvas_div'))
-   scrollCanva(0,0)
+   setTimeout(scrollCanva(0,0),1)
    strokeSize(strokeWidth)
 }
 
