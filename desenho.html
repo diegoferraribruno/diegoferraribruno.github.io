@@ -162,7 +162,7 @@ range{
 }
 
       </style>
-      <title>PinteD 0.3.6 e </title>
+      <title>PinteD 0.3.6 f </title>
     </head>
 <body  class="naotoque" >
   <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
@@ -644,7 +644,7 @@ function ZOOM(a){
   document.getElementById("zoombar").value = zoomScale.indexOf(zoomFactor)
   document.getElementById("tzoom").value= zoomFactor
    setZoom(zoomFactor,canvaX)
-   setTimeout(scrollCanva(ultimoToque.x*zoomFactor-150,ultimoToque.y*zoomFactor-150),20)
+   setTimeout(()=>scrollCanva(ultimoToque.x*zoomFactor-150,ultimoToque.y*zoomFactor-150),40)
    strokeSize(strokeWidth)
 }
 
