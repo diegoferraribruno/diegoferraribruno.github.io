@@ -402,7 +402,7 @@ function modeTo(qual){
     if (qual =="zoom"){
       if(zoomFactor!=1){
           ZOOM(1)
-          setTimeout(()=>scrollCanva(-620*zoomFactor,-620*zoomFactor),1000)
+          setTimeout(()=>scrollCanva(-620*zoomFactor,-620*zoomFactor),35)
       }else{
         ZOOM(4)
       }
@@ -639,7 +639,6 @@ function ZOOM(a){
   if(zoomFactor < a) {setTimeout(()=>scrollCanva(ultimoToque.x*zoomFactor-150,ultimoToque.y*zoomFactor-150),8)}
   zoomFactor = Number(a);
   setZoom(1,canvaX)
-  scrollCanva(ultimoToque.x,ultimoToque.y)
    setTimeout(()=>setZoom(zoomFactor,canvaX),2)
 
    strokeSize(strokeWidth)
