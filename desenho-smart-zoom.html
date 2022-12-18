@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+      <style>
+      body{
+        padding: 0px 0px;
+        margin: 0px 0px;
+        background-color: #00000022;
+        background-image: url("./grid.png");
+        font-family: "segoe ui emoji", "noto color emoji", "android emoji",
+"emojisymbols", "segoe ui symbol" "twemoji mozilla",
+"emojione mozilla", "apple color emoji";
+
+      }
+      #desenho_div {
+          text-align: center;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+                    width: 350px;
+        }
+      #canvas_div {
+          text-align: center;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 320px;
+          height: 320px;
+          background-color:#33333333;
+      }
+        #paleta{
+          position: absolute;
+          float: left;
+          width: 280px;
+          display: block;
+          top:8px;
+        }
+        #menu{
+          position: absolute;
+          display: block;
+          float: left;
+          width: 280px;
+          height: 84px;
+          padding-top: 160px;
+          z-index: 3;
+        }
+        #submenu{
+          position: absolute;
+          display: block;
+          float: left;
+          top:260px;
+          width: 280px;
+          height: 26px;
+          padding: 10px;
+        }
+        .fundobranco{
+          z-index: 3;
+          margin: 10px;
+          min-height: 28px;
+          background-color: #ffffff55;
+          border-radius: 20px;
+          border-style: solid;
+          border-width: 1px;
+          border-color: #dddddddd;
+          padding: 10px;
+        }
+        .bloquinho{
+          width:20px;
+          height:20px;
+          border-style: solid;
+          border-radius: 20px;
+          border-color: gray;
+          border-width: thin;
+          display: block;
+          float:left;
+          padding: 2px;
+          font-size: 18px;
+          margin: 2px 1px;
+        }
+        #mostraCor{
+          width:40px;
+          height:40px;
+          border-style: solid;
+          border-radius: 100px;
+          border-color: gray;
+          border-width: thin;
+          display: block;
+          padding: 0px;
+          font-size: 18px;
+          float: left;
+        }
+        .linha{
+          width: 1px;
+          border-radius: 0px;
+        }
+        #mostraCor2{
+          width:2px;
+          height:2px;
+          border-style: solid;
+          border-radius: 100px;
+          border-color: gray;
+          border-width: thin;
+          display: block;
+          padding: 0px;
+          font-size: 18px;
+          float: left;
+        }
+        .disable-scroll{
+  overflow-y: hidden;
+}
+
+      </style>
+      <title>Ver. 0.2.1</title>
+    </head>
+<body>
+  <div id="desenho_div" style="overflow-y: hidden">
+  <div id="menu" class="fundobranco">
+    <div id="paleta"></div>
+    Cor (hue): <input type="range" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" /><br />
+    Saturação: <input type="range" id="S" name="cor" min="0" max="100"  oninput="mudaCorQ(1,this.value)"  value="100" /><br />
+    <span onclick='esconde("menu")' id ="mostraCor" style='background-color:"hsl(0, 100%, 0%)";float:right; margin-right:10px;'> </span>
+    Brilho: <input type="range" id="L" name="cor" min="0" max="100"  oninput="mudaCorQ(2,this.value)"  value="50" /><br />
+    Opacidade:<input type="range" id="A" name="cor" min="0" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.1" value="1" />
+  </div>
+          <div id="submenu" class="fundobranco">
+          &nbsp;<input type="number" id="tpx" min="0.2" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:50px; margin-left:8px;"></input>
+          <input type="range" id="strokeSize" name="strokeSize" min="0.2" max="100" step="0.2" oninput="strokeSize(this.value)"  value="1" width="160px"/>
+          <span style="float:right; position:relative; width:70px;"onmousedown='changeLine()'>Traço:<span id="line">o</span></span> <br>
+          <span onclick='esconde()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
+        </div>
+
+        <div class="fundobranco">
+          <a id="btn-cores" class="bloquinho"   onmousedown=' esconde("menu")'>🎨</a>
+          <span id="pen" class="bloquinho"  onmousedown='modeTo("pen")'>🖌️</span>
+          <span id="eraser" class="bloquinho"  onmousedown='modeTo("eraser")'>🧻</span>
+          <span  onmousedown='backPaint()' class="bloquinho" id="globalComposite" style="width:90px">
+            <span style="position:absolute; float:right; width:50px; display:block; padding-top: 3px;">Pintar</span>
+            <span style="color:white; marging-left:32px; position:relative;  display:block; float:right; width:82px; marging-left:48px; margin-top:-3px;"><b>por cima</b></span>
+          </span>
+          <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1'> </span>
+          <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
+          <span><a id="btn-download" class="bloquinho"  > 📥</a>
+            <span class="bloquinho" onclick='clearArea()'>🗑</span><span>
+
+            </span>
+
+
+
+            </div>
+        <div id="canvas_window" style="overflow: scroll; width:342px; height:342px;  -webkit-touch-overflow:scroll">
+        <div id="canvas_div" style="overflow:hidden;">
+          <canvas id="canvas" width="320px" height="320px">
+            Your browser does not support canvas element.
+          </canvas>
+        </div>
+        </div>
+        <div class="licensing-title">
+          <span id="zoom" class="bloquinho"  onmousedown='modeTo("zoom")'>🔎</span>
+          <input id="tzoom" type="number" min="0.50" max="10" step="0.50" value=1 onchange="ZOOM(this.value)" style="width:30px;"></input>
+          <input id="zoombar" min="0.50" max="10" value='1' step="0.50" onchange="ZOOM(this.value)" type="range"/>
+          <span onmousedown="scrollCanva(-32,0)">⬅️</span>
+          <span onmousedown="scrollCanva(0,-32)">⬆️</span>
+          <span onmousedown="scrollCanva(0,32)">⬇️</span>
+          <span onmousedown="scrollCanva(32,0)">➡️</span>
+          <small><a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
+          creditos</a> </small>
+        </div>
+</div>
+
+      <script>
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
+      let isDrawing = false;
+      let x = 0;
+      let y = 0;
+      var offsetX;
+      var offsetY;
+
+// comeca minha adaptacao
+
+      var globalComposite = 'source-over';
+      var favoritas = []
+      var stroke =1
+      var strokeWidth=1;
+      var estrokeWidth=8;
+      var hsla = [0,100,50,1]
+      var strokeColor=`hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+      var mode="pen";
+      var linejoin="round"
+      var lineJoinsCount = 1
+      const lineJoins=["round","miter"]
+      var zoomScale = 1;
+
+
+// pausa na adaptacao funcoes novas ao fim
+
+
+
+      function startup() {
+
+      document.getElementById("menu").style.visibility = "hidden";
+      document.getElementById("submenu").style.visibility = "hidden";
+        canvas.addEventListener('touchstart', handleStart);
+        canvas.addEventListener('touchend', handleEnd);
+        canvas.addEventListener('touchcancel', handleCancel);
+        canvas.addEventListener('touchmove', handleMove);
+        canvas.addEventListener('mousedown', (e) => {
+          x = e.offsetX;
+          y = e.offsetY;
+          isDrawing = true;
+          document.getElementById("menu").style.visibility = "hidden";
+          document.getElementById("submenu").style.visibility = "hidden";
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+          if (isDrawing) {
+            drawLine(context, x, y, e.offsetX, e.offsetY);
+            x = e.offsetX;
+            y = e.offsetY;
+            newTouch.y = e.offsetY;
+            newTouch.x = e.offsetX;
+          }
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+          if (isDrawing) {
+            drawLine(context, x, y, e.offsetX, e.offsetY);
+            x = 0;
+            y = 0;
+            isDrawing = false;
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", startup);
+
+      const ongoingTouches = [];
+
+      function handleStart(evt) {
+        if(mode != "zoom"){
+          evt.preventDefault();
+          const touches = evt.changedTouches;
+          document.getElementById("menu").style.visibility = "hidden";
+          document.getElementById("submenu").style.visibility = "hidden";
+        offsetX = canvas.getBoundingClientRect().left;
+        offsetY = canvas.getBoundingClientRect().top;
+        for (let i = 0; i < touches.length; i++) {
+          ongoingTouches.push(copyTouch(touches[i]));
+
+        }
+      }
+    }
+var newTouch = {x:160,y:160}
+      function handleMove(evt) {
+      if(mode != "zoom"){
+          evt.preventDefault();
+          const touches = evt.changedTouches;
+          for (let i = 0; i < touches.length; i++) {
+            const color = strokeColor;
+            const idx = ongoingTouchIndexById(touches[i].identifier);
+            if (idx >= 0) {
+
+              context.beginPath();
+              context.moveTo(ongoingTouches[idx].clientX/zoomScale - offsetX/zoomScale, ongoingTouches[idx].clientY/zoomScale - offsetY/zoomScale);
+              newTouch.x = touches[i].clientX/zoomScale - offsetX/zoomScale
+              newTouch.y = touches[i].clientY/zoomScale - offsetY/zoomScale
+              context.lineTo(newTouch.x,newTouch.y);
+              context.lineWidth = stroke;
+              context.strokeStyle = color;
+              context.lineJoin = linejoin;
+              context.closePath();
+              context.stroke();
+              ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
+            }
+          }
+        }
+      }
+
+      function handleEnd(evt) {
+      if(mode != "zoom"){
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+          for (let i = 0; i < touches.length; i++) {
+
+            const color = strokeColor;
+            let idx = ongoingTouchIndexById(touches[i].identifier);
+            if (idx >= 0) {
+              context.lineWidth = strokeWidth;
+              context.fillStyle = color;
+              ongoingTouches.splice(idx, 1);  // remove it; we're done
+            }
+          }
+        }
+      }
+
+      function handleCancel(evt) {
+      if(mode != "zoom"){
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          let idx = ongoingTouchIndexById(touches[i].identifier);
+          ongoingTouches.splice(idx, 1);  // remove it; we're done
+        }
+      }
+      }
+
+      function copyTouch({ identifier, clientX, clientY }) {
+        return { identifier, clientX, clientY };
+      }
+
+      function ongoingTouchIndexById(idToFind) {
+        for (let i = 0; i < ongoingTouches.length; i++) {
+          const id = ongoingTouches[i].identifier;
+          if (id === idToFind) {
+            return i;
+          }
+        }
+        return -1;    // not found
+      }
+
+      function drawLine(context, x1, y1, x2, y2) {
+        context.beginPath();
+        context.strokeStyle = strokeColor;
+        context.lineWidth = stroke;
+        context.lineJoin = linejoin;
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.closePath();
+        context.stroke();
+      }
+
+      function clearArea() {
+          context.setTransform(1, 0, 0, 1, 0, 0);
+          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      }
+
+// By diego
+document.body.style.cursor = "pointer"
+
+function modeTo(qual){
+
+
+    if(qual == "pen"){
+      context.globalCompositeOperation=globalComposite;
+      strokeSize(strokeWidth)
+      document.getElementById("strokeSize").value = strokeWidth
+      esconde()
+    }else if (qual=="eraser"){
+      strokeSize(estrokeWidth)
+      document.getElementById("strokeSize").value = estrokeWidth
+      context.globalCompositeOperation="destination-out";
+      esconde()
+    }else if (qual=="zoom"){
+      if ( mode == qual){ZOOM(1)}
+      document.getElementById("tzoom").value = zoomScale
+    }
+    mode=qual;
+ }
+
+ function strokeSize(value){
+   let tamanho = document.getElementById("mostraCor2");
+   if(mode=="pen"){
+     strokeWidth = value;
+     tamanho.style.width = strokeWidth+"px";
+     tamanho.style.height = strokeWidth+"px";
+     tamanho.style.marginTop = (strokeWidth*-1)+"px";
+     tamanho.style.backgroundColor = strokeColor;
+     stroke = strokeWidth
+   } else if(mode=="eraser"){
+     estrokeWidth = value;
+     tamanho.style.width = estrokeWidth+"px";
+     tamanho.style.height = estrokeWidth+"px";
+     tamanho.style.marginTop = (estrokeWidth*-1)+"px";
+    stroke = estrokeWidth
+   }
+   document.getElementById("tpx").value = stroke
+ }
+
+ function esconde(quem="submenu"){
+   let subv = document.getElementById(quem).style.visibility
+   if (subv != "hidden"){
+     document.getElementById(quem).style.visibility = "hidden";
+   }else{
+     document.getElementById(quem).style.visibility = "visible";
+   }
+ }
+ function backPaint(){
+   if(globalComposite != 'destination-over'){
+     globalComposite = 'destination-over';
+     document.getElementById("globalComposite").innerHTML =
+     `<span style="position:absolute; width:82px; display:block; color:white; margin-left:6px; padding-top:3px;"><b>por baixo</b></span><span style="position:relative; float:left; width:50px; display:block; color:black; left:0px; margin-top:-3px;">Pintar</span>`
+   }else{
+     globalComposite = 'source-over';
+     document.getElementById("globalComposite").innerHTML =
+     `<span style="position:absolute; float:right; width:60px; display:block; padding-top: 3px;">Pintar</span> <span style="color:white; marging-right:6px; position:relative;  display:block; float:right; width:82px; margin-top:-3px;"><b>por cima</b></span> `
+   }
+   return context.globalCompositeOperation = globalComposite;
+ }
+ function mudaCorBG(cor){
+   if(context.globalCompositeOperation != "destination-out"){
+   context.fillStyle = cor;
+   context.fillRect(0, 0, canvas.width, canvas.height);
+ }
+ }
+ function criaPaleta(){
+   i = 1
+   let paleta = "";
+ 	while (i < 44){
+   	//let cor = i*10
+     let cor = document.getElementById("H").value - (i*3)
+   	paleta += `<span onclick='mudaCor("hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]}%, ${hsla[2]}%,${hsla[3]});'> </span>`
+     i++
+   }
+   document.getElementById("paleta").innerHTML = paleta;
+   document.getElementById("paleta").innerHTML +=
+   `<br /><span onclick='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`
+   document.getElementById("paleta").innerHTML +=
+   `<span onclick='mudaCor("B")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`
+ }
+ criaPaleta();
+
+ function mudaCorQ(q=0,valor){
+   hsla[q] = valor;
+   setStrokeColor()
+   criaPaleta();
+ }
+ function setStrokeColor(){
+    strokeColor=`hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+    document.getElementById("mostraCor").style.backgroundColor = strokeColor
+    document.getElementById("mostraCor2").style.backgroundColor = strokeColor
+    document.getElementById("globalComposite").style.backgroundColor = strokeColor
+ }
+ setStrokeColor()
+
+ function mudaCor(valor){
+   if (valor == "P"){
+     strokeColor =  `hsl(0,100%,0%,${hsla[3]})`;
+     document.getElementById("mostraCor").style.color =strokeColor;
+     document.getElementById("menu").style.visibility = "hidden";
+   }else  if (valor == "B"){
+     strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
+     document.getElementById("mostraCor").style.color = strokeColor;
+     document.getElementById("menu").style.visibility = "hidden";
+   }else {
+     strokeColor = valor;
+     document.getElementById("menu").style.visibility = "hidden";
+   }
+   document.getElementById("mostraCor").style.backgroundColor = strokeColor;
+   document.getElementById("mostraCor2").style.backgroundColor = strokeColor
+   document.getElementById("globalComposite").style.backgroundColor = strokeColor
+   const toHslaObject = hslaStr => {const [hue, saturation,  lightness, alpha]= hslaStr.match(/\d+/g).map(Number);
+     hsla[0] = hue;
+     hsla[1] = saturation;
+     hsla[2]= lightness;
+     hsla[3]= alpha;
+   }
+   toHslaObject(strokeColor)
+ }
+
+ // Save | Download image
+
+ // Convert canvas to image
+ document.getElementById('btn-download').addEventListener("click", function(e) {
+     //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+     var dataURL = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+     //downloadImage(dataURL, 'my-canvas.jpeg');
+     downloadImage(dataURL, 'desenho.png');
+ });
+
+ //function downloadImage(data, filename = 'untitled.jpeg') {
+ function downloadImage(data, filename = 'untitled.png') {
+     var a = document.createElement('a');
+     a.href = data;
+     a.download = filename;
+     document.body.appendChild(a);
+     a.click();
+ }
+
+ function changeLine(){
+   lineJoinsCount++;
+   if (lineJoinsCount>1){lineJoinsCount=0}
+   linejoin = lineJoins[lineJoinsCount]
+   if (lineJoinsCount==0){
+     document.getElementById("line").innerHTML = "<b> o</b>"
+   }else{
+     document.getElementById("line").innerHTML = " <b>|</b>"
+   }
+ }
+
+ /*function lupa(){
+   canvas.width = 1080;
+   canvas.height = 1080;
+   context.scale(8, 8)
+ }
+ lupa()
+*/
+
+function setZoom(zoom,el) {
+
+      transformOrigin = [0,0];
+	    el = el || instance.getContainer();
+	    var p = ["webkit", "moz", "ms", "o"],
+            s = "scale(" + zoom + ")",
+            oString = (transformOrigin[0] * 100) + "% " + (transformOrigin[1] * 100) + "%";
+
+	    for (var i = 0; i < p.length; i++) {
+	        el.style[p[i] + "Transform"] = s;
+	        el.style[p[i] + "TransformOrigin"] = oString;
+	    }
+
+	    el.style["transform"] = s;
+	    el.style["transformOrigin"] = oString;
+
+}
+
+//setZoom(5,document.getElementsByClassName('container')[0]);
+
+function ZOOM(a){
+  setZoom(1,document.getElementById('canvas_div'))
+    zoomScale = Number(a);
+    setTimeout(()=>scrollCanva((newTouch.x-10)*zoomScale,(newTouch.y-10)*zoomScale),200)
+    document.getElementById("zoombar").value= zoomScale
+    document.getElementById("tzoom").value= zoomScale
+   setZoom(zoomScale,document.getElementById('canvas_div'))
+   scrollCanva(0,0)
+}
+
+
+//scrolling
+function scrollCanva(x,y){
+  document.getElementById('canvas_window').scrollTop += y;
+  document.getElementById('canvas_window').scrollLeft += x;
+}
+
+
+      </script>
+
+
+</body>
+</html>
