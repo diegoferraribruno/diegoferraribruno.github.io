@@ -5,6 +5,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
       <style>
       body{
+        overflow-y: hidden;
         padding: 0px 0px;
         margin: 0px 0px;
         background-color: #00000022;
@@ -29,6 +30,7 @@
           width: 320px;
           height: 320px;
           background-color:#ffffff22;
+          overflow-y: hidden;
       }
         #paleta{
           position: relative;
@@ -162,7 +164,7 @@ range{
 }
 
       </style>
-      <title>PinteD 0.3.6 j </title>
+      <title>PinteD 0.3.6 k </title>
     </head>
 <body  class="naotoque" >
   <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
@@ -192,8 +194,8 @@ range{
         </div>
 
         <div id="menuzoom" class="fundobranco submenu"  class="naotoque">
-          <input id="tzoom" type="number" min="0.50" max="10" step="0.50" value=1 onchange="ZOOM(this.value)" style="width:30px;"></input>
-          <input id="zoombar" min="0" max="5" value='1' step="1" onchange="ZOOMf(this.value)" type="range"/>
+          <input id="tzoom" type="number" min="0.50" max="4" step="0.5" value=1 onchange="ZOOM(this.value)" style="width:30px;"></input>
+          <input id="zoombar" min="0" max="3" value='1' step="1" onchange="ZOOMf(this.value)" type="range"/>
           <span onmousedown="scrollCanva(-80,0)">⬅️</span>
           <span onmousedown="scrollCanva(0,-80)">⬆️</span>
           <span onmousedown="scrollCanva(0,80)">⬇️</span>
@@ -262,7 +264,7 @@ creditos</a>: lei mao, people from stack overflow, w3schools</small>
   const lineJoins=["round","miter"]
   var ultimoToque = {x:160,y:160}
   var zoomFactor = 1;
-  var zoomScale = [0.5,1,2,4,8,16];
+  var zoomScale = [0.5,1,2,4];
 
 // pausa na adaptacao funcoes novas ao fim
 
@@ -637,6 +639,7 @@ function ZOOMf(a){
 function ZOOM(a){
   let canvaX = document.getElementById('canvas_div')
   setZoom(1,canvaX)
+  resetCanva()
   setTimeout(function(){
     document.getElementById('canvas_window').scrollTop = 0;
   document.getElementById('canvas_window').scrollLeft = 0;
@@ -654,7 +657,13 @@ function scrollCanva(x,y){
   document.getElementById('canvas_window').scrollTop += y;
   document.getElementById('canvas_window').scrollLeft += x;
 }
-
+function resetCanva(){
+  let objects = ["canvas_window","canvas_div"]
+  for (i in objects.length ){
+    document.getElementById(objects[i]).style.width = "320px"
+    document.getElementById(objects[i]).style.height = "320px"
+  }
+}
 
 // cursor area //
 
