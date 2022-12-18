@@ -162,7 +162,7 @@ range{
 }
 
       </style>
-      <title>Pintando Diego Ver. 0.3.5 - smartzoom (ainda)</title>
+      <title>PinteD 0.3.6 </title>
     </head>
 <body  class="naotoque" >
   <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
@@ -262,7 +262,6 @@ creditos</a>: lei mao, people from stack overflow, w3schools</small>
   const lineJoins=["round","miter"]
   var ultimoToque = {x:160,y:160}
   var zoomFactor = 1;
-  var zoomLast = 1;
   var zoomScale = [0.5,1,2,4,8,16];
 
 // pausa na adaptacao funcoes novas ao fim
@@ -287,10 +286,10 @@ function startup() {
       y = e.offsetY;
       ultimoToque.y = e.offsetY;
       ultimoToque.x = e.offsetX;
-          removeClass()
+      if(mode != "zoom"){removeClass()}
     }
   });
-  canvas.addEventListener('mouseup', (e) => {
+  canvas.addEventListener('mouseup', (e) => {file:///home/diego/Área%20de%20Trabalho/Diego.io/
     if (isDrawing) {
       drawLine(context, x, y, e.offsetX, e.offsetY);
       x = 0;
@@ -401,8 +400,9 @@ function modeTo(qual){
   switch(qual) {
     case mode:
     if (qual =="zoom"){
-      if(zoomFactor==4){
+      if(zoomFactor!=1){
           ZOOM(1)
+          setTimeout(()=>scrollCanva(1,1),30)
       }else{
         ZOOM(4)
       }
@@ -636,7 +636,6 @@ function ZOOMf(a){
 }
 function ZOOM(a){
     setZoom(1,document.getElementById('canvas_div'))
-    setTimeout(()=>scrollCanva(0,0),1)
     zoomFactor = Number(a);
     setTimeout(()=>scrollCanva(ultimoToque.x*zoomFactor-150,ultimoToque.y*zoomFactor-150),20)
     document.getElementById("zoombar").value = zoomScale.indexOf(zoomFactor)
@@ -644,6 +643,7 @@ function ZOOM(a){
     document.getElementById("tzoom").value= zoomFactor
    setZoom(1,document.getElementById('canvas_div'))
    setZoom(zoomFactor,document.getElementById('canvas_div'))
+   setTimeout(scrollCanva(0,0),1)
    strokeSize(strokeWidth)
 }
 
