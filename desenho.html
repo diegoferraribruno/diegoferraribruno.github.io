@@ -162,7 +162,7 @@ range{
 }
 
       </style>
-      <title>PinteD 0.3.6 f </title>
+      <title>PinteD 0.3.6 g </title>
     </head>
 <body  class="naotoque" >
   <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
@@ -402,7 +402,7 @@ function modeTo(qual){
     if (qual =="zoom"){
       if(zoomFactor!=1){
           ZOOM(1)
-          setTimeout(()=>scrollCanva(1,1),30)
+          //setTimeout(()=>scrollCanva(1,1),30)
       }else{
         ZOOM(4)
       }
@@ -636,16 +636,15 @@ function ZOOMf(a){
 }
 function ZOOM(a){
   let canvaX = document.getElementById('canvas_div')
-  let canvaW = document.getElementById('canvas_window')
-
+  if(zoomFactor < a) {setTimeout(()=>scrollCanva(ultimoToque.x*zoomFactor-150,ultimoToque.y*zoomFactor-150),8)}
   zoomFactor = Number(a);
   setZoom(1,canvaX)
   scrollCanva(ultimoToque.x,ultimoToque.y)
-  document.getElementById("zoombar").value = zoomScale.indexOf(zoomFactor)
-  document.getElementById("tzoom").value= zoomFactor
-   setZoom(zoomFactor,canvaX)
-   setTimeout(()=>scrollCanva(ultimoToque.x*zoomFactor-150,ultimoToque.y*zoomFactor-150),40)
+   setTimeout(()=>setZoom(zoomFactor,canvaX),2)
+
    strokeSize(strokeWidth)
+   document.getElementById("tzoom").value= zoomFactor
+   document.getElementById("zoombar").value = zoomScale.indexOf(zoomFactor)
 }
 
 function scrollCanva(x,y){
