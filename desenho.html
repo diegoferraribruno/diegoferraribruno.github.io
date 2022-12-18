@@ -402,7 +402,7 @@ function modeTo(qual){
     if (qual =="zoom"){
       if(zoomFactor!=1){
           ZOOM(1)
-          //setTimeout(()=>scrollCanva(1,1),30)
+          setTimeout(()=>scrollCanva(-620*zoomFactor,-620*zoomFactor),1000)
       }else{
         ZOOM(4)
       }
