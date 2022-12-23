@@ -466,14 +466,16 @@ function modeTo(qual){
         removeClass()
         mostraMenu(qual)
         toggleSelect(qual)
+        cursorColor()
       }else{
           mostraMenu(qual)
       }
       break;
 
    case "apagar":
-      removeClass()
-      mode = qual;
+     removeClass()
+     mode = qual;
+     oldMode = qual
       strokeSize(estrokeWidth)
       document.getElementById("estrokeSize").value = estrokeWidth
       context.globalCompositeOperation="destination-out";
@@ -483,6 +485,7 @@ function modeTo(qual){
    case "pintar":
      removeClass()
      mode = qual;
+     oldMode = qual
      context.globalCompositeOperation=globalComposite;
      strokeSize(strokeWidth)
      document.getElementById("strokeSize").value = strokeWidth
@@ -490,12 +493,14 @@ function modeTo(qual){
      
      break;
      case "zoom":
-       mode = qual;
+       mode = qual
        if(zoomFactor==1){
          ZOOM(4)
+         
         }else{
           ZOOM(1)
           setTimeout(()=>scrollCanva(-620*zoomFactor,-620*zoomFactor),60)
+          modeTo(oldMode)
         }
         
         break;
