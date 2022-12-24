@@ -207,10 +207,10 @@ input[type=range][orient=vertical]{
   margin-left: 4px;
 }
     </style>
-    <title>Desenha 0.4.1b Color Picker</title>
+    <title>Desenha 0.4.1b2 Color Picker</title>
     </head>
 <body  class="naotoque" >
-  <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
+    <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
 
 <div id="menus">
   <div id="menupicker" class="submenu"  class="naotoque">Escolha a cor</div>      
@@ -308,9 +308,10 @@ input[type=range][orient=vertical]{
         </div>
         <div id="creditos" class="fundobranco naotoque" style="width:280px; margin: auto;">          
         <small>cc:<a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-lei mao</a> e <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a></small>
+lei mao</a> e <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a> v0.4.2a</small>
 </div>
 </div>
+
 
 <script>
 const canvas = document.getElementById("canvas");
@@ -448,11 +449,13 @@ function handleStart(evt) {
     for (let i = 0; i < touches.length; i++) {
       ongoingTouches.push(copyTouch(touches[i]));
     }
+    
+    removeClass();
   }
 }
 
 function handleMove(evt) {
-  if (mode != "zoom" || mode != "picker") {
+  if (mode != "zoom" && mode != "picker") {
     evt.preventDefault();
     const touches = evt.changedTouches;
     for (let i = 0; i < touches.length; i++) {
@@ -472,17 +475,18 @@ function handleMove(evt) {
         context.closePath();
         context.stroke();
         ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-        removeClass();
+        
       }
     }
-  } else if (mode == "picker") {
+  }
+  if (mode == "picker") {
     evt.preventDefault();
     const touches = evt.changedTouches;
     for (let i = 0; i < touches.length; i++) {
       const idx = ongoingTouchIndexById(touches[i].identifier);
-      if (idx == 1) {
-        x = touches[i].clientX / zoomFactor - offsetX / zoomFactor;
-        y = touches[i].clientY / zoomFactor - offsetY / zoomFactor;
+      if (idx >= 0) {
+        let x =  touches[i].clientX / zoomFactor - offsetX / zoomFactor
+        let y =  touches[i].clientY / zoomFactor - offsetY / zoomFactor
         var imageData = context.getImageData(x, y, 1, 1).data;
         if (imageData[3] > 1) {
           console.log(imageData);
@@ -494,7 +498,8 @@ function handleMove(evt) {
   }
 }
 function handleEnd(evt) {
-  if (mode != "zoom") {
+
+  if (mode != "zoom" ) {
     evt.preventDefault();
     const touches = evt.changedTouches;
     for (let i = 0; i < touches.length; i++) {
@@ -506,6 +511,7 @@ function handleEnd(evt) {
       }
     }
   }
+
 }
 
 function handleCancel(evt) {
