@@ -1,1078 +1,1345 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<style>
-body{
-  overflow-y: hidden;
-  padding: 0px 0px;
-  margin: 0px 0px;
-  background-color: #00000022;
-  font-family: "emojione mozilla","segoe ui emoji", "noto color emoji", "android emoji",
-"emojisymbols", "segoe ui symbol" "twemoji mozilla","apple color emoji";
-}
-#desenho_div {
-  text-align: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100vw;
-}
-#canvas_div {
-background-image: url("./grid.png");
-  text-align: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 320px;
-  height: 320px;
-  background-color:#ffffff22;
-  overflow-y: hidden;
-  image-rendering: pixelated;
-}
-#canvas_window{
-  overflow: scroll;
-  width:342px;
-  height:342px;
-  -webkit-touch-overflow:scroll;
-  margin-left:auto;
-  margin-right:auto;
-}
-#paleta{
-  position: relative;
-  width: 160px;
-  height: 150px;
-  display: block;
-  top:0px;
-  margin-top: 0px;
-  display: block;
-  float: left;
-}#paleta2{
-  position: relative;
-  width: 160px;
-  height: 110px;
-  display: block;
-  top:4px;
-  margin-top: 0px;
-  display: block;
-  float: left;
-}
-#menucores{
-  width: 290px;
-  height: 290px;
-  z-index: 3;
-}
-#menu{
-  font-kerning: 1 em;
-  width: 92px;
-  height: 272px;
-  display: block;
-  float: right;
-  font-size: larger;
-  text-align: center;
-}
-.submenu{
-  position: absolute;
-  display: block;
-  top:50px;
-  width: 280px;
-  height: 60px;
-  padding: 8px;
-  z-index: 3;
-  visibility: hidden;
-}
-.fundobranco{
-  margin: 2px;
-  min-height: 32px;
-  background-color: #eeeeee66;
-  border-radius: 20px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #dddddddd;
-  padding: 4px;
-  display: inline-block;
-}       
-.fundobranco2{
-  min-height: 12px;
-  display: inline-block;
-}
-.bloquinho{
-  margin: 4px;
-  width:20px;
-  height:20px;
-  border-style: solid;
-  border-radius: 20px;
-  border-color: #55555555;
-  border-width: thin;
-  display: block;
-  float:left;
-  padding: 2px;
-  font-size:1.125em;
-  margin: 1px 2px 1px 2px;
-}
-.selected{
-  background-color: #00000044;
-  border-color: #dd5555;
-  border-width: 3px;
-  width: 16px;
-  height: 16px;
-  padding-left: -10px;
-  font-size: 1.5em;
-}
-#mostraCor{
-  width:50px;
-  height:50px;
-  border-style: solid;
-  border-radius: 200px;
-  border-color: gray;
-  border-width: thin;
-  padding: 0px;
-  font-size:1.125em;
-  float: left;
-  text-align: center;
-  background-color:"hsl(0, 100%, 0%)";
-  margin:4px 4px 4px 4px;
-  font-size: 50px;
-  text-align: center;
-  line-height: 50px;
-  display: block;
-}
-.linha{
-  width: 1px;
-  border-radius: 0px;
-}
-#mostraCor2{
-  width:2px;
-  height:2px;
-  border-style: solid;
-  border-radius: 200px;
-  border-color: gray;
-  border-width: thin;
-  display: block;
-  padding: 0px;
-  font-size:1.125em;
-  float: right;
-}
-#cursor{
-  pointer-events:none;
-  display: block;
-  position: absolute;
-  width:2px;
-  height:2px;
-  border-style: solid;
-  border-radius: 200px;
-  border-color: gray;
-  color: #00000055;
-  border-width: thin;
-  padding: 0px;
-  font-size:1.5em;
-  z-index: 10;
-}
-.disable-scroll{
-  overflow-y: hidden;
-}
-.aparece{
-  visibility: visible;
-}
-.naotoque{
-  user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
-}
-.cursorIndex{
-  z-index: 0;
-}
-range{
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-.pqno{
-  height: 24px;
-  width: 24px;
-}
-#canvas{
-  background-color: #ffffff55;
-}
-.smooth{
-  image-rendering:optimizeQuality;
-}
-input[type=range][orient=vertical]{
-  writing-mode: bt-lr; /* IE */
-  -webkit-appearance: slider-vertical; /* Chromium */
-  width: 8px;
-  height: 175px;
-  padding: 0 5px;
-  float: left;
-}
-#menus {
-  margin-left: 0px;
-}
-#ferramentas{
-  width: 300px;
-  margin-left: 4px;
-}
-input[type="range"]::-webkit-slider-runnable-track {
-  -webkit-appearance: none;
-  border-radius:10px;
-  box-shadow:0px 0px 5px 5px gainsboro;
-  background: #4776e6; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #e4e4e4,
-    #1949b9
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #e2e2e2,
-    #1949b9
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  height: 10px;
-  width: 10px;
-}input[type="range"]:focus {
-  outline: none;
-}input[type="range"]::-moz-range-track {
-  -moz-appearance: none;
-  background: rgb(187, 187, 187);
-  background: -moz-linear-gradient(
-    45deg,
-    rgb(221, 221, 221) 0%,
-    rgb(30, 41, 97) 100%,
-  );
-  background: -webkit-gradient(
-    left bottom,
-    right top,
-    color-stop(0%, rgba(59, 173, 227, 1)),
-    color-stop(100%, rgba(87, 111, 230, 1))
-  );
-  background: -webkit-linear-gradient(
-    45deg,
-    rgb(221, 221, 221) 0%,
-    rgb(30, 41, 97) 100%,
-  );
-  background: -o-linear-gradient(
-    45deg,
-    rgba(59, 173, 227, 1) 0%,
-    rgba(87, 111, 230, 1) 25%,
-    rgba(152, 68, 183, 1) 51%,
-    rgba(255, 53, 127, 1) 100%
-  );
-  background: -ms-linear-gradient(
-    45deg,
-    rgba(59, 173, 227, 1) 0%,
-    rgba(87, 111, 230, 1) 25%,
-    rgba(152, 68, 183, 1) 51%,
-    rgba(255, 53, 127, 1) 100%
-  );
-  background: linear-gradient(
-    45deg,
-    rgba(59, 173, 227, 1) 0%,
-    rgba(87, 111, 230, 1) 25%,
-    rgba(152, 68, 183, 1) 51%,
-    rgba(255, 53, 127, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
-  height: 2px;
-}
-.bigScreen{
-  float: left;
-  position: absolute;
-  left: 0px;
-  top:0px;
-  width: 80vw;
-  height: 80vw;
-}
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <style>
+      body {
+        overflow-y: hidden;
+        padding: 0px 0px;
+        margin: 0px 0px;
+        background-color: #00000022;
+        font-family: "emojione mozilla", "segoe ui emoji", "noto color emoji",
+          "android emoji", "emojisymbols", "segoe ui symbol" "twemoji mozilla",
+          "apple color emoji";
+      }
+      #desenho_div {
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100vw;
+      }
+      #canvas_div {
+        background-image: url("./grid.png");
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 320px;
+        height: 320px;
+        background-color: #ffffff22;
+        overflow-y: hidden;
+        image-rendering: pixelated;
+      }
+      #canvas_window {
+        overflow: scroll;
+        width: 342px;
+        height: 342px;
+        -webkit-touch-overflow: scroll;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #paleta {
+        position: relative;
+        width: 160px;
+        height: 150px;
+        display: block;
+        top: 0px;
+        margin-top: 0px;
+        display: block;
+        float: right;
+      }
+      #paleta2 {
+        position: relative;
+        width: 160px;
+        height: 110px;
+        display: block;
+        top: 4px;
+        margin-top: 0px;
+        display: block;
+        float: right;
+      }
+      #menucores {
+        width: 290px;
+        height: 290px;
+        z-index: 3;
+      }
+      #menu {
+        font-kerning: 1.2 em;
+        position: absolute;
+        width: 92px;
+        height: 272px;
+        display: block;
+        float: right;
+        font-size: larger;
+        text-align: center;
+      }
+      .submenu {
+        position: absolute;
+        display: block;
+        top: 50px;
+        width: 280px;
+        height: 60px;
+        padding: 8px;
+        z-index: 3;
+        visibility: hidden;
+      }
+      .fundobranco {
+        margin: 2px;
+        min-height: 32px;
+        background-color: #eeeeee66;
+        border-radius: 20px;
+        border-style: solid;
+        border-width: 2px;
+        border-color: #dddddddd;
+        padding: 4px;
+        display: inline-block;
+      }
+      .fundobranco2 {
+        min-height: 12px;
+        display: inline-block;
+      }
+      .bloquinho {
+        margin: 4px;
+        width: 20px;
+        height: 20px;
+        border-style: solid;
+        border-radius: 20px;
+        border-color: #55555555;
+        border-width: thin;
+        display: block;
+        float: left;
+        padding: 2px;
+        font-size: 1.125em;
+        margin: 1px 2px 1px 2px;
+      }
+      .selected {
+        background-color: #00000044;
+        border-color: #dd5555;
+        border-width: 3px;
+        width: 16px;
+        height: 16px;
+        padding-left: -10px;
+        font-size: 1.5em;
+      }
+      #mostraCor {
+        width: 50px;
+        height: 50px;
+        border-style: solid;
+        border-radius: 200px;
+        border-color: gray;
+        border-width: thin;
+        padding: 0px;
+        font-size: 1.125em;
+        float: left;
+        text-align: center;
+        background-color: "hsl(0, 100%, 0%)";
+        margin: 4px 4px 4px 4px;
+        font-size: 50px;
+        text-align: center;
+        line-height: 50px;
+        display: block;
+      }
+      .linha {
+        width: 1px;
+        border-radius: 0px;
+      }
+      #mostraCor2 {
+        width: 2px;
+        height: 2px;
+        border-style: solid;
+        border-radius: 200px;
+        border-color: gray;
+        border-width: thin;
+        display: block;
+        padding: 0px;
+        font-size: 1.125em;
+        float: right;
+      }
+      #cursor {
+        pointer-events: none;
+        display: block;
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        border-style: solid;
+        border-radius: 200px;
+        border-color: gray;
+        color: #00000055;
+        border-width: thin;
+        padding: 0px;
+        font-size: 1.5em;
+        z-index: 10;
+      }
+      .disable-scroll {
+        overflow-y: hidden;
+      }
+      .aparece {
+        visibility: visible;
+      }
+      .naotoque {
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
+      }
+      .cursorIndex {
+        z-index: 0;
+      }
+      range {
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+      .pqno {
+        height: 24px;
+        width: 24px;
+      }
+      #canvas {
+        background-color: #ffffff55;
+      }
+      .smooth {
+        image-rendering: optimizeQuality;
+      }
+      input[type="range"][orient="vertical"] {
+        writing-mode: bt-lr; /* IE */
+        -webkit-appearance: slider-vertical; /* Chromium */
+        width: 8px;
+        height: 175px;
+        padding: 0 5px;
+        float: left;
+        margin-top: 4px;
+      }
+      #menus {
+        margin-left: 0px;
+      }
+      #ferramentas {
+        width: 300px;
+        margin-left: 4px;
+      }
+      .bigScreen {
+        float: left;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 80vw;
+        height: 80vw;
+      }
     </style>
-    <title>Desenha 0.4.1b2 Color Picker</title>
-    </head>
-<body  class="naotoque" >
+    <title>Desenha 0.4.2a 2xCanva</title>
+  </head>
+  <body class="naotoque">
     <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
-
-<div id="menus">
-  <div id="menupicker" class="submenu fundobranco"  class="naotoque">toque na sua arte para capturar uma cor</div>      
-
-    <div id="menupintar" class="fundobranco submenu">
-      <span style=" float:center; position:relative; width:70px; " onmousedown='changeLine()'>estilo:<span id="line"> ⚫</span></span>
-      <input type="number" id="tpx" min="0.2" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:50px; margin-left:8px;" />
-      <input type="range" id="strokeSize" name="strokeSize" min="0.2" max="100" step="0.2" oninput="strokeSize(this.value)"  value="0.6" width="160px"/><br>
-      <span onmousedown='removeClass()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%)"; margin-top: -50px; margin-left: -20px;'>🖌️</span>
-      💧<input type="range" id="A2" name="transparencia" min="0.01" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.01" value="1" /><br>
-    </div>
-
-    <div id="menuapagar" class="fundobranco submenu"  class="naotoque">
-      <span style=" float:center; position:relative; width:16px; " onmousedown='changeLine()'><span id="line2"> ⚫</span></span>
-      <span class="bloquinho"  onmousedown='removeClass()'>🧻</span>&nbsp;<input type="number" id="tpx2" min="0.3" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:50px; margin-left:8px;">
-        <input type="range" id="estrokeSize" name="estrokeSize" min="0.3" max="100" step="0.3" oninput="strokeSize(this.value)"  value="0.6" width="160px"/>
-       <span onmousedown='removeClass()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
-       💧<input type="range" id="A3" name="transparencia" min="0.01" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.01" value="1" /><br>
-    </div>
-
-  
-    <div id="menucores" class="fundobranco submenu">
-          <div id="menu" class="fundobranco"  onmouseover="mostra()">
-            🌈◒🔆💧<br>
-            <input type="range" orient="vertical" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" />
-            <input type="range" orient="vertical" id="S" name="cor" min="0" max="100"  oninput="mudaCorQ(1,this.value)"  value="100" />
-            <input type="range" orient="vertical" id="L" name="cor" min="0" max="100"  oninput="mudaCorQ(2,this.value)"  value="50" />
-            <input type="range" orient="vertical" id="A" name="cor" min="0.01" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.01" value="1" /><br>
-            <div id="mostraCor" onmousedown='removeClass()' style="float: left; color:white; font-family: Arial, Helvetica, sans-serif; font-size:1.75em;; font-weight:bold;">ok</div>
-            <div id="salvaCor" onmousedown='salvaCor()' title="Favoritar" style="float: right; margin-top: 12px;" class="bloquinho">📌</div>
-            
-            
-          </div>
-          <div id="paleta" class="fundobranco" ></div>
-          <div id="paleta2" class="fundobranco" ></div>
+      <div id="menus">
+        <div id="menupicker" class="submenu fundobranco" class="naotoque">
+          toque na sua arte para capturar uma cor
         </div>
-        
-        <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center;">
-          Fundo falso:
-          <br>
-          <span onmousedown='Fundo("img")' class='bloquinho' >🖼️ </span>
-          <span onmousedown='Fundo("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1)'> </span>
-          <span onmousedown='Fundo("white")' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
-          <span onmousedown='Fundo("grid.png")' class='bloquinho'  style='background-image:url("./grid.png")'>.</span>
-          <span onmousedown='Fundo("grid2.png")' class='bloquinho'  style='background-image:url("./grid2.png"); background-color: #fff;'></span>
-          <span onmousedown='Fundo("grid3.png")' class='bloquinho'  style='background-image:url("./grid3.png")'></span> 
-          <span onmousedown='Fundo("none")' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> ❌</span>
-          </div>
-        
-        <div id="menupreencher" class="fundobranco submenu"  class="naotoque">
-          ⚠️ Preencher tudo ⚠️
-          <span width ="140px" style="margin:8px 80px; display: block;"> 
-            <span onmousedown='mudaCorBG("black")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, 1)'> </span>
-            <span onmousedown='mudaCorBG("white")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 1)'> </span>
-            <span onmousedown='mudaCorBG("strokeColor")' id="preenchercor" class='bloquinho'> </span>
-            <span class="bloquinho"  onmousedown='removeClass()' width="120px" >❌</span><br>
+        <div id="menupintar" class="fundobranco submenu">
+          <span
+            style="float: center; position: relative; width: 70px"
+            onmousedown="changeLine()"
+            >estilo:<span id="line"> ⚫</span></span
+          >
+          <input
+            type="number"
+            id="tpx"
+            min="0.2"
+            max="100"
+            step="0.3"
+            value="1"
+            onchange="strokeSize(this.value)"
+            style="width: 50px; margin-left: 8px"
+          />
+          <input
+            type="range"
+            id="strokeSize"
+            name="strokeSize"
+            min="0.2"
+            max="100"
+            step="0.2"
+            oninput="strokeSize(this.value)"
+            value="0.6"
+            width="160px"
+          /><br />
+          <span
+            onmousedown="removeClass()"
+            id="mostraCor2"
+            style="
+              background-color: 'hsl(0, 100%, 0%)';
+              margin-top: -50px;
+              margin-left: -20px;
+            "
+            >🖌️</span
+          >
+          💧<input
+            type="range"
+            id="A2"
+            name="transparencia"
+            min="0.01"
+            max="1"
+            oninput="mudaCorQ(3,this.value)"
+            step="0.01"
+            value="1"
+          /><br />
+        </div>
+        <div id="menuapagar" class="fundobranco submenu" class="naotoque">
+          <span
+            style="float: center; position: relative; width: 16px"
+            onmousedown="changeLine()"
+            ><span id="line2"> ⚫</span></span
+          >
+          <span class="bloquinho" onmousedown="removeClass()">🧻</span
+          >&nbsp;<input
+            type="number"
+            id="tpx2"
+            min="0.3"
+            max="100"
+            step="0.3"
+            value="1"
+            onchange="strokeSize(this.value)"
+            style="width: 50px; margin-left: 8px"
+          />
+          <input
+            type="range"
+            id="estrokeSize"
+            name="estrokeSize"
+            min="0.3"
+            max="100"
+            step="0.3"
+            oninput="strokeSize(this.value)"
+            value="0.6"
+            width="160px"
+          />
+          <span
+            onmousedown="removeClass()"
+            id="mostraCor2"
+            style="background-color: 'hsl(0, 100%, 0%);'"
+          >
           </span>
-             </div>
+          💧<input
+            type="range"
+            id="A3"
+            name="transparencia"
+            min="0.01"
+            max="1"
+            oninput="mudaCorQ(3,this.value)"
+            step="0.01"
+            value="1"
+          /><br />
+        </div>
 
-        <div id="menuzoom" class="fundobranco submenu"  class="naotoque">
-          <input id="zoombar" type="range" min="0" max="3" value="1" step="1" onchange="ZOOMf(this.value)" /><br>
+        <div id="menucores" class="fundobranco submenu">
+          <div id="paleta" class="fundobranco"></div>
+          <div id="paleta2" class="fundobranco"></div>
+          <div id="menu" class="fundobranco" onmouseover="mostra()">
+            🌈◒🔆💧<br />
+            <input
+              type="range"
+              orient="vertical"
+              id="H"
+              name="cor"
+              min="0"
+              max="359"
+              oninput="mudaCorQ(0,this.value)"
+              value="0"
+            />
+            <input
+              type="range"
+              orient="vertical"
+              id="S"
+              name="cor"
+              min="0"
+              max="100"
+              oninput="mudaCorQ(1,this.value)"
+              value="100"
+            />
+            <input
+              type="range"
+              orient="vertical"
+              id="L"
+              name="cor"
+              min="0"
+              max="100"
+              oninput="mudaCorQ(2,this.value)"
+              value="50"
+            />
+            <input
+              type="range"
+              orient="vertical"
+              id="A"
+              name="cor"
+              min="0.01"
+              max="1"
+              oninput="mudaCorQ(3,this.value)"
+              step="0.01"
+              value="1"
+            /><br />
+            <div
+              id="salvaCor"
+              onmousedown="salvaCor()"
+              title="Favoritar"
+              style="float: right; margin-top: 20px; font-size: 1.5em"
+              class="bloquinho"
+            >
+              📌
+            </div>
+            <div
+              id="mostraCor"
+              onmousedown="removeClass()"
+              style="
+                float: left;
+                color: white;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 1.75em;
+                font-weight: bold;
+              "
+            >
+              ok
+            </div>
+          </div>
+        </div>
+
+        <div
+          id="menufundo"
+          class="fundobranco submenu naotoque"
+          style="text-align: center"
+        >
+          Fundo falso:
+          <br />
+          <span onmousedown='Fundo("img")' class="bloquinho">🖼️ </span>
+          <span
+            onmousedown='Fundo("black")'
+            class="bloquinho"
+            style="background-color: hsla(0, 100%, 0%, 1)"
+          >
+          </span>
+          <span
+            onmousedown='Fundo("white")'
+            class="bloquinho"
+            style="background-color: hsla(0, 100%, 100%, 1)"
+          >
+          </span>
+          <span
+            onmousedown='Fundo("grid.png")'
+            class="bloquinho"
+            style="background-image: url('./grid.png')"
+            >.</span
+          >
+          <span
+            onmousedown='Fundo("grid2.png")'
+            class="bloquinho"
+            style="background-image: url('./grid2.png'); background-color: #fff"
+          ></span>
+          <span
+            onmousedown='Fundo("grid3.png")'
+            class="bloquinho"
+            style="background-image: url('./grid3.png')"
+          ></span>
+          <span
+            onmousedown='Fundo("none")'
+            class="bloquinho"
+            style="background-color: hsla(0, 100%, 100%, 0)"
+          >
+            ❌</span
+          >
+        </div>
+
+        <div id="menupreencher" class="fundobranco submenu" class="naotoque">
+          ⚠️ Preencher tudo ⚠️
+          <span width="140px" style="margin: 8px 80px; display: block">
+            <span
+              onmousedown='mudaCorBG("black")'
+              class="bloquinho"
+              style="background-color: hsla(0, 100%, 0%, 1)"
+            >
+            </span>
+            <span
+              onmousedown='mudaCorBG("white")'
+              class="bloquinho"
+              style="background-color: hsla(0, 100%, 100%, 1)"
+            >
+            </span>
+            <span
+              onmousedown='mudaCorBG("strokeColor")'
+              id="preenchercor"
+              class="bloquinho"
+            >
+            </span>
+            <span class="bloquinho" onmousedown="removeClass()" width="120px"
+              >❌</span
+            ><br />
+          </span>
+        </div>
+
+        <div id="menuzoom" class="fundobranco submenu" class="naotoque">
+          <input
+            id="zoombar"
+            type="range"
+            min="0"
+            max="3"
+            value="1"
+            step="1"
+            onchange="ZOOMf(this.value)"
+          /><br />
           <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
-          
-          <input id="tzoom" type="number" min="0.50" max="4" step="0.5" value=1 onchange="ZOOM(this.value)" style="width:44px;"></input>
+
+          <input
+            id="tzoom"
+            type="number"
+            min="0.50"
+            max="4"
+            step="0.5"
+            value="1"
+            onchange="ZOOM(this.value)"
+            style="width: 44px"
+          />
           <span onmousedown="scrollCanva(-80,0)">⬅️</span>
           <span onmousedown="scrollCanva(0,-80)">⬆️</span>
           <span onmousedown="scrollCanva(0,80)">⬇️</span>
           <span onmousedown="scrollCanva(80,0)">➡️</span>
         </div>
 
-
-        <div id="ferramentas" class="fundobranco"   class="naotoque">
-
-          <span  onmousedown='backPaint()' class="fundobranco2" id="globalComposite" style="width:24px; height:24px; padding-top:6px;" >
-            <span style="position:absolute; float:right; width:30px; display:block; padding-top: 0px;">🔲</span>
-            <span style="color:white; position:relative;  display:block; float:left; width:20px; margin-top:-5px;">⭕</span>
+        <div id="ferramentas" class="fundobranco" class="naotoque">
+          <span
+            onmousedown="backPaint()"
+            class="fundobranco2"
+            id="globalComposite"
+            style="width: 24px; height: 24px; padding-top: 6px"
+          >
+            <span
+              style="
+                position: absolute;
+                float: right;
+                width: 30px;
+                display: block;
+                padding-top: 0px;
+              "
+              >🔲</span
+            >
+            <span
+              style="
+                color: white;
+                position: relative;
+                display: block;
+                float: left;
+                width: 20px;
+                margin-top: -5px;
+              "
+              >⭕</span
+            >
           </span>
-          <span id="pintar" title="pintar" class="bloquinho selected"  onmousedown='modeTo("pintar")' >🖌️</span>
-          <span id="cores" title="cores"  class="bloquinho"  onmousedown='modeTo("cores")' >🎨</span>
-          <span id="picker" title="Pega cor" class="bloquinho"  onmousedown='modeTo("picker")' >🧫</span>
-          <span id="apagar" title="Apagar" class="bloquinho"  onmousedown='modeTo("apagar")'>🧻</span>
-          <span id="zoom" title="Ampliar" class="bloquinho"  onmousedown='modeTo("zoom")'>🔎</span>
-          <span id="preencher" title="Preencher" onmousedown='modeTo("preencher")' class='bloquinho' >🪣</span>
-          <span id="fundo" title="Fundo falso" class="bloquinho"  onmousedown='modeTo("fundo")' >🖼️</span>
-          <span><a id="btn-download" class="bloquinho"  > 📥</a></span>
-            <span class="bloquinho" onmousedown='clearArea()'>🗑</span>      
+          <span
+            id="pintar"
+            title="pintar"
+            class="bloquinho selected"
+            onmousedown='modeTo("pintar")'
+            >🖌️</span
+          >
+          <span
+            id="cores"
+            title="cores"
+            class="bloquinho"
+            onmousedown='modeTo("cores")'
+            >🎨</span
+          >
+          <span
+            id="picker"
+            title="Pega cor"
+            class="bloquinho"
+            onmousedown='modeTo("picker")'
+            >💉</span
+          >
+          <span
+            id="apagar"
+            title="Apagar"
+            class="bloquinho"
+            onmousedown='modeTo("apagar")'
+            >🧻</span
+          >
+          <span
+            id="zoom"
+            title="Ampliar"
+            class="bloquinho"
+            onmousedown='modeTo("zoom")'
+            >🔎</span
+          >
+          <span
+            id="preencher"
+            title="Preencher"
+            onmousedown='modeTo("preencher")'
+            class="bloquinho"
+            >🪣</span
+          >
+          <span
+            id="fundo"
+            title="Fundo falso"
+            class="bloquinho"
+            onmousedown='modeTo("fundo")'
+            >🖼️</span
+          >
+          <span><a id="btn-download" class="bloquinho"> 📥</a></span>
+          <span class="bloquinho" onmousedown="clearArea()">🗑</span>
         </div>
-
       </div>
 
-        <div id="canvas_window" class=".bigScreen" >
-          <span id ="cursor" style='background-color:"hsla(0, 0%, 0%, 0);"' class="naotoque" onselectstart="return false;" ondragstart="return false;"> </span>
-          <div id="canvas_div" style="overflow:hidden;">
-            <canvas id="canvas" class="smooth" width="320px" height="320px"  onmousemove="cursorMove(event)" onmouseout="mostra()" >
-              Your browser does not support canvas element.
-            </canvas>
-          </div>
+      <div id="canvas_window" class=".bigScreen">
+        <span
+          id="cursor"
+          style="background-color: 'hsla(0, 0%, 0%, 0);'"
+          class="naotoque"
+          onselectstart="return false;"
+          ondragstart="return false;"
+        >
+        </span>
+        <div id="canvas_div" style="overflow: hidden">
+          <canvas
+            id="canvas"
+            class="smooth"
+            width="320px"
+            height="320px"
+            onmousemove="cursorMove(event)"
+            onmouseout="mostra()"
+          >
+            Your browser does not support canvas element.
+          </canvas>
         </div>
-        <div id="creditos" class="fundobranco naotoque" style="width:280px; margin: auto;">          
-        <small><span class="bloquinho" onclick="x2()">2x</span> cc:<a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-lei mao</a> e <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a> v0.4.3a</small>
-</div>
-</div>
+      </div>
+      <div
+        id="creditos"
+        class="fundobranco naotoque"
+        style="width: 280px; margin: auto"
+      >
+        <small
+          ><span class="bloquinho" onclick="x2()">2x</span> cc:<a
+            href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/"
+            target="_blank"
+          >
+            lei mao</a
+          >
+          e
+          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a>
+          v0.4.3b</small
+        >
+      </div>
+    </div>
 
+    <script>
+      const canvas = document.getElementById("canvas");
+      const context = canvas.getContext("2d");
+      let isDrawing = false;
+      let x = 0;
+      let y = 0;
+      var offsetX;
+      var offsetY;
+      const ongoingTouches = [];
 
-<script>
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
-let isDrawing = false;
-let x = 0;
-let y = 0;
-var offsetX;
-var offsetY;
-const ongoingTouches = [];
+      // comeca minha adaptacao
 
-// comeca minha adaptacao
+      const canvasDiv = document.getElementById("canvas_div");
+      var globalComposite = "source-over";
+      var favoritas = [];
+      var stroke = 1;
+      var hsla = [0, 100, 50, 1];
+      var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+      var strokeWidth = 0.6;
+      var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+      var estrokeWidth = 4;
+      var mode = "pintar";
+      var linejoin = "round";
+      var lineJoinsCount = 0;
+      const lineJoins = ["round", "miter"];
+      var ultimoToque = { x: 160, y: 160 };
+      var zoomFactor = 1;
+      var zoomScale = [0.5, 1, 2, 4];
+      var mouseOver = false;
+      var layer1 = [];
+      var x2size = 1;
 
-const canvasDiv = document.getElementById("canvas_div");
-var globalComposite = "source-over";
-var favoritas = [];
-var stroke = 1;
-var hsla = [0, 100, 50, 1];
-var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-var strokeWidth = 0.6;
-var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-var estrokeWidth = 4;
-var mode = "pintar";
-var linejoin = "round";
-var lineJoinsCount = 0;
-const lineJoins = ["round", "miter"];
-var ultimoToque = { x: 160, y: 160 };
-var zoomFactor = 1;
-var zoomScale = [0.5, 1, 2, 4];
-var mouseOver = false;
-var layer1 = [];
-var x2size = 1
+      document.addEventListener("keydown", function (event) {
+        if (event.ctrlKey && event.key === "z") {
+          alert("Não existe isso de voltar no tempo. Pratique o desapego.");
+        }
+      });
 
-document.addEventListener("keydown", function (event) {
-  if (event.ctrlKey && event.key === "z") {
-    alert("Não existe isso de voltar no tempo. Pratique o desapego.")
-  }
-});
-
-function x2(w=320,h=320){
-  var resultado = confirm("Dobrar o tamanho da tela? (apaga tudo)")
-  if ( resultado === true){
-    let win = document.getElementById("canvas_window")
-    if( window.innerWidth > 600)
-    win.style.width = `640px`
-    win.style.height = `640px`
-    x2size *= 2;
-    if (x2size > 4){
-      x2size=1
-      win.style.width = `340px`
-      win.style.height = `340px`
-    }
-    let W = w*x2size
-    let H = h*x2size
-    canvasDiv.style.width = `${W}px`
-    canvasDiv.style.height = `${H}px`
-    canvas.width = W
-    canvas.height = H
-    alert(`Novo tamanho de tela: largura ${W}px e altura ${H}px`)
-  }
-  
-}
-
-
-// pausa na adaptacao funcoes novas ao fim
-
-document.addEventListener("DOMContentLoaded", startup);
-
-function startup() {
-  removeClass();
-  document.getElementById("zoombar").value = zoomScale.indexOf(zoomFactor);
-  canvas.addEventListener("touchstart", handleStart);
-  canvas.addEventListener("touchend", handleEnd);
-  canvas.addEventListener("touchcancel", handleCancel);
-  canvas.addEventListener("touchmove", handleMove);
-  canvas.addEventListener("mousedown", (e) => {
-    x = e.offsetX;
-    y = e.offsetY;
-    if (mode != "picker") {
-      isDrawing = true;
-    }
-  });
-  canvas.addEventListener("mouseenter", (e) => {
-    mouseOver = true;
-  });
-  canvas.addEventListener("mouseout", (e) => {
-    mouseOver = false;
-    setTimeout(() => {
-      if (mouseOver == false) {
-        isDrawing = false;
-      }
-    }, 700);
-  });
-  canvas.addEventListener("mousemove", (e) => {
-    if (isDrawing && mode != "picker") {
-      desenha(context, x, y, e.offsetX, e.offsetY);
-      x = e.offsetX;
-      y = e.offsetY;
-      ultimoToque.y = e.offsetY;
-      ultimoToque.x = e.offsetX;
-      if (mode != "zoom") {
-        removeClass();
-      }
-    }
-  });
-  canvas.addEventListener("mouseup", (e) => {
-    if (isDrawing && mode != "picker") {
-      drawLine(context, x, y, e.offsetX + 1, e.offsetY + 1);
-      x = 0;
-      y = 0;
-      isDrawing = false;
-    } else if (mode == "picker") {
-      x = e.offsetX;
-      y = e.offsetY;
-      var imageData = context.getImageData(x, y, 1, 1).data;
-      if (imageData[3] > 1) {
-        console.log(imageData);
-        RGBAToHSLA(imageData[0], imageData[1], imageData[2], imageData[3]);
-        setStrokeColor();
-      }
-    }
-  });
-}
-
-const RGBAToHSLA = (r, g, b, a) => {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  a /= 255;
-  const l = Math.max(r, g, b);
-  const s = l - Math.min(r, g, b);
-  const h = s
-    ? l === r
-      ? (g - b) / s
-      : l === g
-      ? 2 + (b - r) / s
-      : 4 + (r - g) / s
-    : 0;
-  const H = Math.floor(60 * h < 0 ? 60 * h + 360 : 60 * h);
-  const S = Math.floor(
-    100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)
-  );
-  const L = Math.floor((100 * (2 * l - s)) / 2);
-  const A = a;
-  hsla[0] = H;
-  hsla[1] = S;
-  hsla[2] = L;
-  hsla[3] = A;
-  return `hsla(${H},${S}%,${L}%,${a})`;
-};
-
-function desenha(context, x, y, eoX, eoY) {
-  drawLine(context, x, y, eoX, eoY);
-}
-function handleStart(evt) {
-  if (mode != "zoom") {
-    evt.preventDefault();
-    const touches = evt.changedTouches;
-    offsetX = canvas.getBoundingClientRect().left;
-    offsetY = canvas.getBoundingClientRect().top;
-    for (let i = 0; i < touches.length; i++) {
-      ongoingTouches.push(copyTouch(touches[i]));
-    }
-    
-    removeClass();
-  }
-}
-
-function handleMove(evt) {
-  if (mode != "zoom" && mode != "picker") {
-    evt.preventDefault();
-    const touches = evt.changedTouches;
-    for (let i = 0; i < touches.length; i++) {
-      const idx = ongoingTouchIndexById(touches[i].identifier);
-      if (idx >= 0) {
-        context.beginPath();
-        context.moveTo(
-          ongoingTouches[idx].clientX / zoomFactor - offsetX / zoomFactor,
-          ongoingTouches[idx].clientY / zoomFactor - offsetY / zoomFactor
+      function x2(w = 320, h = 320) {
+        var resultado = confirm(
+          "\t\t\t\tDuplicar o tamanho da tela? \n" +
+            "\t\t\t( ⚠️ Atenção! Tudo será apagado ⚠️ )\n\n" +
+            "\t\t\t\t\t Formatos disponiveis: \n" +
+            "\t\t\t320x320px - 640x640px - 1280x1280px"
         );
-        ultimoToque.x = touches[i].clientX / zoomFactor - offsetX / zoomFactor;
-        ultimoToque.y = touches[i].clientY / zoomFactor - offsetY / zoomFactor;
-        context.lineTo(ultimoToque.x, ultimoToque.y);
-        context.lineWidth = stroke;
-        context.strokeStyle = strokeColor;
-        context.lineJoin = linejoin;
-        context.closePath();
-        context.stroke();
-        ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-        
-      }
-    }
-  }
-  if (mode == "picker") {
-    evt.preventDefault();
-    const touches = evt.changedTouches;
-    for (let i = 0; i < touches.length; i++) {
-      const idx = ongoingTouchIndexById(touches[i].identifier);
-      if (idx >= 0) {
-        let x =  touches[i].clientX / zoomFactor - offsetX / zoomFactor
-        let y =  touches[i].clientY / zoomFactor - offsetY / zoomFactor
-        var imageData = context.getImageData(x, y, 1, 1).data;
-        if (imageData[3] > 1) {
-          console.log(imageData);
-          RGBAToHSLA(imageData[0], imageData[1], imageData[2], imageData[3]);
-          setStrokeColor();
+        if (resultado === true) {
+          let win = document.getElementById("canvas_window");
+          if (window.innerWidth > 600) win.style.width = `640px`;
+          win.style.height = `640px`;
+          x2size *= 2;
+          if (x2size > 4) {
+            x2size = 1;
+            win.style.width = `340px`;
+            win.style.height = `340px`;
+          }
+          let W = w * x2size;
+          let H = h * x2size;
+          canvasDiv.style.width = `${W}px`;
+          canvasDiv.style.height = `${H}px`;
+          canvas.width = W;
+          canvas.height = H;
+          alert(
+            `\t\t\t\tNovo tamanho de tela: \n\t\t\tlargura ${W}px e altura ${H}px`
+          );
         }
       }
-    }
-  }
-}
-function handleEnd(evt) {
 
-  if (mode != "zoom" ) {
-    evt.preventDefault();
-    const touches = evt.changedTouches;
-    for (let i = 0; i < touches.length; i++) {
-      let idx = ongoingTouchIndexById(touches[i].identifier);
-      if (idx >= 0) {
-        context.lineWidth = strokeWidth;
-        context.fillStyle = strokeColor;
-        ongoingTouches.splice(idx, 1); // remove it; we're done
-      }
-    }
-  }
+      // pausa na adaptacao funcoes novas ao fim
 
-}
+      document.addEventListener("DOMContentLoaded", startup);
 
-function handleCancel(evt) {
-  if (mode != "zoom") {
-    evt.preventDefault();
-    const touches = evt.changedTouches;
-    for (let i = 0; i < touches.length; i++) {
-      let idx = ongoingTouchIndexById(touches[i].identifier);
-      ongoingTouches.splice(idx, 1); // remove it; we're done
-    }
-  }
-}
-
-function copyTouch({ identifier, clientX, clientY }) {
-  return { identifier, clientX, clientY };
-}
-
-function ongoingTouchIndexById(idToFind) {
-  for (let i = 0; i < ongoingTouches.length; i++) {
-    const id = ongoingTouches[i].identifier;
-    if (id === idToFind) {
-      return i;
-    }
-  }
-  return -1; // not found
-}
-
-function drawLine(context, x1, y1, x2, y2) {
-  context.beginPath();
-  context.strokeStyle = strokeColor;
-  context.lineWidth = stroke;
-  context.lineJoin = linejoin;
-  context.moveTo(x1, y1);
-  context.lineTo(x2, y2);
-  context.closePath();
-  context.stroke();
-}
-
-function clearArea() {
-  context.setTransform(1, 0, 0, 1, 0, 0);
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-}
-
-// By diego
-
-let oldMode = mode;
-function modeTo(qual) {
-  switch (qual) {
-    case mode: //se o modo ja estiver ativo:
-      if (qual == "zoom") {
+      function startup() {
         removeClass();
-        mostraMenu(qual);
-        toggleSelect(qual);
-        cursorColor();
-      } else {
-        mostraMenu(qual);
+        document.getElementById("zoombar").value =
+          zoomScale.indexOf(zoomFactor);
+        canvas.addEventListener("touchstart", handleStart);
+        canvas.addEventListener("touchend", handleEnd);
+        canvas.addEventListener("touchcancel", handleCancel);
+        canvas.addEventListener("touchmove", handleMove);
+        canvas.addEventListener("mousedown", (e) => {
+          x = e.offsetX;
+          y = e.offsetY;
+          if (mode != "picker") {
+            isDrawing = true;
+          }
+        });
+        canvas.addEventListener("mouseenter", (e) => {
+          mouseOver = true;
+        });
+        canvas.addEventListener("mouseout", (e) => {
+          mouseOver = false;
+          setTimeout(() => {
+            if (mouseOver == false) {
+              isDrawing = false;
+            }
+          }, 700);
+        });
+        canvas.addEventListener("mousemove", (e) => {
+          if (isDrawing && mode != "picker") {
+            desenha(context, x, y, e.offsetX, e.offsetY);
+            x = e.offsetX;
+            y = e.offsetY;
+            ultimoToque.y = e.offsetY;
+            ultimoToque.x = e.offsetX;
+            if (mode != "zoom") {
+              removeClass();
+            }
+          }
+        });
+        canvas.addEventListener("mouseup", (e) => {
+          if (isDrawing && mode != "picker") {
+            drawLine(context, x, y, e.offsetX + 1, e.offsetY + 1);
+            x = 0;
+            y = 0;
+            isDrawing = false;
+          } else if (mode == "picker") {
+            x = e.offsetX;
+            y = e.offsetY;
+            var imageData = context.getImageData(x, y, 1, 1).data;
+            if (imageData[3] > 1) {
+              console.log(imageData);
+              RGBAToHSLA(
+                imageData[0],
+                imageData[1],
+                imageData[2],
+                imageData[3]
+              );
+              setStrokeColor();
+            }
+          }
+        });
       }
-      break;
-    case "apagar":
-      removeClass();
-      mode = qual;
-      oldMode = qual;
-      strokeSize(estrokeWidth);
-      context.globalCompositeOperation = "destination-out";
-      document.getElementById("estrokeSize").value = estrokeWidth;
-      cursorColor();
-      toggleSelect(qual);
-      break;
-    case "pintar":
-      removeClass();
-      mode = qual;
-      oldMode = qual;
-      strokeSize(strokeWidth);
-      context.globalCompositeOperation = globalComposite;
-      document.getElementById("strokeSize").value = strokeWidth;
-      toggleSelect(qual);
-      break;
-    case "cores":
-      removeClass();
-      mode = qual;
-      oldMode = qual;
-      context.globalCompositeOperation = globalComposite;
-      strokeSize(strokeWidth);
-      mostraMenu(qual);
-      document.getElementById("strokeSize").value = strokeWidth;
-      toggleSelect(qual);
-    case "fundo":
-      removeClass();
-      mode = qual;
-      oldMode = qual;
-      context.globalCompositeOperation = globalComposite;
-      strokeSize(strokeWidth);
-      mostraMenu(qual);
-      document.getElementById("strokeSize").value = strokeWidth;
-      toggleSelect(qual);
 
-      break;
-    case "zoom":
-      mode = qual;
-      if (zoomFactor == 1) {
-        ZOOM(4);
-      } else {
-        ZOOM(1);
-        setTimeout(
-          () => scrollCanva(-620 * zoomFactor, -620 * zoomFactor),
-          100
+      const RGBAToHSLA = (r, g, b, a) => {
+        r /= 255;
+        g /= 255;
+        b /= 255;
+        a /= 255;
+        const l = Math.max(r, g, b);
+        const s = l - Math.min(r, g, b);
+        const h = s
+          ? l === r
+            ? (g - b) / s
+            : l === g
+            ? 2 + (b - r) / s
+            : 4 + (r - g) / s
+          : 0;
+        const H = Math.floor(60 * h < 0 ? 60 * h + 360 : 60 * h);
+        const S = Math.floor(
+          100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)
         );
-        modeTo(oldMode);
+        const L = Math.floor((100 * (2 * l - s)) / 2);
+        const A = a;
+        hsla[0] = H;
+        hsla[1] = S;
+        hsla[2] = L;
+        hsla[3] = A;
+        return `hsla(${H},${S}%,${L}%,${a})`;
+      };
+
+      function desenha(context, x, y, eoX, eoY) {
+        drawLine(context, x, y, eoX, eoY);
+      }
+      function handleStart(evt) {
+        if (mode != "zoom") {
+          evt.preventDefault();
+          const touches = evt.changedTouches;
+          offsetX = canvas.getBoundingClientRect().left;
+          offsetY = canvas.getBoundingClientRect().top;
+          for (let i = 0; i < touches.length; i++) {
+            ongoingTouches.push(copyTouch(touches[i]));
+          }
+
+          removeClass();
+        }
       }
 
-      break;
-    case "preencher":
-      mode = qual;
-      document.getElementById("preenchercor").style.backgroundColor =
-        strokeColor;
-      context.globalCompositeOperation = globalComposite;
-      removeClass();
-      mostraMenu(qual);
-      toggleSelect(qual);
-      break;
-    case "picker":
-      mode = "picker";
-      removeClass();
-      toggleSelect(qual);
-  }
-  cursorColor();
-  /*  toggleSelect(qual)
+      function handleMove(evt) {
+        if (mode != "zoom" && mode != "picker") {
+          evt.preventDefault();
+          const touches = evt.changedTouches;
+          for (let i = 0; i < touches.length; i++) {
+            const idx = ongoingTouchIndexById(touches[i].identifier);
+            if (idx >= 0) {
+              context.beginPath();
+              context.moveTo(
+                ongoingTouches[idx].clientX / zoomFactor - offsetX / zoomFactor,
+                ongoingTouches[idx].clientY / zoomFactor - offsetY / zoomFactor
+              );
+              ultimoToque.x =
+                touches[i].clientX / zoomFactor - offsetX / zoomFactor;
+              ultimoToque.y =
+                touches[i].clientY / zoomFactor - offsetY / zoomFactor;
+              context.lineTo(ultimoToque.x, ultimoToque.y);
+              context.lineWidth = stroke;
+              context.strokeStyle = strokeColor;
+              context.lineJoin = linejoin;
+              context.closePath();
+              context.stroke();
+              ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
+            }
+          }
+        }
+        if (mode == "picker") {
+          evt.preventDefault();
+          const touches = evt.changedTouches;
+          for (let i = 0; i < touches.length; i++) {
+            const idx = ongoingTouchIndexById(touches[i].identifier);
+            if (idx >= 0) {
+              let x = touches[i].clientX / zoomFactor - offsetX / zoomFactor;
+              let y = touches[i].clientY / zoomFactor - offsetY / zoomFactor;
+              var imageData = context.getImageData(x, y, 1, 1).data;
+              if (imageData[3] > 1) {
+                console.log(imageData);
+                RGBAToHSLA(
+                  imageData[0],
+                  imageData[1],
+                  imageData[2],
+                  imageData[3]
+                );
+                setStrokeColor();
+              }
+            }
+          }
+        }
+      }
+      function handleEnd(evt) {
+        if (mode != "zoom") {
+          evt.preventDefault();
+          const touches = evt.changedTouches;
+          for (let i = 0; i < touches.length; i++) {
+            let idx = ongoingTouchIndexById(touches[i].identifier);
+            if (idx >= 0) {
+              context.lineWidth = strokeWidth;
+              context.fillStyle = strokeColor;
+              ongoingTouches.splice(idx, 1); // remove it; we're done
+            }
+          }
+        }
+      }
+
+      function handleCancel(evt) {
+        if (mode != "zoom") {
+          evt.preventDefault();
+          const touches = evt.changedTouches;
+          for (let i = 0; i < touches.length; i++) {
+            let idx = ongoingTouchIndexById(touches[i].identifier);
+            ongoingTouches.splice(idx, 1); // remove it; we're done
+          }
+        }
+      }
+
+      function copyTouch({ identifier, clientX, clientY }) {
+        return { identifier, clientX, clientY };
+      }
+
+      function ongoingTouchIndexById(idToFind) {
+        for (let i = 0; i < ongoingTouches.length; i++) {
+          const id = ongoingTouches[i].identifier;
+          if (id === idToFind) {
+            return i;
+          }
+        }
+        return -1; // not found
+      }
+
+      function drawLine(context, x1, y1, x2, y2) {
+        context.beginPath();
+        context.strokeStyle = strokeColor;
+        context.lineWidth = stroke;
+        context.lineJoin = linejoin;
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.closePath();
+        context.stroke();
+      }
+
+      function clearArea() {
+        let confirma = confirm(
+          "\t\t\t\t\t Limpar todo o desenho? \n \t\t\t\t\t( ⚠️ impossivel desfazer ⚠️ )"
+        );
+        if (confirma === true) {
+          context.setTransform(1, 0, 0, 1, 0, 0);
+          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        }
+      }
+
+      // By diego
+
+      let oldMode = mode;
+      function modeTo(qual) {
+        switch (qual) {
+          case mode: //se o modo ja estiver ativo:
+            if (qual == "zoom") {
+              removeClass();
+              mostraMenu(qual);
+              toggleSelect(qual);
+              cursorColor();
+            } else {
+              mostraMenu(qual);
+            }
+            break;
+          case "apagar":
+            removeClass();
+            mode = qual;
+            oldMode = qual;
+            strokeSize(estrokeWidth);
+            context.globalCompositeOperation = "destination-out";
+            document.getElementById("estrokeSize").value = estrokeWidth;
+            cursorColor();
+            toggleSelect(qual);
+            break;
+          case "pintar":
+            removeClass();
+            mode = qual;
+            oldMode = qual;
+            strokeSize(strokeWidth);
+            context.globalCompositeOperation = globalComposite;
+            document.getElementById("strokeSize").value = strokeWidth;
+            toggleSelect(qual);
+            break;
+          case "cores":
+            removeClass();
+            mode = qual;
+            oldMode = qual;
+            context.globalCompositeOperation = globalComposite;
+            strokeSize(strokeWidth);
+            mostraMenu(qual);
+            document.getElementById("strokeSize").value = strokeWidth;
+            toggleSelect(qual);
+          case "fundo":
+            removeClass();
+            mode = qual;
+            oldMode = qual;
+            context.globalCompositeOperation = globalComposite;
+            strokeSize(strokeWidth);
+            mostraMenu(qual);
+            document.getElementById("strokeSize").value = strokeWidth;
+            toggleSelect(qual);
+
+            break;
+          case "zoom":
+            mode = qual;
+            if (zoomFactor == 1) {
+              ZOOM(4);
+            } else {
+              ZOOM(1);
+              setTimeout(
+                () => scrollCanva(-620 * zoomFactor, -620 * zoomFactor),
+                100
+              );
+              modeTo(oldMode);
+            }
+            break;
+          case "preencher":
+            mode = qual;
+            document.getElementById("preenchercor").style.backgroundColor =
+              strokeColor;
+            context.globalCompositeOperation = globalComposite;
+            removeClass();
+            mostraMenu(qual);
+            toggleSelect(qual);
+            break;
+          case "picker":
+            mode = "picker";
+            removeClass();
+            toggleSelect(qual);
+        }
+        cursorColor();
+        /*  toggleSelect(qual)
   mostraMenu(qual)
   */
-}
-
-function toggleSelect(id) {
-  removeClass("selected");
-  document.getElementById(id).classList.toggle("selected");
-}
-
-function mostraMenu(id) {
-  let quem = document.getElementById("menu" + id);
-  quem.classList.toggle("aparece");
-}
-
-function removeClass(qual = "aparece") {
-  //pega quem tem e remove
-  Array.from(document.querySelectorAll(`.${qual}`)).forEach(function (el) {
-    el.classList.remove(`${qual}`);
-  });
-}
-
-// Pinceis Cor e Tamanho
-
-function criaPaleta() {
-  i = 1;
-  let paleta = "";
-  while (i < 24) {
-    let cor = Math.floor(
-      (document.getElementById("H").value * 2 + i * 2) % 360
-    );
-    //    let cor = document.getElementById("H").value - (i*3)
-    paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]}%,${
-      hsla[2]
-    }%,${hsla[3]})")' class='bloquinho' style='background-color:hsla(${cor},${
-      hsla[1]
-    }%,${hsla[2]}%,${hsla[3] * 2 + 0.2});'> </span>`;
-    i++;
-  }
-  document.getElementById("paleta").innerHTML = paleta;
-  document.getElementById(
-    "paleta"
-  ).innerHTML += `<span onmousedown='mudaCor("B")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`;
-  document.getElementById(
-    "paleta"
-  ).innerHTML += `<br /><span onmousedown='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`;
-}
-function criaPaleta2() {
-  let paleta = "";
-  let quantas = favoritas.length;
-  for (i = 0; i < quantas; i++) {
-    paleta += `<span onmousedown='mudaCor("${favoritas[i]}")' class='bloquinho' style='background-color:${favoritas[i]};'> </span>`;
-  }
-  document.getElementById("paleta2").innerHTML = paleta;
-}
-
-function strokeSize(value) {
-  let brushes = ["mostraCor2", "cursor"];
-  for (i in brushes) {
-    let tamanho = document.getElementById(brushes[i]);
-    if (mode == "pintar") {
-      strokeWidth = value;
-      tamanho.style.width = strokeWidth * zoomFactor + "px";
-      tamanho.style.height = strokeWidth * zoomFactor + "px";
-      tamanho.style.marginTop = (strokeWidth / 2) * zoomFactor * -1 + "px";
-      tamanho.style.marginLeft = (strokeWidth * zoomFactor * -1) / 2 + "px";
-      if (i == 0) {
-        tamanho.style.backgroundColor = strokeColor;
       }
-      stroke = strokeWidth;
-      document.getElementById("tpx").value = value;
-    } else if (mode == "apagar") {
-      estrokeWidth = value;
-      tamanho.style.width = estrokeWidth * zoomFactor + "px";
-      tamanho.style.height = estrokeWidth * zoomFactor + "px";
-      tamanho.style.marginTop = (estrokeWidth / 2) * zoomFactor * -1 + "px";
-      tamanho.style.marginLeft = (estrokeWidth * zoomFactor * -1) / 2 + "px";
-      stroke = estrokeWidth;
-      document.getElementById("tpx2").value = value;
-    }
-  }
-}
 
-function backPaint() {
-  if (globalComposite != "destination-over") {
-    globalComposite = "destination-over";
-    document.getElementById(
-      "globalComposite"
-    ).innerHTML = `<span style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span><span style="position:relative; float:left; width:30px; display:block; color:black; left:2px; margin-top:0px;" title="Pintar por baixo">🔲</span>`;
-  } else {
-    globalComposite = "source-over";
-    document.getElementById(
-      "globalComposite"
-    ).innerHTML = `<span style="position:absolute; float:right; width:32px; display:block; padding-top: 0px; margin-left:2px;">🔲</span> <span style="color:white; position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
-  }
-  document.getElementById("cursor").classList.toggle("cursorIndex");
-  document.getElementById("cursor").classList.toggle("selected");
-  return (context.globalCompositeOperation = globalComposite);
-}
+      function toggleSelect(id) {
+        removeClass("selected");
+        document.getElementById(id).classList.toggle("selected");
+      }
 
-function mudaCorBG(cor) {
-  if (cor === "strokeColor") {
-    cor = strokeColor;
-  }
-  if (context.globalCompositeOperation != "destination-out") {
-    context.fillStyle = cor;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-  }
-}
+      function mostraMenu(id) {
+        let quem = document.getElementById("menu" + id);
+        quem.classList.toggle("aparece");
+      }
 
-function mudaCorQ(q = 0, valor) {
-  hsla[q] = Number(valor);
-  setStrokeColor();
-  criaPaleta();
-}
-function salvaCor() {
-  if (!favoritas.includes(strokeColor)) {
-    favoritas.push(strokeColor);
-  } else {
-    favoritas = favoritas.filter((item) => item !== strokeColor);
-  }
-  setTimeout(criaPaleta2(), 20);
-}
+      function removeClass(qual = "aparece") {
+        //pega quem tem e remove
+        Array.from(document.querySelectorAll(`.${qual}`)).forEach(function (
+          el
+        ) {
+          el.classList.remove(`${qual}`);
+        });
+      }
 
-criaPaleta();
-function setStrokeColor() {
-  strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-  document.getElementById("mostraCor").style.backgroundColor = strokeColor;
-  document.getElementById("mostraCor2").style.backgroundColor = strokeColor;
-  document.getElementById("pintar").style.backgroundColor = strokeColor;
-}
-setStrokeColor();
+      // Pinceis Cor e Tamanho
 
-function mudaCor(valor) {
-  if (valor == "P") {
-    strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
-    document.getElementById("mostraCor").style.color = strokeColor;
+      function criaPaleta() {
+        i = 1;
+        let paleta = "";
+        while (i < 24) {
+          let cor = Math.floor(
+            (document.getElementById("H").value * 2 + i * 2) % 360
+          );
+          //    let cor = document.getElementById("H").value - (i*3)
+          paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]}%,${
+            hsla[2]
+          }%,${
+            hsla[3]
+          })")' class='bloquinho' style='background-color:hsla(${cor},${
+            hsla[1]
+          }%,${hsla[2]}%,${hsla[3] * 2 + 0.2});'> </span>`;
+          i++;
+        }
+        document.getElementById("paleta").innerHTML = paleta;
+        document.getElementById(
+          "paleta"
+        ).innerHTML += `<span onmousedown='mudaCor("B")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`;
+        document.getElementById(
+          "paleta"
+        ).innerHTML += `<br /><span onmousedown='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`;
+      }
+      function criaPaleta2() {
+        let paleta = "";
+        let quantas = favoritas.length;
+        for (i = 0; i < quantas; i++) {
+          paleta += `<span onmousedown='mudaCor("${favoritas[i]}")' class='bloquinho' style='background-color:${favoritas[i]};'> </span>`;
+        }
+        document.getElementById("paleta2").innerHTML = paleta;
+      }
 
-    //     document.getElementById("menu").style.visibility = "hidden";
-  } else if (valor == "B") {
-    strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
-    document.getElementById("mostraCor").style.color = strokeColor;
-    //     document.getElementById("menu").style.visibility = "hidden";
-  } else {
-    strokeColor = valor;
-    //     document.getElementById("menu").style.visibility = "hidden";
-    cursorColor();
-  }
-  document.getElementById("mostraCor").style.backgroundColor = strokeColor;
-  document.getElementById("mostraCor2").style.backgroundColor = strokeColor;
-  document.getElementById("pintar").style.backgroundColor = strokeColor;
+      function strokeSize(value) {
+        let brushes = ["mostraCor2", "cursor"];
+        for (i in brushes) {
+          let tamanho = document.getElementById(brushes[i]);
+          if (mode == "pintar") {
+            strokeWidth = value;
+            tamanho.style.width = strokeWidth * zoomFactor + "px";
+            tamanho.style.height = strokeWidth * zoomFactor + "px";
+            tamanho.style.marginTop =
+              (strokeWidth / 2) * zoomFactor * -1 + "px";
+            tamanho.style.marginLeft =
+              (strokeWidth * zoomFactor * -1) / 2 + "px";
+            if (i == 0) {
+              tamanho.style.backgroundColor = strokeColor;
+            }
+            stroke = strokeWidth;
+            document.getElementById("tpx").value = value;
+          } else if (mode == "apagar") {
+            estrokeWidth = value;
+            tamanho.style.width = estrokeWidth * zoomFactor + "px";
+            tamanho.style.height = estrokeWidth * zoomFactor + "px";
+            tamanho.style.marginTop =
+              (estrokeWidth / 2) * zoomFactor * -1 + "px";
+            tamanho.style.marginLeft =
+              (estrokeWidth * zoomFactor * -1) / 2 + "px";
+            stroke = estrokeWidth;
+            document.getElementById("tpx2").value = value;
+          }
+        }
+      }
 
-  const toHslaObject = (hslaStr) => {
-    const [hue, saturation, lightness, alpha] = hslaStr
-      .match(/[\d\.]+/g)
-      .map(Number);
-    document.getElementById("H").value = hue;
-    document.getElementById("S").value = saturation;
-    document.getElementById("L").value = lightness;
-    document.getElementById("A").value = alpha;
-    document.getElementById("A2").value = alpha;
-    document.getElementById("A3").value = alpha;
-    hsla[0] = hue;
-    hsla[1] = saturation;
-    hsla[2] = lightness;
-    hsla[3] = alpha;
-  };
-  toHslaObject(strokeColor);
-  setStrokeColor();
-}
+      function backPaint() {
+        if (globalComposite != "destination-over") {
+          globalComposite = "destination-over";
+          document.getElementById(
+            "globalComposite"
+          ).innerHTML = `<span style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span><span style="position:relative; float:left; width:30px; display:block; color:black; left:2px; margin-top:0px;" title="Pintar por baixo">🔲</span>`;
+        } else {
+          globalComposite = "source-over";
+          document.getElementById(
+            "globalComposite"
+          ).innerHTML = `<span style="position:absolute; float:right; width:32px; display:block; padding-top: 0px; margin-left:2px;">🔲</span> <span style="color:white; position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
+        }
+        document.getElementById("cursor").classList.toggle("cursorIndex");
+        document.getElementById("cursor").classList.toggle("selected");
+        return (context.globalCompositeOperation = globalComposite);
+      }
 
-// Save | Download image from stackoverflow
+      function mudaCorBG(cor) {
+        if (cor === "strokeColor") {
+          cor = strokeColor;
+        }
+        if (context.globalCompositeOperation != "destination-out") {
+          context.fillStyle = cor;
+          context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+      }
 
-// Convert canvas to image
-document.getElementById("btn-download").addEventListener("click", function (e) {
-  //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-  var dataURL = canvas
-    .toDataURL("image/png")
-    .replace("image/png", "image/octet-stream");
-  //downloadImage(dataURL, 'my-canvas.jpeg');
-  downloadImage(dataURL, "desenho.png");
-});
+      function mudaCorQ(q = 0, valor) {
+        hsla[q] = Number(valor);
+        setStrokeColor();
+        criaPaleta();
+      }
+      function salvaCor() {
+        if (!favoritas.includes(strokeColor)) {
+          favoritas.push(strokeColor);
+        } else {
+          favoritas = favoritas.filter((item) => item !== strokeColor);
+        }
+        setTimeout(criaPaleta2(), 20);
+      }
 
-//function downloadImage(data, filename = 'untitled.jpeg') {
-function downloadImage(data, filename = "untitled.png") {
-  var a = document.createElement("a");
-  a.href = data;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-}
+      criaPaleta();
 
-function changeLine() {
-  lineJoinsCount++;
-  if (lineJoinsCount > 1) {
-    lineJoinsCount = 0;
-  }
-  linejoin = lineJoins[lineJoinsCount];
-  if (lineJoinsCount != 0) {
-    document.getElementById("line").innerHTML = " ➕";
-    document.getElementById("line2").innerHTML = " ➕";
-  } else {
-    document.getElementById("line").innerHTML = " ⚫";
-    document.getElementById("line2").innerHTML = " ⚫";
-  }
-}
+      function setStrokeColor() {
+        strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+        let objs = [
+          "mostraCor",
+          "salvaCor",
+          "mostraCor2",
+          "pintar",
+          "cores",
+          "picker",
+        ];
+        let quantos = objs.length;
+        for (i = 0; i < quantos; i++) {
+          document.getElementById(objs[i]).style.backgroundColor = strokeColor;
+        }
+      }
+      setStrokeColor();
 
-////// ZOOM and scroling
+      function mudaCor(valor) {
+        if (valor == "P") {
+          strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
+          document.getElementById("mostraCor").style.color = strokeColor;
 
-function setZoom(zoom, el) {
-  transformOrigin = [0, 0];
-  el = el || instance.getContainer();
-  var p = ["webkit", "moz", "ms", "o"],
-    s = "scale(" + zoom + ")",
-    oString = transformOrigin[0] * 100 + "% " + transformOrigin[1] * 100 + "%";
+          //     document.getElementById("menu").style.visibility = "hidden";
+        } else if (valor == "B") {
+          strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
+          document.getElementById("mostraCor").style.color = strokeColor;
+          //     document.getElementById("menu").style.visibility = "hidden";
+        } else {
+          strokeColor = valor;
+          //     document.getElementById("menu").style.visibility = "hidden";
+          cursorColor();
+        }
+        document.getElementById("mostraCor").style.backgroundColor =
+          strokeColor;
+        document.getElementById("mostraCor2").style.backgroundColor =
+          strokeColor;
+        document.getElementById("pintar").style.backgroundColor = strokeColor;
 
-  for (var i = 0; i < p.length; i++) {
-    el.style[p[i] + "Transform"] = s;
-    el.style[p[i] + "TransformOrigin"] = oString;
-  }
+        const toHslaObject = (hslaStr) => {
+          const [hue, saturation, lightness, alpha] = hslaStr
+            .match(/[\d\.]+/g)
+            .map(Number);
+          document.getElementById("H").value = hue;
+          document.getElementById("S").value = saturation;
+          document.getElementById("L").value = lightness;
+          document.getElementById("A").value = alpha;
+          document.getElementById("A2").value = alpha;
+          document.getElementById("A3").value = alpha;
+          hsla[0] = hue;
+          hsla[1] = saturation;
+          hsla[2] = lightness;
+          hsla[3] = alpha;
+        };
+        toHslaObject(strokeColor);
+        setStrokeColor();
+      }
+      // Save | Download image from stackoverflow
+      // Convert canvas to image
+      document
+        .getElementById("btn-download")
+        .addEventListener("click", function (e) {
+          //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+          let nome = prompt("nome da arte:", "desenho");
+          if (nome != null && nome != "") {
+            var dataURL = canvas
+              .toDataURL("image/png")
+              .replace("image/png", "image/octet-stream");
+            //downloadImage(dataURL, 'my-canvas.jpeg');
+            downloadImage(dataURL, `${nome}.png`);
+          }
+        });
+      //function downloadImage(data, filename = 'untitled.jpeg') {
+      function downloadImage(data, filename = "untitled.png") {
+        var a = document.createElement("a");
+        a.href = data;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+      }
+      function changeLine() {
+        lineJoinsCount++;
+        if (lineJoinsCount > 1) {
+          lineJoinsCount = 0;
+        }
+        linejoin = lineJoins[lineJoinsCount];
+        if (lineJoinsCount != 0) {
+          document.getElementById("line").innerHTML = " ➕";
+          document.getElementById("line2").innerHTML = " ➕";
+        } else {
+          document.getElementById("line").innerHTML = " ⚫";
+          document.getElementById("line2").innerHTML = " ⚫";
+        }
+      }
+      ////// ZOOM and scroling
+      function setZoom(zoom, el) {
+        transformOrigin = [0, 0];
+        el = el || instance.getContainer();
+        var p = ["webkit", "moz", "ms", "o"],
+          s = "scale(" + zoom + ")",
+          oString =
+            transformOrigin[0] * 100 + "% " + transformOrigin[1] * 100 + "%";
 
-  el.style["transform"] = s;
-  el.style["transformOrigin"] = oString;
-}
+        for (var i = 0; i < p.length; i++) {
+          el.style[p[i] + "Transform"] = s;
+          el.style[p[i] + "TransformOrigin"] = oString;
+        }
 
-function ZOOMf(a) {
-  let escala = zoomScale[a];
-  ZOOM(escala);
-}
-function ZOOM(a) {
-  setZoom(1, canvasDiv);
-  resetCanva();
-  setTimeout(function () {
-    document.getElementById("canvas_window").scrollTop = 0;
-    document.getElementById("canvas_window").scrollLeft = 0;
-  }, 0);
-  zoomFactor = Number(a);
-  setTimeout(
-    () =>
-      scrollCanva(
-        ultimoToque.x * zoomFactor - 150,
-        ultimoToque.y * zoomFactor - 150
-      ),
-    202
-  );
-  setTimeout(() => setZoom(zoomFactor, canvasDiv), 20);
+        el.style["transform"] = s;
+        el.style["transformOrigin"] = oString;
+      }
 
-  strokeSize(strokeWidth);
-  document.getElementById("tzoom").value = zoomFactor;
-  document.getElementById("zoombar").value = zoomScale.indexOf(zoomFactor);
-}
+      function ZOOMf(a) {
+        let escala = zoomScale[a];
+        ZOOM(escala);
+      }
+      function ZOOM(a) {
+        setZoom(1, canvasDiv);
+        resetCanva();
+        setTimeout(function () {
+          document.getElementById("canvas_window").scrollTop = 0;
+          document.getElementById("canvas_window").scrollLeft = 0;
+        }, 0);
+        zoomFactor = Number(a);
+        setTimeout(
+          () =>
+            scrollCanva(
+              ultimoToque.x * zoomFactor - 150,
+              ultimoToque.y * zoomFactor - 150
+            ),
+          202
+        );
+        setTimeout(() => setZoom(zoomFactor, canvasDiv), 20);
 
-function scrollCanva(x, y) {
-  document.getElementById("canvas_window").scrollTop += y;
-  document.getElementById("canvas_window").scrollLeft += x;
-}
-function resetCanva() {
-  let objects = ["canvas_window", "canvas_div"];
-  for (i in objects.length) {
-    document.getElementById(objects[i]).style.width = "320px";
-    document.getElementById(objects[i]).style.height = "320px";
-  }
-}
+        strokeSize(strokeWidth);
+        document.getElementById("tzoom").value = zoomFactor;
+        document.getElementById("zoombar").value =
+          zoomScale.indexOf(zoomFactor);
+      }
 
-// cursor area //
+      function scrollCanva(x, y) {
+        document.getElementById("canvas_window").scrollTop += y;
+        document.getElementById("canvas_window").scrollLeft += x;
+      }
+      function resetCanva() {
+        let objects = ["canvas_window", "canvas_div"];
+        for (i in objects.length) {
+          document.getElementById(objects[i]).style.width = "320px";
+          document.getElementById(objects[i]).style.height = "320px";
+        }
+      }
 
-function cursorMove(e) {
-  var x = e.clientX;
-  var y = e.clientY;
-  cursor.style.left = x + "px";
-  cursor.style.top = y + "px";
-  document.body.style.cursor = "none";
-}
-function mostra() {
-  document.body.style.cursor = "pointer";
-}
+      // cursor area //
 
-function cursorColor() {
-  switch (mode) {
-    case "apagar":
-      document.getElementById("cursor").style.borderColor = "#cccccccc";
-      document.getElementById("cursor").innerHTML = "";
-      break;
-    case "pintar":
-      document.getElementById("cursor").style.borderColor = strokeColor;
-      document.getElementById("cursor").innerHTML = "";
-      break;
-    case "zoom":
-      document.getElementById("cursor").innerHTML = "🔎";
-      break;
-    case "picker":
-      document.getElementById("cursor").innerHTML = "🧫";
-      break;
-    default:
-      document.getElementById("cursor").innerHTML = "";
-      document.getElementById("cursor").style.borderColor = strokeColor;
-  }
-}
+      function cursorMove(e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        cursor.style.left = x + "px";
+        cursor.style.top = y + "px";
+        document.body.style.cursor = "none";
+      }
+      function mostra() {
+        document.body.style.cursor = "pointer";
+      }
 
-function Fundo(qual) {
-  if (qual === "img") {
-    var item = prompt(
-      "endereço da imagem de fundo",
-      "https://pbs.twimg.com/profile_images/1532631961860247555/UeY1CMQF_400x400.jpg"
-    );
-    if (item == null || item == "") {
-      alert("fundo do app removido");
-      canvasDiv.style.backgroundImage = `none`;
-    } else {
-      canvasDiv.style.backgroundImage = `url(${item})`;
-    }
-  } else if (qual === "black") {
-    canvasDiv.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
-  } else if (qual === "white") {
-    canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
-  } else if (qual === "none") {
-    canvasDiv.style.backgroundImage = `none`;
-    canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
-  } else {
-    canvasDiv.style.backgroundImage = `url(${qual})`;
-  }
-}
-function pixel() {
-  document.getElementById("canvas").classList.toggle("smooth");
-}
-
-</script>
-
-
-</body>
+      function cursorColor() {
+        switch (mode) {
+          case "apagar":
+            document.getElementById("cursor").style.borderColor = "#cccccccc";
+            document.getElementById("cursor").innerHTML = "";
+            break;
+          case "pintar":
+            document.getElementById("cursor").style.borderColor = strokeColor;
+            document.getElementById("cursor").innerHTML = "";
+            break;
+          case "zoom":
+            document.getElementById("cursor").innerHTML = "🔎";
+            break;
+          case "picker":
+            document.getElementById("cursor").innerHTML = "💉";
+            break;
+          default:
+            document.getElementById("cursor").innerHTML = "";
+            document.getElementById("cursor").style.borderColor = strokeColor;
+        }
+      }
+      function Fundo(qual) {
+        if (qual === "img") {
+          var item = prompt(
+            "endereço da imagem de fundo",
+            "https://pbs.twimg.com/profile_images/1532631961860247555/UeY1CMQF_400x400.jpg"
+          );
+          if (item == null || item == "") {
+            alert("fundo do app removido");
+            canvasDiv.style.backgroundImage = `none`;
+          } else {
+            canvasDiv.style.backgroundImage = `url(${item})`;
+          }
+        } else if (qual === "black") {
+          canvasDiv.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
+        } else if (qual === "white") {
+          canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
+        } else if (qual === "none") {
+          canvasDiv.style.backgroundImage = `none`;
+          canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
+        } else {
+          canvasDiv.style.backgroundImage = `url(${qual})`;
+        }
+      }
+      function pixel() {
+        document.getElementById("canvas").classList.toggle("smooth");
+      }
+    </script>
+  </body>
 </html>
