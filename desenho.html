@@ -32,7 +32,6 @@
         height: 320px;
         background-color: #ffffff22;
         overflow-y: hidden;
-        image-rendering: pixelated;
       }
       #canvas_window {
         overflow: scroll;
@@ -80,9 +79,9 @@
       .submenu {
         position: absolute;
         display: block;
-        top: 50px;
+        top: 54px;
         width: 280px;
-        height: 60px;
+        height: 80px;
         padding: 8px;
         z-index: 3;
         visibility: hidden;
@@ -101,6 +100,8 @@
       .fundobranco2 {
         min-height: 12px;
         display: inline-block;
+        float: left;
+        margin: 4px 4px 0px 4px;
       }
       .bloquinho {
         margin: 4px;
@@ -201,8 +202,8 @@
       #canvas {
         background-color: #ffffff55;
       }
-      .smooth {
-        image-rendering: optimizeQuality;
+      .pixel {
+        image-rendering: pixelated;
       }
       input[type="range"][orient="vertical"] {
         writing-mode: bt-lr; /* IE */
@@ -229,13 +230,40 @@
         height: 80vw;
       }
     </style>
-    <title>Desenha 0.4.2a 2xCanva</title>
+    <title>Diego Desenha 0.4.4</title>
   </head>
   <body class="naotoque">
     <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
       <div id="menus">
         <div id="menupicker" class="submenu fundobranco" class="naotoque">
-          toque na sua arte para capturar uma cor
+          Toque numa área pintada<br />
+          para capturar uma cor
+        </div>
+        <div
+          id="menuinfo"
+          class="submenu fundobranco"
+          class="naotoque"
+          style="height: 300px"
+        >
+          <small
+            >Diego Desenha 0.4.4<br />
+            maozinha <br />
+            novidades <br />
+            - Aumento do tamanho da tela <br />
+            - zoom sem menu e maozinha<br />
+            - nome do arquivo pra salvar<br />
+            - função pixel (óculos) mais perceptivel com zoom<br />
+            cc:
+            <a
+              href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/"
+              target="_blank"
+            >
+              lei mao</a
+            >
+            e
+            <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a
+            ><br
+          /></small>
         </div>
         <div id="menupintar" class="fundobranco submenu">
           <span
@@ -333,7 +361,9 @@
 
         <div id="menucores" class="fundobranco submenu">
           <div id="paleta" class="fundobranco"></div>
-          <div id="paleta2" class="fundobranco"></div>
+          <div id="paleta2" class="fundobranco">
+            <br />use o 📌 para guardar <br />ou remover suas cores daqui.
+          </div>
           <div id="menu" class="fundobranco" onmouseover="mostra()">
             🌈◒🔆💧<br />
             <input
@@ -483,9 +513,7 @@
             value="1"
             step="1"
             onchange="ZOOMf(this.value)"
-          /><br />
-          <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
-
+          />
           <input
             id="tzoom"
             type="number"
@@ -567,14 +595,7 @@
             class="bloquinho"
             >🪣</span
           >
-          <span
-            id="fundo"
-            title="Fundo falso"
-            class="bloquinho"
-            onmousedown='modeTo("fundo")'
-            >🖼️</span
-          >
-          <span><a id="btn-download" class="bloquinho"> 📥</a></span>
+          <span class="bloquinho" onclick="x2()">📐</span>
           <span class="bloquinho" onmousedown="clearArea()">🗑</span>
         </div>
       </div>
@@ -591,7 +612,6 @@
         <div id="canvas_div" style="overflow: hidden">
           <canvas
             id="canvas"
-            class="smooth"
             width="320px"
             height="320px"
             onmousemove="cursorMove(event)"
@@ -602,31 +622,35 @@
         </div>
       </div>
       <div
-        id="creditos"
+        id="ferramentas2"
         class="fundobranco naotoque"
         style="width: 280px; margin: auto"
       >
-        <small>
-          <span class="bloquinho" onclick="x2()">2x</span>
-          <span
-            id="zoom"
-            title="Ampliar"
-            class="bloquinho"
-            onmousedown='modeTo("zoom")'
-            >🔎</span
-          >
-          <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
-          cc:
-          <a
-            href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/"
-            target="_blank"
-          >
-            lei mao</a
-          >
-          e
-          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a>
-          v0.4.3c</small
+        <span class="bloquinho" id="x1" style="font-size: 0.9em">1x</span>
+        <span
+          id="zoom"
+          title="Ampliar"
+          class="bloquinho"
+          onmousedown='modeTo("zoom")'
+          >🔎</span
         >
+        <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
+        <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
+        <span
+          id="fundo"
+          title="Fundo falso"
+          class="bloquinho"
+          onmousedown='modeTo("fundo")'
+          >🖼️</span
+        >
+        <span
+          id="info"
+          title="Fundo falso"
+          class="bloquinho"
+          onmousedown='modeTo("info")'
+          >ℹ️</span
+        >
+        <span><a id="btn-download" class="bloquinho"> 📥</a></span>
       </div>
     </div>
 
@@ -634,6 +658,7 @@
       const canvas = document.getElementById("canvas");
       const context = canvas.getContext("2d");
       let isDrawing = false;
+      let isGrabing = false;
       let x = 0;
       let y = 0;
       var offsetX;
@@ -658,10 +683,11 @@
       var ultimoToque = { x: 160, y: 160 };
       var zoomFactor = 1;
       var zoomScale = [0.5, 1, 2, 4];
+      var zoomIndex = 1;
       var mouseOver = false;
       var layer1 = [];
       var x2size = 1;
-
+      const cursor = document.getElementById("cursor");
       document.addEventListener("keydown", function (event) {
         if (event.ctrlKey && event.key === "z") {
           alert("Não existe isso de voltar no tempo. Pratique o desapego.");
@@ -670,10 +696,10 @@
 
       function x2(w = 320, h = 320) {
         var resultado = confirm(
-          "\t\t\t\tDuplicar o tamanho da tela? \n" +
-            "\t\t\t( ⚠️ Atenção! Tudo será apagado ⚠️ )\n\n" +
+          "\t\t\t\t📐 Deseja duplicar o tamanho da tela? \n" +
+            "\t\t\t\t( ⚠️ Atenção, tudo será apagado! ⚠️ )\n\n" +
             "\t\t\t\t\t Formatos disponiveis: \n" +
-            "\t\t\t320x320px - 640x640px - 1280x1280px"
+            "\t\t\t320 x 320px -> 640 x 640px -> 1280 x 1280px"
         );
         if (resultado === true) {
           let win = document.getElementById("canvas_window");
@@ -692,9 +718,10 @@
           canvas.width = W;
           canvas.height = H;
           alert(
-            `\t\t\t\t\t\t\tNovo tamanho de tela:` +
-              ` \t\t\n\t\t\tlargura ${W}px e altura ${H}px` +
-              `\t\t\t\t\t utilize a lupa 🔎 para navegar pela tela`
+            `\t\t\t\tNovo tamanho de tela:\n` +
+              ` \t\t\t\t\t ${W}px por ${H}px\n\n` +
+              `\t\t\t\t utilize a lupa 🔎 para zoom \n` +
+              `\t\t\t e a mão 🖐 para navegar pela tela`
           );
         }
       }
@@ -703,9 +730,10 @@
           oldMode = mode;
           mode = "zoom";
           toggleSelect("hand");
+          cursorColor("zoom");
         } else {
-          mode = oldMode;
-          toggleSelect(mode);
+          modeTo(oldMode);
+          cursorColor(oldMode);
         }
       }
       // pausa na adaptacao funcoes novas ao fim
@@ -723,9 +751,12 @@
         canvas.addEventListener("mousedown", (e) => {
           x = e.offsetX;
           y = e.offsetY;
-          if (mode != "picker") {
+          if (mode != "picker" && mode != "zoom") {
             isDrawing = true;
+          } else if (mode == "zoom") {
+            isGrabing = true;
           }
+          removeClass();
         });
         canvas.addEventListener("mouseenter", (e) => {
           mouseOver = true;
@@ -735,20 +766,23 @@
           setTimeout(() => {
             if (mouseOver == false) {
               isDrawing = false;
+              isGrabing = false;
             }
-          }, 700);
+          }, 600);
         });
         canvas.addEventListener("mousemove", (e) => {
+          ultimoToque.y = e.offsetY;
+          ultimoToque.x = e.offsetX;
           if (isDrawing && mode != "picker") {
             desenha(context, x, y, e.offsetX, e.offsetY);
-            x = e.offsetX;
-            y = e.offsetY;
-            ultimoToque.y = e.offsetY;
-            ultimoToque.x = e.offsetX;
-            if (mode != "zoom") {
-              removeClass();
-            }
+          } else if (isGrabing) {
+            scrollCanva(
+              (x - ultimoToque.x) * zoomFactor,
+              (y - ultimoToque.y) * zoomFactor
+            );
           }
+          x = e.offsetX;
+          y = e.offsetY;
         });
         canvas.addEventListener("mouseup", (e) => {
           if (isDrawing && mode != "picker") {
@@ -770,6 +804,8 @@
               );
               setStrokeColor();
             }
+          } else if (mode == "zoom") {
+            isGrabing = false;
           }
         });
       }
@@ -933,14 +969,24 @@
       let oldMode = mode;
       function modeTo(qual) {
         switch (qual) {
+          case "zoom":
+            zoomIndex++;
+            if (zoomIndex > 3) {
+              zoomIndex = 0;
+            }
+            ZOOMf(zoomIndex);
+            setTimeout(function () {
+              document.getElementById("x1").innerHTML = zoomFactor + "x";
+              scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
+            }, 20);
+            cursorColor();
+            toggleSelect(qual);
+            mode = qual;
+            break;
           case mode: //se o modo ja estiver ativo:
-            if (qual == "zoom") {
-              removeClass();
-              mostraMenu(qual);
-              toggleSelect(qual);
-              cursorColor();
-            } else {
-              mostraMenu(qual);
+            mostraMenu(qual);
+            if (qual == "info") {
+              modeTo(oldMode);
             }
             break;
           case "apagar":
@@ -982,19 +1028,7 @@
             toggleSelect(qual);
 
             break;
-          case "zoom":
-            mode = qual;
-            if (zoomFactor == 1) {
-              ZOOM(4);
-            } else {
-              ZOOM(1);
-              setTimeout(
-                () => scrollCanva(-620 * zoomFactor, -620 * zoomFactor),
-                100
-              );
-              modeTo(oldMode);
-            }
-            break;
+
           case "preencher":
             mode = qual;
             document.getElementById("preenchercor").style.backgroundColor =
@@ -1008,6 +1042,13 @@
             mode = "picker";
             removeClass();
             toggleSelect(qual);
+            break;
+          case "info":
+            mode = "info";
+            removeClass();
+            mostraMenu(qual);
+            toggleSelect(qual);
+            break;
         }
         cursorColor();
         /*  toggleSelect(qual)
@@ -1113,8 +1154,8 @@
             "globalComposite"
           ).innerHTML = `<span style="position:absolute; float:right; width:32px; display:block; padding-top: 0px; margin-left:2px;">🔲</span> <span style="color:white; position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
         }
-        document.getElementById("cursor").classList.toggle("cursorIndex");
-        document.getElementById("cursor").classList.toggle("selected");
+        cursor.classList.toggle("cursorIndex");
+        cursor.classList.toggle("selected");
         return (context.globalCompositeOperation = globalComposite);
       }
 
@@ -1311,22 +1352,22 @@
       function cursorColor() {
         switch (mode) {
           case "apagar":
-            document.getElementById("cursor").style.borderColor = "#cccccccc";
-            document.getElementById("cursor").innerHTML = "";
+            cursor.style.borderColor = "#cccccccc";
+            cursor.innerHTML = "";
             break;
           case "pintar":
-            document.getElementById("cursor").style.borderColor = strokeColor;
-            document.getElementById("cursor").innerHTML = "";
+            cursor.style.borderColor = strokeColor;
+            cursor.innerHTML = "";
             break;
           case "zoom":
-            document.getElementById("cursor").innerHTML = "🔎";
+            cursor.innerHTML = "🖐";
             break;
           case "picker":
-            document.getElementById("cursor").innerHTML = "💉";
+            cursor.innerHTML = "💉";
             break;
           default:
-            document.getElementById("cursor").innerHTML = "";
-            document.getElementById("cursor").style.borderColor = strokeColor;
+            cursor.innerHTML = "";
+            cursor.style.borderColor = strokeColor;
         }
       }
       function Fundo(qual) {
@@ -1353,7 +1394,8 @@
         }
       }
       function pixel() {
-        document.getElementById("canvas").classList.toggle("smooth");
+        canvas.classList.toggle("pixel");
+        canvasDiv.classList.toggle("pixel");
       }
     </script>
   </body>
