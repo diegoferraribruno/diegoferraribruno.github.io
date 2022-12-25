@@ -67,16 +67,16 @@ background-image: url("./grid.png");
 .submenu{
   position: absolute;
   display: block;
-  top:42px;
+  top:50px;
   width: 280px;
-  height: 68px;
+  height: 60px;
   padding: 8px;
   z-index: 3;
   visibility: hidden;
 }
 .fundobranco{
   margin: 2px;
-  height: 30px;
+  min-height: 32px;
   background-color: #eeeeee66;
   border-radius: 20px;
   border-style: solid;
@@ -206,6 +206,68 @@ input[type=range][orient=vertical]{
   width: 300px;
   margin-left: 4px;
 }
+input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  border-radius:10px;
+  box-shadow:0px 0px 5px 5px gainsboro;
+  background: #4776e6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #e4e4e4,
+    #1949b9
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #e2e2e2,
+    #1949b9
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 10px;
+  width: 10px;
+}input[type="range"]:focus {
+  outline: none;
+}input[type="range"]::-moz-range-track {
+  -moz-appearance: none;
+  background: rgb(187, 187, 187);
+  background: -moz-linear-gradient(
+    45deg,
+    rgb(221, 221, 221) 0%,
+    rgb(30, 41, 97) 100%,
+  );
+  background: -webkit-gradient(
+    left bottom,
+    right top,
+    color-stop(0%, rgba(59, 173, 227, 1)),
+    color-stop(100%, rgba(87, 111, 230, 1))
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgb(221, 221, 221) 0%,
+    rgb(30, 41, 97) 100%,
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(59, 173, 227, 1) 0%,
+    rgba(87, 111, 230, 1) 25%,
+    rgba(152, 68, 183, 1) 51%,
+    rgba(255, 53, 127, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
+  height: 2px;
+}
     </style>
     <title>Desenha 0.4.1b2 Color Picker</title>
     </head>
@@ -213,30 +275,41 @@ input[type=range][orient=vertical]{
     <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
 
 <div id="menus">
-  <div id="menupicker" class="submenu"  class="naotoque">Escolha a cor</div>      
+  <div id="menupicker" class="submenu fundobranco"  class="naotoque">toque na sua arte para capturar uma cor</div>      
 
     <div id="menupintar" class="fundobranco submenu">
       <span style=" float:center; position:relative; width:70px; " onmousedown='changeLine()'>estilo:<span id="line"> ⚫</span></span>
       <input type="number" id="tpx" min="0.2" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:50px; margin-left:8px;" />
       <input type="range" id="strokeSize" name="strokeSize" min="0.2" max="100" step="0.2" oninput="strokeSize(this.value)"  value="0.6" width="160px"/><br>
       <span onmousedown='removeClass()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%)"; margin-top: -50px; margin-left: -20px;'>🖌️</span>
+      💧<input type="range" id="A2" name="transparencia" min="0.01" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.01" value="1" /><br>
     </div>
+
+    <div id="menuapagar" class="fundobranco submenu"  class="naotoque">
+      <span style=" float:center; position:relative; width:16px; " onmousedown='changeLine()'><span id="line2"> ⚫</span></span>
+      <span class="bloquinho"  onmousedown='removeClass()'>🧻</span>&nbsp;<input type="number" id="tpx2" min="0.3" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:50px; margin-left:8px;">
+        <input type="range" id="estrokeSize" name="estrokeSize" min="0.3" max="100" step="0.3" oninput="strokeSize(this.value)"  value="0.6" width="160px"/>
+       <span onmousedown='removeClass()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
+       💧<input type="range" id="A3" name="transparencia" min="0.01" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.01" value="1" /><br>
+    </div>
+
+  
     <div id="menucores" class="fundobranco submenu">
           <div id="menu" class="fundobranco"  onmouseover="mostra()">
-            H S V A<br>
+            🌈◒🔆💧<br>
             <input type="range" orient="vertical" id="H" name="cor" min="0" max="359"  oninput="mudaCorQ(0,this.value)"  value="0" />
             <input type="range" orient="vertical" id="S" name="cor" min="0" max="100"  oninput="mudaCorQ(1,this.value)"  value="100" />
             <input type="range" orient="vertical" id="L" name="cor" min="0" max="100"  oninput="mudaCorQ(2,this.value)"  value="50" />
             <input type="range" orient="vertical" id="A" name="cor" min="0.01" max="1"  oninput="mudaCorQ(3,this.value)"  step="0.01" value="1" /><br>
             <div id="mostraCor" onmousedown='removeClass()' style="float: left; color:white; font-family: Arial, Helvetica, sans-serif; font-size:1.75em;; font-weight:bold;">ok</div>
             <div id="salvaCor" onmousedown='salvaCor()' title="Favoritar" style="float: right; margin-top: 12px;" class="bloquinho">📌</div>
-         
-
+            
+            
           </div>
           <div id="paleta" class="fundobranco" ></div>
           <div id="paleta2" class="fundobranco" ></div>
         </div>
-
+        
         <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center;">
           Fundo falso:
           <br>
@@ -249,14 +322,6 @@ input[type=range][orient=vertical]{
           <span onmousedown='Fundo("none")' class='bloquinho'  style='background-color:hsla(0, 100%, 100%, 0)'> ❌</span>
           </div>
         
-        <div id="menuapagar" class="fundobranco submenu"  class="naotoque">
-            <span class="bloquinho"  onmousedown='removeClass()'>🧻</span>&nbsp;<input type="number" id="tpx2" min="0.3" max="100" step="0.3" value=1 onchange="strokeSize(this.value)" style="width:50px; margin-left:8px;"></input>
-          <input type="range" id="estrokeSize" name="estrokeSize" min="0.3" max="100" step="0.3" oninput="strokeSize(this.value)"  value="0.6" width="160px"/>
-           <br>
-          <span style="float:right; position:relative; width:70px;"onmousedown='changeLine()'>estilo:<span id="line">o</span></span> <br>
-          <span onmousedown='removeClass()' id ="mostraCor2" style='background-color:"hsl(0, 100%, 0%);"'> </span>
-        </div>
-
         <div id="menupreencher" class="fundobranco submenu"  class="naotoque">
           ⚠️ Preencher tudo ⚠️
           <span width ="140px" style="margin:8px 80px; display: block;"> 
@@ -298,7 +363,7 @@ input[type=range][orient=vertical]{
 
       </div>
 
-        <div id="canvas_window" style="overflow: scroll; width:342px; height:320px; margin-top: -4px; -webkit-touch-overflow:scroll" >
+        <div id="canvas_window" style="overflow: scroll; width:342px; height:342px; -webkit-touch-overflow:scroll" >
           <span id ="cursor" style='background-color:"hsla(0, 0%, 0%, 0);"' class="naotoque" onselectstart="return false;" ondragstart="return false;"> </span>
           <div id="canvas_div" style="overflow:hidden;">
             <canvas id="canvas" class="smooth" width="320px" height="320px"  onmousemove="cursorMove(event)" onmouseout="mostra()" >
@@ -308,7 +373,7 @@ input[type=range][orient=vertical]{
         </div>
         <div id="creditos" class="fundobranco naotoque" style="width:280px; margin: auto;">          
         <small>cc:<a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-lei mao</a> e <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a> v0.4.2a</small>
+lei mao</a> e <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a> v0.4.2b</small>
 </div>
 </div>
 
@@ -680,10 +745,10 @@ function criaPaleta() {
   document.getElementById("paleta").innerHTML = paleta;
   document.getElementById(
     "paleta"
-  ).innerHTML += `<br /><span onmousedown='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`;
+  ).innerHTML += `<span onmousedown='mudaCor("B")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`;
   document.getElementById(
     "paleta"
-  ).innerHTML += `<span onmousedown='mudaCor("B")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`;
+  ).innerHTML += `<br /><span onmousedown='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`;
 }
 function criaPaleta2() {
   let paleta = "";
@@ -798,6 +863,8 @@ function mudaCor(valor) {
     document.getElementById("S").value = saturation;
     document.getElementById("L").value = lightness;
     document.getElementById("A").value = alpha;
+    document.getElementById("A2").value = alpha;
+    document.getElementById("A3").value = alpha;
     hsla[0] = hue;
     hsla[1] = saturation;
     hsla[2] = lightness;
@@ -836,8 +903,10 @@ function changeLine() {
   linejoin = lineJoins[lineJoinsCount];
   if (lineJoinsCount != 0) {
     document.getElementById("line").innerHTML = " ➕";
+    document.getElementById("line2").innerHTML = " ➕";
   } else {
     document.getElementById("line").innerHTML = " ⚫";
+    document.getElementById("line2").innerHTML = " ⚫";
   }
 }
 
