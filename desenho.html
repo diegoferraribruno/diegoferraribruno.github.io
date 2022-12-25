@@ -17,7 +17,7 @@ body{
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 350px;
+  width: 100vw;
 }
 #canvas_div {
 background-image: url("./grid.png");
@@ -30,6 +30,14 @@ background-image: url("./grid.png");
   background-color:#ffffff22;
   overflow-y: hidden;
   image-rendering: pixelated;
+}
+#canvas_window{
+  overflow: scroll;
+  width:342px;
+  height:342px;
+  -webkit-touch-overflow:scroll;
+  margin-left:auto;
+  margin-right:auto;
 }
 #paleta{
   position: relative;
@@ -268,6 +276,14 @@ input[type="range"]::-webkit-slider-runnable-track {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
   height: 2px;
 }
+.bigScreen{
+  float: left;
+  position: absolute;
+  left: 0px;
+  top:0px;
+  width: 80vw;
+  height: 80vw;
+}
     </style>
     <title>Desenha 0.4.1b2 Color Picker</title>
     </head>
@@ -363,7 +379,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 
       </div>
 
-        <div id="canvas_window" style="overflow: scroll; width:342px; height:342px; -webkit-touch-overflow:scroll" >
+        <div id="canvas_window" class=".bigScreen" >
           <span id ="cursor" style='background-color:"hsla(0, 0%, 0%, 0);"' class="naotoque" onselectstart="return false;" ondragstart="return false;"> </span>
           <div id="canvas_div" style="overflow:hidden;">
             <canvas id="canvas" class="smooth" width="320px" height="320px"  onmousemove="cursorMove(event)" onmouseout="mostra()" >
@@ -372,8 +388,8 @@ input[type="range"]::-webkit-slider-runnable-track {
           </div>
         </div>
         <div id="creditos" class="fundobranco naotoque" style="width:280px; margin: auto;">          
-        <small>cc:<a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-lei mao</a> e <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a> v0.4.2b</small>
+        <small><span class="bloquinho" onclick="x2()">2x</span> cc:<a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
+lei mao</a> e <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a> v0.4.3a</small>
 </div>
 </div>
 
@@ -408,12 +424,38 @@ var zoomFactor = 1;
 var zoomScale = [0.5, 1, 2, 4];
 var mouseOver = false;
 var layer1 = [];
+var x2size = 1
 
 document.addEventListener("keydown", function (event) {
   if (event.ctrlKey && event.key === "z") {
-    context = oldContext;
+    alert("Não existe isso de voltar no tempo. Pratique o desapego.")
   }
 });
+
+function x2(w=320,h=320){
+  var resultado = confirm("Dobrar o tamanho da tela? (apaga tudo)")
+  if ( resultado === true){
+    let win = document.getElementById("canvas_window")
+    if( window.innerWidth > 600)
+    win.style.width = `640px`
+    win.style.height = `640px`
+    x2size *= 2;
+    if (x2size > 4){
+      x2size=1
+      win.style.width = `340px`
+      win.style.height = `340px`
+    }
+    let W = w*x2size
+    let H = h*x2size
+    canvasDiv.style.width = `${W}px`
+    canvasDiv.style.height = `${H}px`
+    canvas.width = W
+    canvas.height = H
+    alert(`Novo tamanho de tela: largura ${W}px e altura ${H}px`)
+  }
+  
+}
+
 
 // pausa na adaptacao funcoes novas ao fim
 
