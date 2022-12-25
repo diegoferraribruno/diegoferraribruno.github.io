@@ -559,13 +559,7 @@
             onmousedown='modeTo("apagar")'
             >🧻</span
           >
-          <span
-            id="zoom"
-            title="Ampliar"
-            class="bloquinho"
-            onmousedown='modeTo("zoom")'
-            >🔎</span
-          >
+
           <span
             id="preencher"
             title="Preencher"
@@ -612,8 +606,18 @@
         class="fundobranco naotoque"
         style="width: 280px; margin: auto"
       >
-        <small
-          ><span class="bloquinho" onclick="x2()">2x</span> cc:<a
+        <small>
+          <span class="bloquinho" onclick="x2()">2x</span>
+          <span
+            id="zoom"
+            title="Ampliar"
+            class="bloquinho"
+            onmousedown='modeTo("zoom")'
+            >🔎</span
+          >
+          <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
+          cc:
+          <a
             href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/"
             target="_blank"
           >
@@ -621,7 +625,7 @@
           >
           e
           <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a>
-          v0.4.3b</small
+          v0.4.3c</small
         >
       </div>
     </div>
@@ -688,11 +692,22 @@
           canvas.width = W;
           canvas.height = H;
           alert(
-            `\t\t\t\tNovo tamanho de tela: \n\t\t\tlargura ${W}px e altura ${H}px`
+            `\t\t\t\t\t\t\tNovo tamanho de tela:` +
+              ` \t\t\n\t\t\tlargura ${W}px e altura ${H}px` +
+              `\t\t\t\t\t utilize a lupa 🔎 para navegar pela tela`
           );
         }
       }
-
+      function toggleHand() {
+        if (mode != "zoom") {
+          oldMode = mode;
+          mode = "zoom";
+          toggleSelect("hand");
+        } else {
+          mode = oldMode;
+          toggleSelect(mode);
+        }
+      }
       // pausa na adaptacao funcoes novas ao fim
 
       document.addEventListener("DOMContentLoaded", startup);
