@@ -245,7 +245,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha 0.4.5<br />
+            >Diego Desenha 0.4.5b<br />
             novidades: <br />
             - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -284,12 +284,12 @@
             type="range"
             id="strokeSize"
             name="strokeSize"
-            min="0.2"
+            min="0.5"
             max="100"
-            step="0.2"
+            step="1"
             oninput="strokeSize(this.value)"
             value="0.6"
-            width="160px"
+            width="200px"
           /><br />
           <span
             onmousedown="removeClass()"
@@ -692,6 +692,7 @@
       var layer1 = [];
       var x2size = 1;
       const cursor = document.getElementById("cursor");
+      const win = document.getElementById("canvas_window");
       document.addEventListener("keydown", function (event) {
         if (event.ctrlKey && event.key === "z") {
           alert("Não existe isso de voltar no tempo. Pratique o desapego.");
@@ -706,7 +707,6 @@
             "\t\t\t320 x 320px -> 640 x 640px -> 1280 x 1280px"
         );
         if (resultado === true) {
-          let win = document.getElementById("canvas_window");
           //dobra o tamanho do canva
           win.style.width = `98vw`;
           win.style.height = `640px`;
@@ -773,14 +773,14 @@
               isDrawing = false;
               isGrabing = false;
             }
-          }, 600);
+          }, 500);
         });
         canvas.addEventListener("mousemove", (e) => {
-          ultimoToque.y = e.offsetY;
-          ultimoToque.x = e.offsetX;
           if (isDrawing && mode != "picker") {
             desenha(context, x, y, e.offsetX, e.offsetY);
           } else if (isGrabing) {
+            ultimoToque.y = e.offsetY;
+            ultimoToque.x = e.offsetX;
             scrollCanva(
               (x - ultimoToque.x) * zoomFactor,
               (y - ultimoToque.y) * zoomFactor
@@ -792,6 +792,8 @@
         canvas.addEventListener("mouseup", (e) => {
           if (isDrawing && mode != "picker") {
             drawLine(context, x, y, e.offsetX + 1, e.offsetY + 1);
+            ultimoToque.y = e.offsetY;
+            ultimoToque.x = e.offsetX;
             x = 0;
             y = 0;
             isDrawing = false;
@@ -800,7 +802,6 @@
             y = e.offsetY;
             var imageData = context.getImageData(x, y, 1, 1).data;
             if (imageData[3] > 1) {
-              console.log(imageData);
               RGBAToHSLA(
                 imageData[0],
                 imageData[1],
@@ -868,15 +869,13 @@
         for (let i = 0; i < touches.length; i++) {
           const idx = ongoingTouchIndexById(touches[i].identifier);
           if (idx >= 0) {
-            ultimoToque.x =
-              touches[i].clientX / zoomFactor - offsetX / zoomFactor;
-            ultimoToque.y =
-              touches[i].clientY / zoomFactor - offsetY / zoomFactor;
+            ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
+            ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
             if (mode != "zoom" && mode != "picker") {
               context.beginPath();
               context.moveTo(
-                ongoingTouches[idx].clientX / zoomFactor - offsetX / zoomFactor,
-                ongoingTouches[idx].clientY / zoomFactor - offsetY / zoomFactor
+                (ongoingTouches[idx].clientX - offsetX) / zoomFactor,
+                (ongoingTouches[idx].clientY - offsetY) / zoomFactor
               );
               context.lineTo(ultimoToque.x, ultimoToque.y);
               context.lineWidth = stroke;
@@ -893,11 +892,13 @@
           for (let i = 0; i < touches.length; i++) {
             const idx = ongoingTouchIndexById(touches[i].identifier);
             if (idx >= 0) {
-              let x = ultimoToque.x;
-              let y = ultimoToque.y;
-              var imageData = context.getImageData(x, y, 1, 1).data;
+              var imageData = context.getImageData(
+                ultimoToque.x,
+                ultimoToque.y,
+                1,
+                1
+              ).data;
               if (imageData[3] > 1) {
-                console.log(imageData);
                 RGBAToHSLA(
                   imageData[0],
                   imageData[1],
@@ -996,7 +997,7 @@
             setTimeout(function () {
               document.getElementById("x1").innerHTML = zoomFactor + "x";
               scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
-            }, 20);
+            }, 10);
             cursorColor();
             toggleSelect(qual);
             mode = qual;
@@ -1321,19 +1322,20 @@
         setZoom(1, canvasDiv);
         resetCanva();
         setTimeout(function () {
-          document.getElementById("canvas_window").scrollTop = 0;
-          document.getElementById("canvas_window").scrollLeft = 0;
-        }, 0);
+          win.scrollTop = 0;
+          win.scrollLeft = 0;
+        }, 10);
         zoomFactor = Number(a);
+        console.log(ultimoToque);
         setTimeout(
           () =>
             scrollCanva(
-              ultimoToque.x * zoomFactor - 150,
-              ultimoToque.y * zoomFactor - 150
+              ultimoToque.x * zoomFactor - 160,
+              ultimoToque.y * zoomFactor - 160
             ),
-          202
+          30
         );
-        setTimeout(() => setZoom(zoomFactor, canvasDiv), 20);
+        setTimeout(() => setZoom(zoomFactor, canvasDiv), 4);
 
         strokeSize(strokeWidth);
         document.getElementById("tzoom").value = zoomFactor;
@@ -1342,8 +1344,8 @@
       }
 
       function scrollCanva(x, y) {
-        document.getElementById("canvas_window").scrollTop += y;
-        document.getElementById("canvas_window").scrollLeft += x;
+        win.scrollTop += y;
+        win.scrollLeft += x;
       }
       function resetCanva() {
         let objects = ["canvas_window", "canvas_div"];
