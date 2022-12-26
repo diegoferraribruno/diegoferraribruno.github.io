@@ -229,7 +229,7 @@
         height: 80vw;
       }
     </style>
-    <title>Diego Desenha 0.4.4b</title>
+    <title>Diego Desenha - Alpha</title>
   </head>
   <body class="naotoque">
     <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
@@ -245,7 +245,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha 0.4.4<br />
+            >Diego Desenha 0.4.5<br />
             novidades: <br />
             - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -912,41 +912,37 @@
           if (isGrabing) {
             for (let i = 0; i < touches.length; i++) {
               const idx = ongoingTouchIndexById(touches[i].identifier);
-              if (idx >= 0) {
-                scrollCanva(
-                  ((x - touches[0].clientX) % 8) * zoomFactor,
-                  ((y - touches[0].clientY) % 8) * zoomFactor
-                );
+              if (idx == 0) {
+                scrollCanva(x - touches[0].clientX, y - touches[0].clientY);
+                x = touches[0].clientX;
+                y = touches[0].clientY;
               }
             }
           }
         }
       }
       function handleEnd(evt) {
-        if (mode != "zoom") {
-          evt.preventDefault();
-          const touches = evt.changedTouches;
-          for (let i = 0; i < touches.length; i++) {
-            let idx = ongoingTouchIndexById(touches[i].identifier);
-            if (idx >= 0) {
-              context.lineWidth = strokeWidth;
-              context.fillStyle = strokeColor;
-              ongoingTouches.splice(idx, 1); // remove it; we're done
-            }
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          let idx = ongoingTouchIndexById(touches[i].identifier);
+          if (idx >= 0) {
+            context.lineWidth = strokeWidth;
+            context.fillStyle = strokeColor;
+            ongoingTouches.splice(idx, 1); // remove it; we're done
           }
-        } else {
+        }
+        if (mode == "zoom") {
           isGrabing = false;
         }
       }
 
       function handleCancel(evt) {
-        if (mode != "zoom") {
-          evt.preventDefault();
-          const touches = evt.changedTouches;
-          for (let i = 0; i < touches.length; i++) {
-            let idx = ongoingTouchIndexById(touches[i].identifier);
-            ongoingTouches.splice(idx, 1); // remove it; we're done
-          }
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          let idx = ongoingTouchIndexById(touches[i].identifier);
+          ongoingTouches.splice(idx, 1); // remove it; we're done
         }
       }
 
