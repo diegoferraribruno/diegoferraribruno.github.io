@@ -230,7 +230,7 @@
         height: 80vw;
       }
     </style>
-    <title>Diego Desenha 0.4.4</title>
+    <title>Diego Desenha 0.4.4b</title>
   </head>
   <body class="naotoque">
     <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
@@ -247,13 +247,13 @@
         >
           <small
             >Diego Desenha 0.4.4<br />
-            maozinha <br />
-            novidades <br />
+            novidades: <br />
             - Aumento do tamanho da tela <br />
-            - zoom sem menu e maozinha<br />
+            - zoom com maozinha<br />
             - nome do arquivo pra salvar<br />
-            - função pixel (óculos) mais perceptivel com zoom<br />
-            cc:
+            - função óculos (perceptivel com zoom)<br />
+            <br />
+            Creative Commons Credits:
             <a
               href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/"
               target="_blank"
@@ -597,6 +597,7 @@
           >
           <span class="bloquinho" onclick="x2()">📐</span>
           <span class="bloquinho" onmousedown="clearArea()">🗑</span>
+          <span><a id="btn-download" class="bloquinho"> 📥</a></span>
         </div>
       </div>
 
@@ -626,16 +627,6 @@
         class="fundobranco naotoque"
         style="width: 280px; margin: auto"
       >
-        <span class="bloquinho" id="x1" style="font-size: 0.9em">1x</span>
-        <span
-          id="zoom"
-          title="Ampliar"
-          class="bloquinho"
-          onmousedown='modeTo("zoom")'
-          >🔎</span
-        >
-        <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
-        <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
         <span
           id="fundo"
           title="Fundo falso"
@@ -650,7 +641,16 @@
           onmousedown='modeTo("info")'
           >ℹ️</span
         >
-        <span><a id="btn-download" class="bloquinho"> 📥</a></span>
+        <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
+        <span class="bloquinho" id="x1" style="font-size: 0.9em">1x</span>
+        <span
+          id="zoom"
+          title="Ampliar"
+          class="bloquinho"
+          onmousedown='modeTo("zoom")'
+          >🔎</span
+        >
+        <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
       </div>
     </div>
 
@@ -841,35 +841,37 @@
         drawLine(context, x, y, eoX, eoY);
       }
       function handleStart(evt) {
-        if (mode != "zoom") {
-          evt.preventDefault();
-          const touches = evt.changedTouches;
-          offsetX = canvas.getBoundingClientRect().left;
-          offsetY = canvas.getBoundingClientRect().top;
-          for (let i = 0; i < touches.length; i++) {
-            ongoingTouches.push(copyTouch(touches[i]));
-          }
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        offsetX = canvas.getBoundingClientRect().left;
+        offsetY = canvas.getBoundingClientRect().top;
+        console.log(offsetX, offsetY);
+        for (let i = 0; i < touches.length; i++) {
+          ongoingTouches.push(copyTouch(touches[i]));
+        }
 
-          removeClass();
+        removeClass();
+        if (mode == "zoom") {
+          isGrabing = true;
         }
       }
 
       function handleMove(evt) {
-        if (mode != "zoom" && mode != "picker") {
-          evt.preventDefault();
-          const touches = evt.changedTouches;
-          for (let i = 0; i < touches.length; i++) {
-            const idx = ongoingTouchIndexById(touches[i].identifier);
-            if (idx >= 0) {
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          const idx = ongoingTouchIndexById(touches[i].identifier);
+          if (idx >= 0) {
+            ultimoToque.x =
+              touches[i].clientX / zoomFactor - offsetX / zoomFactor;
+            ultimoToque.y =
+              touches[i].clientY / zoomFactor - offsetY / zoomFactor;
+            if (mode != "zoom" && mode != "picker") {
               context.beginPath();
               context.moveTo(
                 ongoingTouches[idx].clientX / zoomFactor - offsetX / zoomFactor,
                 ongoingTouches[idx].clientY / zoomFactor - offsetY / zoomFactor
               );
-              ultimoToque.x =
-                touches[i].clientX / zoomFactor - offsetX / zoomFactor;
-              ultimoToque.y =
-                touches[i].clientY / zoomFactor - offsetY / zoomFactor;
               context.lineTo(ultimoToque.x, ultimoToque.y);
               context.lineWidth = stroke;
               context.strokeStyle = strokeColor;
@@ -881,13 +883,12 @@
           }
         }
         if (mode == "picker") {
-          evt.preventDefault();
           const touches = evt.changedTouches;
           for (let i = 0; i < touches.length; i++) {
             const idx = ongoingTouchIndexById(touches[i].identifier);
             if (idx >= 0) {
-              let x = touches[i].clientX / zoomFactor - offsetX / zoomFactor;
-              let y = touches[i].clientY / zoomFactor - offsetY / zoomFactor;
+              let x = ultimoToque.x;
+              let y = ultimoToque.y;
               var imageData = context.getImageData(x, y, 1, 1).data;
               if (imageData[3] > 1) {
                 console.log(imageData);
@@ -898,6 +899,25 @@
                   imageData[3]
                 );
                 setStrokeColor();
+              }
+            }
+          }
+        }
+        if (mode == "zoom") {
+          if (isGrabing) {
+            for (let i = 0; i < touches.length; i++) {
+              const idx = ongoingTouchIndexById(touches[i].identifier);
+              if (idx >= 0) {
+                scrollCanva(
+                  (ongoingTouches[idx].clientX / zoomFactor -
+                    offsetX / zoomFactor -
+                    ultimoToque.x) /
+                    2,
+                  (ongoingTouches[idx].clientY / zoomFactor -
+                    offsetY / zoomFactor -
+                    ultimoToque.y) /
+                    2
+                );
               }
             }
           }
@@ -915,6 +935,8 @@
               ongoingTouches.splice(idx, 1); // remove it; we're done
             }
           }
+        } else {
+          isGrabing = false;
         }
       }
 
@@ -1052,8 +1074,8 @@
         }
         cursorColor();
         /*  toggleSelect(qual)
-  mostraMenu(qual)
-  */
+        mostraMenu(qual)
+        */
       }
 
       function toggleSelect(id) {
