@@ -49,7 +49,7 @@
         top: 0px;
         margin-top: 0px;
         display: block;
-        float: right;
+        float: left;
       }
       #paleta2 {
         position: relative;
@@ -59,7 +59,7 @@
         top: 4px;
         margin-top: 0px;
         display: block;
-        float: right;
+        float: left;
       }
       #menucores {
         width: 290px;
@@ -68,7 +68,6 @@
       }
       #menu {
         font-kerning: 1.2 em;
-        position: absolute;
         width: 92px;
         height: 272px;
         display: block;
@@ -360,10 +359,6 @@
         </div>
 
         <div id="menucores" class="fundobranco submenu">
-          <div id="paleta" class="fundobranco"></div>
-          <div id="paleta2" class="fundobranco">
-            <br />use o 📌 para guardar <br />ou remover suas cores daqui.
-          </div>
           <div id="menu" class="fundobranco" onmouseover="mostra()">
             🌈◒🔆💧<br />
             <input
@@ -411,16 +406,22 @@
               id="salvaCor"
               onmousedown="salvaCor()"
               title="Favoritar"
-              style="float: right; margin-top: 20px; font-size: 1.5em"
+              style="
+                height: 20px;
+                float: left;
+                margin-top: 20px;
+                line-height: 01em;
+                font-size: 1.5em;
+              "
               class="bloquinho"
             >
-              📌
+              <div style="margin: -20px 10px 0px 0px; width: 20px">📌</div>
             </div>
             <div
               id="mostraCor"
               onmousedown="removeClass()"
               style="
-                float: left;
+                float: right;
                 color: white;
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 1.75em;
@@ -429,6 +430,10 @@
             >
               ok
             </div>
+          </div>
+          <div id="paleta" class="fundobranco"></div>
+          <div id="paleta2" class="fundobranco">
+            <br />use o 📌 para guardar <br />ou remover suas cores daqui.
           </div>
         </div>
 
@@ -601,7 +606,7 @@
         </div>
       </div>
 
-      <div id="canvas_window" class=".bigScreen">
+      <div id="canvas_window">
         <span
           id="cursor"
           style="background-color: 'hsla(0, 0%, 0%, 0);'"
@@ -653,7 +658,6 @@
         <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
       </div>
     </div>
-
     <script>
       const canvas = document.getElementById("canvas");
       const context = canvas.getContext("2d");
@@ -845,7 +849,8 @@
         const touches = evt.changedTouches;
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
-        console.log(offsetX, offsetY);
+        x = touches[0].clientX;
+        y = touches[0].clientY;
         for (let i = 0; i < touches.length; i++) {
           ongoingTouches.push(copyTouch(touches[i]));
         }
@@ -909,14 +914,8 @@
               const idx = ongoingTouchIndexById(touches[i].identifier);
               if (idx >= 0) {
                 scrollCanva(
-                  (ongoingTouches[idx].clientX / zoomFactor -
-                    offsetX / zoomFactor -
-                    ultimoToque.x) /
-                    2,
-                  (ongoingTouches[idx].clientY / zoomFactor -
-                    offsetY / zoomFactor -
-                    ultimoToque.y) /
-                    2
+                  ((x - touches[0].clientX) % 8) * zoomFactor,
+                  ((y - touches[0].clientY) % 8) * zoomFactor
                 );
               }
             }
@@ -1048,7 +1047,6 @@
             mostraMenu(qual);
             document.getElementById("strokeSize").value = strokeWidth;
             toggleSelect(qual);
-
             break;
 
           case "preencher":
@@ -1117,12 +1115,12 @@
           i++;
         }
         document.getElementById("paleta").innerHTML = paleta;
-        document.getElementById(
-          "paleta"
-        ).innerHTML += `<span onmousedown='mudaCor("B")'  class='bloquinho'  style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`;
-        document.getElementById(
-          "paleta"
-        ).innerHTML += `<br /><span onmousedown='mudaCor("P")' class='bloquinho'  style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`;
+        document.getElementById("paleta").innerHTML +=
+          `<span onmousedown='mudaCor("B")'  class='bloquinho' ` +
+          `style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`;
+        document.getElementById("paleta").innerHTML +=
+          `<br /><span onmousedown='mudaCor("P")' class='bloquinho' ` +
+          `style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`;
       }
       function criaPaleta2() {
         let paleta = "";
