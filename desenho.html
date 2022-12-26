@@ -707,7 +707,8 @@
         );
         if (resultado === true) {
           let win = document.getElementById("canvas_window");
-          if (window.innerWidth > 600) win.style.width = `640px`;
+          //dobra o tamanho do canva
+          win.style.width = `98vw`;
           win.style.height = `640px`;
           x2size *= 2;
           if (x2size > 4) {
