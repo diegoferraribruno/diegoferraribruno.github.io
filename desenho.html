@@ -248,7 +248,7 @@
           style="height: 300px"
         >
           <small
-            >Desenha versão 0.4.7e<br /><br />
+            >Desenha versão 0.4.7f<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -792,7 +792,7 @@
           zoomScale.indexOf(zoomFactor);
         window.addEventListener("keydown", handleKeys);
         canvas.addEventListener("touchstart", handleStart);
-        desenhoDiv.addEventListener("startdrag", prevent);
+        desenhoDiv.addEventListener("gesturestart", prevent);
         win.addEventListener("touchmove", prevent);
         canvas.addEventListener("touchend", handleEnd);
         canvas.addEventListener("touchcancel", handleCancel);
@@ -932,7 +932,8 @@
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         // Re-play all commands (re-draw canvas from scratch)
-        for (i in comandos) {
+        let lenc = comandos.length;
+        for (i = 0; i < lenc; i++) {
           drawLine(
             comandos[i][0],
             comandos[i][1],
@@ -1128,6 +1129,11 @@
         if (confirma === true) {
           context.setTransform(1, 0, 0, 1, 0, 0);
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+          comandosb = [];
+          let len = comandos.length;
+          for (a = 0; a < len; a++) {
+            comandosb.push(comandos[a]);
+          }
           comandos = [];
         }
       }
