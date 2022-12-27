@@ -6,6 +6,15 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <style>
+      * {
+        -webkit-user-select: none;
+        -moz-user-select: -moz-none;
+        /*IE10*/
+        -ms-user-select: none;
+        user-select: none;
+        /*You just need this if you are only concerned with android and not desktop browsers.*/
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      }
       body {
         overflow-y: hidden;
         padding: 0px 0px;
@@ -20,7 +29,7 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 90vw;
+        width: 360px;
         touch-action: manipulation;
       }
       #canvas_div {
@@ -222,14 +231,6 @@
         width: 300px;
         margin-left: 4px;
       }
-      .bigScreen {
-        float: left;
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        width: 80vw;
-        height: 80vw;
-      }
     </style>
     <title>Diego Desenha - Alpha</title>
   </head>
@@ -247,7 +248,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha versão 0.4.6f<br /><br />
+            >Diego Desenha versão 0.4.7<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -638,7 +639,8 @@
           id="undo"
           title="undo"
           class="bloquinho"
-          onmousedown='modeTo("undo")'
+          onmousedown="undoT()"
+          onmouseup="undoT()"
           >↩️</span
         >
         <span
@@ -710,17 +712,19 @@
       const cursor = document.getElementById("cursor");
       const win = document.getElementById("canvas_window");
 
+      function prevent(evt) {
+        evt.preventDefault();
+      }
+
       function x2(w = 320, h = 320) {
         var resultado = confirm(
           "\t\t\t\t📐 Deseja duplicar o tamanho da tela? \n" +
-            "\t\t\t\t( ⚠️ Atenção, tudo será apagado! ⚠️ )\n\n" +
-            "\t\t\t\t\t Formatos disponiveis: \n" +
             "\t\t\t320 x 320px -> 640 x 640px -> 1280 x 1280px"
         );
         if (resultado === true) {
           //dobra o tamanho do canva
-          win.style.width = `98vw`;
-          win.style.height = `640px`;
+          win.style.width = parseInt(window.innerWidth, 10) - 20 + "px";
+          win.style.height = parseInt(window.innerHeight, 10) - 100 + "px";
           x2size *= 2;
           if (x2size > 4) {
             x2size = 1;
@@ -729,8 +733,8 @@
           }
           let W = w * x2size;
           let H = h * x2size;
-          canvasDiv.style.width = `${W}px`;
-          canvasDiv.style.height = `${H}px`;
+          canvasDiv.style.width = W + 30 + "px";
+          canvasDiv.style.height = H + 20 + "px";
           canvas.width = W;
           canvas.height = H;
           alert(
@@ -740,6 +744,7 @@
               `\t\t\t e a mão 🖐 para navegar pela tela`
           );
         }
+        replay();
       }
       function toggleHand() {
         if (mode != "zoom") {
@@ -755,13 +760,23 @@
       // pausa na adaptacao funcoes novas ao fim
 
       document.addEventListener("DOMContentLoaded", startup);
-
+      function resizeScreen() {
+        document.getElementById("desenho_div").style.width =
+          window.innerWidth + "px";
+        document.getElementById("desenho_div").style.height =
+          window.innerHeight + "px";
+      }
       function startup() {
         removeClass();
+        window.addEventListener("resize", function (event) {
+          resizeScreen();
+        });
+        resizeScreen();
         document.getElementById("zoombar").value =
           zoomScale.indexOf(zoomFactor);
         window.addEventListener("keydown", handleKeys);
         canvas.addEventListener("touchstart", handleStart);
+        win.addEventListener("touchstart", prevent);
         canvas.addEventListener("touchend", handleEnd);
         canvas.addEventListener("touchcancel", handleCancel);
         canvas.addEventListener("touchmove", handleMove);
@@ -875,6 +890,18 @@
           undo();
         }
       }
+      let desfazendo = false;
+      var counter;
+      function undoT() {
+        desfazendo = !desfazendo;
+        console.log(desfazendo);
+        if (desfazendo === true) {
+          counter = setInterval(() => undo(), 20);
+        } else {
+          clearInterval(counter);
+        }
+      }
+
       function undo() {
         // Remove the most recent command from the list
         comandos.splice(-1, 1);
@@ -1075,7 +1102,7 @@
 
       function clearArea() {
         let confirma = confirm(
-          "\t\t\t\t\t Limpar todo o desenho? \n \t\t\t\t\t( ⚠️ impossivel desfazer ⚠️ )"
+          "\t\t\t\t\t Limpar todo o desenho? \n \t\t\t\t\t( utilize o 🔄 para desfazer isto )"
         );
         if (confirma === true) {
           context.setTransform(1, 0, 0, 1, 0, 0);
