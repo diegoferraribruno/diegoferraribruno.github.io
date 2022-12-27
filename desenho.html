@@ -248,7 +248,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha versão 0.4.7d<br /><br />
+            >Desenha versão 0.4.7e<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -264,8 +264,8 @@
             >
             e
             <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a
-            ><br
-          /></small>
+            ><br />twitter @diegofbrasil
+          </small>
         </div>
         <div id="menupintar" class="fundobranco submenu">
           <span
@@ -910,17 +910,23 @@
       let desfazendo = false;
       var counter;
       function undoT() {
-        counter = setInterval(() => undo(), 50);
+        counter = setInterval(() => undo(), 20);
         console.log("undo");
       }
       function undoTEnd() {
         clearInterval(counter);
         console.log("undoEnd");
       }
+      var comandos = [];
+      var comandosb = [];
 
       function undo() {
-        // Remove the most recent command from the list
-        comandos.splice(-1, 1);
+        let len = comandos.length;
+        if (len > 0) {
+          comandosb.unshift(comandos[len - 1]);
+          // Remove the most recent command from the list
+          comandos.splice(-1, 1);
+        }
 
         // Clear canvas
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -941,39 +947,12 @@
       }
       function replay() {
         context.clearRect(0, 0, canvas.width, canvas.height);
-        comandos = [];
-        let len = comandosb.length;
-        for (i = 0; i < len; i++) {
-          comandos.push(comandosb[i]);
+        let lenb = comandosb.length;
+        for (a = 0; a < lenb; a++) {
+          comandos.push(comandosb[a]);
         }
-        for (i in comandos) {
-          drawLine(
-            comandos[i][0],
-            comandos[i][1],
-            comandos[i][2],
-            comandos[i][3],
-            comandos[i][4],
-            comandos[i][5],
-            comandos[i][6],
-            comandos[i][7]
-          );
-        }
-      }
-
-      var comandos = [];
-      var comandosb = [];
-
-      function desenha(GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin) {
-        let comando = [GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin];
-        comandos.push(comando);
-        comandosb = [];
         let len = comandos.length;
         for (i = 0; i < len; i++) {
-          comandosb.push(comandos[i]);
-        }
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        for (i in comandos) {
           drawLine(
             comandos[i][0],
             comandos[i][1],
@@ -985,6 +964,32 @@
             comandos[i][7]
           );
         }
+        comandosb = [];
+      }
+
+      async function desenha(
+        GCO,
+        x,
+        y,
+        eoX,
+        eoY,
+        strokeColor,
+        stroke,
+        linejoin
+      ) {
+        let comando = [GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin];
+        await comandos.push(comando);
+        drawLine(
+          comando[0],
+          comando[1],
+          comando[2],
+          comando[3],
+          comando[4],
+          comando[5],
+          comando[6],
+          comando[7]
+        );
+        comandosb = [];
       }
       function handleStart(evt) {
         evt.preventDefault();
