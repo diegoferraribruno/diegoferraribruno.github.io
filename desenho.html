@@ -248,7 +248,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha versão 0.4.7c<br /><br />
+            >Diego Desenha versão 0.4.7d<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -792,7 +792,7 @@
         window.addEventListener("keydown", handleKeys);
         canvas.addEventListener("touchstart", handleStart);
         desenhoDiv.addEventListener("touchstart", prevent);
-        win.addEventListener("touchstart", prevent);
+        win.addEventListener("touchmove", prevent);
         canvas.addEventListener("touchend", handleEnd);
         canvas.addEventListener("touchcancel", handleCancel);
         canvas.addEventListener("touchmove", handleMove);
