@@ -247,7 +247,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha versão 0.4.6d<br /><br />
+            >Diego Desenha versão 0.4.6e<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -973,7 +973,7 @@
                 (y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor);
 
               desenha(
-                globalComposite,
+                context.globalCompositeOperation,
                 x,
                 y,
                 ultimoToque.x,
