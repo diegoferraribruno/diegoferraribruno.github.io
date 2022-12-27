@@ -245,7 +245,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha ver 0.4.6a<br /><br />
+            >Diego Desenha ver 0.4.6b<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -960,17 +960,19 @@
             ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
             ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
             if (mode != "zoom" && mode != "picker") {
-              context.beginPath();
-              context.moveTo(
-                (ongoingTouches[idx].clientX - offsetX) / zoomFactor,
-                (ongoingTouches[idx].clientY - offsetY) / zoomFactor
+              (x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor),
+                (y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor);
+
+              desenha(
+                context,
+                x,
+                y,
+                ultimoToque.x,
+                ultimoToque.y,
+                strokeColor,
+                stroke,
+                linejoin
               );
-              context.lineTo(ultimoToque.x, ultimoToque.y);
-              context.lineWidth = stroke;
-              context.strokeStyle = strokeColor;
-              context.lineJoin = linejoin;
-              context.closePath();
-              context.stroke();
               ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
             }
           }
