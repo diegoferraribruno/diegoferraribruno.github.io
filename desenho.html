@@ -248,7 +248,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha versão 0.4.7<br /><br />
+            >Diego Desenha versão 0.4.7a<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -640,7 +640,7 @@
           title="undo"
           class="bloquinho"
           onmousedown="undoT()"
-          onmouseup="undoT()"
+          onmouseup="undoTEnd()"
           >↩️</span
         >
         <span
@@ -893,13 +893,12 @@
       let desfazendo = false;
       var counter;
       function undoT() {
-        desfazendo = !desfazendo;
-        console.log(desfazendo);
-        if (desfazendo === true) {
-          counter = setInterval(() => undo(), 20);
-        } else {
-          clearInterval(counter);
-        }
+        counter = setInterval(() => undo(), 30);
+        console.log("undo");
+      }
+      function undoTEnd() {
+        clearInterval(counter);
+        console.log("undoEnd");
       }
 
       function undo() {
