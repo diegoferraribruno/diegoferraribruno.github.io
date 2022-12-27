@@ -247,7 +247,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha versão 0.4.6c<br /><br />
+            >Diego Desenha versão 0.4.6d<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -790,7 +790,7 @@
         canvas.addEventListener("mousemove", (e) => {
           if (isDrawing && mode != "picker") {
             desenha(
-              context,
+              context.globalCompositeOperation,
               x,
               y,
               e.offsetX,
@@ -812,7 +812,13 @@
         });
         canvas.addEventListener("mouseup", (e) => {
           if (isDrawing && mode != "picker") {
-            desenha(context, x, y, e.offsetX + 1, e.offsetY + 1);
+            desenha(
+              context.globalCompositeOperation,
+              x,
+              y,
+              e.offsetX + 1,
+              e.offsetY + 1
+            );
             ultimoToque.y = e.offsetY;
             ultimoToque.x = e.offsetX;
             x = 0;
@@ -913,8 +919,9 @@
 
       var comandos = [];
       var comandosb = [];
-      function desenha(context, x, y, eoX, eoY, strokeColor, stroke, linejoin) {
-        let comando = [context, x, y, eoX, eoY, strokeColor, stroke, linejoin];
+
+      function desenha(GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin) {
+        let comando = [GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin];
         comandos.push(comando);
         comandosb = [];
         let len = comandos.length;
@@ -966,7 +973,7 @@
                 (y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor);
 
               desenha(
-                context,
+                globalComposite,
                 x,
                 y,
                 ultimoToque.x,
@@ -1054,16 +1061,8 @@
         return -1; // not found
       }
 
-      function drawLine(
-        context,
-        x1,
-        y1,
-        x2,
-        y2,
-        strokeColor,
-        stroke,
-        linejoin
-      ) {
+      function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
+        context.globalCompositeOperation = GCO;
         context.beginPath();
         context.strokeStyle = strokeColor;
         context.lineWidth = stroke;
