@@ -674,6 +674,7 @@
           >🔎</span
         >
         <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
+        :)
       </div>
     </div>
     <script>
@@ -791,7 +792,7 @@
           zoomScale.indexOf(zoomFactor);
         window.addEventListener("keydown", handleKeys);
         canvas.addEventListener("touchstart", handleStart);
-        desenhoDiv.addEventListener("touchstart", prevent);
+        desenhoDiv.addEventListener("startdrag", prevent);
         win.addEventListener("touchmove", prevent);
         canvas.addEventListener("touchend", handleEnd);
         canvas.addEventListener("touchcancel", handleCancel);
