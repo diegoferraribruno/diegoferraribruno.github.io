@@ -248,7 +248,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha versão 0.4.7a<br /><br />
+            >Diego Desenha versão 0.4.7b<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -772,6 +772,22 @@
           resizeScreen();
         });
         resizeScreen();
+        document.getElementById("undo").addEventListener(
+          "touchstart",
+          (event) => {
+            event.preventDefault();
+            undoT();
+          },
+          false
+        );
+        document.getElementById("undo").addEventListener(
+          "touchend",
+          (event) => {
+            event.preventDefault();
+            undoTEnd();
+          },
+          false
+        );
         document.getElementById("zoombar").value =
           zoomScale.indexOf(zoomFactor);
         window.addEventListener("keydown", handleKeys);
@@ -893,7 +909,7 @@
       let desfazendo = false;
       var counter;
       function undoT() {
-        counter = setInterval(() => undo(), 30);
+        counter = setInterval(() => undo(), 50);
         console.log("undo");
       }
       function undoTEnd() {
