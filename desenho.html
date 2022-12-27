@@ -248,7 +248,7 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha versão 0.4.7b<br /><br />
+            >Diego Desenha versão 0.4.7c<br /><br />
             novidades: <br />
             - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
@@ -711,6 +711,7 @@
       var x2size = 1;
       const cursor = document.getElementById("cursor");
       const win = document.getElementById("canvas_window");
+      const desenhoDiv = document.getElementById("desenho_div");
 
       function prevent(evt) {
         evt.preventDefault();
@@ -761,10 +762,8 @@
 
       document.addEventListener("DOMContentLoaded", startup);
       function resizeScreen() {
-        document.getElementById("desenho_div").style.width =
-          window.innerWidth + "px";
-        document.getElementById("desenho_div").style.height =
-          window.innerHeight + "px";
+        desenhoDiv.style.width = window.innerWidth + "px";
+        desenhoDiv.style.height = window.innerHeight + "px";
       }
       function startup() {
         removeClass();
@@ -792,6 +791,7 @@
           zoomScale.indexOf(zoomFactor);
         window.addEventListener("keydown", handleKeys);
         canvas.addEventListener("touchstart", handleStart);
+        desenhoDiv.addEventListener("touchstart", prevent);
         win.addEventListener("touchstart", prevent);
         canvas.addEventListener("touchend", handleEnd);
         canvas.addEventListener("touchcancel", handleCancel);
