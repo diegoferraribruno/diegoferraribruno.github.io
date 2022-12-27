@@ -245,9 +245,9 @@
           style="height: 300px"
         >
           <small
-            >Diego Desenha 0.4.5b<br />
+            >Diego Desenha ver 0.4.6a<br /><br />
             novidades: <br />
-            - Aumento do tamanho da tela <br />
+            - ctrl+z + redo - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
             - nome do arquivo pra salvar<br />
             - função óculos (perceptivel com zoom)<br />
@@ -633,6 +633,20 @@
         style="width: 280px; margin: auto"
       >
         <span
+          id="undo"
+          title="undo"
+          class="bloquinho"
+          onmousedown='modeTo("undo")'
+          >↩️</span
+        >
+        <span
+          id="replay"
+          title="replay"
+          class="bloquinho"
+          onmousedown="replay()"
+          >🔄</span
+        >
+        <span
           id="fundo"
           title="Fundo falso"
           class="bloquinho"
@@ -693,11 +707,6 @@
       var x2size = 1;
       const cursor = document.getElementById("cursor");
       const win = document.getElementById("canvas_window");
-      document.addEventListener("keydown", function (event) {
-        if (event.ctrlKey && event.key === "z") {
-          alert("Não existe isso de voltar no tempo. Pratique o desapego.");
-        }
-      });
 
       function x2(w = 320, h = 320) {
         var resultado = confirm(
@@ -749,6 +758,7 @@
         removeClass();
         document.getElementById("zoombar").value =
           zoomScale.indexOf(zoomFactor);
+        window.addEventListener("keydown", handleKeys);
         canvas.addEventListener("touchstart", handleStart);
         canvas.addEventListener("touchend", handleEnd);
         canvas.addEventListener("touchcancel", handleCancel);
@@ -777,7 +787,16 @@
         });
         canvas.addEventListener("mousemove", (e) => {
           if (isDrawing && mode != "picker") {
-            desenha(context, x, y, e.offsetX, e.offsetY);
+            desenha(
+              context,
+              x,
+              y,
+              e.offsetX,
+              e.offsetY,
+              strokeColor,
+              stroke,
+              linejoin
+            );
           } else if (isGrabing) {
             ultimoToque.y = e.offsetY;
             ultimoToque.x = e.offsetX;
@@ -791,7 +810,7 @@
         });
         canvas.addEventListener("mouseup", (e) => {
           if (isDrawing && mode != "picker") {
-            drawLine(context, x, y, e.offsetX + 1, e.offsetY + 1);
+            desenha(context, x, y, e.offsetX + 1, e.offsetY + 1);
             ultimoToque.y = e.offsetY;
             ultimoToque.x = e.offsetX;
             x = 0;
@@ -843,8 +862,77 @@
         return `hsla(${H},${S}%,${L}%,${a})`;
       };
 
-      function desenha(context, x, y, eoX, eoY) {
-        drawLine(context, x, y, eoX, eoY);
+      function handleKeys(evt) {
+        if (evt.ctrlKey && evt.key === "z") {
+          undo();
+        }
+      }
+      function undo() {
+        // Remove the most recent command from the list
+        comandos.splice(-1, 1);
+
+        // Clear canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Re-play all commands (re-draw canvas from scratch)
+        for (i in comandos) {
+          drawLine(
+            comandos[i][0],
+            comandos[i][1],
+            comandos[i][2],
+            comandos[i][3],
+            comandos[i][4],
+            comandos[i][5],
+            comandos[i][6],
+            comandos[i][7]
+          );
+        }
+      }
+      function replay() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        comandos = [];
+        let len = comandosb.length;
+        for (i = 0; i < len; i++) {
+          comandos.push(comandosb[i]);
+        }
+        for (i in comandos) {
+          drawLine(
+            comandos[i][0],
+            comandos[i][1],
+            comandos[i][2],
+            comandos[i][3],
+            comandos[i][4],
+            comandos[i][5],
+            comandos[i][6],
+            comandos[i][7]
+          );
+        }
+      }
+
+      var comandos = [];
+      var comandosb = [];
+      function desenha(context, x, y, eoX, eoY, strokeColor, stroke, linejoin) {
+        let comando = [context, x, y, eoX, eoY, strokeColor, stroke, linejoin];
+        comandos.push(comando);
+        comandosb = [];
+        let len = comandos.length;
+        for (i = 0; i < len; i++) {
+          comandosb.push(comandos[i]);
+        }
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        for (i in comandos) {
+          drawLine(
+            comandos[i][0],
+            comandos[i][1],
+            comandos[i][2],
+            comandos[i][3],
+            comandos[i][4],
+            comandos[i][5],
+            comandos[i][6],
+            comandos[i][7]
+          );
+        }
       }
       function handleStart(evt) {
         evt.preventDefault();
@@ -962,7 +1050,16 @@
         return -1; // not found
       }
 
-      function drawLine(context, x1, y1, x2, y2) {
+      function drawLine(
+        context,
+        x1,
+        y1,
+        x2,
+        y2,
+        strokeColor,
+        stroke,
+        linejoin
+      ) {
         context.beginPath();
         context.strokeStyle = strokeColor;
         context.lineWidth = stroke;
@@ -1067,11 +1164,14 @@
             mostraMenu(qual);
             toggleSelect(qual);
             break;
+          case "undo":
+            undo();
+            break;
         }
         cursorColor();
         /*  toggleSelect(qual)
-        mostraMenu(qual)
-        */
+              mostraMenu(qual)
+              */
       }
 
       function toggleSelect(id) {
