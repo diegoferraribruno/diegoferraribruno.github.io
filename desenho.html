@@ -248,9 +248,11 @@
           style="height: 300px"
         >
           <small
-            >Desenha versão 0.4.7f<br /><br />
+            >Desenha versão 0.4.8a<br /><br />
             novidades: <br />
-            - ctrl+z + redo - Aumento do tamanho da tela <br />
+            - balde funcionando com desfazer.<br />
+            - ctrl+z + redo <br />
+            - Aumento do tamanho da tela <br />
             - zoom com maozinha<br />
             - nome do arquivo pra salvar<br />
             - função óculos (perceptivel com zoom)<br />
@@ -719,9 +721,23 @@
       }
 
       function x2(w = 320, h = 320) {
+        let newSize = 320;
+        let newSizeb = 320;
+        if (x2size < 4) {
+          newSize = newSize * x2size;
+          newSizeb = newSize * 2;
+        } else {
+          newSize = 320 * x2size;
+          newSizeb = 320;
+        }
+
         var resultado = confirm(
-          "\t\t\t\t📐 Deseja duplicar o tamanho da tela? \n" +
-            "\t\t\t320 x 320px -> 640 x 640px -> 1280 x 1280px"
+          "\t\t\t\t📐 Deseja mudar o tamanho da tela de \n" +
+            `\t\t\t\t\t\t${newSize}px x ${newSize}px\n` +
+            `\t\t\t\t\t\t\tpara\n` +
+            `\t\t\t\t\t\t${newSizeb}px x ${newSizeb}px\n\n` +
+            `\t\t\t\t\t utilize a lupa 🔎 para zoom \n` +
+            `\t\t\t\t e a mão 🖐 para navegar pela tela\n\n`
         );
         if (resultado === true) {
           //dobra o tamanho do canva
@@ -739,12 +755,6 @@
           canvasDiv.style.height = H + 20 + "px";
           canvas.width = W;
           canvas.height = H;
-          alert(
-            `\t\t\t\tNovo tamanho de tela:\n` +
-              ` \t\t\t\t\t ${W}px por ${H}px\n\n` +
-              `\t\t\t\t utilize a lupa 🔎 para zoom \n` +
-              `\t\t\t e a mão 🖐 para navegar pela tela`
-          );
         }
         replay();
       }
@@ -849,7 +859,10 @@
               x,
               y,
               e.offsetX + 1,
-              e.offsetY + 1
+              e.offsetY + 1,
+              strokeColor,
+              stroke,
+              linejoin
             );
             ultimoToque.y = e.offsetY;
             ultimoToque.x = e.offsetX;
@@ -911,11 +924,9 @@
       var counter;
       function undoT() {
         counter = setInterval(() => undo(), 20);
-        console.log("undo");
       }
       function undoTEnd() {
         clearInterval(counter);
-        console.log("undoEnd");
       }
       var comandos = [];
       var comandosb = [];
@@ -934,16 +945,23 @@
         // Re-play all commands (re-draw canvas from scratch)
         let lenc = comandos.length;
         for (i = 0; i < lenc; i++) {
-          drawLine(
-            comandos[i][0],
-            comandos[i][1],
-            comandos[i][2],
-            comandos[i][3],
-            comandos[i][4],
-            comandos[i][5],
-            comandos[i][6],
-            comandos[i][7]
-          );
+          if (comandos[i].length > 6) {
+            drawLine(
+              comandos[i][0],
+              comandos[i][1],
+              comandos[i][2],
+              comandos[i][3],
+              comandos[i][4],
+              comandos[i][5],
+              comandos[i][6],
+              comandos[i][7]
+            );
+          } else {
+            //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
+            context.globalCompositeOperation = comandos[i][0];
+            context.fillStyle = comandos[i][1];
+            context.fillRect(0, 0, canvas.width, canvas.height);
+          }
         }
       }
       function replay() {
@@ -954,16 +972,23 @@
         }
         let len = comandos.length;
         for (i = 0; i < len; i++) {
-          drawLine(
-            comandos[i][0],
-            comandos[i][1],
-            comandos[i][2],
-            comandos[i][3],
-            comandos[i][4],
-            comandos[i][5],
-            comandos[i][6],
-            comandos[i][7]
-          );
+          if (comandos[i].length > 6) {
+            drawLine(
+              comandos[i][0],
+              comandos[i][1],
+              comandos[i][2],
+              comandos[i][3],
+              comandos[i][4],
+              comandos[i][5],
+              comandos[i][6],
+              comandos[i][7]
+            );
+          } else {
+            //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
+            context.globalCompositeOperation = comandos[i][0];
+            context.fillStyle = comandos[i][1];
+            context.fillRect(0, 0, canvas.width, canvas.height);
+          }
         }
         comandosb = [];
       }
@@ -971,25 +996,32 @@
       async function desenha(
         GCO,
         x,
-        y,
-        eoX,
-        eoY,
-        strokeColor,
-        stroke,
-        linejoin
+        y = undefined,
+        eoX = undefined,
+        eoY = undefined,
+        strokeColor = undefined,
+        stroke = undefined,
+        linejoin = undefined
       ) {
-        let comando = [GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin];
-        await comandos.push(comando);
-        drawLine(
-          comando[0],
-          comando[1],
-          comando[2],
-          comando[3],
-          comando[4],
-          comando[5],
-          comando[6],
-          comando[7]
-        );
+        if (stroke != undefined) {
+          let comando = [GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin];
+          await comandos.push(comando);
+          drawLine(
+            comando[0],
+            comando[1],
+            comando[2],
+            comando[3],
+            comando[4],
+            comando[5],
+            comando[6],
+            comando[7]
+          );
+        } else {
+          let comando = [GCO, x];
+          await comandos.push(comando);
+          context.fillStyle = x; //cor
+          context.fillRect(0, 0, canvas.width, canvas.height);
+        }
         comandosb = [];
       }
       function handleStart(evt) {
@@ -1179,8 +1211,9 @@
             oldMode = qual;
             strokeSize(strokeWidth);
             context.globalCompositeOperation = globalComposite;
-            document.getElementById("strokeSize").value = strokeWidth;
             toggleSelect(qual);
+            document.getElementById("strokeSize").value = strokeWidth;
+            mostraMenu(qual);
             break;
           case "cores":
             removeClass();
@@ -1340,8 +1373,10 @@
           cor = strokeColor;
         }
         if (context.globalCompositeOperation != "destination-out") {
-          context.fillStyle = cor;
-          context.fillRect(0, 0, canvas.width, canvas.height);
+          //context.fillStyle = cor;
+          // context.fillRect(0, 0, canvas.width, canvas.height);
+          let GCO = context.globalCompositeOperation;
+          desenha(GCO, cor);
         }
       }
 
