@@ -1228,7 +1228,6 @@
             }
             break;
           case "apagar":
-          memoryswipe()
             removeClass();
             mode = qual;
             oldMode = qual;
@@ -1237,9 +1236,9 @@
             document.getElementById("estrokeSize").value = estrokeWidth;
             cursorColor();
             toggleSelect(qual);
+            memoryswipe();
             break;
           case "pintar":
-          memoryswipe()
             removeClass();
             mode = qual;
             oldMode = qual;
@@ -1248,9 +1247,9 @@
             toggleSelect(qual);
             document.getElementById("strokeSize").value = strokeWidth;
             mostraMenu(qual);
+            memoryswipe()
             break;
           case "cores":
-          memoryswipe()
             removeClass();
             mode = qual;
             oldMode = qual;
@@ -1259,6 +1258,8 @@
             mostraMenu(qual);
             document.getElementById("strokeSize").value = strokeWidth;
             toggleSelect(qual);
+            memoryswipe();
+            break;
           case "fundo":
             removeClass();
             mode = qual;
@@ -1648,10 +1649,12 @@
         img = new Image();
         img.src = canvas.toDataURL()
       }
-      function  flatImage(x=0,y=0){
+      async function  flatImage(x=0,y=0){
+        let globaltemp = context.globalCompositeOperation
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.globalCompositeOperation = "destination-over"
         context.drawImage(img,x,y)
+        setTimeout(()=>context.globalCompositeOperation = globaltemp,0)
     }
 
     </script>
