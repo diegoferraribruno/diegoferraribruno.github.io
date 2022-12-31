@@ -43,6 +43,17 @@
         background-color: #ffffff22;
         overflow-y: hidden;
       }
+      #canvas_div2 {
+        background-image: url("./grid.png");
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 320px;
+        height: 320px;
+        background-color: #ffffff22;
+        overflow-y: hidden;
+      }
       #canvas_window {
         overflow: scroll;
         width: 342px;
@@ -248,14 +259,13 @@
           style="height: 300px"
         >
           <small
-            >Desenha versão 0.4.8a<br /><br />
+            >Desenha versão 0.4.9<br /><br />
             novidades: <br />
-            - balde funcionando com desfazer.<br />
-            - ctrl+z + redo <br />
-            - Aumento do tamanho da tela <br />
-            - zoom com maozinha<br />
-            - nome do arquivo pra salvar<br />
-            - função óculos (perceptivel com zoom)<br />
+            problema com o excesso de objetos
+            que dobram com a necessidade do desfazer.
+            vamos tentar nessa versao alternativa diminuir a quantifdade de undos
+             disponiveis porem salvaremos uma imagem que sera carregada
+             o que pode influenciar na qualidade do projeto final. vamos ao teste.
             <br />
             Creative Commons Credits:
             <a
@@ -678,7 +688,8 @@
         <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
         :)
       </div>
-    </div>
+
+  </div>
     <script>
       const canvas = document.getElementById("canvas");
       const context = canvas.getContext("2d");
@@ -777,6 +788,7 @@
         desenhoDiv.style.height = window.innerHeight + "px";
       }
       function startup() {
+
         removeClass();
         window.addEventListener("resize", function (event) {
           resizeScreen();
@@ -886,6 +898,19 @@
             isGrabing = false;
           }
         });
+        document
+          .getElementById("btn-download")
+          .addEventListener("click", function (e) {
+            //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+            let nome = prompt("nome da arte:", "desenho");
+            if (nome != null && nome != "") {
+              var dataURL = canvas
+                .toDataURL("image/png")
+                .replace("image/png", "image/octet-stream");
+              //downloadImage(dataURL, 'my-canvas.jpeg');
+              downloadImage(dataURL, `${nome}.png`);
+            }
+          });
       }
 
       const RGBAToHSLA = (r, g, b, a) => {
@@ -923,7 +948,7 @@
       let desfazendo = false;
       var counter;
       function undoT() {
-        counter = setInterval(() => undo(), 20);
+        counter = setInterval(() => undo(), 10);
       }
       function undoTEnd() {
         clearInterval(counter);
@@ -933,16 +958,40 @@
 
       function undo() {
         let len = comandos.length;
+
         if (len > 0) {
           comandosb.unshift(comandos[len - 1]);
           // Remove the most recent command from the list
           comandos.splice(-1, 1);
-        }
+        }else{
+            clearInterval(counter)
+          alert("nivel maximo de desfazer atingindo.");
+          clearInterval(counter)}
 
-        // Clear canvas
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
+        // Clear canvas get last flat img
         // Re-play all commands (re-draw canvas from scratch)
+        comandosExec()
+
+      }
+      function memoryswipe(){
+        let len = comandos.length;
+        if (len >600){
+          comandosb = [];
+          for (i=0;i<300;i++){
+            comandosb.unshift(comandos[len - i-1]);
+            // Remove the most recent command from the list
+              comandos.splice(-1, 1);
+          }
+          comandosExec()
+            convertToImg()
+          comandos=[]
+          setTimeout(()=>replay(),20)
+        }
+      }
+
+
+      function comandosExec(){
+       flatImage();
         let lenc = comandos.length;
         for (i = 0; i < lenc; i++) {
           if (comandos[i].length > 6) {
@@ -970,26 +1019,7 @@
         for (a = 0; a < lenb; a++) {
           comandos.push(comandosb[a]);
         }
-        let len = comandos.length;
-        for (i = 0; i < len; i++) {
-          if (comandos[i].length > 6) {
-            drawLine(
-              comandos[i][0],
-              comandos[i][1],
-              comandos[i][2],
-              comandos[i][3],
-              comandos[i][4],
-              comandos[i][5],
-              comandos[i][6],
-              comandos[i][7]
-            );
-          } else {
-            //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
-            context.globalCompositeOperation = comandos[i][0];
-            context.fillStyle = comandos[i][1];
-            context.fillRect(0, 0, canvas.width, canvas.height);
-          }
-        }
+        comandosExec()
         comandosb = [];
       }
 
@@ -1005,7 +1035,9 @@
       ) {
         if (stroke != undefined) {
           let comando = [GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin];
-          await comandos.push(comando);
+          setTimeout(
+            comandos.push(comando)
+          ,0)
           drawLine(
             comando[0],
             comando[1],
@@ -1018,7 +1050,7 @@
           );
         } else {
           let comando = [GCO, x];
-          await comandos.push(comando);
+          setTimeout( comandos.push(comando),0)
           context.fillStyle = x; //cor
           context.fillRect(0, 0, canvas.width, canvas.height);
         }
@@ -1196,6 +1228,7 @@
             }
             break;
           case "apagar":
+          memoryswipe()
             removeClass();
             mode = qual;
             oldMode = qual;
@@ -1206,6 +1239,7 @@
             toggleSelect(qual);
             break;
           case "pintar":
+          memoryswipe()
             removeClass();
             mode = qual;
             oldMode = qual;
@@ -1216,6 +1250,7 @@
             mostraMenu(qual);
             break;
           case "cores":
+          memoryswipe()
             removeClass();
             mode = qual;
             oldMode = qual;
@@ -1356,12 +1391,19 @@
           globalComposite = "destination-over";
           document.getElementById(
             "globalComposite"
-          ).innerHTML = `<span style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span><span style="position:relative; float:left; width:30px; display:block; color:black; left:2px; margin-top:0px;" title="Pintar por baixo">🔲</span>`;
+          ).innerHTML =
+          `<span style="position:absolute; width:30px; `+
+          `display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span> `+
+          `<span style="position:relative; float:left; width:30px; display:block;  `+
+          `color:black; left:2px; margin-top:0px;" title="Pintar por baixo">🔲</span>`;
         } else {
           globalComposite = "source-over";
           document.getElementById(
             "globalComposite"
-          ).innerHTML = `<span style="position:absolute; float:right; width:32px; display:block; padding-top: 0px; margin-left:2px;">🔲</span> <span style="color:white; position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
+          ).innerHTML =
+           `<span style="position:absolute; float:right; width:32px; display:block; `+
+           `padding-top: 0px; margin-left:2px;">🔲</span> <span style="color:white;`+
+           `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
         }
         cursor.classList.toggle("cursorIndex");
         cursor.classList.toggle("selected");
@@ -1453,20 +1495,8 @@
         setStrokeColor();
       }
       // Save | Download image from stackoverflow
-      // Convert canvas to image
-      document
-        .getElementById("btn-download")
-        .addEventListener("click", function (e) {
-          //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-          let nome = prompt("nome da arte:", "desenho");
-          if (nome != null && nome != "") {
-            var dataURL = canvas
-              .toDataURL("image/png")
-              .replace("image/png", "image/octet-stream");
-            //downloadImage(dataURL, 'my-canvas.jpeg');
-            downloadImage(dataURL, `${nome}.png`);
-          }
-        });
+      // Convert canvas to image added to startup .getElementById("btn-download")
+
       //function downloadImage(data, filename = 'untitled.jpeg') {
       function downloadImage(data, filename = "untitled.png") {
         var a = document.createElement("a");
@@ -1609,6 +1639,21 @@
         canvas.classList.toggle("pixel");
         canvasDiv.classList.toggle("pixel");
       }
+
+
+      let condensado;
+      let img;
+      convertToImg()
+      function convertToImg(){
+        img = new Image();
+        img.src = canvas.toDataURL()
+      }
+      function  flatImage(x=0,y=0){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.globalCompositeOperation = "destination-over"
+        context.drawImage(img,x,y)
+    }
+
     </script>
   </body>
 </html>
