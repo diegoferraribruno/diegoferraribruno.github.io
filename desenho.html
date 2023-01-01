@@ -983,9 +983,9 @@
               comandos.splice(-1, 1);
           }
           comandosExec()
-            convertToImg()
-          comandos=[]
-          setTimeout(()=>replay(),20)
+          setTimeout(()=>convertToImg(),30)
+          setTimeout(()=>comandos=[],35)
+          setTimeout(()=>replay(),40)
         }
       }
 
