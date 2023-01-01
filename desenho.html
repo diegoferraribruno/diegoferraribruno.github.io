@@ -259,7 +259,7 @@
           style="height: 300px"
         >
           <small
-            >Desenha versão 0.4.9<br /><br />
+            >Desenha versão 0.4.9c<br /><br />
             novidades: <br />
             problema com o excesso de objetos
             que dobram com a necessidade do desfazer.
@@ -1188,7 +1188,7 @@
 
       function clearArea() {
         let confirma = confirm(
-          "\t\t\t\t\t Limpar todo o desenho? \n \t\t\t\t\t( utilize o 🔄 para desfazer isto )"
+          "\t\t\t\t\t Limpar todo o desenho? \n \t\t\t\t\t( impossível desfazer isto )"
         );
         if (confirma === true) {
           context.setTransform(1, 0, 0, 1, 0, 0);
@@ -1199,6 +1199,7 @@
             comandosb.push(comandos[a]);
           }
           comandos = [];
+          convertToImg()
         }
       }
 
