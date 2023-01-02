@@ -267,9 +267,8 @@
             >Diego Desenha<br />
              versão 0.5<br /><br />
              proposta:<br />
-             - tamanhos pre definidos de pinceis.
-             <br />[0.5, 1, 1.5 2 4 8 16 32 64 128 256]<br />
-             - refazer passo a passo. OK!<br />
+             - tamanhos pre definidos de pinceis. ok<br />
+             - refazer passo a passo. ok<br />
              - apagador com transparencia propria.<br />
              - lupa com indicador de zoom. no lugar apropriado - ok<br />
              <br />
@@ -370,24 +369,14 @@
             style="background-color: 'hsl(0, 100%, 0%);'"
           >
         </span><div>
-          <input
-            type="number"
-            id="transparenciaN"
-            min="0.1"
-            max="1"
-            step="0.01"
-            value="1"
-            onchange="mudaCorQ(3,this.value)"
-            style="width: 50px; margin-left: 8px"
-          />
           💧<input
             type="range"
-            id="A3"
+            id="transparenciaE"
             name="transparencia"
-            min="0.01"
+            min="0.1"
             max="1"
-            oninput="mudaCorQ(3,this.value)"
-            step="0.01"
+            oninput="mudaCorAlpha()"
+            step="0.1"
             value="1"
           /></div>
         </div>
@@ -834,7 +823,7 @@
           "touchstart",
           (event) => {
             event.preventDefault();
-            undoT();
+            redoT();
           },
           false
         );
@@ -842,7 +831,7 @@
           "touchend",
           (event) => {
             event.preventDefault();
-            undoTEnd();
+            redoTEnd();
           },
           false
         );
@@ -1300,6 +1289,7 @@
             cursorColor();
             toggleSelect(qual);
             memoryswipe();
+            mudaCorAlpha();
             break;
           case "pintar":
             removeClass();
@@ -1310,7 +1300,8 @@
             toggleSelect(qual);
             document.getElementById("strokeSize").value = strokeWidth;
             mostraMenu(qual);
-            memoryswipe()
+            setStrokeColor();
+            memoryswipe();
             break;
           case "cores":
             removeClass();
@@ -1505,6 +1496,10 @@
         hsla[q] = Number(valor);
         setStrokeColor();
         criaPaleta();
+      }
+      function mudaCorAlpha() {
+        let valor = document.getElementById("transparenciaE").value
+        strokeColor = `hsla(0, 100%, 0%, ${valor})`
       }
       function salvaCor() {
         if (!favoritas.includes(strokeColor)) {
