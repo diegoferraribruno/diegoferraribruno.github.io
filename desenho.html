@@ -179,7 +179,8 @@
         display: block;
         padding: 0px;
         font-size: 1.125em;
-        float: right;
+        float:left;
+        margin-left: 10px;
       }
       #cursor {
         pointer-events: none;
@@ -242,6 +243,11 @@
         width: 300px;
         margin-left: 4px;
       }
+      #menuinfo{
+        overflow-y: scroll;
+        height: 300px;
+        width:300px;
+      }
     </style>
     <title>Diego Desenha - Alpha</title>
   </head>
@@ -256,15 +262,20 @@
           id="menuinfo"
           class="submenu fundobranco"
           class="naotoque"
-          style="height: 300px"
         >
           <small
-            >Desenha versão 0.4.9c<br /><br />
-            novidades: <br />
-            problema com o excesso de objetos
-            que dobram com a necessidade do desfazer.
-            vamos tentar nessa versao alternativa diminuir a quantifdade de undos
-             disponiveis porem salvaremos uma imagem que sera carregada
+            >Diego Desenha<br />
+             versão 0.5<br /><br />
+             proposta:<br />
+             - tamanhos pre definidos de pinceis.
+             <br />[0.5, 1, 1.5 2 4 8 16 32 64 128 256]<br />
+             - refazer passo a passo. OK!<br />
+             - apagador com transparencia propria.<br />
+             - lupa com indicador de zoom. no lugar apropriado - ok<br />
+             <br />
+
+            0.4.9
+            reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
              o que pode influenciar na qualidade do projeto final. vamos ao teste.
             <br />
             Creative Commons Credits:
@@ -288,9 +299,9 @@
           <input
             type="number"
             id="tpx"
-            min="0.2"
+            min="0.5"
             max="100"
-            step="0.3"
+            step="0.5"
             value="1"
             onchange="strokeSize(this.value)"
             style="width: 50px; margin-left: 8px"
@@ -299,23 +310,13 @@
             type="range"
             id="strokeSize"
             name="strokeSize"
-            min="0.5"
-            max="100"
+            min="1"
+            max="26"
             step="1"
-            oninput="strokeSize(this.value)"
-            value="0.6"
+            oninput="strokeSizeRange(this.value)"
+            value="1"
             width="200px"
           /><br />
-          <span
-            onmousedown="removeClass()"
-            id="mostraCor2"
-            style="
-              background-color: 'hsl(0, 100%, 0%)';
-              margin-top: -50px;
-              margin-left: -20px;
-            "
-            >🖌️</span
-          >
           💧<input
             type="range"
             id="A2"
@@ -326,6 +327,14 @@
             step="0.01"
             value="1"
           /><br />
+          <span
+          onmousedown="removeClass()"
+          id="mostraCor2"
+          style="
+          background-color: 'hsl(0, 100%, 0%)';
+          "
+          >🖌️</span
+          >
         </div>
         <div id="menuapagar" class="fundobranco submenu" class="naotoque">
           <span
@@ -333,11 +342,11 @@
             onmousedown="changeLine()"
             ><span id="line2"> ⚫</span></span
           >
-          <span class="bloquinho" onmousedown="removeClass()">🧻</span
+          <span class="bloquinho" onmousedown="removeClass()">🧽</span
           >&nbsp;<input
             type="number"
             id="tpx2"
-            min="0.3"
+            min="0.5"
             max="100"
             step="0.3"
             value="1"
@@ -348,11 +357,11 @@
             type="range"
             id="estrokeSize"
             name="estrokeSize"
-            min="0.3"
-            max="100"
-            step="0.3"
-            oninput="strokeSize(this.value)"
-            value="0.6"
+            min="1"
+            max="26"
+            step="1"
+            oninput="strokeSizeRange(this.value)"
+            value="1"
             width="160px"
           />
           <span
@@ -360,7 +369,17 @@
             id="mostraCor2"
             style="background-color: 'hsl(0, 100%, 0%);'"
           >
-          </span>
+        </span><div>
+          <input
+            type="number"
+            id="transparenciaN"
+            min="0.1"
+            max="1"
+            step="0.01"
+            value="1"
+            onchange="mudaCorQ(3,this.value)"
+            style="width: 50px; margin-left: 8px"
+          />
           💧<input
             type="range"
             id="A3"
@@ -370,7 +389,7 @@
             oninput="mudaCorQ(3,this.value)"
             step="0.01"
             value="1"
-          /><br />
+          /></div>
         </div>
 
         <div id="menucores" class="fundobranco submenu">
@@ -600,13 +619,6 @@
             onmousedown='modeTo("picker")'
             >💉</span
           >
-          <span
-            id="apagar"
-            title="Apagar"
-            class="bloquinho"
-            onmousedown='modeTo("apagar")'
-            >🧻</span
-          >
 
           <span
             id="preencher"
@@ -615,7 +627,14 @@
             class="bloquinho"
             >🪣</span
           >
-          <span class="bloquinho" onclick="x2()">📐</span>
+          <span
+          id="apagar"
+          title="Apagar"
+          class="bloquinho"
+          onmousedown='modeTo("apagar")'
+          >🧽</span
+          >
+          <span class="bloquinho" onclick="x2()">↔️</span>
           <span class="bloquinho" onmousedown="clearArea()">🗑</span>
           <span><a id="btn-download" class="bloquinho"> 📥</a></span>
         </div>
@@ -647,21 +666,7 @@
         class="fundobranco naotoque"
         style="width: 280px; margin: auto"
       >
-        <span
-          id="undo"
-          title="undo"
-          class="bloquinho"
-          onmousedown="undoT()"
-          onmouseup="undoTEnd()"
-          >↩️</span
-        >
-        <span
-          id="replay"
-          title="replay"
-          class="bloquinho"
-          onmousedown="replay()"
-          >🔄</span
-        >
+
         <span
           id="fundo"
           title="Fundo falso"
@@ -677,16 +682,31 @@
           >ℹ️</span
         >
         <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
-        <span class="bloquinho" id="x1" style="font-size: 0.9em">1x</span>
+
         <span
           id="zoom"
           title="Ampliar"
           class="bloquinho"
           onmousedown='modeTo("zoom")'
-          >🔎</span
+          >🔎<span id="x1" style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span
         >
         <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
-        :)
+        <span
+          id="undo"
+          title="undo"
+          class="bloquinho"
+          onmousedown="undoT()"
+          onmouseup="undoTEnd()"
+          >↩️</span
+        >
+        <span
+          id="redo"
+          title="replay"
+          class="bloquinho"
+          onmousedown="redoT()"
+          onmouseup="redoTEnd()"
+          >↪️</span
+        >
       </div>
 
   </div>
@@ -743,7 +763,7 @@
         }
 
         var resultado = confirm(
-          "\t\t\t\t📐 Deseja mudar o tamanho da tela de \n" +
+          "\t\t\t\t↔️ Deseja mudar o tamanho da tela de \n" +
             `\t\t\t\t\t\t${newSize}px x ${newSize}px\n` +
             `\t\t\t\t\t\t\tpara\n` +
             `\t\t\t\t\t\t${newSizeb}px x ${newSizeb}px\n\n` +
@@ -803,6 +823,22 @@
           false
         );
         document.getElementById("undo").addEventListener(
+          "touchend",
+          (event) => {
+            event.preventDefault();
+            undoTEnd();
+          },
+          false
+        );
+        document.getElementById("redo").addEventListener(
+          "touchstart",
+          (event) => {
+            event.preventDefault();
+            undoT();
+          },
+          false
+        );
+        document.getElementById("redo").addEventListener(
           "touchend",
           (event) => {
             event.preventDefault();
@@ -911,6 +947,7 @@
               downloadImage(dataURL, `${nome}.png`);
             }
           });
+          initStrokeRange()
       }
 
       const RGBAToHSLA = (r, g, b, a) => {
@@ -945,7 +982,10 @@
           undo();
         }
       }
+      var comandos = [];
+      var comandosb = [];
       let desfazendo = false;
+      let refazendo = false;
       var counter;
       function undoT() {
         counter = setInterval(() => undo(), 10);
@@ -953,8 +993,6 @@
       function undoTEnd() {
         clearInterval(counter);
       }
-      var comandos = [];
-      var comandosb = [];
 
       function undo() {
         let len = comandos.length;
@@ -973,11 +1011,35 @@
         comandosExec()
 
       }
+      function redoT() {
+        counter = setInterval(() => redo(), 10);
+      }
+      function redoTEnd() {
+        clearInterval(counter);
+      }
+
+      function redo() {
+        let len = comandosb.length;
+
+        if (len > 0) {
+          comandos.push(comandosb[0]);
+          // Remove the most recent command from the list
+          comandosb.shift();
+        }else{
+            clearInterval(counter)
+          alert("nivel maximo de refazer atingindo.");
+          clearInterval(counter)}
+
+        // Clear canvas get last flat img
+        // Re-play all commands (re-draw canvas from scratch)
+        comandosExec()
+
+      }
       function memoryswipe(){
         let len = comandos.length;
-        if (len >600){
+        if (len >2000){
           comandosb = [];
-          for (i=0;i<300;i++){
+          for (i=0;i<1000;i++){
             comandosb.unshift(comandos[len - i-1]);
             // Remove the most recent command from the list
               comandos.splice(-1, 1);
@@ -1357,7 +1419,22 @@
         document.getElementById("paleta2").innerHTML = paleta;
       }
 
-      function strokeSize(value) {
+      let strokeRange = [0.3,0.5,0.7,1,2]
+
+      function initStrokeRange(){
+        let r = 2;
+        while (r<=500){
+          r= r*1.3;
+        strokeRange.push(Math.floor(r))
+      }
+    }
+
+      function strokeSizeRange(value) {
+        strokeSize(
+          strokeRange[value]
+        )
+}
+   function strokeSize(value) {
         let brushes = ["mostraCor2", "cursor"];
         for (i in brushes) {
           let tamanho = document.getElementById(brushes[i]);
@@ -1449,6 +1526,7 @@
           "pintar",
           "cores",
           "picker",
+          "preencher"
         ];
         let quantos = objs.length;
         for (i = 0; i < quantos; i++) {
