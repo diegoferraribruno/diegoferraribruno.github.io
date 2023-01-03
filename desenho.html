@@ -265,8 +265,9 @@
         >
           <small
             >Diego Desenha<br />
-             versão 0.5<br /><br />
-             proposta:<br />
+             versão 0.5.1 - Turing
+             - nova paleta de cores
+             0.5<br /><br />
              - tamanhos pre definidos de pinceis. ok<br />
              - refazer passo a passo. ok<br />
              - apagador com transparencia propria.<br />
@@ -1380,17 +1381,15 @@
         i = 1;
         let paleta = "";
         while (i < 24) {
-          let cor = Math.floor(
-            (document.getElementById("H").value * 2 + i * 2) % 360
-          );
+          let cor = document.getElementById("H").value
           //    let cor = document.getElementById("H").value - (i*3)
-          paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]}%,${
-            hsla[2]
+          paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]+i*2}%,${
+            hsla[2]+i*2
           }%,${
             hsla[3]
           })")' class='bloquinho' style='background-color:hsla(${cor},${
-            hsla[1]
-          }%,${hsla[2]}%,${hsla[3] * 2 + 0.2});'> </span>`;
+            hsla[1]+i*2
+          }%,${hsla[2]+i*2}%,${hsla[3] * 2 + 0.2});'> </span>`;
           i++;
         }
         document.getElementById("paleta").innerHTML = paleta;
@@ -1494,6 +1493,7 @@
 
       function mudaCorQ(q = 0, valor) {
         hsla[q] = Number(valor);
+//        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
         setStrokeColor();
         criaPaleta();
       }
@@ -1690,7 +1690,7 @@
         if (qual === "img") {
           var item = prompt(
             "endereço da imagem de fundo",
-            "https://pbs.twimg.com/profile_images/1532631961860247555/UeY1CMQF_400x400.jpg"
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
           );
           if (item == null || item == "") {
             alert("fundo do app removido");
