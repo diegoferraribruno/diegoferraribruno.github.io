@@ -265,13 +265,13 @@
         >
           <small
             >Diego Desenha<br />
-             versão 0.5.1 - Turing
-             - nova paleta de cores
-             0.5<br /><br />
-             - tamanhos pre definidos de pinceis. ok<br />
-             - refazer passo a passo. ok<br />
+             versão 0.5.1b - Turing<br>
+             - nova paleta de cores<br><br />
+             notas ver 0.5<br />
+             - tamanhos pre definidos de pinceis. <br />
+             - refazer passo a passo. <br />
              - apagador com transparencia propria.<br />
-             - lupa com indicador de zoom. no lugar apropriado - ok<br />
+             - lupa com indicador de zoom. no lugar apropriado<br />
              <br />
 
             0.4.9
@@ -303,7 +303,7 @@
             max="100"
             step="0.5"
             value="1"
-            onchange="strokeSize(this.value)"
+            onchange="setStrokeSize(this.value)"
             style="width: 50px; margin-left: 8px"
           />
           <input
@@ -350,7 +350,7 @@
             max="100"
             step="0.3"
             value="1"
-            onchange="strokeSize(this.value)"
+            onchange="setStrokeSize(this.value)"
             style="width: 50px; margin-left: 8px"
           />
           <input
@@ -1284,9 +1284,8 @@
             removeClass();
             mode = qual;
             oldMode = qual;
-            strokeSize(estrokeWidth);
+            setStrokeSize(estrokeWidth);
             context.globalCompositeOperation = "destination-out";
-            document.getElementById("estrokeSize").value = estrokeWidth;
             cursorColor();
             toggleSelect(qual);
             memoryswipe();
@@ -1296,11 +1295,10 @@
             removeClass();
             mode = qual;
             oldMode = qual;
-            strokeSize(strokeWidth);
+            setStrokeSize(strokeWidth);
             context.globalCompositeOperation = globalComposite;
-            toggleSelect(qual);
-            document.getElementById("strokeSize").value = strokeWidth;
             mostraMenu(qual);
+            toggleSelect(qual);
             setStrokeColor();
             memoryswipe();
             break;
@@ -1308,11 +1306,11 @@
             removeClass();
             mode = qual;
             oldMode = qual;
+            setStrokeSize(strokeWidth);
             context.globalCompositeOperation = globalComposite;
-            strokeSize(strokeWidth);
             mostraMenu(qual);
-            document.getElementById("strokeSize").value = strokeWidth;
             toggleSelect(qual);
+            setStrokeColor();
             memoryswipe();
             break;
           case "fundo":
@@ -1320,9 +1318,8 @@
             mode = qual;
             oldMode = qual;
             context.globalCompositeOperation = globalComposite;
-            strokeSize(strokeWidth);
+            setStrokeSize(strokeWidth);
             mostraMenu(qual);
-            document.getElementById("strokeSize").value = strokeWidth;
             toggleSelect(qual);
             break;
 
@@ -1420,15 +1417,15 @@
     }
 
       function strokeSizeRange(value) {
-        strokeSize(
+        setStrokeSize(
           strokeRange[value]
         )
 }
-   function strokeSize(value) {
+   function setStrokeSize(value) {
         let brushes = ["mostraCor2", "cursor"];
         for (i in brushes) {
           let tamanho = document.getElementById(brushes[i]);
-          if (mode == "pintar") {
+          if (mode == "pintar" || mode == "cores") {
             strokeWidth = value;
             tamanho.style.width = strokeWidth * zoomFactor + "px";
             tamanho.style.height = strokeWidth * zoomFactor + "px";
@@ -1456,6 +1453,7 @@
       }
 
       function backPaint() {
+
         if (globalComposite != "destination-over") {
           globalComposite = "destination-over";
           document.getElementById(
@@ -1476,7 +1474,8 @@
         }
         cursor.classList.toggle("cursorIndex");
         cursor.classList.toggle("selected");
-        return (context.globalCompositeOperation = globalComposite);
+        modeTo("pintar")
+        removeClass()
       }
 
       function mudaCorBG(cor) {
@@ -1634,7 +1633,7 @@
         );
         setTimeout(() => setZoom(zoomFactor, canvasDiv), 4);
 
-        strokeSize(strokeWidth);
+        setStrokeSize(strokeWidth);
         document.getElementById("tzoom").value = zoomFactor;
         document.getElementById("zoombar").value =
           zoomScale.indexOf(zoomFactor);
