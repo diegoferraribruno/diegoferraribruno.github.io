@@ -1,916 +1,986 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <style>
-      * {
-        -webkit-user-select: none;
-        -moz-user-select: -moz-none;
-        /*IE10*/
-        -ms-user-select: none;
-        user-select: none;
-        /*You just need this if you are only concerned with android and not desktop browsers.*/
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-      }
-      body {
-        overflow-y: hidden;
-        padding: 0px 0px;
-        margin: 0px 0px;
-        background-color: #00000022;
-        font-family: "emojione mozilla", "segoe ui emoji", "noto color emoji",
-          "android emoji", "emojisymbols", "segoe ui symbol" "twemoji mozilla",
-          "apple color emoji";
-      }
-      #desenho_div {
-        text-align: center;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 360px;
-        touch-action: manipulation;
-      }
-      #canvas_div {
-        background-image: url("./grid.png");
-        text-align: center;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 320px;
-        height: 320px;
-        background-color: #ffffff22;
-        overflow-y: hidden;
-      }
-      #canvas_div2 {
-        background-image: url("./grid.png");
-        text-align: center;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 320px;
-        height: 320px;
-        background-color: #ffffff22;
-        overflow-y: hidden;
-      }
-      #canvas_window {
-        overflow: scroll;
-        width: 342px;
-        height: 342px;
-        -webkit-touch-overflow: scroll;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      #paleta {
-        position: relative;
-        width: 160px;
-        height: 150px;
-        display: block;
-        top: 0px;
-        margin-top: 0px;
-        display: block;
-        float: left;
-      }
-      #paleta2 {
-        position: relative;
-        width: 160px;
-        height: 110px;
-        display: block;
-        top: 4px;
-        margin-top: 0px;
-        display: block;
-        float: left;
-      }
-      #menucores {
-        width: 290px;
-        height: 290px;
-        z-index: 3;
-      }
-      #menu {
-        font-kerning: 1.2 em;
-        width: 92px;
-        height: 272px;
-        display: block;
-        float: right;
-        font-size: larger;
-        text-align: center;
-      }
-      .submenu {
-        position: absolute;
-        display: block;
-        top: 54px;
-        width: 280px;
-        height: 80px;
-        padding: 8px;
-        z-index: 3;
-        visibility: hidden;
-      }
-      .fundobranco {
-        margin: 2px;
-        min-height: 32px;
-        background-color: #eeeeee66;
-        border-radius: 20px;
-        border-style: solid;
-        border-width: 2px;
-        border-color: #dddddddd;
-        padding: 4px;
-        display: inline-block;
-      }
-      .fundobranco2 {
-        min-height: 12px;
-        display: inline-block;
-        float: left;
-        margin: 4px 4px 0px 4px;
-      }
-      .bloquinho {
-        margin: 4px;
-        width: 20px;
-        height: 20px;
-        border-style: solid;
-        border-radius: 20px;
-        border-color: #55555555;
-        border-width: thin;
-        display: block;
-        float: left;
-        padding: 2px;
-        font-size: 1.125em;
-        margin: 1px 2px 1px 2px;
-        touch-action: manipulation;
-      }
-      .selected {
-        background-color: #00000044;
-        border-color: #dd5555;
-        border-width: 3px;
-        width: 16px;
-        height: 16px;
-        padding-left: -10px;
-        font-size: 1.5em;
-      }
-      #mostraCor {
-        width: 50px;
-        height: 50px;
-        border-style: solid;
-        border-radius: 200px;
-        border-color: gray;
-        border-width: thin;
-        padding: 0px;
-        font-size: 1.125em;
-        float: left;
-        text-align: center;
-        background-color: "hsl(0, 100%, 0%)";
-        margin: 4px 4px 4px 4px;
-        font-size: 50px;
-        text-align: center;
-        line-height: 50px;
-        display: block;
-      }
-      .linha {
-        width: 1px;
-        border-radius: 0px;
-      }
-      #mostraCor2 {
-        width: 2px;
-        height: 2px;
-        border-style: solid;
-        border-radius: 200px;
-        border-color: gray;
-        border-width: thin;
-        display: block;
-        padding: 0px;
-        font-size: 1.125em;
-        float:left;
-        margin-left: 10px;
-      }
-      #cursor {
-        pointer-events: none;
-        display: block;
-        position: absolute;
-        width: 2px;
-        height: 2px;
-        border-style: solid;
-        border-radius: 200px;
-        border-color: gray;
-        color: #00000055;
-        border-width: thin;
-        padding: 0px;
-        font-size: 1.5em;
-        z-index: 10;
-      }
-      .disable-scroll {
-        overflow-y: hidden;
-      }
-      .aparece {
-        visibility: visible;
-      }
-      .naotoque {
-        user-select: none;
-        -moz-user-select: none;
-        -khtml-user-select: none;
-        -webkit-user-select: none;
-        -o-user-select: none;
-      }
-      .cursorIndex {
-        z-index: 0;
-      }
-      range {
-        margin-bottom: 10px;
-        margin-top: 10px;
-      }
-      .pqno {
-        height: 24px;
-        width: 24px;
-      }
-      #canvas {
-        background-color: #ffffff55;
-      }
-      .pixel {
-        image-rendering: pixelated;
-      }
-      input[type="range"][orient="vertical"] {
-        writing-mode: bt-lr; /* IE */
-        -webkit-appearance: slider-vertical; /* Chromium */
-        width: 8px;
-        height: 175px;
-        padding: 0 5px;
-        float: left;
-        margin-top: 4px;
-      }
-      #menus {
-        margin-left: 0px;
-      }
-      #ferramentas {
-        width: 300px;
-        margin-left: 4px;
-      }
-      #menuinfo{
-        overflow-y: scroll;
-        height: 300px;
-        width:300px;
-      }
-    </style>
-    <title>Diego Desenha - Alpha</title>
-  </head>
-  <body class="naotoque">
-    <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
-      <div id="menus">
-        <div id="menupicker" class="submenu fundobranco" class="naotoque">
-          Toque numa área pintada<br />
-          para capturar uma cor
-        </div>
-        <div
-          id="menuinfo"
-          class="submenu fundobranco"
-          class="naotoque"
-        >
-          <small
-            >Diego Desenha<br />
-             versão 0.5.1b - Turing<br>
-             - nova paleta de cores<br><br />
-             notas ver 0.5<br />
-             - tamanhos pre definidos de pinceis. <br />
-             - refazer passo a passo. <br />
-             - apagador com transparencia propria.<br />
-             - lupa com indicador de zoom. no lugar apropriado<br />
-             <br />
 
-            0.4.9
-            reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
-             o que pode influenciar na qualidade do projeto final. vamos ao teste.
-            <br />
-            Creative Commons Credits:
-            <a
-              href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/"
-              target="_blank"
-            >
-              lei mao</a
-            >
-            e
-            <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a
-            ><br />twitter @diegofbrasil
-          </small>
-        </div>
-        <div id="menupintar" class="fundobranco submenu">
-          <span
-            style="float: center; position: relative; width: 70px"
-            onmousedown="changeLine()"
-            >estilo:<span id="line"> ⚫</span></span
-          >
-          <input
-            type="number"
-            id="tpx"
-            min="0.5"
-            max="100"
-            step="0.5"
-            value="1"
-            onchange="setStrokeSize(this.value)"
-            style="width: 50px; margin-left: 8px"
-          />
-          <input
-            type="range"
-            id="strokeSize"
-            name="strokeSize"
-            min="1"
-            max="26"
-            step="1"
-            oninput="strokeSizeRange(this.value)"
-            value="1"
-            width="200px"
-          /><br />
-          💧<input
-            type="range"
-            id="A2"
-            name="transparencia"
-            min="0.01"
-            max="1"
-            oninput="mudaCorQ(3,this.value)"
-            step="0.01"
-            value="1"
-          /><br />
-          <span
-          onmousedown="removeClass()"
-          id="mostraCor2"
-          style="
-          background-color: 'hsl(0, 100%, 0%)';
-          "
-          >🖌️</span
-          >
-        </div>
-        <div id="menuapagar" class="fundobranco submenu" class="naotoque">
-          <span
-            style="float: center; position: relative; width: 16px"
-            onmousedown="changeLine()"
-            ><span id="line2"> ⚫</span></span
-          >
-          <span class="bloquinho" onmousedown="removeClass()">🧽</span
-          >&nbsp;<input
-            type="number"
-            id="tpx2"
-            min="0.5"
-            max="100"
-            step="0.3"
-            value="1"
-            onchange="setStrokeSize(this.value)"
-            style="width: 50px; margin-left: 8px"
-          />
-          <input
-            type="range"
-            id="estrokeSize"
-            name="estrokeSize"
-            min="1"
-            max="26"
-            step="1"
-            oninput="strokeSizeRange(this.value)"
-            value="1"
-            width="160px"
-          />
-          <span
-            onmousedown="removeClass()"
-            id="mostraCor2"
-            style="background-color: 'hsl(0, 100%, 0%);'"
-          >
-        </span><div>
-          💧<input
-            type="range"
-            id="transparenciaE"
-            name="transparencia"
-            min="0.1"
-            max="1"
-            oninput="mudaCorAlpha()"
-            step="0.1"
-            value="1"
-          /></div>
-        </div>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: -moz-none;
+      /*IE10*/
+      -ms-user-select: none;
+      user-select: none;
+      /*You just need this if you are only concerned with android and not desktop browsers.*/
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
 
-        <div id="menucores" class="fundobranco submenu">
-          <div id="menu" class="fundobranco" onmouseover="mostra()">
-            🌈◒🔆💧<br />
-            <input
-              type="range"
-              orient="vertical"
-              id="H"
-              name="cor"
-              min="0"
-              max="359"
-              oninput="mudaCorQ(0,this.value)"
-              value="0"
-            />
-            <input
-              type="range"
-              orient="vertical"
-              id="S"
-              name="cor"
-              min="0"
-              max="100"
-              oninput="mudaCorQ(1,this.value)"
-              value="100"
-            />
-            <input
-              type="range"
-              orient="vertical"
-              id="L"
-              name="cor"
-              min="0"
-              max="100"
-              oninput="mudaCorQ(2,this.value)"
-              value="50"
-            />
-            <input
-              type="range"
-              orient="vertical"
-              id="A"
-              name="cor"
-              min="0.01"
-              max="1"
-              oninput="mudaCorQ(3,this.value)"
-              step="0.01"
-              value="1"
-            /><br />
-            <div
-              id="salvaCor"
-              onmousedown="salvaCor()"
-              title="Favoritar"
-              style="
-                height: 20px;
-                float: left;
-                margin-top: 20px;
-                line-height: 01em;
-                font-size: 1.5em;
-              "
-              class="bloquinho"
-            >
-              <div style="margin: -20px 10px 0px 0px; width: 20px">📌</div>
-            </div>
-            <div
-              id="mostraCor"
-              onmousedown="removeClass()"
-              style="
-                float: right;
-                color: white;
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 1.75em;
-                font-weight: bold;
-              "
-            >
-              ok
-            </div>
-          </div>
-          <div id="paleta" class="fundobranco"></div>
-          <div id="paleta2" class="fundobranco">
-            <br />use o 📌 para guardar <br />ou remover suas cores daqui.
-          </div>
-        </div>
+    body {
+      overflow-y: hidden;
+      padding: 0px 0px;
+      margin: 0px 0px;
+      font-family: "emojione mozilla", "segoe ui emoji", "noto color emoji",
+        "android emoji", "emojisymbols", "segoe ui symbol" "twemoji mozilla",
+        "apple color emoji";
+    }
 
-        <div
-          id="menufundo"
-          class="fundobranco submenu naotoque"
-          style="text-align: center"
-        >
-          Fundo falso:
-          <br />
-          <span onmousedown='Fundo("img")' class="bloquinho">🖼️ </span>
-          <span
-            onmousedown='Fundo("black")'
-            class="bloquinho"
-            style="background-color: hsla(0, 100%, 0%, 1)"
-          >
-          </span>
-          <span
-            onmousedown='Fundo("white")'
-            class="bloquinho"
-            style="background-color: hsla(0, 100%, 100%, 1)"
-          >
-          </span>
-          <span
-            onmousedown='Fundo("grid.png")'
-            class="bloquinho"
-            style="background-image: url('./grid.png')"
-            >.</span
-          >
-          <span
-            onmousedown='Fundo("grid2.png")'
-            class="bloquinho"
-            style="background-image: url('./grid2.png'); background-color: #fff"
-          ></span>
-          <span
-            onmousedown='Fundo("grid3.png")'
-            class="bloquinho"
-            style="background-image: url('./grid3.png')"
-          ></span>
-          <span
-            onmousedown='Fundo("none")'
-            class="bloquinho"
-            style="background-color: hsla(0, 100%, 100%, 0)"
-          >
-            ❌</span
-          >
-        </div>
+    #desenho_div {
+      text-align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 360px;
+      touch-action: manipulation;
+    }
 
-        <div id="menupreencher" class="fundobranco submenu" class="naotoque">
-          ⚠️ Preencher tudo ⚠️
-          <span width="140px" style="margin: 8px 80px; display: block">
-            <span
-              onmousedown='mudaCorBG("black")'
-              class="bloquinho"
-              style="background-color: hsla(0, 100%, 0%, 1)"
-            >
-            </span>
-            <span
-              onmousedown='mudaCorBG("white")'
-              class="bloquinho"
-              style="background-color: hsla(0, 100%, 100%, 1)"
-            >
-            </span>
-            <span
-              onmousedown='mudaCorBG("strokeColor")'
-              id="preenchercor"
-              class="bloquinho"
-            >
-            </span>
-            <span class="bloquinho" onmousedown="removeClass()" width="120px"
-              >❌</span
-            ><br />
-          </span>
-        </div>
+    #canvas_div {
+      background-image: url("./grid.png");
+      text-align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 320px;
+      height: 320px;
+      overflow-y: hidden;
+    }
 
-        <div id="menuzoom" class="fundobranco submenu" class="naotoque">
-          <input
-            id="zoombar"
-            type="range"
-            min="0"
-            max="3"
-            value="1"
-            step="1"
-            onchange="ZOOMf(this.value)"
-          />
-          <input
-            id="tzoom"
-            type="number"
-            min="0.50"
-            max="4"
-            step="0.5"
-            value="1"
-            onchange="ZOOM(this.value)"
-            style="width: 44px"
-          />
-          <span onmousedown="scrollCanva(-80,0)">⬅️</span>
-          <span onmousedown="scrollCanva(0,-80)">⬆️</span>
-          <span onmousedown="scrollCanva(0,80)">⬇️</span>
-          <span onmousedown="scrollCanva(80,0)">➡️</span>
-        </div>
+    #canvas_div2 {
+      background-image: url("./grid.png");
+      text-align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 320px;
+      height: 320px;
+      overflow-y: hidden;
+    }
 
-        <div id="ferramentas" class="fundobranco" class="naotoque">
-          <span
-            onmousedown="backPaint()"
-            class="fundobranco2"
-            id="globalComposite"
-            style="width: 24px; height: 24px; padding-top: 6px"
-          >
-            <span
-              style="
-                position: absolute;
-                float: right;
-                width: 30px;
-                display: block;
-                padding-top: 0px;
-              "
-              >🔲</span
-            >
-            <span
-              style="
-                color: white;
-                position: relative;
-                display: block;
-                float: left;
-                width: 20px;
-                margin-top: -5px;
-              "
-              >⭕</span
-            >
-          </span>
-          <span
-            id="pintar"
-            title="pintar"
-            class="bloquinho selected"
-            onmousedown='modeTo("pintar")'
-            >🖌️</span
-          >
-          <span
-            id="cores"
-            title="cores"
-            class="bloquinho"
-            onmousedown='modeTo("cores")'
-            >🎨</span
-          >
-          <span
-            id="picker"
-            title="Pega cor"
-            class="bloquinho"
-            onmousedown='modeTo("picker")'
-            >💉</span
-          >
+    #canvas_window {
+      overflow: scroll;
+      width: 342px;
+      height: 342px;
+      -webkit-touch-overflow: scroll;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-          <span
-            id="preencher"
-            title="Preencher"
-            onmousedown='modeTo("preencher")'
-            class="bloquinho"
-            >🪣</span
-          >
-          <span
-          id="apagar"
-          title="Apagar"
-          class="bloquinho"
-          onmousedown='modeTo("apagar")'
-          >🧽</span
-          >
-          <span class="bloquinho" onclick="x2()">↔️</span>
-          <span class="bloquinho" onmousedown="clearArea()">🗑</span>
-          <span><a id="btn-download" class="bloquinho"> 📥</a></span>
-        </div>
+    #paleta {
+      position: relative;
+      width: 160px;
+      height: 150px;
+      display: block;
+      top: 0px;
+      margin-top: 0px;
+      display: block;
+      float: left;
+    }
+
+    #paleta2 {
+      position: relative;
+      width: 160px;
+      height: 110px;
+      display: block;
+      top: 4px;
+      margin-top: 0px;
+      display: block;
+      float: left;
+    }
+
+    #menucores {
+      width: 290px;
+      height: 290px;
+      z-index: 3;
+    }
+
+    #menu {
+      font-kerning: 1.2 em;
+      width: 92px;
+      height: 272px;
+      display: block;
+      float: right;
+      font-size: larger;
+      text-align: center;
+    }
+
+    .submenu {
+      position: absolute;
+      display: block;
+      top: 54px;
+      width: 280px;
+      height: 80px;
+      padding: 8px;
+      z-index: 3;
+      visibility: hidden;
+    }
+
+    .fundobranco {
+      margin: 2px;
+      min-height: 32px;
+      background-color: #eeeeee66;
+      border-radius: 20px;
+      border-style: solid;
+      border-width: 2px;
+      border-color: #dddddddd;
+      padding: 4px;
+      display: inline-block;
+    }
+
+    .fundobranco2 {
+      min-height: 12px;
+      display: inline-block;
+      float: left;
+      margin: 4px 4px 0px 4px;
+    }
+
+    .bloquinho {
+      margin: 4px;
+      width: 20px;
+      height: 20px;
+      border-style: solid;
+      border-radius: 20px;
+      border-color: #55555555;
+      border-width: thin;
+      display: block;
+      float: left;
+      padding: 2px;
+      font-size: 1.125em;
+      margin: 1px 2px 1px 2px;
+      touch-action: manipulation;
+    }
+
+    .selected {
+      background-color: #00000044;
+      border-color: #dd5555;
+      border-width: 3px;
+      width: 16px;
+      height: 16px;
+      padding-left: -10px;
+      font-size: 1.5em;
+    }
+
+    #mostraCor {
+      width: 50px;
+      height: 50px;
+      border-style: solid;
+      border-radius: 200px;
+      border-color: gray;
+      border-width: thin;
+      padding: 0px;
+      font-size: 1.125em;
+      float: left;
+      text-align: center;
+      background-color: "hsl(0, 100%, 0%)";
+      margin: 4px 4px 4px 4px;
+      font-size: 50px;
+      text-align: center;
+      line-height: 50px;
+      display: block;
+    }
+
+    .linha {
+      width: 1px;
+      border-radius: 0px;
+    }
+
+    #mostraCor2 {
+      width: 2px;
+      height: 2px;
+      border-style: solid;
+      border-radius: 200px;
+      border-color: gray;
+      border-width: thin;
+      display: block;
+      padding: 0px;
+      font-size: 1.125em;
+      float: left;
+      margin-left: 10px;
+    }
+
+    #cursor {
+      pointer-events: none;
+      display: block;
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-style: solid;
+      border-radius: 200px;
+      border-color: gray;
+      color: #00000055;
+      border-width: thin;
+      padding: 0px;
+      font-size: 1.5em;
+      z-index: 10;
+    }
+
+    .disable-scroll {
+      overflow-y: hidden;
+    }
+
+    .aparece {
+      visibility: visible;
+    }
+
+    .naotoque {
+      user-select: none;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
+    }
+
+    .cursorIndex {
+      z-index: 0;
+    }
+
+    range {
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    .pqno {
+      height: 24px;
+      width: 24px;
+    }
+
+    .pixel {
+      image-rendering: pixelated;
+    }
+
+    input[type="range"][orient="vertical"] {
+      writing-mode: bt-lr;
+      /* IE */
+      -webkit-appearance: slider-vertical;
+      /* Chromium */
+      width: 8px;
+      height: 175px;
+      padding: 0 5px;
+      float: left;
+      margin-top: 4px;
+    }
+
+    #menus {
+      margin-left: 0px;
+    }
+
+    #ferramentas {
+      width: 310px;
+      margin-left: 4px;
+    }
+
+    #menuinfo {
+      overflow-y: scroll;
+      height: 300px;
+      width: 300px;
+    }
+
+    .day {
+      background-color: #ddddddcc;
+    }
+
+    .night {
+      background-color: #111111cc;
+      border-color: #333333ee;
+    }
+  </style>
+  <title>Diego Desenha - Alpha</title>
+</head>
+
+<body class="naotoque day" style="cursor: pointer;">
+  <div id="desenho_div" style="overflow-y: hidden; width: 1050px; height: 609px;" class="naotoque">
+    <div id="menus">
+      <div id="menupicker" class="submenu fundobranco">
+        Toque numa área pintada<br>
+        para capturar uma cor
       </div>
+      <div id="menuinfo" class="submenu fundobranco">
+        <small>Diego Desenha<br>
+          versão 0.5.2<br>
+          - night mode
+          - nova paleta de cores<br><br>
+          notas ver 0.5 - Turing<br>
+          - tamanhos pre definidos de pinceis. <br>
+          - refazer passo a passo. <br>
+          - apagador com transparencia propria.<br>
+          - lupa com indicador de zoom. no lugar apropriado<br>
+          <br>
 
-      <div id="canvas_window">
-        <span
-          id="cursor"
-          style="background-color: 'hsla(0, 0%, 0%, 0);'"
-          class="naotoque"
-          onselectstart="return false;"
-          ondragstart="return false;"
-        >
+          0.4.9
+          reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
+          o que pode influenciar na qualidade do projeto final. vamos ao teste.
+          <br>
+          Creative Commons Credits:
+          <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
+            lei mao</a>
+          e
+          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>twitter @diegofbrasil
+        </small>
+      </div>
+      <div id="menupintar" class="fundobranco submenu">
+        <span style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
+            ➕</span></span>
+        <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1" onchange="setStrokeSize(this.value)"
+          style="width: 50px; margin-left: 8px">
+        <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
+          oninput="strokeSizeRange(this.value)" value="1" width="200px"><br>
+        💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+          step="0.01" value="1"><br>
+        <span onmousedown="removeClass()" id="mostraCor2"
+          style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px;">🖌️</span>
+      </div>
+      <div id="menuapagar" class="fundobranco submenu">
+        <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span id="line2">
+            ➕</span></span>
+        <span class="bloquinho" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2" min="0.5"
+          max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
+        <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
+          oninput="strokeSizeRange(this.value)" value="1" width="160px">
+        <span onmousedown="removeClass()" id="mostraCor2" style="background-color: &#39;hsl(0, 100%, 0%);&#39;">
         </span>
-        <div id="canvas_div" style="overflow: hidden">
-          <canvas
-            id="canvas"
-            width="320px"
-            height="320px"
-            onmousemove="cursorMove(event)"
-            onmouseout="mostra()"
-          >
-            Your browser does not support canvas element.
-          </canvas>
+        <div>
+          💧<input type="range" id="transparenciaE" name="transparencia" min="0.1" max="1" oninput="mudaCorAlpha()"
+            step="0.1" value="1"></div>
+      </div>
+
+      <div id="menucores" class="fundobranco submenu">
+        <div id="menu" class="fundobranco" onmouseover="mostra()">
+          🌈◒🔆💧<br>
+          <input type="range" orient="vertical" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
+            value="0">
+          <input type="range" orient="vertical" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)"
+            value="100">
+          <input type="range" orient="vertical" id="L" name="cor" min="0" max="100" oninput="mudaCorQ(2,this.value)"
+            value="50">
+          <input type="range" orient="vertical" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+            step="0.01" value="1"><br>
+          <div id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
+            style="height: 20px; float: left; margin-top: 20px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"
+            class="bloquinho">
+            <div style="margin: -20px 10px 0px 0px; width: 20px">📌</div>
+          </div>
+          <div id="mostraCor" onmousedown="removeClass()"
+            style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.75em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
+            ok
+          </div>
+        </div>
+        <div id="paleta" class="fundobranco"><span onmousedown="mudaCor('hsla(357,87%,82%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,87%,82%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,89%,84%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,89%,84%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,91%,86%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,91%,86%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,93%,88%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,93%,88%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,95%,90%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,95%,90%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,97%,92%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,97%,92%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,99%,94%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,99%,94%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,101%,96%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,101%,96%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,103%,98%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,103%,98%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,105%,100%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,105%,100%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,107%,102%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,107%,102%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,109%,104%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,109%,104%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,111%,106%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,111%,106%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,113%,108%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,113%,108%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,115%,110%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,115%,110%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,117%,112%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,117%,112%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,119%,114%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,119%,114%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,121%,116%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,121%,116%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,123%,118%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,123%,118%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,125%,120%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,125%,120%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,127%,122%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,127%,122%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,129%,124%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,129%,124%,0.5);"> </span><span
+            onmousedown="mudaCor('hsla(357,131%,126%,0.15)')" class="bloquinho"
+            style="background-color:hsla(357,131%,126%,0.5);"> </span><span onmousedown="mudaCor('B')" class="bloquinho"
+            style="background-color:hsla(0, 100%, 100%, 0.15)"> </span><br><span onmousedown="mudaCor('P')"
+            class="bloquinho" style="background-color:hsla(0, 100%, 0%, 0.15)"> </span></div>
+        <div id="paleta2" class="fundobranco">
+          <br>use o 📌 para guardar <br>ou remover suas cores daqui.
         </div>
       </div>
-      <div
-        id="ferramentas2"
-        class="fundobranco naotoque"
-        style="width: 280px; margin: auto"
-      >
 
-        <span
-          id="fundo"
-          title="Fundo falso"
-          class="bloquinho"
-          onmousedown='modeTo("fundo")'
-          >🖼️</span
-        >
-        <span
-          id="info"
-          title="Fundo falso"
-          class="bloquinho"
-          onmousedown='modeTo("info")'
-          >ℹ️</span
-        >
-        <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
-
-        <span
-          id="zoom"
-          title="Ampliar"
-          class="bloquinho"
-          onmousedown='modeTo("zoom")'
-          >🔎<span id="x1" style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span
-        >
-        <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
-        <span
-          id="undo"
-          title="undo"
-          class="bloquinho"
-          onmousedown="undoT()"
-          onmouseup="undoTEnd()"
-          >↩️</span
-        >
-        <span
-          id="redo"
-          title="replay"
-          class="bloquinho"
-          onmousedown="redoT()"
-          onmouseup="redoTEnd()"
-          >↪️</span
-        >
+      <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center">
+        Fundo falso:
+        <br>
+        <span onmousedown="Fundo('img')" class="bloquinho">🖼️ </span>
+        <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
+        </span>
+        <span onmousedown="Fundo('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
+        </span>
+        <span onmousedown="Fundo('grid.png')" class="bloquinho"
+          style="background-image: url(&#39;./grid.png&#39;)">.</span>
+        <span onmousedown="Fundo('grid2.png')" class="bloquinho"
+          style="background-image: url(&#39;./grid2.png&#39;); background-color: #fff"></span>
+        <span onmousedown="Fundo('grid3.png')" class="bloquinho"
+          style="background-image: url(&#39;./grid3.png&#39;)"></span>
+        <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
+          ❌</span>
       </div>
+
+      <div id="menupreencher" class="fundobranco submenu">
+        ⚠️ Preencher tudo ⚠️
+        <span width="140px" style="margin: 8px 80px; display: block">
+          <span onmousedown="mudaCorBG('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
+          </span>
+          <span onmousedown="mudaCorBG('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
+          </span>
+          <span onmousedown="mudaCorBG('strokeColor')" id="preenchercor" class="bloquinho"
+            style="background-color: rgba(158, 239, 129, 0.28);">
+          </span>
+          <span class="bloquinho" onmousedown="removeClass()" width="120px">❌</span><br>
+        </span>
+      </div>
+
+      <div id="menuzoom" class="fundobranco submenu">
+        <input id="zoombar" type="range" min="0" max="3" value="1" step="1" onchange="ZOOMf(this.value)">
+        <input id="tzoom" type="number" min="0.50" max="4" step="0.5" value="1" onchange="ZOOM(this.value)"
+          style="width: 44px">
+        <span onmousedown="scrollCanva(-80,0)">⬅️</span>
+        <span onmousedown="scrollCanva(0,-80)">⬆️</span>
+        <span onmousedown="scrollCanva(0,80)">⬇️</span>
+        <span onmousedown="scrollCanva(80,0)">➡️</span>
+      </div>
+
+      <div id="ferramentas" class="fundobranco">
+        <span onmousedown="backPaint()" class="fundobranco2" id="globalComposite"
+          style="width: 24px; height: 24px; padding-top: 6px"><span
+            style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
+          <span
+            style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
+            title="Pintar por baixo">🔲</span></span>
+        <span id="pintar" title="pintar" class="bloquinho selected" onmousedown="modeTo('pintar')"
+          style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span>
+        <span id="cores" title="cores" class="bloquinho" onmousedown="modeTo('cores')"
+          style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+        <span id="picker" title="Pega cor" class="bloquinho" onmousedown="modeTo('picker')"
+          style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
+
+        <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho"
+          style="background-color: rgba(247, 161, 165, 0.15);">🪣</span>
+        <span id="apagar" title="Apagar" class="bloquinho" onmousedown="modeTo('apagar')">🧽</span>
+        <span class="bloquinho" onclick="x2()">↔️</span>
+        <span class="bloquinho" onmousedown="clearArea()">🗑</span>
+        <span><a id="btn-download" class="bloquinho"> 📥</a></span>
+        <span id="info" title="Fundo falso" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
+      </div>
+    </div>
+
+    <div id="canvas_window">
+      <span id="cursor"
+        style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
+        class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
+      <div id="canvas_div" style="overflow: hidden" class="day">
+        <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
+          class="day">
+          Your browser does not support canvas element.
+        </canvas>
+      </div>
+    </div>
+    <div id="ferramentas2" class="fundobranco naotoque" style="width: 280px; margin: auto">
+
+      <span id="fundo" title="Fundo falso" class="bloquinho" onmousedown="modeTo('fundo')">🖼️</span>
+
+      <span id="night" class="bloquinho" onmousedown="night()"> 🌒</span>
+      <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
+
+      <span id="zoom" title="Ampliar" class="bloquinho" onmousedown="modeTo('zoom')">🔎<span id="x1"
+          style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
+      <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
+      <span id="undo" title="undo" class="bloquinho" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
+      <span id="redo" title="replay" class="bloquinho" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
+    </div>
 
   </div>
-    <script>
-      const canvas = document.getElementById("canvas");
-      const context = canvas.getContext("2d");
-      let isDrawing = false;
-      let isGrabing = false;
-      let x = 0;
-      let y = 0;
-      var offsetX;
-      var offsetY;
-      const ongoingTouches = [];
+  <script>
+    const canvas = document.getElementById("canvas");
+    const context = canvas.getContext("2d");
+    let isDrawing = false;
+    let isGrabing = false;
+    let x = 0;
+    let y = 0;
+    var offsetX;
+    var offsetY;
+    const ongoingTouches = [];
 
-      // comeca minha adaptacao
+    // comeca minha adaptacao
 
-      const canvasDiv = document.getElementById("canvas_div");
-      var globalComposite = "source-over";
-      var favoritas = [];
-      var stroke = 1;
-      var hsla = [0, 100, 50, 1];
-      var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-      var strokeWidth = 0.6;
-      var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-      var estrokeWidth = 4;
-      var mode = "pintar";
-      var linejoin = "round";
-      var lineJoinsCount = 0;
-      const lineJoins = ["round", "miter"];
-      var ultimoToque = { x: 160, y: 160 };
-      var zoomFactor = 1;
-      var zoomScale = [0.5, 1, 2, 4];
-      var zoomIndex = 1;
-      var mouseOver = false;
-      var layer1 = [];
-      var x2size = 1;
-      const cursor = document.getElementById("cursor");
-      const win = document.getElementById("canvas_window");
-      const desenhoDiv = document.getElementById("desenho_div");
+    const canvasDiv = document.getElementById("canvas_div");
+    var globalComposite = "source-over";
+    var favoritas = [];
+    var stroke = 1;
+    var hsla = [0, 100, 50, 1];
+    var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+    var strokeWidth = 0.6;
+    var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+    var estrokeWidth = 4;
+    var mode = "pintar";
+    var linejoin = "round";
+    var lineJoinsCount = 0;
+    const lineJoins = ["round", "miter"];
+    var ultimoToque = { x: 160, y: 160 };
+    var zoomFactor = 1;
+    var zoomScale = [0.5, 1, 2, 4];
+    var zoomIndex = 1;
+    var mouseOver = false;
+    var layer1 = [];
+    var x2size = 1;
+    const cursor = document.getElementById("cursor");
+    const win = document.getElementById("canvas_window");
+    const desenhoDiv = document.getElementById("desenho_div");
 
-      function prevent(evt) {
-        evt.preventDefault();
+    function prevent(evt) {
+      evt.preventDefault();
+    }
+    function night() {
+      let testarray = document.getElementsByClassName("fundobranco");
+      let testarray2 = document.getElementsByClassName("day");
+      for (let i = 0; i < testarray.length; i++) {
+        //testarray[i].className += "night";
+        testarray[i].classList.toggle("night")
+      } for (let i = 0; i < testarray2.length; i++) {
+        //testarray[i].className += "night";
+        testarray2[i].classList.toggle("night")
+      }
+    }
+    function x2(w = 320, h = 320) {
+      let newSize = 320;
+      let newSizeb = 320;
+      if (x2size < 4) {
+        newSize = newSize * x2size;
+        newSizeb = newSize * 2;
+      } else {
+        newSize = 320 * x2size;
+        newSizeb = 320;
       }
 
-      function x2(w = 320, h = 320) {
-        let newSize = 320;
-        let newSizeb = 320;
-        if (x2size < 4) {
-          newSize = newSize * x2size;
-          newSizeb = newSize * 2;
-        } else {
-          newSize = 320 * x2size;
-          newSizeb = 320;
+      var resultado = confirm(
+        "\t\t\t\t↔️ Deseja mudar o tamanho da tela de \n" +
+        `\t\t\t\t\t\t${newSize}px x ${newSize}px\n` +
+        `\t\t\t\t\t\t\tpara\n` +
+        `\t\t\t\t\t\t${newSizeb}px x ${newSizeb}px\n\n` +
+        `\t\t\t\t\t utilize a lupa 🔎 para zoom \n` +
+        `\t\t\t\t e a mão 🖐 para navegar pela tela\n\n`
+      );
+      if (resultado === true) {
+        //dobra o tamanho do canva
+        win.style.width = parseInt(window.innerWidth, 10) - 20 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 100 + "px";
+        x2size *= 2;
+        if (x2size > 4) {
+          x2size = 1;
+          win.style.width = `340px`;
+          win.style.height = `340px`;
         }
-
-        var resultado = confirm(
-          "\t\t\t\t↔️ Deseja mudar o tamanho da tela de \n" +
-            `\t\t\t\t\t\t${newSize}px x ${newSize}px\n` +
-            `\t\t\t\t\t\t\tpara\n` +
-            `\t\t\t\t\t\t${newSizeb}px x ${newSizeb}px\n\n` +
-            `\t\t\t\t\t utilize a lupa 🔎 para zoom \n` +
-            `\t\t\t\t e a mão 🖐 para navegar pela tela\n\n`
-        );
-        if (resultado === true) {
-          //dobra o tamanho do canva
-          win.style.width = parseInt(window.innerWidth, 10) - 20 + "px";
-          win.style.height = parseInt(window.innerHeight, 10) - 100 + "px";
-          x2size *= 2;
-          if (x2size > 4) {
-            x2size = 1;
-            win.style.width = `340px`;
-            win.style.height = `340px`;
-          }
-          let W = w * x2size;
-          let H = h * x2size;
-          canvasDiv.style.width = W + 30 + "px";
-          canvasDiv.style.height = H + 20 + "px";
-          canvas.width = W;
-          canvas.height = H;
-        }
-        replay();
+        let W = w * x2size;
+        let H = h * x2size;
+        canvasDiv.style.width = W + 30 + "px";
+        canvasDiv.style.height = H + 20 + "px";
+        canvas.width = W;
+        canvas.height = H;
       }
-      function toggleHand() {
-        if (mode != "zoom") {
-          oldMode = mode;
-          mode = "zoom";
-          toggleSelect("hand");
-          cursorColor("zoom");
-        } else {
-          modeTo(oldMode);
-          cursorColor(oldMode);
-        }
+      replay();
+    }
+    function toggleHand() {
+      if (mode != "zoom") {
+        oldMode = mode;
+        mode = "zoom";
+        toggleSelect("hand");
+        cursorColor("zoom");
+      } else {
+        modeTo(oldMode);
+        cursorColor(oldMode);
       }
-      // pausa na adaptacao funcoes novas ao fim
+    }
+    // pausa na adaptacao funcoes novas ao fim
 
-      document.addEventListener("DOMContentLoaded", startup);
-      function resizeScreen() {
-        desenhoDiv.style.width = window.innerWidth + "px";
-        desenhoDiv.style.height = window.innerHeight + "px";
-      }
-      function startup() {
+    document.addEventListener("DOMContentLoaded", startup);
+    function resizeScreen() {
+      desenhoDiv.style.width = window.innerWidth + "px";
+      desenhoDiv.style.height = window.innerHeight + "px";
+    }
+    function startup() {
 
-        removeClass();
-        window.addEventListener("resize", function (event) {
-          resizeScreen();
-        });
+      removeClass();
+      window.addEventListener("resize", function (event) {
         resizeScreen();
-        document.getElementById("undo").addEventListener(
-          "touchstart",
-          (event) => {
-            event.preventDefault();
-            undoT();
-          },
-          false
-        );
-        document.getElementById("undo").addEventListener(
-          "touchend",
-          (event) => {
-            event.preventDefault();
-            undoTEnd();
-          },
-          false
-        );
-        document.getElementById("redo").addEventListener(
-          "touchstart",
-          (event) => {
-            event.preventDefault();
-            redoT();
-          },
-          false
-        );
-        document.getElementById("redo").addEventListener(
-          "touchend",
-          (event) => {
-            event.preventDefault();
-            redoTEnd();
-          },
-          false
-        );
-        document.getElementById("zoombar").value =
-          zoomScale.indexOf(zoomFactor);
-        window.addEventListener("keydown", handleKeys);
-        canvas.addEventListener("touchstart", handleStart);
-        desenhoDiv.addEventListener("gesturestart", prevent);
-        win.addEventListener("touchmove", prevent);
-        canvas.addEventListener("touchend", handleEnd);
-        canvas.addEventListener("touchcancel", handleCancel);
-        canvas.addEventListener("touchmove", handleMove);
-        canvas.addEventListener("mousedown", (e) => {
-          x = e.offsetX;
-          y = e.offsetY;
-          if (mode != "picker" && mode != "zoom") {
-            isDrawing = true;
-          } else if (mode == "zoom") {
-            isGrabing = true;
-          }
-          removeClass();
-        });
-        canvas.addEventListener("mouseenter", (e) => {
-          mouseOver = true;
-        });
-        canvas.addEventListener("mouseout", (e) => {
-          mouseOver = false;
-          setTimeout(() => {
-            if (mouseOver == false) {
-              isDrawing = false;
-              isGrabing = false;
-            }
-          }, 500);
-        });
-        canvas.addEventListener("mousemove", (e) => {
-          if (isDrawing && mode != "picker") {
-            desenha(
-              context.globalCompositeOperation,
-              x,
-              y,
-              e.offsetX,
-              e.offsetY,
-              strokeColor,
-              stroke,
-              linejoin
-            );
-          } else if (isGrabing) {
-            ultimoToque.y = e.offsetY;
-            ultimoToque.x = e.offsetX;
-            scrollCanva(
-              (x - ultimoToque.x) * zoomFactor,
-              (y - ultimoToque.y) * zoomFactor
-            );
-          }
-          x = e.offsetX;
-          y = e.offsetY;
-        });
-        canvas.addEventListener("mouseup", (e) => {
-          if (isDrawing && mode != "picker") {
-            desenha(
-              context.globalCompositeOperation,
-              x,
-              y,
-              e.offsetX + 1,
-              e.offsetY + 1,
-              strokeColor,
-              stroke,
-              linejoin
-            );
-            ultimoToque.y = e.offsetY;
-            ultimoToque.x = e.offsetX;
-            x = 0;
-            y = 0;
+      });
+      resizeScreen();
+      document.getElementById("undo").addEventListener(
+        "touchstart",
+        (event) => {
+          event.preventDefault();
+          undoT();
+        },
+        false
+      );
+      document.getElementById("undo").addEventListener(
+        "touchend",
+        (event) => {
+          event.preventDefault();
+          undoTEnd();
+        },
+        false
+      );
+      document.getElementById("redo").addEventListener(
+        "touchstart",
+        (event) => {
+          event.preventDefault();
+          redoT();
+        },
+        false
+      );
+      document.getElementById("redo").addEventListener(
+        "touchend",
+        (event) => {
+          event.preventDefault();
+          redoTEnd();
+        },
+        false
+      );
+      document.getElementById("zoombar").value =
+        zoomScale.indexOf(zoomFactor);
+      window.addEventListener("keydown", handleKeys);
+      canvas.addEventListener("touchstart", handleStart);
+      desenhoDiv.addEventListener("gesturestart", prevent);
+      win.addEventListener("touchmove", prevent);
+      canvas.addEventListener("touchend", handleEnd);
+      canvas.addEventListener("touchcancel", handleCancel);
+      canvas.addEventListener("touchmove", handleMove);
+      canvas.addEventListener("mousedown", (e) => {
+        x = e.offsetX;
+        y = e.offsetY;
+        if (mode != "picker" && mode != "zoom") {
+          isDrawing = true;
+        } else if (mode == "zoom") {
+          isGrabing = true;
+        }
+        removeClass();
+      });
+      canvas.addEventListener("mouseenter", (e) => {
+        mouseOver = true;
+      });
+      canvas.addEventListener("mouseout", (e) => {
+        mouseOver = false;
+        setTimeout(() => {
+          if (mouseOver == false) {
             isDrawing = false;
-          } else if (mode == "picker") {
-            x = e.offsetX;
-            y = e.offsetY;
-            var imageData = context.getImageData(x, y, 1, 1).data;
+            isGrabing = false;
+          }
+        }, 500);
+      });
+      canvas.addEventListener("mousemove", (e) => {
+        if (isDrawing && mode != "picker") {
+          desenha(
+            context.globalCompositeOperation,
+            x,
+            y,
+            e.offsetX,
+            e.offsetY,
+            strokeColor,
+            stroke,
+            linejoin
+          );
+        } else if (isGrabing) {
+          ultimoToque.y = e.offsetY;
+          ultimoToque.x = e.offsetX;
+          scrollCanva(
+            (x - ultimoToque.x) * zoomFactor,
+            (y - ultimoToque.y) * zoomFactor
+          );
+        }
+        x = e.offsetX;
+        y = e.offsetY;
+      });
+      canvas.addEventListener("mouseup", (e) => {
+        if (isDrawing && mode != "picker") {
+          desenha(
+            context.globalCompositeOperation,
+            x,
+            y,
+            e.offsetX + 1,
+            e.offsetY + 1,
+            strokeColor,
+            stroke,
+            linejoin
+          );
+          ultimoToque.y = e.offsetY;
+          ultimoToque.x = e.offsetX;
+          x = 0;
+          y = 0;
+          isDrawing = false;
+        } else if (mode == "picker") {
+          x = e.offsetX;
+          y = e.offsetY;
+          var imageData = context.getImageData(x, y, 1, 1).data;
+          if (imageData[3] > 1) {
+            RGBAToHSLA(
+              imageData[0],
+              imageData[1],
+              imageData[2],
+              imageData[3]
+            );
+            setStrokeColor();
+          }
+        } else if (mode == "zoom") {
+          isGrabing = false;
+        }
+      });
+      document
+        .getElementById("btn-download")
+        .addEventListener("click", function (e) {
+          //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+          let nome = prompt("nome da arte:", "desenho");
+          if (nome != null && nome != "") {
+            var dataURL = canvas
+              .toDataURL("image/png")
+              .replace("image/png", "image/octet-stream");
+            //downloadImage(dataURL, 'my-canvas.jpeg');
+            downloadImage(dataURL, `${nome}.png`);
+          }
+        });
+      initStrokeRange()
+    }
+
+    const RGBAToHSLA = (r, g, b, a) => {
+      r /= 255;
+      g /= 255;
+      b /= 255;
+      a /= 255;
+      const l = Math.max(r, g, b);
+      const s = l - Math.min(r, g, b);
+      const h = s
+        ? l === r
+          ? (g - b) / s
+          : l === g
+            ? 2 + (b - r) / s
+            : 4 + (r - g) / s
+        : 0;
+      const H = Math.floor(60 * h < 0 ? 60 * h + 360 : 60 * h);
+      const S = Math.floor(
+        100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)
+      );
+      const L = Math.floor((100 * (2 * l - s)) / 2);
+      const A = a;
+      hsla[0] = H;
+      hsla[1] = S;
+      hsla[2] = L;
+      hsla[3] = A;
+      return `hsla(${H},${S}%,${L}%,${a})`;
+    };
+
+    function handleKeys(evt) {
+      if (evt.ctrlKey && evt.key === "z") {
+        undo();
+      }
+    }
+    var comandos = [];
+    var comandosb = [];
+    let desfazendo = false;
+    let refazendo = false;
+    var counter;
+    function undoT() {
+      counter = setInterval(() => undo(), 10);
+    }
+    function undoTEnd() {
+      clearInterval(counter);
+    }
+
+    function undo() {
+      let len = comandos.length;
+
+      if (len > 0) {
+        comandosb.unshift(comandos[len - 1]);
+        // Remove the most recent command from the list
+        comandos.splice(-1, 1);
+      } else {
+        clearInterval(counter)
+        alert("nivel maximo de desfazer atingindo.");
+        clearInterval(counter)
+      }
+
+      // Clear canvas get last flat img
+      // Re-play all commands (re-draw canvas from scratch)
+      comandosExec()
+
+    }
+    function redoT() {
+      counter = setInterval(() => redo(), 10);
+    }
+    function redoTEnd() {
+      clearInterval(counter);
+    }
+
+    function redo() {
+      let len = comandosb.length;
+
+      if (len > 0) {
+        comandos.push(comandosb[0]);
+        // Remove the most recent command from the list
+        comandosb.shift();
+      } else {
+        clearInterval(counter)
+        alert("nivel maximo de refazer atingindo.");
+        clearInterval(counter)
+      }
+
+      // Clear canvas get last flat img
+      // Re-play all commands (re-draw canvas from scratch)
+      comandosExec()
+
+    }
+    function memoryswipe() {
+      let len = comandos.length;
+      if (len > 2000) {
+        comandosb = [];
+        for (i = 0; i < 1000; i++) {
+          comandosb.unshift(comandos[len - i - 1]);
+          // Remove the most recent command from the list
+          comandos.splice(-1, 1);
+        }
+        comandosExec()
+        setTimeout(() => convertToImg(), 30)
+        setTimeout(() => comandos = [], 35)
+        setTimeout(() => replay(), 40)
+      }
+    }
+
+
+    function comandosExec() {
+      flatImage();
+      let lenc = comandos.length;
+      for (i = 0; i < lenc; i++) {
+        if (comandos[i].length > 6) {
+          drawLine(
+            comandos[i][0],
+            comandos[i][1],
+            comandos[i][2],
+            comandos[i][3],
+            comandos[i][4],
+            comandos[i][5],
+            comandos[i][6],
+            comandos[i][7]
+          );
+        } else {
+          //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
+          context.globalCompositeOperation = comandos[i][0];
+          context.fillStyle = comandos[i][1];
+          context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+    }
+    function replay() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      let lenb = comandosb.length;
+      for (a = 0; a < lenb; a++) {
+        comandos.push(comandosb[a]);
+      }
+      comandosExec()
+      comandosb = [];
+    }
+
+    async function desenha(
+      GCO,
+      x,
+      y = undefined,
+      eoX = undefined,
+      eoY = undefined,
+      strokeColor = undefined,
+      stroke = undefined,
+      linejoin = undefined
+    ) {
+      if (stroke != undefined) {
+        let comando = [GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin];
+        setTimeout(
+          comandos.push(comando)
+          , 0)
+        drawLine(
+          comando[0],
+          comando[1],
+          comando[2],
+          comando[3],
+          comando[4],
+          comando[5],
+          comando[6],
+          comando[7]
+        );
+      } else {
+        let comando = [GCO, x];
+        setTimeout(comandos.push(comando), 0)
+        context.fillStyle = x; //cor
+        context.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      comandosb = [];
+    }
+    function handleStart(evt) {
+      evt.preventDefault();
+      const touches = evt.changedTouches;
+      offsetX = canvas.getBoundingClientRect().left;
+      offsetY = canvas.getBoundingClientRect().top;
+      x = touches[0].clientX;
+      y = touches[0].clientY;
+      for (let i = 0; i < touches.length; i++) {
+        ongoingTouches.push(copyTouch(touches[i]));
+      }
+
+      removeClass();
+      if (mode == "zoom") {
+        isGrabing = true;
+      }
+    }
+
+    function handleMove(evt) {
+      evt.preventDefault();
+      const touches = evt.changedTouches;
+      for (let i = 0; i < touches.length; i++) {
+        const idx = ongoingTouchIndexById(touches[i].identifier);
+        if (idx >= 0) {
+          ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
+          ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
+          if (mode != "zoom" && mode != "picker") {
+            (x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor),
+              (y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor);
+
+            desenha(
+              context.globalCompositeOperation,
+              x,
+              y,
+              ultimoToque.x,
+              ultimoToque.y,
+              strokeColor,
+              stroke,
+              linejoin
+            );
+            ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
+          }
+        }
+      }
+      if (mode == "picker") {
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          const idx = ongoingTouchIndexById(touches[i].identifier);
+          if (idx >= 0) {
+            var imageData = context.getImageData(
+              ultimoToque.x,
+              ultimoToque.y,
+              1,
+              1
+            ).data;
             if (imageData[3] > 1) {
               RGBAToHSLA(
                 imageData[0],
@@ -920,815 +990,564 @@
               );
               setStrokeColor();
             }
-          } else if (mode == "zoom") {
-            isGrabing = false;
-          }
-        });
-        document
-          .getElementById("btn-download")
-          .addEventListener("click", function (e) {
-            //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-            let nome = prompt("nome da arte:", "desenho");
-            if (nome != null && nome != "") {
-              var dataURL = canvas
-                .toDataURL("image/png")
-                .replace("image/png", "image/octet-stream");
-              //downloadImage(dataURL, 'my-canvas.jpeg');
-              downloadImage(dataURL, `${nome}.png`);
-            }
-          });
-          initStrokeRange()
-      }
-
-      const RGBAToHSLA = (r, g, b, a) => {
-        r /= 255;
-        g /= 255;
-        b /= 255;
-        a /= 255;
-        const l = Math.max(r, g, b);
-        const s = l - Math.min(r, g, b);
-        const h = s
-          ? l === r
-            ? (g - b) / s
-            : l === g
-            ? 2 + (b - r) / s
-            : 4 + (r - g) / s
-          : 0;
-        const H = Math.floor(60 * h < 0 ? 60 * h + 360 : 60 * h);
-        const S = Math.floor(
-          100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)
-        );
-        const L = Math.floor((100 * (2 * l - s)) / 2);
-        const A = a;
-        hsla[0] = H;
-        hsla[1] = S;
-        hsla[2] = L;
-        hsla[3] = A;
-        return `hsla(${H},${S}%,${L}%,${a})`;
-      };
-
-      function handleKeys(evt) {
-        if (evt.ctrlKey && evt.key === "z") {
-          undo();
-        }
-      }
-      var comandos = [];
-      var comandosb = [];
-      let desfazendo = false;
-      let refazendo = false;
-      var counter;
-      function undoT() {
-        counter = setInterval(() => undo(), 10);
-      }
-      function undoTEnd() {
-        clearInterval(counter);
-      }
-
-      function undo() {
-        let len = comandos.length;
-
-        if (len > 0) {
-          comandosb.unshift(comandos[len - 1]);
-          // Remove the most recent command from the list
-          comandos.splice(-1, 1);
-        }else{
-            clearInterval(counter)
-          alert("nivel maximo de desfazer atingindo.");
-          clearInterval(counter)}
-
-        // Clear canvas get last flat img
-        // Re-play all commands (re-draw canvas from scratch)
-        comandosExec()
-
-      }
-      function redoT() {
-        counter = setInterval(() => redo(), 10);
-      }
-      function redoTEnd() {
-        clearInterval(counter);
-      }
-
-      function redo() {
-        let len = comandosb.length;
-
-        if (len > 0) {
-          comandos.push(comandosb[0]);
-          // Remove the most recent command from the list
-          comandosb.shift();
-        }else{
-            clearInterval(counter)
-          alert("nivel maximo de refazer atingindo.");
-          clearInterval(counter)}
-
-        // Clear canvas get last flat img
-        // Re-play all commands (re-draw canvas from scratch)
-        comandosExec()
-
-      }
-      function memoryswipe(){
-        let len = comandos.length;
-        if (len >2000){
-          comandosb = [];
-          for (i=0;i<1000;i++){
-            comandosb.unshift(comandos[len - i-1]);
-            // Remove the most recent command from the list
-              comandos.splice(-1, 1);
-          }
-          comandosExec()
-          setTimeout(()=>convertToImg(),30)
-          setTimeout(()=>comandos=[],35)
-          setTimeout(()=>replay(),40)
-        }
-      }
-
-
-      function comandosExec(){
-       flatImage();
-        let lenc = comandos.length;
-        for (i = 0; i < lenc; i++) {
-          if (comandos[i].length > 6) {
-            drawLine(
-              comandos[i][0],
-              comandos[i][1],
-              comandos[i][2],
-              comandos[i][3],
-              comandos[i][4],
-              comandos[i][5],
-              comandos[i][6],
-              comandos[i][7]
-            );
-          } else {
-            //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
-            context.globalCompositeOperation = comandos[i][0];
-            context.fillStyle = comandos[i][1];
-            context.fillRect(0, 0, canvas.width, canvas.height);
           }
         }
       }
-      function replay() {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        let lenb = comandosb.length;
-        for (a = 0; a < lenb; a++) {
-          comandos.push(comandosb[a]);
-        }
-        comandosExec()
-        comandosb = [];
-      }
-
-      async function desenha(
-        GCO,
-        x,
-        y = undefined,
-        eoX = undefined,
-        eoY = undefined,
-        strokeColor = undefined,
-        stroke = undefined,
-        linejoin = undefined
-      ) {
-        if (stroke != undefined) {
-          let comando = [GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin];
-          setTimeout(
-            comandos.push(comando)
-          ,0)
-          drawLine(
-            comando[0],
-            comando[1],
-            comando[2],
-            comando[3],
-            comando[4],
-            comando[5],
-            comando[6],
-            comando[7]
-          );
-        } else {
-          let comando = [GCO, x];
-          setTimeout( comandos.push(comando),0)
-          context.fillStyle = x; //cor
-          context.fillRect(0, 0, canvas.width, canvas.height);
-        }
-        comandosb = [];
-      }
-      function handleStart(evt) {
-        evt.preventDefault();
-        const touches = evt.changedTouches;
-        offsetX = canvas.getBoundingClientRect().left;
-        offsetY = canvas.getBoundingClientRect().top;
-        x = touches[0].clientX;
-        y = touches[0].clientY;
-        for (let i = 0; i < touches.length; i++) {
-          ongoingTouches.push(copyTouch(touches[i]));
-        }
-
-        removeClass();
-        if (mode == "zoom") {
-          isGrabing = true;
-        }
-      }
-
-      function handleMove(evt) {
-        evt.preventDefault();
-        const touches = evt.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-          const idx = ongoingTouchIndexById(touches[i].identifier);
-          if (idx >= 0) {
-            ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
-            ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
-            if (mode != "zoom" && mode != "picker") {
-              (x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor),
-                (y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor);
-
-              desenha(
-                context.globalCompositeOperation,
-                x,
-                y,
-                ultimoToque.x,
-                ultimoToque.y,
-                strokeColor,
-                stroke,
-                linejoin
-              );
-              ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-            }
-          }
-        }
-        if (mode == "picker") {
-          const touches = evt.changedTouches;
+      if (mode == "zoom") {
+        if (isGrabing) {
           for (let i = 0; i < touches.length; i++) {
             const idx = ongoingTouchIndexById(touches[i].identifier);
-            if (idx >= 0) {
-              var imageData = context.getImageData(
-                ultimoToque.x,
-                ultimoToque.y,
-                1,
-                1
-              ).data;
-              if (imageData[3] > 1) {
-                RGBAToHSLA(
-                  imageData[0],
-                  imageData[1],
-                  imageData[2],
-                  imageData[3]
-                );
-                setStrokeColor();
-              }
-            }
-          }
-        }
-        if (mode == "zoom") {
-          if (isGrabing) {
-            for (let i = 0; i < touches.length; i++) {
-              const idx = ongoingTouchIndexById(touches[i].identifier);
-              if (idx == 0) {
-                scrollCanva(x - touches[0].clientX, y - touches[0].clientY);
-                x = touches[0].clientX;
-                y = touches[0].clientY;
-              }
+            if (idx == 0) {
+              scrollCanva(x - touches[0].clientX, y - touches[0].clientY);
+              x = touches[0].clientX;
+              y = touches[0].clientY;
             }
           }
         }
       }
-      function handleEnd(evt) {
-        evt.preventDefault();
-        const touches = evt.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-          let idx = ongoingTouchIndexById(touches[i].identifier);
-          if (idx >= 0) {
-            context.lineWidth = strokeWidth;
-            context.fillStyle = strokeColor;
-            ongoingTouches.splice(idx, 1); // remove it; we're done
-          }
-        }
-        if (mode == "zoom") {
-          isGrabing = false;
-        }
-      }
-
-      function handleCancel(evt) {
-        evt.preventDefault();
-        const touches = evt.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-          let idx = ongoingTouchIndexById(touches[i].identifier);
+    }
+    function handleEnd(evt) {
+      evt.preventDefault();
+      const touches = evt.changedTouches;
+      for (let i = 0; i < touches.length; i++) {
+        let idx = ongoingTouchIndexById(touches[i].identifier);
+        if (idx >= 0) {
+          context.lineWidth = strokeWidth;
+          context.fillStyle = strokeColor;
           ongoingTouches.splice(idx, 1); // remove it; we're done
         }
       }
-
-      function copyTouch({ identifier, clientX, clientY }) {
-        return { identifier, clientX, clientY };
+      if (mode == "zoom") {
+        isGrabing = false;
       }
+    }
 
-      function ongoingTouchIndexById(idToFind) {
-        for (let i = 0; i < ongoingTouches.length; i++) {
-          const id = ongoingTouches[i].identifier;
-          if (id === idToFind) {
-            return i;
+    function handleCancel(evt) {
+      evt.preventDefault();
+      const touches = evt.changedTouches;
+      for (let i = 0; i < touches.length; i++) {
+        let idx = ongoingTouchIndexById(touches[i].identifier);
+        ongoingTouches.splice(idx, 1); // remove it; we're done
+      }
+    }
+
+    function copyTouch({ identifier, clientX, clientY }) {
+      return { identifier, clientX, clientY };
+    }
+
+    function ongoingTouchIndexById(idToFind) {
+      for (let i = 0; i < ongoingTouches.length; i++) {
+        const id = ongoingTouches[i].identifier;
+        if (id === idToFind) {
+          return i;
+        }
+      }
+      return -1; // not found
+    }
+
+    function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
+      context.globalCompositeOperation = GCO;
+      context.beginPath();
+      context.strokeStyle = strokeColor;
+      context.lineWidth = stroke;
+      context.lineJoin = linejoin;
+      context.moveTo(x1, y1);
+      context.lineTo(x2, y2);
+      context.closePath();
+      context.stroke();
+    }
+
+    function clearArea() {
+      let confirma = confirm(
+        "\t\t\t\t\t Limpar todo o desenho? \n \t\t\t\t\t( impossível desfazer isto )"
+      );
+      if (confirma === true) {
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        comandosb = [];
+        let len = comandos.length;
+        for (a = 0; a < len; a++) {
+          comandosb.push(comandos[a]);
+        }
+        comandos = [];
+        convertToImg()
+      }
+    }
+
+    // By diego
+
+    let oldMode = mode;
+    function modeTo(qual) {
+      switch (qual) {
+        case "zoom":
+          zoomIndex++;
+          if (zoomIndex > 3) {
+            zoomIndex = 0;
           }
-        }
-        return -1; // not found
-      }
-
-      function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
-        context.globalCompositeOperation = GCO;
-        context.beginPath();
-        context.strokeStyle = strokeColor;
-        context.lineWidth = stroke;
-        context.lineJoin = linejoin;
-        context.moveTo(x1, y1);
-        context.lineTo(x2, y2);
-        context.closePath();
-        context.stroke();
-      }
-
-      function clearArea() {
-        let confirma = confirm(
-          "\t\t\t\t\t Limpar todo o desenho? \n \t\t\t\t\t( impossível desfazer isto )"
-        );
-        if (confirma === true) {
-          context.setTransform(1, 0, 0, 1, 0, 0);
-          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-          comandosb = [];
-          let len = comandos.length;
-          for (a = 0; a < len; a++) {
-            comandosb.push(comandos[a]);
+          ZOOMf(zoomIndex);
+          setTimeout(function () {
+            document.getElementById("x1").innerHTML = zoomFactor + "x";
+            scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
+          }, 10);
+          cursorColor();
+          toggleSelect(qual);
+          mode = qual;
+          break;
+        case mode: //se o modo ja estiver ativo:
+          mostraMenu(qual);
+          if (qual == "info") {
+            modeTo(oldMode);
           }
-          comandos = [];
-          convertToImg()
-        }
+          break;
+        case "apagar":
+          removeClass();
+          mode = qual;
+          oldMode = qual;
+          setStrokeSize(estrokeWidth);
+          context.globalCompositeOperation = "destination-out";
+          cursorColor();
+          toggleSelect(qual);
+          memoryswipe();
+          mudaCorAlpha();
+          break;
+        case "pintar":
+          removeClass();
+          mode = qual;
+          oldMode = qual;
+          setStrokeSize(strokeWidth);
+          context.globalCompositeOperation = globalComposite;
+          mostraMenu(qual);
+          toggleSelect(qual);
+          setStrokeColor();
+          memoryswipe();
+          break;
+        case "cores":
+          removeClass();
+          mode = qual;
+          oldMode = qual;
+          setStrokeSize(strokeWidth);
+          context.globalCompositeOperation = globalComposite;
+          mostraMenu(qual);
+          toggleSelect(qual);
+          setStrokeColor();
+          memoryswipe();
+          break;
+        case "fundo":
+          removeClass();
+          mode = qual;
+          oldMode = qual;
+          context.globalCompositeOperation = globalComposite;
+          setStrokeSize(strokeWidth);
+          mostraMenu(qual);
+          toggleSelect(qual);
+          break;
+
+        case "preencher":
+          mode = qual;
+          document.getElementById("preenchercor").style.backgroundColor =
+            strokeColor;
+          context.globalCompositeOperation = globalComposite;
+          removeClass();
+          mostraMenu(qual);
+          toggleSelect(qual);
+          break;
+        case "picker":
+          mode = "picker";
+          removeClass();
+          toggleSelect(qual);
+          break;
+        case "info":
+          mode = "info";
+          removeClass();
+          mostraMenu(qual);
+          toggleSelect(qual);
+          break;
+        case "undo":
+          undo();
+          break;
       }
+      cursorColor();
+      /*  toggleSelect(qual)
+            mostraMenu(qual)
+            */
+    }
 
-      // By diego
+    function toggleSelect(id) {
+      removeClass("selected");
+      document.getElementById(id).classList.toggle("selected");
+    }
 
-      let oldMode = mode;
-      function modeTo(qual) {
-        switch (qual) {
-          case "zoom":
-            zoomIndex++;
-            if (zoomIndex > 3) {
-              zoomIndex = 0;
-            }
-            ZOOMf(zoomIndex);
-            setTimeout(function () {
-              document.getElementById("x1").innerHTML = zoomFactor + "x";
-              scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
-            }, 10);
-            cursorColor();
-            toggleSelect(qual);
-            mode = qual;
-            break;
-          case mode: //se o modo ja estiver ativo:
-            mostraMenu(qual);
-            if (qual == "info") {
-              modeTo(oldMode);
-            }
-            break;
-          case "apagar":
-            removeClass();
-            mode = qual;
-            oldMode = qual;
-            setStrokeSize(estrokeWidth);
-            context.globalCompositeOperation = "destination-out";
-            cursorColor();
-            toggleSelect(qual);
-            memoryswipe();
-            mudaCorAlpha();
-            break;
-          case "pintar":
-            removeClass();
-            mode = qual;
-            oldMode = qual;
-            setStrokeSize(strokeWidth);
-            context.globalCompositeOperation = globalComposite;
-            mostraMenu(qual);
-            toggleSelect(qual);
-            setStrokeColor();
-            memoryswipe();
-            break;
-          case "cores":
-            removeClass();
-            mode = qual;
-            oldMode = qual;
-            setStrokeSize(strokeWidth);
-            context.globalCompositeOperation = globalComposite;
-            mostraMenu(qual);
-            toggleSelect(qual);
-            setStrokeColor();
-            memoryswipe();
-            break;
-          case "fundo":
-            removeClass();
-            mode = qual;
-            oldMode = qual;
-            context.globalCompositeOperation = globalComposite;
-            setStrokeSize(strokeWidth);
-            mostraMenu(qual);
-            toggleSelect(qual);
-            break;
+    function mostraMenu(id) {
+      let quem = document.getElementById("menu" + id);
+      quem.classList.toggle("aparece");
+    }
 
-          case "preencher":
-            mode = qual;
-            document.getElementById("preenchercor").style.backgroundColor =
-              strokeColor;
-            context.globalCompositeOperation = globalComposite;
-            removeClass();
-            mostraMenu(qual);
-            toggleSelect(qual);
-            break;
-          case "picker":
-            mode = "picker";
-            removeClass();
-            toggleSelect(qual);
-            break;
-          case "info":
-            mode = "info";
-            removeClass();
-            mostraMenu(qual);
-            toggleSelect(qual);
-            break;
-          case "undo":
-            undo();
-            break;
-        }
-        cursorColor();
-        /*  toggleSelect(qual)
-              mostraMenu(qual)
-              */
+    function removeClass(qual = "aparece") {
+      //pega quem tem e remove
+      Array.from(document.querySelectorAll(`.${qual}`)).forEach(function (
+        el
+      ) {
+        el.classList.remove(`${qual}`);
+      });
+    }
+
+    // Pinceis Cor e Tamanho
+
+    function criaPaleta() {
+      i = 1;
+      let paleta = "";
+      while (i < 24) {
+        let cor = document.getElementById("H").value
+        //    let cor = document.getElementById("H").value - (i*3)
+        paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1] + i * 2}%,${hsla[2] + i * 2
+          }%,${hsla[3]
+          })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1] + i * 2
+          }%,${hsla[2] + i * 2}%,${hsla[3] * 2 + 0.2});'> </span>`;
+        i++;
       }
-
-      function toggleSelect(id) {
-        removeClass("selected");
-        document.getElementById(id).classList.toggle("selected");
+      document.getElementById("paleta").innerHTML = paleta;
+      document.getElementById("paleta").innerHTML +=
+        `<span onmousedown='mudaCor("B")'  class='bloquinho' ` +
+        `style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`;
+      document.getElementById("paleta").innerHTML +=
+        `<br /><span onmousedown='mudaCor("P")' class='bloquinho' ` +
+        `style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`;
+    }
+    function criaPaleta2() {
+      let paleta = "";
+      let quantas = favoritas.length;
+      for (i = 0; i < quantas; i++) {
+        paleta += `<span onmousedown='mudaCor("${favoritas[i]}")' class='bloquinho' style='background-color:${favoritas[i]};'> </span>`;
       }
+      document.getElementById("paleta2").innerHTML = paleta;
+    }
 
-      function mostraMenu(id) {
-        let quem = document.getElementById("menu" + id);
-        quem.classList.toggle("aparece");
-      }
+    let strokeRange = [0.3, 0.5, 0.7, 1, 2]
 
-      function removeClass(qual = "aparece") {
-        //pega quem tem e remove
-        Array.from(document.querySelectorAll(`.${qual}`)).forEach(function (
-          el
-        ) {
-          el.classList.remove(`${qual}`);
-        });
-      }
-
-      // Pinceis Cor e Tamanho
-
-      function criaPaleta() {
-        i = 1;
-        let paleta = "";
-        while (i < 24) {
-          let cor = document.getElementById("H").value
-          //    let cor = document.getElementById("H").value - (i*3)
-          paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]+i*2}%,${
-            hsla[2]+i*2
-          }%,${
-            hsla[3]
-          })")' class='bloquinho' style='background-color:hsla(${cor},${
-            hsla[1]+i*2
-          }%,${hsla[2]+i*2}%,${hsla[3] * 2 + 0.2});'> </span>`;
-          i++;
-        }
-        document.getElementById("paleta").innerHTML = paleta;
-        document.getElementById("paleta").innerHTML +=
-          `<span onmousedown='mudaCor("B")'  class='bloquinho' ` +
-          `style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`;
-        document.getElementById("paleta").innerHTML +=
-          `<br /><span onmousedown='mudaCor("P")' class='bloquinho' ` +
-          `style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`;
-      }
-      function criaPaleta2() {
-        let paleta = "";
-        let quantas = favoritas.length;
-        for (i = 0; i < quantas; i++) {
-          paleta += `<span onmousedown='mudaCor("${favoritas[i]}")' class='bloquinho' style='background-color:${favoritas[i]};'> </span>`;
-        }
-        document.getElementById("paleta2").innerHTML = paleta;
-      }
-
-      let strokeRange = [0.3,0.5,0.7,1,2]
-
-      function initStrokeRange(){
-        let r = 2;
-        while (r<=500){
-          r= r*1.3;
+    function initStrokeRange() {
+      let r = 2;
+      while (r <= 500) {
+        r = r * 1.3;
         strokeRange.push(Math.floor(r))
       }
     }
 
-      function strokeSizeRange(value) {
-        setStrokeSize(
-          strokeRange[value]
-        )
-}
-   function setStrokeSize(value) {
-        let brushes = ["mostraCor2", "cursor"];
-        for (i in brushes) {
-          let tamanho = document.getElementById(brushes[i]);
-          if (mode == "pintar" || mode == "cores") {
-            strokeWidth = value;
-            tamanho.style.width = strokeWidth * zoomFactor + "px";
-            tamanho.style.height = strokeWidth * zoomFactor + "px";
-            tamanho.style.marginTop =
-              (strokeWidth / 2) * zoomFactor * -1 + "px";
-            tamanho.style.marginLeft =
-              (strokeWidth * zoomFactor * -1) / 2 + "px";
-            if (i == 0) {
-              tamanho.style.backgroundColor = strokeColor;
-            }
-            stroke = strokeWidth;
-            document.getElementById("tpx").value = value;
-          } else if (mode == "apagar") {
-            estrokeWidth = value;
-            tamanho.style.width = estrokeWidth * zoomFactor + "px";
-            tamanho.style.height = estrokeWidth * zoomFactor + "px";
-            tamanho.style.marginTop =
-              (estrokeWidth / 2) * zoomFactor * -1 + "px";
-            tamanho.style.marginLeft =
-              (estrokeWidth * zoomFactor * -1) / 2 + "px";
-            stroke = estrokeWidth;
-            document.getElementById("tpx2").value = value;
+    function strokeSizeRange(value) {
+      setStrokeSize(
+        strokeRange[value]
+      )
+    }
+    function setStrokeSize(value) {
+      let brushes = ["mostraCor2", "cursor"];
+      for (i in brushes) {
+        let tamanho = document.getElementById(brushes[i]);
+        if (mode == "pintar" || mode == "cores") {
+          strokeWidth = value;
+          tamanho.style.width = strokeWidth * zoomFactor + "px";
+          tamanho.style.height = strokeWidth * zoomFactor + "px";
+          tamanho.style.marginTop =
+            (strokeWidth / 2) * zoomFactor * -1 + "px";
+          tamanho.style.marginLeft =
+            (strokeWidth * zoomFactor * -1) / 2 + "px";
+          if (i == 0) {
+            tamanho.style.backgroundColor = strokeColor;
           }
+          stroke = strokeWidth;
+          document.getElementById("tpx").value = value;
+        } else if (mode == "apagar") {
+          estrokeWidth = value;
+          tamanho.style.width = estrokeWidth * zoomFactor + "px";
+          tamanho.style.height = estrokeWidth * zoomFactor + "px";
+          tamanho.style.marginTop =
+            (estrokeWidth / 2) * zoomFactor * -1 + "px";
+          tamanho.style.marginLeft =
+            (estrokeWidth * zoomFactor * -1) / 2 + "px";
+          stroke = estrokeWidth;
+          document.getElementById("tpx2").value = value;
         }
       }
-
-      function backPaint() {
-
-        if (globalComposite != "destination-over") {
-          globalComposite = "destination-over";
-          document.getElementById(
-            "globalComposite"
-          ).innerHTML =
-          `<span style="position:absolute; width:30px; `+
-          `display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span> `+
-          `<span style="position:relative; float:left; width:30px; display:block;  `+
-          `color:black; left:2px; margin-top:0px;" title="Pintar por baixo">🔲</span>`;
-        } else {
-          globalComposite = "source-over";
-          document.getElementById(
-            "globalComposite"
-          ).innerHTML =
-           `<span style="position:absolute; float:right; width:32px; display:block; `+
-           `padding-top: 0px; margin-left:2px;">🔲</span> <span style="color:white;`+
-           `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
-        }
-        cursor.classList.toggle("cursorIndex");
-        cursor.classList.toggle("selected");
-        modeTo("pintar")
-        removeClass()
-      }
-
-      function mudaCorBG(cor) {
-        if (cor === "strokeColor") {
-          cor = strokeColor;
-        }
-        if (context.globalCompositeOperation != "destination-out") {
-          //context.fillStyle = cor;
-          // context.fillRect(0, 0, canvas.width, canvas.height);
-          let GCO = context.globalCompositeOperation;
-          desenha(GCO, cor);
-        }
-      }
-
-      function mudaCorQ(q = 0, valor) {
-        hsla[q] = Number(valor);
-//        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
-        setStrokeColor();
-        criaPaleta();
-      }
-      function mudaCorAlpha() {
-        let valor = document.getElementById("transparenciaE").value
-        strokeColor = `hsla(0, 100%, 0%, ${valor})`
-      }
-      function salvaCor() {
-        if (!favoritas.includes(strokeColor)) {
-          favoritas.push(strokeColor);
-        } else {
-          favoritas = favoritas.filter((item) => item !== strokeColor);
-        }
-        setTimeout(criaPaleta2(), 20);
-      }
-
-      criaPaleta();
-
-      function setStrokeColor() {
-        strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-        let objs = [
-          "mostraCor",
-          "salvaCor",
-          "mostraCor2",
-          "pintar",
-          "cores",
-          "picker",
-          "preencher"
-        ];
-        let quantos = objs.length;
-        for (i = 0; i < quantos; i++) {
-          document.getElementById(objs[i]).style.backgroundColor = strokeColor;
-        }
-      }
-      setStrokeColor();
-
-      function mudaCor(valor) {
-        if (valor == "P") {
-          strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
-          document.getElementById("mostraCor").style.color = strokeColor;
-
-          //     document.getElementById("menu").style.visibility = "hidden";
-        } else if (valor == "B") {
-          strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
-          document.getElementById("mostraCor").style.color = strokeColor;
-          //     document.getElementById("menu").style.visibility = "hidden";
-        } else {
-          strokeColor = valor;
-          //     document.getElementById("menu").style.visibility = "hidden";
-          cursorColor();
-        }
-        document.getElementById("mostraCor").style.backgroundColor =
-          strokeColor;
-        document.getElementById("mostraCor2").style.backgroundColor =
-          strokeColor;
-        document.getElementById("pintar").style.backgroundColor = strokeColor;
-
-        const toHslaObject = (hslaStr) => {
-          const [hue, saturation, lightness, alpha] = hslaStr
-            .match(/[\d\.]+/g)
-            .map(Number);
-          document.getElementById("H").value = hue;
-          document.getElementById("S").value = saturation;
-          document.getElementById("L").value = lightness;
-          document.getElementById("A").value = alpha;
-          document.getElementById("A2").value = alpha;
-          hsla[0] = hue;
-          hsla[1] = saturation;
-          hsla[2] = lightness;
-          hsla[3] = alpha;
-        };
-        toHslaObject(strokeColor);
-        setStrokeColor();
-      }
-      // Save | Download image from stackoverflow
-      // Convert canvas to image added to startup .getElementById("btn-download")
-
-      //function downloadImage(data, filename = 'untitled.jpeg') {
-      function downloadImage(data, filename = "untitled.png") {
-        var a = document.createElement("a");
-        a.href = data;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-      }
-      function changeLine() {
-        lineJoinsCount++;
-        if (lineJoinsCount > 1) {
-          lineJoinsCount = 0;
-        }
-        linejoin = lineJoins[lineJoinsCount];
-        if (lineJoinsCount != 0) {
-          document.getElementById("line").innerHTML = " ➕";
-          document.getElementById("line2").innerHTML = " ➕";
-        } else {
-          document.getElementById("line").innerHTML = " ⚫";
-          document.getElementById("line2").innerHTML = " ⚫";
-        }
-      }
-      ////// ZOOM and scroling
-      function setZoom(zoom, el) {
-        transformOrigin = [0, 0];
-        el = el || instance.getContainer();
-        var p = ["webkit", "moz", "ms", "o"],
-          s = "scale(" + zoom + ")",
-          oString =
-            transformOrigin[0] * 100 + "% " + transformOrigin[1] * 100 + "%";
-
-        for (var i = 0; i < p.length; i++) {
-          el.style[p[i] + "Transform"] = s;
-          el.style[p[i] + "TransformOrigin"] = oString;
-        }
-
-        el.style["transform"] = s;
-        el.style["transformOrigin"] = oString;
-      }
-
-      function ZOOMf(a) {
-        let escala = zoomScale[a];
-        ZOOM(escala);
-      }
-      function ZOOM(a) {
-        setZoom(1, canvasDiv);
-        resetCanva();
-        setTimeout(function () {
-          win.scrollTop = 0;
-          win.scrollLeft = 0;
-        }, 10);
-        zoomFactor = Number(a);
-        console.log(ultimoToque);
-        setTimeout(
-          () =>
-            scrollCanva(
-              ultimoToque.x * zoomFactor - 160,
-              ultimoToque.y * zoomFactor - 160
-            ),
-          30
-        );
-        setTimeout(() => setZoom(zoomFactor, canvasDiv), 4);
-
-        setStrokeSize(strokeWidth);
-        document.getElementById("tzoom").value = zoomFactor;
-        document.getElementById("zoombar").value =
-          zoomScale.indexOf(zoomFactor);
-      }
-
-      function scrollCanva(x, y) {
-        win.scrollTop += y;
-        win.scrollLeft += x;
-      }
-      function resetCanva() {
-        let objects = ["canvas_window", "canvas_div"];
-        for (i in objects.length) {
-          document.getElementById(objects[i]).style.width = "320px";
-          document.getElementById(objects[i]).style.height = "320px";
-        }
-      }
-
-      // cursor area //
-
-      function cursorMove(e) {
-        var x = e.clientX;
-        var y = e.clientY;
-        cursor.style.left = x + "px";
-        cursor.style.top = y + "px";
-        document.body.style.cursor = "none";
-      }
-      function mostra() {
-        document.body.style.cursor = "pointer";
-      }
-
-      function cursorColor() {
-        switch (mode) {
-          case "apagar":
-            cursor.style.borderColor = "#cccccccc";
-            cursor.innerHTML = "";
-            break;
-          case "pintar":
-            cursor.style.borderColor = strokeColor;
-            cursor.innerHTML = "";
-            break;
-          case "zoom":
-            cursor.innerHTML = "🖐";
-            break;
-          case "picker":
-            cursor.innerHTML = "💉";
-            break;
-          default:
-            cursor.innerHTML = "";
-            cursor.style.borderColor = strokeColor;
-        }
-      }
-      function Fundo(qual) {
-        if (qual === "img") {
-          var item = prompt(
-            "endereço da imagem de fundo",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
-          );
-          if (item == null || item == "") {
-            alert("fundo do app removido");
-            canvasDiv.style.backgroundImage = `none`;
-          } else {
-            canvasDiv.style.backgroundImage = `url(${item})`;
-          }
-        } else if (qual === "black") {
-          canvasDiv.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
-        } else if (qual === "white") {
-          canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
-        } else if (qual === "none") {
-          canvasDiv.style.backgroundImage = `none`;
-          canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
-        } else {
-          canvasDiv.style.backgroundImage = `url(${qual})`;
-        }
-      }
-      function pixel() {
-        canvas.classList.toggle("pixel");
-        canvasDiv.classList.toggle("pixel");
-      }
-
-
-      let condensado;
-      let img;
-      convertToImg()
-      function convertToImg(){
-        img = new Image();
-        img.src = canvas.toDataURL()
-      }
-      async function  flatImage(x=0,y=0){
-        let globaltemp = context.globalCompositeOperation
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.globalCompositeOperation = "destination-over"
-        context.drawImage(img,x,y)
-        setTimeout(()=>context.globalCompositeOperation = globaltemp,0)
     }
 
-    </script>
-  </body>
+    function backPaint() {
+
+      if (globalComposite != "destination-over") {
+        globalComposite = "destination-over";
+        document.getElementById(
+          "globalComposite"
+        ).innerHTML =
+          `<span style="position:absolute; width:30px; ` +
+          `display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span> ` +
+          `<span style="position:relative; float:left; width:30px; display:block;  ` +
+          `color:black; left:2px; margin-top:0px;" title="Pintar por baixo">🔲</span>`;
+      } else {
+        globalComposite = "source-over";
+        document.getElementById(
+          "globalComposite"
+        ).innerHTML =
+          `<span style="position:absolute; float:right; width:32px; display:block; ` +
+          `padding-top: 0px; margin-left:2px;">🔲</span> <span style="color:white;` +
+          `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
+      }
+      cursor.classList.toggle("cursorIndex");
+      cursor.classList.toggle("selected");
+      modeTo("pintar")
+      removeClass()
+    }
+
+    function mudaCorBG(cor) {
+      if (cor === "strokeColor") {
+        cor = strokeColor;
+      }
+      if (context.globalCompositeOperation != "destination-out") {
+        //context.fillStyle = cor;
+        // context.fillRect(0, 0, canvas.width, canvas.height);
+        let GCO = context.globalCompositeOperation;
+        desenha(GCO, cor);
+      }
+    }
+
+    function mudaCorQ(q = 0, valor) {
+      hsla[q] = Number(valor);
+      //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
+      setStrokeColor();
+      criaPaleta();
+    }
+    function mudaCorAlpha() {
+      let valor = document.getElementById("transparenciaE").value
+      strokeColor = `hsla(0, 100%, 0%, ${valor})`
+    }
+    function salvaCor() {
+      if (!favoritas.includes(strokeColor)) {
+        favoritas.push(strokeColor);
+      } else {
+        favoritas = favoritas.filter((item) => item !== strokeColor);
+      }
+      setTimeout(criaPaleta2(), 20);
+    }
+
+    criaPaleta();
+
+    function setStrokeColor() {
+      strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+      let objs = [
+        "mostraCor",
+        "salvaCor",
+        "mostraCor2",
+        "pintar",
+        "cores",
+        "picker",
+        "preencher"
+      ];
+      let quantos = objs.length;
+      for (i = 0; i < quantos; i++) {
+        document.getElementById(objs[i]).style.backgroundColor = strokeColor;
+      }
+    }
+    setStrokeColor();
+
+    function mudaCor(valor) {
+      if (valor == "P") {
+        strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
+        document.getElementById("mostraCor").style.color = strokeColor;
+
+        //     document.getElementById("menu").style.visibility = "hidden";
+      } else if (valor == "B") {
+        strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
+        document.getElementById("mostraCor").style.color = strokeColor;
+        //     document.getElementById("menu").style.visibility = "hidden";
+      } else {
+        strokeColor = valor;
+        //     document.getElementById("menu").style.visibility = "hidden";
+        cursorColor();
+      }
+      document.getElementById("mostraCor").style.backgroundColor =
+        strokeColor;
+      document.getElementById("mostraCor2").style.backgroundColor =
+        strokeColor;
+      document.getElementById("pintar").style.backgroundColor = strokeColor;
+
+      const toHslaObject = (hslaStr) => {
+        const [hue, saturation, lightness, alpha] = hslaStr
+          .match(/[\d\.]+/g)
+          .map(Number);
+        document.getElementById("H").value = hue;
+        document.getElementById("S").value = saturation;
+        document.getElementById("L").value = lightness;
+        document.getElementById("A").value = alpha;
+        document.getElementById("A2").value = alpha;
+        hsla[0] = hue;
+        hsla[1] = saturation;
+        hsla[2] = lightness;
+        hsla[3] = alpha;
+      };
+      toHslaObject(strokeColor);
+      setStrokeColor();
+    }
+    // Save | Download image from stackoverflow
+    // Convert canvas to image added to startup .getElementById("btn-download")
+
+    //function downloadImage(data, filename = 'untitled.jpeg') {
+    function downloadImage(data, filename = "untitled.png") {
+      var a = document.createElement("a");
+      a.href = data;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+    }
+    function changeLine() {
+      lineJoinsCount++;
+      if (lineJoinsCount > 1) {
+        lineJoinsCount = 0;
+      }
+      linejoin = lineJoins[lineJoinsCount];
+      if (lineJoinsCount != 0) {
+        document.getElementById("line").innerHTML = " ➕";
+        document.getElementById("line2").innerHTML = " ➕";
+      } else {
+        document.getElementById("line").innerHTML = " ⚫";
+        document.getElementById("line2").innerHTML = " ⚫";
+      }
+    }
+    ////// ZOOM and scroling
+    function setZoom(zoom, el) {
+      transformOrigin = [0, 0];
+      el = el || instance.getContainer();
+      var p = ["webkit", "moz", "ms", "o"],
+        s = "scale(" + zoom + ")",
+        oString =
+          transformOrigin[0] * 100 + "% " + transformOrigin[1] * 100 + "%";
+
+      for (var i = 0; i < p.length; i++) {
+        el.style[p[i] + "Transform"] = s;
+        el.style[p[i] + "TransformOrigin"] = oString;
+      }
+
+      el.style["transform"] = s;
+      el.style["transformOrigin"] = oString;
+    }
+
+    function ZOOMf(a) {
+      let escala = zoomScale[a];
+      ZOOM(escala);
+    }
+    function ZOOM(a) {
+      setZoom(1, canvasDiv);
+      resetCanva();
+      setTimeout(function () {
+        win.scrollTop = 0;
+        win.scrollLeft = 0;
+      }, 10);
+      zoomFactor = Number(a);
+      console.log(ultimoToque);
+      setTimeout(
+        () =>
+          scrollCanva(
+            ultimoToque.x * zoomFactor - 160,
+            ultimoToque.y * zoomFactor - 160
+          ),
+        30
+      );
+      setTimeout(() => setZoom(zoomFactor, canvasDiv), 4);
+
+      setStrokeSize(strokeWidth);
+      document.getElementById("tzoom").value = zoomFactor;
+      document.getElementById("zoombar").value =
+        zoomScale.indexOf(zoomFactor);
+    }
+
+    function scrollCanva(x, y) {
+      win.scrollTop += y;
+      win.scrollLeft += x;
+    }
+    function resetCanva() {
+      let objects = ["canvas_window", "canvas_div"];
+      for (i in objects.length) {
+        document.getElementById(objects[i]).style.width = "320px";
+        document.getElementById(objects[i]).style.height = "320px";
+      }
+    }
+
+    // cursor area //
+
+    function cursorMove(e) {
+      var x = e.clientX;
+      var y = e.clientY;
+      cursor.style.left = x + "px";
+      cursor.style.top = y + "px";
+      document.body.style.cursor = "none";
+    }
+    function mostra() {
+      document.body.style.cursor = "pointer";
+    }
+
+    function cursorColor() {
+      switch (mode) {
+        case "apagar":
+          cursor.style.borderColor = "#cccccccc";
+          cursor.innerHTML = "";
+          break;
+        case "pintar":
+          cursor.style.borderColor = strokeColor;
+          cursor.innerHTML = "";
+          break;
+        case "zoom":
+          cursor.innerHTML = "🖐";
+          break;
+        case "picker":
+          cursor.innerHTML = "💉";
+          break;
+        default:
+          cursor.innerHTML = "";
+          cursor.style.borderColor = strokeColor;
+      }
+    }
+    function Fundo(qual) {
+      if (qual === "img") {
+        var item = prompt(
+          "endereço da imagem de fundo",
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
+        );
+        if (item == null || item == "") {
+          alert("fundo do app removido");
+          canvasDiv.style.backgroundImage = `none`;
+        } else {
+          canvasDiv.style.backgroundImage = `url(${item})`;
+        }
+      } else if (qual === "black") {
+        canvasDiv.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
+      } else if (qual === "white") {
+        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
+      } else if (qual === "none") {
+        canvasDiv.style.backgroundImage = `none`;
+        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
+      } else {
+        canvasDiv.style.backgroundImage = `url(${qual})`;
+      }
+    }
+    function pixel() {
+      canvas.classList.toggle("pixel");
+      canvasDiv.classList.toggle("pixel");
+    }
+
+
+    let condensado;
+    let img;
+    convertToImg()
+    function convertToImg() {
+      img = new Image();
+      img.src = canvas.toDataURL()
+    }
+    async function flatImage(x = 0, y = 0) {
+      let globaltemp = context.globalCompositeOperation
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.globalCompositeOperation = "destination-over"
+      context.drawImage(img, x, y)
+      setTimeout(() => context.globalCompositeOperation = globaltemp, 0)
+    }
+
+  </script>
+
+
+</body>
+
 </html>
