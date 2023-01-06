@@ -295,9 +295,10 @@
       <div id="menuinfo" class="submenu fundobranco">
         <small>Diego Desenha<br>
           versão 0.5.2<br>
-          - night mode
-          - nova paleta de cores<br><br>
+          - night mode<br>
+          - envia imagem.<br><br>
           notas ver 0.5 - Turing<br>
+          - nova paleta de cores<br><br>
           - tamanhos pre definidos de pinceis. <br>
           - refazer passo a passo. <br>
           - apagador com transparencia propria.<br>
@@ -314,6 +315,9 @@
           e
           <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>twitter @diegofbrasil
         </small>
+      </div>
+      <div id="menuimagem" class="fundobranco submenu aparece">
+        <input type="file" id="input" />
       </div>
       <div id="menupintar" class="fundobranco submenu">
         <span style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
@@ -477,7 +481,7 @@
         <span class="bloquinho" onclick="x2()">↔️</span>
         <span class="bloquinho" onmousedown="clearArea()">🗑</span>
         <span><a id="btn-download" class="bloquinho"> 📥</a></span>
-        <span id="info" title="Fundo falso" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
+        <span id="imagem" title="imagem" class="bloquinho" onmousedown="modeTo('imagem')">📤</span>
       </div>
     </div>
 
@@ -504,6 +508,7 @@
       <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
       <span id="undo" title="undo" class="bloquinho" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
       <span id="redo" title="replay" class="bloquinho" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
+      <span id="info" title="Fundo falso" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
     </div>
 
   </div>
@@ -543,6 +548,7 @@
     const cursor = document.getElementById("cursor");
     const win = document.getElementById("canvas_window");
     const desenhoDiv = document.getElementById("desenho_div");
+    const images = []
 
     function prevent(evt) {
       evt.preventDefault();
@@ -556,6 +562,16 @@
       } for (let i = 0; i < testarray2.length; i++) {
         //testarray[i].className += "night";
         testarray2[i].classList.toggle("night")
+      }
+    }
+    var input = document.getElementById('input');
+    input.addEventListener('change', handleFiles);
+    var imagem
+    function handleFiles(e) {
+      imagem = new Image;
+      imagem.src = URL.createObjectURL(e.target.files[0]);
+      imagem.onload = function () {
+        desenha(imagem)
       }
     }
     function x2(w = 320, h = 320) {
@@ -865,7 +881,16 @@
       flatImage();
       let lenc = comandos.length;
       for (i = 0; i < lenc; i++) {
-        if (comandos[i].length > 6) {
+        if (comandos[i].length == 1) {
+          context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
+        }
+        else if (comandos[i].length == 6) {
+          //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
+          context.globalCompositeOperation = comandos[i][0];
+          context.fillStyle = comandos[i][1];
+          context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        else if (comandos[i].length > 6) {
           drawLine(
             comandos[i][0],
             comandos[i][1],
@@ -876,11 +901,6 @@
             comandos[i][6],
             comandos[i][7]
           );
-        } else {
-          //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
-          context.globalCompositeOperation = comandos[i][0];
-          context.fillStyle = comandos[i][1];
-          context.fillRect(0, 0, canvas.width, canvas.height);
         }
       }
     }
@@ -896,16 +916,24 @@
 
     async function desenha(
       GCO,
-      x,
-      y = undefined,
+      X = undefined,
+      Y = undefined,
       eoX = undefined,
       eoY = undefined,
       strokeColor = undefined,
       stroke = undefined,
       linejoin = undefined
     ) {
-      if (stroke != undefined) {
-        let comando = [GCO, x, y, eoX, eoY, strokeColor, stroke, linejoin];
+      if (X == undefined) {
+        let comando = [GCO]
+        context.drawImage(GCO, 0, 0, GCO.width, GCO.height);
+        setTimeout(
+          comandos.push(comando)
+          , 0)
+
+      }
+      else if (stroke != undefined) {
+        let comando = [GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin];
         setTimeout(
           comandos.push(comando)
           , 0)
@@ -920,9 +948,9 @@
           comando[7]
         );
       } else {
-        let comando = [GCO, x];
+        let comando = [GCO, X];
         setTimeout(comandos.push(comando), 0)
-        context.fillStyle = x; //cor
+        context.fillStyle = X; //cor
         context.fillRect(0, 0, canvas.width, canvas.height);
       }
       comandosb = [];
@@ -1164,6 +1192,9 @@
           break;
         case "undo":
           undo();
+          break;
+        case "imagem":
+          mostraMenu(qual);
           break;
       }
       cursorColor();
