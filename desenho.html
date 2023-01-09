@@ -282,6 +282,22 @@
       background-color: #111111cc;
       border-color: #333333ee;
     }
+
+    .custom-file-input::before {
+      content: '📷';
+      display: inline-block;
+      background: linear-gradient(top, #f9f9f9, #e3e3e3);
+      border: 1px solid #999;
+      border-radius: 3px;
+      padding: 5px 8px;
+      outline: none;
+      white-space: nowrap;
+      -webkit-user-select: none;
+      cursor: pointer;
+      text-shadow: 1px 1px #fff;
+      font-weight: 700;
+      font-size: 10pt;
+    }
   </style>
   <title>Diego Desenha - Alpha</title>
 </head>
@@ -294,14 +310,15 @@
         para capturar uma cor
       </div>
       <div id="menuinfo" class="submenu fundobranco">
-        <small>Diego Desenha<br>
+        <small>Diego Desenha
+          <br>
+          versão 0.5.6<br>
+          - foto e fundo com tamanho<br>
           versão 0.5.5<br>
           - inicia no modo noturno<br>
           - fundo xadrez<br>
           - sons no menu, no Crtl+Z e no Ctrl+Y <br>
-          <h3>
-            notas de versões
-          </h3>
+
           versão 0.5.4<br>
           - multiple images<br>
           versão 0.5.3<br>
@@ -330,7 +347,7 @@
         </small>
       </div>
       <div id="menuimagem" class="fundobranco submenu aparece">
-        <input type="file" id="input" />
+        <input type="file" id="input" class="custom-file-input" />
       </div>
       <div id="menupintar" class="fundobranco submenu">
         <span style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
@@ -435,7 +452,7 @@
       <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center">
         Fundo falso:
         <br>
-        <span onmousedown="Fundo('img')" class="bloquinho">🖼️ </span>
+        <span onmousedown="Fundo('img')" class="bloquinho">🖼️</span>
         <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
         </span>
         <span onmousedown="Fundo('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
@@ -448,6 +465,9 @@
           style="background-image: url(&#39;./grid3.png&#39;)"></span>
         <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
           ❌</span>
+        <br><span>
+          📷 <input type="file" id="input2" class="custom-file-input" />
+        </span>
       </div>
 
       <div id="menupreencher" class="fundobranco submenu">
@@ -505,7 +525,8 @@
       <div id="canvas_div" style="overflow: hidden" class="day">
         <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
           class="day">
-          Your browser does not support canvas element.
+          Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou corretamente.<br>
+          se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
         </canvas>
       </div>
     </div>
@@ -584,17 +605,47 @@
     }
     var input = document.getElementById('input');
     input.addEventListener('change', handleFiles);
+    var input2 = document.getElementById('input2');
+    input2.addEventListener('change', readURL, true);
     var imagem
     function handleFiles(e) {
       imagem = new Image;
       imagem.src = URL.createObjectURL(e.target.files[0]);
       imagem.onload = function () {
         if (imagem.width > canvas.width) {
-
+          let proporcao = canvas.width / imagem.width
+          imagem.height = imagem.height * proporcao
+          imagem.width = imagem.width * proporcao
+          let centerx = canvas.width / 2 - imagem.width / 2
+          let centery = canvas.height / 2 - imagem.height / 2
         }
         desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
       }
     }
+    function readURL() {
+      var file = document.getElementById("input2").files[0];
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        var image = new Image();
+
+        image.src = reader.result;
+
+        image.onload = function () {
+          if (image.width > canvas.width) {
+            let proporcao = canvas.width / image.width
+            image.height = image.height * proporcao
+            image.width = image.width * proporcao
+          }
+          canvasDiv.style.backgroundImage = "url(" + reader.result + ")";
+          canvasDiv.style.backgroundSize = `${image.width}px ${image.height}px`
+        };
+      }
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+      }
+    }
+
     function x2(w = 320, h = 320) {
       let newSize = 320;
       let newSizeb = 320;
@@ -1599,6 +1650,17 @@
         } else {
           canvasDiv.style.backgroundImage = `url(${item})`;
         }
+      } else if (qual === "cam") {
+        var item = prompt(
+          "endereço da imagem de fundo",
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
+        );
+        if (item == null || item == "") {
+          alert("fundo do app removido");
+          canvasDiv.style.backgroundImage = `none`;
+        } else {
+          canvasDiv.style.backgroundImage = `url(${item})`;
+        }
       } else if (qual === "black") {
         canvasDiv.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
       } else if (qual === "white") {
@@ -1606,7 +1668,7 @@
       } else if (qual === "none") {
         canvasDiv.style.backgroundImage = `none`;
         canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
-      } else {
+      } else if (qual === "imagem") {
         canvasDiv.style.backgroundImage = `url(${qual})`;
       }
     }
