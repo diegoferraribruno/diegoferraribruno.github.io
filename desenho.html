@@ -296,11 +296,13 @@
       <div id="menuinfo" class="submenu fundobranco">
         <small>Diego Desenha<br>
           versão 0.5.3<br>
-          - pinta por cima ou por baixo mode fix.<br>
-          - sombra no texto
+          - multiple images
           <h3>
             notas de versões
           </h3>
+          versão 0.5.3<br>
+          - pinta por cima ou por baixo mode fix.<br>
+          - sombra no texto
           versão 0.5.2<br>
           - night mode<br>
           - envia imagem.<br><br>
@@ -485,10 +487,10 @@
         <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho"
           style="background-color: rgba(247, 161, 165, 0.15);">🪣</span>
         <span id="apagar" title="Apagar" class="bloquinho" onmousedown="modeTo('apagar')">🧽</span>
-        <span class="bloquinho" onclick="x2()">↔️</span>
-        <span class="bloquinho" onmousedown="clearArea()">🗑</span>
+        <span class="bloquinho" title="Redimensionar tela" onclick="x2()">↔️</span>
+        <span class="bloquinho" title="Limpar tela" onmousedown="clearArea()">🗑</span>
         <span><a id="btn-download" class="bloquinho"> 📥</a></span>
-        <span id="imagem" title="imagem" class="bloquinho" onmousedown="modeTo('imagem')">📤</span>
+        <span id="imagem" title="adicionar imagem" class="bloquinho" onmousedown="modeTo('imagem')">📷</span>
       </div>
     </div>
 
@@ -578,7 +580,10 @@
       imagem = new Image;
       imagem.src = URL.createObjectURL(e.target.files[0]);
       imagem.onload = function () {
-        desenha(imagem)
+        if (imagem.width > canvas.width) {
+
+        }
+        desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
       }
     }
     function x2(w = 320, h = 320) {
@@ -716,6 +721,7 @@
       canvas.addEventListener("mousemove", (e) => {
         if (isDrawing && mode != "picker") {
           desenha(
+            "p",
             context.globalCompositeOperation,
             x,
             y,
@@ -739,6 +745,7 @@
       canvas.addEventListener("mouseup", (e) => {
         if (isDrawing && mode != "picker") {
           desenha(
+            "p",
             context.globalCompositeOperation,
             x,
             y,
@@ -875,45 +882,52 @@
     }
     function memoryswipe() {
       let len = comandos.length;
-      if (len > 2000) {
+      if (len > 200) {
         comandosb = [];
-        for (i = 0; i < 1000; i++) {
+        for (i = 0; i < 100; i++) {
           comandosb.unshift(comandos[len - i - 1]);
           // Remove the most recent command from the list
           comandos.splice(-1, 1);
         }
         comandosExec()
         setTimeout(() => convertToImg(), 30)
-        setTimeout(() => comandos = [], 35)
-        setTimeout(() => replay(), 40)
+        setTimeout(() => comandos = [], 40)
+        setTimeout(() => replay(), 50)
       }
     }
-
 
     function comandosExec() {
       flatImage();
       let lenc = comandos.length;
       for (i = 0; i < lenc; i++) {
-        if (comandos[i].length == 1) {
-          context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
-        }
-        else if (comandos[i].length == 6) {
-          //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
-          context.globalCompositeOperation = comandos[i][0];
-          context.fillStyle = comandos[i][1];
-          context.fillRect(0, 0, canvas.width, canvas.height);
-        }
-        else if (comandos[i].length > 6) {
-          drawLine(
-            comandos[i][0],
-            comandos[i][1],
-            comandos[i][2],
-            comandos[i][3],
-            comandos[i][4],
-            comandos[i][5],
-            comandos[i][6],
-            comandos[i][7]
-          );
+        switch (comandos[i][0]) {
+          case "p":
+            drawLine(
+              comandos[i][1],
+              comandos[i][2],
+              comandos[i][3],
+              comandos[i][4],
+              comandos[i][5],
+              comandos[i][6],
+              comandos[i][7],
+              comandos[i][8]
+            );
+            break;
+          case "i":
+            context.globalCompositeOperation = comandos[i][1];
+            context.drawImage(
+              comandos[i][2],
+              comandos[i][3],
+              comandos[i][4],
+              comandos[i][5],
+              comandos[i][6]);
+            break;
+          case "b":
+            //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
+            context.globalCompositeOperation = comandos[i][1];
+            context.fillStyle = comandos[i][2];
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            break;
         }
       }
     }
@@ -923,11 +937,12 @@
       for (a = 0; a < lenb; a++) {
         comandos.push(comandosb[a]);
       }
-      comandosExec()
+      setTimeout(() => comandosExec(), 3)
       comandosb = [];
     }
 
     async function desenha(
+      CMD,
       GCO,
       X = undefined,
       Y = undefined,
@@ -937,34 +952,38 @@
       stroke = undefined,
       linejoin = undefined
     ) {
-      if (X == undefined) {
-        let comando = [GCO]
-        context.drawImage(GCO, 0, 0, GCO.width, GCO.height);
-        setTimeout(
-          comandos.push(comando)
-          , 0)
+      let comando = []
+      switch (CMD) {
+        case "p":
+          comando = ["p", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin];
+          setTimeout(
+            comandos.push(comando)
+            , 0)
+          drawLine(
+            comando[1],
+            comando[2],
+            comando[3],
+            comando[4],
+            comando[5],
+            comando[6],
+            comando[7],
+            comando[8]
 
-      }
-      else if (stroke != undefined) {
-        let comando = [GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin];
-        setTimeout(
-          comandos.push(comando)
-          , 0)
-        drawLine(
-          comando[0],
-          comando[1],
-          comando[2],
-          comando[3],
-          comando[4],
-          comando[5],
-          comando[6],
-          comando[7]
-        );
-      } else {
-        let comando = [GCO, X];
-        setTimeout(comandos.push(comando), 0)
-        context.fillStyle = X; //cor
-        context.fillRect(0, 0, canvas.width, canvas.height);
+          );
+          break;
+        case "i":
+          comando = ["i", GCO, imagem, 0, 0, imagem.width, imagem.height]
+          context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
+          setTimeout(
+            comandos.push(comando)
+            , 0)
+          break;
+        case "b":
+          comando = ["b", GCO, X];
+          setTimeout(comandos.push(comando), 0)
+          context.fillStyle = X; //cor
+          context.fillRect(0, 0, canvas.width, canvas.height);
+          break;
       }
       comandosb = [];
     }
@@ -998,6 +1017,7 @@
               (y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor);
 
             desenha(
+              "p",
               context.globalCompositeOperation,
               x,
               y,
@@ -1193,12 +1213,12 @@
           toggleSelect(qual);
           break;
         case "picker":
-          mode = "picker";
+          mode = qual;
           removeClass();
           toggleSelect(qual);
           break;
         case "info":
-          mode = "info";
+          mode = qual;
           removeClass();
           mostraMenu(qual);
           toggleSelect(qual);
@@ -1207,7 +1227,11 @@
           undo();
           break;
         case "imagem":
+          mode = qual;
+          removeClass();
           mostraMenu(qual);
+          toggleSelect(qual);
+          memoryswipe();
           break;
       }
       cursorColor();
@@ -1347,7 +1371,7 @@
         //context.fillStyle = cor;
         // context.fillRect(0, 0, canvas.width, canvas.height);
         let GCO = context.globalCompositeOperation;
-        desenha(GCO, cor);
+        desenha("b", GCO, cor);
       }
     }
 
@@ -1588,6 +1612,7 @@
       context.globalCompositeOperation = "destination-over"
       context.drawImage(img, x, y)
       setTimeout(() => context.globalCompositeOperation = globaltemp, 0)
+
     }
 
   </script>
