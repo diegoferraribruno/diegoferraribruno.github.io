@@ -16,6 +16,7 @@
     }
 
     body {
+      text-shadow: -1px 0 #bbbbbbbb, 0 1px #bbbbbbbb, 1px 0 #bbbbbbbb, 0 -1px #bbbbbbbb;
       overflow-y: hidden;
       padding: 0px 0px;
       margin: 0px 0px;
@@ -294,10 +295,16 @@
       </div>
       <div id="menuinfo" class="submenu fundobranco">
         <small>Diego Desenha<br>
+          versão 0.5.3<br>
+          - pinta por cima ou por baixo mode fix.<br>
+          - sombra no texto
+          <h3>
+            notas de versões
+          </h3>
           versão 0.5.2<br>
           - night mode<br>
           - envia imagem.<br><br>
-          notas ver 0.5 - Turing<br>
+          ver 0.5 - Turing<br>
           - nova paleta de cores<br><br>
           - tamanhos pre definidos de pinceis. <br>
           - refazer passo a passo. <br>
@@ -534,7 +541,7 @@
     var strokeWidth = 0.6;
     var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
     var estrokeWidth = 4;
-    var mode = "pintar";
+    var mode = "cores";
     var linejoin = "round";
     var lineJoinsCount = 0;
     const lineJoins = ["round", "miter"];
@@ -631,8 +638,14 @@
       desenhoDiv.style.height = window.innerHeight + "px";
     }
     function startup() {
-
+      modeTo("pintar")
       removeClass();
+      document.getElementById(
+        "globalComposite"
+      ).innerHTML =
+        `<span style="position:absolute; float:right; width:32px; display:block; ` +
+        `padding-top: 0px;">🔲</span> <span style="color:white;` +
+        `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
       window.addEventListener("resize", function (event) {
         resizeScreen();
       });
@@ -1307,20 +1320,21 @@
           "globalComposite"
         ).innerHTML =
           `<span style="position:absolute; width:30px; ` +
-          `display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span> ` +
+          `display:block; color:white; margin-left:-4px; margin-top:-5px;">⭕</span> ` +
           `<span style="position:relative; float:left; width:30px; display:block;  ` +
-          `color:black; left:2px; margin-top:0px;" title="Pintar por baixo">🔲</span>`;
+          `color:black; left:1px; margin-top:0px;" title="Pintar por baixo">🔲</span>`;
       } else {
         globalComposite = "source-over";
         document.getElementById(
           "globalComposite"
         ).innerHTML =
           `<span style="position:absolute; float:right; width:32px; display:block; ` +
-          `padding-top: 0px; margin-left:2px;">🔲</span> <span style="color:white;` +
+          `padding-top: 0px;">🔲</span> <span style="color:white;` +
           `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
       }
       cursor.classList.toggle("cursorIndex");
       cursor.classList.toggle("selected");
+      context.globalCompositeOperation = globalComposite;
       modeTo("pintar")
       removeClass()
     }
