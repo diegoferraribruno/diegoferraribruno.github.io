@@ -35,7 +35,7 @@
     }
 
     #canvas_div {
-      background-image: url("./grid.png");
+      background-image: url("./grid3.png");
       text-align: center;
       display: block;
       margin-left: auto;
@@ -295,11 +295,15 @@
       </div>
       <div id="menuinfo" class="submenu fundobranco">
         <small>Diego Desenha<br>
-          versão 0.5.3<br>
-          - multiple images
+          versão 0.5.5<br>
+          - inicia no modo noturno<br>
+          - fundo xadrez<br>
+          - sons no menu, no Crtl+Z e no Ctrl+Y <br>
           <h3>
             notas de versões
           </h3>
+          versão 0.5.4<br>
+          - multiple images<br>
           versão 0.5.3<br>
           - pinta por cima ou por baixo mode fix.<br>
           - sombra no texto
@@ -558,6 +562,11 @@
     const win = document.getElementById("canvas_window");
     const desenhoDiv = document.getElementById("desenho_div");
     const images = []
+    var audio = new Audio('./back_001.wav');
+    var audio2 = new Audio('./click_005.wav');
+    audio.volume = 0.5;
+    audio2.volume = 0.5;
+
 
     function prevent(evt) {
       evt.preventDefault();
@@ -643,6 +652,7 @@
       desenhoDiv.style.height = window.innerHeight + "px";
     }
     function startup() {
+      night()
       modeTo("pintar")
       removeClass();
       document.getElementById(
@@ -821,6 +831,9 @@
     };
 
     function handleKeys(evt) {
+      if (evt.ctrlKey && evt.key === "y") {
+        redo();
+      }
       if (evt.ctrlKey && evt.key === "z") {
         undo();
       }
@@ -846,7 +859,8 @@
         comandos.splice(-1, 1);
       } else {
         clearInterval(counter)
-        alert("nivel maximo de desfazer atingindo.");
+        audio.play();
+        //alert("nivel maximo de desfazer atingindo.");
         clearInterval(counter)
       }
 
@@ -871,7 +885,8 @@
         comandosb.shift();
       } else {
         clearInterval(counter)
-        alert("nivel maximo de refazer atingindo.");
+        audio.play();
+        //alert("nivel maximo de refazer atingindo.");
         clearInterval(counter)
       }
 
@@ -1139,6 +1154,7 @@
 
     let oldMode = mode;
     function modeTo(qual) {
+      audio2.play();
       switch (qual) {
         case "zoom":
           zoomIndex++;
@@ -1166,6 +1182,7 @@
           oldMode = qual;
           setStrokeSize(estrokeWidth);
           context.globalCompositeOperation = "destination-out";
+          mostraMenu(qual);
           cursorColor();
           toggleSelect(qual);
           memoryswipe();
