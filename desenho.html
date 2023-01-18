@@ -319,8 +319,8 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             lei mao</a>
           <br>
-          versão 0.5.9a<br>
-          - webcam <br>
+          versão 0.5.9b<br>
+          - webcam - testando para celular<br>
           - ( arrumando bug) precisa aguardar carregar a imagem antes de seguir no undo()
           <br>
           versão 0.5.7<br>
@@ -1356,9 +1356,8 @@
             videoE.height = 240; // in px
             videoE.width = 320; // in px
             canvasDiv.appendChild(videoE);
-            videoE.setAttribute("autoplay")
-            videoE.setAttribute("playsinline")
-            playsinline
+            videoE.toggleAttribute("autoplay")
+            videoE.toggleAttribute("playsinline")
             if (context.globalCompositeOperation == "destination-over") {
               console.log("destination-over")
               videoE.classList.toggle("destination-over")
