@@ -298,6 +298,10 @@
       font-weight: 700;
       font-size: 10pt;
     }
+
+    .destination-over {
+      z-index: 3;
+    }
   </style>
   <title>Diego Desenha - Alpha</title>
 </head>
@@ -310,8 +314,17 @@
         para capturar uma cor
       </div>
       <div id="menuinfo" class="submenu fundobranco">
-        <small>Diego Desenha
+        <small> Desenha CC Credits:<br>
+          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>twitter @diegofbrasil<br>
+          <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
+            lei mao</a>
           <br>
+          versão 0.5.8 <br>
+          - webcam <br>
+          - (bug) precisa aguardar carregar a imagem antes de seguir no undo()
+          <br>
+          versão 0.5.7<br>
+          - ruidos removidos<br>
           versão 0.5.6<br>
           - foto e fundo com tamanho<br>
           versão 0.5.5<br>
@@ -339,15 +352,11 @@
           reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
           o que pode influenciar na qualidade do projeto final. vamos ao teste.
           <br>
-          Creative Commons Credits:
-          <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-            lei mao</a>
-          e
-          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>twitter @diegofbrasil
         </small>
       </div>
       <div id="menuimagem" class="fundobranco submenu aparece">
-        <input type="file" id="input" class="custom-file-input" />
+        📤 <input type="file" id="input" class="custom-file-input" />
+
       </div>
       <div id="menupintar" class="fundobranco submenu">
         <span style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
@@ -396,54 +405,7 @@
             ok
           </div>
         </div>
-        <div id="paleta" class="fundobranco"><span onmousedown="mudaCor('hsla(357,87%,82%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,87%,82%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,89%,84%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,89%,84%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,91%,86%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,91%,86%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,93%,88%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,93%,88%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,95%,90%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,95%,90%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,97%,92%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,97%,92%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,99%,94%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,99%,94%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,101%,96%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,101%,96%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,103%,98%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,103%,98%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,105%,100%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,105%,100%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,107%,102%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,107%,102%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,109%,104%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,109%,104%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,111%,106%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,111%,106%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,113%,108%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,113%,108%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,115%,110%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,115%,110%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,117%,112%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,117%,112%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,119%,114%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,119%,114%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,121%,116%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,121%,116%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,123%,118%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,123%,118%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,125%,120%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,125%,120%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,127%,122%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,127%,122%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,129%,124%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,129%,124%,0.5);"> </span><span
-            onmousedown="mudaCor('hsla(357,131%,126%,0.15)')" class="bloquinho"
-            style="background-color:hsla(357,131%,126%,0.5);"> </span><span onmousedown="mudaCor('B')" class="bloquinho"
-            style="background-color:hsla(0, 100%, 100%, 0.15)"> </span><br><span onmousedown="mudaCor('P')"
-            class="bloquinho" style="background-color:hsla(0, 100%, 0%, 0.15)"> </span></div>
+        <div id="paleta" class="fundobranco"></div>
         <div id="paleta2" class="fundobranco">
           <br>use o 📌 para guardar <br>ou remover suas cores daqui.
         </div>
@@ -466,7 +428,7 @@
         <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
           ❌</span>
         <br><span>
-          📷 <input type="file" id="input2" class="custom-file-input" />
+          📤 <input type="file" id="input2" class="custom-file-input" />
         </span>
       </div>
 
@@ -500,7 +462,7 @@
             style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
           <span
             style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
-            title="Pintar por baixo">🔲</span></span>
+            title="Pintando por baixo">🔲</span></span>
         <span id="pintar" title="pintar" class="bloquinho selected" onmousedown="modeTo('pintar')"
           style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span>
         <span id="cores" title="cores" class="bloquinho" onmousedown="modeTo('cores')"
@@ -514,7 +476,7 @@
         <span class="bloquinho" title="Redimensionar tela" onclick="x2()">↔️</span>
         <span class="bloquinho" title="Limpar tela" onmousedown="clearArea()">🗑</span>
         <span><a id="btn-download" class="bloquinho"> 📥</a></span>
-        <span id="imagem" title="adicionar imagem" class="bloquinho" onmousedown="modeTo('imagem')">📷</span>
+        <span id="imagem" title="adicionar imagem" class="bloquinho" onmousedown="modeTo('imagem')"> 📤</span>
       </div>
     </div>
 
@@ -524,10 +486,14 @@
         class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
       <div id="canvas_div" style="overflow: hidden" class="day">
         <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-          class="day">
+          class="day" style="z-index: 2;">
           Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou corretamente.<br>
           se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
         </canvas>
+        <canvas id="canvasV" width="480px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
+          style="visibility: hidden; position: absolute; left:0px;">
+        </canvas>
+
       </div>
     </div>
     <div id="ferramentas2" class="fundobranco naotoque" style="width: 280px; margin: auto">
@@ -543,12 +509,17 @@
       <span id="undo" title="undo" class="bloquinho" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
       <span id="redo" title="replay" class="bloquinho" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
       <span id="info" title="Fundo falso" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
+      <span id="cam" title="foto" class="bloquinho" onmousedown="cam()">📷</span>
     </div>
 
   </div>
+
   <script>
+    //style="visibility:hidden"
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
+    const canvasV = document.getElementById("canvasV");
+    const contextV = canvasV.getContext("2d");
     let isDrawing = false;
     let isGrabing = false;
     let x = 0;
@@ -588,6 +559,99 @@
     audio.volume = 0.5;
     audio2.volume = 0.5;
 
+    function cam() {
+      if (!document.getElementById("video")) {
+
+        const videoE = document.createElement("video");
+        videoE.id = "video"
+        videoE.setAttribute('style', "position:absolute; margin-left:-160px; margin-top:-325px; z-index:2; opacity: 0.5;")
+        videoE.height = 240; // in px
+        videoE.width = 320; // in px
+        canvasDiv.appendChild(videoE);
+        if (context.globalCompositeOperation == "destination-over") {
+          console.log("destination-over")
+          canvas.classList.toggle("destination-over")
+          context.globalCompositeOperation = globalComposite
+        }
+        navigator.mediaDevices.getUserMedia({ video: true }).then(function (mediaStream) {
+          const video = document.querySelector('#video');
+          video.srcObject = mediaStream;
+          video.play();
+        });
+
+        document.querySelector('#video').addEventListener('click', function (e) {
+          let proporcao = canvas.width / video.width
+          let W = video.width
+          let H = video.height
+          contextV.drawImage(video, 0, 0, W, H)
+          img_b64 = canvasV.toDataURL('image/png');
+          //Create blob from DataURL
+          blob = dataURItoBlob(img_b64)
+
+          //Insert image
+
+          desenha("f", globalComposite, blob, 0, 0, 320, 320)
+          removeElement("video")
+          /*
+            <button id="upload">Upload</button>
+          document.querySelector('#upload').addEventListener('click', function (e) {
+     
+            var canvas = document.querySelector("#canvas");
+     
+            canvas.toBlob(function (blob) {
+     
+              var form = new FormData();
+              form.append('image', blob, 'webcam.jpg');
+     
+              var xhr = new XMLHttpRequest();
+              xhr.open('POST', '/upload', true);
+              xhr.onload = function (e) {
+                // upload concluído  
+              };
+     
+              xhr.send(form);
+     
+            }, 'image/jpeg');
+          })
+          */
+        })
+
+      } else {
+        removeElement("video")
+      }
+    }
+    function removeElement(id) {
+      var elem = document.getElementById(id);
+      return elem.parentNode.removeChild(elem);
+    }
+    function canvasToBlob(context, type) {
+      return new Promise(function (resolve, reject) {
+        context.canvasV.toBlob(function (blob) {
+          resolve(blob);
+        }, type);
+      });
+    }
+    //Get data from canvas
+
+    function dataURItoBlob(dataURI) {
+      // convert base64/URLEncoded data component to raw binary data held in a string
+      var byteString;
+      if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+      else
+        byteString = unescape(dataURI.split(',')[1]);
+
+      // separate out the mime component
+      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+      // write the bytes of the string to a typed array
+      var ia = new Uint8Array(byteString.length);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+
+      return new Blob([ia], { type: mimeString });
+    }
 
     function prevent(evt) {
       evt.preventDefault();
@@ -607,7 +671,8 @@
     input.addEventListener('change', handleFiles);
     var input2 = document.getElementById('input2');
     input2.addEventListener('change', readURL, true);
-    var imagem
+    var imagem = new Image;
+
     function handleFiles(e) {
       imagem = new Image;
       imagem.src = URL.createObjectURL(e.target.files[0]);
@@ -711,7 +776,7 @@
       ).innerHTML =
         `<span style="position:absolute; float:right; width:32px; display:block; ` +
         `padding-top: 0px;">🔲</span> <span style="color:white;` +
-        `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
+        `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
       window.addEventListener("resize", function (event) {
         resizeScreen();
       });
@@ -955,47 +1020,77 @@
           // Remove the most recent command from the list
           comandos.splice(-1, 1);
         }
+        convertToImg()
         comandosExec()
-        setTimeout(() => convertToImg(), 30)
-        setTimeout(() => comandos = [], 40)
-        setTimeout(() => replay(), 50)
+        comandos = []
+        replay()
       }
     }
 
     function comandosExec() {
-      flatImage();
-      let lenc = comandos.length;
-      for (i = 0; i < lenc; i++) {
-        switch (comandos[i][0]) {
-          case "p":
-            drawLine(
-              comandos[i][1],
-              comandos[i][2],
-              comandos[i][3],
-              comandos[i][4],
-              comandos[i][5],
-              comandos[i][6],
-              comandos[i][7],
-              comandos[i][8]
-            );
-            break;
-          case "i":
-            context.globalCompositeOperation = comandos[i][1];
-            context.drawImage(
-              comandos[i][2],
-              comandos[i][3],
-              comandos[i][4],
-              comandos[i][5],
-              comandos[i][6]);
-            break;
-          case "b":
-            //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
-            context.globalCompositeOperation = comandos[i][1];
-            context.fillStyle = comandos[i][2];
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            break;
+      addFlatedImg();
+      setTimeout(() => {
+        let lenc = comandos.length;
+        for (i = 0; i < lenc; i++) {
+          switch (comandos[i][0]) {
+            case "p":
+              drawLine(
+                comandos[i][1],
+                comandos[i][2],
+                comandos[i][3],
+                comandos[i][4],
+                comandos[i][5],
+                comandos[i][6],
+                comandos[i][7],
+                comandos[i][8]
+              );
+              break;
+            case "f":
+              let myImg = document.createElement("img");
+              myImg.src = URL.createObjectURL(comandos[i][2])
+              let gco = comandos[i][1]
+              myImg.onload = function () {
+                let globaltemp = context.globalCompositeOperation
+                context.globalCompositeOperation = gco;
+                context.drawImage(
+                  myImg,
+                  0,
+                  0,
+                  myImg.width,
+                  myImg.height);
+                context.globalCompositeOperation = globaltemp
+              }
+              break;
+            case "i":
+              context.globalCompositeOperation = comandos[i][1];
+              context.drawImage(
+                comandos[i][2],
+                comandos[i][3],
+                comandos[i][4],
+                comandos[i][5],
+                comandos[i][6]);
+              break;
+            case "c":
+              context.globalCompositeOperation = comandos[i][1];
+              context.putImageData(
+                comandos[i][2],
+                comandos[i][3],
+                comandos[i][4],
+                comandos[i][5],
+                comandos[i][6],
+                comandos[i][7],
+                comandos[i][8]);
+              break;
+            case "b":
+              //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
+              context.globalCompositeOperation = comandos[i][1];
+              context.fillStyle = comandos[i][2];
+              context.fillRect(0, 0, canvas.width, canvas.height);
+              break;
+          }
         }
-      }
+      }, 60)
+
     }
     function replay() {
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -1003,11 +1098,11 @@
       for (a = 0; a < lenb; a++) {
         comandos.push(comandosb[a]);
       }
-      setTimeout(() => comandosExec(), 3)
+      setTimeout(() => comandosExec(), 10)
       comandosb = [];
     }
 
-    async function desenha(
+    function desenha(
       CMD,
       GCO,
       X = undefined,
@@ -1020,6 +1115,7 @@
     ) {
       let comando = []
       switch (CMD) {
+
         case "p":
           comando = ["p", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin];
           setTimeout(
@@ -1037,6 +1133,25 @@
 
           );
           break;
+        case "f":
+          comando = ["f", GCO, X, Y, eoX, eoY, strokeColor]
+          let myImg = document.createElement("img");
+          myImg.src = URL.createObjectURL(blob)
+          myImg.onload = function () {
+            let oldGCO = context.globalCompositeOperation
+            context.globalCompositeOperation = globalComposite
+            context.drawImage(
+              myImg,
+              0,
+              0,
+              myImg.width,
+              myImg.height);
+            setTimeout(
+              comandos.push(comando)
+              , 0)
+            context.globalCompositeOperation = oldGCO
+          }
+          break;
         case "i":
           comando = ["i", GCO, imagem, 0, 0, imagem.width, imagem.height]
           context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
@@ -1044,6 +1159,7 @@
             comandos.push(comando)
             , 0)
           break;
+
         case "b":
           comando = ["b", GCO, X];
           setTimeout(comandos.push(comando), 0)
@@ -1205,7 +1321,6 @@
 
     let oldMode = mode;
     function modeTo(qual) {
-      audio2.play();
       switch (qual) {
         case "zoom":
           zoomIndex++;
@@ -1414,7 +1529,7 @@
           `<span style="position:absolute; width:30px; ` +
           `display:block; color:white; margin-left:-4px; margin-top:-5px;">⭕</span> ` +
           `<span style="position:relative; float:left; width:30px; display:block;  ` +
-          `color:black; left:1px; margin-top:0px;" title="Pintar por baixo">🔲</span>`;
+          `color:black; left:1px; margin-top:0px;" title="Pintando por baixo">🔲</span>`;
       } else {
         globalComposite = "source-over";
         document.getElementById(
@@ -1422,7 +1537,7 @@
         ).innerHTML =
           `<span style="position:absolute; float:right; width:32px; display:block; ` +
           `padding-top: 0px;">🔲</span> <span style="color:white;` +
-          `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintar por cima">⭕</span> `;
+          `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
       }
       cursor.classList.toggle("cursorIndex");
       cursor.classList.toggle("selected");
@@ -1662,7 +1777,7 @@
           canvasDiv.style.backgroundImage = `url(${item})`;
         }
       } else if (qual === "black") {
-        canvasDiv.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
+        canvasDiv.style.backflatigroundColor = "hsla(0, 100%, 0%, 1)";
       } else if (qual === "white") {
         canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
       } else if (qual === "none") {
@@ -1685,12 +1800,13 @@
       img = new Image();
       img.src = canvas.toDataURL()
     }
-    async function flatImage(x = 0, y = 0) {
+
+    function addFlatedImg(x = 0, y = 0) {
       let globaltemp = context.globalCompositeOperation
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.globalCompositeOperation = "destination-over"
       context.drawImage(img, x, y)
-      setTimeout(() => context.globalCompositeOperation = globaltemp, 0)
+      context.globalCompositeOperation = globaltemp
 
     }
 
