@@ -300,7 +300,7 @@
     }
 
     .destination-over {
-      z-index: 3;
+      opacity: 0.6;
     }
   </style>
   <title>Diego Desenha - Alpha</title>
@@ -319,9 +319,9 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             lei mao</a>
           <br>
-          versão 0.5.8 <br>
+          versão 0.5.9 <br>
           - webcam <br>
-          - (bug) precisa aguardar carregar a imagem antes de seguir no undo()
+          - ( arrumando bug) precisa aguardar carregar a imagem antes de seguir no undo()
           <br>
           versão 0.5.7<br>
           - ruidos removidos<br>
@@ -486,7 +486,7 @@
         class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
       <div id="canvas_div" style="overflow: hidden" class="day">
         <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-          class="day" style="z-index: 2;">
+          class="day">
           Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou corretamente.<br>
           se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
         </canvas>
@@ -509,13 +509,12 @@
       <span id="undo" title="undo" class="bloquinho" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
       <span id="redo" title="replay" class="bloquinho" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
       <span id="info" title="Fundo falso" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
-      <span id="cam" title="foto" class="bloquinho" onmousedown="cam()">📷</span>
+      <span id="cam" title="foto" class="bloquinho" onmousedown="modeTo('cam')">📷</span>
     </div>
 
   </div>
 
   <script>
-    //style="visibility:hidden"
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
     const canvasV = document.getElementById("canvasV");
@@ -527,8 +526,6 @@
     var offsetX;
     var offsetY;
     const ongoingTouches = [];
-
-    // comeca minha adaptacao
 
     const canvasDiv = document.getElementById("canvas_div");
     var globalComposite = "source-over";
@@ -559,67 +556,7 @@
     audio.volume = 0.5;
     audio2.volume = 0.5;
 
-    function cam() {
-      if (!document.getElementById("video")) {
 
-        const videoE = document.createElement("video");
-        videoE.id = "video"
-        videoE.setAttribute('style', "position:absolute; margin-left:-160px; margin-top:-325px; z-index:2; opacity: 0.5;")
-        videoE.height = 240; // in px
-        videoE.width = 320; // in px
-        canvasDiv.appendChild(videoE);
-        if (context.globalCompositeOperation == "destination-over") {
-          console.log("destination-over")
-          canvas.classList.toggle("destination-over")
-          context.globalCompositeOperation = globalComposite
-        }
-        navigator.mediaDevices.getUserMedia({ video: true }).then(function (mediaStream) {
-          const video = document.querySelector('#video');
-          video.srcObject = mediaStream;
-          video.play();
-        });
-
-        document.querySelector('#video').addEventListener('click', function (e) {
-          let proporcao = canvas.width / video.width
-          let W = video.width
-          let H = video.height
-          contextV.drawImage(video, 0, 0, W, H)
-          img_b64 = canvasV.toDataURL('image/png');
-          //Create blob from DataURL
-          blob = dataURItoBlob(img_b64)
-
-          //Insert image
-
-          desenha("f", globalComposite, blob, 0, 0, 320, 320)
-          removeElement("video")
-          /*
-            <button id="upload">Upload</button>
-          document.querySelector('#upload').addEventListener('click', function (e) {
-     
-            var canvas = document.querySelector("#canvas");
-     
-            canvas.toBlob(function (blob) {
-     
-              var form = new FormData();
-              form.append('image', blob, 'webcam.jpg');
-     
-              var xhr = new XMLHttpRequest();
-              xhr.open('POST', '/upload', true);
-              xhr.onload = function (e) {
-                // upload concluído  
-              };
-     
-              xhr.send(form);
-     
-            }, 'image/jpeg');
-          })
-          */
-        })
-
-      } else {
-        removeElement("video")
-      }
-    }
     function removeElement(id) {
       var elem = document.getElementById(id);
       return elem.parentNode.removeChild(elem);
@@ -631,19 +568,15 @@
         }, type);
       });
     }
-    //Get data from canvas
 
     function dataURItoBlob(dataURI) {
-      // convert base64/URLEncoded data component to raw binary data held in a string
       var byteString;
       if (dataURI.split(',')[0].indexOf('base64') >= 0)
         byteString = atob(dataURI.split(',')[1]);
       else
         byteString = unescape(dataURI.split(',')[1]);
-
       // separate out the mime component
       var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
       // write the bytes of the string to a typed array
       var ia = new Uint8Array(byteString.length);
       for (var i = 0; i < byteString.length; i++) {
@@ -660,10 +593,8 @@
       let testarray = document.getElementsByClassName("fundobranco");
       let testarray2 = document.getElementsByClassName("day");
       for (let i = 0; i < testarray.length; i++) {
-        //testarray[i].className += "night";
         testarray[i].classList.toggle("night")
       } for (let i = 0; i < testarray2.length; i++) {
-        //testarray[i].className += "night";
         testarray2[i].classList.toggle("night")
       }
     }
@@ -760,7 +691,7 @@
         cursorColor(oldMode);
       }
     }
-    // pausa na adaptacao funcoes novas ao fim
+    // drawing app
 
     document.addEventListener("DOMContentLoaded", startup);
     function resizeScreen() {
@@ -1033,18 +964,6 @@
         let lenc = comandos.length;
         for (i = 0; i < lenc; i++) {
           switch (comandos[i][0]) {
-            case "p":
-              drawLine(
-                comandos[i][1],
-                comandos[i][2],
-                comandos[i][3],
-                comandos[i][4],
-                comandos[i][5],
-                comandos[i][6],
-                comandos[i][7],
-                comandos[i][8]
-              );
-              break;
             case "f":
               let myImg = document.createElement("img");
               myImg.src = URL.createObjectURL(comandos[i][2])
@@ -1060,6 +979,18 @@
                   myImg.height);
                 context.globalCompositeOperation = globaltemp
               }
+              break;
+            case "p":
+              drawLine(
+                comandos[i][1],
+                comandos[i][2],
+                comandos[i][3],
+                comandos[i][4],
+                comandos[i][5],
+                comandos[i][6],
+                comandos[i][7],
+                comandos[i][8]
+              );
               break;
             case "i":
               context.globalCompositeOperation = comandos[i][1];
@@ -1416,6 +1347,41 @@
           toggleSelect(qual);
           memoryswipe();
           break;
+        case "cam":
+          if (!document.getElementById("video")) {
+
+            const videoE = document.createElement("video");
+            videoE.id = "video"
+            videoE.setAttribute('style', "position:absolute; margin-left:-160px; margin-top:-325px;")
+            videoE.height = 240; // in px
+            videoE.width = 320; // in px
+            canvasDiv.appendChild(videoE);
+            if (context.globalCompositeOperation == "destination-over") {
+              console.log("destination-over")
+              videoE.classList.toggle("destination-over")
+              context.globalCompositeOperation = globalComposite
+            }
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function (mediaStream) {
+              const video = document.querySelector('#video');
+              video.srcObject = mediaStream;
+              video.play();
+            });
+
+            document.querySelector('#video').addEventListener('click', function (e) {
+              let proporcao = canvas.width / video.width
+              let W = video.width
+              let H = video.height
+              contextV.drawImage(video, 0, 0, W, H)
+              img_b64 = canvasV.toDataURL('image/png');
+              blob = dataURItoBlob(img_b64)
+              desenha("f", globalComposite, blob, 0, 0, 320, 320)
+              removeElement("video")
+            })
+
+          } else {
+            removeElement("video")
+          }
+          break;
       }
       cursorColor();
       /*  toggleSelect(qual)
@@ -1520,7 +1486,9 @@
     }
 
     function backPaint() {
-
+      if (document.getElementById("video")) {
+        document.getElementById("video").classList.toggle("destination-over")
+      }
       if (globalComposite != "destination-over") {
         globalComposite = "destination-over";
         document.getElementById(
