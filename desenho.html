@@ -317,9 +317,10 @@
         <small> Desenha CC Credits:<br>
           <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>twitter @diegofbrasil<br>
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-            lei mao</a>
+            base por lei mao</a>
+          <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a>
           <br>
-          versão 0.5.9b<br>
+          versão 0.6 cam<br>
           - webcam - testando para celular<br>
           - ( arrumando bug) precisa aguardar carregar a imagem antes de seguir no undo()
           <br>
@@ -376,7 +377,7 @@
         <span class="bloquinho" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2" min="0.5"
           max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
         <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
-          oninput="strokeSizeRange(this.value)" value="1" width="160px">
+          oninput="strokeSizeRange(this.value)" value="36" width="160px">
         <span onmousedown="removeClass()" id="mostraCor2" style="background-color: &#39;hsl(0, 100%, 0%);&#39;">
         </span>
         <div>
@@ -490,13 +491,13 @@
           Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou corretamente.<br>
           se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
         </canvas>
-        <canvas id="canvasV" width="480px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
+        <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
           style="visibility: hidden; position: absolute; left:0px;">
         </canvas>
 
       </div>
     </div>
-    <div id="ferramentas2" class="fundobranco naotoque" style="width: 280px; margin: auto">
+    <div id="ferramentas2" class="fundobranco naotoque" style="width: 320px; margin: auto">
 
       <span id="fundo" title="Fundo falso" class="bloquinho" onmousedown="modeTo('fundo')">🖼️</span>
 
@@ -511,7 +512,6 @@
       <span id="info" title="Fundo falso" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
       <span id="cam" title="foto" class="bloquinho" onmousedown="modeTo('cam')">📷</span>
     </div>
-
   </div>
 
   <script>
@@ -535,7 +535,7 @@
     var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
     var strokeWidth = 0.6;
     var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-    var estrokeWidth = 4;
+    var estrokeWidth = 36;
     var mode = "cores";
     var linejoin = "round";
     var lineJoinsCount = 0;
@@ -1251,7 +1251,7 @@
     // By diego
 
     let oldMode = mode;
-    function modeTo(qual) {
+    async function modeTo(qual) {
       switch (qual) {
         case "zoom":
           zoomIndex++;
@@ -1348,24 +1348,28 @@
           memoryswipe();
           break;
         case "cam":
-          if (!document.getElementById("video")) {
+          /*if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
 
-            const videoE = document.createElement("video");
-            videoE.id = "video"
-            videoE.setAttribute('style', "position:absolute; margin-left:-160px; margin-top:-325px;")
-            videoE.height = 240; // in px
-            videoE.width = 320; // in px
-            canvasDiv.appendChild(videoE);
-            videoE.toggleAttribute("autoplay")
-            videoE.toggleAttribute("playsinline")
-            if (context.globalCompositeOperation == "destination-over") {
-              console.log("destination-over")
-              videoE.classList.toggle("destination-over")
-              context.globalCompositeOperation = globalComposite
-            }
-            navigator.mediaDevices.getUserMedia({ video: true }).then(function (mediaStream) {
+            if (!document.getElementById("video")) {
+
+              const videoE = document.createElement("video");
+              videoE.id = "video"
+              videoE.setAttribute('style', "position:absolute; margin-left:-160px; margin-top:-325px;")
+              videoE.height = 240; // in px
+              videoE.width = 320; // in px
+              canvasDiv.appendChild(videoE);
+              videoE.toggleAttribute("autoplay", "autoplay")
+              videoE.toggleAttribute("playsinline", "playsinline")
+              //            playsinline
+              if (context.globalCompositeOperation == "destination-over") {
+                console.log("destination-over")
+                videoE.classList.toggle("destination-over")
+                context.globalCompositeOperation = globalComposite
+              }
+
               const video = document.querySelector('#video');
-              video.srcObject = mediaStream;
+              const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
+              video.srcObject = videoStream;
               video.play();
               video.addEventListener('click', function (e) {
                 let proporcao = canvas.width / video.width
@@ -1377,18 +1381,161 @@
                 desenha("f", globalComposite, blob, 0, 0, 320, 320)
                 removeElement("video")
               })
-            });
 
+          }
+          // ok, browser supports it*/
+          if (!document.getElementById("video")) {
+
+            const botao = document.createElement("button");
+            botao.setAttribute("id", "btnChangeCamera")
+            botao.setAttribute("value", "muda")
+            botao.setAttribute("class", "bloquinho")
+            botao.innerHTML = "self"
+            const videoE = document.createElement("video");
+            videoE.id = "video"
+            videoE.setAttribute('style', "position:absolute; margin-left:-161px; margin-top:-324px;")
+            videoE.height = 320; // in px
+            videoE.width = 428; // in px
+            const videoC = document.createElement("div");
+            videoC.setAttribute("style", "width:320px; height:320px; display:block; overflow: hidden;  overflow-clip-margin: -160px;")
+            videoC.setAttribute("id", "videoC")
+            videoC.appendChild(videoE);
+            document.getElementById("ferramentas2").appendChild(botao);
+
+            canvasDiv.appendChild(videoC)
+
+            videoE.toggleAttribute("autoplay", "autoplay")
+            videoE.toggleAttribute("playsinline", "playsinline")
+            videoE.setAttribute("class", "destination-over");
+
+            (function () {
+              if (
+                !"mediaDevices" in navigator ||
+                !"getUserMedia" in navigator.mediaDevices
+              ) {
+                alert("Camera API is not available in your browser");
+                return;
+              }
+
+              // get page elements
+              const video = document.querySelector("#video");
+              const btnChangeCamera = document.querySelector("#btnChangeCamera");
+              const canvas = document.querySelector("#canvasV");
+
+              // video constpraints
+              const constraints = {
+                video: {
+                  width: {
+                    min: 480,
+                    ideal: 640,
+                    max: 1280,
+                  },
+                  height: {
+                    min: 480,
+                    ideal: 640,
+                    max: 1280,
+                  },
+                },
+              };
+
+              // use front face camera
+              let useFrontCamera = true;
+
+              // current video stream
+              let videoStream;
+
+              // handle events
+              // play
+              /*          btnPlay.addEventListener("click", function () {
+                          video.play();
+                          btnPlay.classList.add("is-hidden");
+                          btnPause.classList.remove("is-hidden");
+                        });
+          
+                        // pause
+                        btnPause.addEventListener("click", function () {
+                          video.pause();
+                          btnPause.classList.add("is-hidden");
+                          btnPlay.classList.remove("is-hidden");
+                        });
+          
+                        // take screenshot
+                        btnScreenshot.addEventListener("click", function () {
+                          const img = document.createElement("img");
+                          canvas.width = video.videoWidth;
+                          canvas.height = video.videoHeight;
+                          canvas.getContext("2d").drawImage(video, 0, 0);
+                          img.src = canvas.toDataURL("image/png");
+                          screenshotsContainer.prepend(img);
+                        });
+          */
+              // switch camera
+              btnChangeCamera.addEventListener("click", function () {
+                useFrontCamera = !useFrontCamera;
+
+                initializeCamera();
+              });
+              // stop video stream
+              function stopVideoStream() {
+                if (videoStream) {
+                  videoStream.getTracks().forEach((track) => {
+                    track.stop();
+                  });
+                }
+              }
+              //diego 
+              video.addEventListener('click', function (e) {
+
+                let W = 428;
+                let H = video.height
+                contextV.drawImage(video, 0, 0, W, H)
+                img_b64 = canvasV.toDataURL('image/png');
+                blob = dataURItoBlob(img_b64)
+                let temp = context.globalCompositeOperation
+                if (globalComposite == "destination-over") {
+
+                  context.globalCompositeOperation = globalComposite
+                }
+
+                desenha("f", globalComposite, blob, 0, 0, W, H)
+                removeElement("videoC")
+                removeElement("btnChangeCamera")
+                context.globalCompositeOperation = temp
+              })
+
+              // initialize
+              async function initializeCamera() {
+                stopVideoStream();
+                constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+
+                try {
+                  videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+                  video.srcObject = videoStream;
+                } catch (err) {
+                  alert("Could not access the camera");
+                }
+              }
+
+              initializeCamera();
+            })();
           } else {
-            removeElement("video")
+            removeElement("videoC")
+            removeElement("btnChangeCamera")
+            modeTo(oldMode)
           }
           break;
       }
       cursorColor();
-      /*  toggleSelect(qual)
-            mostraMenu(qual)
-            */
     }
+
+
+
+
+
+
+
+
+
 
     function toggleSelect(id) {
       removeClass("selected");
