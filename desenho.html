@@ -321,7 +321,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             lei mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br><br>
-          versão 0.6 <br>
+          versão 0.6 alpha <br>
           - webcam <br>
           versão 0.5.7<br>
           - ruidos removidos<br>
@@ -1287,23 +1287,23 @@
           toggleSelect(qual);
           mode = qual;
           break;
-        case mode: //se o modo ja estiver ativo:
-          mostraMenu(qual);
-          if (qual == "info") {
-            modeTo(oldMode);
-          }
-          break;
         case "apagar":
-          removeClass();
-          mode = qual;
           oldMode = qual;
           setStrokeSize(estrokeWidth);
-          context.globalCompositeOperation = "destination-out";
           mostraMenu(qual);
           cursorColor();
           toggleSelect(qual);
           memoryswipe();
           mudaCorAlpha();
+          context.globalCompositeOperation = "destination-out";
+          break;
+        case mode: //se o modo ja estiver ativo:
+          if (qual != "cam") {
+            mostraMenu(qual);
+          }
+          if (qual == "info") {
+            modeTo(oldMode);
+          }
           break;
         case "pintar":
           removeClass();
@@ -1372,10 +1372,12 @@
           removeClass();
           toggleSelect(qual);
           memoryswipe();
+          context.globalCompositeOperation = globalComposite;
+
           /*if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-
+    
             if (!document.getElementById("video")) {
-
+    
               const videoE = document.createElement("video");
               videoE.id = "video"
               videoE.setAttribute('style', "position:absolute; margin-left:-160px; margin-top:-325px;")
@@ -1390,7 +1392,7 @@
                 videoE.classList.toggle("destination-over")
                 context.globalCompositeOperation = globalComposite
               }
-
+    
               const video = document.querySelector('#video');
               const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
               video.srcObject = videoStream;
@@ -1405,7 +1407,7 @@
                 desenha("f", globalComposite, blob, 0, 0, 320, 320)
                 removeElement("video")
               })
-
+    
           }
           // ok, browser supports it*/
           if (!document.getElementById("video")) {
@@ -1431,7 +1433,10 @@
 
             videoE.toggleAttribute("autoplay", "autoplay")
             videoE.toggleAttribute("playsinline", "playsinline")
-            videoE.setAttribute("class", "destination-over");
+            if (context.globalCompositeOperation === "destination-over") {
+              videoE.setAttribute("class", "destination-over");
+              canvas.style.zIndex = 5;
+            }
             if (
               !"mediaDevices" in navigator ||
               !"getUserMedia" in navigator.mediaDevices
@@ -1515,16 +1520,13 @@
               contextV.drawImage(video, 0, 0, W, H)
               img_b64 = canvasV.toDataURL('image/png');
               blob = dataURItoBlob(img_b64)
-              let temp = context.globalCompositeOperation
-              if (globalComposite == "destination-over") {
-
-                context.globalCompositeOperation = globalComposite
-              }
               let offsetW = (W - canvas.width) / -2
               desenha("f", globalComposite, blob, offsetW, 0, W, H)
               removeElement("videoC")
               removeElement("btnChangeCam")
-              context.globalCompositeOperation = temp
+              modeTo(oldMode)
+              setTimeout(() => removeClass(), 10)
+
             })
 
             // initialize
@@ -1547,6 +1549,7 @@
             removeElement("videoC")
             removeElement("btnChangeCam")
             modeTo(oldMode)
+            setTimeout(() => removeClass(), 10)
           }
           break;
       }
@@ -1676,9 +1679,6 @@
     }
 
     function backPaint() {
-      if (document.getElementById("video")) {
-        document.getElementById("video").classList.toggle("destination-over")
-      }
       if (globalComposite != "destination-over") {
         globalComposite = "destination-over";
         document.getElementById(
@@ -1688,6 +1688,8 @@
           `display:block; color:white; margin-left:-4px; margin-top:-5px;">⭕</span> ` +
           `<span style="position:relative; float:left; width:30px; display:block;  ` +
           `color:black; left:1px; margin-top:0px;" title="Pintando por baixo">🔲</span>`;
+
+
       } else {
         globalComposite = "source-over";
         document.getElementById(
@@ -1696,6 +1698,9 @@
           `<span style="position:absolute; float:right; width:32px; display:block; ` +
           `padding-top: 0px;">🔲</span> <span style="color:white;` +
           `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
+      }
+      if (document.getElementById("video")) {
+        document.getElementById("video").classList.toggle("destination-over")
       }
       cursor.classList.toggle("cursorIndex");
       cursor.classList.toggle("selected");
