@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+
+    </style>
+    <title>Diego cam - Alpha</title>
+</head>
+
+<body>
+
+    <video id='video'></video>
+    <canvas id='canvas' style="position: absolute; top: 0px; left:0px;"></canvas>
+    <button id='capture'>Capturar</button>
+    <button id="upload">Upload</button>
+    <script>
+        navigator.mediaDevices.getUserMedia({ video: true }).then(function (mediaStream) {
+            const video = document.querySelector('#video');
+            video.srcObject = mediaStream;
+            video.play();
+        });
+
+        document.querySelector('#capture').addEventListener('click', function (e) {
+            var canvas = document.querySelector("#canvas");
+            canvas.height = video.videoHeight;
+            canvas.width = video.videoWidth;
+            var context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0)
+        })
+        document.querySelector('#upload').addEventListener('click', function (e) {
+
+            var canvas = document.querySelector("#canvas");
+
+            canvas.toBlob(function (blob) {
+
+                var form = new FormData();
+                form.append('image', blob, 'webcam.png');
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/upload', true);
+                xhr.onload = function (e) {
+                    // upload concluído  
+                };
+
+                xhr.send(form);
+
+            }, 'image/png');
+        })
+    </script>
+
+</body>
