@@ -16,7 +16,7 @@
     }
 
     body {
-      text-shadow: -1px 0 #bbbbbbbb, 0 1px #bbbbbbbb, 1px 0 #bbbbbbbb, 0 -1px #bbbbbbbb;
+      text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
       overflow-y: hidden;
       padding: 0px 0px;
       margin: 0px 0px;
@@ -141,6 +141,7 @@
       border-radius: 20px;
       border-color: #55555555;
       border-width: thin;
+      background-color: #ddddddee;
       display: block;
       float: left;
       padding: 2px;
@@ -281,6 +282,7 @@
     .night {
       background-color: #111111cc;
       border-color: #333333ee;
+      color: #eeeeee
     }
 
     .custom-file-input::before {
@@ -318,13 +320,9 @@
           <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             lei mao</a> <br>
-          <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br>
-          PROXIMA versao 0.6.2<br>
-          -bug fix black sponge<br>
-
-          versão 0.6.1d cam<br>
-          - webcam - testando proporção para celular<br>
-          <br>
+          <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br><br>
+          versão 0.6 <br>
+          - webcam <br>
           versão 0.5.7<br>
           - ruidos removidos<br>
           versão 0.5.6<br>
@@ -513,6 +511,9 @@
       <span id="info" title="Fundo falso" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
       <span id="cam" title="foto" class="bloquinho" onmousedown="modeTo('cam')">📷</span>
     </div>
+
+    <div id="menucam" style="display:block; visibility:hidden;"></div>
+
   </div>
 
   <script>
@@ -968,7 +969,6 @@
     }
 
     function exec(i = 0) {
-      console.log(i)
       let lenc = comandos.length;
       let coma = i
 
@@ -1368,6 +1368,10 @@
           memoryswipe();
           break;
         case "cam":
+          mode = qual;
+          removeClass();
+          toggleSelect(qual);
+          memoryswipe();
           /*if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
 
             if (!document.getElementById("video")) {
@@ -1406,11 +1410,11 @@
           // ok, browser supports it*/
           if (!document.getElementById("video")) {
 
-            const botao = document.createElement("button");
-            botao.setAttribute("id", "btnChangeCamera")
+            const botao = document.createElement("div");
+            botao.setAttribute("id", "btnChangeCam")
             botao.setAttribute("value", "muda")
             botao.setAttribute("class", "bloquinho")
-            botao.innerHTML = "self"
+            botao.innerHTML = "🔃"
             const videoE = document.createElement("video");
             videoE.id = "video"
             videoE.height = 320; // in px
@@ -1460,18 +1464,16 @@
               }
               else {
                 video.onplaying = undefined; //Remove event handler.
-                console.log('Detected camera resolution in ' + retryCount + ' retries.');
-                console.log('width:' + videoWidth + ', height:' + videoHeight);
                 let proporcao = videoWidth / videoHeight
                 canvasV.width = canvasV.height * proporcao
-                console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
+                //console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
               }
             };
 
 
 
 
-            const btnChangeCamera = document.querySelector("#btnChangeCamera");
+            const btnChangeCamera = document.querySelector("#btnChangeCam");
 
             // handle events
             // play
@@ -1521,7 +1523,7 @@
               let offsetW = (W - canvas.width) / -2
               desenha("f", globalComposite, blob, offsetW, 0, W, H)
               removeElement("videoC")
-              removeElement("btnChangeCamera")
+              removeElement("btnChangeCam")
               context.globalCompositeOperation = temp
             })
 
@@ -1543,7 +1545,7 @@
           } else {
             stopVideoStream();
             removeElement("videoC")
-            removeElement("btnChangeCamera")
+            removeElement("btnChangeCam")
             modeTo(oldMode)
           }
           break;
@@ -1846,7 +1848,6 @@
         win.scrollLeft = 0;
       }, 10);
       zoomFactor = Number(a);
-      console.log(ultimoToque);
       setTimeout(
         () =>
           scrollCanva(
@@ -1891,7 +1892,7 @@
     function cursorColor() {
       switch (mode) {
         case "apagar":
-          cursor.style.borderColor = "#cccccccc";
+          cursor.style.borderColor = "#555555cc";
           cursor.innerHTML = "";
           break;
         case "pintar":
