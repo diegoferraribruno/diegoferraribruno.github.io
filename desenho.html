@@ -322,7 +322,7 @@
           PROXIMA versao 0.6.2<br>
           -bug fix black sponge<br>
 
-          versão 0.6.1 cam<br>
+          versão 0.6.1b cam<br>
           - webcam - testando proporção para celular<br>
           <br>
           versão 0.5.7<br>
@@ -1480,6 +1480,7 @@
 
               let W = video.width;
               let H = video.height
+              canvasV.width = W
               contextV.drawImage(video, 0, 0, W, H)
               img_b64 = canvasV.toDataURL('image/png');
               blob = dataURItoBlob(img_b64)
