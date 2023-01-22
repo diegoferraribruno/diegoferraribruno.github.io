@@ -304,6 +304,12 @@
     .destination-over {
       opacity: 0.6;
     }
+
+    .vid {
+      min-height: 100%;
+      width: auto;
+      height: auto;
+    }
   </style>
   <title>Desenha 0.6 </title>
 </head>
@@ -321,8 +327,8 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             lei mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br><br>
-          versão 0.6 alpha <br>
-          - webcam <br>
+          versão 0.6.2 alpha <br>
+          - webcam até 640px<br>
           versão 0.5.7<br>
           - ruidos removidos<br>
           versão 0.5.6<br>
@@ -490,9 +496,7 @@
           Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou corretamente.<br>
           se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
         </canvas>
-        <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-          style="visibility: hidden; position: absolute; left:0px;">
-        </canvas>
+
 
       </div>
     </div>
@@ -515,7 +519,9 @@
     <div id="menucam" style="display:block; visibility:hidden;"></div>
 
   </div>
-
+  <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
+    style="visibility: hidden; position: absolute; left:0px;">
+  </canvas>
   <script>
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
@@ -677,8 +683,8 @@
         }
         let W = w * x2size;
         let H = h * x2size;
-        canvasDiv.style.width = W + 30 + "px";
-        canvasDiv.style.height = H + 20 + "px";
+        canvasDiv.style.width = W + "px"; //add 30px for scroll
+        canvasDiv.style.height = H + "px"; //add 30px for scroll
         canvas.width = W;
         canvas.height = H;
       }
@@ -1415,16 +1421,20 @@
             const botao = document.createElement("div");
             botao.setAttribute("id", "btnChangeCam")
             botao.setAttribute("value", "muda")
-            botao.setAttribute("class", "bloquinho")
+            botao.setAttribute("class", "bloquinho vid")
             botao.innerHTML = "🔃"
             const videoE = document.createElement("video");
+            const escala = canvas.height / 320
             videoE.id = "video"
-            videoE.height = 320; // in px
-            videoE.width = 428; // in px
-            let offsetW = - videoE.width / 2
-            videoE.setAttribute('style', `position:absolute; margin-left:${offsetW}px; margin-top:-324px;`)
+            videoE.height = canvas.height; // in px
+            videoE.width = 428 * (escala); // in px
+
+            videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
+
+            let vcW = 428 * escala;
+            let vcH = 320 * escala;
             const videoC = document.createElement("div");
-            videoC.setAttribute("style", "width:320px; height:320px; display:block; overflow: hidden;  overflow-clip-margin: -160px;")
+            videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px;`)
             videoC.setAttribute("id", "videoC")
             videoC.appendChild(videoE);
             document.getElementById("ferramentas2").appendChild(botao);
@@ -1470,11 +1480,27 @@
               else {
                 video.onplaying = undefined; //Remove event handler.
                 let proporcao = videoWidth / videoHeight
-                canvasV.width = canvasV.height * proporcao
+                //diegos magic
+                let canvas = document.getElementById("canvas")
+                let videoC = document.getElementById("videoC")
+
+                let escala = canvas.width / 320
+                let vcW = 428 * escala;
+                let vcH = 320 * escala;
+                canvasV.height = canvas.height
+                canvasV.width = canvas.height * proporcao
+                let prop2 = parseInt(videoC.style.width, 10) / canvas.width
+                //videoC.width = canvasV.width * prop2
+                // videoC.height = canvasV.height * prop2
+
+                let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
+                console.log(prop2)
+                let offsetH = - 322 * escala
+                console.log(offsetH)
+                videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
                 //console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
               }
             };
-
 
 
 
@@ -1561,13 +1587,13 @@
       video: {
         width: {
           min: 480,
-          ideal: 640,
-          max: 1280,
+          ideal: 960,
+          max: 1920,
         },
         height: {
-          min: 480,
+          min: 320,
           ideal: 640,
-          max: 1280,
+          max: 1920,
         },
       },
     };
