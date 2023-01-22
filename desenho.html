@@ -322,7 +322,7 @@
           PROXIMA versao 0.6.2<br>
           -bug fix black sponge<br>
 
-          versão 0.6.1c cam<br>
+          versão 0.6.1d cam<br>
           - webcam - testando proporção para celular<br>
           <br>
           versão 0.5.7<br>
@@ -1438,10 +1438,40 @@
 
             // get page elements
             const video = document.querySelector("#video");
-            const btnChangeCamera = document.querySelector("#btnChangeCamera");
             const canvasV = document.querySelector("#canvasV");
-            canvasV.width = video.width
-            canvasV.height = video.height
+            //Detect camera resolution using pause/play loop.
+            var retryCount = 0;
+            var retryLimit = 25;
+            video.onplaying = function (e) {
+              var videoWidth = this.videoWidth;
+              var videoHeight = this.videoHeight;
+              if (!videoWidth || !videoHeight) {
+                if (retryCount < retryLimit) {
+                  retryCount++;
+                  window.setTimeout(function () {
+                    video.pause();
+                    video.play();
+                  }, 100);
+                }
+                else {
+                  video.onplaying = undefined; //Remove event handler.
+                  console.log('Failed to detect camera resolution after ' + retryCount + ' retries. Giving up!');
+                }
+              }
+              else {
+                video.onplaying = undefined; //Remove event handler.
+                console.log('Detected camera resolution in ' + retryCount + ' retries.');
+                console.log('width:' + videoWidth + ', height:' + videoHeight);
+                let proporcao = videoWidth / videoHeight
+                canvasV.width = canvasV.height * proporcao
+                console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
+              }
+            };
+
+
+
+
+            const btnChangeCamera = document.querySelector("#btnChangeCamera");
 
             // handle events
             // play
