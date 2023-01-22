@@ -317,12 +317,13 @@
         <small> Desenha CC Credits:<br>
           <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>twitter @diegofbrasil<br>
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-            base por lei mao</a>
+            base por lei mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a>
-          <br>
-          versão 0.6 cam<br>
-          - webcam - testando para celular<br>
-          - ( arrumando bug) precisa aguardar carregar a imagem antes de seguir no undo()
+          PROXIMA versao 0.6.2<br>
+          -bug fix black sponge<br>
+
+          versão 0.6.1 cam<br>
+          - webcam - testando proporção para celular<br>
           <br>
           versão 0.5.7<br>
           - ruidos removidos<br>
@@ -555,6 +556,8 @@
     var audio2 = new Audio('./click_005.wav');
     audio.volume = 0.5;
     audio2.volume = 0.5;
+    var useFrontCamera = true; //moved up from modeto("cam") to test.
+    var videoStream;
 
 
     function removeElement(id) {
@@ -891,7 +894,7 @@
     let refazendo = false;
     var counter;
     function undoT() {
-      counter = setInterval(() => undo(), 10);
+      counter = setInterval(() => undo(), 30);
     }
     function undoTEnd() {
       clearInterval(counter);
@@ -913,11 +916,12 @@
 
       // Clear canvas get last flat img
       // Re-play all commands (re-draw canvas from scratch)
+
       comandosExec()
 
     }
     function redoT() {
-      counter = setInterval(() => redo(), 10);
+      counter = setInterval(() => redo(), 30);
     }
     function redoTEnd() {
       clearInterval(counter);
@@ -931,12 +935,10 @@
         // Remove the most recent command from the list
         comandosb.shift();
       } else {
-        clearInterval(counter)
-        audio.play();
         //alert("nivel maximo de refazer atingindo.");
         clearInterval(counter)
+        audio.play();
       }
-
       // Clear canvas get last flat img
       // Re-play all commands (re-draw canvas from scratch)
       comandosExec()
@@ -952,75 +954,93 @@
           comandos.splice(-1, 1);
         }
         convertToImg()
-        comandosExec()
-        comandos = []
-        replay()
+        setTimeout(function () {
+          comandosExec();
+          comandos = []
+          replay()
+        }, 50)
       }
     }
 
     function comandosExec() {
       addFlatedImg();
-      setTimeout(() => {
-        let lenc = comandos.length;
-        for (i = 0; i < lenc; i++) {
-          switch (comandos[i][0]) {
-            case "f":
-              let myImg = document.createElement("img");
-              myImg.src = URL.createObjectURL(comandos[i][2])
-              let gco = comandos[i][1]
-              myImg.onload = function () {
-                let globaltemp = context.globalCompositeOperation
-                context.globalCompositeOperation = gco;
-                context.drawImage(
-                  myImg,
-                  0,
-                  0,
-                  myImg.width,
-                  myImg.height);
-                context.globalCompositeOperation = globaltemp
-              }
-              break;
-            case "p":
-              drawLine(
-                comandos[i][1],
-                comandos[i][2],
-                comandos[i][3],
-                comandos[i][4],
-                comandos[i][5],
-                comandos[i][6],
-                comandos[i][7],
-                comandos[i][8]
-              );
-              break;
-            case "i":
-              context.globalCompositeOperation = comandos[i][1];
+      setTimeout(() => exec(), 10);
+    }
+
+    function exec(i = 0) {
+      console.log(i)
+      let lenc = comandos.length;
+      let coma = i
+
+      if (coma < lenc) {
+
+        switch (comandos[coma][0]) {
+          case "f":
+            let myImg = document.createElement("img");
+            myImg.src = URL.createObjectURL(comandos[coma][2])
+            let gco = comandos[coma][1]
+            myImg.onload = function () {
+              let globaltemp = context.globalCompositeOperation
+              context.globalCompositeOperation = gco;
               context.drawImage(
-                comandos[i][2],
-                comandos[i][3],
-                comandos[i][4],
-                comandos[i][5],
-                comandos[i][6]);
-              break;
-            case "c":
-              context.globalCompositeOperation = comandos[i][1];
-              context.putImageData(
-                comandos[i][2],
-                comandos[i][3],
-                comandos[i][4],
-                comandos[i][5],
-                comandos[i][6],
-                comandos[i][7],
-                comandos[i][8]);
-              break;
-            case "b":
-              //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
-              context.globalCompositeOperation = comandos[i][1];
-              context.fillStyle = comandos[i][2];
-              context.fillRect(0, 0, canvas.width, canvas.height);
-              break;
-          }
+                myImg,
+                comandos[coma][3],
+                comandos[coma][4],
+                myImg.width,
+                myImg.height);
+              context.globalCompositeOperation = globaltemp
+              coma++;
+              exec(coma)
+            }
+            break;
+          case "p":
+            drawLine(
+              comandos[coma][1],
+              comandos[coma][2],
+              comandos[coma][3],
+              comandos[coma][4],
+              comandos[coma][5],
+              comandos[coma][6],
+              comandos[coma][7],
+              comandos[coma][8]
+            );
+            coma++;
+            exec(coma)
+            break;
+          case "i":
+            context.globalCompositeOperation = comandos[coma][1];
+            context.drawImage(
+              comandos[coma][2],
+              comandos[coma][3],
+              comandos[coma][4],
+              comandos[coma][5],
+              comandos[coma][6]);
+            coma++;
+            exec(coma)
+            break;
+          case "c":
+            context.globalCompositeOperation = comandos[coma][1];
+            context.putImageData(
+              comandos[coma][2],
+              comandos[comai][3],
+              comandos[coma][4],
+              comandos[coma][5],
+              comandos[coma][6],
+              comandos[coma][7],
+              comandos[coma][8]);
+            coma++;
+            exec(coma)
+            break;
+          case "b":
+            //          let comando = [GCO, x, y, eoX, eoY, strokeColor];
+            context.globalCompositeOperation = comandos[coma][1];
+            context.fillStyle = comandos[coma][2];
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            coma++;
+            exec(coma)
+            break;
         }
-      }, 60)
+      }
 
     }
     function replay() {
@@ -1029,7 +1049,7 @@
       for (a = 0; a < lenb; a++) {
         comandos.push(comandosb[a]);
       }
-      setTimeout(() => comandosExec(), 10)
+      comandosExec()
       comandosb = [];
     }
 
@@ -1067,14 +1087,14 @@
         case "f":
           comando = ["f", GCO, X, Y, eoX, eoY, strokeColor]
           let myImg = document.createElement("img");
-          myImg.src = URL.createObjectURL(blob)
+          myImg.src = URL.createObjectURL(X)
           myImg.onload = function () {
             let oldGCO = context.globalCompositeOperation
             context.globalCompositeOperation = globalComposite
             context.drawImage(
               myImg,
-              0,
-              0,
+              Y,
+              eoX,
               myImg.width,
               myImg.height);
             setTimeout(
@@ -1233,7 +1253,7 @@
 
     function clearArea() {
       let confirma = confirm(
-        "\t\t\t\t\t Limpar todo o desenho? \n \t\t\t\t\t( impossível desfazer isto )"
+        "Limpar todo o desenho? \n(impossível desfazer)"
       );
       if (confirma === true) {
         context.setTransform(1, 0, 0, 1, 0, 0);
@@ -1393,9 +1413,10 @@
             botao.innerHTML = "self"
             const videoE = document.createElement("video");
             videoE.id = "video"
-            videoE.setAttribute('style', "position:absolute; margin-left:-161px; margin-top:-324px;")
             videoE.height = 320; // in px
             videoE.width = 428; // in px
+            let offsetW = - videoE.width / 2
+            videoE.setAttribute('style', `position:absolute; margin-left:${offsetW}px; margin-top:-324px;`)
             const videoC = document.createElement("div");
             videoC.setAttribute("style", "width:320px; height:320px; display:block; overflow: hidden;  overflow-clip-margin: -160px;")
             videoC.setAttribute("id", "videoC")
@@ -1407,118 +1428,90 @@
             videoE.toggleAttribute("autoplay", "autoplay")
             videoE.toggleAttribute("playsinline", "playsinline")
             videoE.setAttribute("class", "destination-over");
+            if (
+              !"mediaDevices" in navigator ||
+              !"getUserMedia" in navigator.mediaDevices
+            ) {
+              alert("Camera API is not available in your browser");
+              return;
+            }
 
-            (function () {
-              if (
-                !"mediaDevices" in navigator ||
-                !"getUserMedia" in navigator.mediaDevices
-              ) {
-                alert("Camera API is not available in your browser");
-                return;
-              }
+            // get page elements
+            const video = document.querySelector("#video");
+            const btnChangeCamera = document.querySelector("#btnChangeCamera");
+            const canvasV = document.querySelector("#canvasV");
+            canvasV.width = video.width
+            canvasV.height = video.height
 
-              // get page elements
-              const video = document.querySelector("#video");
-              const btnChangeCamera = document.querySelector("#btnChangeCamera");
-              const canvas = document.querySelector("#canvasV");
-
-              // video constpraints
-              const constraints = {
-                video: {
-                  width: {
-                    min: 480,
-                    ideal: 640,
-                    max: 1280,
-                  },
-                  height: {
-                    min: 480,
-                    ideal: 640,
-                    max: 1280,
-                  },
-                },
-              };
-
-              // use front face camera
-              let useFrontCamera = true;
-
-              // current video stream
-              let videoStream;
-
-              // handle events
-              // play
-              /*          btnPlay.addEventListener("click", function () {
-                          video.play();
-                          btnPlay.classList.add("is-hidden");
-                          btnPause.classList.remove("is-hidden");
-                        });
-          
-                        // pause
-                        btnPause.addEventListener("click", function () {
-                          video.pause();
-                          btnPause.classList.add("is-hidden");
-                          btnPlay.classList.remove("is-hidden");
-                        });
-          
-                        // take screenshot
-                        btnScreenshot.addEventListener("click", function () {
-                          const img = document.createElement("img");
-                          canvas.width = video.videoWidth;
-                          canvas.height = video.videoHeight;
-                          canvas.getContext("2d").drawImage(video, 0, 0);
-                          img.src = canvas.toDataURL("image/png");
-                          screenshotsContainer.prepend(img);
-                        });
-          */
-              // switch camera
-              btnChangeCamera.addEventListener("click", function () {
-                useFrontCamera = !useFrontCamera;
-
-                initializeCamera();
-              });
-              // stop video stream
-              function stopVideoStream() {
-                if (videoStream) {
-                  videoStream.getTracks().forEach((track) => {
-                    track.stop();
-                  });
-                }
-              }
-              //diego 
-              video.addEventListener('click', function (e) {
-
-                let W = 428;
-                let H = video.height
-                contextV.drawImage(video, 0, 0, W, H)
-                img_b64 = canvasV.toDataURL('image/png');
-                blob = dataURItoBlob(img_b64)
-                let temp = context.globalCompositeOperation
-                if (globalComposite == "destination-over") {
-
-                  context.globalCompositeOperation = globalComposite
-                }
-
-                desenha("f", globalComposite, blob, 0, 0, W, H)
-                removeElement("videoC")
-                removeElement("btnChangeCamera")
-                context.globalCompositeOperation = temp
-              })
-
-              // initialize
-              async function initializeCamera() {
-                stopVideoStream();
-                constraints.video.facingMode = useFrontCamera ? "user" : "environment";
-
-                try {
-                  videoStream = await navigator.mediaDevices.getUserMedia(constraints);
-                  video.srcObject = videoStream;
-                } catch (err) {
-                  alert("Could not access the camera");
-                }
-              }
+            // handle events
+            // play
+            /*          btnPlay.addEventListener("click", function () {
+                        video.play();
+                        btnPlay.classList.add("is-hidden");
+                        btnPause.classList.remove("is-hidden");
+                      });
+        
+                      // pause
+                      btnPause.addEventListener("click", function () {
+                        video.pause();
+                        btnPause.classList.add("is-hidden");
+                        btnPlay.classList.remove("is-hidden");
+                      });
+        
+                      // take screenshot
+                      btnScreenshot.addEventListener("click", function () {
+                        const img = document.createElement("img");
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        canvas.getContext("2d").drawImage(video, 0, 0);
+                        img.src = canvas.toDataURL("image/png");
+                        screenshotsContainer.prepend(img);
+                      });
+        */
+            // switch camera
+            btnChangeCamera.addEventListener("click", function () {
+              useFrontCamera = !useFrontCamera;
 
               initializeCamera();
-            })();
+            });
+
+            //diego 
+            video.addEventListener('click', function (e) {
+
+              let W = 428;
+              let H = video.height
+              contextV.drawImage(video, 0, 0, W, H)
+              img_b64 = canvasV.toDataURL('image/png');
+              blob = dataURItoBlob(img_b64)
+              let temp = context.globalCompositeOperation
+              if (globalComposite == "destination-over") {
+
+                context.globalCompositeOperation = globalComposite
+              }
+              let offsetW = (W - canvas.width) / -2
+              desenha("f", globalComposite, blob, offsetW, 0, W, H)
+              removeElement("videoC")
+              removeElement("btnChangeCamera")
+              context.globalCompositeOperation = temp
+            })
+
+            // initialize
+            async function initializeCamera() {
+              stopVideoStream();
+              constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+
+              try {
+                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = videoStream;
+              } catch (err) {
+                alert("Could not access the camera");
+              }
+            }
+
+            initializeCamera();
+
           } else {
+            stopVideoStream();
             removeElement("videoC")
             removeElement("btnChangeCamera")
             modeTo(oldMode)
@@ -1528,13 +1521,30 @@
       cursorColor();
     }
 
+    // video constraints
+    const constraints = {
+      video: {
+        width: {
+          min: 480,
+          ideal: 640,
+          max: 1280,
+        },
+        height: {
+          min: 480,
+          ideal: 640,
+          max: 1280,
+        },
+      },
+    };
 
-
-
-
-
-
-
+    // stop video stream
+    function stopVideoStream() {
+      if (videoStream) {
+        videoStream.getTracks().forEach((track) => {
+          track.stop();
+        });
+      }
+    }
 
 
     function toggleSelect(id) {
