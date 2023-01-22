@@ -303,7 +303,7 @@
       opacity: 0.6;
     }
   </style>
-  <title>Diego Desenha - Alpha</title>
+  <title>Desenha 0.6 </title>
 </head>
 
 <body class="naotoque day" style="cursor: pointer;">
@@ -1478,7 +1478,7 @@
             //diego 
             video.addEventListener('click', function (e) {
 
-              let W = 428;
+              let W = video.width;
               let H = video.height
               contextV.drawImage(video, 0, 0, W, H)
               img_b64 = canvasV.toDataURL('image/png');
