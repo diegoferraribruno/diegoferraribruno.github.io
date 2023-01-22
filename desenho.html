@@ -315,14 +315,14 @@
       </div>
       <div id="menuinfo" class="submenu fundobranco">
         <small> Desenha CC Credits:<br>
-          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>twitter @diegofbrasil<br>
+          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-            base por lei mao</a> <br>
-          <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a>
+            lei mao</a> <br>
+          <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br>
           PROXIMA versao 0.6.2<br>
           -bug fix black sponge<br>
 
-          versão 0.6.1b cam<br>
+          versão 0.6.1c cam<br>
           - webcam - testando proporção para celular<br>
           <br>
           versão 0.5.7<br>
@@ -1478,9 +1478,8 @@
             //diego 
             video.addEventListener('click', function (e) {
 
-              let W = video.width;
-              let H = video.height
-              canvasV.width = W
+              let W = canvasV.width;
+              let H = canvasV.height;
               contextV.drawImage(video, 0, 0, W, H)
               img_b64 = canvasV.toDataURL('image/png');
               blob = dataURItoBlob(img_b64)
