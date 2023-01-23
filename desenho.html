@@ -327,8 +327,9 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             lei mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br><br>
-          versão 0.6.3 b <br>
+          versão 0.6.3 c <br>
           - webcam vertical<br>
+          - color picker cursor fix.
           versão 0.5.7<br>
           - ruidos removidos<br>
           versão 0.5.6<br>
@@ -496,17 +497,12 @@
           Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou corretamente.<br>
           se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
         </canvas>
-
-
       </div>
     </div>
     <div id="ferramentas2" class="fundobranco naotoque" style="width: 320px; margin: auto">
-
       <span id="fundo" title="Fundo falso" class="bloquinho" onmousedown="modeTo('fundo')">🖼️</span>
-
       <span id="night" class="bloquinho" onmousedown="night()"> 🌒</span>
       <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
-
       <span id="zoom" title="Ampliar" class="bloquinho" onmousedown="modeTo('zoom')">🔎<span id="x1"
           style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
       <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
@@ -515,9 +511,7 @@
       <span id="info" title="Fundo falso" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
       <span id="cam" title="foto" class="bloquinho" onmousedown="modeTo('cam')">📷</span>
     </div>
-
     <div id="menucam" style="display:block; visibility:hidden;"></div>
-
   </div>
   <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
     style="visibility: hidden; position: absolute; left:0px;">
@@ -1280,6 +1274,7 @@
     async function modeTo(qual) {
       switch (qual) {
         case "zoom":
+          removeClass();
           zoomIndex++;
           if (zoomIndex > 3) {
             zoomIndex = 0;
@@ -1293,71 +1288,76 @@
           toggleSelect(qual);
           mode = qual;
           break;
-        case "apagar":
-          oldMode = qual;
-          setStrokeSize(estrokeWidth);
-          mostraMenu(qual);
-          cursorColor();
-          toggleSelect(qual);
-          memoryswipe();
-          mudaCorAlpha();
-          context.globalCompositeOperation = "destination-out";
-          break;
         case mode: //se o modo ja estiver ativo:
-          if (qual != "cam") {
+          if (qual != "cam" && qual != "info") {
             mostraMenu(qual);
           }
           if (qual == "info") {
             modeTo(oldMode);
           }
           break;
-        case "pintar":
-          removeClass();
+        case "apagar":
+          oldMode = mode;
           mode = qual;
-          oldMode = qual;
+          removeClass();
+          setStrokeSize(estrokeWidth);
+          mostraMenu(qual);
+          toggleSelect(qual);
+          cursorColor();
+          memoryswipe();
+          mudaCorAlpha();
+          context.globalCompositeOperation = "destination-out";
+          break;
+        case "pintar":
+          oldMode = mode;
+          mode = qual;
+          removeClass();
           setStrokeSize(strokeWidth);
-          context.globalCompositeOperation = globalComposite;
           mostraMenu(qual);
           toggleSelect(qual);
           setStrokeColor();
           memoryswipe();
+          context.globalCompositeOperation = globalComposite;
           break;
         case "cores":
-          removeClass();
+          oldMode = mode;
           mode = qual;
-          oldMode = qual;
+          removeClass();
           setStrokeSize(strokeWidth);
-          context.globalCompositeOperation = globalComposite;
           mostraMenu(qual);
           toggleSelect(qual);
           setStrokeColor();
           memoryswipe();
+          context.globalCompositeOperation = globalComposite;
           break;
         case "fundo":
-          removeClass();
+          oldMode = mode;
           mode = qual;
-          oldMode = qual;
-          context.globalCompositeOperation = globalComposite;
+          removeClass();
           setStrokeSize(strokeWidth);
           mostraMenu(qual);
           toggleSelect(qual);
+          context.globalCompositeOperation = globalComposite;
           break;
 
         case "preencher":
+          oldMode = mode;
           mode = qual;
           document.getElementById("preenchercor").style.backgroundColor =
             strokeColor;
-          context.globalCompositeOperation = globalComposite;
           removeClass();
           mostraMenu(qual);
           toggleSelect(qual);
+          context.globalCompositeOperation = globalComposite;
           break;
         case "picker":
+          oldMode = mode;
           mode = qual;
           removeClass();
           toggleSelect(qual);
           break;
         case "info":
+          oldMode = mode;
           mode = qual;
           removeClass();
           mostraMenu(qual);
@@ -1367,6 +1367,7 @@
           undo();
           break;
         case "imagem":
+          oldMode = mode;
           mode = qual;
           removeClass();
           mostraMenu(qual);
@@ -1374,47 +1375,13 @@
           memoryswipe();
           break;
         case "cam":
+          oldMode = mode;
           mode = qual;
           removeClass();
           toggleSelect(qual);
           memoryswipe();
           context.globalCompositeOperation = globalComposite;
 
-          /*if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-    
-            if (!document.getElementById("video")) {
-    
-              const videoE = document.createElement("video");
-              videoE.id = "video"
-              videoE.setAttribute('style', "position:absolute; margin-left:-160px; margin-top:-325px;")
-              videoE.height = 240; // in px
-              videoE.width = 320; // in px
-              canvasDiv.appendChild(videoE);
-              videoE.toggleAttribute("autoplay", "autoplay")
-              videoE.toggleAttribute("playsinline", "playsinline")
-              //            playsinline
-              if (context.globalCompositeOperation == "destination-over") {
-                console.log("destination-over")
-                videoE.classList.toggle("destination-over")
-                context.globalCompositeOperation = globalComposite
-              }
-    
-              const video = document.querySelector('#video');
-              const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
-              video.srcObject = videoStream;
-              video.play();
-              video.addEventListener('click', function (e) {
-                let proporcao = canvas.width / video.width
-                let W = video.width
-                let H = video.height
-                contextV.drawImage(video, 0, 0, W, H)
-                img_b64 = canvasV.toDataURL('image/png');
-                blob = dataURItoBlob(img_b64)
-                desenha("f", globalComposite, blob, 0, 0, 320, 320)
-                removeElement("video")
-              })
-    
-          }
           // ok, browser supports it*/
           if (!document.getElementById("video")) {
 
@@ -1492,61 +1459,27 @@
                 if (proporcao > 1) {
                   canvasV.height = canvas.height
                   canvasV.width = canvas.height * proporcao
-                  // let prop2 = parseInt(videoC.style.width, 10) / canvas.width
-                  //videoC.width = canvasV.width * prop2
-                  // videoC.height = canvasV.height * prop2
 
                   let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
                   let offsetH = - 322 * escala
                   videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
                 } else {
                   proporcao = videoHeight / videoWidth
-                  alert("vertical", proporcao)
                   canvasV.width = canvas.width
                   canvasV.height = canvas.width * proporcao
-                  // let prop2 = parseInt(videoC.style.height, 10) / canvas.height
-                  //videoC.width = canvasV.width * prop2
-                  // videoC.height = canvasV.height * prop2
 
                   let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
                   let offsetH = - 322 * escala
-                  videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column;
-  justify-content: space-between;`)
+                  videoC.setAttribute("style",
+                    `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
                 }
 
                 //console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
               }
             };
 
-
-
             const btnChangeCamera = document.querySelector("#btnChangeCam");
 
-            // handle events
-            // play
-            /*          btnPlay.addEventListener("click", function () {
-                        video.play();
-                        btnPlay.classList.add("is-hidden");
-                        btnPause.classList.remove("is-hidden");
-                      });
-        
-                      // pause
-                      btnPause.addEventListener("click", function () {
-                        video.pause();
-                        btnPause.classList.add("is-hidden");
-                        btnPlay.classList.remove("is-hidden");
-                      });
-        
-                      // take screenshot
-                      btnScreenshot.addEventListener("click", function () {
-                        const img = document.createElement("img");
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                        canvas.getContext("2d").drawImage(video, 0, 0);
-                        img.src = canvas.toDataURL("image/png");
-                        screenshotsContainer.prepend(img);
-                      });
-        */
             // switch camera
             btnChangeCamera.addEventListener("click", function () {
               useFrontCamera = !useFrontCamera;
@@ -1622,7 +1555,6 @@
         });
       }
     }
-
 
     function toggleSelect(id) {
       removeClass("selected");
@@ -1950,7 +1882,12 @@
           cursor.innerHTML = "🖐";
           break;
         case "picker":
-          cursor.innerHTML = "💉";
+          cursor.innerHTML = "";
+          cursor.style.borderColor = "#00ff0088";
+          cursor.style.width = 1 + "px";
+          cursor.style.height = 1 + "px";
+          cursor.style.margingLeft = 25 + "px";
+          cursor.style.margingTop = 25 + "px";
           break;
         default:
           cursor.innerHTML = "";
@@ -2013,9 +1950,7 @@
       context.globalCompositeOperation = globaltemp
 
     }
-
   </script>
-
 
 </body>
 
