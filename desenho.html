@@ -327,7 +327,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             lei mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br><br>
-          versão 0.6.3 alpha <br>
+          versão 0.6.3 b <br>
           - webcam vertical<br>
           versão 0.5.7<br>
           - ruidos removidos<br>
@@ -1497,9 +1497,7 @@
                   // videoC.height = canvasV.height * prop2
 
                   let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
-                  console.log(prop2)
                   let offsetH = - 322 * escala
-                  console.log(offsetH)
                   videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
                 } else {
                   proporcao = videoHeight / videoWidth
@@ -1510,9 +1508,10 @@
                   //videoC.width = canvasV.width * prop2
                   // videoC.height = canvasV.height * prop2
 
-                  let offsetW = (parseInt(videoC.style.height, 10) - canvas.) * escala
+                  let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
                   let offsetH = - 322 * escala
-                  videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
+                  videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column;
+  justify-content: space-between;`)
                 }
 
                 //console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
