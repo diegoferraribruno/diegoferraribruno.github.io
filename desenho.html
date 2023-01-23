@@ -328,7 +328,7 @@
             lei mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br><br>
           versão 0.6.3 alpha <br>
-          - webcam v<br>
+          - webcam vertical<br>
           versão 0.5.7<br>
           - ruidos removidos<br>
           versão 0.5.6<br>
@@ -1492,7 +1492,7 @@
                 if (proporcao > 1) {
                   canvasV.height = canvas.height
                   canvasV.width = canvas.height * proporcao
-                  let prop2 = parseInt(videoC.style.width, 10) / canvas.width
+                  // let prop2 = parseInt(videoC.style.width, 10) / canvas.width
                   //videoC.width = canvasV.width * prop2
                   // videoC.height = canvasV.height * prop2
 
@@ -1503,16 +1503,15 @@
                   videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
                 } else {
                   proporcao = videoHeight / videoWidth
+                  alert("vertical", proporcao)
                   canvasV.width = canvas.width
                   canvasV.height = canvas.width * proporcao
-                  let prop2 = parseInt(videoC.style.height, 10) / canvas.height
+                  // let prop2 = parseInt(videoC.style.height, 10) / canvas.height
                   //videoC.width = canvasV.width * prop2
                   // videoC.height = canvasV.height * prop2
 
-                  let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
-                  console.log(prop2)
+                  let offsetW = (parseInt(videoC.style.height, 10) - canvas.) * escala
                   let offsetH = - 322 * escala
-                  console.log(offsetH)
                   videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
                 }
 
