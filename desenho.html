@@ -311,7 +311,7 @@
       height: auto;
     }
   </style>
-  <title>Desenha 0.6 </title>
+  <title>Desenha! 0.6</title>
 </head>
 
 <body class="naotoque day" style="cursor: pointer;">
@@ -322,43 +322,41 @@
         para capturar uma cor
       </div>
       <div id="menuinfo" class="submenu fundobranco">
-        <small> Desenha CC Credits:<br>
-          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>
-          <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-            lei mao</a> <br>
-          <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br><br>
-          versão 0.6.3 c <br>
-          - webcam vertical<br>
-          - color picker cursor fix.
-          versão 0.5.7<br>
-          - ruidos removidos<br>
-          versão 0.5.6<br>
-          - foto e fundo com tamanho<br>
-          versão 0.5.5<br>
-          - inicia no modo noturno<br>
-          - fundo xadrez<br>
-          - sons no menu, no Crtl+Z e no Ctrl+Y <br>
+        <h2>Desenha! 0.6</h2><br>
+        <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br>sobre códigos de<br>
+        <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
+          lei mao</a> <br>
+        <a href="https://github.com/doug2k1/javascript-camera"> phone cam: Douglas Matoso</a><br><br>
+        versão 0.6.3 d <br>
+        - função camera movida e transparencia arrumada
+        - camera centralizada (tnx Frederico for the help)<br>
+        - seletor de cor (fix).<br>
+        versão 0.5.6<br>
+        - foto e fundo com tamanho<br>
+        versão 0.5.5<br>
+        - inicia no modo noturno<br>
+        - fundo xadrez<br>
+        - Alerta ao fim do Crtl+Z e no Ctrl+Y <br>
 
-          versão 0.5.4<br>
-          - multiple images<br>
-          versão 0.5.3<br>
-          - pinta por cima ou por baixo mode fix.<br>
-          - sombra no texto
-          versão 0.5.2<br>
-          - night mode<br>
-          - envia imagem.<br><br>
-          ver 0.5 - Turing<br>
-          - nova paleta de cores<br><br>
-          - tamanhos pre definidos de pinceis. <br>
-          - refazer passo a passo. <br>
-          - apagador com transparencia propria.<br>
-          - lupa com indicador de zoom. no lugar apropriado<br>
-          <br>
+        versão 0.5.4<br>
+        - multiplas imagens podem ser inseridas<br>
+        versão 0.5.3<br>
+        - pinta por cima ou por baixo<br>
+        versão 0.5.2<br>
+        - night mode<br>
+        - envia imagem.<br><br>
+        ver 0.5 - Turing<br>
+        - nova paleta de cores<br><br>
+        - tamanhos pre definidos de pinceis. <br>
+        - refazer passo a passo. <br>
+        - apagador com transparencia propria.<br>
+        - lupa com indicador de zoom. no lugar apropriado<br>
+        <br>
 
-          0.4.9
-          reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
-          o que pode influenciar na qualidade do projeto final. vamos ao teste.
-          <br>
+        0.4.9
+        reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
+        o que pode influenciar na qualidade do projeto final. vamos ao teste.
+        <br>
         </small>
       </div>
       <div id="menuimagem" class="fundobranco submenu aparece">
@@ -947,9 +945,9 @@
     }
     function memoryswipe() {
       let len = comandos.length;
-      if (len > 200) {
+      if (len > 1000) {
         comandosb = [];
-        for (i = 0; i < 100; i++) {
+        for (i = 0; i < 500; i++) {
           comandosb.unshift(comandos[len - i - 1]);
           // Remove the most recent command from the list
           comandos.splice(-1, 1);
@@ -1288,10 +1286,24 @@
           toggleSelect(qual);
           mode = qual;
           break;
-        case mode: //se o modo ja estiver ativo:
-          if (qual != "cam" && qual != "info") {
-            mostraMenu(qual);
+        case "cam":
+          if (mode != "cam") {
+            oldMode = mode;
+            mode = qual;
+            removeClass();
+            toggleSelect(qual);
+            memoryswipe();
+            camera();
+            context.globalCompositeOperation = globalComposite;
+          } else {
+            removeElement("videoC")
+            removeElement("btnChangeCam")
+            modeTo(oldMode)
+            setTimeout(() => removeClass(), 10)
           }
+          break;
+        case mode: //se o modo ja estiver ativo:
+          mostraMenu(qual);
           if (qual == "info") {
             modeTo(oldMode);
           }
@@ -1374,163 +1386,156 @@
           toggleSelect(qual);
           memoryswipe();
           break;
-        case "cam":
-          oldMode = mode;
-          mode = qual;
-          removeClass();
-          toggleSelect(qual);
-          memoryswipe();
-          context.globalCompositeOperation = globalComposite;
 
-          // ok, browser supports it*/
-          if (!document.getElementById("video")) {
-
-            const botao = document.createElement("div");
-            botao.setAttribute("id", "btnChangeCam")
-            botao.setAttribute("value", "muda")
-            botao.setAttribute("class", "bloquinho vid")
-            botao.innerHTML = "🔃"
-            const videoE = document.createElement("video");
-            const escala = canvas.height / 320
-            videoE.id = "video"
-            videoE.height = canvas.height; // in px
-            videoE.width = 428 * (escala); // in px
-
-            videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
-
-            let vcW = 428 * escala;
-            let vcH = 320 * escala;
-            const videoC = document.createElement("div");
-            videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px;`)
-            videoC.setAttribute("id", "videoC")
-            videoC.appendChild(videoE);
-            document.getElementById("ferramentas2").appendChild(botao);
-
-            canvasDiv.appendChild(videoC)
-
-            videoE.toggleAttribute("autoplay", "autoplay")
-            videoE.toggleAttribute("playsinline", "playsinline")
-            if (context.globalCompositeOperation === "destination-over") {
-              videoE.setAttribute("class", "destination-over");
-              canvas.style.zIndex = 5;
-            }
-            if (
-              !"mediaDevices" in navigator ||
-              !"getUserMedia" in navigator.mediaDevices
-            ) {
-              alert("Camera API is not available in your browser");
-              return;
-            }
-
-            // get page elements
-            const video = document.querySelector("#video");
-            const canvasV = document.querySelector("#canvasV");
-            //Detect camera resolution using pause/play loop.
-            var retryCount = 0;
-            var retryLimit = 25;
-            video.onplaying = function (e) {
-              var videoWidth = this.videoWidth;
-              var videoHeight = this.videoHeight;
-              if (!videoWidth || !videoHeight) {
-                if (retryCount < retryLimit) {
-                  retryCount++;
-                  window.setTimeout(function () {
-                    video.pause();
-                    video.play();
-                  }, 100);
-                }
-                else {
-                  video.onplaying = undefined; //Remove event handler.
-                  console.log('Failed to detect camera resolution after ' + retryCount + ' retries. Giving up!');
-                }
-              }
-              else {
-                video.onplaying = undefined; //Remove event handler.
-                let proporcao = videoWidth / videoHeight
-                //diegos magic
-
-                let canvas = document.getElementById("canvas")
-                let videoC = document.getElementById("videoC")
-
-                let escala = canvas.width / 320
-                let vcW = 428 * escala;
-                let vcH = 320 * escala;
-
-                if (proporcao > 1) {
-                  canvasV.height = canvas.height
-                  canvasV.width = canvas.height * proporcao
-
-                  let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
-                  let offsetH = - 322 * escala
-                  videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
-                } else {
-                  proporcao = videoHeight / videoWidth
-                  canvasV.width = canvas.width
-                  canvasV.height = canvas.width * proporcao
-
-                  let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
-                  let offsetH = - 322 * escala
-                  videoC.setAttribute("style",
-                    `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
-                }
-
-                //console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
-              }
-            };
-
-            const btnChangeCamera = document.querySelector("#btnChangeCam");
-
-            // switch camera
-            btnChangeCamera.addEventListener("click", function () {
-              useFrontCamera = !useFrontCamera;
-
-              initializeCamera();
-            });
-
-            //diego 
-            video.addEventListener('click', function (e) {
-
-              let W = canvasV.width;
-              let H = canvasV.height;
-              contextV.drawImage(video, 0, 0, W, H)
-              img_b64 = canvasV.toDataURL('image/png');
-              blob = dataURItoBlob(img_b64)
-              let offsetW = (W - canvas.width) / -2
-              desenha("f", globalComposite, blob, offsetW, 0, W, H)
-              removeElement("videoC")
-              removeElement("btnChangeCam")
-              modeTo(oldMode)
-              setTimeout(() => removeClass(), 10)
-
-            })
-
-            // initialize
-            async function initializeCamera() {
-              stopVideoStream();
-              constraints.video.facingMode = useFrontCamera ? "user" : "environment";
-
-              try {
-                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
-                video.srcObject = videoStream;
-              } catch (err) {
-                alert("Could not access the camera");
-              }
-            }
-
-            initializeCamera();
-
-          } else {
-            stopVideoStream();
-            removeElement("videoC")
-            removeElement("btnChangeCam")
-            modeTo(oldMode)
-            setTimeout(() => removeClass(), 10)
-          }
-          break;
       }
       cursorColor();
     }
+    function camera() {
 
+      // ok, browser supports it*/
+      if (!document.getElementById("videoC")) {
+
+        const botao = document.createElement("div");
+        botao.setAttribute("id", "btnChangeCam")
+        botao.setAttribute("value", "muda")
+        botao.setAttribute("class", "bloquinho vid")
+        botao.innerHTML = "🔃"
+        const videoE = document.createElement("video");
+        const escala = canvas.height / 320
+        videoE.id = "video"
+        videoE.height = canvas.height; // in px
+        videoE.width = 428 * (escala); // in px
+
+        videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
+
+        let vcW = 428 * escala;
+        let vcH = 320 * escala;
+        const videoC = document.createElement("div");
+        videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px;`)
+        videoC.setAttribute("id", "videoC")
+        videoC.appendChild(videoE);
+        document.getElementById("ferramentas2").appendChild(botao);
+
+        canvasDiv.appendChild(videoC)
+
+        videoE.toggleAttribute("autoplay", "autoplay")
+        videoE.toggleAttribute("playsinline", "playsinline")
+        if (globalComposite == "destination-over") {
+          videoE.setAttribute("class", "destination-over");
+          canvas.style.zIndex = 5;
+        }
+        if (
+          !"mediaDevices" in navigator ||
+          !"getUserMedia" in navigator.mediaDevices
+        ) {
+          alert("Camera API is not available in your browser");
+          return;
+        }
+
+        // get page elements
+        const video = document.querySelector("#video");
+        const canvasV = document.querySelector("#canvasV");
+        //Detect camera resolution using pause/play loop.
+        var retryCount = 0;
+        var retryLimit = 25;
+        video.onplaying = function (e) {
+          var videoWidth = this.videoWidth;
+          var videoHeight = this.videoHeight;
+          if (!videoWidth || !videoHeight) {
+            if (retryCount < retryLimit) {
+              retryCount++;
+              window.setTimeout(function () {
+                video.pause();
+                video.play();
+              }, 100);
+            }
+            else {
+              video.onplaying = undefined; //Remove event handler.
+              console.log('Failed to detect camera resolution after ' + retryCount + ' retries. Giving up!');
+            }
+          }
+          else {
+            video.onplaying = undefined; //Remove event handler.
+            let proporcao = videoWidth / videoHeight
+            //diegos magic
+
+            let canvas = document.getElementById("canvas")
+            let videoC = document.getElementById("videoC")
+
+            let escala = canvas.width / 320
+            let vcW = 428 * escala;
+            let vcH = 320 * escala;
+
+            if (proporcao > 1) {
+              canvasV.height = canvas.height
+              canvasV.width = canvas.height * proporcao
+
+              let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
+              let offsetH = - 322 * escala
+              videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
+            } else {
+              proporcao = videoHeight / videoWidth
+              canvasV.width = canvas.width
+              canvasV.height = canvas.width * proporcao
+
+              let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
+              let offsetH = - 322 * escala
+              videoC.setAttribute("style",
+                `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
+            }
+
+            //console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
+          }
+        };
+
+        const btnChangeCamera = document.querySelector("#btnChangeCam");
+
+        // switch camera
+        btnChangeCamera.addEventListener("click", function () {
+          useFrontCamera = !useFrontCamera;
+
+          initializeCamera();
+        });
+
+        //diego 
+        video.addEventListener('click', function (e) {
+
+          let W = canvasV.width;
+          let H = canvasV.height;
+          contextV.drawImage(video, 0, 0, W, H)
+          img_b64 = canvasV.toDataURL('image/png');
+          blob = dataURItoBlob(img_b64)
+          let offsetW = (W - canvas.width) / -2
+          desenha("f", globalComposite, blob, offsetW, 0, W, H)
+          removeElement("videoC")
+          removeElement("btnChangeCam")
+          modeTo(oldMode)
+          setTimeout(() => removeClass(), 10)
+
+        })
+
+        // initialize
+        async function initializeCamera() {
+          stopVideoStream();
+          constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+
+          try {
+            videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+            video.srcObject = videoStream;
+          } catch (err) {
+            alert("Could not access the camera");
+          }
+        }
+
+        initializeCamera();
+
+      } else {
+        removeElement("videoC")
+        removeElement("btnChangeCam")
+        modeTo(oldMode)
+        setTimeout(() => removeClass(), 10)
+      }
+    }
     // video constraints
     const constraints = {
       video: {
