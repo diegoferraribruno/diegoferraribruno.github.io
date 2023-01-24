@@ -357,7 +357,8 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.5 J <br>
+          versão 0.6.5 K <br>
+          - timeouts retirados (em teste)
           - Desfazer, refazer atualizado. <br>
           versão 0.6.4 c <br>
           - botões maiores e agregados<br>
@@ -1107,9 +1108,7 @@
 
         case "p":
           comando = ["p", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin];
-          setTimeout(
-            comandos.push(comando)
-            , 0)
+          comandos.push(comando)
           drawLine(
             comando[1],
             comando[2],
@@ -1135,23 +1134,19 @@
               eoX,
               myImg.width,
               myImg.height);
-            setTimeout(
-              comandos.push(comando)
-              , 0)
+            comandos.push(comando)
             context.globalCompositeOperation = oldGCO
           }
           break;
         case "i":
           comando = ["i", GCO, imagem, 0, 0, imagem.width, imagem.height]
           context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
-          setTimeout(
-            comandos.push(comando)
-            , 0)
+          comandos.push(comando)
           break;
 
         case "b":
           comando = ["b", GCO, X];
-          setTimeout(comandos.push(comando), 0)
+          comandos.push(comando)
           context.fillStyle = X; //cor
           context.fillRect(0, 0, canvas.width, canvas.height);
           break;
@@ -1562,7 +1557,6 @@
         async function initializeCamera() {
           stopVideoStream();
           constraints.video.facingMode = useFrontCamera ? "user" : "environment";
-
           try {
             videoStream = await navigator.mediaDevices.getUserMedia(constraints);
             video.srcObject = videoStream;
@@ -1986,9 +1980,6 @@
       canvas.classList.toggle("pixel");
       canvasDiv.classList.toggle("pixel");
     }
-
-
-    let condensado;
 
     convertToImg()
 
