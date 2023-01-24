@@ -94,12 +94,11 @@
     }
 
     #menu {
-      font-kerning: 1.2 em;
-      width: 92px;
-      height: 280px;
+      font-kerning: 1.4 em;
+      width: 94px;
+      height: 290px;
       display: block;
       float: right;
-      font-size: larger;
       text-align: center;
     }
 
@@ -149,14 +148,21 @@
       touch-action: manipulation;
     }
 
+    .mais {
+      width: 28px;
+      height: 28px;
+      font-size: 1.6em;
+      margin: 1px 6px 1px 6px;
+      touch-action: manipulation;
+    }
+
     .selected {
       background-color: #00000044;
       border-color: #dd5555;
       border-width: 3px;
-      width: 20px;
-      height: 20px;
-      padding-left: -10px;
-      font-size: 1.75em;
+      width: 24px;
+      height: 24px;
+      font-size: 2em;
     }
 
     #mostraCor {
@@ -325,7 +331,7 @@
         <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
           lei mao</a> <br>
         <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-        versão 0.6.4 a <br>
+        versão 0.6.4 b <br>
         - botões maiores e agregados<br>
         versão 0.6.3 <br>
         - função camera movida e transparencia arrumada<br>
@@ -359,18 +365,19 @@
         <br>
       </div>
       <div id="menuimagem" class="fundobranco submenu aparece">
+        Enviar uma imagem<br><br>
         📤 <input type="file" id="input" class="custom-file-input" />
       </div>
       <div id="menupintar" class="fundobranco submenu">
         <span onmousedown="removeClass()" id="mostraCor2"
           style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
 
-        <span id="picker" title="Pega cor" class="bloquinho" onmousedown="modeTo('picker')"
+        <span id="pickerb" title="Pega cor" class="bloquinho mais" onmousedown="modeTo('picker')"
           style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
-        <span id="cores" title="cores" class="bloquinho" onmousedown="modeTo('cores')"
+        <span id="coresb" title="cores" class="bloquinho mais" onmousedown="modeTo('cores')"
           style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
 
-        <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho"
+        <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho mais"
           style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><span
           style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
             ➕</span> </span>
@@ -385,11 +392,11 @@
       <div id="menuapagar" class="fundobranco submenu">
         <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span id="line2">
             ➕</span></span>
-        <span class="bloquinho" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2" min="0.5"
+        <span class="bloquinho mais" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2" min="0.5"
           max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
         <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
           oninput="strokeSizeRange(this.value)" value="36" width="160px">
-        <span onmousedown="removeClass()" id="mostraCor2" style="background-color: &#39;hsl(0, 100%, 0%);&#39;">
+        <span onmousedown="removeClass()" id="mostraCor2" style="background-color: 'hsl(0, 100%, 0%);'">
         </span>
         <div>
           💧<input type="range" id="transparenciaE" name="transparencia" min="0.1" max="1" oninput="mudaCorAlpha()"
@@ -398,7 +405,7 @@
 
       <div id="menucores" class="fundobranco submenu">
         <div id="menu" class="fundobranco" onmouseover="mostra()">
-          🌈◒🔆💧<br>
+          🌈 ◒ 🔆 💧<br>
           <input type="range" orient="vertical" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
             value="0">
           <input type="range" orient="vertical" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)"
@@ -411,6 +418,8 @@
             style="height: 20px; float: left; margin-top: 20px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"
             class="bloquinho">
             <div style="margin: -20px 10px 0px 0px; width: 20px">📌</div>
+            <span id="picker" title="Pega cor" class="bloquinho" style="margin-top:18px; margin-left:18px;"
+              onmousedown="modeTo('picker')" style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
           </div>
           <div id="mostraCor" onmousedown="removeClass()"
             style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.75em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
@@ -431,12 +440,10 @@
         </span>
         <span onmousedown="Fundo('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
         </span>
-        <span onmousedown="Fundo('grid.png')" class="bloquinho"
-          style="background-image: url(&#39;./grid.png&#39;)">.</span>
+        <span onmousedown="Fundo('grid.png')" class="bloquinho" style="background-image: url('./grid.png')">.</span>
         <span onmousedown="Fundo('grid2.png')" class="bloquinho"
-          style="background-image: url(&#39;./grid2.png&#39;); background-color: #fff"></span>
-        <span onmousedown="Fundo('grid3.png')" class="bloquinho"
-          style="background-image: url(&#39;./grid3.png&#39;)"></span>
+          style="background-image: url('./grid2.png'); background-color: #fff"></span>
+        <span onmousedown="Fundo('grid3.png')" class="bloquinho" style="background-image: url('./grid3.png')"></span>
         <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
           ❌</span>
         <br><span>
@@ -479,22 +486,21 @@
       </div>
 
       <div id="ferramentas" class="fundobranco">
-        <span onmousedown="backPaint()" class="fundobranco2" id="globalComposite"
-          style="width: 24px; height: 24px; padding-top: 6px"><span
+        <span onmousedown="backPaint()" class="fundobranco2 mais" id="globalComposite"
+          style="width: 24px; height: 24px; padding-top: 6px; margin-right: 12px;"><span
             style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
           <span
             style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
             title="Pintando por baixo">🔲</span></span>
-        <span id="pintar" title="pintar" class="bloquinho selected" onmousedown="modeTo('pintar')"
-          style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span>
-        <span id="apagar" title="Apagar" class="bloquinho" onmousedown="modeTo('apagar')">🧽</span>
-        <span id="cam" title="foto" class="bloquinho" onmousedown="modeTo('cam')">📷</span>
-        <span id="zoom" title="Ampliar" class="bloquinho" onmousedown="modeTo('zoom')">🔎<span id="x1"
-            style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
-        <span id="hand" class="bloquinho" onclick="toggleHand()">🖐</span>
+        <span id="pintar" title="pintar" class="bloquinho mais selected" onmousedown="modeTo('pintar')"
+          style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span> <span id="cores" title="cores"
+          class="bloquinho mais" onmousedown="modeTo('cores')"
+          style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+        <span id="apagar" title="Apagar" class="bloquinho mais" onmousedown="modeTo('apagar')">🧽</span>
+        <span id="cam" title="foto" class="bloquinho mais" onmousedown="modeTo('cam')">📷</span>
 
-        <span id="imagem" title="adicionar imagem" class="bloquinho" onmousedown="modeTo('imagem')"> 📤</span>
-        <span><a id="btn-download" class="bloquinho"> 📥</a></span>
+        <span id="imagem" title="adicionar imagem" class="bloquinho mais" onmousedown="modeTo('imagem')"> 📤</span>
+
       </div>
     </div>
 
@@ -511,11 +517,15 @@
       </div>
     </div>
     <div id="ferramentas2" class="fundobranco naotoque" style="width: 320px; margin: auto">
+      <span id="zoom" title="Ampliar" class="bloquinho mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
+          style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
+      <span id="hand" class="bloquinho mais" onclick="toggleHand()">🖐</span>
 
-      <span id="fundo" title="Fundo falso" class="bloquinho" onmousedown="modeTo('fundo')">🖼️</span>
+      <span id="fundo" title="Fundo falso" class="bloquinho mais" onmousedown="modeTo('fundo')">🖼️</span>
 
-      <span id="undo" title="desfazer" class="bloquinho" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
-      <span id="redo" title="refazer" class="bloquinho" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
+      <span id="undo" title="desfazer" class="bloquinho mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
+      <span id="redo" title="refazer" class="bloquinho mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
+      <span><a id="btn-download" class="bloquinho mais"> 📥</a></span>
 
     </div>
     <div id="menucam" style="display:block; visibility:hidden;"></div>
@@ -1935,7 +1945,7 @@
       } else if (qual === "none") {
         canvasDiv.style.backgroundImage = `none`;
         canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
-      } else if (qual === "imagem") {
+      } else {
         canvasDiv.style.backgroundImage = `url(${qual})`;
       }
     }
