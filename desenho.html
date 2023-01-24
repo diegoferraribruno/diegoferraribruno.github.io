@@ -342,7 +342,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             lei mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.5a <br>
+          versão 0.6.5 C <br>
           - Desfazer, refazer atualizado. <br>
           versão 0.6.4 c <br>
           - botões maiores e agregados<br>
@@ -966,9 +966,9 @@
     }
     function memorySwap(GCO) {
       let len = comandos.length;
-      if (len > 100) {
+      if (len > 500) {
         comandosb = [];
-        for (i = 0; i < 50; i++) {
+        for (i = 0; i < 250; i++) {
           comandosb.unshift(comandos[len - i - 1]);
           // Remove the most recent command from the list
           comandos.splice(-1, 1);
@@ -1532,7 +1532,9 @@
           let offsetW = (W - canvas.width) / -2
           desenha("f", globalComposite, blob, offsetW, 0, canvas.height, canvas.width)
           removeElement("videoC")
-          modeTo(oldMode)
+          if (oldMode != "cam") {
+            modeTo(oldMode)
+          }
           setTimeout(() => removeClass(), 10)
 
         })
