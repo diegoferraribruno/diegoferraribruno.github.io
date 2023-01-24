@@ -34,6 +34,16 @@
       touch-action: manipulation;
     }
 
+    #tela {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      touch-action: manipulation;
+    }
+
     #canvas_div {
       background-image: url("./grid3.png");
       text-align: center;
@@ -319,218 +329,221 @@
 </head>
 
 <body class="naotoque day" style="cursor: pointer;">
-  <div id="desenho_div" style="overflow-y: hidden; width: 1050px; height: 609px;" class="naotoque">
-    <div id="menus">
-      <div id="menupicker" class="submenu fundobranco">
-        Toque numa área pintada<br>
-        para capturar uma cor
-      </div>
-      <div id="menuinfo" class="submenu fundobranco">
-        <h2>Desenho!</h2>
-        <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br> com códigos decódigos<br>
-        <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-          lei mao</a> <br>
-        <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-        versão 0.6.5 <br>
-        - Desfazer, refazer atualizado. <br>
-        versão 0.6.4 c <br>
-        - botões maiores e agregados<br>
-        versão 0.6.3 <br>
-        - função camera movida e transparencia arrumada<br>
-        - camera centralizada (tnx Frederico for the help)<br>
-        - seletor de cor (fix).<br>
-        versão 0.5.6<br>
-        - foto e fundo com tamanho<br>
-        versão 0.5.5<br>
-        - inicia no modo noturno<br>
-        - fundo xadrez<br>
-        - Alerta ao fim do Crtl+Z e no Ctrl+Y <br>
+  <div id="tela" style="overflow-y: hidden;" class="naotoque">
+    <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
+      <div id="menus">
+        <div id="menupicker" class="submenu fundobranco">
+          Toque numa área pintada<br>
+          para capturar uma cor
+        </div>
+        <div id="menuinfo" class="submenu fundobranco">
+          <h2>Desenho!</h2>
+          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br> com códigos decódigos<br>
+          <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
+            lei mao</a> <br>
+          <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
+          versão 0.6.5a <br>
+          - Desfazer, refazer atualizado. <br>
+          versão 0.6.4 c <br>
+          - botões maiores e agregados<br>
+          versão 0.6.3 <br>
+          - função camera movida e transparencia arrumada<br>
+          - camera centralizada (tnx Frederico for the help)<br>
+          - seletor de cor (fix).<br>
+          versão 0.5.6<br>
+          - foto e fundo com tamanho<br>
+          versão 0.5.5<br>
+          - inicia no modo noturno<br>
+          - fundo xadrez<br>
+          - Alerta ao fim do Crtl+Z e no Ctrl+Y <br>
 
-        versão 0.5.4<br>
-        - multiplas imagens podem ser inseridas<br>
-        versão 0.5.3<br>
-        - pinta por cima ou por baixo<br>
-        versão 0.5.2<br>
-        - night mode<br>
-        - envia imagem.<br><br>
-        ver 0.5 - Turing<br>
-        - nova paleta de cores<br><br>
-        - tamanhos pre definidos de pinceis. <br>
-        - refazer passo a passo. <br>
-        - apagador com transparencia propria.<br>
-        - lupa com indicador de zoom. no lugar apropriado<br>
-        <br>
+          versão 0.5.4<br>
+          - multiplas imagens podem ser inseridas<br>
+          versão 0.5.3<br>
+          - pinta por cima ou por baixo<br>
+          versão 0.5.2<br>
+          - night mode<br>
+          - envia imagem.<br><br>
+          ver 0.5 - Turing<br>
+          - nova paleta de cores<br><br>
+          - tamanhos pre definidos de pinceis. <br>
+          - refazer passo a passo. <br>
+          - apagador com transparencia propria.<br>
+          - lupa com indicador de zoom. no lugar apropriado<br>
+          <br>
 
-        0.4.9
-        reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
-        o que pode influenciar na qualidade do projeto final. vamos ao teste.
-        <br>
-      </div>
-      <div id="menuimagem" class="fundobranco submenu aparece">
-        Enviar uma imagem<br><br>
-        📤 <input type="file" id="input" class="custom-file-input" />
-      </div>
-      <div id="menupintar" class="fundobranco submenu">
-        <span onmousedown="removeClass()" id="mostraCor2"
-          style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
+          0.4.9
+          reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
+          o que pode influenciar na qualidade do projeto final. vamos ao teste.
+          <br>
+        </div>
+        <div id="menuimagem" class="fundobranco submenu aparece">
+          Enviar uma imagem<br><br>
+          📤 <input type="file" id="input" class="custom-file-input" />
+        </div>
+        <div id="menupintar" class="fundobranco submenu">
+          <span onmousedown="removeClass()" id="mostraCor2"
+            style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
 
-        <span id="pickerb" title="Pega cor" class="bloquinho mais" onmousedown="modeTo('picker')"
-          style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
-        <span id="coresb" title="cores" class="bloquinho mais" onmousedown="modeTo('cores')"
-          style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+          <span id="pickerb" title="Pega cor" class="bloquinho mais" onmousedown="modeTo('picker')"
+            style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
+          <span id="coresb" title="cores" class="bloquinho mais" onmousedown="modeTo('cores')"
+            style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
 
-        <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho mais"
-          style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><span
-          style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
-            ➕</span> </span>
-        <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1" onchange="setStrokeSize(this.value)"
-          style="width: 50px; margin-left: 8px">
-        <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
-          oninput="strokeSizeRange(this.value)" value="1" width="200px"><br>
-        💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
-          step="0.01" value="1"><br>
-      </div>
-
-      <div id="menuapagar" class="fundobranco submenu">
-        <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span id="line2">
-            ➕</span></span>
-        <span class="bloquinho mais" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2" min="0.5"
-          max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
-        <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
-          oninput="strokeSizeRange(this.value)" value="36" width="160px">
-        <span onmousedown="removeClass()" id="mostraCor2" style="background-color: 'hsl(0, 100%, 0%);'">
-        </span>
-        <div>
-          💧<input type="range" id="transparenciaE" name="transparencia" min="0.1" max="1" oninput="mudaCorAlpha()"
-            step="0.1" value="1"></div>
-      </div>
-
-      <div id="menucores" class="fundobranco submenu">
-        <div id="menu" class="fundobranco" onmouseover="mostra()">
-          🌈 ◒ 🔆 💧<br>
-          <input type="range" orient="vertical" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
-            value="0">
-          <input type="range" orient="vertical" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)"
-            value="100">
-          <input type="range" orient="vertical" id="L" name="cor" min="0" max="100" oninput="mudaCorQ(2,this.value)"
-            value="50">
-          <input type="range" orient="vertical" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+          <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho mais"
+            style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><span
+            style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
+              ➕</span> </span>
+          <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1" onchange="setStrokeSize(this.value)"
+            style="width: 50px; margin-left: 8px">
+          <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
+            oninput="strokeSizeRange(this.value)" value="1" width="200px"><br>
+          💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
             step="0.01" value="1"><br>
-          <div id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
-            style="height: 20px; float: left; margin-top: 20px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"
-            class="bloquinho">
-            <div style="margin: -20px 10px 0px 0px; width: 20px">📌</div>
-            <span id="picker" title="Pega cor" class="bloquinho" style="margin-top:18px; margin-left:18px;"
-              onmousedown="modeTo('picker')" style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
+        </div>
+
+        <div id="menuapagar" class="fundobranco submenu">
+          <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span id="line2">
+              ➕</span></span>
+          <span class="bloquinho mais" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2"
+            min="0.5" max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)"
+            style="width: 50px; margin-left: 8px">
+          <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
+            oninput="strokeSizeRange(this.value)" value="36" width="160px">
+          <span onmousedown="removeClass()" id="mostraCor2" style="background-color: 'hsl(0, 100%, 0%);'">
+          </span>
+          <div>
+            💧<input type="range" id="transparenciaE" name="transparencia" min="0.1" max="1" oninput="mudaCorAlpha()"
+              step="0.1" value="1"></div>
+        </div>
+
+        <div id="menucores" class="fundobranco submenu">
+          <div id="menu" class="fundobranco" onmouseover="mostra()">
+            🌈 ◒ 🔆 💧<br>
+            <input type="range" orient="vertical" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
+              value="0">
+            <input type="range" orient="vertical" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)"
+              value="100">
+            <input type="range" orient="vertical" id="L" name="cor" min="0" max="100" oninput="mudaCorQ(2,this.value)"
+              value="50">
+            <input type="range" orient="vertical" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+              step="0.01" value="1"><br>
+            <div id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
+              style="height: 20px; float: left; margin-top: 20px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"
+              class="bloquinho">
+              <div style="margin: -20px 10px 0px 0px; width: 20px">📌</div>
+              <span id="picker" title="Pega cor" class="bloquinho" style="margin-top:18px; margin-left:18px;"
+                onmousedown="modeTo('picker')" style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
+            </div>
+            <div id="mostraCor" onmousedown="removeClass()"
+              style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.75em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
+              ok
+            </div>
           </div>
-          <div id="mostraCor" onmousedown="removeClass()"
-            style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.75em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
-            ok
+          <div id="paleta" class="fundobranco"></div>
+          <div id="paleta2" class="fundobranco">
+            <br>use o 📌 para guardar <br>ou remover suas cores daqui.
           </div>
         </div>
-        <div id="paleta" class="fundobranco"></div>
-        <div id="paleta2" class="fundobranco">
-          <br>use o 📌 para guardar <br>ou remover suas cores daqui.
+
+        <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
+          Adicionar Fundo falso:
+          <br>
+          <span onmousedown="Fundo('img')" class="bloquinho">🖼️</span>
+          <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
+          </span>
+          <span onmousedown="Fundo('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
+          </span>
+          <span onmousedown="Fundo('grid.png')" class="bloquinho" style="background-image: url('./grid.png')">.</span>
+          <span onmousedown="Fundo('grid2.png')" class="bloquinho"
+            style="background-image: url('./grid2.png'); background-color: #fff"></span>
+          <span onmousedown="Fundo('grid3.png')" class="bloquinho" style="background-image: url('./grid3.png')"></span>
+          <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
+            ❌</span>
+          <br><span>
+            <input type="file" id="input2" class="custom-file-input" />
+          </span><br><br>
+          Redimensionar a tela <span class="bloquinho" title="Redimensionar tela" onclick="x2()">↔️</span>
+          <br><br>
+          Limpar a tela <span class="bloquinho" title="Limpar tela" onmousedown="clearArea()">🗑</span>
+          <br><br>
+          Modo Noturno / Diurno<span id="night" class="bloquinho" onmousedown="night()"> 🌒</span>
+          <br><br>
+          Suavisação de pixels <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
+          <br><br>
+          Informações <span id="info" title="Informações" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
+          <br><br>
+        </div>
+
+        <div id="menupreencher" class="fundobranco submenu">
+          ⚠️ Preencher tudo ⚠️
+          <span width="140px" style="margin: 8px 80px; display: block">
+            <span onmousedown="mudaCorBG('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
+            </span>
+            <span onmousedown="mudaCorBG('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
+            </span>
+            <span onmousedown="mudaCorBG('strokeColor')" id="preenchercor" class="bloquinho"
+              style="background-color: rgba(158, 239, 129, 0.28);">
+            </span>
+            <span class="bloquinho" onmousedown="removeClass()" width="120px">❌</span><br>
+          </span>
+        </div>
+
+        <div id="menuzoom" class="fundobranco submenu">
+          <input id="zoombar" type="range" min="0" max="3" value="1" step="1" onchange="ZOOMf(this.value)">
+          <input id="tzoom" type="number" min="0.50" max="4" step="0.5" value="1" onchange="ZOOM(this.value)"
+            style="width: 44px">
+          <span onmousedown="scrollCanva(-80,0)">⬅️</span>
+          <span onmousedown="scrollCanva(0,-80)">⬆️</span>
+          <span onmousedown="scrollCanva(0,80)">⬇️</span>
+          <span onmousedown="scrollCanva(80,0)">➡️</span>
+        </div>
+
+        <div id="ferramentas" class="fundobranco">
+          <span onmousedown="backPaint()" class="fundobranco2 mais" id="globalComposite"
+            style="width: 24px; height: 24px; padding-top: 6px; margin-right: 12px;"><span
+              style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
+            <span
+              style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
+              title="Pintando por baixo">🔲</span></span>
+          <span id="pintar" title="pintar" class="bloquinho mais selected" onmousedown="modeTo('pintar')"
+            style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span> <span id="cores" title="cores"
+            class="bloquinho mais" onmousedown="modeTo('cores')"
+            style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+          <span id="apagar" title="Apagar" class="bloquinho mais" onmousedown="modeTo('apagar')">🧽</span>
+          <span id="cam" title="foto" class="bloquinho mais" onmousedown="modeTo('cam')">📷</span>
+
+          <span id="imagem" title="adicionar imagem" class="bloquinho mais" onmousedown="modeTo('imagem')"> 📤</span>
+
         </div>
       </div>
 
-      <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-        Adicionar Fundo falso:
-        <br>
-        <span onmousedown="Fundo('img')" class="bloquinho">🖼️</span>
-        <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
-        </span>
-        <span onmousedown="Fundo('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
-        </span>
-        <span onmousedown="Fundo('grid.png')" class="bloquinho" style="background-image: url('./grid.png')">.</span>
-        <span onmousedown="Fundo('grid2.png')" class="bloquinho"
-          style="background-image: url('./grid2.png'); background-color: #fff"></span>
-        <span onmousedown="Fundo('grid3.png')" class="bloquinho" style="background-image: url('./grid3.png')"></span>
-        <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
-          ❌</span>
-        <br><span>
-          <input type="file" id="input2" class="custom-file-input" />
-        </span><br><br>
-        Redimensionar a tela <span class="bloquinho" title="Redimensionar tela" onclick="x2()">↔️</span>
-        <br><br>
-        Limpar a tela <span class="bloquinho" title="Limpar tela" onmousedown="clearArea()">🗑</span>
-        <br><br>
-        Modo Noturno / Diurno<span id="night" class="bloquinho" onmousedown="night()"> 🌒</span>
-        <br><br>
-        Suavisação de pixels <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
-        <br><br>
-        Informações <span id="info" title="Informações" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
-        <br><br>
+      <div id="canvas_window">
+        <span id="cursor"
+          style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
+          class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
+        <div id="canvas_div" style="overflow: hidden" class="day">
+          <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
+            class="day">
+            Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou corretamente.<br>
+            se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
+          </canvas>
+        </div>
       </div>
+      <div id="ferramentas2" class="fundobranco naotoque" style="width: 320px; margin: auto">
+        <span id="zoom" title="Ampliar" class="bloquinho mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
+            style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
+        <span id="hand" class="bloquinho mais" onclick="toggleHand()">🖐</span>
 
-      <div id="menupreencher" class="fundobranco submenu">
-        ⚠️ Preencher tudo ⚠️
-        <span width="140px" style="margin: 8px 80px; display: block">
-          <span onmousedown="mudaCorBG('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
-          </span>
-          <span onmousedown="mudaCorBG('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
-          </span>
-          <span onmousedown="mudaCorBG('strokeColor')" id="preenchercor" class="bloquinho"
-            style="background-color: rgba(158, 239, 129, 0.28);">
-          </span>
-          <span class="bloquinho" onmousedown="removeClass()" width="120px">❌</span><br>
-        </span>
-      </div>
+        <span id="fundo" title="Fundo falso" class="bloquinho mais" onmousedown="modeTo('fundo')">🖼️</span>
 
-      <div id="menuzoom" class="fundobranco submenu">
-        <input id="zoombar" type="range" min="0" max="3" value="1" step="1" onchange="ZOOMf(this.value)">
-        <input id="tzoom" type="number" min="0.50" max="4" step="0.5" value="1" onchange="ZOOM(this.value)"
-          style="width: 44px">
-        <span onmousedown="scrollCanva(-80,0)">⬅️</span>
-        <span onmousedown="scrollCanva(0,-80)">⬆️</span>
-        <span onmousedown="scrollCanva(0,80)">⬇️</span>
-        <span onmousedown="scrollCanva(80,0)">➡️</span>
-      </div>
-
-      <div id="ferramentas" class="fundobranco">
-        <span onmousedown="backPaint()" class="fundobranco2 mais" id="globalComposite"
-          style="width: 24px; height: 24px; padding-top: 6px; margin-right: 12px;"><span
-            style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
-          <span
-            style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
-            title="Pintando por baixo">🔲</span></span>
-        <span id="pintar" title="pintar" class="bloquinho mais selected" onmousedown="modeTo('pintar')"
-          style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span> <span id="cores" title="cores"
-          class="bloquinho mais" onmousedown="modeTo('cores')"
-          style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
-        <span id="apagar" title="Apagar" class="bloquinho mais" onmousedown="modeTo('apagar')">🧽</span>
-        <span id="cam" title="foto" class="bloquinho mais" onmousedown="modeTo('cam')">📷</span>
-
-        <span id="imagem" title="adicionar imagem" class="bloquinho mais" onmousedown="modeTo('imagem')"> 📤</span>
+        <span id="undo" title="desfazer" class="bloquinho mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
+        <span id="redo" title="refazer" class="bloquinho mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
+        <span><a id="btn-download" class="bloquinho mais"> 📥</a></span>
 
       </div>
+      <div id="menucam" style="display:block; visibility:hidden;"></div>
     </div>
-
-    <div id="canvas_window">
-      <span id="cursor"
-        style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
-        class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
-      <div id="canvas_div" style="overflow: hidden" class="day">
-        <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-          class="day">
-          Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou corretamente.<br>
-          se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
-        </canvas>
-      </div>
-    </div>
-    <div id="ferramentas2" class="fundobranco naotoque" style="width: 320px; margin: auto">
-      <span id="zoom" title="Ampliar" class="bloquinho mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
-          style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
-      <span id="hand" class="bloquinho mais" onclick="toggleHand()">🖐</span>
-
-      <span id="fundo" title="Fundo falso" class="bloquinho mais" onmousedown="modeTo('fundo')">🖼️</span>
-
-      <span id="undo" title="desfazer" class="bloquinho mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
-      <span id="redo" title="refazer" class="bloquinho mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
-      <span><a id="btn-download" class="bloquinho mais"> 📥</a></span>
-
-    </div>
-    <div id="menucam" style="display:block; visibility:hidden;"></div>
   </div>
   <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
     style="visibility: hidden; position: absolute; left:0px;">
@@ -574,8 +587,8 @@
     const images = []
     var audio = new Audio('./back_001.wav');
     var audio2 = new Audio('./click_005.wav');
-    audio.volume = 0.5;
-    audio2.volume = 0.5;
+    audio.volume = 0.4;
+    audio2.volume = 0.4;
     var useFrontCamera = true; //moved up from modeto("cam") to test.
     var videoStream;
 
@@ -951,9 +964,8 @@
         audio.play();
       }
     }
-    function memoryswipe() {
+    function memorySwap(GCO) {
       let len = comandos.length;
-      let bob
       if (len > 100) {
         comandosb = [];
         for (i = 0; i < 50; i++) {
@@ -964,10 +976,10 @@
         convertToImg();
         comandosExec();
         setTimeout(() => {
-          convertToImg()
-          setTimeout(() => replay(), 100);
+          convertToImg();
+          replay();
         }, 20)
-
+        setTimeout(() => { context.globalCompositeOperation = GCO; }, 100)
       }
     }
 
@@ -1305,9 +1317,9 @@
             mode = qual;
             removeClass();
             toggleSelect(qual);
-            memoryswipe();
             camera();
             context.globalCompositeOperation = globalComposite;
+            memorySwap(globalComposite);
           } else {
             removeElement("videoC")
             modeTo(oldMode)
@@ -1329,8 +1341,8 @@
           toggleSelect(qual);
           cursorColor();
           mudaCorAlpha();
-          memoryswipe();
           context.globalCompositeOperation = "destination-out";
+          memorySwap("destination-out");
           break;
         case "pintar":
           oldMode = mode;
@@ -1340,8 +1352,8 @@
           mostraMenu(qual);
           toggleSelect(qual);
           setStrokeColor();
-          memoryswipe();
           context.globalCompositeOperation = globalComposite;
+          memorySwap(globalComposite);
           break;
         case "cores":
           oldMode = mode;
@@ -1351,8 +1363,8 @@
           mostraMenu(qual);
           toggleSelect(qual);
           setStrokeColor();
-          memoryswipe();
           context.globalCompositeOperation = globalComposite;
+          memorySwap(globalComposite);
           break;
         case "fundo":
           oldMode = mode;
@@ -1362,6 +1374,7 @@
           mostraMenu(qual);
           toggleSelect(qual);
           context.globalCompositeOperation = globalComposite;
+          memorySwap(globalComposite);
           break;
 
         case "preencher":
@@ -1396,7 +1409,6 @@
           removeClass();
           mostraMenu(qual);
           toggleSelect(qual);
-          memoryswipe();
           break;
 
       }
@@ -1952,13 +1964,13 @@
     let condensado;
 
     convertToImg()
-    convertToImg()
 
     function convertToImg() {
       img_b64 = canvas.toDataURL('image/png');
       blob = dataURItoBlob(img_b64)
-      comando = ["f", "destination-over", blob, 0, 0, canvas.width, canvas.height]
+      comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
       comandos = []
+      comandos.unshift(comando)
       comandos.unshift(comando)
     }
 
