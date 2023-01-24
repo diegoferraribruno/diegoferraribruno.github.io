@@ -37,11 +37,12 @@
     #tela {
       text-align: center;
       display: flex;
-      align-items: center;
+      justify-content: center;
       margin-left: auto;
       margin-right: auto;
       width: 100%;
       touch-action: manipulation;
+
     }
 
     #canvas_div {
@@ -138,8 +139,7 @@
     .fundobranco2 {
       min-height: 12px;
       display: inline-block;
-      float: left;
-      margin: 4px 4px 0px 4px;
+      margin: auto;
     }
 
     .bloquinho {
@@ -159,10 +159,18 @@
     }
 
     .mais {
+      border-style: solid;
+      border-radius: 20px;
+      border-color: #55555555;
+      border-width: thin;
+      background-color: #5c7767ee;
+      display: block;
+      float: left;
+      padding: 2px;
       width: 28px;
       height: 28px;
       font-size: 1.6em;
-      margin: 1px 6px 1px 6px;
+      margin: auto;
       touch-action: manipulation;
     }
 
@@ -275,12 +283,19 @@
     }
 
     #menus {
-      margin-left: 0px;
+      display: flex;
+      width: 100%;
+      left: auto;
+      justify-content: center;
     }
 
-    #ferramentas {
+    .ferramentas {
+      height: 50px;
       width: 310px;
-      margin-left: 4px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      vertical-align: auto;
     }
 
     #menuinfo {
@@ -338,11 +353,11 @@
         </div>
         <div id="menuinfo" class="submenu fundobranco">
           <h2>Desenho!</h2>
-          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br> com códigos decódigos<br>
+          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br> com códigos de<br>
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-            lei mao</a> <br>
+            Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.5 C <br>
+          versão 0.6.5 f <br>
           - Desfazer, refazer atualizado. <br>
           versão 0.6.4 c <br>
           - botões maiores e agregados<br>
@@ -384,13 +399,12 @@
         <div id="menupintar" class="fundobranco submenu">
           <span onmousedown="removeClass()" id="mostraCor2"
             style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
-
-          <span id="pickerb" title="Pega cor" class="bloquinho mais" onmousedown="modeTo('picker')"
+          <span id="pickerb" title="Pega cor" class="mais" onmousedown="modeTo('picker')"
             style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
-          <span id="coresb" title="cores" class="bloquinho mais" onmousedown="modeTo('cores')"
+          <span id="coresb" title="cores" class="mais" onmousedown="modeTo('cores')"
             style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
 
-          <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho mais"
+          <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="mais"
             style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><span
             style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
               ➕</span> </span>
@@ -405,9 +419,8 @@
         <div id="menuapagar" class="fundobranco submenu">
           <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span id="line2">
               ➕</span></span>
-          <span class="bloquinho mais" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2"
-            min="0.5" max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)"
-            style="width: 50px; margin-left: 8px">
+          <span class="mais" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2" min="0.5"
+            max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
           <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
             oninput="strokeSizeRange(this.value)" value="36" width="160px">
           <span onmousedown="removeClass()" id="mostraCor2" style="background-color: 'hsl(0, 100%, 0%);'">
@@ -499,23 +512,22 @@
           <span onmousedown="scrollCanva(80,0)">➡️</span>
         </div>
 
-        <div id="ferramentas" class="fundobranco">
-          <span onmousedown="backPaint()" class="fundobranco2 mais" id="globalComposite"
-            style="width: 24px; height: 24px; padding-top: 6px; margin-right: 12px;"><span
-              style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
-            <span
-              style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
-              title="Pintando por baixo">🔲</span></span>
-          <span id="pintar" title="pintar" class="bloquinho mais selected" onmousedown="modeTo('pintar')"
-            style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span> <span id="cores" title="cores"
-            class="bloquinho mais" onmousedown="modeTo('cores')"
-            style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
-          <span id="apagar" title="Apagar" class="bloquinho mais" onmousedown="modeTo('apagar')">🧽</span>
-          <span id="cam" title="foto" class="bloquinho mais" onmousedown="modeTo('cam')">📷</span>
+      </div>
+      <div id="ferramentas" class="ferramentas">
+        <span onmousedown="backPaint()" class="fundobranco2 mais" id="globalComposite"
+          style="width: 24px; height: 24px; padding-top: 6px; margin-right: 12px;"><span
+            style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
+          <span
+            style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
+            title="Pintando por baixo">🔲</span></span>
+        <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')"
+          style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span> <span id="cores" title="cores" class="mais"
+          onmousedown="modeTo('cores')" style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+        <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
+        <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
 
-          <span id="imagem" title="adicionar imagem" class="bloquinho mais" onmousedown="modeTo('imagem')"> 📤</span>
-
-        </div>
+        <span id="imagem" title="adicionar imagem" class="mais" onmousedown="modeTo('imagem')"> 📤</span>
+        <span><a id="btn-download" class="mais"> 📥</a></span>
       </div>
 
       <div id="canvas_window">
@@ -530,16 +542,18 @@
           </canvas>
         </div>
       </div>
-      <div id="ferramentas2" class="fundobranco naotoque" style="width: 320px; margin: auto">
-        <span id="zoom" title="Ampliar" class="bloquinho mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
+      <div id="ferramentas2" class="ferramentas naotoque" style="width: 320px; margin: auto">
+        <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
             style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
-        <span id="hand" class="bloquinho mais" onclick="toggleHand()">🖐</span>
+        <span id="hand" class="mais" onclick="toggleHand()">🖐</span>
 
-        <span id="fundo" title="Fundo falso" class="bloquinho mais" onmousedown="modeTo('fundo')">🖼️</span>
+        <span id="fundo" title="Fundo falso" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
 
-        <span id="undo" title="desfazer" class="bloquinho mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
-        <span id="redo" title="refazer" class="bloquinho mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
-        <span><a id="btn-download" class="bloquinho mais"> 📥</a></span>
+        <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
+        <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span><span
+          class="mais" title="Redimensionar tela" onclick="x2()">↔️</span>
+        <span class="mais" title="Limpar tela" onmousedown="clearArea()">🗑</span>
+
 
       </div>
       <div id="menucam" style="display:block; visibility:hidden;"></div>
@@ -573,7 +587,7 @@
     var mode = "cores";
     var linejoin = "round";
     var lineJoinsCount = 0;
-    const lineJoins = ["round", "miter"];
+    const lineJoins = ["miter", "round"];
     var ultimoToque = { x: 160, y: 160 };
     var zoomFactor = 1;
     var zoomScale = [0.5, 1, 2, 4];
@@ -671,7 +685,6 @@
       } else {
       }
     }
-
     function x2(w = 320, h = 320) {
       let newSize = 320;
       let newSizeb = 320;
@@ -1310,6 +1323,7 @@
           }, 10);
           cursorColor();
           toggleSelect(qual);
+          mode = "zoom"
           break;
         case "cam":
           if (mode != "cam") {
@@ -1532,7 +1546,9 @@
           let offsetW = (W - canvas.width) / -2
           desenha("f", globalComposite, blob, offsetW, 0, canvas.height, canvas.width)
           removeElement("videoC")
-          if (oldMode != "cam") {
+          if (oldMode == "cam" || oldMode == "zoom") {
+            modeTo("apagar")
+          } else {
             modeTo(oldMode)
           }
           setTimeout(() => removeClass(), 10)
@@ -1556,7 +1572,11 @@
 
       } else {
         removeElement("videoC")
-        modeTo(oldMode)
+        if (oldMode == "cam" || oldMode == "zoom") {
+          modeTo("apagar")
+        } else {
+          modeTo(oldMode)
+        }
         setTimeout(() => removeClass(), 10)
       }
     }
@@ -1818,7 +1838,7 @@
         lineJoinsCount = 0;
       }
       linejoin = lineJoins[lineJoinsCount];
-      if (lineJoinsCount != 0) {
+      if (lineJoinsCount != 1) {
         document.getElementById("line").innerHTML = " ➕";
         document.getElementById("line2").innerHTML = " ➕";
       } else {
@@ -1826,6 +1846,7 @@
         document.getElementById("line2").innerHTML = " ⚫";
       }
     }
+    changeLine()
     ////// ZOOM and scroling
     function setZoom(zoom, el) {
       transformOrigin = [0, 0];
