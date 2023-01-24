@@ -357,7 +357,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.5 I <br>
+          versão 0.6.5 J <br>
           - Desfazer, refazer atualizado. <br>
           versão 0.6.4 c <br>
           - botões maiores e agregados<br>
@@ -1336,6 +1336,7 @@
             memorySwap(globalComposite);
           } else {
             removeElement("videoC")
+            removeElement("btnChangeCam")
             modeTo(oldMode)
             setTimeout(() => removeClass(), 10)
           }
@@ -1437,7 +1438,7 @@
         botao.setAttribute("id", "btnChangeCam")
         botao.setAttribute("value", "muda")
         botao.setAttribute("class", "bloquinho")
-        botao.setAttribute("style", "position: absolute; float: left;")
+        botao.setAttribute("style", "position: absolute; top: 60px; float: left;")
         botao.innerHTML = "🔃"
         const videoE = document.createElement("video");
         const escala = canvas.height / 320
@@ -1452,7 +1453,7 @@
         videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px;`)
         videoC.setAttribute("id", "videoC")
         videoC.appendChild(videoE);
-        videoC.appendChild(botao);
+        document.getElementById("tela").appendChild(botao);
 
         canvasDiv.appendChild(videoC)
 
@@ -1548,6 +1549,7 @@
           let offsetW = (W - canvas.width) / -2
           desenha("f", globalComposite, blob, offsetW, -dif, canvas.height, canvas.width)
           removeElement("videoC")
+          removeElement("btnChangeCam")
           if (oldMode == "cam" || oldMode == "zoom") {
             modeTo("apagar")
           } else {
@@ -1574,6 +1576,7 @@
 
       } else {
         removeElement("videoC")
+        removeElement("btnChangeCam")
         if (oldMode == "cam" || oldMode == "zoom") {
           modeTo("apagar")
         } else {
