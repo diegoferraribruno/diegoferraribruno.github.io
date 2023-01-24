@@ -331,7 +331,9 @@
         <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
           lei mao</a> <br>
         <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-        versão 0.6.4 b <br>
+        versão 0.6.5 <br>
+        - Desfazer, refazer atualizado. <br>
+        versão 0.6.4 c <br>
         - botões maiores e agregados<br>
         versão 0.6.3 <br>
         - função camera movida e transparencia arrumada<br>
@@ -582,13 +584,7 @@
       var elem = document.getElementById(id);
       return elem.parentNode.removeChild(elem);
     }
-    function canvasToBlob(context, type) {
-      return new Promise(function (resolve, reject) {
-        context.canvasV.toBlob(function (blob) {
-          resolve(blob);
-        }, type);
-      });
-    }
+
 
     function dataURItoBlob(dataURI) {
       var byteString;
@@ -920,22 +916,18 @@
 
     function undo() {
       let len = comandos.length;
-
-      if (len > 0) {
+      if (len == 1) {
+        clearInterval(counter)
+        convertToImg();
+        audio.play();
+        //alert("nivel maximo de desfazer atingindo.");
+      } else if (len > 1) {
         comandosb.unshift(comandos[len - 1]);
         // Remove the most recent command from the list
         comandos.splice(-1, 1);
-      } else {
-        clearInterval(counter)
-        audio.play();
-        //alert("nivel maximo de desfazer atingindo.");
-        clearInterval(counter)
+        comandosExec()
       }
 
-      // Clear canvas get last flat img
-      // Re-play all commands (re-draw canvas from scratch)
-
-      comandosExec()
 
     }
     function redoT() {
@@ -950,6 +942,7 @@
 
       if (len > 0) {
         comandos.push(comandosb[0]);
+        comandosExec()
         // Remove the most recent command from the list
         comandosb.shift();
       } else {
@@ -957,45 +950,50 @@
         clearInterval(counter)
         audio.play();
       }
-      // Clear canvas get last flat img
-      // Re-play all commands (re-draw canvas from scratch)
-      comandosExec()
-
     }
     function memoryswipe() {
       let len = comandos.length;
-      if (len > 1000) {
+      let bob
+      if (len > 100) {
         comandosb = [];
-        for (i = 0; i < 500; i++) {
+        for (i = 0; i < 50; i++) {
           comandosb.unshift(comandos[len - i - 1]);
           // Remove the most recent command from the list
           comandos.splice(-1, 1);
         }
-        convertToImg()
-        setTimeout(function () {
-          comandosExec();
-          comandos = []
-          replay()
-        }, 50)
+        convertToImg();
+        comandosExec();
+        setTimeout(() => {
+          convertToImg()
+          setTimeout(() => replay(), 100);
+        }, 20)
+
       }
     }
 
+    var executing = false
+
     function comandosExec() {
-      addFlatedImg();
-      setTimeout(() => exec(), 10);
+
+      if (executing == false) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        exec();
+        executing = true;
+      }
     }
 
-    function exec(i = 0) {
+    function exec(coma = 0) {
       let lenc = comandos.length;
-      let coma = i
+      if (lenc == coma && lenc >= 1) {
+        executing = false
+      } else {
 
-      if (coma < lenc && lenc > 0) {
 
         switch (comandos[coma][0]) {
           case "f":
             let myImg = document.createElement("img");
-            myImg.src = URL.createObjectURL(comandos[coma][2])
             let gco = comandos[coma][1]
+            myImg.src = URL.createObjectURL(comandos[coma][2])
             myImg.onload = function () {
               let globaltemp = context.globalCompositeOperation
               context.globalCompositeOperation = gco;
@@ -1060,7 +1058,6 @@
 
     }
     function replay() {
-      context.clearRect(0, 0, canvas.width, canvas.height);
       let lenb = comandosb.length;
       for (a = 0; a < lenb; a++) {
         comandos.push(comandosb[a]);
@@ -1279,7 +1276,6 @@
         for (a = 0; a < len; a++) {
           comandosb.push(comandos[a]);
         }
-        comandos = [];
         convertToImg()
       }
     }
@@ -1332,8 +1328,8 @@
           mostraMenu(qual);
           toggleSelect(qual);
           cursorColor();
-          memoryswipe();
           mudaCorAlpha();
+          memoryswipe();
           context.globalCompositeOperation = "destination-out";
           break;
         case "pintar":
@@ -1422,7 +1418,6 @@
         videoE.id = "video"
         videoE.height = canvas.height; // in px
         videoE.width = 428 * (escala); // in px
-
         videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
 
         let vcW = 428 * escala;
@@ -1523,7 +1518,7 @@
           img_b64 = canvasV.toDataURL('image/png');
           blob = dataURItoBlob(img_b64)
           let offsetW = (W - canvas.width) / -2
-          desenha("f", globalComposite, blob, offsetW, 0, W, H)
+          desenha("f", globalComposite, blob, offsetW, 0, canvas.height, canvas.width)
           removeElement("videoC")
           modeTo(oldMode)
           setTimeout(() => removeClass(), 10)
@@ -1955,21 +1950,18 @@
 
 
     let condensado;
-    let img;
+
     convertToImg()
+    convertToImg()
+
     function convertToImg() {
-      img = new Image();
-      img.src = canvas.toDataURL()
+      img_b64 = canvas.toDataURL('image/png');
+      blob = dataURItoBlob(img_b64)
+      comando = ["f", "destination-over", blob, 0, 0, canvas.width, canvas.height]
+      comandos = []
+      comandos.unshift(comando)
     }
 
-    function addFlatedImg(x = 0, y = 0) {
-      let globaltemp = context.globalCompositeOperation
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.globalCompositeOperation = "destination-over"
-      context.drawImage(img, x, y)
-      context.globalCompositeOperation = globaltemp
-
-    }
   </script>
 
 </body>
