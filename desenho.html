@@ -357,7 +357,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.5 f <br>
+          versão 0.6.5 g <br>
           - Desfazer, refazer atualizado. <br>
           versão 0.6.4 c <br>
           - botões maiores e agregados<br>
@@ -1517,7 +1517,7 @@
               canvasV.height = canvas.width * proporcao
 
               let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
-              let offsetH = - 324 * escala
+              let offsetH = - 324 * escala - (videoC.height - canvas.height) / 2
               videoC.setAttribute("style",
                 `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
             }
@@ -1540,11 +1540,12 @@
 
           let W = canvasV.width;
           let H = canvasV.height;
+          let dif = (H - canvas.height) / 2
           contextV.drawImage(video, 0, 0, W, H)
           img_b64 = canvasV.toDataURL('image/png');
           blob = dataURItoBlob(img_b64)
           let offsetW = (W - canvas.width) / -2
-          desenha("f", globalComposite, blob, offsetW, 0, canvas.height, canvas.width)
+          desenha("f", globalComposite, blob, offsetW, -dif, canvas.height, canvas.width)
           removeElement("videoC")
           if (oldMode == "cam" || oldMode == "zoom") {
             modeTo("apagar")
