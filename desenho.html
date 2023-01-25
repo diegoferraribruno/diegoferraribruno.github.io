@@ -357,6 +357,8 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
+          versão 0.6.6 a <br>
+          -novo sistema de desfazer mais leve<br>
           versão 0.6.5 K <br>
           - timeouts retirados (em teste)
           - Desfazer, refazer atualizado. <br>
@@ -722,7 +724,7 @@
         canvas.width = W;
         canvas.height = H;
       }
-      replay();
+      comandosExec()
     }
     function toggleHand() {
       if (mode != "zoom") {
@@ -934,28 +936,25 @@
     let desfazendo = false;
     let refazendo = false;
     var counter;
+    var counterU;
     function undoT() {
-      counter = setInterval(() => undo(), 30);
+      counterU = setInterval(() => undo(), 30);
     }
     function undoTEnd() {
-      clearInterval(counter);
+      clearInterval(counterU);
     }
 
     function undo() {
       let len = comandos.length;
-      if (len == 1) {
-        clearInterval(counter)
-        convertToImg();
-        audio.play();
-        //alert("nivel maximo de desfazer atingindo.");
-      } else if (len > 1) {
-        comandosb.unshift(comandos[len - 1]);
-        // Remove the most recent command from the list
-        comandos.splice(-1, 1);
+      if (undoLevel < len - 1) {
+        undoLevel++
         comandosExec()
+        //alert("nivel maximo de desfazer atingindo.");
+      } else {
+        clearInterval(counter)
+        audio.play();
       }
-
-
+      console.log(undoLevel)
     }
     function redoT() {
       counter = setInterval(() => redo(), 30);
@@ -965,13 +964,9 @@
     }
 
     function redo() {
-      let len = comandosb.length;
-
-      if (len > 0) {
-        comandos.push(comandosb[0]);
+      if (undoLevel > 0) {
+        undoLevel--
         comandosExec()
-        // Remove the most recent command from the list
-        comandosb.shift();
       } else {
         //alert("nivel maximo de refazer atingindo.");
         clearInterval(counter)
@@ -980,27 +975,38 @@
     }
     function memorySwap(GCO) {
       let len = comandos.length;
-      if (len > 500) {
-        comandosb = [];
-        for (i = 0; i < 250; i++) {
-          comandosb.unshift(comandos[len - i - 1]);
-          // Remove the most recent command from the list
-          comandos.splice(-1, 1);
-        }
-        convertToImg();
-        comandosExec();
+      if (len > 1000) {
+        undoLevel = 500
+        let dist = len - undoLevel
+        comandosExec()
         setTimeout(() => {
-          convertToImg();
-          replay();
-        }, 20)
-        setTimeout(() => { context.globalCompositeOperation = GCO; }, 100)
+          img_b64 = canvas.toDataURL('image/png');
+          blob = dataURItoBlob(img_b64)
+          comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
+          setTimeout(() => {
+            for (i = 0; i < dist; i++) {
+              comandos.shift()
+            }
+            comandos.unshift(comando)
+            undoLevel = 0;
+            comandosExec()
+            setTimeout(() => {
+              context.globalCompositeOperation = GCO;
+            }, 70)
+          }, 20)
+
+        }, 50)
+
       }
+
+
+
     }
 
     var executing = false
+    var undoLevel = 0
 
     function comandosExec() {
-
       if (executing == false) {
         context.clearRect(0, 0, canvas.width, canvas.height);
         exec();
@@ -1010,11 +1016,8 @@
 
     function exec(coma = 0) {
       let lenc = comandos.length;
-      if (lenc == coma && lenc >= 1) {
-        executing = false
-      } else {
-
-
+      let scope = lenc - undoLevel
+      if (scope > coma) {
         switch (comandos[coma][0]) {
           case "f":
             let myImg = document.createElement("img");
@@ -1080,16 +1083,10 @@
             exec(coma)
             break;
         }
+      } else {
+        executing = false
       }
 
-    }
-    function replay() {
-      let lenb = comandosb.length;
-      for (a = 0; a < lenb; a++) {
-        comandos.push(comandosb[a]);
-      }
-      comandosExec()
-      comandosb = [];
     }
 
     function desenha(
@@ -1151,7 +1148,9 @@
           context.fillRect(0, 0, canvas.width, canvas.height);
           break;
       }
-      comandosb = [];
+      if (undoLevel != 0)
+        for (i = 0; i < undoLevel; i++) { comandos.pop() }
+      undoLevel = 0
     }
     function handleStart(evt) {
       evt.preventDefault();
@@ -1291,11 +1290,10 @@
       if (confirma === true) {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        comandosb = [];
-        let len = comandos.length;
-        for (a = 0; a < len; a++) {
-          comandosb.push(comandos[a]);
-        }
+        comandos = []
+        comando = ["b", "destination-out", "#ffffff"];
+        comandos.push(comando)
+        comandosExec()
         convertToImg()
       }
     }
@@ -1420,7 +1418,8 @@
           mostraMenu(qual);
           toggleSelect(qual);
           break;
-
+        case _:
+          break;
       }
       cursorColor();
     }
@@ -1981,14 +1980,13 @@
       canvasDiv.classList.toggle("pixel");
     }
 
-    convertToImg()
+    convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
 
     function convertToImg() {
       img_b64 = canvas.toDataURL('image/png');
       blob = dataURItoBlob(img_b64)
       comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
-      comandos = []
-      comandos.unshift(comando)
+      // comandos.unshift(comando)
       comandos.unshift(comando)
     }
 
