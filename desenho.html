@@ -364,7 +364,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.6 g<br>
+          versão 0.6.6 H<br>
           -otimizacao no codigo da mudança de ferramenta
           -novo sistema de desfazer mais leve( bugado?)<br>
           -touchmovecursor<br>
@@ -574,7 +574,7 @@
     </div>
   </div>
   <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-    onmousedown="cursorMove(event)" style="visibility: hidden; position: absolute; left:0px;">
+    style="visibility: hidden; position: absolute; left:0px;">
   </canvas>
   <script>
     const canvas = document.getElementById("canvas");
@@ -1205,9 +1205,12 @@
               stroke,
               linejoin
             );
+            cursor.style.left = ultimoToque.x + offsetX + "px";
+            cursor.style.top = ultimoToque.y + offsetY + "px";
             ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
           }
         }
+
       }
       if (mode == "picker") {
         const touches = evt.changedTouches;
