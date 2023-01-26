@@ -357,7 +357,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.6 d<br>
+          versão 0.6.6 e<br>
           -novo sistema de desfazer mais leve bugado ainda<br>
           versão 0.6.5 K <br>
           - timeouts retirados (em teste)
@@ -954,7 +954,7 @@
         clearInterval(counter)
         audio.play();
       }
-      console.log(undoLevel)
+
     }
     function redoT() {
       counter = setInterval(() => redo(), 30);
@@ -976,7 +976,7 @@
     function memorySwap(GCO) {
       undoLevel = 0
       let len = comandos.length;
-      let dist = len - 50
+      let dist = len - 100
 
       if (len > 200) {
         undoLevel = 100;
@@ -987,7 +987,7 @@
           comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height];
           setTimeout(() => {
             let b
-            for (i = 100; i < len; i++) {
+            for (i = dist; i < len; i++) {
               comandosb.push(comandos[i])
             }
             comandos = []
