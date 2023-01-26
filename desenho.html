@@ -173,15 +173,13 @@
       display: block;
       float: left;
       padding: 2px;
-      width: 28px;
-      height: 28px;
-      font-size: 1.6em;
-      margin: auto;
-      margin-bottom: 4px;
-      margin-top: 4px;
+      width: 26px;
+      height: 26px;
+      font-size: 1.3em;
+      margin: 10px 18px 10px 1px;
       touch-action: manipulation;
-      border-radius: 14px;
-      background: linear-gradient(145deg, #6b6a6f, #7f7e84);
+      border-radius: 18px;
+      background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
       box-shadow: 3px 3px 5px #515054,
         -3px -3px 5px #9d9ca2;
     }
@@ -299,7 +297,7 @@
       width: 100%;
       left: auto;
       justify-content: left;
-      padding-left: 34px;
+      padding-left: 36px;
     }
 
     .ferramentas {
@@ -357,6 +355,8 @@
       text-shadow: 1px 1px #fff;
       font-weight: 700;
       font-size: 10pt;
+      margin-top: 20px;
+
     }
 
     .destination-over {
@@ -392,11 +392,11 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.6 K<br>
-          -novas variaveis swapImg<br>
-          -otimizacao no codigo da mudança de ferramenta<br>
+          versão 0.6.6 L<br>
+          - novas variaveis swapImg<br>
+          - melhora na troca de ferramenta<br>
           - desfazer mais leve<br>
-          -touchmovecursor<br>
+          - touchmovecursor<br>
           versão 0.6.5 K <br>
           - timeouts retirados (em teste)
           - Desfazer, refazer atualizado. <br>
@@ -440,10 +440,10 @@
         <div id="menupintar" class="fundobranco submenu">
           <span onmousedown="removeClass()" id="mostraCor2"
             style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
-          <span id="pickerb" title="Pega cor" class="mais" onmousedown="modeTo('picker')"
-            style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
           <span id="coresb" title="cores" class="mais" onmousedown="modeTo('cores')"
             style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+          <span id="pickerb" title="Pega cor" class="mais" onmousedown="modeTo('picker')"
+            style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
 
           <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="mais"
             style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><span
@@ -510,7 +510,7 @@
 
           Modo Noturno / Diurno<span id="night" class="bloquinho" onmousedown="night()"> 🌒</span>
           <br><br>
-          Suavisação de pixels <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
+          Suavização de pixels <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
           <br><br> Adicionar Fundo falso:
           <br>
           <span onmousedown="Fundo('img')" class="bloquinho">🖼️</span>
@@ -567,13 +567,14 @@
 
         <span id="fundo" title="Fundo falso" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
 
-        <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
-        <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span><span
-          class="mais" title="Redimensionar tela" onclick="x2()">↔️</span>
+
+        <span class="mais" title="Redimensionar tela" onclick="x2()">↔️</span>
         <span class="mais" title="Limpar tela" onmousedown="clearArea()">🗑</span>
 
         <span id="imagem" title="adicionar imagem" class="mais" onmousedown="modeTo('imagem')"> 📤</span>
         <span id="btn-download" class="mais">📥</span>
+        <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
+        <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
       </div>
       <div id="ferramentas2">
         <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
@@ -1025,32 +1026,39 @@
     let swapImg
     let blobb
     function memorySwap(GCO) {
-      let len = comandos.length;
-      if (len > 600) {
-        undoLevel = Math.floor(len / 2);
-        comandosExec();
-        setTimeout(() => {
-          swapImg = canvas.toDataURL('image/png');
-          blobb = dataURItoBlob(swapImg)
-          comando = ["f", "source-over", blobb, 0, 0, canvas.width, canvas.height];
+      setTimeout(() => {
+
+
+        let len = comandos.length;
+        if (len > 600) {
+          undoLevel = Math.floor(len / 2);
+          comandosExec();
           setTimeout(() => {
-            for (i = 0; i < undoLevel; i++) {
-              comandos.shift()
-            }
-
-            comandos.unshift(comando);
-            undoLevel = 0;
-            // setTimeout(() => {
-            comandosExec();
-            //}, 120)
+            swapImg = canvas.toDataURL('image/png');
+            blobb = dataURItoBlob(swapImg)
+            comando = ["f", "source-over", blobb, 0, 0, canvas.width, canvas.height];
             setTimeout(() => {
-              context.globalCompositeOperation = GCO;
-            }, 150)
-          }, 80)
+              for (i = 0; i < undoLevel; i++) {
+                comandos.shift()
+              }
 
-        }, 120)
+              comandos.unshift(comando);
+              undoLevel = 0;
+              // setTimeout(() => {
+              comandosExec();
+              //}, 120)
+              setTimeout(() => {
+                context.globalCompositeOperation = GCO;
+                swapImg = []
+                blobb = []
+              }, 200)
+            }, 120)
 
+          }, 120)
+
+        }
       }
+        , 20)
 
 
 
@@ -1245,8 +1253,8 @@
               stroke,
               linejoin
             );
-            cursor.style.left = ultimoToque.x + offsetX + "px";
-            cursor.style.top = ultimoToque.y + offsetY + "px";
+            cursor.style.left = ultimoToque.x + offsetX / zoomFactor + "px";
+            cursor.style.top = ultimoToque.y + offsetY / zoomFactor + "px";
             ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
           }
         }
@@ -1572,7 +1580,11 @@
           } else {
             modeTo(oldMode)
           }
-          setTimeout(() => removeClass(), 10)
+          setTimeout(() => {
+            removeClass()
+            img_b64 = [];
+            blob = []
+          }, 10)
 
         })
 
