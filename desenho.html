@@ -357,7 +357,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.6 e<br>
+          versão 0.6.6 f<br>
           -novo sistema de desfazer mais leve bugado ainda<br>
           versão 0.6.5 K <br>
           - timeouts retirados (em teste)
@@ -974,38 +974,28 @@
       }
     }
     function memorySwap(GCO) {
-      undoLevel = 0
       let len = comandos.length;
-      let dist = len - 100
-
-      if (len > 200) {
-        undoLevel = 100;
+      if (len > 600) {
+        undoLevel = Math.floor(len / 2);
         comandosExec();
         setTimeout(() => {
           img_b64 = canvas.toDataURL('image/png');
           blob = dataURItoBlob(img_b64)
           comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height];
           setTimeout(() => {
-            let b
-            for (i = dist; i < len; i++) {
-              comandosb.push(comandos[i])
+            for (i = 0; i < undoLevel; i++) {
+              comandos.shift()
             }
-            comandos = []
-            comandos.push(comando);
-            b = comandosb.length
-            for (i = 0; i < b; i++) {
-              comandos.push(comandosb[i])
-            }
-            comandosb = []
-            // comandos.unshift(comando)
+
+            comandos.unshift(comando);
             undoLevel = 0;
             setTimeout(() => { exec(0) }, 100)
             setTimeout(() => {
               context.globalCompositeOperation = GCO;
-            }, 150)
-          }, 100)
+            }, 100)
+          }, 80)
 
-        }, 120)
+        }, 60)
 
       }
 
@@ -1465,7 +1455,6 @@
         videoE.toggleAttribute("playsinline", "playsinline")
         if (globalComposite == "destination-over") {
           videoE.setAttribute("class", "destination-over");
-          canvas.style.zIndex = 5;
         }
         if (
           !"mediaDevices" in navigator ||
@@ -1719,6 +1708,9 @@
           `<span style="position:relative; float:left; width:30px; display:block;  ` +
           `color:black; left:1px; margin-top:0px;" title="Pintando por baixo">🔲</span>`;
 
+        if (document.getElementById("video")) {
+          document.getElementById("video").setAttribute("class", "destination-over")
+        }
 
       } else {
         globalComposite = "source-over";
@@ -1728,9 +1720,7 @@
           `<span style="position:absolute; float:right; width:32px; display:block; ` +
           `padding-top: 0px;">🔲</span> <span style="color:white;` +
           `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
-      }
-      if (document.getElementById("video")) {
-        document.getElementById("video").classList.toggle("destination-over")
+        removeClass("destination-over")
       }
       cursor.classList.toggle("cursorIndex");
       cursor.classList.toggle("selected");
