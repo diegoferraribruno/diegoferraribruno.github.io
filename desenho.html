@@ -74,7 +74,7 @@
       width: 342px;
       height: 342px;
       -webkit-touch-overflow: scroll;
-      margin-left: 26px;
+      margin-left: 32px;
       margin-right: auto;
     }
 
@@ -171,17 +171,17 @@
       border-width: thin;
       background-color: #c3c3c3ee;
       display: block;
-      float: left;
-      padding: 2px;
+      position: relative;
+      padding: 0px;
       width: 26px;
       height: 26px;
       font-size: 1.3em;
-      margin: 10px 18px 10px 1px;
+      margin: 14px 10px 10px 1px;
       touch-action: manipulation;
-      border-radius: 18px;
+      border-radius: 12px;
       background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
-      box-shadow: 3px 3px 5px #515054,
-        -3px -3px 5px #9d9ca2;
+      box-shadow: 2px 2px 3px #515054,
+        -2px -2px 3px #9d9ca2;
     }
 
     .selected {
@@ -302,7 +302,7 @@
 
     .ferramentas {
       height: 50px;
-      width: 300px;
+      width: 332px;
       margin: auto;
       margin-top: -6px;
       margin-bottom: -4px;
@@ -310,12 +310,13 @@
       align-items: center;
       vertical-align: auto;
       float: left;
+      z-index: 100;
     }
 
     #ferramentas2 {
       position: absolute;
       left: 0px;
-      top: 48px;
+      top: 44px;
       height: 320px;
       width: 30px;
       margin: auto;
@@ -1096,6 +1097,7 @@
               context.globalCompositeOperation = globaltemp
               coma++;
               exec(coma)
+              myImg = []
             }
             break;
           case "p":
