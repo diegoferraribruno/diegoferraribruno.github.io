@@ -357,7 +357,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.6 b<br>
+          versão 0.6.6 d<br>
           -novo sistema de desfazer mais leve bugado ainda<br>
           versão 0.6.5 K <br>
           - timeouts retirados (em teste)
@@ -978,27 +978,34 @@
       let len = comandos.length;
       let dist = len - 50
 
-      if (len > 100) {
-        undoLevel = 50
-        comandosExec()
+      if (len > 200) {
+        undoLevel = 100;
+        comandosExec();
         setTimeout(() => {
           img_b64 = canvas.toDataURL('image/png');
           blob = dataURItoBlob(img_b64)
-          comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
+          comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height];
           setTimeout(() => {
-            for (i = 0; i < len - undoLevel; i++) {
-              comandos.shift()
+            let b
+            for (i = 100; i < len; i++) {
+              comandosb.push(comandos[i])
             }
-            comandos.unshift(comando)
+            comandos = []
+            comandos.push(comando);
+            b = comandosb.length
+            for (i = 0; i < b; i++) {
+              comandos.push(comandosb[i])
+            }
+            comandosb = []
             // comandos.unshift(comando)
             undoLevel = 0;
-            comandosExec()
+            setTimeout(() => { exec(0) }, 100)
             setTimeout(() => {
               context.globalCompositeOperation = GCO;
-            }, 100)
-          }, 50)
+            }, 150)
+          }, 100)
 
-        }, 100)
+        }, 120)
 
       }
 
