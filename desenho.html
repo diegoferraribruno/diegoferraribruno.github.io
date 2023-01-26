@@ -78,7 +78,7 @@
 
     #paleta {
       position: relative;
-      width: 184px;
+      width: 110px;
       height: 162px;
       display: block;
       top: 0px;
@@ -89,7 +89,7 @@
 
     #paleta2 {
       position: relative;
-      width: 184px;
+      width: 110px;
       height: 110px;
       display: block;
       top: 4px;
@@ -99,7 +99,7 @@
     }
 
     #menucores {
-      width: 310px;
+      width: 320px;
       height: 310px;
       z-index: 3;
     }
@@ -127,7 +127,7 @@
     .fundobranco {
       margin: 2px;
       min-height: 32px;
-      background-color: #eeeeee66;
+      background-color: #cccccc66;
       border-radius: 20px;
       border-style: solid;
       border-width: 2px;
@@ -156,6 +156,7 @@
       font-size: 1.3em;
       margin: 1px 3px 1px 3px;
       touch-action: manipulation;
+
     }
 
     .mais {
@@ -163,7 +164,7 @@
       border-radius: 20px;
       border-color: #55555555;
       border-width: thin;
-      background-color: #5c7767ee;
+      background-color: #c3c3c3ee;
       display: block;
       float: left;
       padding: 2px;
@@ -309,8 +310,8 @@
     }
 
     .night {
-      background-color: #111111cc;
-      border-color: #333333ee;
+      background-color: #22222288;
+      border-color: #333333dd;
       color: #eeeeee
     }
 
@@ -339,6 +340,12 @@
       width: auto;
       height: auto;
     }
+
+    #paletas {
+      width: 120px;
+      display: block;
+      float: left;
+    }
   </style>
   <title>Desenho 0.6</title>
 </head>
@@ -357,8 +364,10 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.6 f<br>
-          -novo sistema de desfazer mais leve bugado ainda<br>
+          versão 0.6.6 g<br>
+          -otimizacao no codigo da mudança de ferramenta
+          -novo sistema de desfazer mais leve( bugado?)<br>
+          -touchmovecursor<br>
           versão 0.6.5 K <br>
           - timeouts retirados (em teste)
           - Desfazer, refazer atualizado. <br>
@@ -433,7 +442,7 @@
               step="0.1" value="1"></div>
         </div>
 
-        <div id="menucores" class="fundobranco submenu">
+        <div id="menucores" class="submenu">
           <div id="menu" class="fundobranco" onmouseover="mostra()">
             🌈 ◒ 🔆 💧<br>
             <input type="range" orient="vertical" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
@@ -456,9 +465,11 @@
               ok
             </div>
           </div>
-          <div id="paleta" class="fundobranco"></div>
-          <div id="paleta2" class="fundobranco">
-            <br>use o 📌 para guardar <br>ou remover suas cores daqui.
+          <div id="paletas">
+            <div id="paleta" class="fundobranco"></div>
+            <div id="paleta2" class="fundobranco">
+              <br>use o 📌 para guardar <br>ou remover suas cores daqui.
+            </div>
           </div>
         </div>
 
@@ -563,7 +574,7 @@
     </div>
   </div>
   <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-    style="visibility: hidden; position: absolute; left:0px;">
+    onmousedown="cursorMove(event)" style="visibility: hidden; position: absolute; left:0px;">
   </canvas>
   <script>
     const canvas = document.getElementById("canvas");
@@ -989,13 +1000,15 @@
 
             comandos.unshift(comando);
             undoLevel = 0;
-            setTimeout(() => { exec(0) }, 100)
+            // setTimeout(() => {
+            comandosExec();
+            //}, 120)
             setTimeout(() => {
               context.globalCompositeOperation = GCO;
-            }, 100)
+            }, 150)
           }, 80)
 
-        }, 60)
+        }, 120)
 
       }
 
@@ -1302,6 +1315,25 @@
 
     let oldMode = mode;
     async function modeTo(qual) {
+      if (mode != qual) {
+        oldMode = mode;
+        mode = qual;
+        removeClass();
+        toggleSelect(qual);
+        mostraMenu(qual);
+
+      } else {
+        mostraMenu(qual);
+        if (qual == "cam") {
+
+          removeElement("videoC")
+          removeElement("btnChangeCam")
+          modeTo(oldMode)
+          setTimeout(() => removeClass(), 10)
+          return;
+
+        }
+      }
       switch (qual) {
         case "zoom":
           removeClass();
@@ -1319,104 +1351,55 @@
           mode = "zoom"
           break;
         case "cam":
-          if (mode != "cam") {
-            oldMode = mode;
-            mode = qual;
-            removeClass();
-            toggleSelect(qual);
-            camera();
-            context.globalCompositeOperation = globalComposite;
-            memorySwap(globalComposite);
-          } else {
-            removeElement("videoC")
-            removeElement("btnChangeCam")
-            modeTo(oldMode)
-            setTimeout(() => removeClass(), 10)
-          }
+          camera();
+          context.globalCompositeOperation = globalComposite;
+          //  memorySwap(globalComposite);
+
           break;
-        case mode: //se o modo ja estiver ativo:
-          mostraMenu(qual);
-          if (qual == "info") {
-            modeTo(oldMode);
-          }
-          break;
+        /*  case mode: //se o modo ja estiver ativo:
+            mostraMenu(qual);
+            if (qual == "info") {
+              modeTo(oldMode);
+            }
+            break;*/
         case "apagar":
-          oldMode = mode;
-          mode = qual;
-          removeClass();
           setStrokeSize(estrokeWidth);
-          mostraMenu(qual);
-          toggleSelect(qual);
           cursorColor();
           mudaCorAlpha();
           context.globalCompositeOperation = "destination-out";
           memorySwap("destination-out");
           break;
         case "pintar":
-          oldMode = mode;
-          mode = qual;
-          removeClass();
           setStrokeSize(strokeWidth);
-          mostraMenu(qual);
-          toggleSelect(qual);
           setStrokeColor();
           context.globalCompositeOperation = globalComposite;
           memorySwap(globalComposite);
           break;
         case "cores":
-          oldMode = mode;
-          mode = qual;
-          removeClass();
           setStrokeSize(strokeWidth);
-          mostraMenu(qual);
-          toggleSelect(qual);
           setStrokeColor();
           context.globalCompositeOperation = globalComposite;
           memorySwap(globalComposite);
           break;
         case "fundo":
-          oldMode = mode;
-          mode = qual;
-          removeClass();
           setStrokeSize(strokeWidth);
-          mostraMenu(qual);
-          toggleSelect(qual);
           context.globalCompositeOperation = globalComposite;
           memorySwap(globalComposite);
           break;
 
         case "preencher":
-          oldMode = mode;
-          mode = qual;
           document.getElementById("preenchercor").style.backgroundColor =
             strokeColor;
-          removeClass();
-          mostraMenu(qual);
-          toggleSelect(qual);
           context.globalCompositeOperation = globalComposite;
           break;
         case "picker":
-          oldMode = mode;
-          mode = qual;
-          removeClass();
-          toggleSelect(qual);
           break;
         case "info":
-          oldMode = mode;
-          mode = qual;
-          removeClass();
-          mostraMenu(qual);
-          toggleSelect(qual);
           break;
         case "undo":
           undo();
           break;
         case "imagem":
-          oldMode = mode;
-          mode = qual;
-          removeClass();
-          mostraMenu(qual);
-          toggleSelect(qual);
           break;
         case _:
           break;
@@ -1625,13 +1608,13 @@
     function criaPaleta() {
       i = 1;
       let paleta = "";
-      while (i < 24) {
+      while (i < 14) {
         let cor = document.getElementById("H").value
         //    let cor = document.getElementById("H").value - (i*3)
-        paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1] + i * 2}%,${hsla[2] + i * 2
+        paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1] + i * 2}%,${hsla[2] + i * 3
           }%,${hsla[3]
           })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1] + i * 2
-          }%,${hsla[2] + i * 2}%,${hsla[3] * 2 + 0.2});'> </span>`;
+          }%,${hsla[2] + i * 3}%,${hsla[3] * 4 + 0.2});'> </span>`;
         i++;
       }
       document.getElementById("paleta").innerHTML = paleta;
