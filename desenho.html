@@ -120,7 +120,7 @@
     .submenu {
       position: absolute;
       display: block;
-      top: 54px;
+      top: 40px;
       width: 310px;
       height: 80px;
       padding: 8px;
@@ -176,6 +176,7 @@
       height: 28px;
       font-size: 1.6em;
       margin: auto;
+      margin-bottom: 6px;
       touch-action: manipulation;
     }
 
@@ -292,15 +293,32 @@
       width: 100%;
       left: auto;
       justify-content: left;
+      padding-left: 34px;
     }
 
     .ferramentas {
       height: 50px;
-      width: 310px;
+      width: 300px;
       margin: auto;
+      margin-top: -6px;
+      margin-bottom: -4px;
       display: flex;
       align-items: center;
       vertical-align: auto;
+      float: left;
+    }
+
+    #ferramentas2 {
+      position: absolute;
+      left: 0px;
+      top: 48px;
+      height: 320px;
+      width: 30px;
+      margin: auto;
+      display: block;
+      align-items: center;
+      vertical-align: auto;
+      z-index: 100;
     }
 
     #menuinfo {
@@ -533,6 +551,18 @@
 
       </div>
       <div id="ferramentas" class="ferramentas">
+        <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
+            style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
+        <span id="hand" class="mais" onclick="toggleHand()">🖐</span>
+
+        <span id="fundo" title="Fundo falso" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
+
+        <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
+        <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span><span
+          class="mais" title="Redimensionar tela" onclick="x2()">↔️</span>
+        <span class="mais" title="Limpar tela" onmousedown="clearArea()">🗑</span>
+      </div>
+      <div id="ferramentas2">
         <span onmousedown="backPaint()" class="fundobranco2 mais" id="globalComposite"
           style="width: 24px; height: 24px; padding-top: 6px; margin-right: 12px;"><span
             style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
@@ -547,6 +577,7 @@
 
         <span id="imagem" title="adicionar imagem" class="mais" onmousedown="modeTo('imagem')"> 📤</span>
         <span><a id="btn-download" class="mais"> 📥</a></span>
+
       </div>
 
       <div id="canvas_window">
@@ -561,20 +592,7 @@
           </canvas>
         </div>
       </div>
-      <div id="ferramentas2" class="ferramentas naotoque" style="width: 320px; margin: auto">
-        <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
-            style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
-        <span id="hand" class="mais" onclick="toggleHand()">🖐</span>
 
-        <span id="fundo" title="Fundo falso" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
-
-        <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
-        <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span><span
-          class="mais" title="Redimensionar tela" onclick="x2()">↔️</span>
-        <span class="mais" title="Limpar tela" onmousedown="clearArea()">🗑</span>
-
-
-      </div>
       <div id="menucam" style="display:block; visibility:hidden;"></div>
     </div>
   </div>
@@ -1363,8 +1381,7 @@
         case "cam":
           camera();
           context.globalCompositeOperation = globalComposite;
-          //  memorySwap(globalComposite);
-
+          memorySwap(globalComposite);
           break;
         /*  case mode: //se o modo ja estiver ativo:
             mostraMenu(qual);
