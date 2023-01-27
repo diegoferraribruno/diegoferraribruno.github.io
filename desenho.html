@@ -393,7 +393,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.7a<br>
+          versão 0.6.7b<br>
           -NOVO gerenciador de memória<br>
           versão 0.6.6 L<br>
           - novas variaveis swapImg<br>
@@ -443,12 +443,12 @@
         <div id="menupintar" class="fundobranco submenu">
           <span onmousedown="removeClass()" id="mostraCor2"
             style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
-          <span id="coresb" title="cores" class="mais" onmousedown="modeTo('cores')"
+          <span id="coresb" title="cores" class="bloquinho" onmousedown="modeTo('cores')"
             style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
-          <span id="pickerb" title="Pega cor" class="mais" onmousedown="modeTo('picker')"
+          <span id="pickerb" title="Pega cor" class="bloquinho" onmousedown="modeTo('picker')"
             style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
 
-          <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="mais"
+          <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho"
             style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><span
             style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
               ➕</span> </span>
@@ -463,7 +463,7 @@
         <div id="menuapagar" class="fundobranco submenu">
           <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span id="line2">
               ➕</span></span>
-          <span class="mais" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2" min="0.5"
+          <span class="bloquinho" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2" min="0.5"
             max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
           <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
             oninput="strokeSizeRange(this.value)" value="36" width="160px">
@@ -516,6 +516,7 @@
           Suavização de pixels <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
           <br><br> Adicionar Fundo falso:
           <br>
+          <br>
           <span onmousedown="Fundo('img')" class="bloquinho">🖼️</span>
           <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
           </span>
@@ -527,6 +528,8 @@
           <span onmousedown="Fundo('grid3.png')" class="bloquinho" style="background-image: url('./grid3.png')"></span>
           <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
             ❌</span>
+          <br>
+          <br>
           <br><span>
             <input type="file" id="input2" class="custom-file-input" />
           </span><br><br>
@@ -560,7 +563,7 @@
       </div>
       <div id="ferramentas" class="ferramentas">
 
-        <span onmousedown="backPaint()" class="fundobranco2 mais" id="globalComposite"
+        <span onmousedown="backPaint()" class="fundobranco2 bloquinho" id="globalComposite"
           style="width: 24px; height: 24px; padding-top: 6px; margin-right: 12px;"><span
             style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
           <span
@@ -568,7 +571,7 @@
             title="Pintando por baixo">🔲</span>
         </span>
 
-        <span id="fundo" title="Fundo falso" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
+        <span id="fundo" title="Cnfigurações" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
 
 
         <span class="mais" title="Redimensionar tela" onclick="x2()">↔️</span>
@@ -1031,37 +1034,30 @@
     function memorySwap(GCO) {
       let len = comandos.length;
       if (len > 500) {
-        comando = ["s"]
-        comandos.push(comando)
         swapImg = canvas.toDataURL('image/png');
         blobb = dataURItoBlob(swapImg)
-        comando = ["f", "source-over", blobb, 0, 0, canvas.width, canvas.height];
+        comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
         comandos.push(comando)
-        let quantos = 0
-        let first = 0
-        let second = 0
-        for (i = 0; i < len; i++) {
-          if (comandos[i][0] == "s") {
-            quantos++
-            if (quantos == 1) {
-              first = i
-            }
-            if (quantos > 2) {
-              second = quantos - 2
-            }
-          }
+        swapImg = []
+        blobb = []
+        comando = []
+
+      }
+      let posicao = []
+
+      for (i = 0; i < len - 1; i++) {
+        if (comandos[i][0] == "s") {
+          posicao.push(i)
         }
-        if (second !== 0) {
-          console.log("limpa ate", first)
-          for (i = 0; i <= first; i++) {
-            comandos.shift();
-          }
+      }
+      let tamanho = posicao.length
+      console.log(tamanho)
+      if (tamanho > 3 && len > 500) {
+        for (i = 0; i < posicao[tamanho - 3]; i++) {
+          comandos.shift();
         }
-        //        comandos.find("s") (must find position of  2nd element) 
       }
 
-      // refazer aqui 
-      //tira o print, adiciona um comando de limpar e depis o comando "s" a ser criado. se houver 2 "s" entao 
       //para (i=0, i < s2pos;i++){comando.shift()}
       /*
             setTimeout(() => {
@@ -1140,8 +1136,24 @@
             context.globalCompositeOperation = "destination-out";
             context.fillStyle = "#ffffffff";
             context.fillRect(0, 0, canvas.width, canvas.height);
-            coma++;
-            exec(coma)
+
+            let myImg2 = document.createElement("img");
+            let gco2 = comandos[coma][1]
+            myImg2.src = URL.createObjectURL(comandos[coma][2])
+            myImg2.onload = function () {
+              let globaltemp = context.globalCompositeOperation
+              context.globalCompositeOperation = gco2;
+              context.drawImage(
+                myImg2,
+                comandos[coma][3],
+                comandos[coma][4],
+                myImg2.width,
+                myImg2.height);
+              context.globalCompositeOperation = globaltemp
+              coma++;
+              exec(coma)
+              myImg2 = []
+            }
             break;
           case "p":
             drawLine(
