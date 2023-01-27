@@ -1310,8 +1310,8 @@
               stroke,
               linejoin
             );
-            cursor.style.left = (touches[i].clientX - offsetX) + "px";
-            cursor.style.top = (touches[i].clientY - offsetY) + "px";
+            cursor.style.left = (touches[i].clientX) + "px";
+            cursor.style.top = (touches[i].clientY) + "px";
             ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
           }
         }
