@@ -393,7 +393,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.7c<br>
+          versão 0.6.7d<br>
           -NOVO gerenciador de memória<br>
           - touchmovecursor<br>
           versão 0.6.6 L<br>
@@ -1310,8 +1310,8 @@
               stroke,
               linejoin
             );
-            cursor.style.left = ultimoToque.x + offsetX * zoomFactor + "px";
-            cursor.style.top = ultimoToque.y + offsetY * zoomFactor + "px";
+            cursor.style.left = (touches[i].clientX - offsetX) + "px";
+            cursor.style.top = (touches[i].clientY - offsetY) + "px";
             ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
           }
         }
