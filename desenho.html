@@ -422,7 +422,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.7b<br>
+          versão 0.7c<br>
           -rotaciona tela + flip<br>
           versão 0.6.7d<br>
           -NOVO gerenciador de memória<br>
@@ -700,15 +700,21 @@
             modeTo("cam")
           }, 10);
         }
-        win.style.width = parseInt(window.innerWidth, 10) - 48 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
+
         if (screen.width > screen.height) {
           win.classList.add("horizontalwin");
+          win.style.width = parseInt(screen.width, 10) - 200 + "px";
+          win.style.height = parseInt(screen.height, 10) - 80 + "px";
           document.getElementById("ferramentas").classList.add("horizontal");
+          // alert(`virou, ${screen.width} , ${screen.height}`)
         } else {
           win.classList.remove("horizontalwin");
           document.getElementById("ferramentas").classList.remove("horizontal");
+          win.style.width = parseInt(window.innerWidth, 10) - 48 + "px";
+          win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
         }
+
+        // orientation changed, do your magic here
       }
     };
 
