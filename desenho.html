@@ -410,7 +410,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.8<br>
+          versão 0.6.9<br>
           -rotaciona tela<br>
           versão 0.6.7d<br>
           -NOVO gerenciador de memória<br>
@@ -684,7 +684,11 @@
       if (window.orientation !== previousOrientation) {
         previousOrientation = window.orientation;
         if (screen.width > screen.height) {
-
+          if (mode == "cam") {
+            modeTo("cam"); setTimeout(() => {
+              modeTo("cam")
+            }, 10);
+          }
           win.classList.add("horizontalwin");
           win.style.width = parseInt(screen.width, 10) - 200 + "px";
           win.style.height = parseInt(screen.height, 10) - 100 + "px";
@@ -850,6 +854,9 @@
       desenhoDiv.style.height = window.innerHeight + "px";
     }
     function startup() {
+      win.style.width = parseInt(window.innerWidth, 10) - 0 + "px";
+      win.style.height = parseInt(window.innerHeight, 10) - 40 + "px";
+      resizeScreen()
       night()
       modeTo("pintar")
       removeClass();
@@ -1051,9 +1058,16 @@
 
     function undo() {
       let len = comandos.length;
+      let posicao = 0
+      for (i = 0; i < len; i++) {
+        if (i < undoLevel && comandos[i][0] == "s") {
+          posicao = i;
+        }
+      }
       if (undoLevel < len - 1) {
         undoLevel++
-        comandosExec()
+        exec(posicao)
+        console.log(comandos[posicao][0])
         //alert("nivel maximo de desfazer atingindo.");
       } else {
         clearInterval(counter)
@@ -1069,9 +1083,16 @@
     }
 
     function redo() {
+      let len = comandos.length;
+      let posicao = 0
+      for (i = 0; i < len; i++) {
+        if (i < undoLevel && comandos[i][0] == "s") {
+          posicao = i;
+        }
+      }
       if (undoLevel > 0) {
         undoLevel--
-        comandosExec()
+        exec(posicao)
       } else {
         //alert("nivel maximo de refazer atingindo.");
         clearInterval(counter)
@@ -1080,31 +1101,52 @@
     }
     let swapImg
     let blobb
+    let swaps = []
     function memorySwap(GCO) {
+      swaps = []
       let len = comandos.length;
-      if (len > 500) {
+      let posicao = []
+      if (len > 30) {
+
+        for (i = 0; i < len; i++) {
+          if (comandos[i][0] == "s") {
+            swaps.push(comandos[i])
+            posicao.push(i)
+          }
+        }
+        let pL = posicao.length
+
+        let sl = swaps.length
+        let pops = 0
+        if (sl > 15) {
+          pops = sl - 15
+          for (h = 0; h < pops; h++) {
+            swaps.shift()
+          }
+        }
+        if (pL > 1) {
+          for (i = posicao[pL - 1]; i < len; i++) {
+            if (comandos[i][0] != "s")
+              swaps.push(comandos[i])
+          }
+        }
+        swapImg = []
+        blobb = []
+
         swapImg = canvas.toDataURL('image/png');
         blobb = dataURItoBlob(swapImg)
         comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
-        comandos.push(comando)
-        swapImg = []
-        blobb = []
-        comando = []
+        swaps.push(comando)
+        setTimeout(() => {
+          comandos = []
+          let sl = swaps.length
+          for (i = 0; i < sl; i++) {
+            comandos.push(swaps[i])
+          }
 
-      }
-      let posicao = []
+        }, 100)
 
-      for (i = 0; i < len - 1; i++) {
-        if (comandos[i][0] == "s") {
-          posicao.push(i)
-        }
-      }
-      let tamanho = posicao.length
-      console.log(tamanho)
-      if (tamanho > 3 && len > 500) {
-        for (i = 0; i < posicao[tamanho - 3]; i++) {
-          comandos.shift();
-        }
+
       }
 
       //para (i=0, i < s2pos;i++){comando.shift()}
