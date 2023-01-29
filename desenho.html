@@ -79,6 +79,11 @@
       background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
       box-shadow: 2px 2px 3px #515054,
         -2px -2px 3px #9d9ca2;
+      -webkit-transition: -webkit-transform 0.2s;
+      -moz-transition: -moz-transform 0.2s;
+      -o-transition: -o-transform 0.2s;
+      transition: transform 0.2;
+
     }
 
     #paleta {
@@ -392,6 +397,13 @@
       display: block;
       float: left;
     }
+
+    .flip {
+      -webkit-transform: rotateY(180deg);
+      -moz-transform: rotateY(180deg);
+      -o-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+    }
   </style>
   <title>Desenho 0.6</title>
 </head>
@@ -410,8 +422,8 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.6.9<br>
-          -rotaciona tela<br>
+          versão 0.7a<br>
+          -rotaciona tela + flip<br>
           versão 0.6.7d<br>
           -NOVO gerenciador de memória<br>
           - touchmovecursor<br>
@@ -852,11 +864,12 @@
     function resizeScreen() {
       desenhoDiv.style.width = window.innerWidth + "px";
       desenhoDiv.style.height = window.innerHeight + "px";
+      win.style.width = parseInt(window.innerWidth, 10) - 48 + "px";
+      win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
+
     }
     function startup() {
-      win.style.width = parseInt(window.innerWidth, 10) - 0 + "px";
-      win.style.height = parseInt(window.innerHeight, 10) - 40 + "px";
-      resizeScreen()
+
       night()
       modeTo("pintar")
       removeClass();
@@ -1006,6 +1019,7 @@
           }
         });
       initStrokeRange()
+      setTimeout(() => resizeScreen(), 10)
     }
 
     const RGBAToHSLA = (r, g, b, a) => {
@@ -1525,11 +1539,7 @@
         mostraMenu(qual);
         if (qual == "cam") {
 
-          removeElement("videoC")
-          removeElement("btnChangeCam")
-          modeTo(oldMode)
-          setTimeout(() => removeClass(), 10)
-          return;
+          removeVideo()
 
         }
       }
@@ -1612,8 +1622,8 @@
         const botao = document.createElement("div");
         botao.setAttribute("id", "btnChangeCam")
         botao.setAttribute("value", "muda")
-        botao.setAttribute("class", "bloquinho")
-        botao.setAttribute("style", "position: absolute; top: 60px; float: left;")
+        //        botao.setAttribute("class", "bloquinho")
+        botao.setAttribute("style", "position: absolute; top: 270px; left:40px; width:32x; height:32px; font-size:32px;")
         botao.innerHTML = "🔃"
         const videoE = document.createElement("video");
         const escala = canvas.height / 320
@@ -1622,15 +1632,15 @@
         videoE.width = 428 * (escala); // in px
         videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
 
-        let vcW = 428 * escala;
-        let vcH = 320 * escala;
+        let vcW = 428 * escala * 2;
+        let vcH = 320 * escala * 2;
         const videoC = document.createElement("div");
         videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px;`)
         videoC.setAttribute("id", "videoC")
         videoC.appendChild(videoE);
         document.getElementById("tela").appendChild(botao);
-
         canvasDiv.appendChild(videoC)
+        setTimeout(() => win.classList.add("flip"), 1000)
 
         videoE.toggleAttribute("autoplay", "autoplay")
         videoE.toggleAttribute("playsinline", "playsinline")
@@ -1706,7 +1716,7 @@
         // switch camera
         btnChangeCamera.addEventListener("click", function () {
           useFrontCamera = !useFrontCamera;
-
+          win.classList.toggle("flip");
           initializeCamera();
         });
 
@@ -1721,25 +1731,13 @@
           blob = dataURItoBlob(img_b64)
           let offsetW = (W - canvas.width) / -2
           desenha("f", globalComposite, blob, offsetW, -dif, canvas.height, canvas.width)
-          removeElement("videoC")
-          removeElement("btnChangeCam")
-          if (oldMode == "cam" || oldMode == "zoom") {
-            modeTo("apagar")
-          } else {
-            modeTo(oldMode)
-          }
-          setTimeout(() => {
-            removeClass()
-            img_b64 = [];
-            blob = []
-          }, 10)
-
+          removeVideo();
         })
-
         // initialize
         async function initializeCamera() {
           stopVideoStream();
           constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+
           try {
             videoStream = await navigator.mediaDevices.getUserMedia(constraints);
             video.srcObject = videoStream;
@@ -1750,7 +1748,11 @@
 
         initializeCamera();
 
-      } else {
+      }
+    }
+    function removeVideo() {
+      removeClass("flip");
+      setTimeout(() => {
         removeElement("videoC")
         removeElement("btnChangeCam")
         if (oldMode == "cam" || oldMode == "zoom") {
@@ -1758,8 +1760,12 @@
         } else {
           modeTo(oldMode)
         }
-        setTimeout(() => removeClass(), 10)
-      }
+        setTimeout(() => {
+          removeClass();
+        }, 200)
+        img_b64 = [];
+        blob = []
+      }, 10)
     }
     // video constraints
     const constraints = {
