@@ -74,8 +74,8 @@
       width: 342px;
       height: 342px;
       -webkit-touch-overflow: scroll;
-      margin-left: 36px;
-      margin-right: auto;
+      margin-left: 32px;
+      margin-right: 0px;
       background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
       box-shadow: 2px 2px 3px #515054,
         -2px -2px 3px #9d9ca2;
@@ -341,10 +341,6 @@
       width: 40px;
     }
 
-    .horizontalwin {
-      display: block;
-      position: absolute;
-    }
 
     #menuinfo {
       overflow-y: scroll;
@@ -422,7 +418,7 @@
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
           versão 0.7g<br>
           -rotaciona tela + flip<br>
-          versão 0.6.7d<br>
+          versão 0.6.8<br>
           -NOVO gerenciador de memória<br>
           - touchmovecursor<br>
           versão 0.6.6 L<br>
@@ -694,12 +690,23 @@
       if (window.orientation !== previousOrientation) {
         previousOrientation = window.orientation;
         if (mode == "cam") {
-          modeTo("cam");
-          setTimeout(() => {
+          modeTo("cam"); setTimeout(() => {
             modeTo("cam")
-          }, 20);
+          }, 10);
         }
-        resizeScreen()
+
+        if (screen.width > screen.height) {
+
+          document.getElementById("ferramentas").classList.add("horizontal");
+          // alert(`virou, ${screen.width} , ${screen.height}`) 
+
+        } else {
+          win.classList.remove("horizontalwin");
+          document.getElementById("ferramentas").classList.remove("horizontal");
+        }
+        win.style.width = parseInt(window.innerWidth, 10) - 100 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
+
         // orientation changed, do your magic here
       }
     };
@@ -855,8 +862,8 @@
 
         document.getElementById("ferramentas").classList.add("horizontal");
         // alert(`virou, ${screen.width} , ${screen.height}`) 
-        win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) + "px";
+        win.style.width = parseInt(window.innerWidth, 10) - 100 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
       } else {
         win.classList.remove("horizontalwin");
         document.getElementById("ferramentas").classList.remove("horizontal");
@@ -1115,89 +1122,31 @@
     let blobb
     let swaps = []
     function memorySwap(GCO) {
-      swaps = []
       let len = comandos.length;
-      let posicao = []
-      if (len > 30) {
-
-        for (i = 0; i < len; i++) {
-          if (comandos[i][0] == "s") {
-            swaps.push(comandos[i])
-            posicao.push(i)
-          }
-        }
-        let pL = posicao.length
-
-        let sl = swaps.length
-        let pops = 0
-        if (sl > 15) {
-          pops = sl - 15
-          for (h = 0; h < pops; h++) {
-            swaps.shift()
-          }
-        }
-        if (pL > 1) {
-          for (i = posicao[pL - 1]; i < len; i++) {
-            if (comandos[i][0] != "s")
-              swaps.push(comandos[i])
-          }
-        }
-        swapImg = []
-        blobb = []
-
+      if (len > 500) {
         swapImg = canvas.toDataURL('image/png');
         blobb = dataURItoBlob(swapImg)
         comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
-        swaps.push(comando)
-        setTimeout(() => {
-          comandos = []
-          let sl = swaps.length
-          for (i = 0; i < sl; i++) {
-            comandos.push(swaps[i])
-          }
-
-        }, 100)
-
+        comandos.push(comando)
+        swapImg = []
+        blobb = []
+        comando = []
 
       }
+      let posicao = []
 
-      //para (i=0, i < s2pos;i++){comando.shift()}
-      /*
-            setTimeout(() => {
-      
-      
-              let len = comandos.length;
-              if (len > 600) {
-                undoLevel = Math.floor(len / 2);
-                comandosExec();
-                setTimeout(() => {
-                  swapImg = canvas.toDataURL('image/png');
-                  blobb = dataURItoBlob(swapImg)
-                  comando = ["f", "source-over", blobb, 0, 0, canvas.width, canvas.height];
-                  setTimeout(() => {
-                    for (i = 0; i < undoLevel; i++) {
-                      comandos.shift()
-                    }
-      
-                    comandos.unshift(comando);
-                    undoLevel = 0;
-                    // setTimeout(() => {
-                    comandosExec();
-                    //}, 120)
-                    setTimeout(() => {
-                      context.globalCompositeOperation = GCO;
-                      swapImg = []
-                      blobb = []
-                    }, 200)
-                  }, 120)
-      
-                }, 120)
-      
-              }
-            }
-              , 20)
-      */
-
+      for (i = 0; i < len - 1; i++) {
+        if (comandos[i][0] == "s") {
+          posicao.push(i)
+        }
+      }
+      let tamanho = posicao.length
+      console.log(tamanho)
+      if (tamanho > 3 && len > 500) {
+        for (i = 0; i < posicao[tamanho - 3]; i++) {
+          comandos.shift();
+        }
+      }
     }
 
     var executing = false
@@ -1556,6 +1505,7 @@
           cursorColor();
           toggleSelect(qual);
           mode = "zoom"
+          resizeScreen()
           break;
         case "cam":
           camera();
@@ -1638,6 +1588,7 @@
         videoC.appendChild(videoE);
         document.getElementById("tela").appendChild(botao);
         canvasDiv.appendChild(videoC)
+        setTimeout(() => win.classList.add("flip"), 1000)
 
         videoE.toggleAttribute("autoplay", "autoplay")
         videoE.toggleAttribute("playsinline", "playsinline")
@@ -1713,7 +1664,7 @@
         // switch camera
         btnChangeCamera.addEventListener("click", function () {
           useFrontCamera = !useFrontCamera;
-
+          win.classList.toggle("flip");
           initializeCamera();
         });
 
@@ -1738,11 +1689,6 @@
           try {
             videoStream = await navigator.mediaDevices.getUserMedia(constraints);
             video.srcObject = videoStream;
-            if (useFrontCamera) {
-              win.classList.add("flip");
-            } else {
-              removeClass("flip")
-            }
           } catch (err) {
             alert("Could not access the camera");
           }
