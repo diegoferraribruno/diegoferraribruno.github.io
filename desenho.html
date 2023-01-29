@@ -420,7 +420,7 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.7f<br>
+          versão 0.7g<br>
           -rotaciona tela + flip<br>
           versão 0.6.7d<br>
           -NOVO gerenciador de memória<br>
@@ -1638,7 +1638,6 @@
         videoC.appendChild(videoE);
         document.getElementById("tela").appendChild(botao);
         canvasDiv.appendChild(videoC)
-        setTimeout(() => win.classList.add("flip"), 1000)
 
         videoE.toggleAttribute("autoplay", "autoplay")
         videoE.toggleAttribute("playsinline", "playsinline")
@@ -1714,7 +1713,7 @@
         // switch camera
         btnChangeCamera.addEventListener("click", function () {
           useFrontCamera = !useFrontCamera;
-          win.classList.toggle("flip");
+
           initializeCamera();
         });
 
@@ -1739,6 +1738,11 @@
           try {
             videoStream = await navigator.mediaDevices.getUserMedia(constraints);
             video.srcObject = videoStream;
+            if (useFrontCamera) {
+              win.classList.add("flip");
+            } else {
+              removeClass("flip")
+            }
           } catch (err) {
             alert("Could not access the camera");
           }
