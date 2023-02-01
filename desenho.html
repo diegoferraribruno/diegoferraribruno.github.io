@@ -131,7 +131,7 @@
       display: block;
       top: 40px;
       width: 310px;
-      height: 80px;
+      min-height: 60px;
       padding: 8px;
       z-index: 3;
       visibility: hidden;
@@ -399,7 +399,7 @@
       transform: rotateY(180deg);
     }
   </style>
-  <title>Desenho 0.8</title>
+  <title>Desenho 0.8.1a</title>
 </head>
 
 <body class="naotoque" style="cursor: pointer;">
@@ -416,6 +416,9 @@
           <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
             Lei Mao</a> <br>
           <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
+          versão 0.8<br>
+          -menu tamanho da tela<br>
+          -cores nos botoes<br>
           versão 0.8<br>
           -importar somente gif bmp jpg<br>
           -mensagem de suporte depois do download<br>
@@ -463,6 +466,19 @@
           reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
           o que pode influenciar na qualidade do projeto final. vamos ao teste.
           <br>
+        </div>
+        <div id="menutamanho" class="fundobranco submenu">
+          <div onmousedown="tamanho()" class="bloquinho"
+            style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
+            ok
+          </div>
+          Tamanho da imagem:<br>
+          largura: <input id="largura" type="number" maxlength="4" max="1920" value="320" style="width:50px" />px<br>
+          altura: <input id="altura" type="number" maxlength="4" max="1920" value="320" style="width:50px" />px<br>
+
+
+
+          <br><span title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela: ↔️</span><br>
         </div>
         <div id="menuimagem" class="fundobranco submenu aparece">
           Enviar uma imagem<br><br>
@@ -536,7 +552,7 @@
         <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
           Informações <span id="info" title="Informações" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
           <br><br>
-          Redimensionar a tela <span class="bloquinho" title="Redimensionar tela" onclick="x2()">↔️</span>
+          Redimensionar a tela <span class="bloquinho" title="Redimensionar tela" onclick="tamanhom()">↔️</span>
           <br><br>
 
           Modo Noturno / Diurno<span id="night" class="bloquinho" onmousedown="night()"> 🌒</span>
@@ -593,8 +609,8 @@
 
 
 
-        <span id="fundo" title="Cnfigurações" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
-        <span class="mais" title="Redimensionar tela" onclick="x2()">↔️</span>
+        <span id="fundo" title="Configurações" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
+        <span class="mais" title="Redimensionar tela" onclick="tamanhom()">↔️</span>
         <span class="mais" title="Limpar tela" onmousedown="clearArea()">🗑</span>
 
         <span id="imagem" title="adicionar imagem" class="mais" onmousedown="modeTo('imagem')"> 📤</span>
@@ -650,6 +666,7 @@
     const contextV = canvasV.getContext("2d");
     let isDrawing = false;
     let isGrabing = false;
+    let isPicking = false;
     let x = 0;
     let y = 0;
     var offsetX;
@@ -686,7 +703,26 @@
     audio2.volume = 0.4;
     var useFrontCamera = true; //moved up from modeto("cam") to test.
     var videoStream;
-
+    function tamanhom() {
+      document.getElementById("menutamanho").classList.toggle("aparece")
+    }
+    function tamanho() {
+      let W = document.getElementById("largura").value
+      let H = document.getElementById("altura").value
+      canvasDiv.style.width = W + "px"; //add 30px for scroll
+      canvasDiv.style.height = H + "px"; //add 30px for scroll
+      canvas.width = W;
+      canvas.height = H;
+      win.style.width = parseInt(window.innerWidth, 10) - 48 + "px";
+      win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
+      if (W < screen.width && H < screen.height) {
+        zoomIndex = 0;
+        modeTo("zoom");
+      } else {
+        zoomIndex = 3;
+        modeTo("zoom");
+      }
+    }
     //function handleOrientation() {
     var previousOrientation = window.orientation;
     var checkOrientation = function () {
@@ -939,6 +975,8 @@
           isDrawing = true;
         } else if (mode == "zoom") {
           isGrabing = true;
+        } else if (mode == "picker") {
+          isPicking = true
         }
         removeClass();
       });
@@ -951,6 +989,7 @@
           if (mouseOver == false) {
             isDrawing = false;
             isGrabing = false;
+            isPicking = false;
           }
         }, 500);
       });
@@ -974,6 +1013,19 @@
             (x - ultimoToque.x) * zoomFactor,
             (y - ultimoToque.y) * zoomFactor
           );
+        } else if (isPicking) {
+          x = e.offsetX;
+          y = e.offsetY;
+          var imageData = context.getImageData(x, y, 1, 1).data;
+          if (imageData[3] > 1) {
+            RGBAToHSLA(
+              imageData[0],
+              imageData[1],
+              imageData[2],
+              imageData[3]
+            );
+            setStrokeColor();
+          }
         }
         x = e.offsetX;
         y = e.offsetY;
@@ -1951,6 +2003,7 @@
       let quantos = objs.length;
       for (i = 0; i < quantos; i++) {
         document.getElementById(objs[i]).style.backgroundColor = strokeColor;
+        document.getElementById(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
       }
     }
     setStrokeColor();
