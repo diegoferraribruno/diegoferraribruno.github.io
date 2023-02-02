@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #canvas {
+        border: 1px solid rgb(120, 120, 120);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>This is a tool</h1>
+    <p>Paste image to canva and auto resize</p>
+
+    <canvas id="canvas"></canvas><br>
+
+<input type="text" value="paste your image here"><br></input>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const context = canvas.getContext("2d");
+      function colou() {
+        window.clipboardData.getData("Text");
+      }
+      document.onpaste = function (event) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData)
+          .items;
+        console.log(JSON.stringify(items)); // might give you mime types
+        for (var index in items) {
+          var item = items[index];
+          if (item.kind === "file") {
+            var blob = item.getAsFile();
+            let myImg = document.createElement("img");
+            myImg.src = URL.createObjectURL(blob);
+            myImg.onload = function () {
+              canvas.width = myImg.width;
+              canvas.height = myImg.height;
+              let oldGCO = context.globalCompositeOperation;
+              context.globalCompositeOperation = "source-over";
+              context.drawImage(myImg, 0, 0, myImg.width, myImg.height);
+              context.globalCompositeOperation = oldGCO;
+            };
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
