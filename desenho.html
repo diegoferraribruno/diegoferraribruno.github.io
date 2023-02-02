@@ -17,6 +17,8 @@
     }
 
     body {
+      height: 100%;
+      width: 100%;
       background-color: #77767b;
       text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
       overflow-y: hidden;
@@ -70,19 +72,20 @@
     }
 
     #canvas_window {
+      display: flex;
       overflow: scroll;
-      width: 342px;
+      width: 320px;
       height: 342px;
+      margin: auto;
       -webkit-touch-overflow: scroll;
-      margin-left: 32px;
-      margin-right: 0px;
       background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
       box-shadow: 2px 2px 3px #515054,
         -2px -2px 3px #9d9ca2;
-      -webkit-transition: -webkit-transform 0.2s;
-      -moz-transition: -moz-transform 0.2s;
-      -o-transition: -o-transform 0.2s;
-      transition: transform 0.2;
+      -webkit-transition: -webkit-transform 0.4s;
+      -moz-transition: -moz-transform 0.4s;
+      -o-transition: -o-transform 0.4s;
+      transition: transform 0.4s;
+
 
     }
 
@@ -181,10 +184,10 @@
       display: block;
       position: relative;
       padding: 0px;
-      width: 26px;
-      height: 26px;
-      font-size: 1.3em;
-      margin: 14px 10px 10px 1px;
+      width: 36px;
+      height: 36px;
+      font-size: 1.6em;
+      margin: 7px 5px 7px 1px;
       touch-action: manipulation;
       border-radius: 12px;
       background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
@@ -194,10 +197,10 @@
 
     .selected {
       background-color: #00000044;
-      border-color: #dd5555;
+      border-color: #ffffff55;
       border-width: 3px;
-      width: 24px;
-      height: 24px;
+      width: 32px;
+      height: 32px;
       font-size: 2em;
     }
 
@@ -311,7 +314,7 @@
     .ferramentas {
       height: 50px;
       width: 332px;
-      margin-left: 40px;
+      /*padding-left: 44px;*/
       margin: auto;
       margin-top: -6px;
       margin-bottom: -4px;
@@ -322,25 +325,32 @@
     }
 
     #ferramentas2 {
-      position: absolute;
-      left: 0px;
-      top: 0px;
+      /*position: relative;
+      float: left;
+      top: -10px;
       height: 320px;
       width: 30px;
-      margin: auto;
       display: block;
       align-items: center;
-      z-index: 100;
+      z-index: 100;*/
     }
 
     .horizontal {
       display: block;
-      position: absolute;
+      float: right;
       right: 0px;
       top: 6px;
       width: 40px;
     }
 
+    .horizontal2 {
+      display: block;
+
+      float: left;
+      top: 6px;
+      width: 40px;
+      margin-left: 0px;
+    }
 
     #menuinfo {
       overflow-y: scroll;
@@ -619,23 +629,22 @@
         <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
       </div>
 
-      <div id="ferramentas2">
+      <div id="ferramentas2" class="ferramentas">
         <span onmousedown="backPaint()" class="mais" id="globalComposite"
-          style="width: 24px; height: 24px; padding-top: 6px; margin-right: 12px;"><span
+          style="width: 36px; height: 36px; padding-top: 6px; margin-right: 12px;"><span
             style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
           <span
             style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
             title="Pintando por baixo">🔲</span>
         </span>
-        <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
-            style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
-
-        <span id="hand" class="mais" onclick="toggleHand()">🖐</span>
         <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')"
           style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span> <span id="cores" title="cores" class="mais"
           onmousedown="modeTo('cores')" style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
         <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
         <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
+        <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
+            style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
+        <span id="hand" class="mais" onclick="toggleHand()">🖐</span>
 
 
       </div>
@@ -737,14 +746,18 @@
         if (screen.width > screen.height) {
 
           document.getElementById("ferramentas").classList.add("horizontal");
+          document.getElementById("ferramentas2").classList.add("horizontal2");
+
+
           // alert(`virou, ${screen.width} , ${screen.height}`) 
 
         } else {
-          win.classList.remove("horizontalwin");
           document.getElementById("ferramentas").classList.remove("horizontal");
+          document.getElementById("ferramentas2").classList.remove("horizontal2");
+
         }
-        win.style.width = parseInt(window.innerWidth, 10) - 100 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
+        win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
 
         // orientation changed, do your magic here
       }
@@ -862,8 +875,8 @@
           x2size = 1;
           zoomIndex = 0;
           modeTo("zoom");
-          win.style.width = `340px`;
-          win.style.height = `340px`;
+          win.style.width = `320px`;
+          win.style.height = `320px`;
         } else {
           zoomIndex = 3;
           modeTo("zoom");
@@ -874,8 +887,8 @@
         canvasDiv.style.height = H + "px"; //add 30px for scroll
         canvas.width = W;
         canvas.height = H;
-        win.style.width = parseInt(window.innerWidth, 10) - 48 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
+        win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 60 + "px";
       }
       comandosExec()
     }
@@ -897,17 +910,17 @@
       desenhoDiv.style.width = window.innerWidth + "px";
       desenhoDiv.style.height = window.innerHeight + "px";
       if (screen.width > screen.height) {
-        win.classList.add("horizontalwin");
 
         document.getElementById("ferramentas").classList.add("horizontal");
+        document.getElementById("ferramentas2").classList.add("horizontal2");
         // alert(`virou, ${screen.width} , ${screen.height}`) 
-        win.style.width = parseInt(window.innerWidth, 10) - 100 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
+        win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
       } else {
-        win.classList.remove("horizontalwin");
         document.getElementById("ferramentas").classList.remove("horizontal");
-        win.style.width = parseInt(window.innerWidth, 10) - 48 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
+        document.getElementById("ferramentas2").classList.remove("horizontal2");
+        win.style.width = parseInt(window.innerWidth, 10) - 40 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 92 + "px";
       }
 
 
@@ -1190,7 +1203,7 @@
       swaps = []
       let len = comandos.length;
       if (comandos[len - 1][0] != "s") {
-        if (len > 200) {
+        if (len > 300) {
 
           for (i = 0; i < len; i++) {
             if (comandos[i][0] == "s") {
@@ -1665,7 +1678,7 @@
         const escala = canvas.height / 320
         videoE.id = "video"
         videoE.height = canvas.height; // in px
-        videoE.width = 428 * (escala); // in px
+        videoE.width = 429 * (escala); // in px
         videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
 
         let vcW = 428 * escala * 2;
@@ -1723,14 +1736,14 @@
 
             let escala = canvas.width / 320
             let vcW = 428 * escala;
-            let vcH = 320 * escala;
+            let vcH = 318 * escala;
 
             if (proporcao > 1) {
               canvasV.height = canvas.height
               canvasV.width = canvas.height * proporcao
 
               let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
-              let offsetH = - 324 * escala
+              let offsetH = -canvas.height - 5
               videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
             } else {
               proporcao = videoHeight / videoWidth
@@ -1738,7 +1751,7 @@
               canvasV.height = canvas.width * proporcao
 
               let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
-              let offsetH = - 324 * escala - ((canvasV.height - canvas.height) / 2)
+              let offsetH = - canvas.height * escala - ((canvasV.height - canvas.height) / 2)
               videoC.setAttribute("style",
                 `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
             }
@@ -1761,12 +1774,13 @@
 
           let W = canvasV.width;
           let H = canvasV.height;
-          let dif = (H - canvas.height) / 2
           contextV.drawImage(video, 0, 0, W, H)
           img_b64 = canvasV.toDataURL('image/png');
           blob = dataURItoBlob(img_b64)
           let offsetW = (W - canvas.width) / -2
-          desenha("f", globalComposite, blob, offsetW, -dif, canvas.height, canvas.width)
+          let offsetH = (H - canvas.height) / -2
+
+          desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
           removeVideo();
         })
         // initialize
