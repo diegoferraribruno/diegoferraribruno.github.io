@@ -1,157 +1,173 @@
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta http-equiv="Content-Security-Policy" content="default-src * gap: data: blob: 'unsafe-inline' 'unsafe-eval' ws: wss:;">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src * gap: data: blob: 'unsafe-inline' 'unsafe-eval' ws: wss:;">
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-<style>
-html {
-  height: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-*,
-*:before,
-*:after {
-  -webkit-box-sizing: inherit;
-  -moz-box-sizing: inherit;
-  box-sizing: inherit;
-  position: absolute;
-}
-body {
-  overflow-x: hidden !important;
-  overflow-y: hidden !important;
-  margin: 0px;
-  padding: 0px;
-  background-color: #333333;
-  font-weight: 600 !important;
-  font-size: 18px;
-  font-family: "segoe ui emoji", "noto color emoji", "android emoji",
-    "emojisymbols", "segoe ui symbol" "twemoji mozilla",
-    "emojione mozilla", "apple color emoji";
-  width: 5400px;
-  height: 2760px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  color: white;
-  background-image: url("./bg.jpg");
-}
-#vruler {
-  border-width: 0px 1px 0px 0px;
-  height: 2460px;
-}
-#hruler {
-  border-width: 1px 0px 0px 0px;
-  width: 100%;
-}
-#cursorXY {
-  font-family: sans-serif;
-  left: 50px;
-  top: 50px;
-  font-size: 10px;
-  margin: -12px 0px 0px 0px;
-  width: 240px;
-  color: rgba(255, 255, 255, 0.5);
-}
-.ruler {
-  border-style: dotted;
-  width: 1px;
-  left: 0px;
-  top: 0px;
-  z-index: 1000;
-  pointer-events: none;
-  border-color: rgba(255, 255, 255, 0.2);
-}
-.panel {
-  border-color: #19295559;
-  border-style: solid;
-  background-color: #52a4bd73;
-  border-width: 2px 2px 2px 2px;
-  color: rgba(120, 180, 200);
-  border-radius: 4px;
-  padding: 4px;
-  font-size: 18px;
-}
-#guide {
-  border-radius: 4px;
-  border-style: dashed;
-  border-color: rgba(87, 143, 192, 126);
-  border-width: 1px;
-  visibility: hidden;
-  z-index: 1000;
-  pointer-events: none;
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="gray">
+  <style>
+    html {
+      height: 100%;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
 
-}
-#grid{
-  background-image: url("./grid.png");
-  width:100%;
-  height:100%;
-}
-iframe{
-width: 100%;
-height: 100%;
-}
-#caixa{
-  top:60px;
-}
-.formulario{
-  width: 180px;
-  left: 20px;
-  position: relative;
-}
-.botao{
-  position: relative;
-  background-color: gray;
-  padding: 2px;
-  border-radius: 4px;
-  min-width: 32px;
-  margin-right: 32px;
+    *,
+    *:before,
+    *:after {
+      -webkit-box-sizing: inherit;
+      -moz-box-sizing: inherit;
+      box-sizing: inherit;
+      position: absolute;
+    }
 
-}
-.menu{
-  min-width: 26px;
-  position: relative;
-  display: block;
-  float: left;
-}
-.icon{
-  font-size: 30px;
-}
-.title{
-  min-width: 220px;
-  position: relative;
-  margin-top: -100px;
-  display: flex;
-  float: left;
-}
-.hidden{
-  visibility: hidden;
-}
-.borderless{
-  border: 0px;
-  border-style: none;
-}
-</style>
-<title>Diego.io 0.1.4 desktop</title>
+    body {
+      overflow-x: hidden !important;
+      overflow-y: hidden !important;
+      margin: 0px;
+      padding: 0px;
+      background-color: #333333;
+      font-weight: 600 !important;
+      font-size: 18px;
+      font-family: "segoe ui emoji", "noto color emoji", "android emoji",
+        "emojisymbols", "segoe ui symbol" "twemoji mozilla",
+        "emojione mozilla", "apple color emoji";
+      width: 5400px;
+      height: 2760px;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      color: white;
+      background-image: url("./bg.jpg");
+    }
+
+    #vruler {
+      border-width: 0px 1px 0px 0px;
+      height: 2460px;
+    }
+
+    #hruler {
+      border-width: 1px 0px 0px 0px;
+      width: 100%;
+    }
+
+    #cursorXY {
+      font-family: sans-serif;
+      left: 50px;
+      top: 50px;
+      font-size: 10px;
+      margin: -12px 0px 0px 0px;
+      width: 240px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .ruler {
+      border-style: dotted;
+      width: 1px;
+      left: 0px;
+      top: 0px;
+      z-index: 1000;
+      pointer-events: none;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .panel {
+      border-color: #19295559;
+      border-style: solid;
+      background-color: #52a4bd73;
+      border-width: 2px 2px 2px 2px;
+      color: rgba(120, 180, 200);
+      border-radius: 4px;
+      padding: 4px;
+      font-size: 18px;
+    }
+
+    #guide {
+      border-radius: 4px;
+      border-style: dashed;
+      border-color: rgba(87, 143, 192, 126);
+      border-width: 1px;
+      visibility: hidden;
+      z-index: 1000;
+      pointer-events: none;
+
+    }
+
+    #grid {
+      background-image: url("./grid.png");
+      width: 100%;
+      height: 100%;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+
+    #caixa {
+      top: 60px;
+    }
+
+    .formulario {
+      width: 180px;
+      left: 20px;
+      position: relative;
+    }
+
+    .botao {
+      position: relative;
+      background-color: gray;
+      padding: 2px;
+      border-radius: 4px;
+      min-width: 32px;
+      margin-right: 32px;
+
+    }
+
+    .menu {
+      min-width: 26px;
+      position: relative;
+      display: block;
+      float: left;
+    }
+
+    .icon {
+      font-size: 30px;
+    }
+
+    .title {
+      min-width: 220px;
+      position: relative;
+      margin-top: -100px;
+      display: flex;
+      float: left;
+    }
+
+    .hidden {
+      visibility: hidden;
+    }
+
+    .borderless {
+      border: 0px;
+      border-style: none;
+    }
+  </style>
+  <title>Diego.io 0.1.4 desktop</title>
 </head>
 
-<body
-onmousemove="mouse_position(event)"
-onmousedown="mouse_down(event)"
-onmouseup="mouse_up(event)"
-ontouchmove="mouse_position(event)"
-ontouchstart="mouse_down(event)"
-ontouchend="mouse_up(event)"
-width="100%";
->
-<div id="sobre" style='color:#333322; width:320px; height: 300px; display:block; text-align:right;'>
-  <em>
-<pre>
+<body onmousemove="mouse_position(event)" onmousedown="mouse_down(event)" onmouseup="mouse_up(event)"
+  ontouchmove="mouse_position(event)" ontouchstart="mouse_down(event)" ontouchend="mouse_up(event)" width="100%" ;>
+  <div id="sobre" style='color:#333322; width:320px; height: 300px; display:block; text-align:right;'>
+    <em>
+      <pre>
 Este site é uma zona
 de experimentações e descobertas
 no mundo da programação e desenvolvimento
@@ -163,450 +179,488 @@ aqui haverá um video descritivo deste conteúdo.
 Diego Ferrari Bruno. (@diegofbrasil twitter)
 
 </pre>
-</em>
-</div>
-
-<div id="grid"></div>
-<div id="caixa-body" style="width:100%; height:100%; font-size:24px;" ontouchstart="Regua()" onclick="Regua()"></div>
-<div id="vruler" class="ruler"></div>
-<div id="hruler" class="ruler"></div>
-<div id="panels"></div>
-<div id="guide"></div>
-<div id="menu-esquerdo">
-  <div id="caixa">
-    <div onclick="menuCalc()" ontouchstart="menuCalc()" class="menu icon">➗</div>
-    <div onclick="menuAlfabeto()" ontouchstart="menuAlfabeto()" class="menu icon">🔫</div>
-    <div onclick="menuDesenho()" ontouchstart="menuDesenho()" class="menu icon">🎨</div>
-    <div id="dado" onclick="dado()" ontouchstart="dado()" class="menu icon">
-      <span style="float:left; display:block; width:20px; margin-left: 38px; position:absolute; color:white" id="sorte"></span>🎲</div>
-
-    <div id="caixa-header"></div>
+    </em>
   </div>
-</div>
-<div id="cursorXY"></div>
-<script>
-//document.addEventListener('touchmove', function(e) {e.preventDefault()}, false);
-///--tool REGUA --/// 📏 ⚙️➗❌
 
-var menuEsq = {
-  "Alfabeto":"🔫",
-  "Calculadora":"➗",
-  "Desenho":"🎨",
-  "Identifica":"📛",
-  "Fundo":"🖼️"
+  <div id="grid"></div>
+  <div id="caixa-body" style="width:100%; height:100%; font-size:24px;" ontouchstart="Regua()" onclick="Regua()"></div>
+  <div id="vruler" class="ruler"></div>
+  <div id="hruler" class="ruler"></div>
+  <div id="panels"></div>
+  <div id="guide"></div>
+  <div id="menu-esquerdo">
+    <div id="caixa">
+      <div onclick="menuCalc()" ontouchstart="menuCalc()" class="menu icon">➗</div>
+      <div onclick="menuAlfabeto()" ontouchstart="menuAlfabeto()" class="menu icon">🔫</div>
+      <div onclick="menuApoie()" ontouchstart="menuApoie()" class="menu icon">💸 </div>
+      <div onclick="menuDesenho()" ontouchstart="menuDesenho()" class="menu icon">🎨</div>
+      <div id="dado" onclick="dado()" ontouchstart="dado()" class="menu icon">
+        <span style="float:left; display:block; width:20px; margin-left: 38px; position:absolute; color:white"
+          id="sorte"></span>🎲
+      </div>
 
-}
-var menu = {
-  "Mover":"💠",
-  "Remover":"❌",
-  "Desenho":"🎨",
-  "Alfabeto":"🔫",
-  "Calculadora":"➗",
-  "Titulo":"T",
-  "WebFrame":"🌎",
-  "Fundo":"🖼️"
-//  "Nota":"📝",
-//  "Regua":"📏",
-//  "BatePapo":"💬",
-//  "Pong":"🏓",
-//  "Twitter":"🐦️",
-//  "YouTube":"📽️",
-//  "Favoritos":"📑",
-//  "Album":"📕",
-//  "Ferramentas":"🧰",
-}
+      <div id="caixa-header"></div>
+    </div>
+  </div>
+  <div id="cursorXY"></div>
+  <script>
+    //document.addEventListener('touchmove', function(e) {e.preventDefault()}, false);
+    ///--tool REGUA --/// 📏 ⚙️➗❌
 
-var alvo = ""
+    var menuEsq = {
+      "Alfabeto": "🔫",
+      "Calculadora": "➗",
+      "Desenho": "🎨",
+      "Identifica": "📛",
+      "Fundo": "🖼️",
+      "Apoie": "💸"
 
-var mode = "criativo"
-let elements = 0;
-let cursorxy = document.getElementById("cursorXY");
-let guide = document.getElementById("guide");
-let pointer = { x: 0, y: 0 };
-let pointerstart = { x: 0, y: 0 };
-let vruler = document.getElementById("vruler");
-let hruler = document.getElementById("hruler");
-let ultimoDado = 1;
-const gridSize = 10;
-const apps = {
-  ferramentas:{
-    icon:"🧰",
-    varsao:"0.0.1",
-    modo:"criativo",
-  }
-}
-let janela = [{
-  name:"www",
-  tipo:"iframe",
-  icon:"🌎",
-  ver:"001",
-  url:"#",
-  inner:`<iframe class="xyz" url="#">endereço:</iframe>`,
-}]
-
-function mouse_position(e) {
-  e.preventDefault();
-  pointer.x = Math.floor(e.pageX / gridSize) * gridSize;
-  pointer.y = Math.floor(e.pageY / gridSize) * gridSize;
-  if(mode === "criativo"){
-    vruler.style.left = pointer.x + "px";
-    hruler.style.top = pointer.y + "px";
-    cursorxy.style.left = pointer.x + "px";
-    cursorxy.style.top = pointer.y + "px";
-    let differenceX = pointer.x - pointerstart.x;
-    let differenceY = pointer.y - pointerstart.y;
-    if (differenceX > 0) {
-        guide.style.width = differenceX + "px";
-    } else {
-      guide.style.left = pointer.x + "px";
-      guide.style.width = -differenceX + "px";
     }
-    if (differenceY > 0) {
-      guide.style.height = differenceY + "px";
-    } else {
-      guide.style.top = pointer.y + "px";
-      guide.style.height = -differenceY + "px";
-    }
-      cursorxy.innerHTML = "x: " + pointer.x + " y: " + pointer.y;
-  }
+    var menu = {
+      "Mover": "💠",
+      "Remover": "❌",
+      "Desenho": "🎨",
+      "Alfabeto": "🔫",
+      "Calculadora": "➗",
+      "Titulo": "T",
+      "WebFrame": "🌎",
+      "Fundo": "🖼️",
+      "Apoie": "💸"
 
-}
-function mouse_down(event) {
-  if (mode ==="criativo"){
-    guide.style.width = "0px";
-    guide.style.height = "0px";
-    guide.style.left = pointer.x + "px";
-    guide.style.top = pointer.y + "px";
-    guide.style.visibility = "visible";
-    pointerstart.x = pointer.x;
-    pointerstart.y = pointer.y;
-  }
-}
-function mouse_up(event) {
-  if (mode ==="criativo"){
-    let largura = pointer.x - pointerstart.x;
-    let altura = pointer.y - pointerstart.y;
 
-    if (largura >= gridSize && altura >= gridSize) {
-      criarPainel(elements,pointerstart.y,pointerstart.x,largura,altura);
-    } else if (largura <= -gridSize && altura <= -gridSize) {
-      criarPainel(elements,pointer.y,pointer.x,-largura,-altura);
-    } else if (largura >= gridSize && altura <= -gridSize) {
-      criarPainel(elements,pointer.y,pointerstart.x,largura,-altura);
-    } else if (largura <= -gridSize && altura >= gridSize) {
-      criarPainel(elements,pointerstart.y,pointer.x,-largura,altura)
+      //  "Nota":"📝",
+      //  "Regua":"📏",
+      //  "BatePapo":"💬",
+      //  "Pong":"🏓",
+      //  "Twitter":"🐦️",
+      //  "YouTube":"📽️",
+      //  "Favoritos":"📑",
+      //  "Album":"📕",
+      //  "Ferramentas":"🧰",
     }
 
-    guide.style.visibility = "hidden";
-    guide.style.top = "0px";
-    guide.style.left = "0px";
-  }
-}
-function criarPainel(id,top,left,width,height){
-  var elemento_pai = document.getElementById("panels");
-  if(!document.getElementById(id)){
+    var alvo = ""
 
-  var janela = document.createElement('div');
-  janela.setAttribute("id", id);
+    var mode = "criativo"
+    let elements = 0;
+    let cursorxy = document.getElementById("cursorXY");
+    let guide = document.getElementById("guide");
+    let pointer = { x: 0, y: 0 };
+    let pointerstart = { x: 0, y: 0 };
+    let vruler = document.getElementById("vruler");
+    let hruler = document.getElementById("hruler");
+    let ultimoDado = 1;
+    const gridSize = 10;
+    const apps = {
+      ferramentas: {
+        icon: "🧰",
+        varsao: "0.0.1",
+        modo: "criativo",
+      }
+    }
+    let janela = [{
+      name: "www",
+      tipo: "iframe",
+      icon: "🌎",
+      ver: "001",
+      url: "#",
+      inner: `<iframe class="xyz" url="#">endereço:</iframe>`,
+    }]
 
-  var header = document.createElement("span");
-  header.setAttribute("id", id+"-header");
-  header.setAttribute("style", `width:${width}; height:30px; margin-bottom:12px; position:relative; left:"60px";`);
-  header.innerHTML = "";
-
-  var oMenu = document.createElement("span")
-  oMenu.setAttribute("id", id+"-menu");
-  oMenu.setAttribute("onclick",`hideHeader("${id}")`)
-  oMenu.setAttribute("style", "position:relative; float:left;")
-  oMenu.innerHTML = "⭕"
-  janela.appendChild(oMenu)
-
-  if (width>200){
-    // Criar o nó de conteudo
-    janela.appendChild(header);
-    var conteudo = document.createElement("div");
-    conteudo.setAttribute("id", id+"-body");
-    conteudo.setAttribute("style", `margin-top: 20px; width:98%; height:90%;`);
-    //conteudo.setAttribute("onclick",`caixa("${id}")`);
-    conteudo.innerHTML = " ";
-    janela.appendChild(conteudo);
-    elemento_pai.appendChild(janela);
-    caixa( id+"-header");
-  }
-  else{
-    janela.appendChild(header);
-    header.innerHTML = "";
-    elemento_pai.appendChild(janela);
-    Lixo(id);
-    Atalho(id)
-  }
-  //hideHeader(id)
-  janela = document.getElementById(id);
-  janela.setAttribute("class", "panel");
-  janela.setAttribute("style", `top:${top}px; left:${left}px; width:${width}px; height:${height}px;`);
-  elements++;
-}
-}
-function Regua(){
-  if (mode != "criativo"){
-    mode = "criativo"
-    hruler.style.visibility = "visible";
-    vruler.style.visibility = "visible";
-    cursorxy.style.visibility = "visible";
-  }
-  else{
-    mode = "usando";
-    hruler.style.visibility = "hidden";
-    vruler.style.visibility = "hidden";
-    cursorxy.style.visibility = "hidden";
-  }
-}
-
-function div(parametros="",conteudo){return `<div ${parametros}>${conteudo}</div>`}
-
-function caixa(onde="caixa-header"){
-  var limpa = onde.replace("-header","")
-  let count = 0;
-  Object.keys(menu).forEach(key => {
-    let item = document.createElement("div")
-    item.setAttribute("title",key)
-    item.setAttribute("style","position:relative; float:left;")
-    item.setAttribute("onclick",`${key}("${limpa}")`);
-    item.setAttribute("ontouchend",`${key}("${limpa}")`);
-    item.innerHTML = menu[key]
-    setTimeout(function(){document.getElementById(onde).appendChild(item)}, 80*count);
-    count ++;
-  });
-}
-
-function Remover(id){
-  var elem = document.getElementById(id);
-  elem.parentNode.removeChild(elem);
-}
-function WebFrame(id){
-  let button = document.createElement("span")
-  button.setAttribute("class","botao")
-  button.setAttribute("onclick",`NewUrl("${id}")`)
-  button.setAttribute("ontouchend",`NewUrl("${id}")`)
-  button.innerHTML = "Abrir"
-  document.getElementById(id+"-header").innerHTML = "🌎";
-  document.getElementById(id+"-header").appendChild(button)
-  Lixo(id)
-  let form = document.createElement("input")
-    form.setAttribute("type","text")
-    form.setAttribute("class","formulario")
-    form.setAttribute("id",id+"-endereco")
-    form.setAttribute("value","#")
-  document.getElementById(id+"-header").appendChild(form)
-  }
-
-function NewUrl(id){
-  let input = id+"-endereco"
-  let url = document.getElementById(input).value
-  Iframer(id, url);
-}
-
-function Iframer(id, url){
-  let pai = document.getElementById(id)
-  let larg = (parseInt(pai.style.width, 10)-40)+"px";
-  let ifra = document.createElement("IFRAME")
-  ifra.setAttribute("id", id+"-iframe")
-  ifra.setAttribute("class", "borderless")
-  ifra.setAttribute("src", url)
-  ifra.setAttribute("width","360px")
-  ifra.setAttribute("height","480px")
-  let corpo = document.getElementById(id+"-body")
-  corpo.setAttribute("width",larg+"")
-  corpo.innerHTML="";
-  corpo.appendChild(ifra)
-  hideHeader(id)
-
-}
-function Calculadora(id){
-  let pai = document.getElementById(id)
-  pai.style.width = "240px";
-  pai.style.height = "326px";
-  document.getElementById(id+"-header").innerHTML = "";
-  MoveBot(id)
-  Lixo(id)
-  Iframer(id, "calculadora.html")
-  removeClass(id,"panel")
-}
-function menuCalc(){
-    let w = window.innerWidth/2-180;
-    let h = window.innerHeight/2-180;
-    let largura = 360;
-    let altura = 360;
-    let id = toString(elements)
-    criarPainel("calc",h,w,largura,altura)
-    setTimeout(function(){Calculadora("calc")},500)
-  }
-
-function Alfabeto(id=0){
-  let pai = document.getElementById(id)
-  pai.style.width = "360px";
-  pai.style.height = "380px";
-  document.getElementById(id+"-header").innerHTML = "";
-  MoveBot(id)
-  Lixo(id)
-  Iframer(id, "alfabeto.html")
-//  removeClass(id,"panel")
-
-}
-function Desenho(id=0){
-  let pai = document.getElementById(id)
-  pai.style.width = "360px";
-  pai.style.height = "520px";
-  pai.style.overflowY = "hidden";
-  document.getElementById(id+"-header").innerHTML = "";
-  MoveBot(id)
-  Lixo(id)
-  Iframer(id, "desenho.html")
-  document.getElementById(id+"-iframe").setAttribute("scrolling","no");
-//  removeClass(id,"panel")
-
-}
-var oldmode = "desenhar"
-function Mover(id){
-  oldmode = mode;
-  if ( alvo == ""){
-    alvo = id;
-    cursorxy.innerHTML = "💠";
-  }else{
-    alvo= "";}
-}
-function Titulo(id){
-
-  removeClass(id,"panel")
-  let heade =  document.getElementById(id+"-header");
-  let menu =  document.getElementById(id+"-header");
-  heade.innerHTML ="";
-  MoveBot(id);
-  Lixo(id)
-  let form = document.createElement("input")
-  form.setAttribute("type","text")
-  form.setAttribute("class","formulario")
-  form.setAttribute("id",id+"-endereco")
-  form.setAttribute("value","titulo")
-  heade.appendChild(form)
-  let button = document.createElement("span")
-  button.setAttribute("class","botao")
-  button.setAttribute("onclick",`NewTitle("${id}")`)
-  button.setAttribute("ontouchend",`NewTitle("${id}")`)
-  button.innerHTML = "ok"
-  heade.appendChild(button)
-  heade.setAttribute("style","z-index:1;")
-  document.getElementById(id+"-menu").classList.toggle("hidden")
-//  hideTitle(id)
-}
-function NewTitle(id){
-  let url = document.getElementById(id+"-endereco").value
-  let content = `<h1>${url}</h1>`;
-  document.getElementById(id+"-body").innerHTML =
-  `<span class='title' onclick="hideTitle('${id}')" ontouchend="hideTitle('${id}')" > ${content} </span>`;
-  hideHeader(id)
-}
-function hideTitle(id){
-  document.getElementById(id+"-header").classList.toggle("hidden")
-  document.getElementById(id+"-menu").classList.toggle("hidden")
-}
-
-function hideHeader(id){
-  document.getElementById(id+"-header").classList.toggle("hidden")
-}
-
-function Lixo(id){
-  let heade =  document.getElementById(id+"-header")
-  let lixo = document.createElement("span")
-  lixo.setAttribute("class","menu")
-  lixo.setAttribute("onclick",`Remover("${id}")`)
-  lixo.setAttribute("ontouchend",`Remover("${id}")`)
-  lixo.innerHTML = "❌"
-  heade.appendChild(lixo)
-}
-
-//////////////////Atalho zone em desenvolvimento
-
-function Atalho(id){
-  let heade =  document.getElementById(id+"-header")
-  let lixo = document.createElement("span")
-  lixo.setAttribute("class","menu")
-  lixo.setAttribute("onclick",`criarAtalho("${id}")`)
-  lixo.setAttribute("ontouchend",`CriarAtalho("${id}")`)
-  lixo.innerHTML = "A"
-  heade.appendChild(lixo)
-}
-
-function MoveBot(id){
-  let heade =  document.getElementById(id+"-header")
-  let lixo = document.createElement("span")
-  lixo.setAttribute("class","menu")
-  lixo.setAttribute("onmousedown",`Mover("${id}")`)
-  lixo.setAttribute("onmouseup",`Mover("${id}")`)
-  lixo.setAttribute("ontouchstart",`Mover("${id}")`)
-  lixo.setAttribute("ontouchend",`Mover("${id}")`)
-  lixo.innerHTML ="💠"
-  heade.appendChild(lixo)
-}
-
-function removeClass(id,classe) {
-  var element = document.getElementById(id);
-  element.classList.remove(classe);
-}
-
-setInterval(function(){
-  if (alvo != ""){
-    document.getElementById(alvo).style.left = (pointer.x-30) + "px";
-    document.getElementById(alvo).style.top = (pointer.y-9) + "px";
-  }},80)
-
-function menuAlfabeto(){
-    let w = window.innerWidth/2-180;
-    let h = window.innerHeight/2-180;
-    largura = 360;
-    altura = 360;
-    let id = toString(elements)
-    criarPainel("alfabeto",h,w,largura,altura)
-    setTimeout(function(){Alfabeto("alfabeto")},500)
-  }
-function menuDesenho(){
-    let w = window.innerWidth/2-180;
-    let h = window.innerHeight/2-280;
-    largura = 360;
-    altura = 580;
-    let id = toString(elements)
-    criarPainel("desenho",h,w,largura,altura)
-    setTimeout(function(){Desenho("desenho")},500)
-  }
-function jogaDado(min=1, max=7) {
-    return Math.floor(Math.random() * (max - min) + min);
-  }
-function Fundo(id=0){
-  var item = prompt("endereço da imagem de fundo", "https://pbs.twimg.com/profile_images/1532631961860247555/UeY1CMQF_400x400.jpg");
-  var elem = document.getElementById(id);
-        if (item == null || item == "") {
-            alert("fundo do app removido");
-            elem.style.backgroundImage = `none`;
+    function mouse_position(e) {
+      e.preventDefault();
+      pointer.x = Math.floor(e.pageX / gridSize) * gridSize;
+      pointer.y = Math.floor(e.pageY / gridSize) * gridSize;
+      if (mode === "criativo") {
+        vruler.style.left = pointer.x + "px";
+        hruler.style.top = pointer.y + "px";
+        cursorxy.style.left = pointer.x + "px";
+        cursorxy.style.top = pointer.y + "px";
+        let differenceX = pointer.x - pointerstart.x;
+        let differenceY = pointer.y - pointerstart.y;
+        if (differenceX > 0) {
+          guide.style.width = differenceX + "px";
         } else {
-          elem.style.backgroundImage = `url(${item})`;
+          guide.style.left = pointer.x + "px";
+          guide.style.width = -differenceX + "px";
         }
-}
-function dado(){
-  document.getElementById("dado").removeAttribute("onclick");
-  document.getElementById("dado").removeAttribute("ontouchstart");
-  var audio = new Audio('./diceThrow3.ogg');
-  audio.play();
-  setTimeout(function(){document.getElementById("sorte").innerHTML= jogaDado()},100)
-  setTimeout(function(){document.getElementById("sorte").innerHTML= jogaDado()},200)
-  setTimeout(function(){document.getElementById("sorte").innerHTML= jogaDado()},400)
-  ultimoDado = jogaDado();
-  setTimeout(function(){document.getElementById("sorte").innerHTML= ultimoDado},600)
-  setTimeout(function(){
-    document.getElementById("sorte").innerHTML="";
-   document.getElementById("dado").setAttribute("onclick","dado()");
-    document.getElementById("dado").setAttribute("ontouchstart","dado()");
-  },2000)
-}
-    </script>
-  </body>
+        if (differenceY > 0) {
+          guide.style.height = differenceY + "px";
+        } else {
+          guide.style.top = pointer.y + "px";
+          guide.style.height = -differenceY + "px";
+        }
+        cursorxy.innerHTML = "x: " + pointer.x + " y: " + pointer.y;
+      }
+
+    }
+    function mouse_down(event) {
+      if (mode === "criativo") {
+        guide.style.width = "0px";
+        guide.style.height = "0px";
+        guide.style.left = pointer.x + "px";
+        guide.style.top = pointer.y + "px";
+        guide.style.visibility = "visible";
+        pointerstart.x = pointer.x;
+        pointerstart.y = pointer.y;
+      }
+    }
+    function mouse_up(event) {
+      if (mode === "criativo") {
+        let largura = pointer.x - pointerstart.x;
+        let altura = pointer.y - pointerstart.y;
+
+        if (largura >= gridSize && altura >= gridSize) {
+          criarPainel(elements, pointerstart.y, pointerstart.x, largura, altura);
+        } else if (largura <= -gridSize && altura <= -gridSize) {
+          criarPainel(elements, pointer.y, pointer.x, -largura, -altura);
+        } else if (largura >= gridSize && altura <= -gridSize) {
+          criarPainel(elements, pointer.y, pointerstart.x, largura, -altura);
+        } else if (largura <= -gridSize && altura >= gridSize) {
+          criarPainel(elements, pointerstart.y, pointer.x, -largura, altura)
+        }
+
+        guide.style.visibility = "hidden";
+        guide.style.top = "0px";
+        guide.style.left = "0px";
+      }
+    }
+    function criarPainel(id, top, left, width, height) {
+      var elemento_pai = document.getElementById("panels");
+      if (!document.getElementById(id)) {
+
+        var janela = document.createElement('div');
+        janela.setAttribute("id", id);
+
+        var header = document.createElement("span");
+        header.setAttribute("id", id + "-header");
+        header.setAttribute("style", `width:${width}; height:30px; margin-bottom:12px; position:relative; left:"60px";`);
+        header.innerHTML = "";
+
+        var oMenu = document.createElement("span")
+        oMenu.setAttribute("id", id + "-menu");
+        oMenu.setAttribute("onclick", `hideHeader("${id}")`)
+        oMenu.setAttribute("style", "position:relative; float:left;")
+        oMenu.innerHTML = "⭕"
+        janela.appendChild(oMenu)
+
+        if (width > 200) {
+          // Criar o nó de conteudo
+          janela.appendChild(header);
+          var conteudo = document.createElement("div");
+          conteudo.setAttribute("id", id + "-body");
+          conteudo.setAttribute("style", `margin-top: 20px; width:98%; height:90%;`);
+          //conteudo.setAttribute("onclick",`caixa("${id}")`);
+          conteudo.innerHTML = " ";
+          janela.appendChild(conteudo);
+          elemento_pai.appendChild(janela);
+          caixa(id + "-header");
+        }
+        else {
+          janela.appendChild(header);
+          header.innerHTML = "";
+          elemento_pai.appendChild(janela);
+          Lixo(id);
+          Atalho(id)
+        }
+        //hideHeader(id)
+        janela = document.getElementById(id);
+        janela.setAttribute("class", "panel");
+        janela.setAttribute("style", `top:${top}px; left:${left}px; width:${width}px; height:${height}px;`);
+        elements++;
+      }
+    }
+    function Regua() {
+      if (mode != "criativo") {
+        mode = "criativo"
+        hruler.style.visibility = "visible";
+        vruler.style.visibility = "visible";
+        cursorxy.style.visibility = "visible";
+      }
+      else {
+        mode = "usando";
+        hruler.style.visibility = "hidden";
+        vruler.style.visibility = "hidden";
+        cursorxy.style.visibility = "hidden";
+      }
+    }
+
+    function div(parametros = "", conteudo) { return `<div ${parametros}>${conteudo}</div>` }
+
+    function caixa(onde = "caixa-header") {
+      var limpa = onde.replace("-header", "")
+      let count = 0;
+      Object.keys(menu).forEach(key => {
+        let item = document.createElement("div")
+        item.setAttribute("title", key)
+        item.setAttribute("style", "position:relative; float:left;")
+        item.setAttribute("onclick", `${key}("${limpa}")`);
+        item.setAttribute("ontouchend", `${key}("${limpa}")`);
+        item.innerHTML = menu[key]
+        setTimeout(function () { document.getElementById(onde).appendChild(item) }, 80 * count);
+        count++;
+      });
+    }
+
+    function Remover(id) {
+      var elem = document.getElementById(id);
+      elem.parentNode.removeChild(elem);
+    }
+    function WebFrame(id) {
+      let button = document.createElement("span")
+      button.setAttribute("class", "botao")
+      button.setAttribute("onclick", `NewUrl("${id}")`)
+      button.setAttribute("ontouchend", `NewUrl("${id}")`)
+      button.innerHTML = "Abrir"
+      document.getElementById(id + "-header").innerHTML = "🌎";
+      document.getElementById(id + "-header").appendChild(button)
+      Lixo(id)
+      let form = document.createElement("input")
+      form.setAttribute("type", "text")
+      form.setAttribute("class", "formulario")
+      form.setAttribute("id", id + "-endereco")
+      form.setAttribute("value", "#")
+      document.getElementById(id + "-header").appendChild(form)
+    }
+
+    function NewUrl(id) {
+      let input = id + "-endereco"
+      let url = document.getElementById(input).value
+      Iframer(id, url);
+    }
+
+    function Iframer(id, url) {
+      let pai = document.getElementById(id)
+      let larg = (parseInt(pai.style.width, 10) - 40) + "px";
+      let ifra = document.createElement("IFRAME")
+      ifra.setAttribute("id", id + "-iframe")
+      ifra.setAttribute("class", "borderless")
+      ifra.setAttribute("src", url)
+      ifra.setAttribute("width", "360px")
+      ifra.setAttribute("height", "480px")
+      let corpo = document.getElementById(id + "-body")
+      corpo.setAttribute("width", larg + "")
+      corpo.innerHTML = "";
+      corpo.appendChild(ifra)
+      hideHeader(id)
+
+    }
+    function Calculadora(id) {
+      let pai = document.getElementById(id)
+      pai.style.width = "240px";
+      pai.style.height = "326px";
+      document.getElementById(id + "-header").innerHTML = "";
+      MoveBot(id)
+      Lixo(id)
+      Iframer(id, "calculadora.html")
+      removeClass(id, "panel")
+    }
+    function menuCalc() {
+      let w = window.innerWidth / 2 - 180;
+      let h = window.innerHeight / 2 - 180;
+      let largura = 360;
+      let altura = 360;
+      let id = toString(elements)
+      criarPainel("calc", h, w, largura, altura)
+      setTimeout(function () { Calculadora("calc") }, 500)
+    }
+
+    function Alfabeto(id = 0) {
+      let pai = document.getElementById(id)
+      pai.style.width = "360px";
+      pai.style.height = "380px";
+      document.getElementById(id + "-header").innerHTML = "";
+      MoveBot(id)
+      Lixo(id)
+      Iframer(id, "alfabeto.html")
+      //  removeClass(id,"panel")
+
+    }
+    function Desenho(id = 0) {
+      let pai = document.getElementById(id)
+      pai.style.width = parseInt(window.innerWidth, 10) - 40 + "px";
+      pai.style.left = 40 + "px";
+
+      pai.style.height = parseInt(window.innerHeight, 10) - 92 + "px";
+      pai.style.overflowY = "hidden";
+      document.getElementById(id + "-header").innerHTML = "";
+      MoveBot(id)
+      Lixo(id)
+      Iframer(id, "desenho.html")
+      document.getElementById(id + "-iframe").setAttribute("scrolling", "no");
+      //  removeClass(id,"panel")
+
+    }
+
+    function Apoie(id = 0) {
+      let pai = document.getElementById(id)
+      pai.style.width = parseInt(window.innerWidth, 10) - 40 + "px";
+      pai.style.left = 40 + "px";
+
+      pai.style.height = parseInt(window.innerHeight, 10) - 92 + "px";
+      pai.style.overflowY = "hidden";
+      document.getElementById(id + "-header").innerHTML = "";
+      MoveBot(id)
+      Lixo(id)
+      Iframer(id, "https://github.com/sponsors/diegoferraribruno")
+      document.getElementById(id + "-iframe").setAttribute("scrolling", "no");
+      //  removeClass(id,"panel")
+
+    }
+
+    var oldmode = "desenhar"
+    function Mover(id) {
+      oldmode = mode;
+      if (alvo == "") {
+        alvo = id;
+        cursorxy.innerHTML = "💠";
+      } else {
+        alvo = "";
+      }
+    }
+    function Titulo(id) {
+
+      removeClass(id, "panel")
+      let heade = document.getElementById(id + "-header");
+      let menu = document.getElementById(id + "-header");
+      heade.innerHTML = "";
+      MoveBot(id);
+      Lixo(id)
+      let form = document.createElement("input")
+      form.setAttribute("type", "text")
+      form.setAttribute("class", "formulario")
+      form.setAttribute("id", id + "-endereco")
+      form.setAttribute("value", "titulo")
+      heade.appendChild(form)
+      let button = document.createElement("span")
+      button.setAttribute("class", "botao")
+      button.setAttribute("onclick", `NewTitle("${id}")`)
+      button.setAttribute("ontouchend", `NewTitle("${id}")`)
+      button.innerHTML = "ok"
+      heade.appendChild(button)
+      heade.setAttribute("style", "z-index:1;")
+      document.getElementById(id + "-menu").classList.toggle("hidden")
+      //  hideTitle(id)
+    }
+    function NewTitle(id) {
+      let url = document.getElementById(id + "-endereco").value
+      let content = `<h1>${url}</h1>`;
+      document.getElementById(id + "-body").innerHTML =
+        `<span class='title' onclick="hideTitle('${id}')" ontouchend="hideTitle('${id}')" > ${content} </span>`;
+      hideHeader(id)
+    }
+    function hideTitle(id) {
+      document.getElementById(id + "-header").classList.toggle("hidden")
+      document.getElementById(id + "-menu").classList.toggle("hidden")
+    }
+
+    function hideHeader(id) {
+      document.getElementById(id + "-header").classList.toggle("hidden")
+    }
+
+    function Lixo(id) {
+      let heade = document.getElementById(id + "-header")
+      let lixo = document.createElement("span")
+      lixo.setAttribute("class", "menu")
+      lixo.setAttribute("onclick", `Remover("${id}")`)
+      lixo.setAttribute("ontouchend", `Remover("${id}")`)
+      lixo.innerHTML = "❌"
+      heade.appendChild(lixo)
+    }
+
+    //////////////////Atalho zone em desenvolvimento
+
+    function Atalho(id) {
+      let heade = document.getElementById(id + "-header")
+      let lixo = document.createElement("span")
+      lixo.setAttribute("class", "menu")
+      lixo.setAttribute("onclick", `criarAtalho("${id}")`)
+      lixo.setAttribute("ontouchend", `CriarAtalho("${id}")`)
+      lixo.innerHTML = "A"
+      heade.appendChild(lixo)
+    }
+
+    function MoveBot(id) {
+      let heade = document.getElementById(id + "-header")
+      let lixo = document.createElement("span")
+      lixo.setAttribute("class", "menu")
+      lixo.setAttribute("onmousedown", `Mover("${id}")`)
+      lixo.setAttribute("onmouseup", `Mover("${id}")`)
+      lixo.setAttribute("ontouchstart", `Mover("${id}")`)
+      lixo.setAttribute("ontouchend", `Mover("${id}")`)
+      lixo.innerHTML = "💠"
+      heade.appendChild(lixo)
+    }
+
+    function removeClass(id, classe) {
+      var element = document.getElementById(id);
+      element.classList.remove(classe);
+    }
+
+    setInterval(function () {
+      if (alvo != "") {
+        document.getElementById(alvo).style.left = (pointer.x - 30) + "px";
+        document.getElementById(alvo).style.top = (pointer.y - 9) + "px";
+      }
+    }, 80)
+
+    function menuAlfabeto() {
+      let w = window.innerWidth / 2 - 180;
+      let h = window.innerHeight / 2 - 180;
+      largura = 360;
+      altura = 360;
+      let id = toString(elements)
+      criarPainel("alfabeto", h, w, largura, altura)
+      setTimeout(function () { Alfabeto("alfabeto") }, 500)
+    }
+    function menuApoie() {
+      let w = window.innerWidth / 2 - 180;
+      let h = window.innerHeight / 2 - 180;
+      largura = 360;
+      altura = 360;
+      let id = toString(elements)
+      criarPainel("apoie", h, w, largura, altura)
+      setTimeout(function () { Apoie("apoie") }, 500)
+    }
+    function menuDesenho() {
+      let w = window.innerWidth / 2 - 180;
+      let h = window.innerHeight / 2 - 280;
+      largura = 360;
+      altura = 580;
+      let id = toString(elements)
+      criarPainel("desenho", h, w, largura, altura)
+      setTimeout(function () { Desenho("desenho") }, 500)
+    }
+    function jogaDado(min = 1, max = 7) {
+      return Math.floor(Math.random() * (max - min) + min);
+    }
+    function Fundo(id = 0) {
+      var item = prompt("endereço da imagem de fundo", "https://pbs.twimg.com/profile_images/1532631961860247555/UeY1CMQF_400x400.jpg");
+      var elem = document.getElementById(id);
+      if (item == null || item == "") {
+        alert("fundo do app removido");
+        elem.style.backgroundImage = `none`;
+      } else {
+        elem.style.backgroundImage = `url(${item})`;
+      }
+    }
+    function dado() {
+      document.getElementById("dado").removeAttribute("onclick");
+      document.getElementById("dado").removeAttribute("ontouchstart");
+      var audio = new Audio('./diceThrow3.ogg');
+      audio.play();
+      setTimeout(function () { document.getElementById("sorte").innerHTML = jogaDado() }, 100)
+      setTimeout(function () { document.getElementById("sorte").innerHTML = jogaDado() }, 200)
+      setTimeout(function () { document.getElementById("sorte").innerHTML = jogaDado() }, 400)
+      ultimoDado = jogaDado();
+      setTimeout(function () { document.getElementById("sorte").innerHTML = ultimoDado }, 600)
+      setTimeout(function () {
+        document.getElementById("sorte").innerHTML = "";
+        document.getElementById("dado").setAttribute("onclick", "dado()");
+        document.getElementById("dado").setAttribute("ontouchstart", "dado()");
+      }, 2000)
+    }
+  </script>
+</body>
+
 </html>
