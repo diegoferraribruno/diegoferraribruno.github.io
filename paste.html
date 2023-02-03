@@ -37,13 +37,15 @@
     </div>
 
     <script>
+    const ongoingTouches = [];	
       const canvas = document.getElementById("canvas");
       const context = canvas.getContext("2d");
       var c2 = document.getElementById("c2");
       var context2 = c2.getContext("2d");
       var selecting = false;
-      var origin = null;
+      var origin = { x: 0, y: 0 };
       var cropEnd = { x: 0, y: 0 };
+      let zoomFactor= 1
 
       document.onpaste = function (event) {
         var items = (event.clipboardData || event.originalEvent.clipboardData)
@@ -190,6 +192,85 @@
           context.drawImage(myImg, 0, 0);
           context.restore();
         };
+      }
+      
+      	c2.addEventListener("touchstart", handleStart);
+	c2.addEventListener("touchmove", handleMove);
+	c2.addEventListener("touchend", handleEnd);	
+     function handleStart(evt) {
+   
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        offsetX = c2.getBoundingClientRect().left;
+        offsetY = c2.getBoundingClientRect().top;
+        origin.x = touches[0].clientX-offsetX;
+        origin.y = touches[0].clientY-offsetY;
+        for (let i = 0; i < touches.length; i++) {
+          ongoingTouches.push(copyTouch(touches[i]));
+        }
+       selecting=true
+        }
+	
+	
+
+         var     offsetX = c2.getBoundingClientRect().left;
+        var offsetY = c2.getBoundingClientRect().top;
+   function handleMove(evt) {
+          evt.preventDefault();
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          const idx = ongoingTouchIndexById(touches[i].identifier);
+          if (idx >= 0) {
+            cropEnd.x = (touches[i].clientX - offsetX) / zoomFactor;
+            cropEnd.y = (touches[i].clientY - offsetY) / zoomFactor;
+      
+
+		  if (!!selecting) {
+			
+
+			  context2.strokeStyle = "#ff0000";
+			  context2.clearRect(0, 0, c2.width, c2.height);
+			  context2.setLineDash([5, 5]);
+			  context2.beginPath();
+			  context2.rect(
+			    origin.x,
+			    origin.y,
+			    cropEnd.x,
+			    cropEnd.y
+			  );
+			  context2.stroke();
+			}
+
+              ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
+            }
+          }
+       }
+
+     function handleEnd(evt) {
+        evt.preventDefault();
+        const touches = evt.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+          let idx = ongoingTouchIndexById(touches[i].identifier);
+          if (idx >= 0) {
+        
+            ongoingTouches.splice(idx, 1); // remove it; we're done
+          }
+        }
+          selecting = false;
+        
+      }
+      function copyTouch({ identifier, clientX, clientY }) {
+        return { identifier, clientX, clientY };
+      }
+
+      function ongoingTouchIndexById(idToFind) {
+        for (let i = 0; i < ongoingTouches.length; i++) {
+          const id = ongoingTouches[i].identifier;
+          if (id === idToFind) {
+            return i;
+          }
+        }
+        return -1; // not found
       }
     </script>
   </body>
