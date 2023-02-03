@@ -4,22 +4,47 @@
     <style>
       #canvas {
         border: 1px solid rgb(120, 120, 120);
+        z-index: 0;
+      }
+      #canvas-container {
+        position: relative;
+      }
+      canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      #c2 {
+        z-index: 1;
       }
     </style>
   </head>
   <body>
-    <h1>This is a tool</h1>
-    <p>Paste image to canva and auto resize</p>
+    <h1>This is a paste and crop AND ROTATE image tool</h1>
+    <p>1 - 📋 Paste image to auto resize canvas</p>
+    <p>2- select area and press ✂️ to cut the canvas</p>
+    <p>3- press 📥 to save image</p>
+	<p>*Image will loose quality in the process!</p>
+    <input type="text" value="paste your image here" />
+    <span id="crop" onclick="crop()">✂️</span>
+    <span id="btn-download" class="mais">📥</span>
+    <span id="btn-rotate" class="mais" onclick="drawRotated()">🔃</span>
 
-    <canvas id="canvas"></canvas><br>
+    <br />
+    <div id="canvas-container">
+      <canvas id="canvas" width="100px" height="100px"></canvas>
+      <canvas id="c2" height="200" width="200"></canvas>
+    </div>
 
-<input type="text" value="paste your image here"><br></input>
     <script>
       const canvas = document.getElementById("canvas");
       const context = canvas.getContext("2d");
-      function colou() {
-        window.clipboardData.getData("Text");
-      }
+      var c2 = document.getElementById("c2");
+      var context2 = c2.getContext("2d");
+      var selecting = false;
+      var origin = null;
+      var cropEnd = { x: 0, y: 0 };
+
       document.onpaste = function (event) {
         var items = (event.clipboardData || event.originalEvent.clipboardData)
           .items;
@@ -32,15 +57,140 @@
             myImg.src = URL.createObjectURL(blob);
             myImg.onload = function () {
               canvas.width = myImg.width;
+              c2.width = myImg.width;
+              c2.height = myImg.height;
               canvas.height = myImg.height;
               let oldGCO = context.globalCompositeOperation;
               context.globalCompositeOperation = "source-over";
+              context.imageSmoothingEnabled = false;
               context.drawImage(myImg, 0, 0, myImg.width, myImg.height);
               context.globalCompositeOperation = oldGCO;
             };
           }
         }
       };
+      document
+        .getElementById("btn-download")
+        .addEventListener("click", function (e) {
+          //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+          let nome = prompt("nome da arte:", "desenho");
+          if (nome != null && nome != "") {
+            var dataURL = canvas
+              .toDataURL("image/png")
+              .replace("image/png", "image/octet-stream");
+            //downloadImage(dataURL, 'my-canvas.jpeg');
+            downloadImage(dataURL, `${nome}.png`);
+          }
+        });
+
+      c2.onmousedown = (e) => {
+        selecting = true;
+        origin = { x: e.offsetX, y: e.offsetY };
+      };
+      window.onmouseup = (e) => {
+        selecting = false;
+      };
+      c2.onmousemove = (e) => {
+        if (!!selecting) {
+          cropEnd.x = e.offsetX;
+          cropEnd.y = e.offsetY;
+          context2.strokeStyle = "#ff0000";
+          context2.clearRect(0, 0, c2.width, c2.height);
+          context2.setLineDash([5, 5]);
+          context2.beginPath();
+          context2.rect(
+            origin.x,
+            origin.y,
+            e.offsetX - origin.x,
+            e.offsetY - origin.y
+          );
+          context2.stroke();
+        }
+      };
+      function crop() {
+        if (cropEnd.x != 0) {
+          var swapImg = [];
+          var blob = [];
+          swapImg = canvas.toDataURL("image/png");
+          blob = dataURItoBlob(swapImg);
+          context2.clearRect(0, 0, c2.width, c2.height);
+          let myImg = document.createElement("img");
+          myImg.src = URL.createObjectURL(blob);
+          myImg.onload = async function () {
+            canvas.width = cropEnd.x - origin.x;
+            canvas.height = cropEnd.y - origin.y;
+            //      c2.style.visibility = "hidden";
+            let oldGCO = context.globalCompositeOperation;
+            context.globalCompositeOperation = "source-over";
+            
+              context.imageSmoothingEnabled = false;
+            context.drawImage(
+              myImg,
+              -origin.x,
+              -origin.y,
+              myImg.width,
+              myImg.height
+            );
+            context.globalCompositeOperation = oldGCO;
+          };
+        }
+      }
+      function dataURItoBlob(dataURI) {
+        var byteString;
+        if (dataURI.split(",")[0].indexOf("base64") >= 0)
+          byteString = atob(dataURI.split(",")[1]);
+        else byteString = unescape(dataURI.split(",")[1]);
+        // separate out the mime component
+        var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+        // write the bytes of the string to a typed array
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ia], { type: mimeString });
+      }
+      document.onkeydown = function (event) {
+        if (event.keyCode === 13) {
+          crop();
+        }
+      };
+      function downloadImage(data, filename = "untitled.png") {
+        var a = document.createElement("a");
+        a.href = data;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        alert(
+          "se você gostou desse app, considere fazer um pix pro Diego continuar o desenvolvimento ou ajude divulgando o app :) 11-962238038 Grato."
+        );
+      }
+      function drawRotated(degrees = 90) {
+        var swapImg = [];
+        var blob = [];
+        swapImg = canvas.toDataURL("image/png");
+        blob = dataURItoBlob(swapImg);
+        context2.clearRect(0, 0, c2.width, c2.height);
+        let myImg = document.createElement("img");
+        myImg.src = URL.createObjectURL(blob);
+        myImg.onload = function () {
+
+         var cw = canvas.width;
+    var ch = canvas.height;
+          canvas.width = ch;
+          canvas.height = cw;
+          cw = canvas.width;
+          ch = canvas.height;
+
+          context.save();
+          // translate and rotate
+          context.translate(cw, ch / cw);
+          context.rotate(Math.PI / 2);
+          // draw the previows image, now rotated
+          context.drawImage(myImg, 0, 0);
+          context.restore();
+        };
+      }
     </script>
   </body>
 </html>
