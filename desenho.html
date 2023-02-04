@@ -2,333 +2,347 @@
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="gray">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: -moz-none;
+            /*IE10*/
+            -ms-user-select: none;
+            user-select: none;
+            /*You just need this if you are only concerned with android and not desktop browsers.*/
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
 
-  <style>
-    * {
-      -webkit-user-select: none;
-      -moz-user-select: -moz-none;
-      /*IE10*/
-      -ms-user-select: none;
-      user-select: none;
-      /*You just need this if you are only concerned with android and not desktop browsers.*/
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    }
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #77767b;
+            text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
+            overflow-y: hidden;
+            padding: 0px 0px;
+            margin: 0px 0px;
+            font-family: "emojione mozilla", "segoe ui emoji", "noto color emoji",
+                "android emoji", "emojisymbols", "segoe ui symbol" "twemoji mozilla",
+                "apple color emoji";
+        }
 
-    body {
-      height: 100%;
-      width: 100%;
-      background-color: #77767b;
-      text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
-      overflow-y: hidden;
-      padding: 0px 0px;
-      margin: 0px 0px;
-      font-family: "emojione mozilla", "segoe ui emoji", "noto color emoji",
-        "android emoji", "emojisymbols", "segoe ui symbol" "twemoji mozilla",
-        "apple color emoji";
-    }
+        #desenho_div {
+            text-align: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 360px;
+            touch-action: manipulation;
+        }
 
-    #desenho_div {
-      text-align: center;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 360px;
-      touch-action: manipulation;
-    }
+        #tela {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            touch-action: manipulation;
 
-    #tela {
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      margin-left: auto;
-      margin-right: auto;
-      width: 100%;
-      touch-action: manipulation;
+        }
 
-    }
+        #canvas_div {
+            background-image: url("./grid3.png");
+            text-align: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 320px;
+            height: 320px;
+            overflow-y: hidden;
+        }
 
-    #canvas_div {
-      background-image: url("./grid3.png");
-      text-align: center;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 320px;
-      height: 320px;
-      overflow-y: hidden;
-    }
+        #canvas_div2 {
+            background-image: url("./grid.png");
+            text-align: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            overflow-y: hidden;
+        }
 
-    #canvas_div2 {
-      background-image: url("./grid.png");
-      text-align: center;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 320px;
-      height: 320px;
-      overflow-y: hidden;
-    }
-
-    #canvas_window {
-      display: flex;
-      overflow: scroll;
-      width: 320px;
-      height: 342px;
-      margin: auto;
-      -webkit-touch-overflow: scroll;
-      background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
-      box-shadow: 2px 2px 3px #515054,
-        -2px -2px 3px #9d9ca2;
-      -webkit-transition: -webkit-transform 0.4s;
-      -moz-transition: -moz-transform 0.4s;
-      -o-transition: -o-transform 0.4s;
-      transition: transform 0.4s;
+        #canvas_window {
+            display: flex;
+            overflow: scroll;
+            width: 320px;
+            height: 342px;
+            margin: auto;
+            -webkit-touch-overflow: scroll;
+            background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
+            box-shadow: 2px 2px 3px #515054,
+                -2px -2px 3px #9d9ca2;
+            -webkit-transition: -webkit-transform 0.4s;
+            -moz-transition: -moz-transform 0.4s;
+            -o-transition: -o-transform 0.4s;
+            transition: transform 0.4s;
 
 
-    }
+        }
 
-    #paleta {
-      position: relative;
-      width: 110px;
-      height: 162px;
-      display: block;
-      top: 0px;
-      margin-top: 0px;
-      display: block;
-      float: left;
-    }
+        #paletas {
+            width: 180px;
+            display: block;
+            float: left;
+        }
 
-    #paleta2 {
-      position: relative;
-      width: 110px;
-      height: 110px;
-      display: block;
-      top: 4px;
-      margin-top: 0px;
-      display: block;
-      float: left;
-    }
+        #paleta {
+            position: relative;
+            width: 110px;
+            height: 162px;
+            display: block;
+            top: 0px;
+            margin-top: 0px;
+            display: block;
+            float: left;
+        }
 
-    #menucores {
-      position: absolute;
-      display: block;
-      float: left;
-      width: 236px;
-      height: 310px;
-      z-index: 3;
-    }
+        #paleta2 {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            display: block;
+            top: 4px;
+            margin-top: 0px;
+            display: block;
+            float: left;
+        }
 
-    #menu {
-      font-kerning: 1.4 em;
-      width: 94px;
-      height: 290px;
-      display: block;
-      float: right;
-      text-align: center;
-    }
+        #paleta3 {
+            position: relative;
+            width: 40px;
+            height: 280px;
+            display: block;
+            top: 4px;
+            float: left;
+        }
 
-    .submenu {
-      position: absolute;
-      display: block;
-      top: 40px;
-      width: 310px;
-      min-height: 60px;
-      padding: 8px;
-      z-index: 3;
-      visibility: hidden;
-    }
 
-    .fundobranco {
-      margin: 2px;
-      min-height: 32px;
-      background-color: #cccccc66;
-      border-radius: 20px;
-      border-style: solid;
-      border-width: 2px;
-      border-color: #dddddddd;
-      padding: 4px;
-      display: inline-block;
-    }
+        #menucores {
+            display: block;
+            width: 310px;
+            height: 310px;
+            z-index: 3;
+        }
 
-    .fundobranco2 {
-      min-height: 12px;
-      display: inline-block;
-      margin: auto;
-    }
+        #menu {
+            font-kerning: 1.4 em;
+            width: 94px;
+            height: 290px;
+            display: block;
+            float: right;
+            text-align: center;
+        }
 
-    .bloquinho {
-      width: 24px;
-      height: 24px;
-      border-style: solid;
-      border-radius: 20px;
-      border-color: #55555555;
-      border-width: thin;
-      background-color: #ddddddee;
-      display: block;
-      float: left;
-      padding: 2px;
-      font-size: 1.3em;
-      margin: 1px 3px 1px 3px;
-      touch-action: manipulation;
+        .submenu {
+            position: absolute;
+            display: flex;
+            width: 310px;
+            min-height: 60px;
+            padding: 8px;
+            z-index: 3;
+            visibility: hidden;
 
-    }
+        }
 
-    .mais {
-      border-style: solid;
-      border-radius: 20px;
-      border-color: #55555555;
-      border-width: thin;
-      background-color: #c3c3c3ee;
-      display: block;
-      position: relative;
-      padding: 0px;
-      width: 36px;
-      height: 36px;
-      font-size: 1.6em;
-      margin: 7px 5px 7px 1px;
-      touch-action: manipulation;
-      border-radius: 12px;
-      background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
-      box-shadow: 2px 2px 3px #515054,
-        -2px -2px 3px #9d9ca2;
-    }
+        .fundobranco {
+            min-height: 32px;
+            background-color: #cccccc66;
+            border-radius: 20px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: #dddddddd;
+            padding: 4px;
+            display: inline-block;
+        }
 
-    .selected {
-      background-color: #00000044;
-      border-color: #ffffff55;
-      border-width: 3px;
-      width: 32px;
-      height: 32px;
-      font-size: 2em;
-    }
+        .fundobranco2 {
+            min-height: 12px;
+            display: inline-block;
+            margin: auto;
+        }
 
-    #mostraCor {
-      width: 40px;
-      height: 40px;
-      border-style: solid;
-      border-radius: 200px;
-      border-color: gray;
-      border-width: thin;
-      padding: 0px;
-      font-size: 3 em;
-      float: left;
-      text-align: center;
-      background-color: "hsl(0, 100%, 0%)";
-      margin: 4px 4px 4px 4px;
-      text-align: center;
-      line-height: 50px;
-      display: block;
-    }
+        .bloquinho {
+            width: 24px;
+            height: 24px;
+            border-style: solid;
+            border-radius: 20px;
+            border-color: #55555555;
+            border-width: thin;
+            background-color: #ddddddee;
+            display: block;
+            float: left;
+            padding: 2px;
+            font-size: 1.3em;
+            margin: 1px 3px 1px 3px;
+            touch-action: manipulation;
 
-    .linha {
-      width: 1px;
-      border-radius: 0px;
-    }
+        }
 
-    #mostraCor2 {
-      width: 2px;
-      height: 2px;
-      border-style: solid;
-      border-radius: 200px;
-      border-color: gray;
-      border-width: thin;
-      display: block;
-      padding: 0px;
-      font-size: 1.125em;
-      float: left;
-      margin-left: 10px;
-    }
+        .mais {
+            border-style: solid;
+            border-radius: 20px;
+            border-color: #55555555;
+            border-width: thin;
+            background-color: #c3c3c3ee;
+            display: block;
+            position: relative;
+            padding: 0px;
+            width: 36px;
+            height: 36px;
+            font-size: 1.55em;
+            margin: 7px 5px 7px 1px;
+            touch-action: manipulation;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
+            box-shadow: 2px 2px 3px #515054,
+                -2px -2px 3px #9d9ca2;
+            line-height: 36px;
+            text-align: center;
+        }
 
-    #cursor {
-      pointer-events: none;
-      display: block;
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      border-style: solid;
-      border-radius: 200px;
-      border-color: gray;
-      color: #00000055;
-      border-width: thin;
-      padding: 0px;
-      font-size: 1.5em;
-      z-index: 10;
-    }
+        .selected {
+            background-color: #00000044;
+            border-color: #ffffff55;
+            border-width: 3px;
+            width: 32px;
+            height: 32px;
+            font-size: 2.25em;
+        }
 
-    .disable-scroll {
-      overflow-y: hidden;
-    }
+        #mostraCor {
+            width: 40px;
+            height: 40px;
+            border-style: solid;
+            border-radius: 200px;
+            border-color: gray;
+            border-width: thin;
+            padding: 0px;
+            font-size: 3 em;
+            float: left;
+            text-align: center;
+            background-color: "hsl(0, 100%, 0%)";
+            margin: 4px 4px 4px 4px;
+            text-align: center;
+            line-height: 50px;
+            display: block;
+        }
 
-    .aparece {
-      visibility: visible;
-    }
+        .linha {
+            width: 1px;
+            border-radius: 0px;
+        }
 
-    .naotoque {
-      user-select: none;
-      -moz-user-select: none;
-      -khtml-user-select: none;
-      -webkit-user-select: none;
-      -o-user-select: none;
-    }
+        #mostraCor2 {
+            width: 2px;
+            height: 2px;
+            border-style: solid;
+            border-radius: 200px;
+            border-color: gray;
+            border-width: thin;
+            display: block;
+            padding: 0px;
+            font-size: 1.125em;
+            float: left;
+            margin-left: 10px;
+        }
 
-    .cursorIndex {
-      z-index: 0;
-    }
+        #cursor {
+            pointer-events: none;
+            display: block;
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-style: solid;
+            border-radius: 200px;
+            border-color: gray;
+            color: #00000055;
+            border-width: thin;
+            padding: 0px;
+            font-size: 1.5em;
+            z-index: 10;
+        }
 
-    range {
-      margin-bottom: 10px;
-      margin-top: 10px;
-    }
+        .disable-scroll {
+            overflow-y: hidden;
+        }
 
-    .pqno {
-      height: 24px;
-      width: 24px;
-    }
+        .aparece {
+            visibility: visible;
+        }
 
-    .pixel {
-      image-rendering: pixelated;
-    }
+        .naotoque {
+            user-select: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -o-user-select: none;
+        }
 
-    input[type="range"][orient="vertical"] {
-      writing-mode: bt-lr;
-      /* IE */
-      -webkit-appearance: slider-vertical;
-      /* Chromium */
-      width: 8px;
-      height: 175px;
-      padding: 0 5px;
-      float: left;
-      margin-top: 4px;
-    }
+        .cursorIndex {
+            z-index: 0;
+        }
 
-    #menus {
-      display: flex;
-      width: 100%;
-      left: auto;
-      justify-content: left;
-      padding-left: 36px;
-    }
+        range {
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
 
-    .ferramentas {
-      height: 50px;
-      width: 332px;
-      /*padding-left: 44px;*/
-      margin: auto;
-      margin-top: -6px;
-      margin-bottom: -4px;
-      display: flex;
-      align-items: center;
-      vertical-align: auto;
-      z-index: 100;
-    }
+        .pqno {
+            height: 24px;
+            width: 24px;
+        }
 
-    #ferramentas2 {
-      /*position: relative;
+        .pixel {
+            image-rendering: pixelated;
+        }
+
+        input[type="range"][orient="vertical"] {
+            writing-mode: bt-lr;
+            /* IE */
+            -webkit-appearance: slider-vertical;
+            /* Chromium */
+            width: 8px;
+            height: 175px;
+            padding: 0 5px;
+            float: left;
+            margin-top: 4px;
+        }
+
+        #menus {
+            display: flex;
+            position: absolute;
+            height: 320px;
+            margin-left: -320px;
+            text-align: center;
+            align-content: center;
+            vertical-align: middle;
+            user-select: none;
+        }
+
+        .ferramentas {
+            height: 50px;
+            width: 332px;
+            /*padding-left: 44px;*/
+            margin: auto;
+            margin-top: -6px;
+            margin-bottom: -4px;
+            display: flex;
+            align-items: center;
+            vertical-align: auto;
+            z-index: 100;
+        }
+
+        #ferramentas2 {
+            margin-bottom: 2px;
+            /*position: relative;
       float: left;
       top: -10px;
       height: 320px;
@@ -336,1907 +350,2276 @@
       display: block;
       align-items: center;
       z-index: 100;*/
-    }
+        }
 
-    .horizontal {
-      display: block;
-      float: right;
-      right: 0px;
-      top: 6px;
-      width: 40px;
-    }
+        .horizontal {
+            display: block;
+            float: right;
+            right: 0px;
+            top: 6px;
+            width: 40px;
+        }
 
-    .horizontal2 {
-      display: block;
+        .horizontal2 {
+            display: block;
 
-      float: left;
-      top: 6px;
-      width: 40px;
-      margin-left: 0px;
-    }
+            float: left;
+            top: 6px;
+            width: 40px;
+            margin-left: 0px;
+        }
 
-    #menuinfo {
-      overflow-y: scroll;
-      height: 300px;
-      width: 300px;
-    }
+        #menuinfo {
+            overflow-y: scroll;
+            height: 300px;
+            width: 300px;
+        }
 
-    .day {
-      background-color: #ddddddcc;
-    }
+        .day {
+            background-color: #ddddddcc;
+        }
 
-    .night {
-      background-color: #22222288;
-      border-color: #333333dd;
-      color: #eeeeee
-    }
+        .night {
+            background-color: #22222288;
+            border-color: #333333dd;
+            color: #eeeeee
+        }
 
-    .custom-file-input::before {
-      content: '📷';
-      display: inline-block;
-      background: linear-gradient(top, #f9f9f9, #e3e3e3);
-      border: 1px solid #999;
-      border-radius: 3px;
-      padding: 5px 8px;
-      outline: none;
-      white-space: nowrap;
-      -webkit-user-select: none;
-      cursor: pointer;
-      text-shadow: 1px 1px #fff;
-      font-weight: 700;
-      font-size: 10pt;
-      margin-top: 20px;
+        .custom-file-input::before {
+            content: '📷';
+            display: inline-block;
+            background: linear-gradient(top, #f9f9f9, #e3e3e3);
+            border: 1px solid #999;
+            border-radius: 3px;
+            padding: 5px 8px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            text-shadow: 1px 1px #fff;
+            font-weight: 700;
+            font-size: 10pt;
+            margin-top: 20px;
 
-    }
+        }
 
-    .destination-over {
-      opacity: 0.6;
-    }
+        .destination-over {
+            opacity: 0.6;
+        }
 
-    .vid {
-      min-height: 100%;
-      width: auto;
-      height: auto;
-    }
+        .vid {
+            min-height: 100%;
+            width: auto;
+            height: auto;
+        }
 
-    #paletas {
-      width: 120px;
-      display: block;
-      float: left;
-    }
 
-    .flip {
-      -webkit-transform: rotateY(180deg);
-      -moz-transform: rotateY(180deg);
-      -o-transform: rotateY(180deg);
-      transform: rotateY(180deg);
-    }
-  </style>
-  <title>Desenho 0.8.1a</title>
+
+        .flip {
+            -webkit-transform: rotateY(180deg);
+            -moz-transform: rotateY(180deg);
+            -o-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+
+        .c2 {
+            position: absolute;
+            top: 0px;
+            display: flex;
+            /*margin-left: -320px;*/
+            /* border: pink solid 1px;*/
+            cursor: unset;
+        }
+    </style>
+    <title>Desenho 0.9.3 </title>
 </head>
 
 <body class="naotoque" style="cursor: pointer;">
-  <div id="tela" style="overflow-y: hidden;" class="naotoque">
-    <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
-      <div id="menus">
-        <div id="menupicker" class="submenu fundobranco">
-          Toque numa área pintada<br>
-          para capturar uma cor
-        </div>
-        <div id="menuinfo" class="submenu fundobranco">
-          <h2>Desenho!</h2>
-          <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br> com códigos de<br>
-          <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-            Lei Mao</a> <br>
-          <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-          versão 0.8<br>
-          -menu tamanho da tela<br>
-          -cores nos botoes<br>
-          versão 0.8<br>
-          -importar somente gif bmp jpg<br>
-          -mensagem de suporte depois do download<br>
-          versão 0.7e<br>
-          -rotaciona tela + flip<br>
-          versão 0.6.7d<br>
-          -NOVO gerenciador de memória<br>
-          - touchmovecursor<br>
-          versão 0.6.6 L<br>
-          - novas variaveis swapImg<br>
-          - melhora na troca de ferramenta<br>
-          - desfazer mais leve<br>
-          versão 0.6.5 K <br>
-          - timeouts retirados (em teste)
-          - Desfazer, refazer atualizado. <br>
-          versão 0.6.4 c <br>
-          - botões maiores e agregados<br>
-          versão 0.6.3 <br>
-          - função camera movida e transparencia arrumada<br>
-          - camera centralizada (tnx Frederico for the help)<br>
-          - seletor de cor (fix).<br>
-          versão 0.5.6<br>
-          - foto e fundo com tamanho<br>
-          versão 0.5.5<br>
-          - inicia no modo noturno<br>
-          - fundo xadrez<br>
-          - Alerta ao fim do Crtl+Z e no Ctrl+Y <br>
-
-          versão 0.5.4<br>
-          - multiplas imagens podem ser inseridas<br>
-          versão 0.5.3<br>
-          - pinta por cima ou por baixo<br>
-          versão 0.5.2<br>
-          - night mode<br>
-          - envia imagem.<br><br>
-          ver 0.5 - Turing<br>
-          - nova paleta de cores<br><br>
-          - tamanhos pre definidos de pinceis. <br>
-          - refazer passo a passo. <br>
-          - apagador com transparencia propria.<br>
-          - lupa com indicador de zoom. no lugar apropriado<br>
-          <br>
-
-          0.4.9
-          reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada ao fundo
-          o que pode influenciar na qualidade do projeto final. vamos ao teste.
-          <br>
-        </div>
-        <div id="menutamanho" class="fundobranco submenu">
-          <div onmousedown="tamanho()" class="bloquinho"
-            style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
-            ok
-          </div>
-          Tamanho da imagem:<br>
-          largura: <input id="largura" type="number" maxlength="4" max="1920" value="320" style="width:50px" />px<br>
-          altura: <input id="altura" type="number" maxlength="4" max="1920" value="320" style="width:50px" />px<br>
-
-
-
-          <br><span title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela: ↔️</span><br>
-        </div>
-        <div id="menuimagem" class="fundobranco submenu aparece">
-          Enviar uma imagem<br><br>
-          📤 <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" />
-        </div>
-        <div id="menupintar" class="fundobranco submenu">
-          <span onmousedown="removeClass()" id="mostraCor2"
-            style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
-          <span id="coresb" title="cores" class="bloquinho" onmousedown="modeTo('cores')"
-            style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
-          <span id="pickerb" title="Pega cor" class="bloquinho" onmousedown="modeTo('picker')"
-            style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
-
-          <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho"
-            style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><span
-            style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span id="line">
-              ➕</span> </span>
-          <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1" onchange="setStrokeSize(this.value)"
-            style="width: 50px; margin-left: 8px">
-          <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
-            oninput="strokeSizeRange(this.value)" value="1" width="200px"><br>
-          💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
-            step="0.01" value="1"><br>
-        </div>
-
-        <div id="menuapagar" class="fundobranco submenu">
-          <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span id="line2">
-              ➕</span></span>
-          <span class="bloquinho" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2" min="0.5"
-            max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
-          <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
-            oninput="strokeSizeRange(this.value)" value="36" width="160px">
-          <span onmousedown="removeClass()" id="mostraCor2" style="background-color: 'hsl(0, 100%, 0%);'">
-          </span>
-          <div>
-            💧<input type="range" id="transparenciaE" name="transparencia" min="0.1" max="1" oninput="mudaCorAlpha()"
-              step="0.1" value="1"></div>
-        </div>
-
-        <div id="menucores" class="submenu">
-          <div id="menu" class="fundobranco" onmouseover="mostra()">
-            🌈 ◒ 🔆 💧<br>
-            <input type="range" orient="vertical" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
-              value="0">
-            <input type="range" orient="vertical" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)"
-              value="100">
-            <input type="range" orient="vertical" id="L" name="cor" min="0" max="100" oninput="mudaCorQ(2,this.value)"
-              value="50">
-            <input type="range" orient="vertical" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
-              step="0.01" value="1"><br>
-            <div id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
-              style="height: 20px; float: left; margin-top: 20px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"
-              class="bloquinho">
-              <div style="margin: -20px 10px 0px 0px; width: 20px">📌</div>
-              <span id="picker" title="Pega cor" class="bloquinho" style="margin-top:18px; margin-left:18px;"
-                onmousedown="modeTo('picker')" style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
+    <div id="tela" style="overflow-y: hidden;" class="naotoque">
+        <div id="menus">
+            <div id="menupicker" class="submenu fundobranco">
+                Toque numa área pintada<br>
+                para capturar uma cor
             </div>
-            <div id="mostraCor" onmousedown="removeClass()"
-              style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.75em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
-              ok
+            <div id="menuinfo" class="submenu fundobranco">
+                <h2>Desenho!</h2>
+                <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br> com códigos de<br>
+                <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
+                    Lei Mao</a> <br>
+                <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
+                versão 0.9.3<br>
+                -nova paleta de cores<br>
+                versão 0.9.2<br>
+                -bug fixes<br>
+                versão 0.9.1<br>
+                -Cortar, Rotacionar<br>
+                versão 0.8.2<br>
+                -menu tamanho da tela<br>
+                -cores nos botoes<br>
+                versão 0.8.1<br>
+                -importar somente gif bmp jpg<br>
+                -mensagem de suporte depois do download<br>
+                versão 0.7e<br>
+                -rotaciona tela + flip<br>
+                versão 0.6.7d<br>
+                -NOVO gerenciador de memória<br>
+                - touchmovecursor<br>
+                versão 0.6.6 L<br>
+                - novas variaveis swapImg<br>
+                - melhora na troca de ferramenta<br>
+                - desfazer mais leve<br>
+                versão 0.6.5 K <br>
+                - timeouts retirados (em teste)
+                - Desfazer, refazer atualizado. <br>
+                versão 0.6.4 c <br>
+                - botões maiores e agregados<br>
+                versão 0.6.3 <br>
+                - função camera movida e transparencia arrumada<br>
+                - camera centralizada (tnx Frederico for the help)<br>
+                - seletor de cor (fix).<br>
+                versão 0.5.6<br>
+                - foto e fundo com tamanho<br>
+                versão 0.5.5<br>
+                - inicia no modo noturno<br>
+                - fundo xadrez<br>
+                - Alerta ao fim do Crtl+Z e no Ctrl+Y <br>
+
+                versão 0.5.4<br>
+                - multiplas imagens podem ser inseridas<br>
+                versão 0.5.3<br>
+                - pinta por cima ou por baixo<br>
+                versão 0.5.2<br>
+                - night mode<br>
+                - envia imagem.<br><br>
+                ver 0.5 - Turing<br>
+                - nova paleta de cores<br><br>
+                - tamanhos pre definidos de pinceis. <br>
+                - refazer passo a passo. <br>
+                - apagador com transparencia propria.<br>
+                - lupa com indicador de zoom. no lugar apropriado<br>
+                <br>
+
+                0.4.9
+                reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada
+                ao fundo
+                o que pode influenciar na qualidade do projeto final. vamos ao teste.
+                <br>
             </div>
-          </div>
-          <div id="paletas">
-            <div id="paleta" class="fundobranco"></div>
-            <div id="paleta2" class="fundobranco">
-              <br>use o 📌 para guardar <br>ou remover suas cores daqui.
+            <div id="menutamanho" class="fundobranco submenu">
+                <div onmousedown="tamanho()" class="bloquinho"
+                    style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
+                    ok
+                </div>
+                Tamanho da imagem:<br>
+                largura: <input id="largura" type="number" maxlength="4" max="1920" value="320"
+                    style="width:50px" />px<br>
+                altura: <input id="altura" type="number" maxlength="4" max="1920" value="320"
+                    style="width:50px" />px<br>
+
+
+
+                <br><span title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela:
+                    ↔️</span><br>
             </div>
-          </div>
+            <div id="menuimagem" class="fundobranco submenu aparece">
+                Enviar uma imagem<br><br>
+                📤 <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" />
+            </div>
+            <div id="menupintar" class="fundobranco submenu">
+                <span onmousedown="removeClass()" id="mostraCor2"
+                    style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
+                <span id="coresb" title="cores" class="bloquinho" onmousedown="modeTo('cores')"
+                    style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+                <span id="pickerb" title="Pega cor" class="bloquinho" onmousedown="modeTo('picker')"
+                    style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
+
+                <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho"
+                    style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><span
+                    style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
+                        id="line">
+                        ➕</span> </span>
+                <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
+                    onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
+                <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
+                    oninput="strokeSizeRange(this.value)" value="1" width="200px"><br>
+                💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+                    step="0.01" value="1"><br>
+            </div>
+
+            <div id="menuapagar" class="fundobranco submenu">
+                <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span
+                        id="line2">
+                        ➕</span></span>
+                <span class="bloquinho" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2"
+                    min="0.5" max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)"
+                    style="width: 50px; margin-left: 8px">
+                <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
+                    oninput="strokeSizeRange(this.value)" value="36" width="160px">
+                <span onmousedown="removeClass()" id="mostraCor2" style="background-color: 'hsl(0, 100%, 0%);'">
+                </span>
+                <div>
+                    💧<input type="range" id="transparenciaE" name="transparencia" min="0.1" max="1"
+                        oninput="mudaCorAlpha()" step="0.1" value="1"></div>
+            </div>
+
+            <div id="menucores" class="submenu">
+                <div id="menu" class="fundobranco" onmouseover="mostra()">
+                    🌈 ◒ 🔆 💧<br>
+                    <input type="range" orient="vertical" id="H" name="cor" min="0" max="359"
+                        oninput="mudaCorQ(0,this.value)" value="0">
+                    <input type="range" orient="vertical" id="S" name="cor" min="0" max="100"
+                        oninput="mudaCorQ(1,this.value)" value="100">
+                    <input type="range" orient="vertical" id="L" name="cor" min="0" max="100"
+                        oninput="mudaCorQ(2,this.value)" value="50">
+                    <input type="range" orient="vertical" id="A" name="cor" min="0.01" max="1"
+                        oninput="mudaCorQ(3,this.value)" step="0.01" value="1"><br>
+                    <div id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
+                        style="height: 20px; float: left; margin-top: 20px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"
+                        class="bloquinho">
+                        <div style="margin: -20px 10px 0px 0px; width: 20px">📌</div>
+                        <span id="picker" title="Pega cor" class="bloquinho" style="margin-top:18px; margin-left:18px;"
+                            onmousedown="modeTo('picker')"
+                            style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
+                    </div>
+                    <div id="mostraCor" onmousedown="removeClass()"
+                        style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.75em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
+                        ok
+                    </div>
+                </div>
+                <div id="paletas">
+                    <div id="paleta3" class="fundobranco"></div>
+                    <div id="paleta" class="fundobranco"></div>
+                    <div id="paleta2" class="fundobranco">
+                        <br>use o 📌 para guardar <br>ou remover suas cores daqui.
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
+                Informações <span id="info" title="Informações" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
+                <br><br>
+                Redimensionar a tela <span class="bloquinho" title="Redimensionar tela" onclick="tamanhom()">↔️</span>
+                <br><br>
+
+                Modo Noturno / Diurno<span id="night" class="bloquinho" onmousedown="night()"> 🌒</span>
+                <br><br>
+                Suavização de pixels <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
+                <br><br> Adicionar Fundo falso:
+                <br>
+                <br>
+                <span onmousedown="Fundo('img')" class="bloquinho">🖼️</span>
+                <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
+                </span>
+                <span onmousedown="Fundo('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
+                </span>
+                <span onmousedown="Fundo('grid.png')" class="bloquinho"
+                    style="background-image: url('./grid.png')">.</span>
+                <span onmousedown="Fundo('grid2.png')" class="bloquinho"
+                    style="background-image: url('./grid2.png'); background-color: #fff"></span>
+                <span onmousedown="Fundo('grid3.png')" class="bloquinho"
+                    style="background-image: url('./grid3.png')"></span>
+                <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
+                    ❌</span>
+                <br>
+                <br>
+                <br><span>
+                    <input type="file" id="input2" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" />
+                </span><br><br>
+
+            </div>
+
+            <div id="menupreencher" class="fundobranco submenu">
+                ⚠️ Preencher tudo ⚠️
+                <span width="140px" style="margin: 8px 80px; display: block">
+                    <span onmousedown="mudaCorBG('black')" class="bloquinho"
+                        style="background-color: hsla(0, 100%, 0%, 1)">
+                    </span>
+                    <span onmousedown="mudaCorBG('white')" class="bloquinho"
+                        style="background-color: hsla(0, 100%, 100%, 1)">
+                    </span>
+                    <span onmousedown="mudaCorBG('strokeColor')" id="preenchercor" class="bloquinho"
+                        style="background-color: rgba(158, 239, 129, 0.28);">
+                    </span>
+                    <span class="bloquinho" onmousedown="removeClass()" width="120px">❌</span><br>
+                </span>
+            </div>
+
+            <div id="menuzoom" class="fundobranco submenu">
+                <input id="zoombar" type="range" min="0" max="3" value="1" step="1" onchange="ZOOMf(this.value)">
+                <input id="tzoom" type="number" min="0.50" max="4" step="0.5" value="1" onchange="ZOOM(this.value)"
+                    style="width: 44px">
+                <span onmousedown="scrollCanva(-80,0)">⬅️</span>
+                <span onmousedown="scrollCanva(0,-80)">⬆️</span>
+                <span onmousedown="scrollCanva(0,80)">⬇️</span>
+                <span onmousedown="scrollCanva(80,0)">➡️</span>
+            </div>
+
+            <div id="menurecortar" class="fundobranco submenu" style="min-width:80px; width:80px; margin-left:60px;">
+                ⚠️ Impossivel desfazer!
+                <span class="bloquinho" title="Redimensionar tela" onclick="tamanhom()">↔️</span>
+                <span id="recortarbot" title="Recotar para seleção" class="bloquinho" onclick="cortar()">✂️</span>
+                <span onmousedown="modeTo('recortar')" title="Cancela" class="bloquinho">
+                    ❌</span>
+                <span id="btn-rotate" class="bloquinho" onclick="rotacionar()">🔃</span>
+
+            </div>
         </div>
+        <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
-        <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-          Informações <span id="info" title="Informações" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
-          <br><br>
-          Redimensionar a tela <span class="bloquinho" title="Redimensionar tela" onclick="tamanhom()">↔️</span>
-          <br><br>
+            <div id="ferramentas" class="ferramentas">
 
-          Modo Noturno / Diurno<span id="night" class="bloquinho" onmousedown="night()"> 🌒</span>
-          <br><br>
-          Suavização de pixels <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
-          <br><br> Adicionar Fundo falso:
-          <br>
-          <br>
-          <span onmousedown="Fundo('img')" class="bloquinho">🖼️</span>
-          <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
-          </span>
-          <span onmousedown="Fundo('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
-          </span>
-          <span onmousedown="Fundo('grid.png')" class="bloquinho" style="background-image: url('./grid.png')">.</span>
-          <span onmousedown="Fundo('grid2.png')" class="bloquinho"
-            style="background-image: url('./grid2.png'); background-color: #fff"></span>
-          <span onmousedown="Fundo('grid3.png')" class="bloquinho" style="background-image: url('./grid3.png')"></span>
-          <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
-            ❌</span>
-          <br>
-          <br>
-          <br><span>
-            <input type="file" id="input2" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" />
-          </span><br><br>
 
+
+                <span id="fundo" title="Configurações" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
+                <span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span>
+                <span class="mais" title="Limpar tela" onmousedown="clearArea()">🗑</span>
+
+                <span id="imagem" title="adicionar imagem" class="mais" onmousedown="modeTo('imagem')"> 📤</span>
+                <span id="btn-download" class="mais">📥</span>
+                <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
+                    onmouseleave="undoTEnd()">↩️</span>
+                <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
+                    onmouseleave="redoTEnd()">↪️</span>
+            </div>
+
+            <div id="ferramentas2" class="ferramentas">
+                <span onmousedown="backPaint()" class="mais" id="globalComposite"
+                    style="width: 36px; height: 36px; padding-top: 2px; margin-right: 6px; display:flex;"><span
+                        style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
+                    <span
+                        style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
+                        title="Pintando por baixo">🔲</span>
+                </span>
+                <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')"
+                    style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span> <span id="cores" title="cores"
+                    class="mais" onmousedown="modeTo('cores')"
+                    style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
+                <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
+                <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
+                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
+                <span id="hand" class="mais" onclick="toggleHand()">🖐</span>
+
+
+            </div>
+
+            <div id="canvas_window">
+                <span id="cursor"
+                    style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
+                    class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
+                <div id="canvas_div" class="day">
+                    <canvas id="canvas" width="320px" height="320px" class="day" style="padding-top: 1px;"
+                        onmousemove="cursorMove(event)" onmouseout="mostra()">
+                        Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou
+                        corretamente.<br>
+                        se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
+                    </canvas>
+                </div>
+
+
+            </div>
+
+            <div id="menucam" style="display:block; visibility:hidden;"></div>
         </div>
-
-        <div id="menupreencher" class="fundobranco submenu">
-          ⚠️ Preencher tudo ⚠️
-          <span width="140px" style="margin: 8px 80px; display: block">
-            <span onmousedown="mudaCorBG('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
-            </span>
-            <span onmousedown="mudaCorBG('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
-            </span>
-            <span onmousedown="mudaCorBG('strokeColor')" id="preenchercor" class="bloquinho"
-              style="background-color: rgba(158, 239, 129, 0.28);">
-            </span>
-            <span class="bloquinho" onmousedown="removeClass()" width="120px">❌</span><br>
-          </span>
-        </div>
-
-        <div id="menuzoom" class="fundobranco submenu">
-          <input id="zoombar" type="range" min="0" max="3" value="1" step="1" onchange="ZOOMf(this.value)">
-          <input id="tzoom" type="number" min="0.50" max="4" step="0.5" value="1" onchange="ZOOM(this.value)"
-            style="width: 44px">
-          <span onmousedown="scrollCanva(-80,0)">⬅️</span>
-          <span onmousedown="scrollCanva(0,-80)">⬆️</span>
-          <span onmousedown="scrollCanva(0,80)">⬇️</span>
-          <span onmousedown="scrollCanva(80,0)">➡️</span>
-        </div>
-
-      </div>
-      <div id="ferramentas" class="ferramentas">
-
-
-
-        <span id="fundo" title="Configurações" class="mais" onmousedown="modeTo('fundo')">🖼️</span>
-        <span class="mais" title="Redimensionar tela" onclick="tamanhom()">↔️</span>
-        <span class="mais" title="Limpar tela" onmousedown="clearArea()">🗑</span>
-
-        <span id="imagem" title="adicionar imagem" class="mais" onmousedown="modeTo('imagem')"> 📤</span>
-        <span id="btn-download" class="mais">📥</span>
-        <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()">↩️</span>
-        <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()">↪️</span>
-      </div>
-
-      <div id="ferramentas2" class="ferramentas">
-        <span onmousedown="backPaint()" class="mais" id="globalComposite"
-          style="width: 36px; height: 36px; padding-top: 6px; margin-right: 12px;"><span
-            style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
-          <span
-            style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
-            title="Pintando por baixo">🔲</span>
-        </span>
-        <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')"
-          style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span> <span id="cores" title="cores" class="mais"
-          onmousedown="modeTo('cores')" style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
-        <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
-        <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
-        <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
-            style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
-        <span id="hand" class="mais" onclick="toggleHand()">🖐</span>
-
-
-      </div>
-
-      <div id="canvas_window">
-        <span id="cursor"
-          style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
-          class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
-        <div id="canvas_div" style="overflow: hidden" class="day">
-          <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-            class="day">
-            Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou corretamente.<br>
-            se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
-          </canvas>
-        </div>
-      </div>
-
-      <div id="menucam" style="display:block; visibility:hidden;"></div>
     </div>
-  </div>
-  <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-    style="visibility: hidden; position: absolute; left:0px;">
-  </canvas>
-  <script>
-    const canvas = document.getElementById("canvas");
-    const context = canvas.getContext("2d");
-    const canvasV = document.getElementById("canvasV");
-    const contextV = canvasV.getContext("2d");
-    let isDrawing = false;
-    let isGrabing = false;
-    let isPicking = false;
-    let x = 0;
-    let y = 0;
-    var offsetX;
-    var offsetY;
-    const ongoingTouches = [];
+    <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
+        style="visibility: hidden; position: absolute; left:0px;">
+    </canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const context = canvas.getContext("2d");
+        const canvasV = document.getElementById("canvasV");
+        const contextV = canvasV.getContext("2d");
+        let isDrawing = false;
+        let isGrabing = false;
+        let isPicking = false;
+        let x = 0;
+        let y = 0;
+        var offsetX;
+        var offsetY;
+        const ongoingTouches = [];
 
-    const canvasDiv = document.getElementById("canvas_div");
-    var globalComposite = "source-over";
-    var favoritas = [];
-    var stroke = 1;
-    var hsla = [0, 100, 50, 1];
-    var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-    var strokeWidth = 0.6;
-    var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-    var estrokeWidth = 36;
-    var mode = "cores";
-    var linejoin = "round";
-    var lineJoinsCount = 0;
-    const lineJoins = ["miter", "round"];
-    var ultimoToque = { x: 160, y: 160 };
-    var zoomFactor = 1;
-    var zoomScale = [0.5, 1, 2, 4];
-    var zoomIndex = 1;
-    var mouseOver = false;
-    var layer1 = [];
-    var x2size = 1;
-    const cursor = document.getElementById("cursor");
-    const win = document.getElementById("canvas_window");
-    const desenhoDiv = document.getElementById("desenho_div");
-    const images = []
-    var audio = new Audio('./back_001.wav');
-    var audio2 = new Audio('./click_005.wav');
-    audio.volume = 0.4;
-    audio2.volume = 0.4;
-    var useFrontCamera = true; //moved up from modeto("cam") to test.
-    var videoStream;
-    function tamanhom() {
-      document.getElementById("menutamanho").classList.toggle("aparece")
-    }
-    function tamanho() {
-      let W = document.getElementById("largura").value
-      let H = document.getElementById("altura").value
-      canvasDiv.style.width = W + "px"; //add 30px for scroll
-      canvasDiv.style.height = H + "px"; //add 30px for scroll
-      canvas.width = W;
-      canvas.height = H;
-      win.style.width = parseInt(window.innerWidth, 10) - 48 + "px";
-      win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
-      if (W < screen.width && H < screen.height) {
-        zoomIndex = 0;
-        modeTo("zoom");
-      } else {
-        zoomIndex = 3;
-        modeTo("zoom");
-      }
-    }
-    //function handleOrientation() {
-    var previousOrientation = window.orientation;
-    var checkOrientation = function () {
-      if (window.orientation !== previousOrientation) {
-        previousOrientation = window.orientation;
-        if (mode == "cam") {
-          modeTo("cam"); setTimeout(() => {
-            modeTo("cam")
-          }, 10);
-        }
+        const canvasDiv = document.getElementById("canvas_div");
+        var globalComposite = "source-over";
+        var favoritas = [];
+        var stroke = 1;
+        var hsla = [0, 100, 50, 1];
+        var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+        var strokeWidth = 0.6;
+        var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+        var estrokeWidth = 36;
+        var mode = "cores";
+        var linejoin = "round";
+        var lineJoinsCount = 0;
+        const lineJoins = ["miter", "round"];
+        var ultimoToque = { x: 160, y: 160 };
+        var zoomFactor = 1;
+        var zoomScale = [0.5, 1, 2, 4];
+        var zoomIndex = 1;
+        var mouseOver = false;
+        var layer1 = [];
+        var x2size = 1;
+        const cursor = document.getElementById("cursor");
+        const win = document.getElementById("canvas_window");
+        const desenhoDiv = document.getElementById("desenho_div");
+        const images = []
+        var audio = new Audio('./back_001.wav');
+        var audio2 = new Audio('./click_005.wav');
+        audio.volume = 0.4;
+        audio2.volume = 0.4;
+        var useFrontCamera = true; //moved up from modeto("cam") to test.
+        var videoStream;
+        let rotationDeg = 0;
+        var selecting = false;
+        var origin = { x: 0, y: 0 };
+        var cropEnd = { x: 0, y: 0 };
 
-        if (screen.width > screen.height) {
+        function recortar() {
+            if (!document.getElementById("c2")) {
 
-          document.getElementById("ferramentas").classList.add("horizontal");
-          document.getElementById("ferramentas2").classList.add("horizontal2");
-
-
-          // alert(`virou, ${screen.width} , ${screen.height}`) 
-
-        } else {
-          document.getElementById("ferramentas").classList.remove("horizontal");
-          document.getElementById("ferramentas2").classList.remove("horizontal2");
-
-        }
-        win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
-
-        // orientation changed, do your magic here
-      }
-    };
-
-    window.addEventListener("resize", checkOrientation, false);
-    window.addEventListener("orientationchange", checkOrientation, false);
-
-    // (optional) Android doesn't always fire orientationChange on 180 degree turns
-    setInterval(checkOrientation, 2000);
-
-
-    function removeElement(id) {
-      var elem = document.getElementById(id);
-      return elem.parentNode.removeChild(elem);
-    }
-
-
-    function dataURItoBlob(dataURI) {
-      var byteString;
-      if (dataURI.split(',')[0].indexOf('base64') >= 0)
-        byteString = atob(dataURI.split(',')[1]);
-      else
-        byteString = unescape(dataURI.split(',')[1]);
-      // separate out the mime component
-      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-      // write the bytes of the string to a typed array
-      var ia = new Uint8Array(byteString.length);
-      for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
-
-      return new Blob([ia], { type: mimeString });
-    }
-
-    function prevent(evt) {
-      evt.preventDefault();
-    }
-    function night() {
-      let testarray = document.getElementsByClassName("fundobranco");
-      let testarray2 = document.getElementsByClassName("day");
-      for (let i = 0; i < testarray.length; i++) {
-        testarray[i].classList.toggle("night")
-      } for (let i = 0; i < testarray2.length; i++) {
-        testarray2[i].classList.toggle("night")
-      }
-    }
-    var input = document.getElementById('input');
-    input.addEventListener('change', handleFiles);
-    var input2 = document.getElementById('input2');
-    input2.addEventListener('change', readURL, true);
-    var imagem = new Image;
-
-    function handleFiles(e) {
-      imagem = new Image;
-      imagem.src = URL.createObjectURL(e.target.files[0]);
-      imagem.onload = function () {
-        if (imagem.width > canvas.width) {
-          let proporcao = canvas.width / imagem.width
-          imagem.height = imagem.height * proporcao
-          imagem.width = imagem.width * proporcao
-          let centerx = canvas.width / 2 - imagem.width / 2
-          let centery = canvas.height / 2 - imagem.height / 2
-        }
-        desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
-      }
-    }
-    function readURL() {
-      var file = document.getElementById("input2").files[0];
-      var reader = new FileReader();
-      reader.onloadend = function () {
-        var image = new Image();
-
-        image.src = reader.result;
-
-        image.onload = function () {
-          if (image.width > canvas.width) {
-            let proporcao = canvas.width / image.width
-            image.height = image.height * proporcao
-            image.width = image.width * proporcao
-          }
-          canvasDiv.style.backgroundImage = "url(" + reader.result + ")";
-          canvasDiv.style.backgroundSize = `${image.width}px ${image.height}px`
-        };
-      }
-      if (file) {
-        reader.readAsDataURL(file);
-      } else {
-      }
-    }
-    function x2(w = 320, h = 320) {
-      let newSize = 320;
-      let newSizeb = 320;
-      if (x2size < 4) {
-        newSize = newSize * x2size;
-        newSizeb = newSize * 2;
-      } else {
-
-        newSize = 320 * x2size;
-        newSizeb = 320;
-      }
-
-      var resultado = confirm(
-        "\t\t\t\t↔️ Deseja mudar o tamanho da tela de \n" +
-        `\t\t\t\t\t\t${newSize}px x ${newSize}px\n` +
-        `\t\t\t\t\t\t\tpara\n` +
-        `\t\t\t\t\t\t${newSizeb}px x ${newSizeb}px\n\n` +
-        `\t\t\t\t\t utilize a lupa 🔎 para zoom \n` +
-        `\t\t\t\t e a mão 🖐 para navegar pela tela\n\n`
-      );
-      if (resultado === true) {
-        //dobra o tamanho do canva
-        x2size *= 2;
-        if (x2size > 4) {
-          x2size = 1;
-          zoomIndex = 0;
-          modeTo("zoom");
-          win.style.width = `320px`;
-          win.style.height = `320px`;
-        } else {
-          zoomIndex = 3;
-          modeTo("zoom");
-        }
-        let W = w * x2size;
-        let H = h * x2size;
-        canvasDiv.style.width = W + "px"; //add 30px for scroll
-        canvasDiv.style.height = H + "px"; //add 30px for scroll
-        canvas.width = W;
-        canvas.height = H;
-        win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 60 + "px";
-      }
-      comandosExec()
-    }
-    function toggleHand() {
-      if (mode != "zoom") {
-        oldMode = mode;
-        mode = "zoom";
-        toggleSelect("hand");
-        cursorColor("zoom");
-      } else {
-        modeTo(oldMode);
-        cursorColor(oldMode);
-      }
-    }
-    // drawing app
-
-    document.addEventListener("DOMContentLoaded", startup);
-    function resizeScreen() {
-      desenhoDiv.style.width = window.innerWidth + "px";
-      desenhoDiv.style.height = window.innerHeight + "px";
-      if (screen.width > screen.height) {
-
-        document.getElementById("ferramentas").classList.add("horizontal");
-        document.getElementById("ferramentas2").classList.add("horizontal2");
-        // alert(`virou, ${screen.width} , ${screen.height}`) 
-        win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
-      } else {
-        document.getElementById("ferramentas").classList.remove("horizontal");
-        document.getElementById("ferramentas2").classList.remove("horizontal2");
-        win.style.width = parseInt(window.innerWidth, 10) - 40 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 92 + "px";
-      }
-
-
-    }
-    function startup() {
-
-      night()
-      modeTo("pintar")
-      removeClass();
-      document.getElementById(
-        "globalComposite"
-      ).innerHTML =
-        `<span style="position:absolute; float:right; width:32px; display:block; ` +
-        `padding-top: 0px;">🔲</span> <span style="color:white;` +
-        `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
-      window.addEventListener("resize", function (event) {
-        resizeScreen();
-      });
-      resizeScreen();
-      document.getElementById("undo").addEventListener(
-        "touchstart",
-        (event) => {
-          event.preventDefault();
-          undoT();
-        },
-        false
-      );
-      document.getElementById("undo").addEventListener(
-        "touchend",
-        (event) => {
-          event.preventDefault();
-          undoTEnd();
-        },
-        false
-      );
-      document.getElementById("redo").addEventListener(
-        "touchstart",
-        (event) => {
-          event.preventDefault();
-          redoT();
-        },
-        false
-      );
-      document.getElementById("redo").addEventListener(
-        "touchend",
-        (event) => {
-          event.preventDefault();
-          redoTEnd();
-        },
-        false
-      );
-      document.getElementById("zoombar").value =
-        zoomScale.indexOf(zoomFactor);
-      window.addEventListener("keydown", handleKeys);
-      canvas.addEventListener("touchstart", handleStart);
-      desenhoDiv.addEventListener("gesturestart", prevent);
-      win.addEventListener("touchmove", prevent);
-      canvas.addEventListener("touchend", handleEnd);
-      canvas.addEventListener("touchcancel", handleCancel);
-      canvas.addEventListener("touchmove", handleMove);
-      canvas.addEventListener("mousedown", (e) => {
-        x = e.offsetX;
-        y = e.offsetY;
-        if (mode != "picker" && mode != "zoom") {
-          isDrawing = true;
-        } else if (mode == "zoom") {
-          isGrabing = true;
-        } else if (mode == "picker") {
-          isPicking = true
-        }
-        removeClass();
-      });
-      canvas.addEventListener("mouseenter", (e) => {
-        mouseOver = true;
-      });
-      canvas.addEventListener("mouseout", (e) => {
-        mouseOver = false;
-        setTimeout(() => {
-          if (mouseOver == false) {
-            isDrawing = false;
-            isGrabing = false;
-            isPicking = false;
-          }
-        }, 500);
-      });
-      canvas.addEventListener("mousemove", (e) => {
-        if (isDrawing && mode != "picker") {
-          desenha(
-            "p",
-            context.globalCompositeOperation,
-            x,
-            y,
-            e.offsetX,
-            e.offsetY,
-            strokeColor,
-            stroke,
-            linejoin
-          );
-        } else if (isGrabing) {
-          ultimoToque.y = e.offsetY;
-          ultimoToque.x = e.offsetX;
-          scrollCanva(
-            (x - ultimoToque.x) * zoomFactor,
-            (y - ultimoToque.y) * zoomFactor
-          );
-        } else if (isPicking) {
-          x = e.offsetX;
-          y = e.offsetY;
-          var imageData = context.getImageData(x, y, 1, 1).data;
-          if (imageData[3] > 1) {
-            RGBAToHSLA(
-              imageData[0],
-              imageData[1],
-              imageData[2],
-              imageData[3]
-            );
-            setStrokeColor();
-          }
-        }
-        x = e.offsetX;
-        y = e.offsetY;
-      });
-      canvas.addEventListener("mouseup", (e) => {
-        if (isDrawing && mode != "picker") {
-          desenha(
-            "p",
-            context.globalCompositeOperation,
-            x,
-            y,
-            e.offsetX + 1,
-            e.offsetY + 1,
-            strokeColor,
-            stroke,
-            linejoin
-          );
-          ultimoToque.y = e.offsetY;
-          ultimoToque.x = e.offsetX;
-          x = 0;
-          y = 0;
-          isDrawing = false;
-        } else if (mode == "picker") {
-          x = e.offsetX;
-          y = e.offsetY;
-          var imageData = context.getImageData(x, y, 1, 1).data;
-          if (imageData[3] > 1) {
-            RGBAToHSLA(
-              imageData[0],
-              imageData[1],
-              imageData[2],
-              imageData[3]
-            );
-            setStrokeColor();
-          }
-        } else if (mode == "zoom") {
-          isGrabing = false;
-        }
-      });
-      document
-        .getElementById("btn-download")
-        .addEventListener("click", function (e) {
-          //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-          let nome = prompt("nome da arte:", "desenho");
-          if (nome != null && nome != "") {
-            var dataURL = canvas
-              .toDataURL("image/png")
-              .replace("image/png", "image/octet-stream");
-            //downloadImage(dataURL, 'my-canvas.jpeg');
-            downloadImage(dataURL, `${nome}.png`);
-          }
-        });
-      initStrokeRange()
-      setTimeout(() => resizeScreen(), 10)
-    }
-
-    const RGBAToHSLA = (r, g, b, a) => {
-      r /= 255;
-      g /= 255;
-      b /= 255;
-      a /= 255;
-      const l = Math.max(r, g, b);
-      const s = l - Math.min(r, g, b);
-      const h = s
-        ? l === r
-          ? (g - b) / s
-          : l === g
-            ? 2 + (b - r) / s
-            : 4 + (r - g) / s
-        : 0;
-      const H = Math.floor(60 * h < 0 ? 60 * h + 360 : 60 * h);
-      const S = Math.floor(
-        100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)
-      );
-      const L = Math.floor((100 * (2 * l - s)) / 2);
-      const A = a;
-      hsla[0] = H;
-      hsla[1] = S;
-      hsla[2] = L;
-      hsla[3] = A;
-      return `hsla(${H},${S}%,${L}%,${a})`;
-    };
-
-    function handleKeys(evt) {
-      if (evt.ctrlKey && evt.key === "y") {
-        redo();
-      }
-      if (evt.ctrlKey && evt.key === "z") {
-        undo();
-      }
-    }
-    var comandos = [];
-    var comandosb = [];
-    let desfazendo = false;
-    let refazendo = false;
-    var counter;
-    var counterU;
-    function undoT() {
-
-      clearInterval(counterU);
-      counterU = setInterval(() => undo(), 30);
-    }
-    function undoTEnd() {
-      clearInterval(counterU);
-      clearInterval(counter);
-    }
-
-    function undo() {
-      let len = comandos.length;
-      let posicao = 0
-      for (i = 0; i < len; i++) {
-        if (i < undoLevel && (comandos[i][0] == "s" || comandos[i][0] == "f")) {
-          posicao = i;
-        }
-      }
-      if (undoLevel < len - 1) {
-        undoLevel++
-        comandosExec(posicao)
-      } else {
-        clearInterval(counter)
-        audio.play();
-      }
-
-    }
-    function redoT() {
-      clearInterval(counterU);
-      clearInterval(counter);
-
-
-      counter = setInterval(() => redo(), 30);
-    }
-    function redoTEnd() {
-      clearInterval(counter);
-    }
-
-    function redo() {
-      let len = comandos.length;
-      let posicao = 0
-      for (i = 0; i < len; i++) {
-        if (i < undoLevel && comandos[i][0] == "s") {
-          posicao = i;
-        }
-      }
-      if (undoLevel > 0) {
-        undoLevel--
-        comandosExec(posicao)
-      } else {
-        //alert("nivel maximo de refazer atingindo.");
-        clearInterval(counter)
-        audio.play();
-      }
-    }
-    let swapImg
-    let blobb
-    let swaps = new Array()
-    let pL
-    let posicoes = new Array(0)
-    function memorySwap(GCO) {
-      posicoes = []
-      posicoes.push(0)
-      posicoes.push(0)
-      swaps = []
-      let len = comandos.length;
-      if (comandos[len - 1][0] != "s") {
-        if (len > 300) {
-
-          for (i = 0; i < len; i++) {
-            if (comandos[i][0] == "s") {
-              swaps.push(comandos[i])
-              posicoes.push(i)
+                let c2 = document.createElement("canvas")
+                c2.setAttribute("id", "c2")
+                c2.width = canvas.width
+                c2.height = canvas.height
+                c2.style.marginLeft = -canvas.width
+                c2.setAttribute("class", "c2")
+                let context2 = c2.getContext("2d");
+                c2.addEventListener("touchstart", handleStart);
+                c2.addEventListener("touchmove", handleMove);
+                c2.addEventListener("touchend", handleEnd);
+                canvasDiv.appendChild(c2)
+                c2.onmouseout = (e) => mostra();
+                c2.onmousedown = (e) => {
+                    selecting = true;
+                    origin = { x: e.offsetX, y: e.offsetY };
+                };
+                c2.onmousemove = (e) => {
+                    cursorMove(e)
+                    if (!!selecting) {
+                        cropEnd.x = e.offsetX;
+                        cropEnd.y = e.offsetY;
+                        context2.strokeStyle = "#ccccccdd";
+                        context2.strokeWidth = 0.5
+                        context2.clearRect(0, 0, c2.width, c2.height);
+                        context2.setLineDash([1, 1]);
+                        context2.beginPath();
+                        context2.rect(
+                            origin.x,
+                            origin.y,
+                            e.offsetX - origin.x,
+                            e.offsetY - origin.y
+                        );
+                        context2.stroke();
+                    }
+                };
+                c2.onmouseup = (e) => {
+                    selecting = false;
+                };
             }
-          }
-          pL = posicoes.length
-          let sl = swaps.length
-          let pops = 0
-          if (sl > 15) {
-            pops = sl - 15
-            for (h = 0; h < pops; h++) {
-              swaps.shift()
-            }
-          }
-          console.log(posicoes[pL - 1])
-          for (i = posicoes[pL - 1]; i < len; i++) {
-            if (comandos[i][0] != "s") {
-              swaps.push(comandos[i])
-            }
-          }
+            /*else {
+              removeElement("c2");
+              removeClass();
+              setTimeout(() => {
+                modeTo("pintar")
+                cursorColor()
+              }, 200)
+            }*/
         }
-        swapImg = []
-        blobb = []
 
-        swapImg = canvas.toDataURL('image/png');
-        blobb = dataURItoBlob(swapImg)
-        comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
-        swaps.push(comando)
-        setTimeout(() => {
-          comandos = []
-          let sl = swaps.length
-          for (i = 0; i < sl; i++) {
-            comandos.push(swaps[i])
-          }
+        function cortar() {
+            if (cropEnd.x != 0) {
 
-        }, 100)
+                let context2 = c2.getContext("2d");
+                var swapImg = [];
+                var blob = [];
+                swapImg = canvas.toDataURL("image/png");
+                blob = dataURItoBlob(swapImg);
+                context2.clearRect(0, 0, c2.width, c2.height);
+                let myImg = document.createElement("img");
+                myImg.src = URL.createObjectURL(blob);
+                myImg.onload = async function () {
+                    let noy
+                    let nox
+                    let pos = { x: -origin.x, y: -origin.y }
+                    if (cropEnd.x < origin.x) {
+                        nox = [origin.x, cropEnd.x]
+                        pos.x = -cropEnd.x;
+                    } else {
+                        nox = [cropEnd.x, origin.x]
+                    }
+                    if (cropEnd.y < origin.y) {
+                        noy = [origin.y, cropEnd.y]
+                        pos.y = -cropEnd.y;
+                    } else {
+                        noy = [cropEnd.y, origin.y]
+                    }
+                    canvas.width = nox[0] - nox[1];
+                    canvas.height = noy[0] - noy[1];
+                    canvasDiv.style.width = nox[0] - nox[1] + "px"
+                    canvasDiv.style.height = noy[0] - noy[1] + "px"
+                    let oldGCO = context.globalCompositeOperation;
+                    context.globalCompositeOperation = "source-over";
+                    context.imageSmoothingEnabled = false;
+                    let comando = ["f", "source-over", blob, pos.x, pos.y, myImg.width, myImg.height];
+                    comandos.length = 0
+                    comandos.push(comando)
+                    comandosExec()
+                    context.globalCompositeOperation = oldGCO;
+                };
+                removeElement("c2");
+                setTimeout(() => {
+                    modeTo("recortar")
+                }, 200)
+            }
+        }
 
-      }
-    }
 
-    var executing = false
-    var undoLevel = 0
 
-    function comandosExec() {
-      if (executing == false) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        exec();
-        executing = true;
-      }
-    }
 
-    function exec(coma = 0) {
-      let lenc = comandos.length;
-      let scope = lenc - undoLevel
-      if (scope > coma) {
-        switch (comandos[coma][0]) {
-          case "f":
+        function rotacionar() {
+            rotationDeg = (rotationDeg + 90) % 360,
+                console.log(rotationDeg)
+            canvasDiv.style.width = canvas.width + "px";
+            // canvasDiv.height = cw;
+            canvasDiv.style.height = canvas.height + "px";
+            canvasDiv.setAttribute("style", `-webkit-transform: rotate(${rotationDeg}deg);)
+        - moz - transform: rotate(${rotationDeg}deg);
+      -o - transform: rotate(${rotationDeg}deg);
+      -ms - transform: rotate(${rotationDeg}deg);
+      transform: rotate(${rotationDeg}deg);`)
+            setTimeout(
+                () => {
+                    let cw = canvasDiv.width;
+                    let ch = canvasDiv.height;
+                    //if (rotationDeg == 90 || rotationDeg == 270) {
+                    // canvasDiv.width = ch;
+                    canvasDiv.style.width = canvas.width + "px";
+                    // canvasDiv.height = cw;
+                    canvasDiv.style.height = canvas.height + "px";
+                    cw = canvasDiv.width;
+                    ch = canvasDiv.height;
+
+                }, 10
+            )
+            //}
+        }
+        function drawRotated(degrees = 90) {
+            var swapImg = [];
+            var blob = [];
+            swapImg = canvas.toDataURL("image/png");
+            blob = dataURItoBlob(swapImg);
+            //context2.clearRect(0, 0, c2.width, c2.height);
             let myImg = document.createElement("img");
-            let gco = comandos[coma][1]
-            myImg.src = URL.createObjectURL(comandos[coma][2])
+            myImg.src = URL.createObjectURL(blob);
             myImg.onload = function () {
-              let globaltemp = context.globalCompositeOperation
-              context.globalCompositeOperation = gco;
-              context.drawImage(
-                myImg,
-                comandos[coma][3],
-                comandos[coma][4],
-                myImg.width,
-                myImg.height);
-              context.globalCompositeOperation = globaltemp
-              coma++;
-              exec(coma)
-              myImg = []
-            }
-            break;
-          case "s":
-            context.globalCompositeOperation = "destination-out";
-            context.fillStyle = "#ffffffff";
-            context.fillRect(0, 0, canvas.width, canvas.height);
+                let cw = canvas.width;
+                let ch = canvas.height;
+                if (degrees == 90 || degrees == 270) {
+                    canvas.width = ch;
+                    //canvasDiv.style.width = ch + "px";
+                    canvas.height = cw;
+                    //canvasDiv.style.height = cw + "px";
+                    cw = canvas.width;
+                    ch = canvas.height;
+                    canvasDiv.style.marginTop = ch - cw
+                } else {
+                    canvas.width = cw;
+                    canvas.height = ch;
+                    canvasDiv.style.marginTop = 0
+                }
 
-            let myImg2 = document.createElement("img");
-            let gco2 = comandos[coma][1]
-            myImg2.src = URL.createObjectURL(comandos[coma][2])
-            myImg2.onload = function () {
-              let globaltemp = context.globalCompositeOperation
-              context.globalCompositeOperation = gco2;
-              context.drawImage(
-                myImg2,
-                comandos[coma][3],
-                comandos[coma][4],
-                myImg2.width,
-                myImg2.height);
-              context.globalCompositeOperation = globaltemp
-              coma++;
-              exec(coma)
-              myImg2 = []
-            }
-            break;
-          case "p":
-            drawLine(
-              comandos[coma][1],
-              comandos[coma][2],
-              comandos[coma][3],
-              comandos[coma][4],
-              comandos[coma][5],
-              comandos[coma][6],
-              comandos[coma][7],
-              comandos[coma][8]
-            );
-            coma++;
-            exec(coma)
-            break;
-          case "i":
-            context.globalCompositeOperation = comandos[coma][1];
-            context.drawImage(
-              comandos[coma][2],
-              comandos[coma][3],
-              comandos[coma][4],
-              comandos[coma][5],
-              comandos[coma][6]);
-            coma++;
-            exec(coma)
-            break;
-          case "c":
-            context.globalCompositeOperation = comandos[coma][1];
-            context.putImageData(
-              comandos[coma][2],
-              comandos[comai][3],
-              comandos[coma][4],
-              comandos[coma][5],
-              comandos[coma][6],
-              comandos[coma][7],
-              comandos[coma][8]);
-            coma++;
-            exec(coma)
-            break;
-          case "b":
-            context.globalCompositeOperation = comandos[coma][1];
-            context.fillStyle = comandos[coma][2];
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            coma++;
-            exec(coma)
-            break;
-        }
-      } else {
-        executing = false
-      }
+                context.save();
+                // translate and rotate
+                switch (degrees) {
+                    case 90:
+                        context.translate(cw, Math.floor(ch / cw));
+                        context.rotate(Math.PI / 2);
+                        break;
+                    case 180:
+                        context.rotate(Math.PI);
+                        context.translate(-cw, -ch);
+                        break;
+                    case 270:
+                        context.translate(-Math.floor(ch / cw), cw);
 
-    }
-
-    function desenha(
-      CMD,
-      GCO,
-      X = undefined,
-      Y = undefined,
-      eoX = undefined,
-      eoY = undefined,
-      strokeColor = undefined,
-      stroke = undefined,
-      linejoin = undefined
-    ) {
-      let comando = []
-      switch (CMD) {
-
-        case "p":
-          comando = ["p", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin];
-          comandos.push(comando)
-          drawLine(
-            comando[1],
-            comando[2],
-            comando[3],
-            comando[4],
-            comando[5],
-            comando[6],
-            comando[7],
-            comando[8]
-
-          );
-          break;
-        case "f":
-          comando = ["f", GCO, X, Y, eoX, eoY, strokeColor]
-          let myImg = document.createElement("img");
-          myImg.src = URL.createObjectURL(X)
-          myImg.onload = function () {
-            let oldGCO = context.globalCompositeOperation
-            context.globalCompositeOperation = globalComposite
-            context.drawImage(
-              myImg,
-              Y,
-              eoX,
-              myImg.width,
-              myImg.height);
-            comandos.push(comando)
-            context.globalCompositeOperation = oldGCO
-          }
-          break;
-        case "i":
-          comando = ["i", GCO, imagem, 0, 0, imagem.width, imagem.height]
-          context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
-          comandos.push(comando)
-          break;
-
-        case "b":
-          comando = ["b", GCO, X];
-          comandos.push(comando)
-          context.fillStyle = X; //cor
-          context.fillRect(0, 0, canvas.width, canvas.height);
-          break;
-      }
-
-      if (undoLevel != 0) {
-        for (i = 0; i < undoLevel; i++) { comandos.pop() }
-        undoLevel = 0
-        console.log("daqui pra frente..")
-      }
-
-    }
-    function handleStart(evt) {
-      evt.preventDefault();
-      const touches = evt.changedTouches;
-      offsetX = canvas.getBoundingClientRect().left;
-      offsetY = canvas.getBoundingClientRect().top;
-      x = touches[0].clientX;
-      y = touches[0].clientY;
-      for (let i = 0; i < touches.length; i++) {
-        ongoingTouches.push(copyTouch(touches[i]));
-      }
-
-      removeClass();
-      if (mode == "zoom") {
-        isGrabing = true;
-      }
-    }
-
-    function handleMove(evt) {
-      evt.preventDefault();
-      const touches = evt.changedTouches;
-      for (let i = 0; i < touches.length; i++) {
-        const idx = ongoingTouchIndexById(touches[i].identifier);
-        if (idx >= 0) {
-          ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
-          ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
-          if (mode != "zoom" && mode != "picker") {
-            (x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor),
-              (y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor);
-
-            desenha(
-              "p",
-              context.globalCompositeOperation,
-              x,
-              y,
-              ultimoToque.x,
-              ultimoToque.y,
-              strokeColor,
-              stroke,
-              linejoin
-            );
-            cursor.style.left = (touches[i].clientX) + "px";
-            cursor.style.top = (touches[i].clientY) + "px";
-            ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-          }
+                        context.rotate(Math.PI * 3 / 2);
+                        break;
+                }
+                // draw the previows image, now rotated
+                context.drawImage(myImg, 0, 0);
+                context.restore();
+                canvasDiv.style.width = canvas.width + "px";
+                canvasDiv.style.height = canvas.height + "px";
+            };
         }
 
-      }
-      if (mode == "picker") {
-        const touches = evt.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-          const idx = ongoingTouchIndexById(touches[i].identifier);
-          if (idx >= 0) {
-            var imageData = context.getImageData(
-              ultimoToque.x,
-              ultimoToque.y,
-              1,
-              1
-            ).data;
-            if (imageData[3] > 1) {
-              RGBAToHSLA(
-                imageData[0],
-                imageData[1],
-                imageData[2],
-                imageData[3]
-              );
-              setStrokeColor();
-            }
-          }
+        function tamanhom() {
+            removeClass();
+            document.getElementById("menutamanho").classList.toggle("aparece")
         }
-      }
-      if (mode == "zoom") {
-        if (isGrabing) {
-          for (let i = 0; i < touches.length; i++) {
-            const idx = ongoingTouchIndexById(touches[i].identifier);
-            if (idx == 0) {
-              scrollCanva(x - touches[0].clientX, y - touches[0].clientY);
-              x = touches[0].clientX;
-              y = touches[0].clientY;
-            }
-          }
-        }
-      }
-    }
-    function handleEnd(evt) {
-      evt.preventDefault();
-      const touches = evt.changedTouches;
-      for (let i = 0; i < touches.length; i++) {
-        let idx = ongoingTouchIndexById(touches[i].identifier);
-        if (idx >= 0) {
-          context.lineWidth = strokeWidth;
-          context.fillStyle = strokeColor;
-          ongoingTouches.splice(idx, 1); // remove it; we're done
-        }
-      }
-      if (mode == "zoom") {
-        isGrabing = false;
-      }
-    }
-
-    function handleCancel(evt) {
-      evt.preventDefault();
-      const touches = evt.changedTouches;
-      for (let i = 0; i < touches.length; i++) {
-        let idx = ongoingTouchIndexById(touches[i].identifier);
-        ongoingTouches.splice(idx, 1); // remove it; we're done
-      }
-    }
-
-    function copyTouch({ identifier, clientX, clientY }) {
-      return { identifier, clientX, clientY };
-    }
-
-    function ongoingTouchIndexById(idToFind) {
-      for (let i = 0; i < ongoingTouches.length; i++) {
-        const id = ongoingTouches[i].identifier;
-        if (id === idToFind) {
-          return i;
-        }
-      }
-      return -1; // not found
-    }
-
-    function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
-      context.globalCompositeOperation = GCO;
-      context.beginPath();
-      context.strokeStyle = strokeColor;
-      context.lineWidth = stroke;
-      context.lineJoin = linejoin;
-      context.moveTo(x1, y1);
-      context.lineTo(x2, y2);
-      context.closePath();
-      context.stroke();
-    }
-
-    function clearArea() {
-      let confirma = confirm(
-        "Limpar todo o desenho? \n(impossível desfazer)"
-      );
-      if (confirma === true) {
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        comandos = []
-        comando = ["b", "destination-out", "#ffffff"];
-        comandos.push(comando)
-        comandosExec()
-        convertToImg()
-      }
-    }
-
-    // By diego
-
-    let oldMode = mode;
-    async function modeTo(qual) {
-      if (mode != qual) {
-        oldMode = mode;
-        mode = qual;
-        removeClass();
-        toggleSelect(qual);
-        mostraMenu(qual);
-
-      } else {
-        mostraMenu(qual);
-        if (qual == "cam") {
-
-          removeVideo()
-
-        }
-      }
-      switch (qual) {
-        case "zoom":
-          removeClass();
-          zoomIndex++;
-          if (zoomIndex > 3) {
-            zoomIndex = 0;
-          }
-          ZOOMf(zoomIndex);
-          setTimeout(function () {
-            document.getElementById("x1").innerHTML = zoomFactor + "x";
-            scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
-          }, 10);
-          cursorColor();
-          toggleSelect(qual);
-          resizeScreen()
-          mode = "zoom"
-          break;
-        case "cam":
-          camera();
-          context.globalCompositeOperation = globalComposite;
-          memorySwap(globalComposite);
-          break;
-        /*  case mode: //se o modo ja estiver ativo:
-            mostraMenu(qual);
-            if (qual == "info") {
-              modeTo(oldMode);
-            }
-            break;*/
-        case "apagar":
-          setStrokeSize(estrokeWidth);
-          cursorColor();
-          mudaCorAlpha();
-          context.globalCompositeOperation = "destination-out";
-          //memorySwap("destination-out");
-          break;
-        case "pintar":
-          setStrokeSize(strokeWidth);
-          setStrokeColor();
-          context.globalCompositeOperation = globalComposite;
-          memorySwap(globalComposite);
-          break;
-        case "cores":
-          setStrokeSize(strokeWidth);
-          setStrokeColor();
-          context.globalCompositeOperation = globalComposite;
-          memorySwap(globalComposite);
-          break;
-        case "fundo":
-          setStrokeSize(strokeWidth);
-          context.globalCompositeOperation = globalComposite;
-          memorySwap(globalComposite);
-          break;
-
-        case "preencher":
-          document.getElementById("preenchercor").style.backgroundColor =
-            strokeColor;
-          context.globalCompositeOperation = globalComposite;
-          break;
-        case "picker":
-          break;
-        case "info":
-          break;
-        case "undo":
-          undo();
-          break;
-        case "imagem":
-          break;
-        case _:
-          break;
-      }
-      cursorColor();
-    }
-    function camera() {
-
-      // ok, browser supports it*/
-      if (!document.getElementById("videoC")) {
-
-        const botao = document.createElement("div");
-        botao.setAttribute("id", "btnChangeCam")
-        botao.setAttribute("value", "muda")
-        //        botao.setAttribute("class", "bloquinho")
-        botao.setAttribute("style", "position: absolute; top: 270px; left:40px; width:32x; height:32px; font-size:32px;")
-        botao.innerHTML = "🔃"
-        const videoE = document.createElement("video");
-        const escala = canvas.height / 320
-        videoE.id = "video"
-        videoE.height = canvas.height; // in px
-        videoE.width = 429 * (escala); // in px
-        videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
-
-        let vcW = 428 * escala * 2;
-        let vcH = 320 * escala * 2;
-        const videoC = document.createElement("div");
-        videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px;`)
-        videoC.setAttribute("id", "videoC")
-        videoC.appendChild(videoE);
-        document.getElementById("tela").appendChild(botao);
-        canvasDiv.appendChild(videoC)
-        setTimeout(() => win.classList.add("flip"), 1000)
-
-        videoE.toggleAttribute("autoplay", "autoplay")
-        videoE.toggleAttribute("playsinline", "playsinline")
-        if (globalComposite == "destination-over") {
-          videoE.setAttribute("class", "destination-over");
-        }
-        if (
-          !"mediaDevices" in navigator ||
-          !"getUserMedia" in navigator.mediaDevices
-        ) {
-          alert("Camera API is not available in your browser");
-          return;
-        }
-
-        // get page elements
-        const video = document.querySelector("#video");
-        const canvasV = document.querySelector("#canvasV");
-        //Detect camera resolution using pause/play loop.
-        var retryCount = 0;
-        var retryLimit = 25;
-        video.onplaying = function (e) {
-          var videoWidth = this.videoWidth;
-          var videoHeight = this.videoHeight;
-          if (!videoWidth || !videoHeight) {
-            if (retryCount < retryLimit) {
-              retryCount++;
-              window.setTimeout(function () {
-                video.pause();
-                video.play();
-              }, 100);
-            }
-            else {
-              video.onplaying = undefined; //Remove event handler.
-              console.log('Failed to detect camera resolution after ' + retryCount + ' retries. Giving up!');
-            }
-          }
-          else {
-            video.onplaying = undefined; //Remove event handler.
-            let proporcao = videoWidth / videoHeight
-            //diegos magic
-
-            let canvas = document.getElementById("canvas")
-            let videoC = document.getElementById("videoC")
-
-            let escala = canvas.width / 320
-            let vcW = 428 * escala;
-            let vcH = 318 * escala;
-
-            if (proporcao > 1) {
-              canvasV.height = canvas.height
-              canvasV.width = canvas.height * proporcao
-
-              let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
-              let offsetH = -canvas.height - 5
-              videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
+        function tamanho() {
+            let W = document.getElementById("largura").value
+            let H = document.getElementById("altura").value
+            canvasDiv.style.width = W + "px"; //add 30px for scroll
+            canvasDiv.style.height = H + "px"; //add 30px for scroll
+            canvas.width = W;
+            canvas.height = H;
+            win.style.width = parseInt(window.innerWidth, 10) - 48 + "px";
+            win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
+            if (W < screen.width && H < screen.height) {
+                zoomIndex = 0;
+                modeTo("zoom");
             } else {
-              proporcao = videoHeight / videoWidth
-              canvasV.width = canvas.width
-              canvasV.height = canvas.width * proporcao
-
-              let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
-              let offsetH = - canvas.height * escala - ((canvasV.height - canvas.height) / 2)
-              videoC.setAttribute("style",
-                `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
+                zoomIndex = 3;
+                modeTo("zoom");
             }
+        }
+        //function handleOrientation() {
+        var previousOrientation = window.orientation;
+        var checkOrientation = function () {
+            if (window.orientation !== previousOrientation) {
+                previousOrientation = window.orientation;
+                if (mode == "cam") {
+                    modeTo("cam"); setTimeout(() => {
+                        modeTo("cam")
+                    }, 10);
+                }
 
-            //console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
-          }
+                if (screen.width > screen.height) {
+
+                    document.getElementById("ferramentas").classList.add("horizontal");
+                    document.getElementById("ferramentas2").classList.add("horizontal2");
+                    document.getElementsById("menus").style.top = "90px";
+
+                    // alert(`virou, ${screen.width} , ${screen.height}`) 
+
+                } else {
+                    document.getElementById("ferramentas").classList.remove("horizontal");
+                    document.getElementById("ferramentas2").classList.remove("horizontal2");
+                    document.getElementsById("menus").style.top = "0px";
+
+                }
+                win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
+                win.style.height = parseInt(window.innerHeighamt, 10) - 20 + "px";
+
+                // orientation changed, do your magic here
+            }
         };
 
-        const btnChangeCamera = document.querySelector("#btnChangeCam");
+        window.addEventListener("resize", checkOrientation, false);
+        window.addEventListener("orientationchange", checkOrientation, false);
 
-        // switch camera
-        btnChangeCamera.addEventListener("click", function () {
-          useFrontCamera = !useFrontCamera;
-          win.classList.toggle("flip");
-          initializeCamera();
-        });
+        // (optional) Android doesn't always fire orientationChange on 180 degree turns
+        setInterval(checkOrientation, 2000);
 
-        //diego 
-        video.addEventListener('click', function (e) {
-
-          let W = canvasV.width;
-          let H = canvasV.height;
-          contextV.drawImage(video, 0, 0, W, H)
-          img_b64 = canvasV.toDataURL('image/png');
-          blob = dataURItoBlob(img_b64)
-          let offsetW = (W - canvas.width) / -2
-          let offsetH = (H - canvas.height) / -2
-
-          desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
-          removeVideo();
-        })
-        // initialize
-        async function initializeCamera() {
-          stopVideoStream();
-          constraints.video.facingMode = useFrontCamera ? "user" : "environment";
-
-          try {
-            videoStream = await navigator.mediaDevices.getUserMedia(constraints);
-            video.srcObject = videoStream;
-          } catch (err) {
-            alert("Could not access the camera");
-          }
+        function removeElement(id) {
+            var elem = document.getElementById(id);
+            return elem.parentNode.removeChild(elem);
         }
 
-        initializeCamera();
 
-      }
-    }
-    function removeVideo() {
-      removeClass("flip");
-      setTimeout(() => {
-        removeElement("videoC")
-        removeElement("btnChangeCam")
-        if (oldMode == "cam" || oldMode == "zoom") {
-          modeTo("apagar")
-        } else {
-          modeTo(oldMode)
-        }
-        setTimeout(() => {
-          removeClass();
-        }, 200)
-        img_b64 = [];
-        blob = []
-      }, 10)
-    }
-    // video constraints
-    const constraints = {
-      video: {
-        width: {
-          min: 480,
-          ideal: 960,
-          max: 1920,
-        },
-        height: {
-          min: 320,
-          ideal: 640,
-          max: 1920,
-        },
-      },
-    };
+        function dataURItoBlob(dataURI) {
+            var byteString;
+            if (dataURI.split(',')[0].indexOf('base64') >= 0)
+                byteString = atob(dataURI.split(',')[1]);
+            else
+                byteString = unescape(dataURI.split(',')[1]);
+            // separate out the mime component
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            // write the bytes of the string to a typed array
+            var ia = new Uint8Array(byteString.length);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
 
-    // stop video stream
-    function stopVideoStream() {
-      if (videoStream) {
-        videoStream.getTracks().forEach((track) => {
-          track.stop();
-        });
-      }
-    }
-
-    function toggleSelect(id) {
-      removeClass("selected");
-      document.getElementById(id).classList.toggle("selected");
-    }
-
-    function mostraMenu(id) {
-      let quem = document.getElementById("menu" + id);
-      quem.classList.toggle("aparece");
-    }
-
-    function removeClass(qual = "aparece") {
-      //pega quem tem e remove
-      Array.from(document.querySelectorAll(`.${qual}`)).forEach(function (
-        el
-      ) {
-        el.classList.remove(`${qual}`);
-      });
-    }
-
-    // Pinceis Cor e Tamanho
-
-    function criaPaleta() {
-      i = 1;
-      let paleta = "";
-      while (i < 14) {
-        let cor = document.getElementById("H").value
-        //    let cor = document.getElementById("H").value - (i*3)
-        paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1] + i * 2}%,${hsla[2] + i * 3
-          }%,${hsla[3]
-          })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1] + i * 2
-          }%,${hsla[2] + i * 3}%,${hsla[3] * 4 + 0.2});'> </span>`;
-        i++;
-      }
-      document.getElementById("paleta").innerHTML = paleta;
-      document.getElementById("paleta").innerHTML +=
-        `<span onmousedown='mudaCor("B")'  class='bloquinho' ` +
-        `style='background-color:hsla(0, 100%, 100%, ${hsla[3]})'> </span>`;
-      document.getElementById("paleta").innerHTML +=
-        `<br /><span onmousedown='mudaCor("P")' class='bloquinho' ` +
-        `style='background-color:hsla(0, 100%, 0%, ${hsla[3]})'> </span>`;
-    }
-    function criaPaleta2() {
-      let paleta = "";
-      let quantas = favoritas.length;
-      for (i = 0; i < quantas; i++) {
-        paleta += `<span onmousedown='mudaCor("${favoritas[i]}")' class='bloquinho' style='background-color:${favoritas[i]};'> </span>`;
-      }
-      document.getElementById("paleta2").innerHTML = paleta;
-    }
-
-    let strokeRange = [0.3, 0.5, 0.7, 1, 2]
-
-    function initStrokeRange() {
-      let r = 2;
-      while (r <= 500) {
-        r = r * 1.3;
-        strokeRange.push(Math.floor(r))
-      }
-    }
-
-    function strokeSizeRange(value) {
-      setStrokeSize(
-        strokeRange[value]
-      )
-    }
-    function setStrokeSize(value) {
-      let brushes = ["mostraCor2", "cursor"];
-      for (i in brushes) {
-        let tamanho = document.getElementById(brushes[i]);
-        if (mode == "pintar" || mode == "cores") {
-          strokeWidth = value;
-          tamanho.style.width = strokeWidth * zoomFactor + "px";
-          tamanho.style.height = strokeWidth * zoomFactor + "px";
-          tamanho.style.marginTop =
-            (strokeWidth / 2) * zoomFactor * -1 + "px";
-          tamanho.style.marginLeft =
-            (strokeWidth * zoomFactor * -1) / 2 + "px";
-          if (i == 0) {
-            tamanho.style.backgroundColor = strokeColor;
-          }
-          stroke = strokeWidth;
-          document.getElementById("tpx").value = value;
-        } else if (mode == "apagar") {
-          estrokeWidth = value;
-          tamanho.style.width = estrokeWidth * zoomFactor + "px";
-          tamanho.style.height = estrokeWidth * zoomFactor + "px";
-          tamanho.style.marginTop =
-            (estrokeWidth / 2) * zoomFactor * -1 + "px";
-          tamanho.style.marginLeft =
-            (estrokeWidth * zoomFactor * -1) / 2 + "px";
-          stroke = estrokeWidth;
-          document.getElementById("tpx2").value = value;
-        }
-      }
-    }
-
-    function backPaint() {
-      if (globalComposite != "destination-over") {
-        globalComposite = "destination-over";
-        document.getElementById(
-          "globalComposite"
-        ).innerHTML =
-          `<span style="position:absolute; width:30px; ` +
-          `display:block; color:white; margin-left:-4px; margin-top:-5px;">⭕</span> ` +
-          `<span style="position:relative; float:left; width:30px; display:block;  ` +
-          `color:black; left:1px; margin-top:0px;" title="Pintando por baixo">🔲</span>`;
-
-        if (document.getElementById("video")) {
-          document.getElementById("video").setAttribute("class", "destination-over")
+            return new Blob([ia], { type: mimeString });
         }
 
-      } else {
-        globalComposite = "source-over";
-        document.getElementById(
-          "globalComposite"
-        ).innerHTML =
-          `<span style="position:absolute; float:right; width:32px; display:block; ` +
-          `padding-top: 0px;">🔲</span> <span style="color:white;` +
-          `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
-        removeClass("destination-over")
-      }
-      cursor.classList.toggle("cursorIndex");
-      cursor.classList.toggle("selected");
-      context.globalCompositeOperation = globalComposite;
-      modeTo("pintar")
-      removeClass()
-    }
-
-    function mudaCorBG(cor) {
-      if (cor === "strokeColor") {
-        cor = strokeColor;
-      }
-      if (context.globalCompositeOperation != "destination-out") {
-        //context.fillStyle = cor;
-        // context.fillRect(0, 0, canvas.width, canvas.height);
-        let GCO = context.globalCompositeOperation;
-        desenha("b", GCO, cor);
-      }
-    }
-
-    function mudaCorQ(q = 0, valor) {
-      hsla[q] = Number(valor);
-      //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
-      setStrokeColor();
-      criaPaleta();
-    }
-    function mudaCorAlpha() {
-      let valor = document.getElementById("transparenciaE").value
-      strokeColor = `hsla(0, 100%, 0%, ${valor})`
-    }
-    function salvaCor() {
-      if (!favoritas.includes(strokeColor)) {
-        favoritas.push(strokeColor);
-      } else {
-        favoritas = favoritas.filter((item) => item !== strokeColor);
-      }
-      setTimeout(criaPaleta2(), 20);
-    }
-
-    criaPaleta();
-
-    function setStrokeColor() {
-      strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-      let objs = [
-        "mostraCor",
-        "salvaCor",
-        "mostraCor2",
-        "pintar",
-        "cores",
-        "picker",
-        "preencher"
-      ];
-      let quantos = objs.length;
-      for (i = 0; i < quantos; i++) {
-        document.getElementById(objs[i]).style.backgroundColor = strokeColor;
-        document.getElementById(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
-      }
-    }
-    setStrokeColor();
-
-    function mudaCor(valor) {
-      if (valor == "P") {
-        strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
-        document.getElementById("mostraCor").style.color = strokeColor;
-
-        //     document.getElementById("menu").style.visibility = "hidden";
-      } else if (valor == "B") {
-        strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
-        document.getElementById("mostraCor").style.color = strokeColor;
-        //     document.getElementById("menu").style.visibility = "hidden";
-      } else {
-        strokeColor = valor;
-        //     document.getElementById("menu").style.visibility = "hidden";
-        cursorColor();
-      }
-      document.getElementById("mostraCor").style.backgroundColor =
-        strokeColor;
-      document.getElementById("mostraCor2").style.backgroundColor =
-        strokeColor;
-      document.getElementById("pintar").style.backgroundColor = strokeColor;
-
-      const toHslaObject = (hslaStr) => {
-        const [hue, saturation, lightness, alpha] = hslaStr
-          .match(/[\d\.]+/g)
-          .map(Number);
-        document.getElementById("H").value = hue;
-        document.getElementById("S").value = saturation;
-        document.getElementById("L").value = lightness;
-        document.getElementById("A").value = alpha;
-        document.getElementById("A2").value = alpha;
-        hsla[0] = hue;
-        hsla[1] = saturation;
-        hsla[2] = lightness;
-        hsla[3] = alpha;
-      };
-      toHslaObject(strokeColor);
-      setStrokeColor();
-    }
-    // Save | Download image from stackoverflow
-    // Convert canvas to image added to startup .getElementById("btn-download")
-
-    //function downloadImage(data, filename = 'untitled.jpeg') {
-    function downloadImage(data, filename = "untitled.png") {
-      var a = document.createElement("a");
-      a.href = data;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      alert("se você gostou desse app, considere fazer um pix pro Diego continuar o desenvolvimento ou ajude divulgando o app :) 11-962238038 Grato.")
-    }
-    function changeLine() {
-      lineJoinsCount++;
-      if (lineJoinsCount > 1) {
-        lineJoinsCount = 0;
-      }
-      linejoin = lineJoins[lineJoinsCount];
-      if (lineJoinsCount != 1) {
-        document.getElementById("line").innerHTML = " ➕";
-        document.getElementById("line2").innerHTML = " ➕";
-      } else {
-        document.getElementById("line").innerHTML = " ⚫";
-        document.getElementById("line2").innerHTML = " ⚫";
-      }
-    }
-    changeLine()
-    ////// ZOOM and scroling
-    function setZoom(zoom, el) {
-      transformOrigin = [0, 0];
-      el = el || instance.getContainer();
-      var p = ["webkit", "moz", "ms", "o"],
-        s = "scale(" + zoom + ")",
-        oString =
-          transformOrigin[0] * 100 + "% " + transformOrigin[1] * 100 + "%";
-
-      for (var i = 0; i < p.length; i++) {
-        el.style[p[i] + "Transform"] = s;
-        el.style[p[i] + "TransformOrigin"] = oString;
-      }
-
-      el.style["transform"] = s;
-      el.style["transformOrigin"] = oString;
-    }
-
-    function ZOOMf(a) {
-      let escala = zoomScale[a];
-      ZOOM(escala);
-    }
-    function ZOOM(a) {
-      setZoom(1, canvasDiv);
-      resetCanva();
-      setTimeout(function () {
-        win.scrollTop = 0;
-        win.scrollLeft = 0;
-      }, 10);
-      zoomFactor = Number(a);
-      setTimeout(
-        () =>
-          scrollCanva(
-            ultimoToque.x * zoomFactor - 160,
-            ultimoToque.y * zoomFactor - 160
-          ),
-        30
-      );
-      setTimeout(() => setZoom(zoomFactor, canvasDiv), 4);
-
-      setStrokeSize(strokeWidth);
-      document.getElementById("tzoom").value = zoomFactor;
-      document.getElementById("zoombar").value =
-        zoomScale.indexOf(zoomFactor);
-    }
-
-    function scrollCanva(x, y) {
-      win.scrollTop += y;
-      win.scrollLeft += x;
-    }
-    function resetCanva() {
-      let objects = ["canvas_window", "canvas_div"];
-      for (i in objects.length) {
-        document.getElementById(objects[i]).style.width = "320px";
-        document.getElementById(objects[i]).style.height = "320px";
-      }
-    }
-
-    // cursor area //
-
-    function cursorMove(e) {
-      var x = e.clientX;
-      var y = e.clientY;
-      cursor.style.left = x + "px";
-      cursor.style.top = y + "px";
-      document.body.style.cursor = "none";
-    }
-    function mostra() {
-      document.body.style.cursor = "pointer";
-    }
-
-    function cursorColor() {
-      switch (mode) {
-        case "apagar":
-          cursor.style.borderColor = "#555555cc";
-          cursor.innerHTML = "";
-          break;
-        case "pintar":
-          cursor.style.borderColor = strokeColor;
-          cursor.innerHTML = "";
-          break;
-        case "zoom":
-          cursor.innerHTML = "🖐";
-          break;
-        case "picker":
-          cursor.innerHTML = '<div style="-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1);width:32px;">💉</div>'
-          cursor.style.borderColor = "#00ff0088";
-          cursor.style.width = 1 + "px";
-          cursor.style.height = 1 + "px";
-          cursor.style.margingLeft = 24 + "px";
-          cursor.style.margingTop = 24 + "px";
-          break;
-        default:
-          cursor.innerHTML = "";
-          cursor.style.borderColor = strokeColor;
-      }
-    }
-    function Fundo(qual) {
-      if (qual === "img") {
-        var item = prompt(
-          "endereço da imagem de fundo",
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
-        );
-        if (item == null || item == "") {
-          alert("fundo do app removido");
-          canvasDiv.style.backgroundImage = `none`;
-        } else {
-          canvasDiv.style.backgroundImage = `url(${item})`;
+        function prevent(evt) {
+            evt.preventDefault();
         }
-      } else if (qual === "cam") {
-        var item = prompt(
-          "endereço da imagem de fundo",
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
-        );
-        if (item == null || item == "") {
-          alert("fundo do app removido");
-          canvasDiv.style.backgroundImage = `none`;
-        } else {
-          canvasDiv.style.backgroundImage = `url(${item})`;
+        function night() {
+            let testarray = document.getElementsByClassName("fundobranco");
+            let testarray2 = document.getElementsByClassName("day");
+            for (let i = 0; i < testarray.length; i++) {
+                testarray[i].classList.toggle("night")
+            } for (let i = 0; i < testarray2.length; i++) {
+                testarray2[i].classList.toggle("night")
+            }
         }
-      } else if (qual === "black") {
-        canvasDiv.style.backflatigroundColor = "hsla(0, 100%, 0%, 1)";
-      } else if (qual === "white") {
-        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
-      } else if (qual === "none") {
-        canvasDiv.style.backgroundImage = `none`;
-        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
-      } else {
-        canvasDiv.style.backgroundImage = `url(${qual})`;
-      }
-    }
-    function pixel() {
-      canvas.classList.toggle("pixel");
-      canvasDiv.classList.toggle("pixel");
-    }
+        var input = document.getElementById('input');
+        input.addEventListener('change', handleFiles);
+        var input2 = document.getElementById('input2');
+        input2.addEventListener('change', readURL, true);
+        var imagem = new Image;
 
-    convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
+        function handleFiles(e) {
+            imagem = new Image;
+            imagem.src = URL.createObjectURL(e.target.files[0]);
+            imagem.onload = function () {
+                if (imagem.width > canvas.width) {
+                    let proporcao = canvas.width / imagem.width
+                    imagem.height = imagem.height * proporcao
+                    imagem.width = imagem.width * proporcao
+                    let centerx = canvas.width / 2 - imagem.width / 2
+                    let centery = canvas.height / 2 - imagem.height / 2
+                }
+                desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
+            }
+        }
+        function readURL() {
+            var file = document.getElementById("input2").files[0];
+            var reader = new FileReader();
+            reader.onloadend = function () {
+                var image = new Image();
 
-    function convertToImg() {
-      img_b64 = canvas.toDataURL('image/png');
-      blob = dataURItoBlob(img_b64)
-      comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
-      // comandos.unshift(comando)
-      comandos.unshift(comando)
-    }
+                image.src = reader.result;
 
-  </script>
+                image.onload = function () {
+                    if (image.width > canvas.width) {
+                        let proporcao = canvas.width / image.width
+                        image.height = image.height * proporcao
+                        image.width = image.width * proporcao
+                    }
+                    canvasDiv.style.backgroundImage = "url(" + reader.result + ")";
+                    canvasDiv.style.backgroundSize = `${image.width}px ${image.height}px`
+                };
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+            }
+        }
+        function x2(w = 320, h = 320) {
+            let newSize = 320;
+            let newSizeb = 320;
+            if (x2size < 4) {
+                newSize = newSize * x2size;
+                newSizeb = newSize * 2;
+            } else {
+
+                newSize = 320 * x2size;
+                newSizeb = 320;
+            }
+
+            var resultado = confirm(
+                "\t\t\t\t↔️ Deseja mudar o tamanho da tela de \n" +
+                `\t\t\t\t\t\t${newSize}px x ${newSize}px\n` +
+                `\t\t\t\t\t\t\tpara\n` +
+                `\t\t\t\t\t\t${newSizeb}px x ${newSizeb}px\n\n` +
+                `\t\t\t\t\t utilize a lupa 🔎 para zoom \n` +
+                `\t\t\t\t e a mão 🖐 para navegar pela tela\n\n`
+            );
+            if (resultado === true) {
+                //dobra o tamanho do canva
+                x2size *= 2;
+                if (x2size > 4) {
+                    x2size = 1;
+                    zoomIndex = 0;
+                    modeTo("zoom");
+                    win.style.width = `320px`;
+                    win.style.height = `320px`;
+                } else {
+                    zoomIndex = 3;
+                    modeTo("zoom");
+                }
+                let W = w * x2size;
+                let H = h * x2size;
+                canvasDiv.style.width = W + "px"; //add 30px for scroll
+                canvasDiv.style.height = H + "px"; //add 30px for scroll
+                canvas.width = W;
+                canvas.height = H;
+                win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
+                win.style.height = parseInt(window.innerHeight, 10) - 60 + "px";
+            }
+            comandosExec()
+        }
+        function toggleHand() {
+            if (mode != "zoom") {
+                oldMode = mode;
+                mode = "zoom";
+                toggleSelect("hand");
+                cursorColor("zoom");
+            } else {
+                modeTo(oldMode);
+                cursorColor(oldMode);
+            }
+        }
+        // drawing app
+
+        document.addEventListener("DOMContentLoaded", startup);
+        function resizeScreen() {
+            desenhoDiv.style.width = window.innerWidth + "px";
+            desenhoDiv.style.height = window.innerHeight + "px";
+            if (screen.width > screen.height) {
+
+                document.getElementById("ferramentas").classList.add("horizontal");
+                document.getElementById("ferramentas2").classList.add("horizontal2");
+                // alert(`virou, ${screen.width} , ${screen.height}`) 
+                win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
+                win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
+                document.getElementById("menus").style.top = "0px";
+            } else {
+                document.getElementById("ferramentas").classList.remove("horizontal");
+                document.getElementById("ferramentas2").classList.remove("horizontal2");
+                win.style.width = parseInt(window.innerWidth, 10) - 40 + "px";
+                win.style.height = parseInt(window.innerHeight, 10) - 92 + "px";
+                document.getElementById("menus").style.top = "90px";
+            }
+            canvasDiv.style.width = canvas.width + "px";
+            canvasDiv.style.height = canvas.height + "px";
+
+        }
+
+        function startup() {
+            counter = setInterval(() => undoing(), 30)
+            document.onkeydown = function (event) {
+                //on enter key
+                if (event.keyCode === 13 && mode == "recortar") {
+                    cortar();
+                }
+            };
+            night()
+            modeTo("pintar")
+            removeClass();
+            document.getElementById(
+                "globalComposite"
+            ).innerHTML =
+                `<span style="position:absolute; float:right; width:32px; display:block; ` +
+                `padding-top: 0px;">🔲</span> <span style="color:white;` +
+                `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
+            window.addEventListener("resize", function (event) {
+                resizeScreen();
+            });
+            resizeScreen();
+            document.getElementById("undo").addEventListener(
+                "touchstart",
+                (event) => {
+                    event.preventDefault();
+                    undoT();
+                },
+                false
+            );
+            document.getElementById("undo").addEventListener(
+                "touchend",
+                (event) => {
+                    event.preventDefault();
+                    undoTEnd();
+                },
+                false
+            );
+            document.getElementById("redo").addEventListener(
+                "touchstart",
+                (event) => {
+                    event.preventDefault();
+                    redoT();
+                },
+                false
+            );
+            document.getElementById("redo").addEventListener(
+                "touchend",
+                (event) => {
+                    event.preventDefault();
+                    redoTEnd();
+                },
+                false
+            );
+            window.addEventListener("keyup", handleKeyUp);
+            window.addEventListener("keydown", handleKeys);
+
+            document.getElementById("zoombar").value =
+                zoomScale.indexOf(zoomFactor);
+
+            desenhoDiv.addEventListener("gesturestart", prevent);
+            win.addEventListener("touchmove", prevent);
+            canvas.addEventListener("touchstart", handleStart);
+            canvas.addEventListener("touchend", handleEnd);
+            canvas.addEventListener("touchcancel", handleCancel);
+            canvas.addEventListener("touchmove", handleMove);
+            canvas.addEventListener("mousedown", (e) => {
+                x = e.offsetX;
+                y = e.offsetY;
+                if (mode != "picker" && mode != "zoom") {
+                    isDrawing = true;
+                } else if (mode == "zoom") {
+                    isGrabing = true;
+                } else if (mode == "picker") {
+                    isPicking = true
+                }
+                removeClass();
+            });
+            canvas.addEventListener("mouseenter", (e) => {
+                mouseOver = true;
+            });
+            canvas.addEventListener("mouseout", (e) => {
+                mouseOver = false;
+                setTimeout(() => {
+                    if (mouseOver == false) {
+                        isDrawing = false;
+                        isGrabing = false;
+                        isPicking = false;
+                    }
+                }, 500);
+            });
+            canvas.addEventListener("mousemove", (e) => {
+                if (isDrawing && mode != "picker") {
+                    desenha(
+                        "p",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        e.offsetX,
+                        e.offsetY,
+                        strokeColor,
+                        stroke,
+                        linejoin
+                    );
+                } else if (isGrabing) {
+                    ultimoToque.y = e.offsetY;
+                    ultimoToque.x = e.offsetX;
+                    scrollCanva(
+                        (x - ultimoToque.x) * zoomFactor,
+                        (y - ultimoToque.y) * zoomFactor
+                    );
+                } else if (isPicking) {
+                    x = e.offsetX;
+                    y = e.offsetY;
+                    var imageData = context.getImageData(x, y, 1, 1).data;
+                    if (imageData[3] > 1) {
+                        RGBAToHSLA(
+                            imageData[0],
+                            imageData[1],
+                            imageData[2],
+                            imageData[3]
+                        );
+                        setStrokeColor();
+                    }
+                }
+                x = e.offsetX;
+                y = e.offsetY;
+            });
+            canvas.addEventListener("mouseup", (e) => {
+                if (isDrawing && mode != "picker") {
+                    desenha(
+                        "p",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        e.offsetX + 1,
+                        e.offsetY + 1,
+                        strokeColor,
+                        stroke,
+                        linejoin
+                    );
+                    ultimoToque.y = e.offsetY;
+                    ultimoToque.x = e.offsetX;
+                    x = 0;
+                    y = 0;
+                    isDrawing = false;
+                } else if (mode == "picker") {
+                    x = e.offsetX;
+                    y = e.offsetY;
+                    var imageData = context.getImageData(x, y, 1, 1).data;
+                    if (imageData[3] > 1) {
+                        RGBAToHSLA(
+                            imageData[0],
+                            imageData[1],
+                            imageData[2],
+                            imageData[3]
+                        );
+                        setStrokeColor();
+                    }
+                } else if (mode == "zoom") {
+                    isGrabing = false;
+                }
+            });
+            document
+                .getElementById("btn-download")
+                .addEventListener("click", function (e) {
+                    if (rotationDeg != 0) {
+                        drawRotated(rotationDeg)
+                        rotationDeg = 0;
+                        canvasDiv.setAttribute("style", `-webkit-transform: rotate(${rotationDeg}deg);)
+        - moz - transform: rotate(${rotationDeg}deg);
+      -o - transform: rotate(${rotationDeg}deg);
+      -ms - transform: rotate(${rotationDeg}deg);
+      transform: rotate(${rotationDeg}deg);`)
+                    }
+                    //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+                    let nome = prompt("nome da arte:", "desenho");
+                    if (nome != null && nome != "") {
+                        var dataURL = canvas
+                            .toDataURL("image/png")
+                            .replace("image/png", "image/octet-stream");
+                        //downloadImage(dataURL, 'my-canvas.jpeg');
+                        downloadImage(dataURL, `${nome}.png`);
+                    }
+                });
+            initStrokeRange()
+            setTimeout(() => resizeScreen(), 10)
+        }
+
+        const RGBAToHSLA = (r, g, b, a) => {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            a /= 255;
+            const l = Math.max(r, g, b);
+            const s = l - Math.min(r, g, b);
+            const h = s
+                ? l === r
+                    ? (g - b) / s
+                    : l === g
+                        ? 2 + (b - r) / s
+                        : 4 + (r - g) / s
+                : 0;
+            const H = Math.floor(60 * h < 0 ? 60 * h + 360 : 60 * h);
+            const S = Math.floor(
+                100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)
+            );
+            const L = Math.floor((100 * (2 * l - s)) / 2);
+            const A = a;
+            hsla[0] = H;
+            hsla[1] = S;
+            hsla[2] = L;
+            hsla[3] = A;
+            return `hsla(${H},${S}%,${L}%,${a})`;
+        };
+        let keyZ = false
+        let keyY = false
+        let keyCtrl = false
+        var shiftHeld = false;
+
+        function handleKeyUp(evt) {
+            if (evt.keyCode === 16) {
+                shiftHeld = false
+                redoTEnd()
+            }
+            if (evt.keyCode === 17) {
+                keyCtrl = false
+                redoTEnd()
+                undoTEnd()
+
+            }
+            if (evt.key === "y") {
+                redoTEnd()
+                keyY = false
+            }
+            if (evt.keyCode === 90) {
+                keyZ = false
+                undoTEnd()
+
+            }
+        }
+        function handleKeys(evt) {
+            if (evt.keyCode === 90) {
+                keyZ = true
+            }
+            if (evt.keyCode === 16) {
+                shiftHeld = true
+            }
+            if (evt.keyCode === 17) {
+                keyCtrl = true
+            }
+            if (evt.key === "y") {
+                keyY = true
+            }
+            //.log(shiftHeld, keyCtrl, keyY, keyZ)
+            if (keyCtrl) {
+                if (keyZ) {
+                    if (shiftHeld) {
+                        redoT();
+                    } else { undoT() }
+
+                } else if (keyY) {
+                    redoT()
+                }
+
+            }
+        }
+
+
+        function undoing() {
+            if (desfazendo == true && refazendo == false) {
+                undo()
+            }
+            if (refazendo == true) {
+                redo()
+            }
+
+        }
+        var comandos = [];
+        var comandosb = [];
+        let desfazendo = false;
+        let refazendo = false;
+        var counter;
+        var counterU;
+
+
+        function undoT() {
+            desfazendo = true
+        }
+        function undoTEnd() {
+            desfazendo = false
+        }
+        function undo() {
+            let len = comandos.length;
+            let posicao = 0
+            for (i = 0; i < len; i++) {
+                if (i < undoLevel - 1 && (comandos[i][0] == "s")) {
+                    posicao = i;
+                }
+            }
+            if (undoLevel < len - 1) {
+                undoLevel++
+                comandosExec(posicao)
+            } else {
+                audio.play();
+                undoTEnd()
+            }
+        }
+        function redoTEnd() {
+            refazendo = false
+        }
+        function redoT() {
+            refazendo = true
+        }
+        function redo() {
+            let len = comandos.length;
+            let posicao = 0
+            for (i = 0; i < len; i++) {
+                if (i < undoLevel && comandos[i][0] == "s") {
+                    posicao = i;
+                }
+            }
+            if (undoLevel > 0) {
+                undoLevel--
+                comandosExec(posicao)
+            } else {
+                //alert("nivel maximo de refazer atingindo.");
+                audio.play();
+                redoTEnd()
+            }
+        }
+
+
+        let swapT
+        let blobb
+        let swaps = new Array()
+        let pL
+        let posicoes = new Array(0)
+        /* function memorySwap(GCO) {
+             posicoes = []
+             posicoes.push(0)
+             posicoes.push(0)
+             swaps = []
+             let len = comandos.length;
+             if (comandos[len - 1][0] != "s") {
+                 if (len > 300) {
+ 
+                     for (i = 0; i < len; i++) {
+                         if (comandos[i][0] == "s") {
+                             swaps.push(comandos[i])
+                             posicoes.push(i)
+                         }
+                     }
+                     pL = posicoes.length
+                     let sl = swaps.length
+                     let pops = 0
+                     if (sl > 15) {
+                         pops = sl - 15
+                         for (h = 0; h < pops; h++) {
+                             swaps.shift()
+                         }
+                     }
+                     console.log(posicoes[pL - 1])
+                     for (i = posicoes[pL - 1]; i < len; i++) {
+                         if (comandos[i][0] != "s") {
+                             swaps.push(comandos[i])
+                         }
+                     }
+                 }
+                 swapT = []
+                 blobb = []
+ 
+                 swapT = canvas.toDataURL('image/png');
+                 blobb = dataURItoBlob(swapT)
+                 comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
+                 swaps.push(comando)
+                 setTimeout(() => {
+                     comandos = []
+                     let sl = swaps.length
+                     for (i = 0; i < sl; i++) {
+                         comandos.push(swaps[i])
+                     }
+ 
+                 }, 100)
+ 
+             }
+         }
+ */
+        function memorySwap(GCO) {
+            let len = comandos.length;
+            if (len > 500) {
+                swapImg = canvas.toDataURL('image/png');
+                blobb = dataURItoBlob(swapImg)
+                comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
+                swaps.push(comando)
+                swapImg = []
+                blobb = []
+                comando = []
+
+
+                setTimeout(() => {
+                    comandos = []
+                    let lenb = swaps.length
+                    if (lenb > 8) { swaps.shift() }
+                    lenb = swaps.length
+                    for (i = 0; i < lenb; i++) {
+                        comandos.push(swaps[i]);
+                    }
+
+                }, 40)
+            }
+        }
+        var executing = false
+        var undoLevel = 0
+
+        function comandosExec() {
+            if (executing == false) {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                exec();
+                executing = true;
+            }
+        }
+
+        function exec(coma = 0) {
+            let lenc = comandos.length;
+            let scope = lenc - undoLevel
+            if (scope > coma) {
+                switch (comandos[coma][0]) {
+                    case "f":
+                        let myImg = document.createElement("img");
+                        let gco = comandos[coma][1]
+                        myImg.src = URL.createObjectURL(comandos[coma][2])
+                        myImg.onload = function () {
+                            let globaltemp = context.globalCompositeOperation
+                            context.globalCompositeOperation = gco;
+                            context.drawImage(
+                                myImg,
+                                comandos[coma][3],
+                                comandos[coma][4],
+                                myImg.width,
+                                myImg.height);
+                            context.globalCompositeOperation = globaltemp
+                            coma++;
+                            exec(coma)
+                            myImg = []
+                        }
+                        break;
+                    case "s":
+                        context.globalCompositeOperation = "destination-out";
+                        context.fillStyle = "#ffffffff";
+                        context.fillRect(0, 0, canvas.width, canvas.height);
+
+                        let myImg2 = document.createElement("img");
+                        let gco2 = comandos[coma][1]
+                        myImg2.src = URL.createObjectURL(comandos[coma][2])
+                        myImg2.onload = function () {
+                            let globaltemp = context.globalCompositeOperation
+                            context.globalCompositeOperation = gco2;
+                            context.drawImage(
+                                myImg2,
+                                comandos[coma][3],
+                                comandos[coma][4],
+                                myImg2.width,
+                                myImg2.height);
+                            context.globalCompositeOperation = globaltemp
+                            coma++;
+                            exec(coma)
+                            myImg2 = []
+                        }
+                        break;
+                    case "p":
+                        drawLine(
+                            comandos[coma][1],
+                            comandos[coma][2],
+                            comandos[coma][3],
+                            comandos[coma][4],
+                            comandos[coma][5],
+                            comandos[coma][6],
+                            comandos[coma][7],
+                            comandos[coma][8]
+                        );
+                        coma++;
+                        exec(coma)
+                        break;
+                    case "i":
+                        context.globalCompositeOperation = comandos[coma][1];
+                        context.drawImage(
+                            comandos[coma][2],
+                            comandos[coma][3],
+                            comandos[coma][4],
+                            comandos[coma][5],
+                            comandos[coma][6]);
+                        coma++;
+                        exec(coma)
+                        break;
+                    case "c":
+                        context.globalCompositeOperation = comandos[coma][1];
+                        context.putImageData(
+                            comandos[coma][2],
+                            comandos[comai][3],
+                            comandos[coma][4],
+                            comandos[coma][5],
+                            comandos[coma][6],
+                            comandos[coma][7],
+                            comandos[coma][8]);
+                        coma++;
+                        exec(coma)
+                        break;
+                    case "b":
+                        context.globalCompositeOperation = comandos[coma][1];
+                        context.fillStyle = comandos[coma][2];
+                        context.fillRect(0, 0, canvas.width, canvas.height);
+                        coma++;
+                        exec(coma)
+                        break;
+                }
+            } else {
+                executing = false
+            }
+
+        }
+
+        function desenha(
+            CMD,
+            GCO,
+            X = undefined,
+            Y = undefined,
+            eoX = undefined,
+            eoY = undefined,
+            strokeColor = undefined,
+            stroke = undefined,
+            linejoin = undefined
+        ) {
+            let comando = []
+            switch (CMD) {
+
+                case "p":
+                    comando = ["p", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin];
+                    comandos.push(comando)
+                    drawLine(
+                        comando[1],
+                        comando[2],
+                        comando[3],
+                        comando[4],
+                        comando[5],
+                        comando[6],
+                        comando[7],
+                        comando[8]
+
+                    );
+                    break;
+                case "f":
+                    comando = ["f", GCO, X, Y, eoX, eoY, strokeColor]
+                    let myImg = document.createElement("img");
+                    myImg.src = URL.createObjectURL(X)
+                    myImg.onload = function () {
+                        let oldGCO = context.globalCompositeOperation
+                        context.globalCompositeOperation = globalComposite
+                        context.drawImage(
+                            myImg,
+                            Y,
+                            eoX,
+                            myImg.width,
+                            myImg.height);
+                        comandos.push(comando)
+                        context.globalCompositeOperation = oldGCO
+                    }
+                    break;
+                case "i":
+                    comando = ["i", GCO, imagem, 0, 0, imagem.width, imagem.height]
+                    context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
+                    comandos.push(comando)
+                    break;
+
+                case "b":
+                    comando = ["b", GCO, X];
+                    comandos.push(comando)
+                    context.fillStyle = X; //cor
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+                    break;
+            }
+
+            if (undoLevel != 0) {
+                for (i = 0; i < undoLevel; i++) { comandos.pop() }
+                undoLevel = 0
+                console.log("daqui pra frente..")
+            }
+
+        }
+        function handleStart(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            offsetX = canvas.getBoundingClientRect().left;
+            offsetY = canvas.getBoundingClientRect().top;
+            x = touches[0].clientX;
+            y = touches[0].clientY;
+            for (let i = 0; i < touches.length; i++) {
+                ongoingTouches.push(copyTouch(touches[i]));
+            }
+
+            removeClass();
+            if (mode == "zoom") {
+                isGrabing = true;
+            }
+        }
+
+        function handleMove(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            for (let i = 0; i < touches.length; i++) {
+                const idx = ongoingTouchIndexById(touches[i].identifier);
+                if (idx >= 0) {
+                    ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
+                    ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
+                    if (mode != "zoom" && mode != "picker") {
+                        (x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor),
+                            (y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor);
+
+                        desenha(
+                            "p",
+                            context.globalCompositeOperation,
+                            x,
+                            y,
+                            ultimoToque.x,
+                            ultimoToque.y,
+                            strokeColor,
+                            stroke,
+                            linejoin
+                        );
+                        cursor.style.left = (touches[i].clientX) + "px";
+                        cursor.style.top = (touches[i].clientY) + "px";
+                        ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
+                    }
+                }
+
+            }
+            if (mode == "picker") {
+                const touches = evt.changedTouches;
+                for (let i = 0; i < touches.length; i++) {
+                    const idx = ongoingTouchIndexById(touches[i].identifier);
+                    if (idx >= 0) {
+                        var imageData = context.getImageData(
+                            ultimoToque.x,
+                            ultimoToque.y,
+                            1,
+                            1
+                        ).data;
+                        if (imageData[3] > 1) {
+                            RGBAToHSLA(
+                                imageData[0],
+                                imageData[1],
+                                imageData[2],
+                                imageData[3]
+                            );
+                            setStrokeColor();
+                        }
+                    }
+                }
+            }
+            if (mode == "zoom") {
+                if (isGrabing) {
+                    for (let i = 0; i < touches.length; i++) {
+                        const idx = ongoingTouchIndexById(touches[i].identifier);
+                        if (idx == 0) {
+                            scrollCanva(x - touches[0].clientX, y - touches[0].clientY);
+                            x = touches[0].clientX;
+                            y = touches[0].clientY;
+                        }
+                    }
+                }
+            }
+        }
+        function handleEnd(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            for (let i = 0; i < touches.length; i++) {
+                let idx = ongoingTouchIndexById(touches[i].identifier);
+                if (idx >= 0) {
+                    context.lineWidth = strokeWidth;
+                    context.fillStyle = strokeColor;
+                    ongoingTouches.splice(idx, 1); // remove it; we're done
+                }
+            }
+            if (mode == "zoom") {
+                isGrabing = false;
+            }
+        }
+
+        function handleCancel(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            for (let i = 0; i < touches.length; i++) {
+                let idx = ongoingTouchIndexById(touches[i].identifier);
+                ongoingTouches.splice(idx, 1); // remove it; we're done
+            }
+        }
+
+        function copyTouch({ identifier, clientX, clientY }) {
+            return { identifier, clientX, clientY };
+        }
+
+        function ongoingTouchIndexById(idToFind) {
+            for (let i = 0; i < ongoingTouches.length; i++) {
+                const id = ongoingTouches[i].identifier;
+                if (id === idToFind) {
+                    return i;
+                }
+            }
+            return -1; // not found
+        }
+
+        function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
+            context.globalCompositeOperation = GCO;
+            context.beginPath();
+            context.strokeStyle = strokeColor;
+            context.lineWidth = stroke;
+            context.lineJoin = linejoin;
+            context.moveTo(x1, y1);
+            context.lineTo(x2, y2);
+            context.closePath();
+            context.stroke();
+        }
+
+        function clearArea() {
+            let confirma = confirm(
+                "Limpar todo o desenho? \n(impossível desfazer)"
+            );
+            if (confirma === true) {
+                context.setTransform(1, 0, 0, 1, 0, 0);
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                comandos = []
+                comando = ["b", "destination-out", "#ffffff"];
+                comandos.push(comando)
+                comandosExec()
+                convertToImg()
+            }
+        }
+
+        // By diego
+
+        let oldMode = mode;
+        async function modeTo(qual) {
+            if (mode != qual) {
+                if (qual != "recortar") {
+                    if (document.getElementById("c2")) {
+                        removeElement("c2")
+                        setTimeout(() => {
+                            origin.x = 0
+                            origin.y = 0
+                        }, 40)
+                    }
+                }
+                oldMode = mode;
+                mode = qual;
+                removeClass();
+                toggleSelect(qual);
+                mostraMenu(qual);
+
+
+            } else {
+                mostraMenu(qual);
+                if (qual == "cam") {
+
+                    removeVideo()
+                }
+            }
+            switch (qual) {
+                case "recortar":
+                    recortar();
+                    mode = qual;
+                    break;
+                case "zoom":
+                    removeClass();
+                    zoomIndex++;
+                    if (zoomIndex > 3) {
+                        zoomIndex = 0;
+                    }
+                    ZOOMf(zoomIndex);
+                    setTimeout(function () {
+                        document.getElementById("x1").innerHTML = zoomFactor + "x";
+                        scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
+                    }, 10);
+                    cursorColor();
+                    toggleSelect(qual);
+                    resizeScreen()
+                    mode = "zoom"
+                    break;
+                case "cam":
+                    camera();
+                    context.globalCompositeOperation = globalComposite;
+                    memorySwap(globalComposite);
+                    break;
+                /*  case mode: //se o modo ja estiver ativo:
+                    mostraMenu(qual);
+                    if (qual == "info") {
+                      modeTo(oldMode);
+                    }
+                    break;*/
+                case "apagar":
+                    setStrokeSize(estrokeWidth);
+                    cursorColor();
+                    mudaCorAlpha();
+                    context.globalCompositeOperation = "destination-out";
+                    //memorySwap("destination-out");
+                    break;
+                case "pintar":
+                    setStrokeSize(strokeWidth);
+                    setStrokeColor();
+                    context.globalCompositeOperation = globalComposite;
+                    memorySwap(globalComposite);
+                    break;
+                case "cores":
+                    setStrokeSize(strokeWidth);
+                    setStrokeColor();
+                    context.globalCompositeOperation = globalComposite;
+                    memorySwap(globalComposite);
+                    break;
+                case "fundo":
+                    setStrokeSize(strokeWidth);
+                    context.globalCompositeOperation = globalComposite;
+                    memorySwap(globalComposite);
+                    break;
+
+                case "preencher":
+                    document.getElementById("preenchercor").style.backgroundColor =
+                        strokeColor;
+                    context.globalCompositeOperation = globalComposite;
+                    break;
+                case "picker":
+                    break;
+                case "info":
+                    break;
+                case "undo":
+                    undo();
+                    break;
+                case "imagem":
+                    break;
+                case _:
+                    break;
+            }
+            cursorColor();
+        }
+        function camera() {
+
+            // ok, browser supports it*/
+            if (!document.getElementById("videoC")) {
+
+                const botao = document.createElement("div");
+                botao.setAttribute("id", "btnChangeCam")
+                botao.setAttribute("value", "muda")
+                //        botao.setAttribute("class", "bloquinho")
+                botao.setAttribute("style", "position: absolute; top: 270px; left:40px; width:32x; height:32px; font-size:32px;")
+                botao.innerHTML = "🔃"
+                const videoE = document.createElement("video");
+                const escala = canvas.height / 320
+                videoE.id = "video"
+                videoE.height = canvas.height; // in px
+                videoE.width = 429 * (escala); // in px
+                videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
+
+                let vcW = 428 * escala * 2;
+                let vcH = 320 * escala * 2;
+                const videoC = document.createElement("div");
+                videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px;`)
+                videoC.setAttribute("id", "videoC")
+                videoC.appendChild(videoE);
+                document.getElementById("tela").appendChild(botao);
+                canvasDiv.appendChild(videoC)
+                setTimeout(() => win.classList.add("flip"), 900)
+
+                videoE.toggleAttribute("autoplay", "autoplay")
+                videoE.toggleAttribute("playsinline", "playsinline")
+                if (globalComposite == "destination-over") {
+                    videoE.setAttribute("class", "destination-over");
+                }
+                if (
+                    !"mediaDevices" in navigator ||
+                    !"getUserMedia" in navigator.mediaDevices
+                ) {
+                    alert("Camera API is not available in your browser");
+                    return;
+                }
+
+                // get page elements
+                const video = document.querySelector("#video");
+                const canvasV = document.querySelector("#canvasV");
+                //Detect camera resolution using pause/play loop.
+                var retryCount = 0;
+                var retryLimit = 25;
+                video.onplaying = function (e) {
+                    var videoWidth = this.videoWidth;
+                    var videoHeight = this.videoHeight;
+                    if (!videoWidth || !videoHeight) {
+                        if (retryCount < retryLimit) {
+                            retryCount++;
+                            window.setTimeout(function () {
+                                video.pause();
+                                video.play();
+                            }, 100);
+                        }
+                        else {
+                            video.onplaying = undefined; //Remove event handler.
+                            console.log('Failed to detect camera resolution after ' + retryCount + ' retries. Giving up!');
+                        }
+                    }
+                    else {
+                        video.onplaying = undefined; //Remove event handler.
+                        let proporcao = videoWidth / videoHeight
+                        //diegos magic
+
+                        let canvas = document.getElementById("canvas")
+                        let videoC = document.getElementById("videoC")
+
+                        let escala = canvas.width / 320
+                        let vcW = 428 * escala;
+                        let vcH = 318 * escala;
+
+                        if (proporcao > 1) {
+                            canvasV.height = canvas.height
+                            canvasV.width = canvas.height * proporcao
+
+                            let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
+                            let offsetH = -canvas.height - 5
+                            videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
+                        } else {
+                            proporcao = videoHeight / videoWidth
+                            canvasV.width = canvas.width
+                            canvasV.height = canvas.width * proporcao
+
+                            let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
+                            let offsetH = - canvas.height * escala - ((canvasV.height - canvas.height) / 2)
+                            videoC.setAttribute("style",
+                                `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
+                        }
+
+                        //console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
+                    }
+                };
+
+                const btnChangeCamera = document.querySelector("#btnChangeCam");
+
+                // switch camera
+                btnChangeCamera.addEventListener("click", function () {
+                    useFrontCamera = !useFrontCamera;
+                    win.classList.toggle("flip");
+                    initializeCamera();
+                });
+
+                //diego 
+                video.addEventListener('click', function (e) {
+
+                    let W = canvasV.width;
+                    let H = canvasV.height;
+                    contextV.drawImage(video, 0, 0, W, H)
+                    img_b64 = canvasV.toDataURL('image/png');
+                    blob = dataURItoBlob(img_b64)
+                    let offsetW = (W - canvas.width) / -2
+                    let offsetH = (H - canvas.height) / -2
+
+                    desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+                    removeVideo();
+                })
+                // initialize
+                async function initializeCamera() {
+                    stopVideoStream();
+                    constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+
+                    try {
+                        videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+                        video.srcObject = videoStream;
+                    } catch (err) {
+                        alert("Could not access the camera");
+                    }
+                }
+
+                initializeCamera();
+
+            }
+        }
+        function removeVideo() {
+            removeClass("flip");
+            setTimeout(() => {
+                removeElement("videoC")
+                removeElement("btnChangeCam")
+                if (oldMode == "cam" || oldMode == "zoom") {
+                    modeTo("apagar")
+                } else {
+                    modeTo(oldMode)
+                }
+                setTimeout(() => {
+                    removeClass();
+                }, 200)
+                img_b64 = [];
+                blob = []
+            }, 10)
+        }
+        // video constraints
+        const constraints = {
+            video: {
+                width: {
+                    min: 480,
+                    ideal: 960,
+                    max: 1920,
+                },
+                height: {
+                    min: 320,
+                    ideal: 640,
+                    max: 1920,
+                },
+            },
+        };
+
+        // stop video stream
+        function stopVideoStream() {
+            if (videoStream) {
+                videoStream.getTracks().forEach((track) => {
+                    track.stop();
+                });
+            }
+        }
+
+        function toggleSelect(id) {
+            removeClass("selected");
+            document.getElementById(id).classList.toggle("selected");
+        }
+
+        function mostraMenu(id) {
+            let quem = document.getElementById("menu" + id);
+            quem.classList.toggle("aparece");
+        }
+
+        function removeClass(qual = "aparece") {
+            //pega quem tem e remove
+            Array.from(document.querySelectorAll(`.${qual}`)).forEach(function (
+                el
+            ) {
+                el.classList.remove(`${qual}`);
+            });
+        }
+
+        // Pinceis Cor e Tamanho
+
+        function criaPaleta() {
+            i = 1;
+            let paleta = `<span onmousedown='mudaCor("B")'  class='bloquinho' ` +
+                `style='background-color:hsla(0, 100%, 100%, ${hsla[3] * 4})'> </span>`;
+            let hue100 = 100
+            while (i < 14) {
+                hue100 -= Math.floor(100 / 13)
+                let cor = document.getElementById("H").value
+                //    let cor = document.getElementById("H").value - (i*3)
+                /*  
+                 paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1] + i * 2}%,${hsla[2] + i * 3
+                       }%,${hsla[3]
+                       })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1] + i * 2
+                       }%,${hsla[2] + i * 3}%,${hsla[3] * 4 + 0.2});'> </span>`;
+                       */
+                /*  paleta += `<span onmousedown='mudaCor("hsla(${cor},${hue100}%,${hsla[2] + i * 3
+                       }%,${hsla[3]
+                       })")' class='bloquinho' style='background-color:hsla(${cor},${hue100}%,${hsla[2] + i * 3}%,${hsla[3] * 4 + 0.2});'> </span>`;
+                   */
+                paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]}%,${hue100
+                    }%,${hsla[3]
+                    })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]
+                    }%,${hue100}%,${hsla[3] * 4});'> </span>`;
+                i++;
+            }
+
+            document.getElementById("paleta").innerHTML = paleta;
+            document.getElementById("paleta").innerHTML +=
+                `<br /><span onmousedown='mudaCor("P")' class='bloquinho' ` +
+                `style='background-color:hsla(0, 100%, 0%, ${hsla[3] * 4})'> </span>`;
+        }
+
+        function criaPaleta2() {
+            let paleta = "";
+            let quantas = favoritas.length;
+            for (i = 0; i < quantas; i++) {
+                paleta += `<span onmousedown='mudaCor("${favoritas[i]}")' class='bloquinho' style='background-color:${favoritas[i]};'> </span>`;
+            }
+            document.getElementById("paleta2").innerHTML = paleta;
+        }
+        function criapaleta3() {
+            let paleta3 = "";
+            let c = 0;
+            while (c < 7) {
+                let cor = (c * 55)
+                c++;
+                paleta3 += `<span onmousedown='mudaCor("hsla(${cor},100%,50%,${hsla[3]
+                    })")' class='bloquinho' style='background-color:hsla(${cor},100%,50%,${hsla[3] * 4 + 0.2});'> </span>`;
+                document.getElementById("paleta3").innerHTML = paleta3;
+            }
+        } criapaleta3()
+        let strokeRange = [0.3, 0.5, 0.7, 1, 2]
+
+        function initStrokeRange() {
+            let r = 2;
+            while (r <= 500) {
+                r = r * 1.3;
+                strokeRange.push(Math.floor(r))
+            }
+        }
+
+        function strokeSizeRange(value) {
+            setStrokeSize(
+                strokeRange[value]
+            )
+        }
+        function setStrokeSize(value) {
+            let brushes = ["mostraCor2", "cursor"];
+            for (i in brushes) {
+                let tamanho = document.getElementById(brushes[i]);
+                if (mode == "pintar" || mode == "cores") {
+                    strokeWidth = value;
+                    tamanho.style.width = strokeWidth * zoomFactor + "px";
+                    tamanho.style.height = strokeWidth * zoomFactor + "px";
+                    tamanho.style.marginTop =
+                        (strokeWidth / 2) * zoomFactor * -1 + "px";
+                    tamanho.style.marginLeft =
+                        (strokeWidth * zoomFactor * -1) / 2 + "px";
+                    if (i == 0) {
+                        tamanho.style.backgroundColor = strokeColor;
+                    }
+                    stroke = strokeWidth;
+                    document.getElementById("tpx").value = value;
+                } else if (mode == "apagar") {
+                    estrokeWidth = value;
+                    tamanho.style.width = estrokeWidth * zoomFactor + "px";
+                    tamanho.style.height = estrokeWidth * zoomFactor + "px";
+                    tamanho.style.marginTop =
+                        (estrokeWidth / 2) * zoomFactor * -1 + "px";
+                    tamanho.style.marginLeft =
+                        (estrokeWidth * zoomFactor * -1) / 2 + "px";
+                    stroke = estrokeWidth;
+                    document.getElementById("tpx2").value = value;
+                }
+            }
+        }
+
+        function backPaint() {
+            if (globalComposite != "destination-over") {
+                globalComposite = "destination-over";
+                document.getElementById(
+                    "globalComposite"
+                ).innerHTML =
+                    `<span style="position:absolute; width:30px; ` +
+                    `display:block; color:white; margin-left:-4px; margin-top:-5px;">⭕</span> ` +
+                    `<span style="position:relative; float:left; width:30px; display:block;  ` +
+                    `color:black; left:1px; margin-top:0px;" title="Pintando por baixo">🔲</span>`;
+
+                if (document.getElementById("video")) {
+                    document.getElementById("video").setAttribute("class", "destination-over")
+                }
+
+            } else {
+                globalComposite = "source-over";
+                document.getElementById(
+                    "globalComposite"
+                ).innerHTML =
+                    `<span style="position:absolute; float:right; width:32px; display:block; ` +
+                    `padding-top: 0px;">🔲</span> <span style="color:white;` +
+                    `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
+                removeClass("destination-over")
+            }
+            cursor.classList.toggle("cursorIndex");
+            cursor.classList.toggle("selected");
+            context.globalCompositeOperation = globalComposite;
+            modeTo("pintar")
+            removeClass()
+        }
+
+        function mudaCorBG(cor) {
+            if (cor === "strokeColor") {
+                cor = strokeColor;
+            }
+            if (context.globalCompositeOperation != "destination-out") {
+                //context.fillStyle = cor;
+                // context.fillRect(0, 0, canvas.width, canvas.height);
+                let GCO = context.globalCompositeOperation;
+                desenha("b", GCO, cor);
+            }
+        }
+
+        function mudaCorQ(q = 0, valor) {
+            hsla[q] = Number(valor);
+            //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
+            setStrokeColor();
+            criaPaleta();
+        }
+        function mudaCorAlpha() {
+            let valor = document.getElementById("transparenciaE").value
+            strokeColor = `hsla(0, 100%, 0%, ${valor})`
+        }
+        function salvaCor() {
+            if (!favoritas.includes(strokeColor)) {
+                favoritas.push(strokeColor);
+            } else {
+                favoritas = favoritas.filter((item) => item !== strokeColor);
+            }
+            setTimeout(criaPaleta2(), 20);
+        }
+
+        criaPaleta();
+
+        function setStrokeColor() {
+            strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+            let objs = [
+                "mostraCor",
+                "salvaCor",
+                "mostraCor2",
+                "pintar",
+                "cores",
+                "picker",
+                "preencher"
+            ];
+            let quantos = objs.length;
+            for (i = 0; i < quantos; i++) {
+                document.getElementById(objs[i]).style.backgroundColor = strokeColor;
+                document.getElementById(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
+            }
+        }
+        setStrokeColor();
+
+        function mudaCor(valor) {
+            if (valor == "P") {
+                strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
+                document.getElementById("mostraCor").style.color = strokeColor;
+
+                //     document.getElementById("menu").style.visibility = "hidden";
+            } else if (valor == "B") {
+                strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
+                document.getElementById("mostraCor").style.color = strokeColor;
+                //     document.getElementById("menu").style.visibility = "hidden";
+            } else {
+                strokeColor = valor;
+                //     document.getElementById("menu").style.visibility = "hidden";
+                cursorColor();
+            }
+            document.getElementById("mostraCor").style.backgroundColor =
+                strokeColor;
+            document.getElementById("mostraCor2").style.backgroundColor =
+                strokeColor;
+            document.getElementById("pintar").style.backgroundColor = strokeColor;
+
+            const toHslaObject = (hslaStr) => {
+                const [hue, saturation, lightness, alpha] = hslaStr
+                    .match(/[\d\.]+/g)
+                    .map(Number);
+                document.getElementById("H").value = hue;
+                document.getElementById("S").value = saturation;
+                document.getElementById("L").value = lightness;
+                document.getElementById("A").value = alpha;
+                document.getElementById("A2").value = alpha;
+                hsla[0] = hue;
+                hsla[1] = saturation;
+                hsla[2] = lightness;
+                hsla[3] = alpha;
+            };
+            toHslaObject(strokeColor);
+            setStrokeColor();
+        }
+        // Save | Download image from stackoverflow
+        // Convert canvas to image added to startup .getElementById("btn-download")
+
+        //function downloadImage(data, filename = 'untitled.jpeg') {
+        function downloadImage(data, filename = "untitled.png") {
+            var a = document.createElement("a");
+            a.href = data;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            alert("se você gostou desse app, considere fazer um pix pro Diego continuar o desenvolvimento ou ajude divulgando o app :) 11-962238038 Grato.")
+        }
+        function changeLine() {
+            lineJoinsCount++;
+            if (lineJoinsCount > 1) {
+                lineJoinsCount = 0;
+            }
+            linejoin = lineJoins[lineJoinsCount];
+            if (lineJoinsCount != 1) {
+                document.getElementById("line").innerHTML = " ➕";
+                document.getElementById("line2").innerHTML = " ➕";
+            } else {
+                document.getElementById("line").innerHTML = " ⚫";
+                document.getElementById("line2").innerHTML = " ⚫";
+            }
+        }
+        changeLine()
+        ////// ZOOM and scroling
+        function setZoom(zoom, el) {
+            transformOrigin = [0, 0];
+            el = el || instance.getContainer();
+            var p = ["webkit", "moz", "ms", "o"],
+                s = "scale(" + zoom + ")",
+                oString =
+                    transformOrigin[0] * 100 + "% " + transformOrigin[1] * 100 + "%";
+
+            for (var i = 0; i < p.length; i++) {
+                el.style[p[i] + "Transform"] = s;
+                el.style[p[i] + "TransformOrigin"] = oString;
+            }
+
+            el.style["transform"] = s;
+            el.style["transformOrigin"] = oString;
+        }
+
+        function ZOOMf(a) {
+            let escala = zoomScale[a];
+            ZOOM(escala);
+        }
+        function ZOOM(a) {
+            setZoom(1, canvasDiv);
+            resetCanva();
+            setTimeout(function () {
+                win.scrollTop = 0;
+                win.scrollLeft = 0;
+            }, 10);
+            zoomFactor = Number(a);
+            setTimeout(
+                () =>
+                    scrollCanva(
+                        ultimoToque.x * zoomFactor - 160,
+                        ultimoToque.y * zoomFactor - 160
+                    ),
+                30
+            );
+            setTimeout(() => setZoom(zoomFactor, canvasDiv), 4);
+
+            setStrokeSize(strokeWidth);
+            document.getElementById("tzoom").value = zoomFactor;
+            document.getElementById("zoombar").value =
+                zoomScale.indexOf(zoomFactor);
+        }
+
+        function scrollCanva(x, y) {
+            win.scrollTop += y;
+            win.scrollLeft += x;
+        }
+        function resetCanva() {
+            let objects = ["canvas_window", "canvas_div"];
+            for (i in objects.length) {
+                document.getElementById(objects[i]).style.width = "320px";
+                document.getElementById(objects[i]).style.height = "320px";
+            }
+        }
+
+        // cursor area //
+
+        function cursorMove(e) {
+            var x = e.clientX;
+            var y = e.clientY;
+            cursor.style.left = x + "px";
+            cursor.style.top = y + "px";
+            document.body.style.cursor = "none";
+        }
+        function mostra() {
+            document.body.style.cursor = "pointer";
+        }
+
+        function cursorColor() {
+            switch (mode) {
+                case "apagar":
+                    cursor.style.borderColor = "#555555cc";
+                    cursor.innerHTML = "<div style='font-size:16px; margin-top:4px;'>🧽</div>";
+                    break;
+                case "pintar":
+                    cursor.innerHTML = "";
+                    cursor.style.borderColor = strokeColor;
+                    break;
+                case "zoom":
+                    cursor.innerHTML = "🖐";
+                    break;
+                case "picker":
+                    cursor.innerHTML = '<div style="-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1);width:32px;">💉</div>'
+                    cursor.style.borderColor = "#00ff0088";
+                    cursor.style.width = 1 + "px";
+                    cursor.style.height = 1 + "px";
+                    cursor.style.margingLeft = 24 + "px";
+                    cursor.style.margingTop = 24 + "px";
+                    break;
+                case "recortar":
+                    cursor.innerHTML = "✂️";
+                    cursor.style.width = 1 + "px";
+                    cursor.style.height = 1 + "px";
+                    cursor.style.margingLeft = 24 + "px";
+                    cursor.style.margingTop = 23 + "px";
+                    break;
+                case "cam":
+                    cursor.innerHTML = "📷";
+                    break;
+
+
+                default:
+                    cursor.innerHTML = "";
+                    cursor.style.borderColor = strokeColor;
+                    break;
+            }
+        }
+        function Fundo(qual) {
+            if (qual === "img") {
+                var item = prompt(
+                    "endereço da imagem de fundo",
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
+                );
+                if (item == null || item == "") {
+                    alert("fundo do app removido");
+                    canvasDiv.style.backgroundImage = `none`;
+                } else {
+                    canvasDiv.style.backgroundImage = `url(${item})`;
+                }
+            } else if (qual === "cam") {
+                var item = prompt(
+                    "endereço da imagem de fundo",
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
+                );
+                if (item == null || item == "") {
+                    alert("fundo do app removido");
+                    canvasDiv.style.backgroundImage = `none`;
+                } else {
+                    canvasDiv.style.backgroundImage = `url(${item})`;
+                }
+            } else if (qual === "black") {
+                canvasDiv.style.backflatigroundColor = "hsla(0, 100%, 0%, 1)";
+            } else if (qual === "white") {
+                canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
+            } else if (qual === "none") {
+                canvasDiv.style.backgroundImage = `none`;
+                canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
+            } else {
+                canvasDiv.style.backgroundImage = `url(${qual})`;
+            }
+        }
+        function pixel() {
+            canvas.classList.toggle("pixel");
+            canvasDiv.classList.toggle("pixel");
+        }
+
+        convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
+
+        function convertToImg() {
+            img_b64 = canvas.toDataURL('image/png');
+            blob = dataURItoBlob(img_b64)
+            comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
+            // comandos.unshift(comando)
+            comandos.unshift(comando)
+        }
+
+    </script>
 
 </body>
 
