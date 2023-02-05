@@ -429,11 +429,11 @@
             top: 0px;
             display: flex;
             /*margin-left: -320px;*/
-            /* border: pink solid 1px;*/
+            border: pink solid 1px;
             cursor: unset;
         }
     </style>
-    <title>Desenho 0.9.4 </title>
+    <title>Desenho 0.9.5 </title>
 </head>
 
 <body class="naotoque" style="cursor: pointer;">
@@ -449,6 +449,8 @@
                 <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
                     Lei Mao</a> <br>
                 <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
+                versão 0.9.6<br>
+                -fixing crop<br>
                 versão 0.9.4<br>
                 -nova paleta de cores<br>
                 versão 0.9.2<br>
@@ -709,8 +711,8 @@
                     style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
                     class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
                 <div id="canvas_div" class="day">
-                    <canvas id="canvas" width="320px" height="320px" class="day" style="padding-top: 1px;"
-                        onmousemove="cursorMove(event)" onmouseout="mostra()">
+                    <canvas id="canvas" width="320px" height="320px" class="day" onmousemove="cursorMove(event)"
+                        onmouseout="mostra()">
                         Seu navegador nao suporta o elemento de canvas ou vc está offline e algo não carregou
                         corretamente.<br>
                         se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
@@ -734,6 +736,7 @@
         let isDrawing = false;
         let isGrabing = false;
         let isPicking = false;
+        var isSelecting = false;
         let x = 0;
         let y = 0;
         var offsetX;
@@ -771,7 +774,6 @@
         var useFrontCamera = true; //moved up from modeto("cam") to test.
         var videoStream;
         let rotationDeg = 0;
-        var selecting = false;
         var origin = { x: 0, y: 0 };
         var cropEnd = { x: 0, y: 0 };
 
@@ -785,18 +787,23 @@
                 c2.style.marginLeft = -canvas.width
                 c2.setAttribute("class", "c2")
                 let context2 = c2.getContext("2d");
-                c2.addEventListener("touchstart", handleStart);
-                c2.addEventListener("touchmove", handleMove);
-                c2.addEventListener("touchend", handleEnd);
+                /* c2.addEventListener("touchstart", chandleStart);
+                 c2.addEventListener("touchmove", chandleMove);
+                 c2.addEventListener("touchend", chandleEnd);*/
+                if (screen.width < screen.height) {
+
+                    c2.style.top = "90px"
+                }
                 canvasDiv.appendChild(c2)
                 c2.onmouseout = (e) => mostra();
                 c2.onmousedown = (e) => {
-                    selecting = true;
+                    isSelecting = true;
                     origin = { x: e.offsetX, y: e.offsetY };
                 };
                 c2.onmousemove = (e) => {
                     cursorMove(e)
-                    if (!!selecting) {
+                    if (!!isSelecting) {
+
                         cropEnd.x = e.offsetX;
                         cropEnd.y = e.offsetY;
                         context2.strokeStyle = "#ccccccdd";
@@ -814,65 +821,146 @@
                     }
                 };
                 c2.onmouseup = (e) => {
-                    selecting = false;
+                    isSelecting = false;
                 };
+
+
+                var offsetX = c2.getBoundingClientRect().left;
+                var offsetY = c2.getBoundingClientRect().top;
+
+
+                /*else {
+                  removeElement("c2");
+                  removeClass();
+                  setTimeout(() => {
+                    modeTo("pintar")
+                    cursorColor()
+                  }, 200)
+                }*/
+                c2.ontouchstart = (evt) => {
+
+                    evt.preventDefault();
+                    const touches = evt.changedTouches;
+                    origin.x = touches[0].clientX - offsetX;
+                    origin.y = touches[0].clientY - offsetY;
+                    for (let i = 0; i < touches.length; i++) {
+                        ongoingTouches.push(copyTouch(touches[i]));
+                    }
+                    isSelecting = true
+                }
+
+
+                c2.ontouchmove = (evt) => {
+                    evt.preventDefault();
+                    const touches = evt.changedTouches;
+                    for (let i = 0; i < touches.length; i++) {
+                        const idx = ongoingTouchIndexById(touches[i].identifier);
+                        if (idx
+                            == 0) {
+                            cropEnd.x = (touches[i].clientX - offsetX);
+                            cropEnd.y = (touches[i].clientY - offsetY);
+                            let a = origin.x
+                            let b = cropEnd.x
+                            let c = origin.y
+                            let d = cropEnd.y
+                            if (cropEnd.x < origin.x) {
+                                a = cropEnd.x
+                                b = origin.x
+                            }
+                            if (d < c) {
+                                d = origin.y
+                                c = cropEnd.y
+                            }
+                            if (!!isSelecting) {
+
+
+                                context2.strokeStyle = "#ff0000";
+                                context2.clearRect(0, 0, c2.width, c2.height);
+                                context2.setLineDash([5, 5]);
+                                context2.beginPath();
+                                context2.rect(
+                                    a,
+                                    c,
+                                    b,
+                                    d
+                                );
+                                context2.stroke();
+                            }
+
+                            ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
+                        }
+                    }
+                }
+
+                c2.ontouchend = (evt) => {
+                    evt.preventDefault();
+                    const touches = evt.changedTouches;
+                    for (let i = 0; i < touches.length; i++) {
+                        let idx = fongoingTouchIndexById(touches[i].identifier);
+                        if (idx >= 0) {
+
+                            ongoingTouches.splice(idx, 1); // remove it; we're done
+                        }
+                    }
+                    isSelecting = false;
+
+                }
             }
-            /*else {
-              removeElement("c2");
-              removeClass();
-              setTimeout(() => {
-                modeTo("pintar")
-                cursorColor()
-              }, 200)
-            }*/
+
         }
+
 
         function cortar() {
             if (cropEnd.x != 0) {
-
-                let context2 = c2.getContext("2d");
-                var swapImg = [];
-                var blob = [];
-                swapImg = canvas.toDataURL("image/png");
-                blob = dataURItoBlob(swapImg);
-                context2.clearRect(0, 0, c2.width, c2.height);
-                let myImg = document.createElement("img");
-                myImg.src = URL.createObjectURL(blob);
-                myImg.onload = async function () {
-                    let noy
-                    let nox
-                    let pos = { x: -origin.x, y: -origin.y }
-                    if (cropEnd.x < origin.x) {
-                        nox = [origin.x, cropEnd.x]
-                        pos.x = -cropEnd.x;
-                    } else {
-                        nox = [cropEnd.x, origin.x]
-                    }
-                    if (cropEnd.y < origin.y) {
-                        noy = [origin.y, cropEnd.y]
-                        pos.y = -cropEnd.y;
-                    } else {
-                        noy = [cropEnd.y, origin.y]
-                    }
-                    canvas.width = nox[0] - nox[1];
-                    canvas.height = noy[0] - noy[1];
-                    canvasDiv.style.width = nox[0] - nox[1] + "px"
-                    canvasDiv.style.height = noy[0] - noy[1] + "px"
-                    let oldGCO = context.globalCompositeOperation;
-                    context.globalCompositeOperation = "source-over";
-                    context.imageSmoothingEnabled = false;
-                    let comando = ["f", "source-over", blob, pos.x, pos.y, myImg.width, myImg.height];
-                    comandos.length = 0
-                    comandos.push(comando)
-                    comandosExec()
-                    context.globalCompositeOperation = oldGCO;
-                };
-                removeElement("c2");
+                comandosExec()
                 setTimeout(() => {
-                    modeTo("recortar")
-                }, 200)
-            }
+                    var swapImg = [];
+                    var blob = [];
+                    swapImg = canvas.toDataURL("image/png");
+                    blob = dataURItoBlob(swapImg);
+                    // context2.clearRect(0, 0, c2.width, c2.height);
+                    let myImg = document.createElement("img");
+                    myImg.src = URL.createObjectURL(blob);
+                    myImg.onload = async function () {
+                        let noy
+                        let nox
+                        let pos = { x: -origin.x, y: -origin.y }
+                        if (cropEnd.x < origin.x) {
+                            nox = [origin.x, cropEnd.x]
+                            pos.x = -cropEnd.x;
+                        } else {
+                            nox = [cropEnd.x, origin.x]
+                        }
+                        if (cropEnd.y < origin.y) {
+                            noy = [origin.y, cropEnd.y]
+                            pos.y = -cropEnd.y;
+                        } else {
+                            noy = [cropEnd.y, origin.y]
+                        }
+                        canvas.width = nox[0] - nox[1];
+                        canvas.height = noy[0] - noy[1];
+                        canvasDiv.style.width = nox[0] - nox[1] + "px"
+                        canvasDiv.style.height = noy[0] - noy[1] + "px"
+                        let oldGCO = context.globalCompositeOperation;
+                        context.globalCompositeOperation = "source-over";
+                        context.imageSmoothingEnabled = false;
+                        let comando = ["f", "source-over", blob, pos.x, pos.y, myImg.width, myImg.height];
+                        comandos.length = 0
+                        comandos.push(comando)
+                        comandosExec()
+                        context.globalCompositeOperation = oldGCO;
+
+                    }
+                }, 100)
+                //let context2 = c2.getContext("2d");
+
+            };
+            //    removeElement("c2");
+            setTimeout(() => {
+                modeTo("recortar")
+            }, 200)
         }
+
 
 
 
@@ -1240,12 +1328,16 @@
             canvas.addEventListener("mousedown", (e) => {
                 x = e.offsetX;
                 y = e.offsetY;
-                if (mode != "picker" && mode != "zoom") {
+                if (mode != "picker" && mode != "zoom" && mode != "recortar") {
                     isDrawing = true;
                 } else if (mode == "zoom") {
                     isGrabing = true;
                 } else if (mode == "picker") {
                     isPicking = true
+                } else if (mode == "recortar" && isSelecting == false) {
+                    isSelecting = true
+                    origin.x = e.offsetX;
+                    origin.y = e.offsetY;
                 }
                 removeClass();
             });
@@ -1259,6 +1351,7 @@
                         isDrawing = false;
                         isGrabing = false;
                         isPicking = false;
+                        isSelecting = false;
                     }
                 }, 500);
             });
@@ -1295,6 +1388,29 @@
                         );
                         setStrokeColor();
                     }
+                } else if (isSelecting) {
+                    cropEnd.x = e.offsetX;
+                    cropEnd.y = e.offsetY;
+                    context.strokeStyle = "#ccccccdd";
+                    context.strokeWidth = 0.5
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.setLineDash([1, 1]);
+                    context.beginPath();
+                    context.globalCompositeOperation = "source-over"
+                    context.rect(
+                        origin.x,
+                        origin.y,
+                        e.offsetX - origin.x,
+                        e.offsetY - origin.y
+                    );
+                    context.stroke();
+                    context.globalCompositeOperation = "destination-over";
+                    context.drawImage(
+                        tempImg,
+                        0,
+                        0,
+                        tempImg.width,
+                        tempImg.height);
                 }
                 x = e.offsetX;
                 y = e.offsetY;
@@ -1332,6 +1448,8 @@
                     }
                 } else if (mode == "zoom") {
                     isGrabing = false;
+                } else if (isSelecting) {
+                    isSelecting = false;
                 }
             });
             document
@@ -1770,11 +1888,16 @@
             for (let i = 0; i < touches.length; i++) {
                 ongoingTouches.push(copyTouch(touches[i]));
             }
-
             removeClass();
             if (mode == "zoom") {
                 isGrabing = true;
             }
+            if (mode == "recortar" && isSelecting == false) {
+                isSelecting = true
+                origin.x = touches[0].clientX - offsetX;
+                origin.y = touches[0].clientY - offsetY;
+            }
+
         }
 
         function handleMove(evt) {
@@ -1785,9 +1908,9 @@
                 if (idx >= 0) {
                     ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
                     ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
-                    if (mode != "zoom" && mode != "picker") {
-                        (x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor),
-                            (y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor);
+                    x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor;
+                    y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor;
+                    if (mode != "zoom" && mode != "picker" && mode != "recortar") {
 
                         desenha(
                             "p",
@@ -1803,7 +1926,33 @@
                         cursor.style.left = (touches[i].clientX) + "px";
                         cursor.style.top = (touches[i].clientY) + "px";
                         ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
+                    } else if (isSelecting) {
+                        console.log(ultimoToque.x, ultimoToque.y)
+                        cropEnd.x = ultimoToque.x
+                        cropEnd.y = ultimoToque.y
+                        context.strokeStyle = "#ffccccdd";
+                        context.strokeWidth = 0.5
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        context.setLineDash([1, 1]);
+                        context.beginPath();
+                        context.globalCompositeOperation = "source-over"
+                        context.rect(
+                            x,
+                            y,
+                            ultimoToque.x - x,
+                            ultimoToque.y - y
+                        );
+
+                        context.stroke();
+                        context.globalCompositeOperation = "destination-over";
+                        context.drawImage(
+                            tempImg,
+                            0,
+                            0,
+                            tempImg.width,
+                            tempImg.height);
                     }
+
                 }
 
             }
@@ -1857,6 +2006,7 @@
             if (mode == "zoom") {
                 isGrabing = false;
             }
+            if (mode == "recortar") { isSelecting = false }
         }
 
         function handleCancel(evt) {
@@ -1915,14 +2065,13 @@
         async function modeTo(qual) {
             if (mode != qual) {
                 if (qual != "recortar") {
-                    if (document.getElementById("c2")) {
-                        removeElement("c2")
-                        setTimeout(() => {
-                            origin.x = 0
-                            origin.y = 0
-                        }, 40)
-                    }
+                    removeClass("flip")
+                    setTimeout(() => {
+                        origin.x = 0
+                        origin.y = 0
+                    }, 40)
                 }
+
                 oldMode = mode;
                 mode = qual;
                 removeClass();
@@ -1939,7 +2088,8 @@
             }
             switch (qual) {
                 case "recortar":
-                    recortar();
+                    cut()
+                    //   recortar();
                     mode = qual;
                     break;
                 case "zoom":
@@ -2013,6 +2163,14 @@
             }
             cursorColor();
         }
+        let tempImg
+        function cut() {
+            swapImg = canvas.toDataURL("image/png");
+            blob = dataURItoBlob(swapImg);
+            tempImg = document.createElement("img");
+            tempImg.src = URL.createObjectURL(blob)
+
+        }
         function camera() {
 
             // ok, browser supports it*/
@@ -2028,10 +2186,10 @@
                 const escala = canvas.height / 320
                 videoE.id = "video"
                 videoE.height = canvas.height; // in px
-                videoE.width = 429 * (escala); // in px
+                videoE.width = 430 * (escala); // in px
                 videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
 
-                let vcW = 428 * escala * 2;
+                let vcW = 430 * escala * 2;
                 let vcH = 320 * escala * 2;
                 const videoC = document.createElement("div");
                 videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px;`)
@@ -2085,8 +2243,8 @@
                         let videoC = document.getElementById("videoC")
 
                         let escala = canvas.width / 320
-                        let vcW = 428 * escala;
-                        let vcH = 318 * escala;
+                        let vcW = 430 * escala;
+                        let vcH = 321 * escala;
 
                         if (proporcao > 1) {
                             canvasV.height = canvas.height
@@ -2125,7 +2283,7 @@
                     let W = canvasV.width;
                     let H = canvasV.height;
                     contextV.drawImage(video, 0, 0, W, H)
-                    img_b64 = canvasV.toDataURL('image/png');
+                    img_b64 = canvasV.toDataURL("image/png");
                     blob = dataURItoBlob(img_b64)
                     let offsetW = (W - canvas.width) / -2
                     let offsetH = (H - canvas.height) / -2
@@ -2614,7 +2772,7 @@
         convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
 
         function convertToImg() {
-            img_b64 = canvas.toDataURL('image/png');
+            img_b64 = canvas.toDataURL("image/png");
             blob = dataURItoBlob(img_b64)
             comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
             // comandos.unshift(comando)
