@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
+    <title>Desenho 0.9.6 </title>
     <style>
         * {
             -webkit-user-select: none;
@@ -433,7 +434,6 @@
             cursor: unset;
         }
     </style>
-    <title>Desenho 0.9.5 </title>
 </head>
 
 <body class="naotoque" style="cursor: pointer;">
@@ -511,7 +511,9 @@
             </div>
             <div id="menutamanho" class="fundobranco submenu">
                 <div onmousedown="tamanho()" class="bloquinho"
-                    style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
+                    style="float: right; color: white; font-family: Arial, Helvetica,
+                    sans-serif; font-size: 1.3em; font-weight: bold;
+                    background-color: rgba(247, 161, 165, 0.15);">
                     ok
                 </div>
                 Tamanho da imagem:<br>
@@ -914,8 +916,8 @@
             if (cropEnd.x != 0) {
                 comandosExec()
                 setTimeout(() => {
-                    var swapImg = [];
-                    var blob = [];
+                    let swapImg = [];
+                    let blob = [];
                     swapImg = canvas.toDataURL("image/png");
                     blob = dataURItoBlob(swapImg);
                     // context2.clearRect(0, 0, c2.width, c2.height);
@@ -1080,7 +1082,7 @@
                     document.getElementById("ferramentas2").classList.add("horizontal2");
                     document.getElementsById("menus").style.top = "90px";
 
-                    // alert(`virou, ${screen.width} , ${screen.height}`) 
+                    // alert(`virou, ${screen.width} , ${screen.height}`)
 
                 } else {
                     document.getElementById("ferramentas").classList.remove("horizontal");
@@ -1244,7 +1246,7 @@
 
                 document.getElementById("ferramentas").classList.add("horizontal");
                 document.getElementById("ferramentas2").classList.add("horizontal2");
-                // alert(`virou, ${screen.width} , ${screen.height}`) 
+                // alert(`virou, ${screen.width} , ${screen.height}`)
                 win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
                 win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
                 document.getElementById("menus").style.top = "0px";
@@ -1450,6 +1452,7 @@
                     isGrabing = false;
                 } else if (isSelecting) {
                     isSelecting = false;
+                  mostraMenu("recortar")
                 }
             });
             document
@@ -1635,7 +1638,7 @@
              let len = comandos.length;
              if (comandos[len - 1][0] != "s") {
                  if (len > 300) {
- 
+
                      for (i = 0; i < len; i++) {
                          if (comandos[i][0] == "s") {
                              swaps.push(comandos[i])
@@ -1660,7 +1663,7 @@
                  }
                  swapT = []
                  blobb = []
- 
+
                  swapT = canvas.toDataURL('image/png');
                  blobb = dataURItoBlob(swapT)
                  comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
@@ -1671,9 +1674,9 @@
                      for (i = 0; i < sl; i++) {
                          comandos.push(swaps[i])
                      }
- 
+
                  }, 100)
- 
+
              }
          }
  */
@@ -1899,7 +1902,23 @@
             }
 
         }
-
+       function handleEnd(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            for (let i = 0; i < touches.length; i++) {
+                let idx = ongoingTouchIndexById(touches[i].identifier);
+                if (idx >= 0) {
+                    context.lineWidth = strokeWidth;
+                    context.fillStyle = strokeColor;
+                    ongoingTouches.splice(idx, 1); // remove it; we're done
+                }
+            }
+            if (mode == "zoom") {
+                isGrabing = false;
+            }
+            if (mode == "recortar") { mostraMenu("recortar")}
+            isSelecting = false
+        }
         function handleMove(evt) {
             evt.preventDefault();
             const touches = evt.changedTouches;
@@ -1926,7 +1945,7 @@
                         cursor.style.left = (touches[i].clientX) + "px";
                         cursor.style.top = (touches[i].clientY) + "px";
                         ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-                    } else if (isSelecting) {
+                    } else if (isSelecting === true ) {
                         console.log(ultimoToque.x, ultimoToque.y)
                         cropEnd.x = ultimoToque.x
                         cropEnd.y = ultimoToque.y
@@ -1992,22 +2011,7 @@
                 }
             }
         }
-        function handleEnd(evt) {
-            evt.preventDefault();
-            const touches = evt.changedTouches;
-            for (let i = 0; i < touches.length; i++) {
-                let idx = ongoingTouchIndexById(touches[i].identifier);
-                if (idx >= 0) {
-                    context.lineWidth = strokeWidth;
-                    context.fillStyle = strokeColor;
-                    ongoingTouches.splice(idx, 1); // remove it; we're done
-                }
-            }
-            if (mode == "zoom") {
-                isGrabing = false;
-            }
-            if (mode == "recortar") { isSelecting = false }
-        }
+
 
         function handleCancel(evt) {
             evt.preventDefault();
@@ -2277,7 +2281,7 @@
                     initializeCamera();
                 });
 
-                //diego 
+                //diego
                 video.addEventListener('click', function (e) {
 
                     let W = canvasV.width;
@@ -2380,7 +2384,7 @@
                 hue100 -= Math.floor(100 / 14)
                 let cor = document.getElementById("H").value
                 //    let cor = document.getElementById("H").value - (i*3)
-                /*  
+                /*
                  paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1] + i * 2}%,${hsla[2] + i * 3
                        }%,${hsla[3]
                        })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1] + i * 2
