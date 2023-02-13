@@ -442,10 +442,9 @@
                 versão 0.9.8 next<br>
                 - mouse+touch events > onPointerEvent<br>
                 - arrumar o mover com zoom.
-                versão 0.9.7c<br>
-                - preventDefault no canvas_div2<br>
+                versão 0.9.7d<br>
                 - removido o canvas de recorte<br>
-                - zoom 8x<br>
+                - zoom 8x funcionando<br>
                 - tela desvira depois da camera<br>
                 versão 0.9.6<br>
                 -fixing crop<br>
@@ -2450,6 +2449,7 @@
 
             el.style["transform"] = s;
             el.style["transformOrigin"] = oString;
+            resizeScreen();
         }
 
         function ZOOMf(a) {
