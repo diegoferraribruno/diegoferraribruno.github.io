@@ -57,7 +57,7 @@
             margin-right: auto;
             width: 320px;
             height: 320px;
-            overflow-y: hidden;
+            /*overflow-y: hidden;*/
         }
 
         #canvas_div2 {
@@ -68,7 +68,6 @@
             margin-left: auto;
             margin-right: auto;
             align:center;
-             pointer-events: none;
         }
 
         #canvas_window {
@@ -424,7 +423,7 @@
             transform: rotateY(180deg);
         }
     </style>
-    <title>Desenho 0.9.7 </title>
+    <title>Desenho 0.9.7c </title>
 </head>
 
 <body class="naotoque" style="cursor: pointer;">
@@ -443,8 +442,8 @@
                 versão 0.9.8 next<br>
                 - mouse+touch events > onPointerEvent<br>
                 - arrumar o mover com zoom.
-                versão 0.9.7b<br>
-                - pointer-events: none; no canvas_div2<br>
+                versão 0.9.7c<br>
+                - preventDefault no canvas_div2<br>
                 - removido o canvas de recorte<br>
                 - zoom 8x<br>
                 - tela desvira depois da camera<br>
@@ -1717,9 +1716,13 @@
                 if (idx >= 0) {
                     ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
                     ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
-                    x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor;
+                    if (mode == "recortar"){
+									x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor;
                     y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor;
+					}
                     if (mode != "zoom" && mode != "picker" && mode != "recortar") {
+					x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor;
+                    y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor;
 
                         desenha(
                             "p",
