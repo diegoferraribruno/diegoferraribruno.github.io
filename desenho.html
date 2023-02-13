@@ -5,7 +5,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>Desenho 0.9.6 </title>
     <style>
         * {
             -webkit-user-select: none;
@@ -62,12 +61,13 @@
         }
 
         #canvas_div2 {
-            background-image: url("./grid.png");
+            width:320px;
+            height:320px;
             text-align: center;
-            display: block;
+            display: flex;
             margin-left: auto;
             margin-right: auto;
-            overflow-y: hidden;
+            align:center;
         }
 
         #canvas_window {
@@ -416,24 +416,14 @@
             height: auto;
         }
 
-
-
         .flip {
             -webkit-transform: rotateY(180deg);
             -moz-transform: rotateY(180deg);
             -o-transform: rotateY(180deg);
             transform: rotateY(180deg);
         }
-
-        .c2 {
-            position: absolute;
-            top: 0px;
-            display: flex;
-            /*margin-left: -320px;*/
-            border: pink solid 1px;
-            cursor: unset;
-        }
     </style>
+    <title>Desenho 0.9.5 </title>
 </head>
 
 <body class="naotoque" style="cursor: pointer;">
@@ -449,6 +439,10 @@
                 <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
                     Lei Mao</a> <br>
                 <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
+                versão 0.9.7<br>
+                - removido o canvas falso da selecao de recorte<br>
+                - zoom 8x<br>
+                - tela desvira depois de fechada camera<br>
                 versão 0.9.6<br>
                 -fixing crop<br>
                 versão 0.9.4<br>
@@ -511,9 +505,7 @@
             </div>
             <div id="menutamanho" class="fundobranco submenu">
                 <div onmousedown="tamanho()" class="bloquinho"
-                    style="float: right; color: white; font-family: Arial, Helvetica,
-                    sans-serif; font-size: 1.3em; font-weight: bold;
-                    background-color: rgba(247, 161, 165, 0.15);">
+                    style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
                     ok
                 </div>
                 Tamanho da imagem:<br>
@@ -712,6 +704,8 @@
                 <span id="cursor"
                     style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
                     class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
+                <div id="canvas_div2">
+
                 <div id="canvas_div" class="day">
                     <canvas id="canvas" width="320px" height="320px" class="day" onmousemove="cursorMove(event)"
                         onmouseout="mostra()">
@@ -720,7 +714,7 @@
                         se quiser, salve a pagina no seu computador ou dispositivo e abra o desenho.html diretamente.
                     </canvas>
                 </div>
-
+</div>
 
             </div>
 
@@ -760,7 +754,7 @@
         const lineJoins = ["miter", "round"];
         var ultimoToque = { x: 160, y: 160 };
         var zoomFactor = 1;
-        var zoomScale = [0.5, 1, 2, 4];
+        var zoomScale = [0.5, 1, 2, 4, 8];
         var zoomIndex = 1;
         var mouseOver = false;
         var layer1 = [];
@@ -779,139 +773,6 @@
         var origin = { x: 0, y: 0 };
         var cropEnd = { x: 0, y: 0 };
 
-        function recortar() {
-            if (!document.getElementById("c2")) {
-
-                let c2 = document.createElement("canvas")
-                c2.setAttribute("id", "c2")
-                c2.width = canvas.width
-                c2.height = canvas.height
-                c2.style.marginLeft = -canvas.width
-                c2.setAttribute("class", "c2")
-                let context2 = c2.getContext("2d");
-                /* c2.addEventListener("touchstart", chandleStart);
-                 c2.addEventListener("touchmove", chandleMove);
-                 c2.addEventListener("touchend", chandleEnd);*/
-                if (screen.width < screen.height) {
-
-                    c2.style.top = "90px"
-                }
-                canvasDiv.appendChild(c2)
-                c2.onmouseout = (e) => mostra();
-                c2.onmousedown = (e) => {
-                    isSelecting = true;
-                    origin = { x: e.offsetX, y: e.offsetY };
-                };
-                c2.onmousemove = (e) => {
-                    cursorMove(e)
-                    if (!!isSelecting) {
-
-                        cropEnd.x = e.offsetX;
-                        cropEnd.y = e.offsetY;
-                        context2.strokeStyle = "#ccccccdd";
-                        context2.strokeWidth = 0.5
-                        context2.clearRect(0, 0, c2.width, c2.height);
-                        context2.setLineDash([1, 1]);
-                        context2.beginPath();
-                        context2.rect(
-                            origin.x,
-                            origin.y,
-                            e.offsetX - origin.x,
-                            e.offsetY - origin.y
-                        );
-                        context2.stroke();
-                    }
-                };
-                c2.onmouseup = (e) => {
-                    isSelecting = false;
-                };
-
-
-                var offsetX = c2.getBoundingClientRect().left;
-                var offsetY = c2.getBoundingClientRect().top;
-
-
-                /*else {
-                  removeElement("c2");
-                  removeClass();
-                  setTimeout(() => {
-                    modeTo("pintar")
-                    cursorColor()
-                  }, 200)
-                }*/
-                c2.ontouchstart = (evt) => {
-
-                    evt.preventDefault();
-                    const touches = evt.changedTouches;
-                    origin.x = touches[0].clientX - offsetX;
-                    origin.y = touches[0].clientY - offsetY;
-                    for (let i = 0; i < touches.length; i++) {
-                        ongoingTouches.push(copyTouch(touches[i]));
-                    }
-                    isSelecting = true
-                }
-
-
-                c2.ontouchmove = (evt) => {
-                    evt.preventDefault();
-                    const touches = evt.changedTouches;
-                    for (let i = 0; i < touches.length; i++) {
-                        const idx = ongoingTouchIndexById(touches[i].identifier);
-                        if (idx
-                            == 0) {
-                            cropEnd.x = (touches[i].clientX - offsetX);
-                            cropEnd.y = (touches[i].clientY - offsetY);
-                            let a = origin.x
-                            let b = cropEnd.x
-                            let c = origin.y
-                            let d = cropEnd.y
-                            if (cropEnd.x < origin.x) {
-                                a = cropEnd.x
-                                b = origin.x
-                            }
-                            if (d < c) {
-                                d = origin.y
-                                c = cropEnd.y
-                            }
-                            if (!!isSelecting) {
-
-
-                                context2.strokeStyle = "#ff0000";
-                                context2.clearRect(0, 0, c2.width, c2.height);
-                                context2.setLineDash([5, 5]);
-                                context2.beginPath();
-                                context2.rect(
-                                    a,
-                                    c,
-                                    b,
-                                    d
-                                );
-                                context2.stroke();
-                            }
-
-                            ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-                        }
-                    }
-                }
-
-                c2.ontouchend = (evt) => {
-                    evt.preventDefault();
-                    const touches = evt.changedTouches;
-                    for (let i = 0; i < touches.length; i++) {
-                        let idx = fongoingTouchIndexById(touches[i].identifier);
-                        if (idx >= 0) {
-
-                            ongoingTouches.splice(idx, 1); // remove it; we're done
-                        }
-                    }
-                    isSelecting = false;
-
-                }
-            }
-
-        }
-
-
         function cortar() {
             if (cropEnd.x != 0) {
                 comandosExec()
@@ -920,7 +781,6 @@
                     let blob = [];
                     swapImg = canvas.toDataURL("image/png");
                     blob = dataURItoBlob(swapImg);
-                    // context2.clearRect(0, 0, c2.width, c2.height);
                     let myImg = document.createElement("img");
                     myImg.src = URL.createObjectURL(blob);
                     myImg.onload = async function () {
@@ -944,28 +804,22 @@
                         canvasDiv.style.width = nox[0] - nox[1] + "px"
                         canvasDiv.style.height = noy[0] - noy[1] + "px"
                         let oldGCO = context.globalCompositeOperation;
-                        context.globalCompositeOperation = "source-over";
+                        changeGCO("source-over");
                         context.imageSmoothingEnabled = false;
                         let comando = ["f", "source-over", blob, pos.x, pos.y, myImg.width, myImg.height];
                         comandos.length = 0
                         comandos.push(comando)
                         comandosExec()
-                        context.globalCompositeOperation = oldGCO;
+                        changeGCO(oldGCO);
 
                     }
                 }, 100)
-                //let context2 = c2.getContext("2d");
 
             };
-            //    removeElement("c2");
             setTimeout(() => {
                 modeTo("recortar")
             }, 200)
         }
-
-
-
-
 
         function rotacionar() {
             rotationDeg = (rotationDeg + 90) % 360,
@@ -995,11 +849,10 @@
             //}
         }
         function drawRotated(degrees = 90) {
-            var swapImg = [];
-            var blob = [];
+            let swapImg = [];
+            let blob = [];
             swapImg = canvas.toDataURL("image/png");
             blob = dataURItoBlob(swapImg);
-            //context2.clearRect(0, 0, c2.width, c2.height);
             let myImg = document.createElement("img");
             myImg.src = URL.createObjectURL(blob);
             myImg.onload = function () {
@@ -1398,7 +1251,7 @@
                     context.clearRect(0, 0, canvas.width, canvas.height);
                     context.setLineDash([1, 1]);
                     context.beginPath();
-                    context.globalCompositeOperation = "source-over"
+                    changeGCO("source-over");
                     context.rect(
                         origin.x,
                         origin.y,
@@ -1406,7 +1259,7 @@
                         e.offsetY - origin.y
                     );
                     context.stroke();
-                    context.globalCompositeOperation = "destination-over";
+                    changeGCO("destination-over");
                     context.drawImage(
                         tempImg,
                         0,
@@ -1452,7 +1305,6 @@
                     isGrabing = false;
                 } else if (isSelecting) {
                     isSelecting = false;
-                  mostraMenu("recortar")
                 }
             });
             document
@@ -1546,7 +1398,6 @@
             if (evt.key === "y") {
                 keyY = true
             }
-            //.log(shiftHeld, keyCtrl, keyY, keyZ)
             if (keyCtrl) {
                 if (keyZ) {
                     if (shiftHeld) {
@@ -1618,7 +1469,6 @@
                 undoLevel--
                 comandosExec(posicao)
             } else {
-                //alert("nivel maximo de refazer atingindo.");
                 audio.play();
                 redoTEnd()
             }
@@ -1630,56 +1480,7 @@
         let swaps = new Array()
         let pL
         let posicoes = new Array(0)
-        /* function memorySwap(GCO) {
-             posicoes = []
-             posicoes.push(0)
-             posicoes.push(0)
-             swaps = []
-             let len = comandos.length;
-             if (comandos[len - 1][0] != "s") {
-                 if (len > 300) {
 
-                     for (i = 0; i < len; i++) {
-                         if (comandos[i][0] == "s") {
-                             swaps.push(comandos[i])
-                             posicoes.push(i)
-                         }
-                     }
-                     pL = posicoes.length
-                     let sl = swaps.length
-                     let pops = 0
-                     if (sl > 15) {
-                         pops = sl - 15
-                         for (h = 0; h < pops; h++) {
-                             swaps.shift()
-                         }
-                     }
-                     console.log(posicoes[pL - 1])
-                     for (i = posicoes[pL - 1]; i < len; i++) {
-                         if (comandos[i][0] != "s") {
-                             swaps.push(comandos[i])
-                         }
-                     }
-                 }
-                 swapT = []
-                 blobb = []
-
-                 swapT = canvas.toDataURL('image/png');
-                 blobb = dataURItoBlob(swapT)
-                 comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
-                 swaps.push(comando)
-                 setTimeout(() => {
-                     comandos = []
-                     let sl = swaps.length
-                     for (i = 0; i < sl; i++) {
-                         comandos.push(swaps[i])
-                     }
-
-                 }, 100)
-
-             }
-         }
- */
         function memorySwap(GCO) {
             let len = comandos.length;
             if (len > 500) {
@@ -1722,41 +1523,38 @@
                 switch (comandos[coma][0]) {
                     case "f":
                         let myImg = document.createElement("img");
-                        let gco = comandos[coma][1]
                         myImg.src = URL.createObjectURL(comandos[coma][2])
                         myImg.onload = function () {
                             let globaltemp = context.globalCompositeOperation
-                            context.globalCompositeOperation = gco;
+                             context.globalCompositeOperation = comandos[coma][1];
                             context.drawImage(
                                 myImg,
                                 comandos[coma][3],
                                 comandos[coma][4],
                                 myImg.width,
                                 myImg.height);
-                            context.globalCompositeOperation = globaltemp
+                            changeGCO(globaltemp)
                             coma++;
                             exec(coma)
                             myImg = []
                         }
                         break;
                     case "s":
-                        context.globalCompositeOperation = "destination-out";
+                        changeGCO("destination-out");
                         context.fillStyle = "#ffffffff";
                         context.fillRect(0, 0, canvas.width, canvas.height);
-
                         let myImg2 = document.createElement("img");
-                        let gco2 = comandos[coma][1]
                         myImg2.src = URL.createObjectURL(comandos[coma][2])
                         myImg2.onload = function () {
                             let globaltemp = context.globalCompositeOperation
-                            context.globalCompositeOperation = gco2;
+                             context.globalCompositeOperation = comandos[coma][1]
                             context.drawImage(
                                 myImg2,
                                 comandos[coma][3],
                                 comandos[coma][4],
                                 myImg2.width,
                                 myImg2.height);
-                            context.globalCompositeOperation = globaltemp
+                            changeGCO(globaltemp)
                             coma++;
                             exec(coma)
                             myImg2 = []
@@ -1777,7 +1575,7 @@
                         exec(coma)
                         break;
                     case "i":
-                        context.globalCompositeOperation = comandos[coma][1];
+                         context.globalCompositeOperation = comandos[coma][1]
                         context.drawImage(
                             comandos[coma][2],
                             comandos[coma][3],
@@ -1787,11 +1585,11 @@
                         coma++;
                         exec(coma)
                         break;
-                    case "c":
-                        context.globalCompositeOperation = comandos[coma][1];
+                   /* case "c":
+                        changeGCO(comandos[coma][1]);
                         context.putImageData(
                             comandos[coma][2],
-                            comandos[comai][3],
+                            comandos[coma][3],
                             comandos[coma][4],
                             comandos[coma][5],
                             comandos[coma][6],
@@ -1799,9 +1597,9 @@
                             comandos[coma][8]);
                         coma++;
                         exec(coma)
-                        break;
+                        break*/
                     case "b":
-                        context.globalCompositeOperation = comandos[coma][1];
+                        changeGCO(comandos[coma][1]);
                         context.fillStyle = comandos[coma][2];
                         context.fillRect(0, 0, canvas.width, canvas.height);
                         coma++;
@@ -1849,7 +1647,7 @@
                     myImg.src = URL.createObjectURL(X)
                     myImg.onload = function () {
                         let oldGCO = context.globalCompositeOperation
-                        context.globalCompositeOperation = globalComposite
+                        changeGCO(globalComposite)
                         context.drawImage(
                             myImg,
                             Y,
@@ -1857,7 +1655,7 @@
                             myImg.width,
                             myImg.height);
                         comandos.push(comando)
-                        context.globalCompositeOperation = oldGCO
+                        changeGCO(oldGCO)
                     }
                     break;
                 case "i":
@@ -1883,6 +1681,8 @@
         }
         function handleStart(evt) {
             evt.preventDefault();
+            removeClass();
+
             const touches = evt.changedTouches;
             offsetX = canvas.getBoundingClientRect().left;
             offsetY = canvas.getBoundingClientRect().top;
@@ -1891,7 +1691,6 @@
             for (let i = 0; i < touches.length; i++) {
                 ongoingTouches.push(copyTouch(touches[i]));
             }
-            removeClass();
             if (mode == "zoom") {
                 isGrabing = true;
             }
@@ -1902,22 +1701,8 @@
             }
 
         }
-       function handleEnd(evt) {
-            evt.preventDefault();
-            const touches = evt.changedTouches;
-            for (let i = 0; i < touches.length; i++) {
-                let idx = ongoingTouchIndexById(touches[i].identifier);
-                if (idx >= 0) {
-                    context.lineWidth = strokeWidth;
-                    context.fillStyle = strokeColor;
-                    ongoingTouches.splice(idx, 1); // remove it; we're done
-                }
-            }
-            if (mode == "zoom") {
-                isGrabing = false;
-            }
-            if (mode == "recortar") { mostraMenu("recortar")}
-            isSelecting = false
+        function changeGCO(GCO = globalComposite) {
+            context.globalCompositeOperation = GCO
         }
         function handleMove(evt) {
             evt.preventDefault();
@@ -1945,7 +1730,7 @@
                         cursor.style.left = (touches[i].clientX) + "px";
                         cursor.style.top = (touches[i].clientY) + "px";
                         ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-                    } else if (isSelecting === true ) {
+                    } else if (isSelecting) {
                         console.log(ultimoToque.x, ultimoToque.y)
                         cropEnd.x = ultimoToque.x
                         cropEnd.y = ultimoToque.y
@@ -1954,7 +1739,7 @@
                         context.clearRect(0, 0, canvas.width, canvas.height);
                         context.setLineDash([1, 1]);
                         context.beginPath();
-                        context.globalCompositeOperation = "source-over"
+                        changeGCO("source-over")
                         context.rect(
                             x,
                             y,
@@ -1963,7 +1748,7 @@
                         );
 
                         context.stroke();
-                        context.globalCompositeOperation = "destination-over";
+                        changeGCO("destination-over");
                         context.drawImage(
                             tempImg,
                             0,
@@ -2011,7 +1796,25 @@
                 }
             }
         }
-
+        function handleEnd(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            for (let i = 0; i < touches.length; i++) {
+                let idx = ongoingTouchIndexById(touches[i].identifier);
+                if (idx >= 0) {
+                    context.lineWidth = strokeWidth;
+                    context.fillStyle = strokeColor;
+                    ongoingTouches.splice(idx, 1); // remove it; we're done
+                }
+            }
+            if (mode == "zoom") {
+                isGrabing = false;
+            }
+            if (mode == "recortar") {
+				mostraMenu("recortar")
+				isSelecting = false
+				}
+        }
 
         function handleCancel(evt) {
             evt.preventDefault();
@@ -2037,7 +1840,7 @@
         }
 
         function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
-            context.globalCompositeOperation = GCO;
+            changeGCO(GCO);
             context.beginPath();
             context.strokeStyle = strokeColor;
             context.lineWidth = stroke;
@@ -2099,7 +1902,7 @@
                 case "zoom":
                     removeClass();
                     zoomIndex++;
-                    if (zoomIndex > 3) {
+                    if (zoomIndex > 4) {
                         zoomIndex = 0;
                     }
                     ZOOMf(zoomIndex);
@@ -2114,7 +1917,7 @@
                     break;
                 case "cam":
                     camera();
-                    context.globalCompositeOperation = globalComposite;
+                    changeGCO();
                     memorySwap(globalComposite);
                     break;
                 /*  case mode: //se o modo ja estiver ativo:
@@ -2127,31 +1930,31 @@
                     setStrokeSize(estrokeWidth);
                     cursorColor();
                     mudaCorAlpha();
-                    context.globalCompositeOperation = "destination-out";
+                    changeGCO("destination-out");
                     //memorySwap("destination-out");
                     break;
                 case "pintar":
                     setStrokeSize(strokeWidth);
                     setStrokeColor();
-                    context.globalCompositeOperation = globalComposite;
+                    changeGCO();
                     memorySwap(globalComposite);
                     break;
                 case "cores":
                     setStrokeSize(strokeWidth);
                     setStrokeColor();
-                    context.globalCompositeOperation = globalComposite;
+                    changeGCO();
                     memorySwap(globalComposite);
                     break;
                 case "fundo":
                     setStrokeSize(strokeWidth);
-                    context.globalCompositeOperation = globalComposite;
+                    changeGCO();
                     memorySwap(globalComposite);
                     break;
 
                 case "preencher":
                     document.getElementById("preenchercor").style.backgroundColor =
                         strokeColor;
-                    context.globalCompositeOperation = globalComposite;
+                    changeGCO();
                     break;
                 case "picker":
                     break;
@@ -2267,8 +2070,6 @@
                             videoC.setAttribute("style",
                                 `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
                         }
-
-                        //console.log('cv width:' + canvasV.width + ', height:' + canvasV.height);
                     }
                 };
 
@@ -2313,7 +2114,6 @@
             }
         }
         function removeVideo() {
-            removeClass("flip");
             setTimeout(() => {
                 removeElement("videoC")
                 removeElement("btnChangeCam")
@@ -2323,6 +2123,7 @@
                     modeTo(oldMode)
                 }
                 setTimeout(() => {
+                    removeClass("flip");
                     removeClass();
                 }, 200)
                 img_b64 = [];
@@ -2376,11 +2177,10 @@
         // Pinceis Cor e Tamanho
 
         function criaPaleta() {
-            i = 1;
             let paleta = `<span onmousedown='mudaCor("B")'  class='bloquinho' ` +
-                `style='background-color:hsla(0, 100%, 100%, ${hsla[3] * 4})'> </span>`;
-            let hue100 = 100
-            while (i < 15) {
+                "style='background-color:hsla(0, 100%, 100%, "+hsla[3] * 4+")'> </span>";
+            let hue100 = 100;
+            for (i = 1; i < 15; i++) {
                 hue100 -= Math.floor(100 / 14)
                 let cor = document.getElementById("H").value
                 //    let cor = document.getElementById("H").value - (i*3)
@@ -2398,27 +2198,26 @@
                     }%,${hsla[3]
                     })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]
                     }%,${hue100}%,${hsla[3] * 4});'> </span>`;
-                i++;
+
             }
 
             document.getElementById("paleta").innerHTML = paleta;
             document.getElementById("paleta").innerHTML +=
                 `<br /><span onmousedown='mudaCor("P")' class='bloquinho' ` +
-                `style='background-color:hsla(0, 100%, 0%, ${hsla[3] * 4})'> </span>`;
+                "style='background-color:hsla(0, 100%, 0%, "+hsla[3] * 4+")'> </span>";
         }
 
         function criaPaleta2() {
             let paleta = "";
             let quantas = favoritas.length;
             for (i = 0; i < quantas; i++) {
-                paleta += `<span onmousedown='mudaCor("${favoritas[i]}")' class='bloquinho' style='background-color:${favoritas[i]};'> </span>`;
+                paleta += "<span onmousedown='mudaCor("+favoritas[i]+")' class='bloquinho' style='background-color:"+favoritas[i]+";'> </span>";
             }
             document.getElementById("paleta2").innerHTML = paleta;
         }
         function criapaleta3() {
-            let paleta3 = `<span id="picker" title="Pega cor" class="bloquinho""
-                            onmousedown="modeTo('picker')"
-                            style="background-color: rgba(247, 161, 165, 0.15);">💉</span>`;
+            let paleta3 = '<span id="picker" title="Pega cor" class="bloquinho"'+
+                            'onmousedown="modeTo(`picker`)" style="background-color: rgba(247, 161, 165, 0.15);">💉</span>';
             let c = 0;
             while (c < 7) {
                 let cor = (c * 55)
@@ -2501,7 +2300,7 @@
             }
             cursor.classList.toggle("cursorIndex");
             cursor.classList.toggle("selected");
-            context.globalCompositeOperation = globalComposite;
+            changeGCO();
             modeTo("pintar")
             removeClass()
         }
@@ -2631,11 +2430,14 @@
             var p = ["webkit", "moz", "ms", "o"],
                 s = "scale(" + zoom + ")",
                 oString =
-                    transformOrigin[0] * 100 + "% " + transformOrigin[1] * 100 + "%";
+                    transformOrigin[0] + "% " + transformOrigin[1] + "%";
 
             for (var i = 0; i < p.length; i++) {
                 el.style[p[i] + "Transform"] = s;
                 el.style[p[i] + "TransformOrigin"] = oString;
+                document.getElementById("canvas_div2").style.width = canvas.width*2+"px";
+                document.getElementById("canvas_div2").style.height = canvas.height*2+"px";
+                document.getElementById("canvas_div2").style.marginTop = canvas.height/4+"px";
             }
 
             el.style["transform"] = s;
@@ -2647,7 +2449,8 @@
             ZOOM(escala);
         }
         function ZOOM(a) {
-            setZoom(1, canvasDiv);
+            setZoom(a, canvasDiv);
+            //  setZoom(a, canvas_window);
             resetCanva();
             setTimeout(function () {
                 win.scrollTop = 0;
@@ -2657,12 +2460,12 @@
             setTimeout(
                 () =>
                     scrollCanva(
-                        ultimoToque.x * zoomFactor - 160,
-                        ultimoToque.y * zoomFactor - 160
+                        ultimoToque.x * zoomFactor - canvas.width / 2,
+                        ultimoToque.y * zoomFactor - canvas.height / 2
                     ),
                 30
             );
-            setTimeout(() => setZoom(zoomFactor, canvasDiv), 4);
+            setTimeout(() => setZoom(zoomFactor, canvasDiv), 10);
 
             setStrokeSize(strokeWidth);
             document.getElementById("tzoom").value = zoomFactor;
