@@ -68,6 +68,7 @@
             margin-left: auto;
             margin-right: auto;
             align:center;
+             pointer-events: none;
         }
 
         #canvas_window {
@@ -423,7 +424,7 @@
             transform: rotateY(180deg);
         }
     </style>
-    <title>Desenho 0.9.5 </title>
+    <title>Desenho 0.9.7 </title>
 </head>
 
 <body class="naotoque" style="cursor: pointer;">
@@ -439,10 +440,14 @@
                 <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
                     Lei Mao</a> <br>
                 <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-                versão 0.9.7<br>
-                - removido o canvas falso da selecao de recorte<br>
+                versão 0.9.8 next<br>
+                - mouse+touch events > onPointerEvent<br>
+                - arrumar o mover com zoom.
+                versão 0.9.7b<br>
+                - pointer-events: none; no canvas_div2<br>
+                - removido o canvas de recorte<br>
                 - zoom 8x<br>
-                - tela desvira depois de fechada camera<br>
+                - tela desvira depois da camera<br>
                 versão 0.9.6<br>
                 -fixing crop<br>
                 versão 0.9.4<br>
@@ -704,7 +709,7 @@
                 <span id="cursor"
                     style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
                     class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
-                <div id="canvas_div2">
+                <div id="canvas_div2" >
 
                 <div id="canvas_div" class="day">
                     <canvas id="canvas" width="320px" height="320px" class="day" onmousemove="cursorMove(event)"
