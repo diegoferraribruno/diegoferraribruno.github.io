@@ -57,7 +57,7 @@
             margin-right: auto;
             width: 320px;
             height: 320px;
-            /*overflow-y: hidden;*/
+            overflow-y: hidden;
         }
 
         #canvas_div2 {
@@ -423,7 +423,7 @@
             transform: rotateY(180deg);
         }
     </style>
-    <title>Desenho 0.9.7c </title>
+    <title>Desenho 0.9.7d </title>
 </head>
 
 <body class="naotoque" style="cursor: pointer;">
@@ -893,8 +893,23 @@
                         break;
                 }
                 // draw the previows image, now rotated
-                context.drawImage(myImg, 0, 0);
+
+				context.drawImage(myImg, 0, 0);
                 context.restore();
+/* Need to save rotated!
+                setTimeout(()=>{ swapImg2 = canvas.toDataURL("image/png");
+            let blob2 = dataURItoBlob(swapImg2);
+            let myImg2 = document.createElement("img");
+            myImg2.src = URL.createObjectURL(blob2);
+            myImg2.onload = function () {
+                comando = ["s", "source-over", blob, 0, 0, canvas.width, canvas.height];
+                swaps.push(comando)
+                swapImg = []
+                blob = []
+                comando = []}
+                comandosExec()
+                },100)
+*/
                 canvasDiv.style.width = canvas.width + "px";
                 canvasDiv.style.height = canvas.height + "px";
             };
@@ -1313,15 +1328,7 @@
             document
                 .getElementById("btn-download")
                 .addEventListener("click", function (e) {
-                    if (rotationDeg != 0) {
-                        drawRotated(rotationDeg)
-                        rotationDeg = 0;
-                        canvasDiv.setAttribute("style", `-webkit-transform: rotate(${rotationDeg}deg);)
-        - moz - transform: rotate(${rotationDeg}deg);
-      -o - transform: rotate(${rotationDeg}deg);
-      -ms - transform: rotate(${rotationDeg}deg);
-      transform: rotate(${rotationDeg}deg);`)
-                    }
+     rotacionaCanva()
                     //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
                     let nome = prompt("nome da arte:", "desenho");
                     if (nome != null && nome != "") {
@@ -1335,7 +1342,20 @@
             initStrokeRange()
             setTimeout(() => resizeScreen(), 10)
         }
+		function rotacionaCanva(){
+			   if (rotationDeg != 0) {
+					drawRotated(rotationDeg)
 
+					rotationDeg = 0;
+					canvasDiv.setAttribute("style", `-webkit-transform: rotate(${rotationDeg}deg);)
+        - moz - transform: rotate(${rotationDeg}deg);
+      -o - transform: rotate(${rotationDeg}deg);
+      -ms - transform: rotate(${rotationDeg}deg);
+      transform: rotate(${rotationDeg}deg);`)
+
+                    }
+
+				}
         const RGBAToHSLA = (r, g, b, a) => {
             r /= 255;
             g /= 255;
@@ -1891,6 +1911,7 @@
                 removeClass();
                 toggleSelect(qual);
                 mostraMenu(qual);
+                rotacionaCanva()
 
 
             } else {
