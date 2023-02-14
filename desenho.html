@@ -97,7 +97,7 @@
         #paleta {
             position: relative;
             width: 144px;
-            height: 128px;
+            height: 140px;
             display: block;
             top: 0px;
             margin-top: 0px;
@@ -107,8 +107,8 @@
 
         #paleta2 {
             position: relative;
-            width: 144px;
-            height: 138px;
+            width: 142px;
+            height: 124px;
             display: block;
             top: 4px;
             margin-top: 0px;
@@ -123,20 +123,20 @@
             display: block;
             top: 4px;
             float: left;
-            margin-right: 4px;
+            margin-right: 2px;
         }
 
 
         #menucores {
             display: block;
-            width: 316px;
+            width: 318px;
             height: 310px;
             z-index: 3;
         }
 
         #menu {
-            font-kerning: 1.4 em;
-            width: 94px;
+            font-kerning: 2em;
+            width: 98px;
             height: 280px;
             display: block;
             float: right;
@@ -180,8 +180,8 @@
             border-color: #55555555;
             border-width: thin;
             background-color: #ddddddee;
-            display: block;
-            float: left;
+            display: inline-block;
+           /* float: left;*/
             padding: 2px;
             font-size: 1.3em;
             margin: 1px 3px 1px 3px;
@@ -191,7 +191,7 @@
 
         .mais {
             border-style: solid;
-            border-radius: 20px;
+            border-radius: 36px;
             border-color: #55555555;
             border-width: thin;
             background-color: #c3c3c3ee;
@@ -203,7 +203,6 @@
             font-size: 1.55em;
             margin: 7px 5px 7px 1px;
             touch-action: manipulation;
-            border-radius: 12px;
             background: linear-gradient(145deg, #6b6a6f, #9c9b9f);
             box-shadow: 2px 2px 3px #515054,
                 -2px -2px 3px #9d9ca2;
@@ -317,6 +316,7 @@
             padding: 0 5px;
             float: left;
             margin-top: 4px;
+            margin-right:4px;
         }
 
         #menus {
@@ -422,6 +422,27 @@
             -o-transform: rotateY(180deg);
             transform: rotateY(180deg);
         }
+        .botao{
+			display:inline-block;
+			width:98%;
+			line-height:30px;
+			padding:4px;
+			border: solid 1px #55555555;
+			background-color: none;
+			margin-left: auto;
+			right-margin: auto;
+			marging-top:2px;
+			margin-bottom:2px;
+			border-radius:12px;
+			}
+		.botao:hover{
+			background-color: #eeeeee22;
+			}
+		#menuinfo{
+			font-family:sans-serif;
+			align: left;
+			font-size:0.75em;
+			}
     </style>
     <title>Desenho 0.9.7d </title>
 </head>
@@ -434,76 +455,56 @@
                 para capturar uma cor
             </div>
             <div id="menuinfo" class="submenu fundobranco">
-                <h2>Desenho!</h2>
+                Feito por:
                 <a href="https://diegoferraribruno.github.io/">Diego F. Bruno</a><br> com códigos de<br>
                 <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
                     Lei Mao</a> <br>
                 <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
                 versão 0.9.8 next<br>
-                - mouse+touch events > onPointerEvent<br>
-                - arrumar o mover com zoom.
-                versão 0.9.7d<br>
+                - alteracao do metodo de entrada<br>
+                versão 0.9.7<br>
+                - nova rotacao do canvas. (em desenvolvimento)<br>
                 - removido o canvas de recorte<br>
-                - zoom 8x funcionando<br>
+                - zoom 8x<br>
                 - tela desvira depois da camera<br>
-                versão 0.9.6<br>
-                -fixing crop<br>
-                versão 0.9.4<br>
-                -nova paleta de cores<br>
-                versão 0.9.2<br>
-                -bug fixes<br>
-                versão 0.9.1<br>
-                -Cortar, Rotacionar<br>
-                versão 0.8.2<br>
-                -menu tamanho da tela<br>
-                -cores nos botoes<br>
-                versão 0.8.1<br>
-                -importar somente gif bmp jpg<br>
-                -mensagem de suporte depois do download<br>
-                versão 0.7e<br>
-                -rotaciona tela + flip<br>
-                versão 0.6.7d<br>
-                -NOVO gerenciador de memória<br>
+                - nova paleta de cores<br>
+                - Cortar, Rotacionar<br>
+                - menu tamanho da tela<br>
+                - cores nos botoes<br>
+                - importar somente gif bmp jpg<br>
+                - mensagem de suporte depois do download<br>
+                versão 0.7<br>
+                - tela vira quando muda camera<br>
+                versão 0.6<br>
+                - NOVO gerenciador de memória<br>
                 - touchmovecursor<br>
-                versão 0.6.6 L<br>
-                - novas variaveis swapImg<br>
                 - melhora na troca de ferramenta<br>
                 - desfazer mais leve<br>
-                versão 0.6.5 K <br>
-                - timeouts retirados (em teste)
                 - Desfazer, refazer atualizado. <br>
-                versão 0.6.4 c <br>
                 - botões maiores e agregados<br>
-                versão 0.6.3 <br>
                 - função camera movida e transparencia arrumada<br>
                 - camera centralizada (tnx Frederico for the help)<br>
                 - seletor de cor (fix).<br>
-                versão 0.5.6<br>
+             ver 0.5 - Turing<br>
                 - foto e fundo com tamanho<br>
-                versão 0.5.5<br>
                 - inicia no modo noturno<br>
                 - fundo xadrez<br>
                 - Alerta ao fim do Crtl+Z e no Ctrl+Y <br>
-
-                versão 0.5.4<br>
                 - multiplas imagens podem ser inseridas<br>
-                versão 0.5.3<br>
                 - pinta por cima ou por baixo<br>
-                versão 0.5.2<br>
                 - night mode<br>
                 - envia imagem.<br><br>
-                ver 0.5 - Turing<br>
                 - nova paleta de cores<br><br>
                 - tamanhos pre definidos de pinceis. <br>
                 - refazer passo a passo. <br>
                 - apagador com transparencia propria.<br>
                 - lupa com indicador de zoom. no lugar apropriado<br>
                 <br>
-
-                0.4.9
+                0.4
                 reduzida a quantifdade de undos disponiveis porem salvaremos uma imagem que sera carregada
                 ao fundo
                 o que pode influenciar na qualidade do projeto final. vamos ao teste.
+                versões 0
                 <br>
             </div>
             <div id="menutamanho" class="fundobranco submenu">
@@ -590,24 +591,21 @@
                     <div id="paleta2" class="fundobranco">
                         <br>Use o 📌 para guardar <br>ou remover suas cores favoritas.
                     </div>
-
-
                 </div>
             </div>
 
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-                Informações <span id="info" title="Informações" class="bloquinho" onmousedown="modeTo('info')">ℹ️</span>
-                <br><br>
-                Redimensionar a tela <span class="bloquinho" title="Redimensionar tela" onclick="tamanhom()">↔️</span>
-                <br><br>
 
-                Modo Noturno / Diurno<span id="night" class="bloquinho" onmousedown="night()"> 🌒</span>
-                <br><br>
-                Suavização de pixels <span id="oculos" class="bloquinho" onmousedown="pixel()"> 👓</span>
-                <br><br> Adicionar Fundo falso:
-                <br>
-                <br>
-                <span onmousedown="Fundo('img')" class="bloquinho">🖼️</span>
+                 <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
+
+				<span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span>
+
+                <span id="night" class="botao" onmousedown="night()">🌒 Modo Noturno / Diurno</span>
+
+                <span id="oculos" class="botao" onmousedown="pixel()">👓 Suavização de pixels </span>
+               <span id="fundo falso" class="botao"> Adicionar Fundo falso:</span>
+<span class="botao">
+                <span onmousedown="Fundo('img')" class="bloquinho">🌎</span>
                 <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
                 </span>
                 <span onmousedown="Fundo('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
@@ -620,11 +618,10 @@
                     style="background-image: url('./grid3.png')"></span>
                 <span onmousedown="Fundo('none')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 0)">
                     ❌</span>
-                <br>
-                <br>
-                <br><span>
+              <span>
                     <input type="file" id="input2" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" />
-                </span><br><br>
+                </span></span>
+           <span id="info" title="Informações" class="botao" onmousedown="modeTo('info')">ℹ️ Informações </span>
 
             </div>
 
@@ -654,15 +651,19 @@
                 <span onmousedown="scrollCanva(80,0)">➡️</span>
             </div>
 
-            <div id="menurecortar" class="fundobranco submenu" style="min-width:80px; width:80px; margin-left:60px;">
-                ⚠️ Impossivel desfazer!
-                <span class="bloquinho" title="Redimensionar tela" onclick="tamanhom()">↔️</span>
-                <span id="recortarbot" title="Recotar para seleção" class="bloquinho" onclick="cortar()">✂️</span>
-                <span onmousedown="modeTo('recortar')" title="Cancela" class="bloquinho">
-                    ❌</span>
-                <span id="btn-rotate" class="bloquinho" onclick="rotacionar()">🔃</span>
+            <div id="menurecortar" class="fundobranco submenu" >
+                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
+                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar para seleção</span>
+                <span onmousedown="comandosExec()" title="Cancela" class="botao">
+                    ❌ Cancelar</span>
 
             </div>
+             <div id="menurotacionar" class="fundobranco submenu" >
+               <span id="rotacionar" class="botao" onclick="rotacionar()">🔃 Rotacionar a tela </span>
+               <span id="rotacionar" class="botao" onclick="comandoR()">✔️ confirmar rotação </span>
+
+
+          </div>
         </div>
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
@@ -824,9 +825,11 @@
             }, 200)
         }
 
+
         function rotacionar() {
             rotationDeg = (rotationDeg + 90) % 360,
                 console.log(rotationDeg)
+               // comandoR()
             canvasDiv.style.width = canvas.width + "px";
             // canvasDiv.height = cw;
             canvasDiv.style.height = canvas.height + "px";
@@ -852,10 +855,11 @@
             //}
         }
         function drawRotated(degrees = 90) {
-            let swapImg = [];
-            let blob = [];
+            var swapImg = [];
+            var blob = [];
             swapImg = canvas.toDataURL("image/png");
             blob = dataURItoBlob(swapImg);
+            //context2.clearRect(0, 0, c2.width, c2.height);
             let myImg = document.createElement("img");
             myImg.src = URL.createObjectURL(blob);
             myImg.onload = function () {
@@ -893,23 +897,8 @@
                         break;
                 }
                 // draw the previows image, now rotated
-
-				context.drawImage(myImg, 0, 0);
+                context.drawImage(myImg, 0, 0);
                 context.restore();
-/* Need to save rotated!
-                setTimeout(()=>{ swapImg2 = canvas.toDataURL("image/png");
-            let blob2 = dataURItoBlob(swapImg2);
-            let myImg2 = document.createElement("img");
-            myImg2.src = URL.createObjectURL(blob2);
-            myImg2.onload = function () {
-                comando = ["s", "source-over", blob, 0, 0, canvas.width, canvas.height];
-                swaps.push(comando)
-                swapImg = []
-                blob = []
-                comando = []}
-                comandosExec()
-                },100)
-*/
                 canvasDiv.style.width = canvas.width + "px";
                 canvasDiv.style.height = canvas.height + "px";
             };
@@ -1323,12 +1312,13 @@
                     isGrabing = false;
                 } else if (isSelecting) {
                     isSelecting = false;
+                    mostraMenu("recortar")
                 }
             });
             document
                 .getElementById("btn-download")
                 .addEventListener("click", function (e) {
-     rotacionaCanva()
+  //   rotacionaCanva(rotationDeg)
                     //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
                     let nome = prompt("nome da arte:", "desenho");
                     if (nome != null && nome != "") {
@@ -1342,8 +1332,9 @@
             initStrokeRange()
             setTimeout(() => resizeScreen(), 10)
         }
-		function rotacionaCanva(){
+		function rotacionaCanva(rotationDeg = 0){
 			   if (rotationDeg != 0) {
+
 					drawRotated(rotationDeg)
 
 					rotationDeg = 0;
@@ -1356,6 +1347,14 @@
                     }
 
 				}
+		function comandoR(){
+			if (rotationDeg != 0){
+					comando = ["r", rotationDeg];
+                    comandos.push(comando)
+                    rotationDeg = 0
+				}
+                    comandosExec()
+			}
         const RGBAToHSLA = (r, g, b, a) => {
             r /= 255;
             g /= 255;
@@ -1628,6 +1627,11 @@
                         coma++;
                         exec(coma)
                         break;
+                    case "r":
+						rotacionaCanva(comandos[coma][1])
+						coma++;
+                        exec(coma)
+                        break;
                 }
             } else {
                 executing = false
@@ -1893,9 +1897,13 @@
             }
         }
 
-        // By diego
+        // This mess was made By diego Ferrari Bruno
+        // good luck finding useful code!
+        // esta bagunça foi feita pelo Diego,
+        // boa sorte para encontrar codigos uteis.
 
         let oldMode = mode;
+
         async function modeTo(qual) {
             if (mode != qual) {
                 if (qual != "recortar") {
@@ -1905,28 +1913,29 @@
                         origin.y = 0
                     }, 40)
                 }
-
+/*				if (oldMode == "rotacionar" && rotationDeg != 0){
+					comandoR()
+					comandosExec()
+				}*/
                 oldMode = mode;
                 mode = qual;
                 removeClass();
                 toggleSelect(qual);
                 mostraMenu(qual);
-                rotacionaCanva()
-
-
             } else {
                 mostraMenu(qual);
                 if (qual == "cam") {
-
                     removeVideo()
                 }
             }
             switch (qual) {
                 case "recortar":
                     cut()
-                    //   recortar();
                     mode = qual;
+                    removeClass();
                     break;
+                case "rotacionar":
+					break;
                 case "zoom":
                     removeClass();
                     zoomIndex++;
@@ -1948,12 +1957,6 @@
                     changeGCO();
                     memorySwap(globalComposite);
                     break;
-                /*  case mode: //se o modo ja estiver ativo:
-                    mostraMenu(qual);
-                    if (qual == "info") {
-                      modeTo(oldMode);
-                    }
-                    break;*/
                 case "apagar":
                     setStrokeSize(estrokeWidth);
                     cursorColor();
@@ -2231,7 +2234,7 @@
 
             document.getElementById("paleta").innerHTML = paleta;
             document.getElementById("paleta").innerHTML +=
-                `<br /><span onmousedown='mudaCor("P")' class='bloquinho' ` +
+                `<span onmousedown='mudaCor("P")' class='bloquinho' ` +
                 "style='background-color:hsla(0, 100%, 0%, "+hsla[3] * 4+")'> </span>";
         }
 
