@@ -1,0 +1,151 @@
+body {
+    text-align: center;
+    background-color: #666666;
+    /* background-image: url("img/grid.png");
+    background-repeat: repeat;*/
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.shadow {
+    border-radius: 16px;
+    margin: 2px 4px 2px 4px;
+    box-shadow: 2px 2px 3px #51505488,
+        -1px -2px 3px #9d9ca288;
+}
+
+#foto {
+    width: 320px;
+    max-width: 320px;
+    display: inline-flex;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+#galeria {
+    width: 260px;
+    height: 178px;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+    overflow-y: scroll;
+}
+
+#info {
+    width: 260px;
+    height: 284px;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+    overflow-y: scroll;
+}
+
+.mini {
+    width: 60px;
+    height: 60px;
+    margin: 0px 10px 8px 10px;
+    border-radius: 12px;
+
+}
+
+.borderless {
+    border: 0px;
+    border-style: none;
+    margin: 6px;
+}
+
+.bot {
+
+    border-radius: 20px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    height: 34px;
+    width: 34px;
+    font-size: 32px;
+    display: inline-flex;
+    position: relative;
+    background-color: #818085dd;
+    line-height:34px;
+    vertical-align:middle;
+    text-align: center;
+
+}
+
+a,
+a:visited {
+    /*text-decoration: none;
+    height: 32px;
+    color: rgb(19, 23, 85);*/
+}
+
+#cabeca {
+    margin-top: 0px;
+    margin-bottom: 4px;
+    display: block;
+    float: right;
+    position: fixed;
+    left: 2px;
+    bottom: 0px;
+}
+
+.confirm {
+    display: block;
+    position: absolute;
+    width: 280px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 5000;
+    left: 15%;
+    right: 25%;
+    top: 25%;
+    padding-top: 20px;
+    border-radius: 8px;
+    line-height: 1.5em;
+    text-align: center;
+}
+
+#conteudo {
+    background-color: #ffffffcd;
+    border-radius: 8px;
+    min-width: 320px;
+    max-width: 620px;
+    min-height: 320px;
+    padding: 12px;
+    text-align: justify;
+    font-size: small;
+    align-items: initial;
+    position:absolute;
+    left:8px;
+    top:8px;
+}
+
+#corpo {
+    display: flexbox;
+    width: 100%;
+}
+
+#legenda {
+    display: block;
+    overflow-y: scroll;
+    font-size: small;
+    text-align: justify;
+    padding: 0px;
+    width:96%;
+    text-align:center;
+    margin:4px;
+}
+
+.moldura {
+    /*  border: red 1px dashed;*/
+}
+
+#bio {
+    height: 64px;
+    font-size: x-small;
+    padding: 4px;
+    margin: auto;
+
+}
+#djs{
+background-image: url("../img/logo.png");
+background-size:34px 34px;
+}
