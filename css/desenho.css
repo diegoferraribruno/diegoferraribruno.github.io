@@ -85,11 +85,16 @@ body {
 }
 
 #paleta2 {
-    position: relative;
-    width: 340px;
+
+    position:relative;
+    width: 320px;
     height: 34px;
     display: flex;
-padding:8px;
+    padding:8px;
+margin-left:auto;
+margin-right:auto;
+margin-bottom:4px;
+
 }
 
 #paleta3 {
@@ -130,7 +135,7 @@ padding:8px;
 .fundobranco {
     min-height: 32px;
     background-color: #eeeeeeee;
-    border-radius: 20px;
+    border-radius: 16px;
     border: solid 1px #55555555;
     padding: 4px;
     display: inline-block;
@@ -378,7 +383,7 @@ display:inline}
 
 .botao {
     display: inline-block;
-    width: 98%;
+    width: 324px;
     line-height: 30px;
     padding: 4px;
     border: solid 1px #55555555;

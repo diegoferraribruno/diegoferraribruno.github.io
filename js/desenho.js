@@ -206,7 +206,7 @@ var checkOrientation = function () {
         }
 
         if (screen.width > screen.height) {
-
+      
             document.getElementById("ferramentas").classList.add("horizontal");
             document.getElementById("ferramentas2").classList.add("horizontal2");
             document.getElementsById("menus").style.top = "90px";
@@ -258,6 +258,8 @@ function dataURItoBlob(dataURI) {
 function prevent(evt) {
     evt.preventDefault();
 }
+
+let nightmode = false
 function night() {
     let testarray = document.getElementsByClassName("fundobranco");
     let testarray2 = document.getElementsByClassName("day");
@@ -266,6 +268,13 @@ function night() {
     } for (let i = 0; i < testarray2.length; i++) {
         testarray2[i].classList.toggle("night")
     }
+    nightmode = !nightmode
+    if (nightmode){
+        Fundo('black')
+    }else{
+        Fundo("white")
+    }
+    
 }
 var input = document.getElementById('input');
 input.addEventListener('change', handleFiles);
@@ -566,6 +575,7 @@ function startup() {
             y = 0;
             isDrawing = false;
         } else if (mode == "picker") {
+        isPicking = false
             x = e.offsetX;
             y = e.offsetY;
             var imageData = context.getImageData(x, y, 1, 1).data;
@@ -577,6 +587,7 @@ function startup() {
                     imageData[3]
                 );
                 setStrokeColor();
+           
             }
         } else if (mode == "zoom") {
             isGrabing = false;
@@ -1515,8 +1526,7 @@ function criaPaleta2() {
     document.getElementById("paleta2").innerHTML = paleta;
 }
 function criapaleta3() {
-    let paleta3 = '<span id="picker" title="Pega cor" class="bloquinho"' +
-        'onmousedown="modeTo(`picker`)" style="background-color: rgba(247, 161, 165, 0.15);">💉</span>';
+    let paleta3 = '';
     let c = 0;
     while (c < 7) {
         let cor = (c * 55)

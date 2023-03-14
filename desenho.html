@@ -27,6 +27,9 @@
 
                 proxima versao 0.9.9<br>
                 - alteracao do metodo de entrada (ainda nao)<br>
+                versão 0.9.8c <br>
+                - arrumei o colorpicker <br>
+                -reposicionei menus<br><br>
                 versão 0.9.8 <br>
                 - javascript e css em arquivos externos.<br>
                 - recorte e rotação <br>(desativado temporariamente)<br>
@@ -158,12 +161,13 @@
                     </div>
 <div id="paleta" class="fundobranco"></div>
          <div id="menu" class="fundobranco" onmouseover="mostra()">
-                    <div id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
+ <span id="pickerc" title="Pega cor" class="bloquinho" onmousedown="modeTo(`picker`)"  style="margin: -10px 10px 0px 0px; width: 24px; font-size:24px;">💉</span>
+                    <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
               
                         class="bloquinho">
-                        <div style="margin: -10px 10px 0px 0px; width: 20px; padding-left:20px; font-size:24px;">📌</div>
+                        <span style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span> 
                     
-                </div><br>
+                </span><br>
                    
                     🌈<input type="range"  id="H" name="cor" min="0" max="359"
                         oninput="mudaCorQ(0,this.value)" value="0"> <br>
