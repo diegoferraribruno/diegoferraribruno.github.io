@@ -45,6 +45,7 @@ var videoStream;
 let rotationDeg = 0;
 var origin = { x: 0, y: 0 };
 var cropEnd = { x: 0, y: 0 };
+var emoji = "😍"
 
 function cortar() {
     if (cropEnd.x != 0) {
@@ -206,7 +207,7 @@ var checkOrientation = function () {
         }
 
         if (screen.width > screen.height) {
-      
+
             document.getElementById("ferramentas").classList.add("horizontal");
             document.getElementById("ferramentas2").classList.add("horizontal2");
             document.getElementsById("menus").style.top = "90px";
@@ -274,7 +275,7 @@ function night() {
     }else{
         Fundo("white")
     }
-    
+
 }
 var input = document.getElementById('input');
 input.addEventListener('change', handleFiles);
@@ -401,6 +402,10 @@ function resizeScreen() {
 }
 
 function startup() {
+	document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(detail){
+	trocaEmoji(event.detail.unicode);
+    emojipicker();
+});
     Fundo("white")
     Fundo('img/grid3.png')
     counter = setInterval(() => undoing(), 30)
@@ -469,7 +474,7 @@ function startup() {
     canvas.addEventListener("mousedown", (e) => {
         x = e.offsetX;
         y = e.offsetY;
-        if (mode != "picker" && mode != "zoom" && mode != "recortar") {
+        if (mode != "picker" && mode != "zoom" && mode != "recortar" && mode != "emoji") {
             isDrawing = true;
         } else if (mode == "zoom") {
             isGrabing = true;
@@ -479,6 +484,17 @@ function startup() {
             isSelecting = true
             origin.x = e.offsetX;
             origin.y = e.offsetY;
+        } else if (mode == "emoji"){
+			let size = document.getElementById("emosize").value
+            isEmoji = true
+            desenha(
+            "e",
+             context.globalCompositeOperation,
+             e.offsetX,
+             e.offsetY,
+             emoji,
+           size
+             )
         }
         removeClass();
     });
@@ -587,7 +603,7 @@ function startup() {
                     imageData[3]
                 );
                 setStrokeColor();
-           
+
             }
         } else if (mode == "zoom") {
             isGrabing = false;
@@ -913,6 +929,15 @@ function exec(coma = 0) {
                 coma++;
                 exec(coma)
                 break;
+             case "e":
+                changeGCO(comandos[coma][1]);
+                context.font = comandos[coma][5]+'px serif'
+				context.textAlign = "center";
+				context.textBaseline = "middle";
+				context.fillText(comandos[coma][4], comandos[coma][2], comandos[coma][3])
+				coma++;
+                exec(coma)
+
         }
     } else {
         executing = false
@@ -978,6 +1003,17 @@ function desenha(
             context.fillStyle = X; //cor
             context.fillRect(0, 0, canvas.width, canvas.height);
             break;
+        case "e":
+            comando = ["e",GCO,X,Y,eoX,eoY]
+             context.font = eoY+'px serif'
+		// use these alignment properties for "better" positioning
+		context.textAlign = "center";
+		context.textBaseline = "middle";
+		context.fillText(eoX, X, Y)
+            comandos.push(comando)
+
+
+
     }
 
     if (undoLevel != 0) {
@@ -1006,7 +1042,11 @@ function handleStart(evt) {
         isSelecting = true
         origin.x = touches[0].clientX - offsetX;
         origin.y = touches[0].clientY - offsetY;
-    }
+    }if (mode  == "emoji"){
+
+            isEmoji = true
+            isDrawing = false
+}
 
 }
 function changeGCO(GCO = globalComposite) {
@@ -1020,11 +1060,13 @@ function handleMove(evt) {
         if (idx >= 0) {
             ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
             ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
+             cursor.style.left = (touches[i].clientX) + "px";
+                cursor.style.top = (touches[i].clientY) + "px";
             if (mode == "recortar") {
                 x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor;
                 y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor;
             }
-            if (mode != "zoom" && mode != "picker" && mode != "recortar") {
+            if (mode != "zoom" && mode != "picker" && mode != "recortar"&& mode != "emoji") {
                 x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor;
                 y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor;
 
@@ -1126,6 +1168,17 @@ function handleEnd(evt) {
         mostraMenu("recortar")
         isSelecting = false
     }
+    if (mode  == "emoji"){
+			let size = document.getElementById("emosize").value
+            isEmoji = true
+            desenha(
+            "e",
+             context.globalCompositeOperation,
+              touches[0].clientX - offsetX,
+             touches[0].clientY - offsetY,
+             emoji,
+           size
+             )}
 }
 
 function handleCancel(evt) {
@@ -1277,6 +1330,11 @@ async function modeTo(qual) {
             break;
         case "imagem":
             break;
+        case "emoji":
+          setStrokeSize(strokeWidth);
+            setStrokeColor();
+            changeGCO();
+			break;
         case _:
             break;
     }
@@ -1580,7 +1638,7 @@ function setStrokeSize(value) {
             tamanho.style.width = estrokeWidth * zoomFactor + "px";
             tamanho.style.height = estrokeWidth * zoomFactor + "px";
             tamanho.style.lineHeight = estrokeWidth * zoomFactor+"px";
-          
+
             tamanho.style.marginTop =
                 (estrokeWidth / 2) * zoomFactor * -1 + "px";
             tamanho.style.marginLeft =
@@ -1912,3 +1970,31 @@ function convertToImg() {
     // comandos.unshift(comando)
     comandos.unshift(comando)
 }
+	function emojiSizeRange(valor){
+
+		 cursor.style.width = 0 + "px";
+            cursor.style.height = 0 + "px";
+            cursor.style.lineHeight = 1+ "px";
+             cursor.style.marginTop = 0 + "px";
+             cursor.style.marginLeft =
+                0 + "px";
+		valor = valor*zoomFactor
+		document.getElementById("emoExemplo").style.fontSize= valor+"px"
+		cursor.innerHTML='<span id="emoExemplo2" style="position:absolute; display:block; margin-left:-' +valor/2+'px; height:'+valor+'px; margin-top:-' +valor/10+'px; ">'+emoji+'</span>'
+		document.getElementById("emoExemplo2").style.fontSize = valor+"px"
+		}
+function emojipicker(){
+
+  let emojip = document.getElementById("emojipicker");
+  if (emojip.style.display == "none"){
+    emojip.style.display = "block";
+  }
+    else{
+      emojip.style.display = "none";}
+}
+function trocaEmoji(emo){
+	emoji = emo
+	emojiSizeRange(document.getElementById("emosize").value)
+	emoexemplo = document.getElementById("emoexemplo")
+	emoExemplo.innerHTML = emo
+	}

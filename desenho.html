@@ -7,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" type="text/css" href="css/desenho.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-
+<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
     <title>Desenho 0.9.8 </title>
 </head>
 
@@ -27,9 +27,10 @@
 
                 proxima versao 0.9.9<br>
                 - alteracao do metodo de entrada (ainda nao)<br>
-                versão 0.9.8c <br>
+                versão 0.9.8d <br>
                 - arrumei o colorpicker <br>
-                -reposicionei menus<br><br>
+                - menus alterados<br>
+                - emojis?<br>
                 versão 0.9.8 <br>
                 - javascript e css em arquivos externos.<br>
                 - recorte e rotação <br>(desativado temporariamente)<br>
@@ -102,9 +103,22 @@
                 Enviar uma imagem<br><br>
                 📤 <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" />
             </div>
+              <div id="menuemoji" class="fundobranco submenu menu">
+<span title="fechar menu emoji" class="botao" onmousedown="modeTo('emoji')"
+                    style="background-color: rgba(247, 161, 165, 0.15);">emoji😍</span>
+               estilo:<span  onclick="emojipicker()" id="emoExemplo">😍</span>  <br>
+                <input type="range" id="emosize" name="strokeSize" min="16" max="320" step="8"
+                    oninput="emojiSizeRange(this.value)" value="1" width="200px">
+<br><emoji-picker id ="emojipicker"></emoji-picker>
+
+            </div>
+
+
+
+
             <div id="menupintar" class="fundobranco submenu menu">
 <span title="fechar menu pintar" class="botao" onmousedown="modeTo('pintar')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🖌️ Pincel ❌</span> 
+                    style="background-color: rgba(247, 161, 165, 0.15);">🖌️ Pincel ❌</span>
                 <span onmousedown="removeClass()" id="mostraCor2"
                     style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
 
@@ -117,7 +131,7 @@
                     oninput="strokeSizeRange(this.value)" value="1" width="200px">
 <br>
 
-    
+
                 💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
                     step="0.01" value="1"><br>
                 <span id="pickerb" title="Pega cor" class=" bot" onmousedown="modeTo('picker')"
@@ -149,13 +163,13 @@
 
 
             <div id="menucores" class="submenu fundobranco">
-               <span class="botao"onmousedown="removeClass()"> 🎨 Menu cores       <span id="mostraCor" 
+               <span class="botao"onmousedown="removeClass()"> 🎨 Menu cores       <span id="mostraCor"
                       >
                        ❌
                     </span></span><br>
-            
-              
-                    
+
+
+
             <div id="paleta2" class="fundobranco">
                         <br>Use o 📌 para guardar <br>ou remover suas cores favoritas.
                     </div>
@@ -163,12 +177,12 @@
          <div id="menu" class="fundobranco" onmouseover="mostra()">
  <span id="pickerc" title="Pega cor" class="bloquinho" onmousedown="modeTo(`picker`)"  style="margin: -10px 10px 0px 0px; width: 24px; font-size:24px;">💉</span>
                     <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
-              
+
                         class="bloquinho">
-                        <span style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span> 
-                    
+                        <span style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span>
+
                 </span><br>
-                   
+
                     🌈<input type="range"  id="H" name="cor" min="0" max="359"
                         oninput="mudaCorQ(0,this.value)" value="0"> <br>
                     ◒ <input type="range"  id="S" name="cor" min="0" max="100"
@@ -177,7 +191,7 @@
                         oninput="mudaCorQ(2,this.value)" value="50"> <br>
                     💧<input type="range"  id="A" name="cor" min="0.01" max="1"
                         oninput="mudaCorQ(3,this.value)" step="0.01" value="1"><br>
-              
+
 
             </div>
 
@@ -291,6 +305,7 @@
                 <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
                 <span id="hand" class="mais" title="Mover a tela" onclick="toggleHand()">🖐</span>
+                  <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
             </div>
 
             <div id="canvas_window">
