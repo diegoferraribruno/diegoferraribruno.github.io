@@ -95,11 +95,11 @@
                     ↔️</span><br>
 
             </div>
-            <div id="menuimagem" class="fundobranco submenu aparece">
+            <div id="menuimagem" class="fundobranco submenu aparece menu">
                 Enviar uma imagem<br><br>
                 📤 <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" />
             </div>
-            <div id="menupintar" class="fundobranco submenu">
+            <div id="menupintar" class="fundobranco submenu menu">
 <span title="fechar menu pintar" class="botao" onmousedown="modeTo('pintar')"
                     style="background-color: rgba(247, 161, 165, 0.15);">🖌️ Pincel ❌</span> 
                 <span onmousedown="removeClass()" id="mostraCor2"
@@ -117,18 +117,16 @@
     
                 💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
                     step="0.01" value="1"><br>
-                <span id="coresb" title="cores" class="bloquinho" onmousedown="modeTo('cores')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
-                <span id="pickerb" title="Pega cor" class="bloquinho" onmousedown="modeTo('picker')"
+                <span id="pickerb" title="Pega cor" class=" bot" onmousedown="modeTo('picker')"
                     style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
 
-                <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho"
+                <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class=" bot"
                     style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><br>
 
             </div>
 
             <div id="menuapagar" class="fundobranco submenu">
-<span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🧽 Apagador  ❌</span><br>
+            <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🧽 Apagador  ❌</span><br>
                 <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span
                         id="line2">
                         ➕</span></span>
@@ -144,36 +142,43 @@
                         oninput="mudaCorAlpha()" step="0.1" value="1"></div>
             </div>
 
-            <div id="menucores" class="submenu">
-                <div id="menu" class="fundobranco" onmouseover="mostra()">
-                    🌈 ◒ 🔆 💧<br>
-                    <input type="range" orient="vertical" id="H" name="cor" min="0" max="359"
-                        oninput="mudaCorQ(0,this.value)" value="0">
-                    <input type="range" orient="vertical" id="S" name="cor" min="0" max="100"
-                        oninput="mudaCorQ(1,this.value)" value="100">
-                    <input type="range" orient="vertical" id="L" name="cor" min="0" max="100"
-                        oninput="mudaCorQ(2,this.value)" value="50">
-                    <input type="range" orient="vertical" id="A" name="cor" min="0.01" max="1"
-                        oninput="mudaCorQ(3,this.value)" step="0.01" value="1"><br>
-                    <div id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
-                        style="height: 20px; float: left; margin-top: 30px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"
-                        class="bloquinho">
-                        <div style="margin: -10px 10px 0px 0px; width: 20px">📌</div>
-                    </div>
-                    <div id="mostraCor" onmousedown="removeClass()"
-                        style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.75em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15); margin-top: 20px;">
+
+
+
+            <div id="menucores" class="submenu fundobranco">
+               <span class="botao"onmousedown="removeClass()"> 🎨 Menu cores       <span id="mostraCor" 
+                      >
                        ❌
-                    </div>
-                </div>
-                <div id="paletas">
-                    <div id="paleta3" class="fundobranco"></div>
-                    <div id="paleta" class="fundobranco"></div>
-                    <div id="paleta2" class="fundobranco">
+                    </span></span><br>
+            
+              
+                    
+            <div id="paleta2" class="fundobranco">
                         <br>Use o 📌 para guardar <br>ou remover suas cores favoritas.
                     </div>
-                </div>
+<div id="paleta" class="fundobranco"></div>
+         <div id="menu" class="fundobranco" onmouseover="mostra()">
+                    <div id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
+              
+                        class="bloquinho">
+                        <div style="margin: -10px 10px 0px 0px; width: 20px; padding-left:20px; font-size:24px;">📌</div>
+                    
+                </div><br>
+                   
+                    🌈<input type="range"  id="H" name="cor" min="0" max="359"
+                        oninput="mudaCorQ(0,this.value)" value="0"> <br>
+                    ◒ <input type="range"  id="S" name="cor" min="0" max="100"
+                        oninput="mudaCorQ(1,this.value)" value="100"> <br>
+                     🔆 <input type="range" id="L" name="cor" min="0" max="100"
+                        oninput="mudaCorQ(2,this.value)" value="50"> <br>
+                    💧<input type="range"  id="A" name="cor" min="0.01" max="1"
+                        oninput="mudaCorQ(3,this.value)" step="0.01" value="1"><br>
+              
+
             </div>
 
+<div id="paleta3" class="fundobranco"></div>
+                </div>
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
 <span title="Configurações" class="botao" onmousedown="modeTo('fundo')">🖥️  menu configurações ❌</span>
 			<span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
@@ -208,7 +213,7 @@
             </div>
 
             <div id="menupreencher" class="fundobranco submenu">
-                ⚠️ Preencher tudo ⚠️
+                  <span class="botao" onmousedown="removeClass()" >🪣 Preencher tudo ❌</span>
                 <span width="140px" style="margin: 8px 80px; display: block">
                     <span onmousedown="mudaCorBG('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">
@@ -219,7 +224,6 @@
                     <span onmousedown="mudaCorBG('strokeColor')" id="preenchercor" class="bloquinho"
                         style="background-color: rgba(158, 239, 129, 0.28);">
                     </span>
-                    <span class="bloquinho" onmousedown="removeClass()" width="120px">❌</span><br>
                 </span>
             </div>
 
@@ -261,6 +265,8 @@
                     onmouseleave="undoTEnd()">↩️</span>
                 <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
                     onmouseleave="redoTEnd()">↪️</span>
+
+                <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
             </div>
 
             <div id="ferramentas2" class="ferramentas">
@@ -275,8 +281,9 @@
                     style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span> <span id="cores" title="cores"
                     class="mais" onmousedown="modeTo('cores')"
                     style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+                <span id="picker" title="Pega cor" class="mais" onmousedown="modeTo('picker')"
+                    style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
                 <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
-                <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
                 <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
                 <span id="hand" class="mais" title="Mover a tela" onclick="toggleHand()">🖐</span>

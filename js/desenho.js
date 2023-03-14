@@ -1503,9 +1503,7 @@ function criaPaleta() {
     }
 
     document.getElementById("paleta").innerHTML = paleta;
-    document.getElementById("paleta").innerHTML +=
-        `<span onmousedown='mudaCor("P")' class='bloquinho' ` +
-        "style='background-color:hsla(0, 100%, 0%, " + hsla[3] * 4 + ")'> </span>";
+
 }
 
 function criaPaleta2() {
@@ -1526,6 +1524,12 @@ function criapaleta3() {
         paleta3 += `<span onmousedown='mudaCor("hsla(${cor},100%,50%,${hsla[3]
             })")' class='bloquinho' style='background-color:hsla(${cor},100%,50%,${hsla[3] * 4 + 0.2});'> </span>`;
         document.getElementById("paleta3").innerHTML = paleta3;
+    document.getElementById("paleta3").innerHTML +=
+        `<span onmousedown='mudaCor("hsla(0, 0%, 50%, ` + hsla[3] * 4 + `)")' class='bloquinho' ` +
+        "style='background-color:hsla(0, 0%, 50%, " + hsla[3] * 4 + ")'> </span>";
+    document.getElementById("paleta3").innerHTML +=
+        `<span onmousedown='mudaCor("P")' class='bloquinho' ` +
+        "style='background-color:hsla(0, 0%, 0%, " + hsla[3] * 4 + ")'> </span>";
     }
 } criapaleta3()
 let strokeRange = [0.3, 0.5, 0.7, 1, 2]

@@ -171,9 +171,9 @@ margin:8px;
     font-size: small;
     padding: 8px;
     margin: auto;
-    color:black;
-background-color:#dfb000;
-border: black 2px dashed;
+    color:white;
+background-color:black;
+border: #dfb000 4px dashed;
 border-radius:8px;
 
 }

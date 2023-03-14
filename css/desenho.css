@@ -44,8 +44,8 @@ body {
     background-image: url("../img/grid3.png");
     text-align: center;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: auto;/*for camera flip*/
+    margin-right: auto;/*for camera flip*/
     margin-top: 0px;
     width: 320px;
     height: 320px;
@@ -77,58 +77,41 @@ body {
     transition: transform 0.4s;
 }
 
-#paletas {
-    width: 208px;
-    display: block;
-    float: left;
-}
-
 #paleta {
     position: relative;
-    width: 144px;
-    height: 140px;
-    display: block;
-    top: 0px;
-    margin-top: 0px;
-    display: block;
+    width: 120px;
+    display: inline-block;
     float: left;
 }
 
 #paleta2 {
     position: relative;
-    width: 144px;
-    height: 124px;
-    display: block;
-    top: 4px;
-    margin-top: 0px;
-    display: block;
-    float: left;
+    width: 340px;
+    height: 34px;
+    display: flex;
+padding:8px;
 }
 
 #paleta3 {
     position: relative;
-    width: 34px;
-    height: 280px;
-    display: block;
+    width: 320px;
+    height: 34px;
+    display: flex;
     top: 4px;
-    float: left;
-    margin-right: 2px;
 }
 
 
 #menucores {
     display: block;
-    width: 318px;
+    width: 340px;
     height: 310px;
     z-index: 3;
 }
 
 #menu {
     font-kerning: 2em;
-    width: 98px;
-    height: 280px;
-    display: block;
-    float: right;
+    width: 190px;
+    display: inline-block;
     text-align: center;
     line-height: 1.8em;
 }
@@ -136,9 +119,9 @@ body {
 .submenu {
     position: absolute;
     display: flex;
-    width: 310px;
+    width: 360px;
     min-height: 60px;
-    padding: 8px;
+    padding: 6px;
     z-index: 3;
     visibility: hidden;
 
@@ -148,9 +131,7 @@ body {
     min-height: 32px;
     background-color: #eeeeeeee;
     border-radius: 20px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #dddddd99;
+    border: solid 1px #55555555;
     padding: 4px;
     display: inline-block;
 }
@@ -200,21 +181,16 @@ body {
 }
 
 #mostraCor {
-    width: 40px;
-    height: 40px;
+    width: 26px;
+    height: 26px;
     border-style: solid;
     border-radius: 200px;
     border-color: gray;
     border-width: thin;
     padding: 0px;
-    font-size: 3 em;
-    float: left;
     text-align: center;
     background-color: "hsl(0, 100%, 0%)";
-    margin: 4px 4px 4px 4px;
-    text-align: center;
-    line-height: 50px;
-    display: block;
+    display: inline-block;
 }
 
 .linha {
@@ -254,7 +230,8 @@ body {
         -1px -1px 1px #9d9ca288;
 vertical-align:middle;
 }
-
+#salvaCor{
+"height: 32px; width:32px; margin-right:auto; margin-left:auto; margin-top: 30px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"}
 .disable-scroll {
     overflow-y: hidden;
 }
@@ -290,29 +267,31 @@ range {
 }
 
 input[type="range"][orient="vertical"] {
-    writing-mode: bt-lr;
+   /* writing-mode: bt-lr;*/
     /* IE */
-    -webkit-appearance: slider-vertical;
+     /*-webkit-appearance: slider-vertical;*/
     /* Chromium */
-    width: 8px;
+    /*width: 8px;
     height: 175px;
     padding: 0 5px;
     float: left;
     margin-top: 4px;
-    margin-right: 4px;
+    margin-right: 4px;*/
 }
-
+input[type="range"]{
+display:inline}
 #menus {
     display: flex;
     position: absolute;
-    height: 320px;
-    margin-left: -324px;
+    height: 360px;
+    margin-left: -360px;
     text-align: center;
     align-content: center;
     vertical-align: middle;
     user-select: none;
-}
 
+}
+.menu{line-height:2em;}
 .ferramentas {
     height: 50px;
     width: 332px;
