@@ -7,7 +7,7 @@ body {
 }
 .shadow {
     border-radius: 16px;
-    margin: 2px 4px 2px 4px;
+    margin: 4px;
     box-shadow: 2px 2px 3px #51505488,
         -1px -2px 3px #9d9ca288;
 }
@@ -29,7 +29,7 @@ body {
     overflow-y: scroll;
 }
 
-#info {
+#info_area {
     width: 260px;
     height: 284px;
     margin-left: auto;
@@ -63,7 +63,7 @@ body {
     font-size: 32px;
     display: inline-flex;
     position: relative;
-    background-color: #818085dd;
+    background-color: #777755cc;
     line-height:34px;
     vertical-align:middle;
     text-align: center;
@@ -91,13 +91,13 @@ a:visited {
     display: block;
     position: absolute;
     width: 280px;
-    height: 100px;
+    min-height: 100px;
     background-color: rgba(255, 255, 255, 0.8);
     z-index: 5000;
     left: 15%;
     right: 25%;
     top: 25%;
-    padding-top: 20px;
+    padding: 10px;
     border-radius: 8px;
     line-height: 1.5em;
     text-align: center;
@@ -143,9 +143,12 @@ a:visited {
     font-size: x-small;
     padding: 4px;
     margin: auto;
+    color:black;
 
 }
 #djs{
 background-image: url("../img/logo.png");
 background-size:34px 34px;
 }
+#apoio{
+color:black;}

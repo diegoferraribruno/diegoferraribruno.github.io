@@ -2,7 +2,6 @@ body {
     height: 100%;
     width: 100%;
     background-color: #77767b;
-    text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
     overflow: hidden;
     padding: 0px 0px;
     margin: 0px 0px;
@@ -151,7 +150,7 @@ body {
     border-radius: 20px;
     border-style: solid;
     border-width: 2px;
-    border-color: #dddddddd;
+    border-color: #dddddd99;
     padding: 4px;
     display: inline-block;
 }
@@ -163,16 +162,14 @@ body {
 }
 
 .bloquinho {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     border-style: solid;
     border-radius: 20px;
     border-color: #55555555;
     border-width: thin;
     background-color: #ddddddee;
     display: inline-block;
-    padding: 2px;
-    font-size: 1.3em;
     margin: 1px 3px 1px 3px;
     touch-action: manipulation;
 
@@ -188,10 +185,11 @@ body {
     font-size: 1.55em;
     margin: 7px auto 7px auto;
     touch-action: manipulation;
-    box-shadow: 2px 2px 3px #515054dd,
-        -2px -2px 3px #9d9ca2dd;
+    box-shadow: 2px 2px 3px #51505477,
+        -2px -2px 3px #9d9ca277;
     line-height: 36px;
     text-align: center;
+      text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
 }
 
 .selected {
@@ -353,11 +351,11 @@ input[type="range"][orient="vertical"] {
 }
 
 .day {
-    background-color: #eeeeeeee;
+    background-color: #ccccccee;
 }
 
 .night {
-    background-color: #22222288;
+    background-color: #222222;
     color: #eeeeee
 }
 
@@ -408,6 +406,7 @@ input[type="range"][orient="vertical"] {
     margin-top: 2px;
     margin-bottom: 2px;
     border-radius: 12px;
+    vertical-align:top;
 }
 
 .botao:hover {

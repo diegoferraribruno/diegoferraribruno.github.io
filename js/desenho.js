@@ -340,7 +340,7 @@ function x2(w = 320, h = 320) {
             win.style.width = `320px`;
             win.style.height = `320px`;
         } else {
-            zoomIndex = 3;
+            zoomIndex = 0;
             modeTo("zoom");
         }
         let W = w * x2size;
@@ -352,7 +352,7 @@ function x2(w = 320, h = 320) {
         win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 60 + "px";
     }
-    comandosExec()
+    setTimeout(()=> comandosExec(),40)
 }
 function toggleHand() {
     if (mode != "zoom") {
@@ -388,7 +388,7 @@ function resizeScreen() {
     }
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";
-
+ setTimeout(()=> comandosExec(),40)
 }
 
 function startup() {

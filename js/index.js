@@ -56,7 +56,7 @@ function criaCabeca() {
     })
 }
 setTimeout(() => { criaCabeca() }, 100)
-setTimeout(() => { limpaCabeca() }, 1100)
+//setTimeout(() => { limpaCabeca() }, 1100)
 
 function limpaCabeca() {
     cabeca.innerHTML = "<div id='djs'class='bot shadow' title='Links do diego' onclick='criaCabeca()'> </div>"
@@ -74,8 +74,8 @@ function confirmLink(url) {
 				let item = document.createElement("div")
 				item.id = "confirm"
 				item.classList.add("confirm")
-				item.innerHTML = "Ir para a página:<a href='" + url + "'> " + menu[url] + " " + url + "<br>Confirma ✅</a> "
-				item.innerHTML += "<div onClick='cancela()'>cancela ❌</div>"
+				item.innerHTML = " Ir para a página:<br> <div  class='shadow'><a href='" + url + "'> " + menu[url] + " " + url + " ✅</a> </div>"
+				item.innerHTML += "<div onClick='cancela()' class='shadow'>cancela ❌</div>"
 				document.body.appendChild(item)
 			} else {
 				cancela()
@@ -104,21 +104,24 @@ function apoio(){
 	let ap = document.getElementById("conteudo")
 	if(ap){
 		let apoioHTML = `
-		<div id="apoio" style=" display:inline-block; width: 320px; vertical-align: top;">
+		<div id="apoio" style=" display:inline-block; width: 320px; vertical-align: top;" class="day">
 			    <div onClick='cancela("conteudo")' style=' float:right'class='bot shadow'>❌</div>
             Olá visitante, estes APPs foram desenvolvidos por mim e
             <a href="https://github.com/diegoferraribruno"> todo o código é livre e aberto.</a><br><br>
            Espero que você encontre alguma diversão ou aprenda algo por aqui e se desejar contribuir
           com este jovem pai/desenvolvedor, saiba que você pode:<br>
 					<br>
-				1 - Divulguar meu site portifolio:<br>
+				<b>1 - Divulguar meu site portifolio:</b><br>
 					https://diegoferraribruno.github.io<br>
 					<!--social links.<br>-->
-					2 - apoio financeiro via
+					<b>2 - apoio financeiro via</b>
 					<a href="https://github.com/sponsors/diegoferraribruno"> Github Sponsors.</a><br>
 
 				<!--img src="galeria/01/desenho2.png" style="display:inline-block; max-width: 320px; height: 300px; margin: 4px;"-->
-			<!-- 3 - fazendo um pix anonimo e sincero:<br> para (futura chave pix...) <br>-->
+			 <b>3 - fazendo um pix sincero:<br></b>
+			 <input type="text" value="f6aecef5-e60b-408e-97e1-30ee3927c0c0" id="myInput" readonly><br>
+
+<button onclick="myFunction()">Copiar chave pix</button><br>
 				Grato pela sua atenção<br><br>
 				</div>
             <div id="bio2"></div>`
@@ -128,3 +131,17 @@ function apoio(){
 
 	}
 
+function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myInput");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
+  // Alert the copied text
+  alert("chave pix copiada: " + copyText.value);
+}
