@@ -4,31 +4,17 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <style>
-    html {
-      width: 360px;
-      height: 360px;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-    }
 
-    *,
-    *:before,
-    *:after {
-      -webkit-box-sizing: inherit;
-      -moz-box-sizing: inherit;
-      box-sizing: inherit;
-      position: absolute;
-    }
 
     body {
-      width: 360px;
+      width: 100%;
       height: 360px;
+      top:0px;
       overflow-x: hidden !important;
       overflow-y: hidden !important;
       margin: 0px;
       padding: 0px;
-      font-weight: 600 !important;
+      
       font-size: 14px;
       font-family: "emojione mozilla", "segoe ui emoji", "noto color emoji", "android emoji",
         "emojisymbols", "segoe ui symbol" "twemoji mozilla",
@@ -40,6 +26,7 @@
       -ms-user-select: none;
       user-select: none;
       color: white;
+      text-align:center;
 
     }
 
@@ -60,6 +47,7 @@
     .clock {
       position: relative;
       text-align: center;
+             pointer-events:none;
     }
 
     .result {
@@ -73,7 +61,6 @@
     #container {
       font-family: arial;
       font-size: 24px;
-      ;
       width: 360px;
       height: 360px;
       position: relative;
@@ -101,17 +88,25 @@
     }
 
     #alfabeto {
+		position:absolute;
+		top:0px;
       width: 360px;
       height: 360px;
       overflow: hidden;
-      background-color: #dddddd55;
+      background-color: #cccccc;
        text-shadow: -2px 0 black, 0 1px black, 1px 0 gray, 0 -1px gray;
+       margin-left:auto;
+       margin-right:auto;
+font-weight: 600 !important;
     }
 
     #tempo {
       font-size: 30px;
       width: 360px;
       text-align: center;
+      z-index:100;
+font-weight: 600 !important;
+       pointer-events:none;
     }
 
     li {
@@ -121,6 +116,9 @@
       height: 20px;
       position: relative;
     }
+    .absolute{
+font-weight: 600 !important;
+		position:absolute;}
   </style>
 
   <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -129,12 +127,12 @@
 </head>
 
 <body>
-  <div id="tempo"><span id="hr" class="clock">00</span>:<span id="min" class="clock">00</span>:<span id="sec"
+  <div id="tempo" class="absolute"><span id="hr" class="clock">00</span>:<span id="min" class="clock">00</span>:<span id="sec"
       class="clock">00</span>:<span id="count" class="clock">00</span></div>
-  <div id="alfabeto"></div>
-  <div id="container">
-    <ul id="ultima"></ul>
-    <div class="child" onmousedown="jogar()" ontouchstart="jogar()">A + 🔫 = 💥</div>
+  <div id="alfabeto"class="absolute"></div>
+  <div id="container" class="absolute">
+    <ul id="ultima"class="absolute"></ul>
+    <div class="child absolute" onmousedown="jogar()" ontouchstart="jogar()">A + 🔫 = 💥</div>
   </div>
 
   <script>
@@ -150,7 +148,7 @@
     var count = 0;
     let gameSpeed = 100;
     let partida = 0
-	var audio = new Audio('./audio/switch12.wav');
+	//var audio = new Audio('./audio/switch12.wav');
     for (i in personagens) { numeros.push(i) }
     document.body.style.cursor = "crosshair"
     function alfabeto(quais) {
@@ -181,7 +179,7 @@
       element.removeAttribute("onmousedown");
       element.removeAttribute("ontouchstart");
       element.innerHTML = "💥"
-      audio.play()
+     // audio.play()
       count++
       setTimeout(
         function () {
@@ -243,7 +241,7 @@
     }
     var mode = "alfabeto"
 
-    function div(parametros = "", conteudo) { return `<div ${parametros}>${conteudo}</div>` }
+    function div(parametros = "", conteudo) { return `<div ${parametros} class='absolute'> ${conteudo}</div>` }
     function span(parametros = "", conteudo) { return `<span ${parametros}>${conteudo}</span>` }
 
 

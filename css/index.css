@@ -1,12 +1,22 @@
 body {
     text-align: center;
-    background-color: #666666;
+    background-color: #dddddd;
     /* background-image: url("img/grid.png");
     background-repeat: repeat;*/
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+.day {
+    background-color: #eeeeeeee;
+
+    color: #000000;
+}
+
+.night {
+    background-color: #222222dd;
+    color: #eeeeee;
+}
 .shadow {
-    border-radius: 16px;
+    border-radius: 8px;
     margin: 4px;
     box-shadow: 2px 2px 3px #51505488,
         -1px -2px 3px #9d9ca288;
@@ -22,16 +32,16 @@ body {
 
 #galeria {
     width: 260px;
-    height: 178px;
+    height: 90px;
     margin-left: auto;
     margin-right: auto;
-    display: inline-block;
-    overflow-y: scroll;
+    display: flex;
+    overflow-x: scroll;
 }
 
 #info_area {
     width: 260px;
-    height: 284px;
+    height: 100%;
     margin-left: auto;
     margin-right: auto;
     display: inline-block;
@@ -43,6 +53,7 @@ body {
     height: 60px;
     margin: 0px 10px 8px 10px;
     border-radius: 12px;
+display:inline-block;
 
 }
 
@@ -73,8 +84,8 @@ body {
 a,
 a:visited {
     /*text-decoration: none;
-    height: 32px;
-    color: rgb(19, 23, 85);*/
+    height: 32px;*/
+    color: rgb(190, 50, 100);
 }
 
 #cabeca {
@@ -101,13 +112,13 @@ a:visited {
     border-radius: 8px;
     line-height: 1.5em;
     text-align: center;
+z-index:3000;
 }
 
 #conteudo {
-    background-color: #ffffffcd;
     border-radius: 8px;
-    min-width: 320px;
-    max-width: 620px;
+    min-width: 304px;
+    max-width: 320px;
     min-height: 320px;
     padding: 12px;
     text-align: justify;
@@ -116,34 +127,54 @@ a:visited {
     position:absolute;
     left:8px;
     top:8px;
+
+z-index:3000;
 }
 
 #corpo {
-    display: flexbox;
+    display: inline;
     width: 100%;
 }
 
 #legenda {
     display: block;
-    overflow-y: scroll;
     font-size: small;
     text-align: justify;
     padding: 0px;
     width:96%;
     text-align:center;
-    margin:4px;
+    margin:0px 4px 4px 4px;
 }
 
 .moldura {
+display:inline-block;
+    height: 100%;
+line-height:100%;
+vertical-align:top;
     /*  border: red 1px dashed;*/
 }
 
 #bio {
     height: 64px;
-    font-size: x-small;
+    font-size: small;
     padding: 4px;
     margin: auto;
     color:black;
+background-color:#dfb000;
+border: black 2px dashed;
+border-radius:8px;
+margin:8px;
+
+}
+#bio2 {
+    height: 64px;
+    font-size: small;
+    padding: 8px;
+    margin: auto;
+    color:black;
+background-color:#dfb000;
+border: black 2px dashed;
+border-radius:8px;
 
 }
 #djs{

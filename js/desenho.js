@@ -401,7 +401,6 @@ function startup() {
             cortar();
         }
     };
-    night()
     modeTo("pintar")
     removeClass();
     document.getElementById(
@@ -1552,6 +1551,7 @@ function setStrokeSize(value) {
             strokeWidth = value;
             tamanho.style.width = strokeWidth * zoomFactor + "px";
             tamanho.style.height = strokeWidth * zoomFactor + "px";
+            tamanho.style.lineHeight = strokeWidth * zoomFactor + "px";
             tamanho.style.marginTop =
                 (strokeWidth / 2) * zoomFactor * -1 + "px";
             tamanho.style.marginLeft =
@@ -1565,6 +1565,8 @@ function setStrokeSize(value) {
             estrokeWidth = value;
             tamanho.style.width = estrokeWidth * zoomFactor + "px";
             tamanho.style.height = estrokeWidth * zoomFactor + "px";
+            tamanho.style.lineHeight = estrokeWidth * zoomFactor+"px";
+          
             tamanho.style.marginTop =
                 (estrokeWidth / 2) * zoomFactor * -1 + "px";
             tamanho.style.marginLeft =

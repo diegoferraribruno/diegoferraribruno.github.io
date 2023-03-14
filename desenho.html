@@ -100,31 +100,39 @@
                 📤 <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" />
             </div>
             <div id="menupintar" class="fundobranco submenu">
+<span title="fechar menu pintar" class="botao" onmousedown="modeTo('pintar')"
+                    style="background-color: rgba(247, 161, 165, 0.15);">🖌️ Pincel ❌</span> 
                 <span onmousedown="removeClass()" id="mostraCor2"
                     style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
+
+<span
+                    style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
+                        id="line">
+                        ➕</span> </span>           <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
+                    onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px"> <br>
+                <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
+                    oninput="strokeSizeRange(this.value)" value="1" width="200px">
+<br>
+
+    
+                💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+                    step="0.01" value="1"><br>
                 <span id="coresb" title="cores" class="bloquinho" onmousedown="modeTo('cores')"
                     style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
                 <span id="pickerb" title="Pega cor" class="bloquinho" onmousedown="modeTo('picker')"
                     style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
 
                 <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class="bloquinho"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><span
-                    style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
-                        id="line">
-                        ➕</span> </span>
-                <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
-                    onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
-                <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
-                    oninput="strokeSizeRange(this.value)" value="1" width="200px"><br>
-                💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
-                    step="0.01" value="1"><br>
+                    style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><br>
+
             </div>
 
             <div id="menuapagar" class="fundobranco submenu">
+<span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🧽 Apagador  ❌</span><br>
                 <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span
                         id="line2">
                         ➕</span></span>
-                <span class="bloquinho" onmousedown="removeClass()">🧽</span>&nbsp;<input type="number" id="tpx2"
+                <input type="number" id="tpx2"
                     min="0.5" max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)"
                     style="width: 50px; margin-left: 8px">
                 <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
@@ -154,7 +162,7 @@
                     </div>
                     <div id="mostraCor" onmousedown="removeClass()"
                         style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.75em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15); margin-top: 20px;">
-                        ok
+                       ❌
                     </div>
                 </div>
                 <div id="paletas">
@@ -167,6 +175,7 @@
             </div>
 
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
+<span title="Configurações" class="botao" onmousedown="modeTo('fundo')">🖥️  menu configurações ❌</span>
 			<span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
                 <!--
                 <span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span-->
@@ -175,8 +184,7 @@
 
                 <span id="oculos" class="botao" onmousedown="pixel()">👓 Suavização de pixels </span>
                 <span id="info" title="Informações" class="botao" onmousedown="modeTo('info')">ℹ️ Informações </span>
-                <span id="fundo falso" class="botao"> Adicionar Fundo falso:</span>
-                <span class="botao">
+                <span id="fundo falso" class="botao"> Adicionar Fundo falso:<br>
                     <span onmousedown="Fundo('img')" class="bloquinho">🌎</span>
                     <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
                     </span>

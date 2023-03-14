@@ -95,6 +95,7 @@ function criaConteudo (){
 	if(!ap){
 		var conteudo = document.createElement("div")
 		conteudo.id = "conteudo"
+conteudo.classList.add("day")
 		document.body.appendChild(conteudo)
 	}else{
 		cancela("conteudo")
@@ -104,24 +105,16 @@ function apoio(){
 	let ap = document.getElementById("conteudo")
 	if(ap){
 		let apoioHTML = `
-		<div id="apoio" style=" display:inline-block; width: 320px; vertical-align: top;" class="day">
-			    <div onClick='cancela("conteudo")' style=' float:right'class='bot shadow'>❌</div>
-            Olá visitante, estes APPs foram desenvolvidos por mim e
-            <a href="https://github.com/diegoferraribruno"> todo o código é livre e aberto.</a><br><br>
-           Espero que você encontre alguma diversão ou aprenda algo por aqui e se desejar contribuir
-          com este jovem pai/desenvolvedor, saiba que você pode:<br>
-					<br>
-				<b>1 - Divulguar meu site portifolio:</b><br>
-					https://diegoferraribruno.github.io<br>
-					<!--social links.<br>-->
-					<b>2 - apoio financeiro via</b>
-					<a href="https://github.com/sponsors/diegoferraribruno"> Github Sponsors.</a><br>
+			    <div onClick='cancela("conteudo")' style=' float:right'class='bot'>❌</div>
+           Este é um website 
+            <a href="https://github.com/diegoferraribruno">de código livre!</a>
+           .<br>Se desejar contribuir financeiramente com seu desenvolvedor, você pode via:</b>
+					<a href="https://github.com/sponsors/diegoferraribruno"> Github Sponsors</a> ou fazendo um PIX para:<br>
+			 <input type="text" size="26" value="f6aecef5-e60b-408e-97e1-30ee3927c0c0" id="myInput" readonly>
 
-				<!--img src="galeria/01/desenho2.png" style="display:inline-block; max-width: 320px; height: 300px; margin: 4px;"-->
-			 <b>3 - fazendo um pix sincero:<br></b>
-			 <input type="text" value="f6aecef5-e60b-408e-97e1-30ee3927c0c0" id="myInput" readonly><br>
-
-<button onclick="myFunction()">Copiar chave pix</button><br>
+<button onclick="copyPix()">Copiar</button><br><br>
+Ajude também a divulguar:</b><br>
+					https://diegoferraribruno.github.io<br><br>
 				Grato pela sua atenção<br><br>
 				</div>
             <div id="bio2"></div>`
@@ -131,15 +124,12 @@ function apoio(){
 
 	}
 
-function myFunction() {
-  // Get the text field
+function copyPix() {
   var copyText = document.getElementById("myInput");
-
   // Select the text field
   copyText.select();
   copyText.setSelectionRange(0, 99999); // For mobile devices
 
-   // Copy the text inside the text field
   navigator.clipboard.writeText(copyText.value);
 
   // Alert the copied text

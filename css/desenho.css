@@ -146,7 +146,7 @@ body {
 
 .fundobranco {
     min-height: 32px;
-    background-color: #cccccc66;
+    background-color: #eeeeeeee;
     border-radius: 20px;
     border-style: solid;
     border-width: 2px;
@@ -238,7 +238,7 @@ body {
 
 #cursor {
     pointer-events: none;
-    display: block;
+    display: inline-block;
     position: absolute;
     width: 2px;
     height: 2px;
@@ -252,6 +252,7 @@ body {
     z-index: 10;
     box-shadow: 1px 1px 1px #51505488,
         -1px -1px 1px #9d9ca288;
+vertical-align:middle;
 }
 
 .disable-scroll {
@@ -351,12 +352,14 @@ input[type="range"][orient="vertical"] {
 }
 
 .day {
-    background-color: #ccccccee;
+    background-color: #eeeeeedd;
+
+    color: #000000;
 }
 
 .night {
-    background-color: #222222;
-    color: #eeeeee
+    background-color: #222222dd;
+    color: #eeeeee;
 }
 
 .custom-file-input::before {
