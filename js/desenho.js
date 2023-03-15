@@ -1174,8 +1174,8 @@ function handleEnd(evt) {
             desenha(
             "e",
              context.globalCompositeOperation,
-              touches[0].clientX - offsetX,
-             touches[0].clientY - offsetY,
+              (touches[0].clientX - offsetX )/ zoomFactor,
+             (touches[0].clientY - offsetY )/ zoomFactor,
              emoji,
            size
              )}
@@ -1331,9 +1331,14 @@ async function modeTo(qual) {
         case "imagem":
             break;
         case "emoji":
-          setStrokeSize(strokeWidth);
-            setStrokeColor();
+			// setStrokeSize(strokeWidth);
+           // setStrokeColor();
+           setTimeout(()=>{
+
+           emojiSizeRange();
+           },40)
             changeGCO();
+
 			break;
         case _:
             break;
@@ -1782,7 +1787,8 @@ function downloadImage(data, filename = "untitled.png") {
     a.download = filename;
     document.body.appendChild(a);
     a.click();
-    alert("se você gostou desse app, considere fazer um pix pro Diego continuar o desenvolvimento ou ajude divulgando o app :) 11-962238038 Grato.")
+    apoio();
+    //alert("se você gostou desse app, considere fazer um pix pro Diego continuar o desenvolvimento ou ajude divulgando o app :) 11-962238038 Grato.")
 }
 function changeLine() {
     lineJoinsCount++;
@@ -1970,14 +1976,13 @@ function convertToImg() {
     // comandos.unshift(comando)
     comandos.unshift(comando)
 }
-	function emojiSizeRange(valor){
-
-		 cursor.style.width = 0 + "px";
-            cursor.style.height = 0 + "px";
-            cursor.style.lineHeight = 1+ "px";
-             cursor.style.marginTop = 0 + "px";
-             cursor.style.marginLeft =
-                0 + "px";
+	function emojiSizeRange(){
+		valor = document.getElementById("emosize").value
+		cursor.style.width = 0 + "px";
+        cursor.style.height = 0 + "px";
+        cursor.style.lineHeight = 1+ "px";
+        cursor.style.marginTop = 0 + "px";
+        cursor.style.marginLeft = 0 + "px";
 		valor = valor*zoomFactor
 		document.getElementById("emoExemplo").style.fontSize= valor+"px"
 		cursor.innerHTML='<span id="emoExemplo2" style="position:absolute; display:block; margin-left:-' +valor/2+'px; height:'+valor+'px; margin-top:-' +valor/10+'px; ">'+emoji+'</span>'
@@ -1994,7 +1999,8 @@ function emojipicker(){
 }
 function trocaEmoji(emo){
 	emoji = emo
+	emoExemplo.innerHTML = emo
 	emojiSizeRange(document.getElementById("emosize").value)
 	emoexemplo = document.getElementById("emoexemplo")
-	emoExemplo.innerHTML = emo
+
 	}
