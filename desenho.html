@@ -101,16 +101,16 @@
 
             </div>
             <div id="menuimagem" class="fundobranco submenu aparece menu">
-                Enviar uma imagem<br><br>
-                📤 <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" />
+                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">📤  Enviar uma imagem ❌</span><br>
+                <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" title="📤"/>
             </div>
               <div id="menuemoji" class="fundobranco submenu menu">
 <span title="fechar menu emoji" class="botao" onmousedown="modeTo('emoji')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">emoji😍</span>
+                    style="background-color: rgba(247, 161, 165, 0.15);">emoji😍</span><emoji-picker id ="emojipicker"></emoji-picker>
                estilo:<span  onclick="emojipicker()" id="emoExemplo">😍</span>  <br>
                 <input type="range" id="emosize" name="strokeSize" min="16" max="320" step="8"
                     oninput="emojiSizeRange()" value="16" width="200px">
-<br><emoji-picker id ="emojipicker"></emoji-picker>
+<br>
 
             </div>
 
@@ -286,6 +286,8 @@
                     onmouseleave="redoTEnd()">↪️</span>
 
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
+
+                  <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
             </div>
 
             <div id="ferramentas2" class="ferramentas">
@@ -306,7 +308,6 @@
                 <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
                 <span id="hand" class="mais" title="Mover a tela" onclick="toggleHand()">🖐</span>
-                  <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
             </div>
 
             <div id="canvas_window">
