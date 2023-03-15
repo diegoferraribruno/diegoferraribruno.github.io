@@ -909,7 +909,7 @@ function changeGCO(GCO = globalComposite) {
 	if (mode == "zoom") {
 		isGrabing = true;
 	}
-	if (mode=="pintar" || mode == "apagar") {
+	if (mode=="pintar" || mode == "apagar" || mode == "cores") {
 		isDrawing = true
 					mouseOver = true;
 
@@ -1494,7 +1494,7 @@ function setStrokeSize(value) {
     let brushes = ["mostraCor2", "cursor"];
     for (i in brushes) {
         let tamanho = document.getElementById(brushes[i]);
-        if (mode == "pintar" || mode == "cores") {
+        if (mode == "pintar" || mode == "cores"|| mode == "cores") {
             strokeWidth = value;
             tamanho.style.width = strokeWidth * zoomFactor + "px";
             tamanho.style.height = strokeWidth * zoomFactor + "px";
