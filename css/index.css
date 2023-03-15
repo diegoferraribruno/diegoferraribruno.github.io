@@ -183,3 +183,18 @@ background-size:34px 34px;
 }
 #apoio{
 color:black;}
+
+#blog{
+display:block;
+line-height:20px;
+color:#eeeeee;
+background-color:#333333;
+border-radius:16px;
+margin: 8px;
+padding:10px;
+overflow-y:scroll;
+height: 260px;
+}
+h6{margin:8px;}
+h2{margin-bottom:4px;
+margin-top:14px}

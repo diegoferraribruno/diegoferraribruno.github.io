@@ -32,7 +32,7 @@ var menu = {
     "galeria.html": "🖼️",
     "apoio.html": "💸",
     "alfabeto.html": "🔫",
-    "calculadora.html": "➗",
+    "index.html": "📔 ",
     "https://diegoferraribruno.itch.io": "🎮"
     // "Identifica": "📛",
 }
@@ -106,9 +106,9 @@ function apoio(){
 	if(ap){
 		let apoioHTML = `
 			    <div onClick='cancela("conteudo")' style=' float:right'class='bot'>❌</div>
-           Este é um website 
-            <a href="https://github.com/diegoferraribruno">de código livre!</a>
-           .<br>Se desejar contribuir financeiramente com seu desenvolvedor, você pode via:</b>
+           Este website é um projeto de
+            <a href="https://github.com/diegoferraribruno"> código livre</a> em constante evolução.<br><br>
+           Se desejar contribuir financeiramente com seu desenvolvedor, você pode via:</b>
 					<a href="https://github.com/sponsors/diegoferraribruno"> Github Sponsors</a> ou fazendo um PIX para:<br>
 			 <input type="text" size="26" value="f6aecef5-e60b-408e-97e1-30ee3927c0c0" id="myInput" readonly>
 
