@@ -910,6 +910,24 @@ function changeGCO(GCO = globalComposite) {
 	}
 	if (mode=="pintar" || mode == "apagar") {
 		isDrawing = true
+					mouseOver = true;
+
+	offsetX = canvas.getBoundingClientRect().left;
+	offsetY = canvas.getBoundingClientRect().top;
+
+	let x = (evt.pageX - offsetX)/zoomFactor
+	let y = (evt.pageY -offsetY)/zoomFactor
+			  desenha(
+                    "p",
+                    context.globalCompositeOperation,
+                    x,
+                    y,
+                    origin.x,
+                    origin.y+0.1,
+                    strokeColor,
+                    stroke,
+                    linejoin
+                );
 	}
 	if (mode == "picker") {
 		isPicking = true
