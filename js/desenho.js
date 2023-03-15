@@ -10,7 +10,6 @@ let x = 0;
 let y = 0;
 var offsetX;
 var offsetY;
-const ongoingTouches = [];
 
 const canvasDiv = document.getElementById("canvas_div");
 var globalComposite = "source-over";
@@ -466,155 +465,15 @@ function startup() {
         zoomScale.indexOf(zoomFactor);
 
     desenhoDiv.addEventListener("gesturestart", prevent);
-    win.addEventListener("touchmove", prevent);
-    canvas.addEventListener("touchstart", handleStart);
-    canvas.addEventListener("touchend", handleEnd);
-    canvas.addEventListener("touchcancel", handleCancel);
-    canvas.addEventListener("touchmove", handleMove);
-    canvas.addEventListener("mousedown", (e) => {
-        x = e.offsetX;
-        y = e.offsetY;
-        if (mode != "picker" && mode != "zoom" && mode != "recortar" && mode != "emoji") {
-            isDrawing = true;
-        } else if (mode == "zoom") {
-            isGrabing = true;
-        } else if (mode == "picker") {
-            isPicking = true
-        } else if (mode == "recortar" && isSelecting == false) {
-            isSelecting = true
-            origin.x = e.offsetX;
-            origin.y = e.offsetY;
-        } else if (mode == "emoji"){
-			let size = document.getElementById("emosize").value
-            isEmoji = true
-            desenha(
-            "e",
-             context.globalCompositeOperation,
-             e.offsetX,
-             e.offsetY,
-             emoji,
-           size
-             )
-        }
-        removeClass();
-    });
-    canvas.addEventListener("mouseenter", (e) => {
-        mouseOver = true;
-    });
-    canvas.addEventListener("mouseout", (e) => {
-        mouseOver = false;
-        setTimeout(() => {
-            if (mouseOver == false) {
-                isDrawing = false;
-                isGrabing = false;
-                isPicking = false;
-                isSelecting = false;
-            }
-        }, 500);
-    });
-    canvas.addEventListener("mousemove", (e) => {
-        if (isDrawing && mode != "picker") {
-            desenha(
-                "p",
-                context.globalCompositeOperation,
-                x,
-                y,
-                e.offsetX,
-                e.offsetY,
-                strokeColor,
-                stroke,
-                linejoin
-            );
-        } else if (isGrabing) {
-            ultimoToque.y = e.offsetY;
-            ultimoToque.x = e.offsetX;
-            scrollCanva(
-                (x - ultimoToque.x) * zoomFactor,
-                (y - ultimoToque.y) * zoomFactor
-            );
-        } else if (isPicking) {
-            x = e.offsetX;
-            y = e.offsetY;
-            var imageData = context.getImageData(x, y, 1, 1).data;
-            if (imageData[3] > 1) {
-                RGBAToHSLA(
-                    imageData[0],
-                    imageData[1],
-                    imageData[2],
-                    imageData[3]
-                );
-                setStrokeColor();
-            }
-        } else if (isSelecting) {
-            cropEnd.x = e.offsetX;
-            cropEnd.y = e.offsetY;
-            context.strokeStyle = "#ccccccdd";
-            context.strokeWidth = 0.5
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.setLineDash([1, 1]);
-            context.beginPath();
-            changeGCO("source-over");
-            context.rect(
-                origin.x,
-                origin.y,
-                e.offsetX - origin.x,
-                e.offsetY - origin.y
-            );
-            context.stroke();
-            changeGCO("destination-over");
-            context.drawImage(
-                tempImg,
-                0,
-                0,
-                tempImg.width,
-                tempImg.height);
-        }
-        x = e.offsetX;
-        y = e.offsetY;
-    });
-    canvas.addEventListener("mouseup", (e) => {
-        if (isDrawing && mode != "picker") {
-            desenha(
-                "p",
-                context.globalCompositeOperation,
-                x,
-                y,
-                e.offsetX + 1,
-                e.offsetY + 1,
-                strokeColor,
-                stroke,
-                linejoin
-            );
-            ultimoToque.y = e.offsetY;
-            ultimoToque.x = e.offsetX;
-            x = 0;
-            y = 0;
-            isDrawing = false;
-        } else if (mode == "picker") {
-        isPicking = false
-            x = e.offsetX;
-            y = e.offsetY;
-            var imageData = context.getImageData(x, y, 1, 1).data;
-            if (imageData[3] > 1) {
-                RGBAToHSLA(
-                    imageData[0],
-                    imageData[1],
-                    imageData[2],
-                    imageData[3]
-                );
-                setStrokeColor();
+	win.addEventListener("touchmove", prevent);
+	canvas.addEventListener("pointerdown", handleStart);
+	canvas.addEventListener("pointerup", handleUp);
+	canvas.addEventListener("pointercancel", handleCancel);
+	canvas.addEventListener("pointermove", handleMove);
+	canvas.addEventListener("pointerleave", handleEnd);
 
-            }
-        } else if (mode == "zoom") {
-            isGrabing = false;
-        } else if (isSelecting) {
-            isSelecting = false;
-            mostraMenu("recortar")
-        }
-    });
-    document
-        .getElementById("btn-download")
-        .addEventListener("click", function (e) {
+
+    document.getElementById("btn-download").addEventListener("click", function (e) {
             //   rotacionaCanva(rotationDeg)
             //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
             let nome = prompt("nome da arte:", "desenho");
@@ -1023,186 +882,189 @@ function desenha(
     }
 
 }
-function handleStart(evt) {
-    evt.preventDefault();
-    removeClass();
 
-    const touches = evt.changedTouches;
-    offsetX = canvas.getBoundingClientRect().left;
-    offsetY = canvas.getBoundingClientRect().top;
-    x = touches[0].clientX;
-    y = touches[0].clientY;
-    for (let i = 0; i < touches.length; i++) {
-        ongoingTouches.push(copyTouch(touches[i]));
-    }
-    if (mode == "zoom") {
-        isGrabing = true;
-    }
-    if (mode == "recortar" && isSelecting == false) {
-        isSelecting = true
-        origin.x = touches[0].clientX - offsetX;
-        origin.y = touches[0].clientY - offsetY;
-    }if (mode  == "emoji"){
-
-            isEmoji = true
-            isDrawing = false
-}
-
-}
 function changeGCO(GCO = globalComposite) {
     context.globalCompositeOperation = GCO
 }
-function handleMove(evt) {
-    evt.preventDefault();
-    const touches = evt.changedTouches;
-    for (let i = 0; i < touches.length; i++) {
-        const idx = ongoingTouchIndexById(touches[i].identifier);
-        if (idx >= 0) {
-            ultimoToque.x = (touches[i].clientX - offsetX) / zoomFactor;
-            ultimoToque.y = (touches[i].clientY - offsetY) / zoomFactor;
-             cursor.style.left = (touches[i].clientX) + "px";
-                cursor.style.top = (touches[i].clientY) + "px";
-            if (mode == "recortar") {
-                x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor;
-                y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor;
-            }
-            if (mode != "zoom" && mode != "picker" && mode != "recortar"&& mode != "emoji") {
-                x = (ongoingTouches[idx].clientX - offsetX) / zoomFactor;
-                y = (ongoingTouches[idx].clientY - offsetY) / zoomFactor;
 
-                desenha(
+ function handleStart(evt) {
+	removeClass();
+	evt.preventDefault();
+		origin.x =  (evt.pageX - offsetX)/zoomFactor
+		origin.y = (evt.pageY - offsetY)/zoomFactor
+		offsetX = canvas.getBoundingClientRect().left;
+		offsetY = canvas.getBoundingClientRect().top;
+	if (mode === "recortar") {
+		swapImg = canvas.toDataURL("image/png");
+		blob = dataURItoBlob(swapImg);
+		tempImg = document.createElement("img");
+		tempImg.src = URL.createObjectURL(blob);
+		isSelecting = true;
+	}
+	if (mode  == "emoji") {
+		isEmoji = true
+		isDrawing = false
+	}
+	if (mode == "zoom") {
+		isGrabing = true;
+	}
+	if (mode=="pintar" || mode == "apagar") {
+		isDrawing = true
+	}
+	if (mode == "picker") {
+		isPicking = true
+	}
+}
+
+function handleMove(evt) {
+
+	evt.preventDefault();
+
+	offsetX = canvas.getBoundingClientRect().left;
+	offsetY = canvas.getBoundingClientRect().top;
+
+	let x = (evt.pageX - offsetX)/zoomFactor
+	let y = (evt.pageY -offsetY)/zoomFactor
+
+	let over = checkOverCanvas(x, y)
+	if (isSelecting === true && over === true) {
+		cropEnd.x = (evt.pageX - canvas.offsetLeft)/zoomFactor
+		cropEnd.y = (evt.pageY - canvas.offsetTop)/zoomFactor
+		context.strokeStyle = "#ffccccdd";
+		desenhaRetangulo();
+
+	}if (isDrawing === true ) {
+		evt.preventDefault();
+			mouseOver = true;
+			  desenha(
                     "p",
                     context.globalCompositeOperation,
                     x,
                     y,
-                    ultimoToque.x,
-                    ultimoToque.y,
+                    origin.x,
+                    origin.y,
                     strokeColor,
                     stroke,
                     linejoin
                 );
-                cursor.style.left = (touches[i].clientX) + "px";
-                cursor.style.top = (touches[i].clientY) + "px";
-                ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-            } else if (isSelecting) {
-                console.log(ultimoToque.x, ultimoToque.y)
-                cropEnd.x = ultimoToque.x
-                cropEnd.y = ultimoToque.y
-                context.strokeStyle = "#ffccccdd";
-                context.strokeWidth = 0.5
-                context.clearRect(0, 0, canvas.width, canvas.height);
-                context.setLineDash([1, 1]);
-                context.beginPath();
-                changeGCO("source-over")
-                context.rect(
-                    x,
-                    y,
-                    ultimoToque.x - x,
-                    ultimoToque.y - y
+	}
+	if (isPicking){
+			var imageData = context.getImageData(x, y, 1, 1).data;
+            if (imageData[3] > 1) {
+                RGBAToHSLA(
+                    imageData[0],
+                    imageData[1],
+                    imageData[2],
+                    imageData[3]
                 );
-
-                context.stroke();
-                changeGCO("destination-over");
-                context.drawImage(
-                    tempImg,
-                    0,
-                    0,
-                    tempImg.width,
-                    tempImg.height);
+                setStrokeColor();
             }
+	}
+	if (isGrabing) {
 
-        }
-
+evt.preventDefault();
+	   scrollCanva((origin.x -x)*zoomFactor, (origin.y-y)*zoomFactor);
     }
-    if (mode == "picker") {
-        const touches = evt.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-            const idx = ongoingTouchIndexById(touches[i].identifier);
-            if (idx >= 0) {
-                var imageData = context.getImageData(
-                    ultimoToque.x,
-                    ultimoToque.y,
-                    1,
-                    1
-                ).data;
-                if (imageData[3] > 1) {
-                    RGBAToHSLA(
-                        imageData[0],
-                        imageData[1],
-                        imageData[2],
-                        imageData[3]
-                    );
-                    setStrokeColor();
-                }
-            }
-        }
-    }
-    if (mode == "zoom") {
-        if (isGrabing) {
-            for (let i = 0; i < touches.length; i++) {
-                const idx = ongoingTouchIndexById(touches[i].identifier);
-                if (idx == 0) {
-                    scrollCanva(x - touches[0].clientX, y - touches[0].clientY);
-                    x = touches[0].clientX;
-                    y = touches[0].clientY;
-                }
-            }
-        }
-    }
+	if (!isGrabing){
+	origin.x = x
+	origin.y = y
 }
-function handleEnd(evt) {
-    evt.preventDefault();
-    const touches = evt.changedTouches;
-    for (let i = 0; i < touches.length; i++) {
-        let idx = ongoingTouchIndexById(touches[i].identifier);
-        if (idx >= 0) {
-            context.lineWidth = strokeWidth;
-            context.fillStyle = strokeColor;
-            ongoingTouches.splice(idx, 1); // remove it; we're done
-        }
-    }
-    if (mode == "zoom") {
-        isGrabing = false;
-    }
-    if (mode == "recortar") {
+	cursor.style.left = evt.pageX + "px";
+	cursor.style.top = evt.pageY + "px";
+}
+function handleUp(evt) {
+	offsetX = canvas.getBoundingClientRect().left;
+	offsetY = canvas.getBoundingClientRect().top;
+	let over = checkOverCanvas(evt.pageX, evt.pageY)
+	if (isSelecting === true && over === true) {
+		cropEnd.x = evt.pageX - canvas.offsetLeft
+		cropEnd.y = evt.pageY - canvas.offsetTop
+		desenhaRetangulo();
+	}
+	if (mode  === "emoji" && isEmoji){
+		x = (evt.pageX- offsetX)/zoomFactor
+		y = (evt.pageY -offsetY)/zoomFactor
+		let size = document.getElementById("emosize").value
+		desenha(
+			"e",
+			 context.globalCompositeOperation,
+			 x,
+			 y,
+			 emoji,
+			 size
+			);
+		isEmoji = false
+	}
+	if (mode === "recortar") {
         mostraMenu("recortar")
         isSelecting = false
     }
-    if (mode  == "emoji"){
-			let size = document.getElementById("emosize").value
-            isEmoji = true
-            desenha(
-            "e",
-             context.globalCompositeOperation,
-              (touches[0].clientX - offsetX )/ zoomFactor,
-             (touches[0].clientY - offsetY )/ zoomFactor,
-             emoji,
-           size
-             )}
+
+	if (isPicking){
+			x = (evt.pageX- offsetX)/zoomFactor
+		y = (evt.pageY -offsetY)/zoomFactor
+		var imageData = context.getImageData(x, y, 1, 1).data;
+		if (imageData[3] > 1) {
+			RGBAToHSLA(
+				imageData[0],
+				imageData[1],
+				imageData[2],
+				imageData[3]
+			);
+			setStrokeColor();
+		}
+		isPicking = false
+	}
+	    isDrawing = false;
+        isGrabing = false;
 }
+
+ function handleEnd(evt){
+	  mouseOver = false;
+	  //console.log(evt)
+        setTimeout(() => {
+            if (mouseOver == false) {
+                isDrawing = false;
+                isGrabing = false;
+                isPicking = false;
+                isSelecting = false;
+            }
+        }, 500);
+ }
 
 function handleCancel(evt) {
-    evt.preventDefault();
-    const touches = evt.changedTouches;
-    for (let i = 0; i < touches.length; i++) {
-        let idx = ongoingTouchIndexById(touches[i].identifier);
-        ongoingTouches.splice(idx, 1); // remove it; we're done
-    }
+	evt.preventDefault();
 }
 
-function copyTouch({ identifier, clientX, clientY }) {
-    return { identifier, clientX, clientY };
+function checkOverCanvas(x, y) {
+	if (x > canvas.offsetLeft && x < canvas.offsetWidth + canvas.offsetLeft && y > canvas.offsetTop && y < canvas.offsetHeight + canvas.offsetTop) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
-function ongoingTouchIndexById(idToFind) {
-    for (let i = 0; i < ongoingTouches.length; i++) {
-        const id = ongoingTouches[i].identifier;
-        if (id === idToFind) {
-            return i;
+function desenhaRetangulo() {
+            context.strokeWidth = 0.5
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.setLineDash([1, 1]);
+            context.beginPath();
+            context.globalCompositeOperation = "source-over"
+            context.rect(
+                origin.x,
+                origin.y,
+                cropEnd.x - origin.x,
+                cropEnd.y - origin.y
+            );
+            context.stroke();
+            context.globalCompositeOperation = "destination-over";
+            context.drawImage(
+                tempImg,
+                0,
+                0,
+                tempImg.width,
+                tempImg.height);
         }
-    }
-    return -1; // not found
-}
 
 function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     changeGCO(GCO);
@@ -1230,11 +1092,6 @@ function clearArea() {
         convertToImg()
     }
 }
-
-// This mess was made By diego Ferrari Bruno
-// good luck finding useful code!
-// esta bagunça foi feita pelo Diego,
-// boa sorte para encontrar codigos uteis.
 
 let oldMode = mode;
 
@@ -1346,6 +1203,7 @@ async function modeTo(qual) {
     cursorColor();
 }
 let tempImg
+
 function cut() {
     swapImg = canvas.toDataURL("image/png");
     blob = dataURItoBlob(swapImg);
@@ -1353,6 +1211,7 @@ function cut() {
     tempImg.src = URL.createObjectURL(blob)
 
 }
+
 function camera() {
 
     // ok, browser supports it*/
@@ -1490,6 +1349,8 @@ function camera() {
 }
 function removeVideo() {
     setTimeout(() => {
+	stopVideoStream()
+        removeElement("video")
         removeElement("videoC")
         removeElement("btnChangeCam")
         if (oldMode == "cam" || oldMode == "zoom") {
@@ -1522,6 +1383,7 @@ const constraints = {
 };
 
 // stop video stream
+
 function stopVideoStream() {
     if (videoStream) {
         videoStream.getTracks().forEach((track) => {
@@ -1558,17 +1420,6 @@ function criaPaleta() {
     for (i = 1; i < 15; i++) {
         hue100 -= Math.floor(100 / 14)
         let cor = document.getElementById("H").value
-        //    let cor = document.getElementById("H").value - (i*3)
-        /*
-         paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1] + i * 2}%,${hsla[2] + i * 3
-               }%,${hsla[3]
-               })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1] + i * 2
-               }%,${hsla[2] + i * 3}%,${hsla[3] * 4 + 0.2});'> </span>`;
-               */
-        /*  paleta += `<span onmousedown='mudaCor("hsla(${cor},${hue100}%,${hsla[2] + i * 3
-               }%,${hsla[3]
-               })")' class='bloquinho' style='background-color:hsla(${cor},${hue100}%,${hsla[2] + i * 3}%,${hsla[3] * 4 + 0.2});'> </span>`;
-           */
         paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]}%,${hue100
             }%,${hsla[3]
             })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]
@@ -1864,9 +1715,9 @@ function ZOOM(a) {
         zoomScale.indexOf(zoomFactor);
 }
 
-function scrollCanva(x, y) {
-    win.scrollTop += y;
-    win.scrollLeft += x;
+function scrollCanva(a, b) {
+    win.scrollLeft += a;
+    win.scrollTop += b;
 }
 function resetCanva() {
     let objects = ["canvas_window", "canvas_div"];
@@ -1973,7 +1824,6 @@ function convertToImg() {
     img_b64 = canvas.toDataURL("image/png");
     blob = dataURItoBlob(img_b64)
     comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
-    // comandos.unshift(comando)
     comandos.unshift(comando)
 }
 	function emojiSizeRange(){
