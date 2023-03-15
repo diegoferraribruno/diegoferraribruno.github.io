@@ -1787,8 +1787,8 @@ function downloadImage(data, filename = "untitled.png") {
     a.download = filename;
     document.body.appendChild(a);
     a.click();
-    apoio();
-    //alert("se você gostou desse app, considere fazer um pix pro Diego continuar o desenvolvimento ou ajude divulgando o app :) 11-962238038 Grato.")
+    setTimeout(()=> {confirmLink("apoio.html")},1200);
+    //
 }
 function changeLine() {
     lineJoinsCount++;
