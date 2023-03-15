@@ -401,6 +401,7 @@ function resizeScreen() {
 }
 
 function startup() {
+	window.scrollTo(0,1);
 	document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(detail){
 	trocaEmoji(event.detail.unicode);
     emojipicker();
