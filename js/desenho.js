@@ -823,21 +823,21 @@ var brushMode = 1
 let brushesImg = []
 
 var copo = []
-function createNewBrush(){
-	for (i=1;i<10;i++){
+
+function criarPinceis(){
+	for (i=0;i<10;i++){
 	let brush2 = new Image();
 	  brush2.src = 'img/brush'+i+'.png';
+      brush2.setAttribute("onmousedown","selectBrush('"+i+"')")
 	  brush2.setAttribute("style","width:32px; height:32px;")
-
-	  brush2.onload = function(){
 copo.push(brush2)
 		  console.log(copo)
-		document.getElementById("pinceis").appendChild(brush2)
+
       brush2.setAttribute("onmousedown","selectBrush('"+ i+"')")
 	  }
+	  for (i in copo){document.getElementById("pinceis").appendChild(copo[i])}
 	  }
-	  }
-createNewBrush()
+criarPinceis()
 
 var brush = new Image();
 	  brush.src = 'img/brush1.png';
@@ -1204,7 +1204,7 @@ function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     context.closePath();
     context.stroke();
 }
-
+var qualBrush = 0
 function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin){
 	let start = {x:x1,y:y1}
 	let end = {x:x2, y:y2}
@@ -1217,13 +1217,14 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin){
 	context.lineWidth = stroke;
 	var strokeImg = new Image();
 	strokeImg.src = linejoin
+strokeImg.onload = function(){
 	for ( var z=0; (z<=distance || z==0); z++ )
 	{
 		x = start.x + (Math.sin(angle) * z) - halfBrushW;
 		y = start.y + (Math.cos(angle) * z) - halfBrushH;
 		//console.log( x, y, angle, z );
 		context.drawImage(strokeImg, x, y,stroke,stroke);
-	}
+	}}
 	}
 var Trig = {
 	distanceBetween2Points: function ( point1, point2 ) {
