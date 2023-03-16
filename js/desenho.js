@@ -821,18 +821,24 @@ function exec(coma = 0) {
 var brushMode = 1
 
 let brushesImg = []
+
+var copo = []
 function createNewBrush(){
 	for (i=1;i<10;i++){
 	let brush2 = new Image();
 	  brush2.src = 'img/brush'+i+'.png';
 	  brush2.setAttribute("style","width:32px; height:32px;")
+
 	  brush2.onload = function(){
+copo.push(brush2)
+		  console.log(copo)
 		document.getElementById("pinceis").appendChild(brush2)
-      brush2.setAttribute("onmousedown","selectBrush('"+ brush2.src+"')")
+      brush2.setAttribute("onmousedown","selectBrush('"+ i+"')")
 	  }
 	  }
 	  }
-	  createNewBrush()
+createNewBrush()
+
 var brush = new Image();
 	  brush.src = 'img/brush1.png';
 
@@ -844,10 +850,8 @@ var brush = new Image();
 
 var newBrush = document.createElement("img")
 function selectBrush(src){
-	brush.src = src
-	brush.onload = function(){
+	brush = copo[src]
 changeBrush()
-	}
 	}
 function changeBrush(src=brush.src){
 	var brushImage = brush
@@ -1025,6 +1029,7 @@ function changeGCO(GCO = globalComposite) {
 	}
 
 }
+
 
 function handleMove(evt) {
 
