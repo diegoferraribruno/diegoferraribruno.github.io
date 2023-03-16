@@ -5,7 +5,7 @@ var posts = [
 	data:"15/03/2023 10:00",
 	conteudo:"Começando um novo blog aqui"
 	},
-		{
+	{
 	id:2,
 	titulo:"Atualização dos apps",
 	data:"15/03/2023 11:00",
@@ -13,12 +13,20 @@ var posts = [
 	" para a versão 0.9.9, ou seja, falta apenas um tiquinho"+
 	" pra oficializar a versao 1.0 do noss APP de arte"
 	},
-			{
+	{
 	id:3,
 	titulo:"Upload do blog",
 	data:"15/03/2023 12:00",
 	conteudo:"ainda é off-line"+
 	" mas por hora, ta bom demais."
+	},
+	{
+	id:4,
+	titulo:"novos pincéis",
+	data:"16/03/2023 08:40",
+	conteudo:"Passei um dia inteiro para"+
+	" fazer um novo tipo de pincel agora mais um dia trabalhando nisso e a noite a gente vê o resultado<br>"+
+	"update: são quase 16h da tarde e acho q terminei minahs gabia.. adaptações técnicas! hora do upload."
 	}
 
 ]

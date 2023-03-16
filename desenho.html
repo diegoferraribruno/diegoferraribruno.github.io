@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/desenho.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
-    <title>Desenho 0.9.8 </title>
+    <title>Desenho 0.9.9 </title>
 </head>
 
 <body class="naotoque day" style="cursor: pointer;">
@@ -24,7 +24,10 @@
                 <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
                     Lei Mao</a> <br>
                 <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-
+versao 0.9.9a<br>
+				- Novo estilo de pintura e pinceis<br>
+				<a href="http://www.tricedesigns.com/2012/01/04/sketching-with-html5-canvas-and-brush-images" target="blank">com cdigos daqui</a><br>
+				- menu apagar junto do menu pincel.<br>
                 versão 0.9.9<br>
                 - arrumei o colorpicker <br>
                 - menus alterados<br>
@@ -117,31 +120,30 @@
 
 
 
-            <div id="menupintar" class="fundobranco submenu menu">
-<span title="fechar menu pintar" class="botao" onmousedown="modeTo('pintar')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🖌️ Pincel ❌</span>
-                <span onmousedown="removeClass()" id="mostraCor2"
-                    style="background-color: rgba(247, 161, 165, 0.15); width: 35px; height: 35px; top: 50px; left: 20px; z-index: -1; position: absolute;">🖌️</span>
+		<div id="menupintar" class="fundobranco submenu menu">
+			<span title="fechar menu pintar" class="botao" onmousedown="removeClass()"
+			style="background-color: rgba(247, 161, 165, 0.15);">🖌️ Pincel ❌</span>
+		    <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
+			onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
 
-<span
-                    style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
-                        id="line">
-                        ➕</span> </span>           <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
-                    onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px"> <br>
-                <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
-                    oninput="strokeSizeRange(this.value)" value="1" width="200px">
-<br>
+			<input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
+			oninput="strokeSizeRange(this.value)" value="6" width="200px">
+			<br>
+			💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+			step="0.01" value="1"><br>
+			<span id="pickerb" title="Pega cor" class=" bot" onmousedown="modeTo('picker')"
+			style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
 
-
-                💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
-                    step="0.01" value="1"><br>
-                <span id="pickerb" title="Pega cor" class=" bot" onmousedown="modeTo('picker')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
-
-                <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class=" bot"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🪣</span><br>
-
-            </div>
+			<span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class=" bot"
+			style="background-color: rgba(247, 161, 165, 0.15);">🪣</span>
+			<span class="bot" title="modo apagar" onmousedown='changeGCO("destination-out"), removeClass()'>🧽</span><br>
+			<span
+			style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
+			id="line">
+			➕</span></span><br>
+			<div id="pinceis"></div>
+			<canvas id="brushCanva" width="40px" height="40px" onmousedown="changeBrush(brush)"></canvas><br>
+		</div>
 
             <div id="menuapagar" class="fundobranco submenu">
             <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🧽 Apagador  ❌</span><br>
@@ -149,10 +151,10 @@
                         id="line2">
                         ➕</span></span>
                 <input type="number" id="tpx2"
-                    min="0.5" max="100" step="0.3" value="1" onchange="setStrokeSize(this.value)"
+                    min="0.5" max="100" step="0.3" value="" onchange="setStrokeSize(this.value)"
                     style="width: 50px; margin-left: 8px">
-                <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="26" step="1"
-                    oninput="strokeSizeRange(this.value)" value="36" width="160px">
+                <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="16" step="1"
+                    oninput="strokeSizeRange(this.value)" value="16" width="160px">
                 <span onmousedown="removeClass()" id="mostraCor2" style="background-color: 'hsl(0, 100%, 0%);'">
                 </span>
                 <div>
@@ -304,7 +306,9 @@
                     style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
                 <span id="picker" title="Pega cor" class="mais" onmousedown="modeTo('picker')"
                     style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
-                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
+                <!--span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span-->
+
+                <span id="apagar" title="Apagar" class="mais" onmousedown='changeGCO("destination-out")'>🧽</span>
                 <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
                 <span id="hand" class="mais" title="Mover a tela" onclick="toggleHand()">🖐</span>

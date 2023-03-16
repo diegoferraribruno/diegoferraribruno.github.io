@@ -15,9 +15,9 @@ const canvasDiv = document.getElementById("canvas_div");
 var globalComposite = "source-over";
 var favoritas = [];
 var stroke = 1;
-var hsla = [0, 100, 50, 1];
+var hsla = [0, 0, 0, 1];
 var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-var strokeWidth = 0.6;
+var strokeWidth = 6;
 var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
 var estrokeWidth = 36;
 var mode = "cores";
@@ -616,7 +616,7 @@ function undoTEnd() {
 }
 function undo() {
     let len = comandos.length;
-    let posicao = 0
+    let posicao = 1
     for (i = 0; i < len; i++) {
         if (i < undoLevel - 1 && (comandos[i][0] == "s")) {
             posicao = i;
@@ -797,14 +797,84 @@ function exec(coma = 0) {
 				context.fillText(comandos[coma][4], comandos[coma][2], comandos[coma][3])
 				coma++;
                 exec(coma)
-
+				break;
+			case "brush":
+			drawBrush(
+                    comandos[coma][1],
+                    comandos[coma][2],
+                    comandos[coma][3],
+                    comandos[coma][4],
+                    comandos[coma][5],
+                    comandos[coma][6],
+                    comandos[coma][7],
+                    comandos[coma][8]
+                );
+                	coma++;
+                exec(coma)
+                break;
         }
     } else {
         executing = false
     }
 
 }
+var brushMode = 1
 
+let brushesImg = []
+function createNewBrush(){
+	for (i=1;i<10;i++){
+	let brush2 = new Image();
+	  brush2.src = 'img/brush'+i+'.png';
+	  brush2.setAttribute("style","width:32px; height:32px;")
+	  brush2.onload = function(){
+		document.getElementById("pinceis").appendChild(brush2)
+      brush2.setAttribute("onmousedown","selectBrush('"+ brush2.src+"')")
+	  }
+	  }
+	  }
+	  createNewBrush()
+var brush = new Image();
+	  brush.src = 'img/brush1.png';
+
+	  brush.onload = function(){
+		  changeBrush()
+	//	document.getElementById("pinceis").appendChild(brush)
+      //brush.setAttribute("onmousedown","changeBrush('img/brush1.png')")
+	  }
+
+var newBrush = document.createElement("img")
+function selectBrush(src){
+	brush.src = src
+	brush.onload = function(){
+changeBrush()
+	}
+	}
+function changeBrush(src=brush.src){
+	var brushImage = brush
+	brushMode = 1
+	var brushCanva = document.getElementById("brushCanva")
+	var brushCtx = brushCanva.getContext("2d");
+	let tam = strokeWidth
+	if (mode == "apagar"){
+		tam = estrokeWidth
+	}
+	brushCanva.height = tam
+	brushCanva.width = tam
+	brushCtx.fillStyle = strokeColor;
+
+	brushCtx.fillRect(0,0,tam, tam)
+	brushCtx.globalCompositeOperation = 'destination-in'
+	brushCtx.drawImage(brushImage, 0, 0, tam, tam)
+
+	newBrush.crossOrigin = "anonymous"
+    newBrush.src = brushCanva.toDataURL("image/png");
+ setTimeout(()=>{cursor.style.backgroundImage = 'url("'+newBrush.src+'")';
+	 cursor.style.opacity = 0.7},20)
+
+    //document.getElementById("menupintar").appendChild(newBrush)
+
+
+	}
 function desenha(
     CMD,
     GCO,
@@ -871,7 +941,13 @@ function desenha(
 		context.textBaseline = "middle";
 		context.fillText(eoX, X, Y)
             comandos.push(comando)
+		case "brush":
+            comando = ["brush", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin]
 
+			drawBrush(GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin)
+            //context.drawImage(brush, X, Y, 8, 8);
+            comandos.push(comando)
+            break;
 
 
     }
@@ -916,8 +992,9 @@ function changeGCO(GCO = globalComposite) {
 	offsetX = canvas.getBoundingClientRect().left;
 	offsetY = canvas.getBoundingClientRect().top;
 
-	let x = (evt.pageX - offsetX)/zoomFactor
-	let y = (evt.pageY -offsetY)/zoomFactor
+	let x = (evt.pageX - offsetX)/zoomFactor;
+	let y = (evt.pageY -offsetY)/zoomFactor;
+			  if (brushMode==0){
 			  desenha(
                     "p",
                     context.globalCompositeOperation,
@@ -928,11 +1005,25 @@ function changeGCO(GCO = globalComposite) {
                     strokeColor,
                     stroke,
                     linejoin
-                );
+                );}
+                else{
+					desenha(
+                    "brush",
+                    context.globalCompositeOperation,
+                    x,
+                    y ,
+                    origin.x,
+                    origin.y,
+                    strokeColor,
+                    strokeWidth,
+                   newBrush.src
+                );}
+
 	}
 	if (mode == "picker") {
 		isPicking = true
 	}
+
 }
 
 function handleMove(evt) {
@@ -955,6 +1046,7 @@ function handleMove(evt) {
 	}if (isDrawing === true ) {
 		evt.preventDefault();
 			mouseOver = true;
+			 if (brushMode==0){
 			  desenha(
                     "p",
                     context.globalCompositeOperation,
@@ -965,7 +1057,18 @@ function handleMove(evt) {
                     strokeColor,
                     stroke,
                     linejoin
-                );
+                );}   else{
+					desenha(
+                    "brush",
+                    context.globalCompositeOperation,
+                    x,
+                    y,
+                    origin.x,
+                    origin.y,
+					strokeColor,
+					strokeWidth,
+					newBrush.src
+                );}
 	}
 	if (isPicking){
 			var imageData = context.getImageData(x, y, 1, 1).data;
@@ -1097,6 +1200,41 @@ function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     context.stroke();
 }
 
+function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin){
+	let start = {x:x1,y:y1}
+	let end = {x:x2, y:y2}
+	var halfBrushW = stroke/2;
+	var halfBrushH = stroke/2;
+	var distance = parseInt( Trig.distanceBetween2Points( start, end ) );
+	var angle = Trig.angleBetween2Points( start, end );
+	var x,y;
+	changeGCO(GCO);
+	context.lineWidth = stroke;
+	var strokeImg = new Image();
+	strokeImg.src = linejoin
+	for ( var z=0; (z<=distance || z==0); z++ )
+	{
+		x = start.x + (Math.sin(angle) * z) - halfBrushW;
+		y = start.y + (Math.cos(angle) * z) - halfBrushH;
+		//console.log( x, y, angle, z );
+		context.drawImage(strokeImg, x, y,stroke,stroke);
+	}
+	}
+var Trig = {
+	distanceBetween2Points: function ( point1, point2 ) {
+
+		var dx = point2.x - point1.x;
+		var dy = point2.y - point1.y;
+		return Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dy, 2 ) );
+	},
+
+	angleBetween2Points: function ( point1, point2 ) {
+
+		var dx = point2.x - point1.x;
+		var dy = point2.y - point1.y;
+		return Math.atan2( dx, dy );
+	}
+}
 function clearArea() {
     let confirma = confirm(
         "Limpar todo o desenho? \n(impossível desfazer)"
@@ -1168,6 +1306,7 @@ async function modeTo(qual) {
             memorySwap(globalComposite);
             break;
         case "apagar":
+        brushMode = 0;
             setStrokeSize(estrokeWidth);
             cursorColor();
             mudaCorAlpha();
@@ -1491,7 +1630,7 @@ function strokeSizeRange(value) {
     )
 }
 function setStrokeSize(value) {
-    let brushes = ["mostraCor2", "cursor"];
+    let brushes = ["cursor"];
     for (i in brushes) {
         let tamanho = document.getElementById(brushes[i]);
         if (mode == "pintar" || mode == "cores"|| mode == "cores") {
@@ -1504,9 +1643,10 @@ function setStrokeSize(value) {
             tamanho.style.marginLeft =
                 (strokeWidth * zoomFactor * -1) / 2 + "px";
             if (i == 0) {
-                tamanho.style.backgroundColor = strokeColor;
+                //tamanho.style.backgroundColor = strokeColor;
             }
-            stroke = strokeWidth;
+
+                     stroke = strokeWidth;
             document.getElementById("tpx").value = value;
         } else if (mode == "apagar") {
             estrokeWidth = value;
@@ -1522,6 +1662,7 @@ function setStrokeSize(value) {
             document.getElementById("tpx2").value = value;
         }
     }
+    changeBrush()
 }
 
 function backPaint() {
@@ -1552,8 +1693,8 @@ function backPaint() {
     cursor.classList.toggle("cursorIndex");
     cursor.classList.toggle("selected");
     changeGCO();
-    modeTo("pintar")
-    removeClass()
+    if (mode=="apagar"){modeTo("pintar")}
+    //removeClass()
 }
 
 function mudaCorBG(cor) {
@@ -1573,6 +1714,7 @@ function mudaCorQ(q = 0, valor) {
     //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
     setStrokeColor();
     criaPaleta();
+
 }
 function mudaCorAlpha() {
     let valor = document.getElementById("transparenciaE").value
@@ -1600,15 +1742,19 @@ function setStrokeColor() {
         "picker",
         "preencher"
     ];
+
     let quantos = objs.length;
     for (i = 0; i < quantos; i++) {
         document.getElementById(objs[i]).style.backgroundColor = strokeColor;
         document.getElementById(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
     }
-}
+      changeBrush()
+
+     }
 setStrokeColor();
 
 function mudaCor(valor) {
+
     if (valor == "P") {
         strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
         document.getElementById("mostraCor").style.color = strokeColor;
@@ -1646,6 +1792,8 @@ function mudaCor(valor) {
     toHslaObject(strokeColor);
     setStrokeColor();
     criaPaleta();
+    changeBrush()
+
 }
 // Save | Download image from stackoverflow
 // Convert canvas to image added to startup .getElementById("btn-download")
@@ -1661,6 +1809,7 @@ function downloadImage(data, filename = "untitled.png") {
     //
 }
 function changeLine() {
+	brushMode=0
     lineJoinsCount++;
     if (lineJoinsCount > 1) {
         lineJoinsCount = 0;
