@@ -1324,13 +1324,16 @@ async function modeTo(qual) {
                     comandoR()
                     comandosExec()
                 }*/
-        oldMode = mode;
-        mode = qual;
+
         removeClass();
         toggleSelect(qual);
+		if (qual != "apagar"){
+		oldMode = mode;
+        mode = qual;
         mostraMenu(qual);
+		}
     } else {
-        mostraMenu(qual);
+        if (qual != "apagar"){mostraMenu(qual);}
         if (qual == "cam") {
             removeVideo()
         }
@@ -1365,12 +1368,13 @@ async function modeTo(qual) {
             memorySwap(globalComposite);
             break;
         case "apagar":
-            brushMode = 0;
+            /*brushMode = 0;
             setStrokeSize(estrokeWidth);
             cursorColor();
-            mudaCorAlpha();
+            mudaCorAlpha();*/
             changeGCO("destination-out");
             //memorySwap("destination-out");
+
             break;
         case "pintar":
             setStrokeSize(strokeWidth);
@@ -1396,6 +1400,7 @@ async function modeTo(qual) {
             changeGCO();
             break;
         case "picker":
+         cursorColor()
             break;
         case "info":
             break;
@@ -1688,19 +1693,19 @@ function strokeSizeRange(value) {
         strokeRange[value]
     )
 }
-function setStrokeSize(value) {
+function setStrokeSize(value=strokeWidth) {
     let brushes = ["cursor"];
     for (i in brushes) {
         let tamanho = document.getElementById(brushes[i]);
-        if (mode == "pintar" || mode == "cores" || mode == "cores") {
+        if (mode == "pintar" || mode == "cores" || mode == "cores"|| mode == "picker") {
             strokeWidth = value;
-            tamanho.style.width = strokeWidth * zoomFactor + "px";
-            tamanho.style.height = strokeWidth * zoomFactor + "px";
-            tamanho.style.lineHeight = strokeWidth * zoomFactor + "px";
+            tamanho.style.width = value * zoomFactor + "px";
+            tamanho.style.height = value * zoomFactor + "px";
+            tamanho.style.lineHeight = value * zoomFactor + "px";
             tamanho.style.marginTop =
-                (strokeWidth / 2) * zoomFactor * -1 + "px";
+                (value / 2) * zoomFactor * -1 + "px";
             tamanho.style.marginLeft =
-                (strokeWidth * zoomFactor * -1) / 2 + "px";
+                (value * zoomFactor * -1) / 2 + "px";
             if (i == 0) {
                 //tamanho.style.backgroundColor = strokeColor;
             }
@@ -1984,12 +1989,13 @@ function cursorColor() {
             cursor.innerHTML = "🖐";
             break;
         case "picker":
+        setStrokeSize(2)
             cursor.innerHTML = '<div style="-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1);width:32px;">💉</div>'
             cursor.style.borderColor = "#00ff0088";
-            cursor.style.width = 1 + "px";
+            cursor.style.width = 2 + "px";
             cursor.style.height = 1 + "px";
             cursor.style.margingLeft = 24 + "px";
-            cursor.style.margingTop = 24 + "px";
+            cursor.style.margingTop = 48 + "px";
             break;
         case "recortar":
             cursor.innerHTML = "✂️";

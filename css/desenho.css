@@ -188,16 +188,7 @@ body {
 }
 
 #mostraCor {
-    width: 26px;
-    height: 26px;
-    border-style: solid;
-    border-radius: 200px;
-    border-color: gray;
-    border-width: thin;
-    padding: 0px;
-    text-align: center;
-    background-color: "hsl(0, 100%, 0%)";
-    display: inline-block;
+
 }
 
 .linha {
