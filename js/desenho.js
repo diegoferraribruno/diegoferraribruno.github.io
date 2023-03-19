@@ -679,32 +679,33 @@ function memorySwap(GCO) {
             for (i = 0; i < lenb; i++) {
                 comandos.push(swaps[i]);
             }
-            clearBrushes()
+            // clearBrushes()
         }, 40)
     }
 }
 var executing = false
 var undoLevel = 0
-
+/*let usedBrushes = []
 function clearBrushes() {
     //preciso arrumar isso aqui para limpar os brushes nao usados.
     len = comandos.length
-    let usedBrushes = []
+
     for (i = 0; i < len; i++) {
         if (comandos[i][0] == "brush") {
+            console.log(comandos[i][8])
             if (!usedBrushes.includes(comandos[i][8])) {
                 usedBrushes.push[comandos[i][8]]
             }
         }
     }
     let len2 = newBrushes.length
-    //let superNewBrushes = []
+    let superNewBrushes = []
     for (i = 0; i < len2; i++) {
-        if (!usedBrushes.icludes(newBrushes[i])) {
+        if (!usedBrushes.icludes(newBrushes[i].key)) {
             newBrushes[i] = []
         }
     }
-}
+}*/
 
 function comandosExec() {
     if (executing == false) {
@@ -720,7 +721,11 @@ function exec(coma = 0) {
     if (scope > coma) {
         switch (comandos[coma][0]) {
             case "CB":
-                changeBrush(comandos[coma][1], comandos[coma][2], comandos[coma][3], comandos[coma][4])
+                if (!changedBrush) {
+                    strokeColor = comandos[coma][3]
+                    strokeWidth = comandos[coma][2]
+                    changeBrush(comandos[coma][1], comandos[coma][2], comandos[coma][3], comandos[coma][4])
+                }
                 coma++;
                 exec(coma)
                 break;
@@ -882,11 +887,12 @@ function createColorBrush() {
 
 createColorBrush()
 
-function selectBrush(src) {
-    brush = copo[src]
+function selectBrush(numero) {
+    brush = copo[numero]
     changeBrush()
 }
-function changeBrush(src = brush.src, tam = strokeWidth, cor = strokeColor) {
+var changedBrush = false
+function changeBrush(src = brush, tam = strokeWidth, cor = strokeColor) {
     brushMode = 1
     var brushCanva = document.getElementById("brushCanva")
     var brushCtx = brushCanva.getContext("2d");
@@ -896,18 +902,21 @@ function changeBrush(src = brush.src, tam = strokeWidth, cor = strokeColor) {
 
     brushCtx.fillRect(0, 0, tam, tam)
     brushCtx.globalCompositeOperation = 'destination-in'
-    brushCtx.drawImage(brush, 0, 0, tam, tam)
+    brushCtx.drawImage(src, 0, 0, tam, tam)
     brushCtx.globalCompositeOperation = 'destination-over'
     setTimeout(() => {
-        brushCount++
         let newNewBrush = new Image();
         newNewBrush.src = brushCanva.toDataURL("image/png");
         newBrush.crossOrigin = "anonymous"
         newBrush.src = newNewBrush.src
         cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
         cursor.style.opacity = 0.7
+        if (changedBrush == false) {
+            brushCount++
+            changedBrush = true;
+        }
         newBrushes[brushCount] = newNewBrush
-    }, 100)
+    }, 0)
 
 
     //document.getElementById("menupintar").appendChild(newBrush)
@@ -1009,6 +1018,7 @@ function changeGCO(GCO = globalComposite) {
 
 function handleStart(evt) {
     removeClass();
+    changedBrush = false;
     evt.preventDefault();
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
@@ -1841,8 +1851,8 @@ function mudaCor(valor) {
     toHslaObject(strokeColor);
     setStrokeColor();
     criaPaleta();
-    desenha("CB", strokeColor,
-        strokeWidth,
+    desenha("CB", brush,
+        strokeWidth, strokeColor,
         brushCount)
 
 }
