@@ -5,9 +5,9 @@ body {
     background-repeat: repeat;*/
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .day {
     background-color: #eeeeeeee;
-
     color: #000000;
 }
 
@@ -15,6 +15,7 @@ body {
     background-color: #222222dd;
     color: #eeeeee;
 }
+
 .shadow {
     border-radius: 8px;
     margin: 4px;
@@ -53,7 +54,7 @@ body {
     height: 60px;
     margin: 0px 10px 8px 10px;
     border-radius: 12px;
-display:inline-block;
+    display: inline-block;
 
 }
 
@@ -64,7 +65,6 @@ display:inline-block;
 }
 
 .bot {
-
     border-radius: 20px;
     margin-left: 8px;
     margin-right: 8px;
@@ -75,10 +75,9 @@ display:inline-block;
     display: inline-flex;
     position: relative;
     background-color: #777755cc;
-    line-height:34px;
-    vertical-align:middle;
+    line-height: 34px;
+    vertical-align: middle;
     text-align: center;
-
 }
 
 a,
@@ -112,7 +111,7 @@ a:visited {
     border-radius: 8px;
     line-height: 1.5em;
     text-align: center;
-z-index:3000;
+    z-index: 3000;
 }
 
 #conteudo {
@@ -124,11 +123,11 @@ z-index:3000;
     text-align: justify;
     font-size: small;
     align-items: initial;
-    position:absolute;
-    left:8px;
-    top:8px;
+    position: absolute;
+    left: 8px;
+    top: 8px;
 
-z-index:3000;
+    z-index: 3000;
 }
 
 #corpo {
@@ -141,16 +140,16 @@ z-index:3000;
     font-size: small;
     text-align: justify;
     padding: 0px;
-    width:96%;
-    text-align:center;
-    margin:0px 4px 4px 4px;
+    width: 96%;
+    text-align: center;
+    margin: 0px 4px 4px 4px;
 }
 
 .moldura {
-display:inline-block;
+    display: inline-block;
     height: 100%;
-line-height:100%;
-vertical-align:top;
+    line-height: 100%;
+    vertical-align: top;
     /*  border: red 1px dashed;*/
 }
 
@@ -159,45 +158,55 @@ vertical-align:top;
     font-size: small;
     padding: 4px;
     margin: auto;
-    color:black;
-background-color:#dfb000;
-border: black 2px dashed;
-border-radius:8px;
-margin:8px;
+    color: black;
+    background-color: #dfb000;
+    border: black 2px dashed;
+    border-radius: 8px;
+    margin: 8px;
 
 }
+
 #bio2 {
     height: 64px;
     font-size: small;
     padding: 8px;
     margin: auto;
-    color:white;
-background-color:black;
-border: #dfb000 4px dashed;
-border-radius:8px;
+    color: white;
+    background-color: black;
+    border: #dfb000 4px dashed;
+    border-radius: 8px;
+}
 
+#djs {
+    background-image: url("../img/logo.png");
+    background-size: 34px 34px;
 }
-#djs{
-background-image: url("../img/logo.png");
-background-size:34px 34px;
-}
-#apoio{
-color:black;}
 
-#blog{
-display:block;
-line-height:20px;
-color:#eeeeee;
-background-color:#333333;
-border-radius:16px;
-margin: 8px;
-padding:10px;
-overflow-y:scroll;
-height: 260px;
+#apoio {
+    color: black;
 }
-h6{margin:8px;}
-h2{margin-bottom:4px;
-margin-top:14px}
-#emojipicker{
-height:300px;
+
+#blog {
+    display: block;
+    line-height: 20px;
+    color: #eeeeee;
+    background-color: #333333;
+    border-radius: 16px;
+    margin: 8px;
+    padding: 10px;
+    overflow-y: scroll;
+    height: 260px;
+}
+
+h6 {
+    margin: 8px;
+}
+
+h2 {
+    margin-bottom: 4px;
+    margin-top: 14px
+}
+
+#emojipicker {
+    height: 300px;
 }

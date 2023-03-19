@@ -44,8 +44,10 @@ body {
     background-image: url("../img/grid3.png");
     text-align: center;
     display: block;
-    margin-left: auto;/*for camera flip*/
-    margin-right: auto;/*for camera flip*/
+    margin-left: auto;
+    /*for camera flip*/
+    margin-right: auto;
+    /*for camera flip*/
     margin-top: 0px;
     width: 320px;
     height: 320px;
@@ -69,7 +71,7 @@ body {
     width: 320px;
     height: 342px;
     margin: auto;
-    margin-top:auto;
+    margin-top: auto;
     -webkit-touch-overflow: scroll;
     -webkit-transition: -webkit-transform 0.4s;
     -moz-transition: -moz-transform 0.4s;
@@ -86,14 +88,14 @@ body {
 
 #paleta2 {
 
-    position:relative;
+    position: relative;
     width: 320px;
     height: 34px;
     display: flex;
-    padding:8px;
-margin-left:auto;
-margin-right:auto;
-margin-bottom:4px;
+    padding: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 4px;
 
 }
 
@@ -175,7 +177,7 @@ margin-bottom:4px;
         -2px -2px 3px #9d9ca277;
     line-height: 36px;
     text-align: center;
-      text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
+    text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
 }
 
 .selected {
@@ -233,10 +235,13 @@ margin-bottom:4px;
     z-index: 10;
     box-shadow: 1px 1px 1px #51505488,
         -1px -1px 1px #9d9ca288;
-vertical-align:middle;
+    vertical-align: middle;
 }
-#salvaCor{
-"height: 32px; width:32px; margin-right:auto; margin-left:auto; margin-top: 30px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"}
+
+#salvaCor {
+    "height: 32px; width:32px; margin-right:auto; margin-left:auto; margin-top: 30px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"
+}
+
 .disable-scroll {
     overflow-y: hidden;
 }
@@ -272,9 +277,9 @@ range {
 }
 
 input[type="range"][orient="vertical"] {
-   /* writing-mode: bt-lr;*/
+    /* writing-mode: bt-lr;*/
     /* IE */
-     /*-webkit-appearance: slider-vertical;*/
+    /*-webkit-appearance: slider-vertical;*/
     /* Chromium */
     /*width: 8px;
     height: 175px;
@@ -283,8 +288,11 @@ input[type="range"][orient="vertical"] {
     margin-top: 4px;
     margin-right: 4px;*/
 }
-input[type="range"]{
-display:inline}
+
+input[type="range"] {
+    display: inline
+}
+
 #menus {
     display: flex;
     position: absolute;
@@ -296,7 +304,11 @@ display:inline}
     user-select: none;
 
 }
-.menu{line-height:2em;}
+
+.menu {
+    line-height: 2em;
+}
+
 .ferramentas {
     height: 50px;
     width: 332px;
@@ -393,7 +405,7 @@ display:inline}
     margin-top: 2px;
     margin-bottom: 2px;
     border-radius: 12px;
-    vertical-align:top;
+    vertical-align: top;
 }
 
 .botao:hover {

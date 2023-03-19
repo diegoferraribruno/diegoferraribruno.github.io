@@ -15,7 +15,7 @@ var usuarios = [{
     bio: "Filho, artista, matemático",
 }]
 
-function createAvatar(id = 0, onde="bio") {
+function createAvatar(id = 0, onde = "bio") {
 
     var avatar = document.createElement("img")
     avatar.src = "./avatar/" + usuarios[id].id + ".png"
@@ -39,7 +39,7 @@ var menu = {
 
 function criaCabeca() {
     cabeca.innerHTML = "<div  id='djs' class='bot shadow' title='Links do diego' onclick='limpaCabeca()'> </div>"
-	//<!--🚀-->
+    //<!--🚀-->
 
     Object.keys(menu).forEach((key, index) => {
         setTimeout(() => {
@@ -63,48 +63,48 @@ function limpaCabeca() {
 }
 //limpaCabeca()
 function confirmLink(url) {
-	if (url == "apoio.html"){
-		criaConteudo()
-		apoio()
-		}else{
-		let canvasD = document.getElementById("canvas_div")
-		if (canvasD){
-			let confirm = document.getElementById("confirm")
-			if (!confirm) {
-				let item = document.createElement("div")
-				item.id = "confirm"
-				item.classList.add("confirm")
-				item.innerHTML = " Ir para a página:<br> <div  class='shadow'><a href='" + url + "'> " + menu[url] + " " + url + " ✅</a> </div>"
-				item.innerHTML += "<div onClick='cancela()' class='shadow'>cancela ❌</div>"
-				document.body.appendChild(item)
-			} else {
-				cancela()
-				confirmLink(url)
-			}
-		}else{
-			window.open(url,'_self');
-		}
-	}
+    if (url == "apoio.html") {
+        criaConteudo()
+        apoio()
+    } else {
+        let canvasD = document.getElementById("canvas_div")
+        if (canvasD) {
+            let confirm = document.getElementById("confirm")
+            if (!confirm) {
+                let item = document.createElement("div")
+                item.id = "confirm"
+                item.classList.add("confirm")
+                item.innerHTML = " Ir para a página:<br> <div  class='shadow'><a href='" + url + "'> " + menu[url] + " " + url + " ✅</a> </div>"
+                item.innerHTML += "<div onClick='cancela()' class='shadow'>cancela ❌</div>"
+                document.body.appendChild(item)
+            } else {
+                cancela()
+                confirmLink(url)
+            }
+        } else {
+            window.open(url, '_self');
+        }
+    }
 }
-function cancela(oque="confirm") {
+function cancela(oque = "confirm") {
     let confirm = document.getElementById(oque)
     confirm.parentElement.removeChild(confirm)
 }
-function criaConteudo (){
-	let ap = document.getElementById("conteudo")
-	if(!ap){
-		var conteudo = document.createElement("div")
-		conteudo.id = "conteudo"
-conteudo.classList.add("day")
-		document.body.appendChild(conteudo)
-	}else{
-		cancela("conteudo")
-		}
+function criaConteudo() {
+    let ap = document.getElementById("conteudo")
+    if (!ap) {
+        var conteudo = document.createElement("div")
+        conteudo.id = "conteudo"
+        conteudo.classList.add("day")
+        document.body.appendChild(conteudo)
+    } else {
+        cancela("conteudo")
+    }
 }
-function apoio(){
-	let ap = document.getElementById("conteudo")
-	if(ap){
-		let apoioHTML = `
+function apoio() {
+    let ap = document.getElementById("conteudo")
+    if (ap) {
+        let apoioHTML = `
 			    <div onClick='cancela("conteudo")' style=' float:right'class='bot'>❌</div>
            Este website é um projeto de
             <a href="https://github.com/diegoferraribruno"> código livre</a> em constante evolução.<br><br>
@@ -118,20 +118,21 @@ Ajude também a divulguar:</b><br>
 				Grato pela sua atenção<br><br>
 				</div>
             <div id="bio2"></div>`
-	 document.getElementById("conteudo").innerHTML = apoioHTML
+        document.getElementById("conteudo").innerHTML = apoioHTML
 
-	 createAvatar(0,"bio2")}
+        createAvatar(0, "bio2")
+    }
 
-	}
+}
 
 function copyPix() {
-  var copyText = document.getElementById("myInput");
-  // Select the text field
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); // For mobile devices
+    var copyText = document.getElementById("myInput");
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
 
-  navigator.clipboard.writeText(copyText.value);
+    navigator.clipboard.writeText(copyText.value);
 
-  // Alert the copied text
-  alert("chave pix copiada: " + copyText.value);
+    // Alert the copied text
+    alert("chave pix copiada: " + copyText.value);
 }

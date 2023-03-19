@@ -2,15 +2,13 @@
 <html>
 
 <head>
-	<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <style>
-
-
     body {
       width: 100%;
       height: 360px;
-      top:0px;
+      top: 0px;
       overflow-x: hidden !important;
       overflow-y: hidden !important;
       margin: 0px;
@@ -27,7 +25,7 @@
       -ms-user-select: none;
       user-select: none;
       color: white;
-      text-align:center;
+      text-align: center;
 
     }
 
@@ -48,7 +46,7 @@
     .clock {
       position: relative;
       text-align: center;
-             pointer-events:none;
+      pointer-events: none;
     }
 
     .result {
@@ -77,7 +75,7 @@
       margin: -25px 0 0 -140px;
       text-align: center;
       border-radius: 16px;
-       text-shadow: -2px 0 black, 0 1px black, 1px 0 gray, 0 -1px gray;
+      text-shadow: -2px 0 black, 0 1px black, 1px 0 gray, 0 -1px gray;
     }
 
     #ultima {
@@ -89,25 +87,25 @@
     }
 
     #alfabeto {
-		position:absolute;
-		top:0px;
+      position: absolute;
+      top: 0px;
       width: 360px;
       height: 360px;
       overflow: hidden;
       background-color: #cccccc;
-       text-shadow: -2px 0 black, 0 1px black, 1px 0 gray, 0 -1px gray;
-       margin-left:auto;
-       margin-right:auto;
-font-weight: 600 !important;
+      text-shadow: -2px 0 black, 0 1px black, 1px 0 gray, 0 -1px gray;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 600 !important;
     }
 
     #tempo {
       font-size: 30px;
       width: 360px;
       text-align: center;
-      z-index:100;
-font-weight: 600 !important;
-       pointer-events:none;
+      z-index: 100;
+      font-weight: 600 !important;
+      pointer-events: none;
     }
 
     li {
@@ -117,9 +115,11 @@ font-weight: 600 !important;
       height: 20px;
       position: relative;
     }
-    .absolute{
-font-weight: 600 !important;
-		position:absolute;}
+
+    .absolute {
+      font-weight: 600 !important;
+      position: absolute;
+    }
   </style>
 
   <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -128,11 +128,11 @@ font-weight: 600 !important;
 </head>
 
 <body>
-  <div id="tempo" class="absolute"><span id="hr" class="clock">00</span>:<span id="min" class="clock">00</span>:<span id="sec"
-      class="clock">00</span>:<span id="count" class="clock">00</span></div>
-  <div id="alfabeto"class="absolute"></div>
+  <div id="tempo" class="absolute"><span id="hr" class="clock">00</span>:<span id="min" class="clock">00</span>:<span
+      id="sec" class="clock">00</span>:<span id="count" class="clock">00</span></div>
+  <div id="alfabeto" class="absolute"></div>
   <div id="container" class="absolute">
-    <ul id="ultima"class="absolute"></ul>
+    <ul id="ultima" class="absolute"></ul>
     <div class="child absolute" onmousedown="jogar()" ontouchstart="jogar()">A + 🔫 = 💥</div>
   </div>
 
@@ -149,7 +149,7 @@ font-weight: 600 !important;
     var count = 0;
     let gameSpeed = 100;
     let partida = 0
-	//var audio = new Audio('./audio/switch12.wav');
+    //var audio = new Audio('./audio/switch12.wav');
     for (i in personagens) { numeros.push(i) }
     document.body.style.cursor = "crosshair"
     function alfabeto(quais) {
@@ -180,7 +180,7 @@ font-weight: 600 !important;
       element.removeAttribute("onmousedown");
       element.removeAttribute("ontouchstart");
       element.innerHTML = "💥"
-     // audio.play()
+      // audio.play()
       count++
       setTimeout(
         function () {

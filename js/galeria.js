@@ -24,8 +24,6 @@ var fotos = [
 function trocaFoto(qual = 0) { //define o valor padrao para a variavel 'qual' = 0
     foto.setAttribute("src", "./galeria/" + userId + "/" + fotos[qual].imagem);
     document.getElementById("legenda").innerHTML = "<b>" + fotos[qual].legenda + "</b>";
-
-
 }
 
 // para a Galeria criamos uma função que cria elemento img,
