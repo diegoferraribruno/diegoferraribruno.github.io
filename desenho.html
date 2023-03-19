@@ -2,13 +2,13 @@
 <html>
 
 <head>
-	<meta name="mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="css/desenho.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
-    <title>Desenho 0.9.9 </title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+    <title>Desenho 0.9.9 alpha</title>
 </head>
 
 <body class="naotoque day" style="cursor: pointer;">
@@ -18,16 +18,18 @@
                 Toque numa área pintada<br>
                 para capturar uma cor
             </div>
+
             <div id="menuinfo" class="submenu fundobranco">
                 Feito por:
                 <a href="https://diegoferraribruno.github.io/">Diego Ferrari Bruno</a><br> com códigos de<br>
                 <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
                     Lei Mao</a> <br>
                 <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a><br>
-versao 0.9.9a<br>
-				- Novo estilo de pintura e pinceis<br>
-				<a href="http://www.tricedesigns.com/2012/01/04/sketching-with-html5-canvas-and-brush-images" target="blank">com cdigos daqui</a><br>
-				- menu apagar junto do menu pincel.<br>
+                versao 0.9.9 alpha<br>
+                - Novo estilo de pintura e pinceis<br>
+                <a href="http://www.tricedesigns.com/2012/01/04/sketching-with-html5-canvas-and-brush-images"
+                    target="blank">com cdigos daqui</a><br>
+                - menu apagar junto do menu pincel.<br>
                 versão 0.9.9<br>
                 - arrumei o colorpicker <br>
                 - menus alterados<br>
@@ -89,6 +91,7 @@ versao 0.9.9a<br>
                 versões 0
                 <br>
             </div>
+
             <div id="menutamanho" class="fundobranco submenu">
                 <div onmousedown="tamanho()" class="bloquinho"
                     style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
@@ -101,58 +104,57 @@ versao 0.9.9a<br>
                     style="width:50px" />px<br>
                 <br><span class="botao" title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela:
                     ↔️</span><br>
+            </div>
 
-            </div>
             <div id="menuimagem" class="fundobranco submenu aparece menu">
-                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">📤  Enviar uma imagem ❌</span><br>
-                <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp" title="📤"/>
+                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">📤 Enviar uma imagem
+                    ❌</span><br>
+                <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp"
+                    title="📤" />
             </div>
-              <div id="menuemoji" class="fundobranco submenu menu">
-<span title="fechar menu emoji" class="botao" onmousedown="modeTo('emoji')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">emoji😍</span><emoji-picker id ="emojipicker"></emoji-picker>
-               estilo:<span  onclick="emojipicker()" id="emoExemplo">😍</span>  <br>
+
+            <div id="menuemoji" class="fundobranco submenu menu">
+                <span title="fechar menu emoji" class="botao" onmousedown="modeTo('emoji')"
+                    style="background-color: rgba(247, 161, 165, 0.15);">emoji😍</span><emoji-picker
+                    id="emojipicker"></emoji-picker>
+                estilo:<span onclick="emojipicker()" id="emoExemplo">😍</span> <br>
                 <input type="range" id="emosize" name="strokeSize" min="16" max="320" step="8"
                     oninput="emojiSizeRange()" value="16" width="200px">
-<br>
-
+                <br>
             </div>
 
+            <div id="menupintar" class="fundobranco submenu menu">
+                <span title="fechar menu pintar" class="botao" onmousedown="removeClass()"
+                    style="background-color: rgba(247, 161, 165, 0.15);">🖌️ Pincel ❌</span>
+                <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
+                    onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
 
+                <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
+                    oninput="strokeSizeRange(this.value)" value="6" width="200px">
+                <br>
+                💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+                    step="0.01" value="1"><br>
+                <span id="pickerb" title="Pega cor" class=" bot" onmousedown="modeTo('picker')"
+                    style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
 
-
-		<div id="menupintar" class="fundobranco submenu menu">
-			<span title="fechar menu pintar" class="botao" onmousedown="removeClass()"
-			style="background-color: rgba(247, 161, 165, 0.15);">🖌️ Pincel ❌</span>
-		    <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
-			onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
-
-			<input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
-			oninput="strokeSizeRange(this.value)" value="6" width="200px">
-			<br>
-			💧<input type="range" id="A2" name="transparencia" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
-			step="0.01" value="1"><br>
-			<span id="pickerb" title="Pega cor" class=" bot" onmousedown="modeTo('picker')"
-			style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
-
-			<span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class=" bot"
-			style="background-color: rgba(247, 161, 165, 0.15);">🪣</span>
-			<span class="bot" title="modo apagar" onmousedown='changeGCO("destination-out"), removeClass()'>🧽</span><br>
-			<span
-			style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
-			id="line">
-			➕</span></span><br>
-			<div id="pinceis"></div>
-			<canvas id="brushCanva" width="40px" height="40px" onmousedown="changeBrush(brush)"></canvas><br>
-		</div>
+                <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class=" bot"
+                    style="background-color: rgba(247, 161, 165, 0.15);">🪣</span>
+                <span class="bot" title="modo apagar"
+                    onmousedown='changeGCO("destination-out"), removeClass()'>🧽</span><br>
+                <span style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
+                        id="line">
+                        ➕</span></span><br>
+                <div id="pinceis"></div>
+                <canvas id="brushCanva" width="40px" height="40px" onmousedown="changeBrush(brush)"></canvas><br>
+            </div>
 
             <div id="menuapagar" class="fundobranco submenu">
-            <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🧽 Apagador  ❌</span><br>
+                <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🧽 Apagador ❌</span><br>
                 <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span
                         id="line2">
                         ➕</span></span>
-                <input type="number" id="tpx2"
-                    min="0.5" max="100" step="0.3" value="" onchange="setStrokeSize(this.value)"
-                    style="width: 50px; margin-left: 8px">
+                <input type="number" id="tpx2" min="0.5" max="100" step="0.3" value=""
+                    onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
                 <input type="range" id="estrokeSize" name="estrokeSize" min="1" max="16" step="1"
                     oninput="strokeSizeRange(this.value)" value="16" width="160px">
                 <span onmousedown="removeClass()" id="mostraCor2" style="background-color: 'hsl(0, 100%, 0%);'">
@@ -162,47 +164,38 @@ versao 0.9.9a<br>
                         oninput="mudaCorAlpha()" step="0.1" value="1"></div>
             </div>
 
-
-
-
             <div id="menucores" class="submenu fundobranco">
-               <span class="botao"onmousedown="removeClass()"> 🎨 Menu cores       <span id="mostraCor"
-                      >
-                       ❌
+                <span class="botao" onmousedown="removeClass()"> 🎨 Menu cores <span id="mostraCor">
+                        ❌
                     </span></span><br>
+                <div id="paleta2" class="fundobranco">
+                    <br>Use o 📌 para guardar <br>ou remover suas cores favoritas.
+                </div>
+                <div id="paleta" class="fundobranco"></div>
+                <div id="menu" class="fundobranco" onmouseover="mostra()">
+                    <span id="pickerc" title="Pega cor" class="bloquinho" onmousedown="modeTo(`picker`)"
+                        style="margin: -10px 10px 0px 0px; width: 24px; font-size:24px;">💉</span>
+                    <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="bloquinho">
+                        <span
+                            style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span>
 
+                    </span><br>
+                    🌈<input type="range" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
+                        value="0"> <br>
+                    ◒ <input type="range" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)"
+                        value="100"> <br>
+                    🔆 <input type="range" id="L" name="cor" min="0" max="100" oninput="mudaCorQ(2,this.value)"
+                        value="50"> <br>
+                    💧<input type="range" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+                        step="0.01" value="1"><br>
+                </div>
 
-
-            <div id="paleta2" class="fundobranco">
-                        <br>Use o 📌 para guardar <br>ou remover suas cores favoritas.
-                    </div>
-<div id="paleta" class="fundobranco"></div>
-         <div id="menu" class="fundobranco" onmouseover="mostra()">
- <span id="pickerc" title="Pega cor" class="bloquinho" onmousedown="modeTo(`picker`)"  style="margin: -10px 10px 0px 0px; width: 24px; font-size:24px;">💉</span>
-                    <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar"
-
-                        class="bloquinho">
-                        <span style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span>
-
-                </span><br>
-
-                    🌈<input type="range"  id="H" name="cor" min="0" max="359"
-                        oninput="mudaCorQ(0,this.value)" value="0"> <br>
-                    ◒ <input type="range"  id="S" name="cor" min="0" max="100"
-                        oninput="mudaCorQ(1,this.value)" value="100"> <br>
-                     🔆 <input type="range" id="L" name="cor" min="0" max="100"
-                        oninput="mudaCorQ(2,this.value)" value="50"> <br>
-                    💧<input type="range"  id="A" name="cor" min="0.01" max="1"
-                        oninput="mudaCorQ(3,this.value)" step="0.01" value="1"><br>
-
-
+                <div id="paleta3" class="fundobranco"></div>
             </div>
 
-<div id="paleta3" class="fundobranco"></div>
-                </div>
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-<span title="Configurações" class="botao" onmousedown="modeTo('fundo')">🖥️  menu configurações ❌</span>
-			<span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
+                <span title="Configurações" class="botao" onmousedown="modeTo('fundo')">🖥️ menu configurações ❌</span>
+                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
                 <!--
                 <span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span-->
 
@@ -234,7 +227,7 @@ versao 0.9.9a<br>
             </div>
 
             <div id="menupreencher" class="fundobranco submenu">
-                  <span class="botao" onmousedown="removeClass()" >🪣 Preencher tudo ❌</span>
+                <span class="botao" onmousedown="removeClass()">🪣 Preencher tudo ❌</span>
                 <span width="140px" style="margin: 8px 80px; display: block">
                     <span onmousedown="mudaCorBG('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">
@@ -266,30 +259,28 @@ versao 0.9.9a<br>
                     ❌ Cancelar</span>
 
             </div>
+
             <div id="menurotacionar" class="fundobranco submenu">
                 <span id="rotacionar" class="botao" onclick="rotacionar()">🔃 Rotacionar a tela </span>
                 <span id="rotacionar" class="botao" onclick="comandoR()">✔️ confirmar rotação </span>
 
             </div>
         </div>
+
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
             <div id="ferramentas" class="ferramentas">
-
                 <span id="fundo" title="Configurações" class="mais" onmousedown="modeTo('fundo')">🖥️</span>
                 <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
                 <span class="mais" title="Limpar tela" onmousedown="clearArea()">🗑</span>
-
                 <span id="imagem" title="adicionar imagem" class="mais" onmousedown="modeTo('imagem')"> 📤</span>
                 <span id="btn-download" title="salvar imagem" class="mais">📥</span>
                 <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
                     onmouseleave="undoTEnd()">↩️</span>
                 <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
                     onmouseleave="redoTEnd()">↪️</span>
-
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
-
-                  <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
+                <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
             </div>
 
             <div id="ferramentas2" class="ferramentas">
@@ -335,11 +326,8 @@ versao 0.9.9a<br>
         </div>
     </div>
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-        style="visibility: hidden; position: absolute; left:0px;">
-    </canvas>
-    <script type="text/javascript" src="js/desenho.js">
-
-    </script>
+        style="visibility: hidden; position: absolute; left:0px;"></canvas>
+    <script type="text/javascript" src="js/desenho.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </body>
 

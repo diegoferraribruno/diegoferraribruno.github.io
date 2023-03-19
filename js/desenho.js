@@ -269,9 +269,9 @@ function night() {
         testarray2[i].classList.toggle("night")
     }
     nightmode = !nightmode
-    if (nightmode){
+    if (nightmode) {
         Fundo('black')
-    }else{
+    } else {
         Fundo("white")
     }
 
@@ -361,7 +361,7 @@ function x2(w = 320, h = 320) {
         win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 60 + "px";
     }
-    setTimeout(()=> comandosExec(),40)
+    setTimeout(() => comandosExec(), 40)
 }
 function toggleHand() {
     if (mode != "zoom") {
@@ -397,15 +397,15 @@ function resizeScreen() {
     }
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";
- setTimeout(()=> comandosExec(),40)
+    setTimeout(() => comandosExec(), 40)
 }
 
 function startup() {
-	window.scrollTo(0,1);
-	document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(detail){
-	trocaEmoji(event.detail.unicode);
-    emojipicker();
-});
+    window.scrollTo(0, 1);
+    document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(detail) {
+        trocaEmoji(event.detail.unicode);
+        emojipicker();
+    });
     Fundo("white")
     Fundo('img/grid3.png')
     counter = setInterval(() => undoing(), 30)
@@ -466,26 +466,26 @@ function startup() {
         zoomScale.indexOf(zoomFactor);
 
     desenhoDiv.addEventListener("gesturestart", prevent);
-	win.addEventListener("touchmove", prevent);
-	canvas.addEventListener("pointerdown", handleStart);
-	canvas.addEventListener("pointerup", handleUp);
-	canvas.addEventListener("pointercancel", handleCancel);
-	canvas.addEventListener("pointermove", handleMove);
-	canvas.addEventListener("pointerleave", handleEnd);
+    win.addEventListener("touchmove", prevent);
+    canvas.addEventListener("pointerdown", handleStart);
+    canvas.addEventListener("pointerup", handleUp);
+    canvas.addEventListener("pointercancel", handleCancel);
+    canvas.addEventListener("pointermove", handleMove);
+    canvas.addEventListener("pointerleave", handleEnd);
 
 
     document.getElementById("btn-download").addEventListener("click", function (e) {
-            //   rotacionaCanva(rotationDeg)
-            //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-            let nome = prompt("nome da arte:", "desenho");
-            if (nome != null && nome != "") {
-                var dataURL = canvas
-                    .toDataURL("image/png")
-                    .replace("image/png", "image/octet-stream");
-                //downloadImage(dataURL, 'my-canvas.jpeg');
-                downloadImage(dataURL, `${nome}.png`);
-            }
-        });
+        //   rotacionaCanva(rotationDeg)
+        //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+        let nome = prompt("nome da arte:", "desenho");
+        if (nome != null && nome != "") {
+            var dataURL = canvas
+                .toDataURL("image/png")
+                .replace("image/png", "image/octet-stream");
+            //downloadImage(dataURL, 'my-canvas.jpeg');
+            downloadImage(dataURL, `${nome}.png`);
+        }
+    });
     initStrokeRange()
     setTimeout(() => resizeScreen(), 10)
 }
@@ -671,7 +671,6 @@ function memorySwap(GCO) {
         blobb = []
         comando = []
 
-
         setTimeout(() => {
             comandos = []
             let lenb = swaps.length
@@ -680,12 +679,32 @@ function memorySwap(GCO) {
             for (i = 0; i < lenb; i++) {
                 comandos.push(swaps[i]);
             }
-
+            clearBrushes()
         }, 40)
     }
 }
 var executing = false
 var undoLevel = 0
+
+function clearBrushes() {
+    //preciso arrumar isso aqui para limpar os brushes nao usados.
+    len = comandos.length
+    let usedBrushes = []
+    for (i = 0; i < len; i++) {
+        if (comandos[i][0] == "brush") {
+            if (!usedBrushes.includes(comandos[i][8])) {
+                usedBrushes.push[comandos[i][8]]
+            }
+        }
+    }
+    let len2 = newBrushes.length
+    //let superNewBrushes = []
+    for (i = 0; i < len2; i++) {
+        if (!usedBrushes.icludes(newBrushes[i])) {
+            newBrushes[i] = []
+        }
+    }
+}
 
 function comandosExec() {
     if (executing == false) {
@@ -700,6 +719,11 @@ function exec(coma = 0) {
     let scope = lenc - undoLevel
     if (scope > coma) {
         switch (comandos[coma][0]) {
+            case "CB":
+                changeBrush(comandos[coma][1], comandos[coma][2], comandos[coma][3], comandos[coma][4])
+                coma++;
+                exec(coma)
+                break;
             case "f":
                 let myImg = document.createElement("img");
                 myImg.src = URL.createObjectURL(comandos[coma][2])
@@ -789,17 +813,17 @@ function exec(coma = 0) {
                 coma++;
                 exec(coma)
                 break;
-             case "e":
+            case "e":
                 changeGCO(comandos[coma][1]);
-                context.font = comandos[coma][5]+'px serif'
-				context.textAlign = "center";
-				context.textBaseline = "middle";
-				context.fillText(comandos[coma][4], comandos[coma][2], comandos[coma][3])
-				coma++;
+                context.font = comandos[coma][5] + 'px serif'
+                context.textAlign = "center";
+                context.textBaseline = "middle";
+                context.fillText(comandos[coma][4], comandos[coma][2], comandos[coma][3])
+                coma++;
                 exec(coma)
-				break;
-			case "brush":
-			drawBrush(
+                break;
+            case "brush":
+                drawBrush(
                     comandos[coma][1],
                     comandos[coma][2],
                     comandos[coma][3],
@@ -809,7 +833,7 @@ function exec(coma = 0) {
                     comandos[coma][7],
                     comandos[coma][8]
                 );
-                	coma++;
+                coma++;
                 exec(coma)
                 break;
         }
@@ -820,66 +844,76 @@ function exec(coma = 0) {
 }
 var brushMode = 1
 
-let brushesImg = []
+let brushesImg = {}
 
 var copo = []
 
-function criarPinceis(){
-	for (i=0;i<10;i++){
-	let brush2 = new Image();
-	  brush2.src = 'img/brush'+i+'.png';
-      brush2.setAttribute("onmousedown","selectBrush('"+i+"')")
-	  brush2.setAttribute("style","width:32px; height:32px;")
-		copo.push(brush2)
+function criarPinceis() {
+    for (i = 0; i < 10; i++) {
+        let brush2 = new Image();
+        brush2.src = 'img/brush' + i + '.png';
+        brush2.setAttribute("onmousedown", "selectBrush('" + i + "')")
+        brush2.setAttribute("style", "width:32px; height:32px;")
+        copo.push(brush2)
 
-      brush2.setAttribute("onmousedown","selectBrush('"+ i+"')")
-	  }
-	  for (i in copo){document.getElementById("pinceis").appendChild(copo[i])}
-	  for (i in copo){document.getElementById("pinceis").appendChild(copo[i])}
-	  }
+        brush2.setAttribute("onmousedown", "selectBrush('" + i + "')")
+    }
+    for (i in copo) { document.getElementById("pinceis").appendChild(copo[i]) }
+    for (i in copo) { document.getElementById("pinceis").appendChild(copo[i]) }
+}
 criarPinceis()
 
 var brush = new Image();
-	  brush.src = 'img/brush1.png';
+brush.src = 'img/brush1.png';
 
-	  brush.onload = function(){
-		  changeBrush()
-	//	document.getElementById("pinceis").appendChild(brush)
-      //brush.setAttribute("onmousedown","changeBrush('img/brush1.png')")
-	  }
-
+brush.onload = function () {
+    changeBrush()
+    //	document.getElementById("pinceis").appendChild(brush)
+    //brush.setAttribute("onmousedown","changeBrush('img/brush1.png')")
+}
 var newBrush = document.createElement("img")
 newBrush.src = brush.src
-function selectBrush(src){
-	brush = copo[src]
-changeBrush()
-	}
-function changeBrush(src=brush.src){
-	brushMode = 1
-	var brushCanva = document.getElementById("brushCanva")
-	var brushCtx = brushCanva.getContext("2d");
-	let tam = strokeWidth
-	if (mode == "apagar"){
-		tam = estrokeWidth
-	}
-	brushCanva.height = tam
-	brushCanva.width = tam
-	brushCtx.fillStyle = strokeColor;
+var newBrushes = {}
+var brushCount = 0
 
-	brushCtx.fillRect(0,0,tam, tam)
-	brushCtx.globalCompositeOperation = 'destination-in'
-	brushCtx.drawImage(brush, 0, 0, tam, tam)
-	brushCtx.globalCompositeOperation = globalComposite
-	setTimeout(()=>{newBrush.crossOrigin = "anonymous"
-    newBrush.src = brushCanva.toDataURL("image/png");
-cursor.style.backgroundImage = 'url("'+newBrush.src+'")';
-	 cursor.style.opacity = 0.7},100)
+function createColorBrush() {
+    brushCount++
+}
+
+createColorBrush()
+
+function selectBrush(src) {
+    brush = copo[src]
+    changeBrush()
+}
+function changeBrush(src = brush.src, tam = strokeWidth, cor = strokeColor) {
+    brushMode = 1
+    var brushCanva = document.getElementById("brushCanva")
+    var brushCtx = brushCanva.getContext("2d");
+    brushCanva.height = tam
+    brushCanva.width = tam
+    brushCtx.fillStyle = cor;
+
+    brushCtx.fillRect(0, 0, tam, tam)
+    brushCtx.globalCompositeOperation = 'destination-in'
+    brushCtx.drawImage(brush, 0, 0, tam, tam)
+    brushCtx.globalCompositeOperation = 'destination-over'
+    setTimeout(() => {
+        brushCount++
+        let newNewBrush = new Image();
+        newNewBrush.src = brushCanva.toDataURL("image/png");
+        newBrush.crossOrigin = "anonymous"
+        newBrush.src = newNewBrush.src
+        cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
+        cursor.style.opacity = 0.7
+        newBrushes[brushCount] = newNewBrush
+    }, 100)
 
 
     //document.getElementById("menupintar").appendChild(newBrush)
 
 
-	}
+}
 function desenha(
     CMD,
     GCO,
@@ -893,7 +927,10 @@ function desenha(
 ) {
     let comando = []
     switch (CMD) {
-
+        case "CB":
+            comando = ["CB", GCO, X, Y, eoX]
+            comandos.push(comando)
+            break;
         case "p":
             comando = ["p", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin];
             comandos.push(comando)
@@ -939,18 +976,18 @@ function desenha(
             context.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case "e":
-            comando = ["e",GCO,X,Y,eoX,eoY]
-             context.font = eoY+'px serif'
-		// use these alignment properties for "better" positioning
-		context.textAlign = "center";
-		context.textBaseline = "middle";
-		context.fillText(eoX, X, Y)
+            comando = ["e", GCO, X, Y, eoX, eoY]
+            context.font = eoY + 'px serif'
+            // use these alignment properties for "better" positioning
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillText(eoX, X, Y)
             comandos.push(comando)
             break
-		case "brush":
+        case "brush":
             comando = ["brush", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin]
 
-			drawBrush(GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin)
+            drawBrush(GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin)
             //context.drawImage(brush, X, Y, 8, 8);
             comandos.push(comando)
             break;
@@ -970,230 +1007,234 @@ function changeGCO(GCO = globalComposite) {
     context.globalCompositeOperation = GCO
 }
 
- function handleStart(evt) {
-	removeClass();
-	evt.preventDefault();
-		origin.x =  (evt.pageX - offsetX)/zoomFactor
-		origin.y = (evt.pageY - offsetY)/zoomFactor
-		offsetX = canvas.getBoundingClientRect().left;
-		offsetY = canvas.getBoundingClientRect().top;
-	if (mode === "recortar") {
-		swapImg = canvas.toDataURL("image/png");
-		blob = dataURItoBlob(swapImg);
-		tempImg = document.createElement("img");
-		tempImg.src = URL.createObjectURL(blob);
-		isSelecting = true;
-	}
-	if (mode  == "emoji") {
-		isEmoji = true
-		isDrawing = false
-	}
-	if (mode == "zoom") {
-		isGrabing = true;
-	}
-	if (mode=="pintar" || mode == "apagar" || mode == "cores") {
-		isDrawing = true
-					mouseOver = true;
+function handleStart(evt) {
+    removeClass();
+    evt.preventDefault();
+    origin.x = (evt.pageX - offsetX) / zoomFactor
+    origin.y = (evt.pageY - offsetY) / zoomFactor
+    offsetX = canvas.getBoundingClientRect().left;
+    offsetY = canvas.getBoundingClientRect().top;
+    if (mode === "recortar") {
+        swapImg = canvas.toDataURL("image/png");
+        blob = dataURItoBlob(swapImg);
+        tempImg = document.createElement("img");
+        tempImg.src = URL.createObjectURL(blob);
+        isSelecting = true;
+    }
+    if (mode == "emoji") {
+        isEmoji = true
+        isDrawing = false
+    }
+    if (mode == "zoom") {
+        isGrabing = true;
+    }
+    if (mode == "pintar" || mode == "apagar" || mode == "cores") {
+        isDrawing = true
+        mouseOver = true;
 
-	offsetX = canvas.getBoundingClientRect().left;
-	offsetY = canvas.getBoundingClientRect().top;
+        offsetX = canvas.getBoundingClientRect().left;
+        offsetY = canvas.getBoundingClientRect().top;
 
-	let x = (evt.pageX - offsetX)/zoomFactor;
-	let y = (evt.pageY -offsetY)/zoomFactor;
-			  if (brushMode==0){
-			  desenha(
-                    "p",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y+0.1,
-                    strokeColor,
-                    stroke,
-                    linejoin
-                );}
-                else{
-					desenha(
-                    "brush",
-                    context.globalCompositeOperation,
-                    x,
-                    y ,
-                    origin.x,
-                    origin.y,
-                    strokeColor,
-                    strokeWidth,
-                   newBrush.src
-                );}
+        let x = (evt.pageX - offsetX) / zoomFactor;
+        let y = (evt.pageY - offsetY) / zoomFactor;
+        if (brushMode == 0) {
+            desenha(
+                "p",
+                context.globalCompositeOperation,
+                x,
+                y,
+                origin.x,
+                origin.y + 0.1,
+                strokeColor,
+                stroke,
+                linejoin
+            );
+        }
+        else {
+            desenha(
+                "brush",
+                context.globalCompositeOperation,
+                x,
+                y,
+                origin.x,
+                origin.y,
+                strokeColor,
+                strokeWidth,
+                brushCount
+            );
+        }
 
-	}
-	if (mode == "picker") {
-		isPicking = true
-	}
+    }
+    if (mode == "picker") {
+        isPicking = true
+    }
 
 }
 
 
 function handleMove(evt) {
 
-	evt.preventDefault();
+    evt.preventDefault();
 
-	offsetX = canvas.getBoundingClientRect().left;
-	offsetY = canvas.getBoundingClientRect().top;
+    offsetX = canvas.getBoundingClientRect().left;
+    offsetY = canvas.getBoundingClientRect().top;
 
-	let x = (evt.pageX - offsetX)/zoomFactor
-	let y = (evt.pageY -offsetY)/zoomFactor
+    let x = (evt.pageX - offsetX) / zoomFactor
+    let y = (evt.pageY - offsetY) / zoomFactor
 
-	let over = checkOverCanvas(x, y)
-	if (isSelecting === true && over === true) {
-		cropEnd.x = (evt.pageX - canvas.offsetLeft)/zoomFactor
-		cropEnd.y = (evt.pageY - canvas.offsetTop)/zoomFactor
-		context.strokeStyle = "#ffccccdd";
-		desenhaRetangulo();
+    let over = checkOverCanvas(x, y)
+    if (isSelecting === true && over === true) {
+        cropEnd.x = (evt.pageX - canvas.offsetLeft) / zoomFactor
+        cropEnd.y = (evt.pageY - canvas.offsetTop) / zoomFactor
+        context.strokeStyle = "#ffccccdd";
+        desenhaRetangulo();
 
-	}if (isDrawing === true ) {
-		evt.preventDefault();
-			mouseOver = true;
-			 if (brushMode==0){
-			  desenha(
-                    "p",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-                    strokeColor,
-                    stroke,
-                    linejoin
-                );}   else{
-					desenha(
-                    "brush",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-					strokeColor,
-					strokeWidth,
-					newBrush.src
-                );}
-	}
-	if (isPicking){
-			var imageData = context.getImageData(x, y, 1, 1).data;
-            if (imageData[3] > 1) {
-                RGBAToHSLA(
-                    imageData[0],
-                    imageData[1],
-                    imageData[2],
-                    imageData[3]
-                );
-                setStrokeColor();
-            }
-	}
-	if (isGrabing) {
-
-evt.preventDefault();
-	   scrollCanva((origin.x -x)*zoomFactor, (origin.y-y)*zoomFactor);
+    } if (isDrawing === true) {
+        evt.preventDefault();
+        mouseOver = true;
+        if (brushMode == 0) {
+            desenha(
+                "p",
+                context.globalCompositeOperation,
+                x,
+                y,
+                origin.x,
+                origin.y,
+                strokeColor,
+                stroke,
+                linejoin
+            );
+        } else {
+            desenha(
+                "brush",
+                context.globalCompositeOperation,
+                x,
+                y,
+                origin.x,
+                origin.y,
+                strokeColor,
+                strokeWidth,
+                brushCount
+            );
+        }
     }
-	if (!isGrabing){
-	origin.x = x
-	origin.y = y
-}
-	cursor.style.left = evt.pageX + "px";
-	cursor.style.top = evt.pageY + "px";
+    if (isPicking) {
+        var imageData = context.getImageData(x, y, 1, 1).data;
+        if (imageData[3] > 1) {
+            RGBAToHSLA(
+                imageData[0],
+                imageData[1],
+                imageData[2],
+                imageData[3]
+            );
+            setStrokeColor();
+        }
+    }
+    if (isGrabing) {
+
+        evt.preventDefault();
+        scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
+    }
+    if (!isGrabing) {
+        origin.x = x
+        origin.y = y
+    }
+    cursor.style.left = evt.pageX + "px";
+    cursor.style.top = evt.pageY + "px";
 }
 function handleUp(evt) {
-	offsetX = canvas.getBoundingClientRect().left;
-	offsetY = canvas.getBoundingClientRect().top;
-	let over = checkOverCanvas(evt.pageX, evt.pageY)
-	if (isSelecting === true && over === true) {
-		cropEnd.x = evt.pageX - canvas.offsetLeft
-		cropEnd.y = evt.pageY - canvas.offsetTop
-		desenhaRetangulo();
-	}
-	if (mode  === "emoji" && isEmoji){
-		x = (evt.pageX- offsetX)/zoomFactor
-		y = (evt.pageY -offsetY)/zoomFactor
-		let size = document.getElementById("emosize").value
-		desenha(
-			"e",
-			 context.globalCompositeOperation,
-			 x,
-			 y,
-			 emoji,
-			 size
-			);
-		isEmoji = false
-	}
-	if (mode === "recortar") {
+    offsetX = canvas.getBoundingClientRect().left;
+    offsetY = canvas.getBoundingClientRect().top;
+    let over = checkOverCanvas(evt.pageX, evt.pageY)
+    if (isSelecting === true && over === true) {
+        cropEnd.x = evt.pageX - canvas.offsetLeft
+        cropEnd.y = evt.pageY - canvas.offsetTop
+        desenhaRetangulo();
+    }
+    if (mode === "emoji" && isEmoji) {
+        x = (evt.pageX - offsetX) / zoomFactor
+        y = (evt.pageY - offsetY) / zoomFactor
+        let size = document.getElementById("emosize").value
+        desenha(
+            "e",
+            context.globalCompositeOperation,
+            x,
+            y,
+            emoji,
+            size
+        );
+        isEmoji = false
+    }
+    if (mode === "recortar") {
         mostraMenu("recortar")
         isSelecting = false
     }
 
-	if (isPicking){
-			x = (evt.pageX- offsetX)/zoomFactor
-		y = (evt.pageY -offsetY)/zoomFactor
-		var imageData = context.getImageData(x, y, 1, 1).data;
-		if (imageData[3] > 1) {
-			RGBAToHSLA(
-				imageData[0],
-				imageData[1],
-				imageData[2],
-				imageData[3]
-			);
-			setStrokeColor();
-		}
-		isPicking = false
-	}
-	    isDrawing = false;
-        isGrabing = false;
+    if (isPicking) {
+        x = (evt.pageX - offsetX) / zoomFactor
+        y = (evt.pageY - offsetY) / zoomFactor
+        var imageData = context.getImageData(x, y, 1, 1).data;
+        if (imageData[3] > 1) {
+            RGBAToHSLA(
+                imageData[0],
+                imageData[1],
+                imageData[2],
+                imageData[3]
+            );
+            setStrokeColor();
+        }
+        isPicking = false
+    }
+    isDrawing = false;
+    isGrabing = false;
 }
 
- function handleEnd(evt){
-	  mouseOver = false;
-	  //console.log(evt)
-        setTimeout(() => {
-            if (mouseOver == false) {
-                isDrawing = false;
-                isGrabing = false;
-                isPicking = false;
-                isSelecting = false;
-            }
-        }, 500);
- }
+function handleEnd(evt) {
+    mouseOver = false;
+    //console.log(evt)
+    setTimeout(() => {
+        if (mouseOver == false) {
+            isDrawing = false;
+            isGrabing = false;
+            isPicking = false;
+            isSelecting = false;
+        }
+    }, 500);
+}
 
 function handleCancel(evt) {
-	evt.preventDefault();
+    evt.preventDefault();
 }
 
 function checkOverCanvas(x, y) {
-	if (x > canvas.offsetLeft && x < canvas.offsetWidth + canvas.offsetLeft && y > canvas.offsetTop && y < canvas.offsetHeight + canvas.offsetTop) {
-		return true;
-	} else {
-		return false;
-	}
+    if (x > canvas.offsetLeft && x < canvas.offsetWidth + canvas.offsetLeft && y > canvas.offsetTop && y < canvas.offsetHeight + canvas.offsetTop) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function desenhaRetangulo() {
-            context.strokeWidth = 0.5
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.setLineDash([1, 1]);
-            context.beginPath();
-            context.globalCompositeOperation = "source-over"
-            context.rect(
-                origin.x,
-                origin.y,
-                cropEnd.x - origin.x,
-                cropEnd.y - origin.y
-            );
-            context.stroke();
-            context.globalCompositeOperation = "destination-over";
-            context.drawImage(
-                tempImg,
-                0,
-                0,
-                tempImg.width,
-                tempImg.height);
-        }
+    context.strokeWidth = 0.5
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.setLineDash([1, 1]);
+    context.beginPath();
+    context.globalCompositeOperation = "source-over"
+    context.rect(
+        origin.x,
+        origin.y,
+        cropEnd.x - origin.x,
+        cropEnd.y - origin.y
+    );
+    context.stroke();
+    context.globalCompositeOperation = "destination-over";
+    context.drawImage(
+        tempImg,
+        0,
+        0,
+        tempImg.width,
+        tempImg.height);
+}
 
 function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     changeGCO(GCO);
@@ -1207,41 +1248,41 @@ function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     context.stroke();
 }
 
-function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin){
-	let start = {x:x1,y:y1}
-	let end = {x:x2, y:y2}
-	var halfBrushW = stroke/2;
-	var halfBrushH = stroke/2;
-	var distance = parseInt( Trig.distanceBetween2Points( start, end ) );
-	var angle = Trig.angleBetween2Points( start, end );
-	var x,y;
-	changeGCO(GCO);
-	context.lineWidth = stroke;
-	var strokeImg = new Image();
-	strokeImg.src = linejoin
-	strokeImg.onload = function(){
-		for ( var z=0; (z<=distance || z==0); z++ )
-		{
-			x = start.x + (Math.sin(angle) * z) - halfBrushW;
-			y = start.y + (Math.cos(angle) * z) - halfBrushH;
-			//console.log( x, y, angle, z );
-			context.drawImage(strokeImg, x, y,stroke,stroke);
-		}}
-	}
+function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
+    let start = { x: x1, y: y1 }
+    let end = { x: x2, y: y2 }
+    var halfBrushW = stroke / 2;
+    var halfBrushH = stroke / 2;
+    var distance = parseInt(Trig.distanceBetween2Points(start, end));
+    var angle = Trig.angleBetween2Points(start, end);
+    var x, y;
+    changeGCO(GCO);
+    context.lineWidth = stroke;
+    /*var strokeImg = new Image();
+    strokeImg.src = linejoin
+    strokeImg.onload = function () {*/
+    for (var z = 0; (z <= distance || z == 0); z++) {
+        x = start.x + (Math.sin(angle) * z) - halfBrushW;
+        y = start.y + (Math.cos(angle) * z) - halfBrushH;
+        //console.log( x, y, angle, z );
+        context.drawImage(newBrushes[linejoin], x, y, stroke, stroke);
+    }
+    //  }
+}
 var Trig = {
-	distanceBetween2Points: function ( point1, point2 ) {
+    distanceBetween2Points: function (point1, point2) {
 
-		var dx = point2.x - point1.x;
-		var dy = point2.y - point1.y;
-		return Math.sqrt( Math.pow( dx, 2 ) + Math.pow( dy, 2 ) );
-	},
+        var dx = point2.x - point1.x;
+        var dy = point2.y - point1.y;
+        return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+    },
 
-	angleBetween2Points: function ( point1, point2 ) {
+    angleBetween2Points: function (point1, point2) {
 
-		var dx = point2.x - point1.x;
-		var dy = point2.y - point1.y;
-		return Math.atan2( dx, dy );
-	}
+        var dx = point2.x - point1.x;
+        var dy = point2.y - point1.y;
+        return Math.atan2(dx, dy);
+    }
 }
 function clearArea() {
     let confirma = confirm(
@@ -1314,7 +1355,7 @@ async function modeTo(qual) {
             memorySwap(globalComposite);
             break;
         case "apagar":
-        brushMode = 0;
+            brushMode = 0;
             setStrokeSize(estrokeWidth);
             cursorColor();
             mudaCorAlpha();
@@ -1354,15 +1395,15 @@ async function modeTo(qual) {
         case "imagem":
             break;
         case "emoji":
-			// setStrokeSize(strokeWidth);
-           // setStrokeColor();
-           setTimeout(()=>{
+            // setStrokeSize(strokeWidth);
+            // setStrokeColor();
+            setTimeout(() => {
 
-           emojiSizeRange();
-           },40)
+                emojiSizeRange();
+            }, 40)
             changeGCO();
 
-			break;
+            break;
         case _:
             break;
     }
@@ -1515,7 +1556,7 @@ function camera() {
 }
 function removeVideo() {
     setTimeout(() => {
-	stopVideoStream()
+        stopVideoStream()
         removeElement("video")
         removeElement("videoC")
         removeElement("btnChangeCam")
@@ -1614,12 +1655,12 @@ function criapaleta3() {
         paleta3 += `<span onmousedown='mudaCor("hsla(${cor},100%,50%,${hsla[3]
             })")' class='bloquinho' style='background-color:hsla(${cor},100%,50%,${hsla[3] * 4 + 0.2});'> </span>`;
         document.getElementById("paleta3").innerHTML = paleta3;
-    document.getElementById("paleta3").innerHTML +=
-        `<span onmousedown='mudaCor("hsla(0, 0%, 50%, ` + hsla[3] * 4 + `)")' class='bloquinho' ` +
-        "style='background-color:hsla(0, 0%, 50%, " + hsla[3] * 4 + ")'> </span>";
-    document.getElementById("paleta3").innerHTML +=
-        `<span onmousedown='mudaCor("P")' class='bloquinho' ` +
-        "style='background-color:hsla(0, 0%, 0%, " + hsla[3] * 4 + ")'> </span>";
+        document.getElementById("paleta3").innerHTML +=
+            `<span onmousedown='mudaCor("hsla(0, 0%, 50%, ` + hsla[3] * 4 + `)")' class='bloquinho' ` +
+            "style='background-color:hsla(0, 0%, 50%, " + hsla[3] * 4 + ")'> </span>";
+        document.getElementById("paleta3").innerHTML +=
+            `<span onmousedown='mudaCor("P")' class='bloquinho' ` +
+            "style='background-color:hsla(0, 0%, 0%, " + hsla[3] * 4 + ")'> </span>";
     }
 } criapaleta3()
 let strokeRange = [0.3, 0.5, 0.7, 1, 2]
@@ -1641,7 +1682,7 @@ function setStrokeSize(value) {
     let brushes = ["cursor"];
     for (i in brushes) {
         let tamanho = document.getElementById(brushes[i]);
-        if (mode == "pintar" || mode == "cores"|| mode == "cores") {
+        if (mode == "pintar" || mode == "cores" || mode == "cores") {
             strokeWidth = value;
             tamanho.style.width = strokeWidth * zoomFactor + "px";
             tamanho.style.height = strokeWidth * zoomFactor + "px";
@@ -1654,13 +1695,13 @@ function setStrokeSize(value) {
                 //tamanho.style.backgroundColor = strokeColor;
             }
 
-                     stroke = strokeWidth;
+            stroke = strokeWidth;
             document.getElementById("tpx").value = value;
         } else if (mode == "apagar") {
             estrokeWidth = value;
             tamanho.style.width = estrokeWidth * zoomFactor + "px";
             tamanho.style.height = estrokeWidth * zoomFactor + "px";
-            tamanho.style.lineHeight = estrokeWidth * zoomFactor+"px";
+            tamanho.style.lineHeight = estrokeWidth * zoomFactor + "px";
 
             tamanho.style.marginTop =
                 (estrokeWidth / 2) * zoomFactor * -1 + "px";
@@ -1701,7 +1742,7 @@ function backPaint() {
     cursor.classList.toggle("cursorIndex");
     cursor.classList.toggle("selected");
     changeGCO();
-    if (mode=="apagar"){modeTo("pintar")}
+    if (mode == "apagar") { modeTo("pintar") }
     //removeClass()
 }
 
@@ -1756,9 +1797,9 @@ function setStrokeColor() {
         document.getElementById(objs[i]).style.backgroundColor = strokeColor;
         document.getElementById(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
     }
-      changeBrush()
+    changeBrush()
 
-     }
+}
 setStrokeColor();
 
 function mudaCor(valor) {
@@ -1800,7 +1841,9 @@ function mudaCor(valor) {
     toHslaObject(strokeColor);
     setStrokeColor();
     criaPaleta();
-    changeBrush()
+    desenha("CB", strokeColor,
+        strokeWidth,
+        brushCount)
 
 }
 // Save | Download image from stackoverflow
@@ -1813,11 +1856,11 @@ function downloadImage(data, filename = "untitled.png") {
     a.download = filename;
     document.body.appendChild(a);
     a.click();
-    setTimeout(()=> {confirmLink("apoio.html")},1200);
+    setTimeout(() => { confirmLink("apoio.html") }, 1200);
     //
 }
 function changeLine() {
-	brushMode=0
+    brushMode = 0
     lineJoinsCount++;
     if (lineJoinsCount > 1) {
         lineJoinsCount = 0;
@@ -1867,22 +1910,23 @@ function ZOOM(a) {
         win.scrollLeft = 0;
     }, 10);
     zoomFactor = Number(a);
-    if (zoomFactor==1){
-		  setTimeout(
-        () =>
-		scrollCanva(canvas.width,canvas.height),
-        30
-    );
-		}else{
+    if (zoomFactor == 1) {
+        setTimeout(
+            () =>
+                scrollCanva(canvas.width, canvas.height),
+            30
+        );
+    } else {
 
-    setTimeout(
-        () =>
-            scrollCanva(
-                ultimoToque.x * zoomFactor - canvas.width / 2,
-                ultimoToque.y * zoomFactor - canvas.height / 2
-            ),
-        30
-    );}
+        setTimeout(
+            () =>
+                scrollCanva(
+                    ultimoToque.x * zoomFactor - canvas.width / 2,
+                    ultimoToque.y * zoomFactor - canvas.height / 2
+                ),
+            30
+        );
+    }
     setTimeout(() => setZoom(zoomFactor, canvasDiv), 10);
 
     setStrokeSize(strokeWidth);
@@ -2002,31 +2046,32 @@ function convertToImg() {
     comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
     comandos.unshift(comando)
 }
-	function emojiSizeRange(){
-		valor = document.getElementById("emosize").value
-		cursor.style.width = 0 + "px";
-        cursor.style.height = 0 + "px";
-        cursor.style.lineHeight = 1+ "px";
-        cursor.style.marginTop = 0 + "px";
-        cursor.style.marginLeft = 0 + "px";
-		valor = valor*zoomFactor
-		document.getElementById("emoExemplo").style.fontSize= valor+"px"
-		cursor.innerHTML='<span id="emoExemplo2" style="position:absolute; display:block; margin-left:-' +valor/2+'px; height:'+valor+'px; margin-top:-' +valor/10+'px; ">'+emoji+'</span>'
-		document.getElementById("emoExemplo2").style.fontSize = valor+"px"
-		}
-function emojipicker(){
-
-  let emojip = document.getElementById("emojipicker");
-  if (emojip.style.display == "none"){
-    emojip.style.display = "block";
-  }
-    else{
-      emojip.style.display = "none";}
+function emojiSizeRange() {
+    valor = document.getElementById("emosize").value
+    cursor.style.width = 0 + "px";
+    cursor.style.height = 0 + "px";
+    cursor.style.lineHeight = 1 + "px";
+    cursor.style.marginTop = 0 + "px";
+    cursor.style.marginLeft = 0 + "px";
+    valor = valor * zoomFactor
+    document.getElementById("emoExemplo").style.fontSize = valor + "px"
+    cursor.innerHTML = '<span id="emoExemplo2" style="position:absolute; display:block; margin-left:-' + valor / 2 + 'px; height:' + valor + 'px; margin-top:-' + valor / 10 + 'px; ">' + emoji + '</span>'
+    document.getElementById("emoExemplo2").style.fontSize = valor + "px"
 }
-function trocaEmoji(emo){
-	emoji = emo
-	emoExemplo.innerHTML = emo
-	emojiSizeRange(document.getElementById("emosize").value)
-	emoexemplo = document.getElementById("emoexemplo")
+function emojipicker() {
 
-	}
+    let emojip = document.getElementById("emojipicker");
+    if (emojip.style.display == "none") {
+        emojip.style.display = "block";
+    }
+    else {
+        emojip.style.display = "none";
+    }
+}
+function trocaEmoji(emo) {
+    emoji = emo
+    emoExemplo.innerHTML = emo
+    emojiSizeRange(document.getElementById("emosize").value)
+    emoexemplo = document.getElementById("emoexemplo")
+
+}
