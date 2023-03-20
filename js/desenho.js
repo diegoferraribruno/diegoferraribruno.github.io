@@ -35,9 +35,9 @@ const cursor = document.getElementById("cursor");
 const win = document.getElementById("canvas_window");
 const desenhoDiv = document.getElementById("desenho_div");
 const images = []
-var audio = new Audio('./audio/back_001.wav');
-var audio2 = new Audio('./audio/click_005.wav');
-audio.volume = 0.4;
+var audio2 = new Audio('./audio/back_001.wav');
+var audio = new Audio('./audio/switch12.wav');
+audio.volume = 0.2;
 audio2.volume = 0.4;
 var useFrontCamera = true; //moved up from modeto("cam") to test.
 var videoStream;
@@ -209,7 +209,7 @@ var checkOrientation = function () {
 
             document.getElementById("ferramentas").classList.add("horizontal");
             document.getElementById("ferramentas2").classList.add("horizontal2");
-            document.getElementsById("menus").style.top = "90px";
+            document.getElementsById("menus").style.top = "100px";
 
             // alert(`virou, ${screen.width} , ${screen.height}`)
 
@@ -262,11 +262,11 @@ function prevent(evt) {
 let nightmode = false
 function night() {
     let testarray = document.getElementsByClassName("fundobranco");
-    let testarray2 = document.getElementsByClassName("day");
+    let testarray2 = document.getElementsByClassName("light");
     for (let i = 0; i < testarray.length; i++) {
-        testarray[i].classList.toggle("night")
+        testarray[i].classList.toggle("dark")
     } for (let i = 0; i < testarray2.length; i++) {
-        testarray2[i].classList.toggle("night")
+        testarray2[i].classList.toggle("dark")
     }
     nightmode = !nightmode
     if (nightmode) {
@@ -910,7 +910,7 @@ function changeBrush(src = brush, tam = strokeWidth, cor = strokeColor) {
         newBrush.crossOrigin = "anonymous"
         newBrush.src = newNewBrush.src
         cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
-        cursor.style.opacity = 0.7
+        cursor.style.opacity = 0.8
         if (changedBrush == false) {
             brushCount++
             changedBrush = true;
@@ -1327,13 +1327,13 @@ async function modeTo(qual) {
 
         removeClass();
         toggleSelect(qual);
-		if (qual != "apagar"){
-		oldMode = mode;
-        mode = qual;
-        mostraMenu(qual);
-		}
+        if (qual != "apagar") {
+            oldMode = mode;
+            mode = qual;
+            mostraMenu(qual);
+        }
     } else {
-        if (qual != "apagar"){mostraMenu(qual);}
+        if (qual != "apagar") { mostraMenu(qual); }
         if (qual == "cam") {
             removeVideo()
         }
@@ -1400,7 +1400,7 @@ async function modeTo(qual) {
             changeGCO();
             break;
         case "picker":
-         cursorColor()
+            cursorColor()
             break;
         case "info":
             break;
@@ -1693,11 +1693,11 @@ function strokeSizeRange(value) {
         strokeRange[value]
     )
 }
-function setStrokeSize(value=strokeWidth) {
+function setStrokeSize(value = strokeWidth) {
     let brushes = ["cursor"];
     for (i in brushes) {
         let tamanho = document.getElementById(brushes[i]);
-        if (mode == "pintar" || mode == "cores" || mode == "cores"|| mode == "picker") {
+        if (mode == "pintar" || mode == "cores" || mode == "cores" || mode == "picker") {
             strokeWidth = value;
             tamanho.style.width = value * zoomFactor + "px";
             tamanho.style.height = value * zoomFactor + "px";
@@ -1889,7 +1889,7 @@ function changeLine() {
         document.getElementById("line2").innerHTML = " ⚫";
     }
 }
-changeLine()
+
 ////// ZOOM and scroling
 function setZoom(zoom, el) {
     transformOrigin = [0, 0];
@@ -1987,15 +1987,17 @@ function cursorColor() {
             break;
         case "zoom":
             cursor.innerHTML = "🖐";
+            setTimeout(() => { cursor.style.backgroundImage = "none"; }, 20)
             break;
         case "picker":
-        setStrokeSize(2)
-            cursor.innerHTML = '<div style="-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1);width:32px;">💉</div>'
+            setStrokeSize(2)
+            cursor.innerHTML = '<div style="-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1);width:32px; margin-top:8px; margin-left:-2px;">💉</div>'
             cursor.style.borderColor = "#00ff0088";
             cursor.style.width = 2 + "px";
             cursor.style.height = 1 + "px";
             cursor.style.margingLeft = 24 + "px";
             cursor.style.margingTop = 48 + "px";
+            cursor.style.opacity = 0.9
             break;
         case "recortar":
             cursor.innerHTML = "✂️";

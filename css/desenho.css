@@ -105,13 +105,12 @@ body {
     height: 34px;
     display: flex;
     top: 4px;
+    margin-bottom: 4px;
 }
 
 
 #menucores {
     display: block;
-    width: 340px;
-    height: 310px;
     z-index: 3;
 }
 
@@ -126,21 +125,24 @@ body {
 .submenu {
     position: absolute;
     display: flex;
-    width: 360px;
+    width: 340px;
     min-height: 60px;
     padding: 6px;
     z-index: 3;
     visibility: hidden;
+    max-height: 490px;
 
 }
 
 .fundobranco {
     min-height: 32px;
+
     background-color: #eeeeeeee;
     border-radius: 16px;
     border: solid 1px #55555555;
     padding: 4px;
     display: inline-block;
+    margin-bottom: 4px;
 }
 
 .fundobranco2 {
@@ -187,9 +189,7 @@ body {
     font-size: 2.25em;
 }
 
-#mostraCor {
-
-}
+#mostraCor {}
 
 .linha {
     width: 1px;
@@ -219,7 +219,7 @@ body {
     border-style: solid;
     border-radius: 200px;
     border-color: gray;
-    color: #00000055;
+    color: #000000ee;
     border-width: thin;
     padding: 0px;
     font-size: 1.5em;
@@ -227,6 +227,7 @@ body {
     box-shadow: 1px 1px 1px #51505488,
         -1px -1px 1px #9d9ca288;
     vertical-align: middle;
+    background-size: cover;
 }
 
 #salvaCor {
@@ -334,17 +335,16 @@ input[type="range"] {
 
 #menuinfo {
     overflow-y: scroll;
-    height: 300px;
-    width: 300px;
+
 }
 
-.day {
+.light {
     background-color: #eeeeeedd;
 
     color: #000000;
 }
 
-.night {
+.dark {
     background-color: #222222dd;
     color: #eeeeee;
 }
@@ -387,7 +387,9 @@ input[type="range"] {
 .botao {
     display: inline-block;
     width: 324px;
-    line-height: 30px;
+    line-height: 36px;
+    min-height: 36px;
+    max-height: 360px;
     padding: 4px;
     border: solid 1px #55555555;
     background-color: none;
@@ -396,7 +398,8 @@ input[type="range"] {
     margin-top: 2px;
     margin-bottom: 2px;
     border-radius: 12px;
-    vertical-align: top;
+    vertical-align: bottom;
+    overflow: scroll;
 }
 
 .botao:hover {
