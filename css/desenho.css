@@ -90,7 +90,7 @@ body {
 
     position: relative;
     width: 320px;
-    height: 34px;
+    height: 30px;
     display: flex;
     padding: 8px;
     margin-left: auto;
@@ -387,8 +387,8 @@ input[type="range"] {
 .botao {
     display: inline-block;
     width: 324px;
-    line-height: 36px;
-    min-height: 36px;
+    line-height: 34px;
+    min-height: 34px;
     max-height: 360px;
     padding: 4px;
     border: solid 1px #55555555;

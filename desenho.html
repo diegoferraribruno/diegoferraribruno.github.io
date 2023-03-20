@@ -143,13 +143,15 @@
             </div>
 
             <div id="menuemoji" class="fundobranco submenu menu">
-                <span title="fechar menu emoji" class="botao" onmousedown="modeTo('emoji')"
-                    style="z-index: 200; display: inline-block;">😍 Emoji ❌</span>
+                <span class="botao"> <span class="bot" onclick="emojipicker()">😍</span> ↕️<input type="range"
+                        id="emosize" name="strokeSize" min="16" max="320" step="8" oninput="emojiSizeRange()" value="16"
+                        width="200px">
+                    <span title="fechar menu emoji" class="bot" onmousedown="modeTo('emoji')"
+                        style="z-index: 200; display: inline-block;"> ❌</span></span>
                 <emoji-picker id="emojipicker" class="light"></emoji-picker>
-                <span class="botao">↕️<input type="range" id="emosize" name="strokeSize" min="16" max="320" step="8"
-                        oninput="emojiSizeRange()" value="16" width="200px"></span>
-                <span class="botao" onclick="emojipicker()"
-                    style="display:inline-block; width:320px; max-height: 200px; overflow:hidden; line-height: 200px; vertical-align: middle; background-color: #fff; background-image: url('img/grid3.png');">
+
+                <span class="botao ligth" onclick="emojipicker()"
+                    style="display:inline-block; width:320px; max-height: 200px; overflow:hidden; line-height: 200px; vertical-align: middle;  background-image: url('img/grid3.png');">
                     <span id="emoExemplo">😍</span></span>
             </div>
 
@@ -160,16 +162,18 @@
                     <span title="Pega cor" class="bot" onmousedown="modeTo('picker')">💉</span>
 
                     <span title="Preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
-                    <span id="emoji" title="pintar emoji" class="bot selected" onmousedown="modeTo('emoji')">😍</span>
+                    <span title="pintar emoji" class="bot selected" onmousedown="modeTo('emoji')">😍</span>
                     <span title="pintar" class="bot selected" onmousedown="modeTo('pintar')">🖌️<span
                             style="position:absolute; left:0px;"> ❌</span></span>
                 </span>
-                <div class="botao" id="pinceis"></div>
+                <div class="botao " id="pinceis"
+                    style="background-color:#fff; line-height: 32px; display: inline-block; vertical-align: middle;">
+                </div>
                 <span class="botao">
-                    <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
+                    ↕️ <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
                         onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
 
-                    ↕️<input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
+                    <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
                         oninput="strokeSizeRange(this.value)" value="6" width="200px">
                 </span>
                 <span class="botao">
@@ -179,8 +183,8 @@
                 <!--span style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
                         id="line">
                         ➕</span></span><br-->
-                <span class="botao " onmousedown="removeClass()"
-                    style="background-color: #fff; background-image: url('img/grid3.png');"><canvas id="brushCanva"
+                <span class="botao light" onmousedown="removeClass()"
+                    style="background-image: url('img/grid3.png'); max-height: 220px;"><canvas id="brushCanva"
                         width="40px" height="40px"></canvas></span>
             </div>
 
@@ -206,7 +210,7 @@
                     <span id="picker" title="Pega cor" class="bot" onmousedown="modeTo('picker')">💉</span>
 
                     <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
-                    <span id="emoji" title="pintar emoji" class="bot selected" onmousedown="modeTo('emoji')">😍</span>
+                    <span title="pintar emoji" class="bot selected" onmousedown="modeTo('emoji')">😍</span>
                     <span title="cores" class="bot" onmousedown="modeTo('cores')">🎨 <span
                             style="position:absolute; left:0px;"> ❌
                         </span></span>
@@ -240,7 +244,7 @@
                 <span class="botao"> <span id="btn-download" title="salvar imagem" class="bot">📥</span>
 
                     <span id="imagem" title="adicionar imagem" class="bot" onmousedown="modeTo('imagem')"> 📤</span>
-                    <span id="night" class="bot" onmousedown="night()">🌒</span>
+                    <span id="night" title="modo claro/escuro" class="bot" onmousedown="night()">🌒</span>
 
                     <span class="bot" title="Limpar tela" onmousedown="clearArea()">🗑</span>
 
@@ -325,6 +329,7 @@
 
             <div id="ferramentas" class="ferramentas">
                 <span id="fundo" title="Configurações" class="mais" onmousedown="modeTo('fundo')">🖥️</span>
+                <span id="night" class="mais" onmousedown="night()">🌒</span>
                 <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
                 <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
@@ -339,13 +344,7 @@
             </div>
 
             <div id="ferramentas2" class="ferramentas">
-                <span onmousedown="backPaint()" class="mais" id="globalComposite"
-                    style="width: 36px; height: 36px; padding-top: 2px; margin-right: 6px; display:flex;"><span
-                        style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
-                    <span
-                        style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
-                        title="Pintando por baixo">🔲</span>
-                </span>
+
                 <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">🖌️</span>
                 <span id="cores" title="cores" class="mais" onmousedown="modeTo('cores')">🎨</span>
 
@@ -354,8 +353,16 @@
 
                 <!--span id="apagar" title="Apagar" class="mais" onmousedown='changeGCO("destination-out")'>🧽</span-->
 
-
+                <span onmousedown="backPaint()" class="mais" id="globalComposite"
+                    style="width: 36px; height: 36px; padding-top: 2px; margin-right: 6px; display:flex;"><span
+                        style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
+                    <span
+                        style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
+                        title="Pintando por baixo">🔲</span>
+                </span>
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
+                <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
+
             </div>
 
             <div id="canvas_window">
@@ -382,6 +389,9 @@
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/desenho.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/start.js">
+
+    </script>
 </body>
 
 </html>

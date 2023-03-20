@@ -854,11 +854,11 @@ let brushesImg = {}
 var copo = []
 
 function criarPinceis() {
-    for (i = 0; i < 10; i++) {
+    for (i = 1; i < 10; i++) {
         let brush2 = new Image();
         brush2.src = 'img/brush' + i + '.png';
         brush2.setAttribute("onmousedown", "selectBrush('" + i + "')")
-        brush2.setAttribute("style", "width:32px; height:32px;")
+        brush2.setAttribute("style", "width:32px; height:32px; margin-top:6px;")
         copo.push(brush2)
 
         brush2.setAttribute("onmousedown", "selectBrush('" + i + "')")
@@ -1970,9 +1970,11 @@ function cursorMove(e) {
     cursor.style.left = x + "px";
     cursor.style.top = y + "px";
     document.body.style.cursor = "none";
+    cursor.style.visibility = "visible";
 }
 function mostra() {
     document.body.style.cursor = "pointer";
+    cursor.style.visibility = "hidden";
 }
 
 function cursorColor() {
@@ -1991,13 +1993,13 @@ function cursorColor() {
             break;
         case "picker":
             setStrokeSize(2)
-            cursor.innerHTML = '<div style="-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1);width:32px; margin-top:8px; margin-left:-2px;">💉</div>'
-            cursor.style.borderColor = "#00ff0088";
+            cursor.innerHTML = '<div style="-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1);width:32px; margin-top:12px; margin-left:-3px;">💉</div>'
+            cursor.style.borderColor = "#000000ee";
             cursor.style.width = 2 + "px";
             cursor.style.height = 1 + "px";
             cursor.style.margingLeft = 24 + "px";
-            cursor.style.margingTop = 48 + "px";
-            cursor.style.opacity = 0.9
+            cursor.style.margingTop = 52 + "px";
+            cursor.style.opacity = 1
             break;
         case "recortar":
             cursor.innerHTML = "✂️";
