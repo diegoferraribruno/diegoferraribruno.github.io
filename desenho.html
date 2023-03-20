@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/desenho.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
-    <title>Desenho 0.9.9 alpha</title>
+    <title>Desenho 0.9 beta</title>
 </head>
 
 <body class="naotoque day" style="cursor: pointer;">
@@ -138,10 +138,10 @@
             </div>
 
             <div id="menuemoji" class="fundobranco submenu menu">
-                <span title="fechar menu emoji" class="botao" onmousedown="modeTo('emoji')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">😍 Emoji ❌</span><emoji-picker
+                <span title="fechar menu emoji" class="botao" onmousedown="modeTo('emoji')">😍 Emoji ❌</span>
+                <emoji-picker
                     id="emojipicker"></emoji-picker>
-                estilo:<span onclick="emojipicker()" id="emoExemplo">😍</span> <br>
+                estilo: <span onclick="emojipicker()" id="emoExemplo">😍</span> <br>
                 <input type="range" id="emosize" name="strokeSize" min="16" max="320" step="8"
                     oninput="emojiSizeRange()" value="16" width="200px">
                 <br>
@@ -149,18 +149,13 @@
 
             <div id="menupintar" class="fundobranco submenu menu">
                     <span class="botao">
-                    <span title="Pega cor" class="bot" onmousedown="modeTo('picker')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
+						<span id="mostraCor" title="cores"class="bot" onmousedown="modeTo('cores')">🎨</span>
+                    <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
+                    <span title="Pega cor" class="bot" onmousedown="modeTo('picker')">💉</span>
 
-				<span  title="Preencher" onmousedown="modeTo('preencher')" class=" bot"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🪣</span>
-                    <span id="apagar" title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
+				<span  title="Preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
                     <span id="emoji" title="pintar emoji" class="bot selected" onmousedown="modeTo('emoji')">😍</span>
-                           <span id="cores" title="cores"
-                    class="bot" onmousedown="modeTo('cores')"
-                    >🎨
-                    </span> <span title="pintar" class="bot selected" onmousedown="modeTo('pintar')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🖌️<span style="position:absolute; left:0px;"> ❌</span></span>
+                            <span title="pintar" class="bot selected" onmousedown="modeTo('pintar')">🖌️<span style="position:absolute; left:0px;"> ❌</span></span>
 </span>
                 <div id="pinceis"></div>
                 <input type="number" id="tpx" min="0.5" max="100" step="0.5" value="1"
@@ -195,22 +190,18 @@
             </div>
 
             <div id="menucores" class="submenu fundobranco">
-                <span class="botao">     <span id="pintar" title="pintar" class="bot selected" onmousedown="modeTo('pintar')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🖌️</span>
-                    <span id="picker" title="Pega cor" class="bot" onmousedown="modeTo('picker')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">💉</span>
+                <span class="botao">     <span id="pintar" title="pintar" class="bot selected" onmousedown="modeTo('pintar')">🖌️</span>
+                <span  title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
+                    <span id="picker" title="Pega cor" class="bot" onmousedown="modeTo('picker')">💉</span>
 
-				<span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class=" bot"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🪣</span>
-                    <span id="apagar" title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
+                    <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
                     <span id="emoji" title="pintar emoji" class="bot selected" onmousedown="modeTo('emoji')">😍</span>
-                           <span id="cores" title="cores"
-                    class="bot" onmousedown="modeTo('cores')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🎨 <span style="position:absolute; left:0px;">  ❌
+                           <span title="cores"
+                    class="bot" onmousedown="modeTo('cores')">🎨 <span style="position:absolute; left:0px;">  ❌
                     </span></span>
                        </span><br>
                 <div id="paleta2" class="fundobranco">
-                    <br>Use o 📌 para guardar <br>ou remover suas cores favoritas.
+                    Use o 📌 para guardar <br>ou remover suas cores favoritas.
                 </div>
                 <div id="paleta" class="fundobranco"></div>
                 <div id="menu" class="fundobranco" onmouseover="mostra()">
@@ -235,11 +226,14 @@
             </div>
 
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-                <span class="botao"> <span id="night" class="bot" onmousedown="night()">🌒</span>
-                          <span id="btn-download" title="salvar imagem" class="bot">📥</span>
+                 <span class="botao">  <span id="btn-download" title="salvar imagem" class="bot">📥</span>
+
+                  <span id="imagem" title="adicionar imagem" class="bot" onmousedown="modeTo('imagem')"> 📤</span>
+                <span id="night" class="bot" onmousedown="night()">🌒</span>
+
+               <span class="bot" title="Limpar tela" onmousedown="clearArea()">🗑</span>
 
                  <span id="info" title="Informações" class="bot" onmousedown="modeTo('info')">ℹ️</span>
-               <span class="bot" title="Limpar tela" onmousedown="clearArea()">🗑</span>
                 <span title="Configurações" class="bot" onmousedown="modeTo('fundo')">🖥️ <span style="position:absolute; left:0px;">  ❌
                     </span></span></span>
                 <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
@@ -341,18 +335,17 @@
                         style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
                         title="Pintando por baixo">🔲</span>
                 </span>
-				<span  class="mais"  id="mostraCor" title="cores"
-                    class="mais" onmousedown="modeTo('cores')"
-                    style="background-color: rgba(247, 161, 165, 0.15);">🎨<span
+				<span  id="cores" title="cores"
+                    class="mais" onmousedown="modeTo('cores')">🎨<span
                     style="position:absolute; left:2px;">🖌️</span></span>
 
+                    <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
 
 
                 <!--span id="apagar" title="Apagar" class="mais" onmousedown='changeGCO("destination-out")'>🧽</span-->
 
 
                                      <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
-                  <span id="imagem" title="adicionar imagem" class="mais" onmousedown="modeTo('imagem')"> 📤</span>
             </div>
 
             <div id="canvas_window">
