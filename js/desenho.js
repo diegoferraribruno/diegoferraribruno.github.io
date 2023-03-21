@@ -854,7 +854,7 @@ let brushesImg = {}
 var copo = []
 
 function criarPinceis() {
-    for (i = 1; i < 10; i++) {
+    for (i = 0; i < 10; i++) {
         let brush2 = new Image();
         brush2.src = 'img/brush' + i + '.png';
         brush2.setAttribute("onmousedown", "selectBrush('" + i + "')")
@@ -1739,10 +1739,12 @@ function backPaint() {
             `display:block; color:white; margin-left:-4px; margin-top:-5px;">⭕</span> ` +
             `<span style="position:relative; float:left; width:30px; display:block;  ` +
             `color:black; left:1px; margin-top:0px;" title="Pintando por baixo">🔲</span>`;
+        Alert("⚠️ Pintando por <b>baixo</b>")
 
         if (document.getElementById("video")) {
             document.getElementById("video").setAttribute("class", "destination-over")
         }
+
 
     } else {
         globalComposite = "source-over";
@@ -1752,6 +1754,7 @@ function backPaint() {
             `<span style="position:absolute; float:right; width:32px; display:block; ` +
             `padding-top: 0px;">🔲</span> <span style="color:white;` +
             `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
+        Alert("⚠️ Pintando por <b>cima</b>")
         removeClass("destination-over")
     }
     cursor.classList.toggle("cursorIndex");
@@ -1760,7 +1763,13 @@ function backPaint() {
     if (mode == "apagar") { modeTo("pintar") }
     //removeClass()
 }
+function Alert(text) {
+    let alert = document.getElementById("alert")
+    alert.innerHTML = text;
+    alert.style.visibility = "visible"
+    setTimeout(() => { alert.style.visibility = "hidden"; }, 3000)
 
+}
 function mudaCorBG(cor) {
     if (cor === "strokeColor") {
         cor = strokeColor;

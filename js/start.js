@@ -1,5 +1,5 @@
 let startText = 0
-let texts = [["🖐 😍 - oie.", "desenhe aqui.", "🖌️ 👆️"], ["Ou tire uma 📷", "depois apague 🧽,", "use o modo por trás ⭕,"], ["e tire outra 📷", "para fazer uma bela", "foto-montagem."]]
+let texts = [["🖐 😍 - oie.", "desenhe aqui.", "🖌️ 👆️"], ["Ou tire uma 📷", "depois apague 🧽,", "use o ⭕ por baixo ,"], ["e tire outra 📷", "para fazer uma bela", "foto-montagem."]]
 function start() {
 
   setTimeout(() => {

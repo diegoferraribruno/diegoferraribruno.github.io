@@ -34,7 +34,7 @@ var menu = {
     "alfabeto.html": "🔫",
     "index.html": "📔 ",
     "https://diegoferraribruno.itch.io": "🎮"
-    // "Identifica": "📛",
+    // "Identifica": "🪪",
 }
 
 function criaCabeca() {
@@ -134,5 +134,5 @@ function copyPix() {
     navigator.clipboard.writeText(copyText.value);
 
     // Alert the copied text
-    alert("chave pix copiada: " + copyText.value);
+    Alert("Chave PIX copiada: " + copyText.value);
 }
