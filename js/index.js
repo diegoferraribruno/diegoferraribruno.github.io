@@ -15,7 +15,7 @@ var usuarios = [{
     bio: "Filho, artista, matemático",
 }]
 
-function createAvatar(id = 0, onde = "bio") {
+function createAvatar(id = 0, onde = "bio2") {
 
     var avatar = document.createElement("img")
     avatar.src = "./avatar/" + usuarios[id].id + ".png"

@@ -1,9 +1,18 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+
 body {
     text-align: center;
     background-color: #dddddd;
     /* background-image: url("img/grid.png");
     background-repeat: repeat;*/
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+    width: 100%;
+    min-height: 100vh;
 }
 
 .day {
@@ -154,7 +163,6 @@ a:visited {
 }
 
 #bio {
-    height: 64px;
     font-size: small;
     padding: 4px;
     margin: auto;
@@ -167,7 +175,6 @@ a:visited {
 }
 
 #bio2 {
-    height: 64px;
     font-size: small;
     padding: 8px;
     margin: auto;
@@ -187,7 +194,7 @@ a:visited {
 }
 
 #blog {
-    display: block;
+    display: inline-block;
     line-height: 20px;
     color: #eeeeee;
     background-color: #333333;
@@ -210,3 +217,10 @@ h2 {
 #emojipicker {
     height: 300px;
 }
+section {
+  display: inline-block;
+  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  background-color: orange;
+}
+.bloco{width:300px;display:inline-block;}

@@ -1,4 +1,4 @@
-const canvas = document.getElementById("canvas");
+const canvas = document.getElementById("canvas"); strokeWidth
 const context = canvas.getContext("2d");
 const canvasV = document.getElementById("canvasV");
 const contextV = canvasV.getContext("2d");
@@ -45,6 +45,9 @@ let rotationDeg = 0;
 var origin = { x: 0, y: 0 };
 var cropEnd = { x: 0, y: 0 };
 var emoji = "😍"
+function redondo(numero) {
+    return Math.floor(numero, 10)
+}
 
 function cortar() {
     if (cropEnd.x != 0) {
@@ -1020,8 +1023,8 @@ function handleStart(evt) {
     removeClass();
     changedBrush = false;
     evt.preventDefault();
-    origin.x = (evt.pageX - offsetX) / zoomFactor
-    origin.y = (evt.pageY - offsetY) / zoomFactor
+    origin.x = redondo((evt.pageX - offsetX) / zoomFactor)
+    origin.y = redondo((evt.pageY - offsetY) / zoomFactor)
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     if (mode === "recortar") {
@@ -1030,6 +1033,7 @@ function handleStart(evt) {
         tempImg = document.createElement("img");
         tempImg.src = URL.createObjectURL(blob);
         isSelecting = true;
+        console.log("start1", origin, cropEnd)
     }
     if (mode == "emoji") {
         isEmoji = true
@@ -1079,6 +1083,7 @@ function handleStart(evt) {
         isPicking = true
     }
 
+    console.log("start2", origin, cropEnd)
 }
 
 
@@ -1093,13 +1098,15 @@ function handleMove(evt) {
     let y = (evt.pageY - offsetY) / zoomFactor
 
     let over = checkOverCanvas(x, y)
-    if (isSelecting === true && over === true) {
-        cropEnd.x = (evt.pageX - canvas.offsetLeft) / zoomFactor
-        cropEnd.y = (evt.pageY - canvas.offsetTop) / zoomFactor
+
+    if (isSelecting === true) {
+        cropEnd.x = redondo((evt.pageX - canvas.offsetLeft) / zoomFactor)
+        cropEnd.y = redondo((evt.pageY - canvas.offsetTop) / zoomFactor)
         context.strokeStyle = "#ffccccdd";
         desenhaRetangulo();
-
-    } if (isDrawing === true) {
+        console.log("move1", origin, cropEnd)
+    }
+    if (isDrawing === true) {
         evt.preventDefault();
         mouseOver = true;
         if (brushMode == 0) {
@@ -1145,21 +1152,23 @@ function handleMove(evt) {
         evt.preventDefault();
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
     }
-    if (!isGrabing) {
+    if (!isGrabing && mode != "recortar") {
         origin.x = x
         origin.y = y
     }
     cursor.style.left = evt.pageX + "px";
     cursor.style.top = evt.pageY + "px";
+    console.log("move2", origin, cropEnd)
 }
 function handleUp(evt) {
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     let over = checkOverCanvas(evt.pageX, evt.pageY)
     if (isSelecting === true && over === true) {
-        cropEnd.x = evt.pageX - canvas.offsetLeft
-        cropEnd.y = evt.pageY - canvas.offsetTop
+        cropEnd.x = redondo((evt.pageX - offsetX) / zoomFactor)
+        cropEnd.y = redondo((evt.pageY - offsetY) / zoomFactor)
         desenhaRetangulo();
+        console.log("up1 desenharect", origin, cropEnd)
     }
     if (mode === "emoji" && isEmoji) {
         x = (evt.pageX - offsetX) / zoomFactor
@@ -1197,6 +1206,7 @@ function handleUp(evt) {
     }
     isDrawing = false;
     isGrabing = false;
+    console.log("startup2", origin, cropEnd)
 }
 
 function handleEnd(evt) {
@@ -1210,6 +1220,7 @@ function handleEnd(evt) {
             isSelecting = false;
         }
     }, 500);
+    console.log("end", origin, cropEnd)
 }
 
 function handleCancel(evt) {
@@ -1225,11 +1236,14 @@ function checkOverCanvas(x, y) {
 }
 
 function desenhaRetangulo() {
-    context.strokeWidth = 0.5
+
     context.clearRect(0, 0, canvas.width, canvas.height);
+    context.globalCompositeOperation = "destination-over"
+    context.lineWidth = 0.5
+    context.strokeStyle = "#ff2200";
+    context.stroke();
     context.setLineDash([1, 1]);
     context.beginPath();
-    context.globalCompositeOperation = "source-over"
     context.rect(
         origin.x,
         origin.y,
