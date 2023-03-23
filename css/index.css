@@ -1,7 +1,7 @@
-*{
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
 }
 
 
@@ -10,7 +10,7 @@ body {
     background-color: #dddddd;
     /* background-image: url("img/grid.png");
     background-repeat: repeat;*/
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 100%;
     min-height: 100vh;
 }
@@ -195,7 +195,7 @@ a:visited {
 
 #blog {
     display: inline-block;
-    line-height: 20px;
+    line-height: 22px;
     color: #eeeeee;
     background-color: #333333;
     border-radius: 16px;
@@ -217,10 +217,26 @@ h2 {
 #emojipicker {
     height: 300px;
 }
+
 section {
-  display: inline-block;
-  align-items: start;
-  grid-template-columns: 1fr 1fr;
-  background-color: orange;
+    display: flex;
+    background-color: orange;
+    width: 1600px;
+    height: 400px;
 }
-.bloco{width:300px;display:inline-block;}
+
+.bloco {
+    width: 320px;
+    height: 400px;
+    display: block;
+    margin: 10px;
+
+}
+
+#container {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    overflow: scroll;
+    background-color: orange;
+}

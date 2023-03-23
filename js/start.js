@@ -25,6 +25,6 @@ function start() {
       limpaCabeca();
 
     }
-  }, 2700);
+  }, 5000);
 }
 start()
