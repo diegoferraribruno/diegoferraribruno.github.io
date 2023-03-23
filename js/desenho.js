@@ -180,9 +180,7 @@ function tamanhom() {
     removeClass();
     document.getElementById("menutamanho").classList.toggle("aparece")
 }
-function tamanho() {
-    let W = document.getElementById("largura").value
-    let H = document.getElementById("altura").value
+function tamanho(W = document.getElementById("largura").value, H = document.getElementById("altura").value) {
     canvasDiv.style.width = W + "px"; //add 30px for scroll
     canvasDiv.style.height = H + "px"; //add 30px for scroll
     canvas.width = W;
@@ -289,6 +287,10 @@ function handleFiles(e) {
     imagem = new Image;
     imagem.src = URL.createObjectURL(e.target.files[0]);
     imagem.onload = function () {
+        let ajustar = document.getElementById("ajustar").checked
+        if (ajustar === true) {
+            tamanho(imagem.width, imagem.height)
+        }
         if (imagem.width > canvas.width) {
             let proporcao = canvas.width / imagem.width
             imagem.height = imagem.height * proporcao
@@ -476,22 +478,21 @@ function startup() {
     canvas.addEventListener("pointermove", handleMove);
     canvas.addEventListener("pointerleave", handleEnd);
 
-
-    document.getElementById("btn-download").addEventListener("click", function (e) {
-        //   rotacionaCanva(rotationDeg)
-        //var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-        let nome = prompt("nome da arte:", "desenho");
-        if (nome != null && nome != "") {
-            var dataURL = canvas
-                .toDataURL("image/png")
-                .replace("image/png", "image/octet-stream");
-            //downloadImage(dataURL, 'my-canvas.jpeg');
-            downloadImage(dataURL, `${nome}.png`);
-        }
-    });
     initStrokeRange()
     setTimeout(() => resizeScreen(), 10)
 }
+
+function salvaImagem() {
+    let nome = document.getElementById("filename").value
+    if (nome != null && nome != "") {
+        var dataURL = canvas
+            .toDataURL("image/png")
+            .replace("image/png", "image/octet-stream");
+        //downloadImage(dataURL, 'my-canvas.jpeg');
+        downloadImage(dataURL, `${nome}.png`);
+    } else { Alert("Favor Preencher o nome do arquivo") }
+}
+
 function rotacionaCanva(rotationDeg = 0) {
     if (rotationDeg != 0) {
 
@@ -1033,7 +1034,6 @@ function handleStart(evt) {
         tempImg = document.createElement("img");
         tempImg.src = URL.createObjectURL(blob);
         isSelecting = true;
-        console.log("start1", origin, cropEnd)
     }
     if (mode == "emoji") {
         isEmoji = true
@@ -1083,7 +1083,6 @@ function handleStart(evt) {
         isPicking = true
     }
 
-    console.log("start2", origin, cropEnd)
 }
 
 
@@ -1104,7 +1103,6 @@ function handleMove(evt) {
         cropEnd.y = redondo((evt.pageY - canvas.offsetTop) / zoomFactor)
         context.strokeStyle = "#ffccccdd";
         desenhaRetangulo();
-        console.log("move1", origin, cropEnd)
     }
     if (isDrawing === true) {
         evt.preventDefault();
@@ -1158,7 +1156,6 @@ function handleMove(evt) {
     }
     cursor.style.left = evt.pageX + "px";
     cursor.style.top = evt.pageY + "px";
-    console.log("move2", origin, cropEnd)
 }
 function handleUp(evt) {
     offsetX = canvas.getBoundingClientRect().left;
@@ -1168,7 +1165,6 @@ function handleUp(evt) {
         cropEnd.x = redondo((evt.pageX - offsetX) / zoomFactor)
         cropEnd.y = redondo((evt.pageY - offsetY) / zoomFactor)
         desenhaRetangulo();
-        console.log("up1 desenharect", origin, cropEnd)
     }
     if (mode === "emoji" && isEmoji) {
         x = (evt.pageX - offsetX) / zoomFactor
@@ -1206,12 +1202,10 @@ function handleUp(evt) {
     }
     isDrawing = false;
     isGrabing = false;
-    console.log("startup2", origin, cropEnd)
 }
 
 function handleEnd(evt) {
     mouseOver = false;
-    //console.log(evt)
     setTimeout(() => {
         if (mouseOver == false) {
             isDrawing = false;
@@ -1220,7 +1214,6 @@ function handleEnd(evt) {
             isSelecting = false;
         }
     }, 500);
-    console.log("end", origin, cropEnd)
 }
 
 function handleCancel(evt) {
@@ -1353,6 +1346,9 @@ async function modeTo(qual) {
         }
     }
     switch (qual) {
+        case "salvar":
+            mode = qual;
+            break;
         case "recortar":
             cut()
             mode = qual;

@@ -147,6 +147,7 @@
                     ❌</span><br>
                 <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp"
                     title="📤" />
+                <br>Ajustar tela ao tamanho da imagem: <input type="checkbox" id="ajustar" checked="true">
             </div>
 
             <div id="menuemoji" class="fundobranco submenu menu">
@@ -248,7 +249,8 @@
             </div>
 
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-                <span class="botao"> <span id="btn-download" title="salvar imagem" class="bot">📥</span>
+                <span class="botao">
+                    <span id="salvar" title="salvar imagem" class="bot" onclick="modeTo('salvar')">📥</span>
 
                     <span id="imagem" title="adicionar imagem" class="bot" onmousedown="modeTo('imagem')"> 📤</span>
                     <span id="night" title="modo claro/escuro" class="bot" onmousedown="night()">🌒</span>
@@ -316,6 +318,14 @@
                 <span onmousedown="scrollCanva(0,80)">⬇️</span>
                 <span onmousedown="scrollCanva(80,0)">➡️</span>
             </div>
+
+            <div id="menusalvar" class="fundobranco submenu">
+                <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">📥 Menu salvar ❌</span>
+                <input id="filename" type="text" alt="Nome do arquivo"><span onclick="salvaImagem()"
+                    class="bot">📥</span>
+
+            </div>
+
 
             <div id="menurecortar" class="fundobranco submenu">
                 <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
