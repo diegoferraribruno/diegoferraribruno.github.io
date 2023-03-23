@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/desenho.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
-    <title>Desenho 0.9 beta</title>
+    <title>Desenho HD 1.0.2 </title>
 </head>
 
 <body class="naotoque light" style="cursor: pointer;">
@@ -23,123 +23,64 @@
                 para capturar uma cor
             </div>
             <div id="menuinfo" class="submenu fundobranco">
-                <span class="fundobranco">
-                    Este App divertido não tem inteção de ser uma ferramenta profissional.
-                    durante o processo de criação e exportação das imagens,
-                    irá ocorrer perda de qualidade da imagem.<br>
-                    Sabendo disto, divirta-se!<br></span>
-                <span class="fundobranco">Feito por:<br>
-                    <a href="https://diegoferraribruno.github.io/">Diego Ferrari Bruno</a><br> com códigos de<br>
+                <span class="fundobranco" onmousedown="removeClass()">
+                    <span class="bot" style="float: right;"> ❌</span><span
+                        style="display: block; position: relative; float: left; font-size: 32px; margin-right: 4px;">😅</span>
+                    <b>⚠️Atenção!⚠️<br>
+                        Este é um App de diversão!</b><br>
+                    durante o processo de criação e exportação,
+                    a imagem perderá qualidade!<br>
+                    Dito isto, esquero que você se divirta!<br></span>
+                <span class="fundobranco">Feito por:
+                    <a href="https://diegoferraribruno.github.io/">Diego Ferrari Bruno</a><br> com códigos de:
                     <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
-                        Lei Mao</a>, <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a> e <a
+                        Lei Mao</a>, <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a>, <a
                         href="http://tricedesigns.com/sketching-with-html5-canvas-and-brush-images/"
                         target="blank">Andrew
-                        Trice</a><br>
-                    <br>
-                    versao 0.1 alpha<br>
-
-                    - Ferramenta de recorte está de volta 100%<br>
-                    <br>
-                    versao 0.9 beta<br>
-                    - menos botoes. mais menus.. vamos testar<br>
-                    - cursor do color picker corrigido<br>
-                    - menus mais bonitos<br>
-                    <br>
-                    versao 0.9.9 alpha 19/03/2023<br>
-                    - Novo estilo de pintura e pinceis<br>
-                    <a href="http://tricedesigns.com/sketching-with-html5-canvas-and-brush-images/" target="blank">com
-                        códigos de Andrew Trice</a><br>
-                    - menu apagar junto do menu pincel.<br>
-                    <br>
-                    versão 0.9.9<br>
-                    - arrumei o colorpicker <br>
-                    - menus alterados<br>
-                    - emojis!<br>
-                    - alteracao do metodo de entrada (pointer)<br>
-                    - stopVideoStream quando fecha camera<br>
-                    - Novos pinceis dinamicos<br>
-                    <br>
-                    versão 0.9.8 <br>
-                    - javascript e css em arquivos externos.<br>
-                    - recorte e rotação <br>(desativado temporariamente)<br>
-                    - contraste das imagens de grade alteradas<br>
-                    - incluídos index.css e index.js nas páginas<br>
-                    - novo index.html para o app<br>
-                    - realinhamento da tela (zoom)<br>
-                    - estilo mais minimalista<br>
-                    <br>
-                    versão 0.9.7d<br>
-                    - nova rotacao do canvas. (em desenvolvimento)<br>
-                    - removido o canvas de recorte<br>
-                    - zoom 8x<br>
-                    - tela desvira depois da camera<br>
-                    - nova paleta de cores<br>
-                    - Cortar, Rotacionar<br>
-                    - menu tamanho da tela<br>
-                    - cores nos botoes<br>
-                    - importar somente gif bmp jpg<br>
-                    - mensagem de suporte depois do download<br>
-                    <br>
-                    versões 0.8 <br>
-                    - uma série de mudanças e testes para recortar E girar a tela além do gerenciamento da memória.
-                    <br>
-                    versão 0.7<br>
-                    - tela vira quando muda camera<br>
-                    <br>
-                    versão 0.6<br>
-                    - NOVO gerenciador de memória<br>
-                    - touchmovecursor<br>
-                    - melhora na troca de ferramenta<br>
-                    - desfazer mais leve<br>
-                    - Desfazer, refazer atualizado. <br>
-                    - botões maiores e agregados<br>
-                    - função camera movida e transparencia arrumada<br>
-                    - camera centralizada (tnx Frederico for the help)<br>
-                    - seletor de cor (fix).<br>
-                    <br>
-                    versão 0.5 - Turing<br>
-                    - foto e fundo com tamanho<br>
-                    - inicia no modo noturno<br>
-                    - fundo xadrez<br>
-                    - Alerta ao fim do Crtl+Z e no Ctrl+Y <br>
-                    - multiplas imagens podem ser inseridas<br>
-                    - pinta por cima ou por baixo<br>
-                    - night mode<br>
-                    - envia imagem.<br>
-                    - nova paleta de cores<br>
-                    - tamanhos pre definidos de pinceis. <br>
-                    - refazer passo a passo. <br>
-                    - apagador com transparencia propria.<br>
-                    - lupa com indicador de zoom. no lugar apropriado<br>
-                    <br>
-                    versão 0.4 (01/23)<br>
-                    - reduzida a quantifdade de "desfazer" disponiveis porem salvaremos uma imagem que sera carregada
-                    ao fundo o que pode influenciar na qualidade do projeto final. vamos ao teste.<br><br>
-                    versão 0.3<br>
-                    - Código refeito para guardar comandos e executa-los nas ações de desfaze e refazer.<br>
-                    (update:19/03/2023 isso será mudado muitas vezes!)
-                    versão 0.2<br>
-                    - Salvar imagem<br>
-                    - criação da paleta de cores<br><br>
-                    versão 0.1<br>
-                    - Uni códigos de Lei Mao com outro código de desenhar linah e criei dois modos de pincel além do
-                    modo
-                    apagar. claro que tudo isso com uma pitada de emojis.
-                    <br></span>
+                        Trice</a> e uma turma aí. <br>
+                    (gratidão <a href="http://stackoverflow.com" target="_blank">comunidade stackOverflow!</a>)<br>
+                    <h3>Mudanças nas versões:</h3>
+                    <div id="versoes"></div>
+                </span>
             </div>
 
             <div id="menutamanho" class="fundobranco submenu">
-                <div onmousedown="tamanho()" class="bloquinho"
-                    style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; background-color: rgba(247, 161, 165, 0.15);">
-                    ok
-                </div>
-                Tamanho da imagem:<br>
-                largura: <input id="largura" type="number" maxlength="4" max="1920" value="320"
-                    style="width:50px" />px<br>
-                altura: <input id="altura" type="number" maxlength="4" max="1920" value="320"
-                    style="width:50px" />px<br>
-                <br><span class="botao" title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela:
-                    ↔️</span><br>
+                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()"> ↔️ Redimensionar a
+                    tela ❌</span><br>
+
+                <span class="botao">
+                    <div onmousedown="tamanho()" class="bot"
+                        style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: 60px; margin-left: 20px; text-align: center;">
+                        ok
+                    </div>
+                    Tamanho Atual:<br>
+                    largura: <input id="largura" type="number" maxlength="4" max="1920" value="320"
+                        style="width:60px; padding: 4px;" /> pixels<br>
+                    altura: <input id="altura" type="number" maxlength="4" max="1920" value="320"
+                        style="width:60px;padding: 4px;" /> pixels<br>
+                    <span title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela?
+                        ↔️</span>
+                </span>
+                <span class="botao" title="formatos">
+                    <span onmousedown="tamanho(32,32)">32x32
+                        <span style="border: 1px solid gray; width: 5px; height: 5px; display: inline-block;"></span>
+                    </span>
+                    <span onmousedown="tamanho(64,64)">64x64
+                        <span style="border: 1px solid gray; width: 10px; height: 10px; display: inline-block;"></span>
+                    </span>
+                    <span onmousedown="tamanho(128,128)">128x128
+                        <span style="border: 1px solid gray; width: 20px; height: 20px; display: inline-block;"></span>
+                    </span><br>HD
+                    <span onmousedown="tamanho(640,360)">640x360
+                        <span style="border: 1px solid gray; width: 12px; height: 6px; display: inline-block;"></span>
+                    </span>
+                    <span onmousedown="tamanho(1280,720)">1280x720
+                        <span style="border: 1px solid gray; width: 26px; height: 14px; display: inline-block;"></span>
+                    </span>
+                    <span onmousedown="tamanho(1920,1080)">1920x1080
+                        <span style="border: 1px solid gray; width: 40px; height: 20px; display: inline-block;"></span>
+                    </span>
+                </span>
             </div>
 
             <div id="menuimagem" class="fundobranco submenu aparece menu">
@@ -184,16 +125,17 @@
                     <input type="range" id="strokeSize" name="strokeSize" min="1" max="26" step="1"
                         oninput="strokeSizeRange(this.value)" value="6" width="200px">
                 </span>
-                <span class="botao">
+                <!--span class="botao">
                     💧 <input type="range" id="A2" name="transparencia" min="0.01" max="1"
-                        oninput="mudaCorQ(3,this.value)" step="0.01" value="1"></span>
+                        oninput="mudaCorQ(3,this.value)" step="0.01" value="1"></span-->
 
                 <!--span style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
                         id="line">
                         ➕</span></span><br-->
                 <span class="botao light" onmousedown="removeClass()"
                     style="background-image: url('img/grid3.png'); max-height: 220px;"><canvas id="brushCanva"
-                        width="40px" height="40px"></canvas></span>
+                        width="40px" height="40px"></canvas><span
+                        style="display: block; position: absolute; right: 20px; top:170px">❌</span></span>
             </div>
 
             <div id="menuapagar" class="fundobranco submenu">
@@ -267,7 +209,6 @@
 
                 <span id="recortar" class="botao" onclick="modeTo('recortar')">✂️ recortar (impossível desfazer)</span>
 
-
                 <span id="oculos" class="botao" onmousedown="pixel()">👓 Suavização de pixels </span>
 
                 <span id="fundo falso" class="botao"> Adicionar Fundo falso:<br>
@@ -320,9 +261,10 @@
             </div>
 
             <div id="menusalvar" class="fundobranco submenu">
-                <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">📥 Menu salvar ❌</span>
-                <input id="filename" type="text" alt="Nome do arquivo"><span onclick="salvaImagem()"
-                    class="bot">📥</span>
+                <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">📥 Baixar / Salvar arte
+                    ❌</span>
+                Título: <input id="filename" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
+                    value="desenho" onfocus="this.value=''"><span onclick="salvaImagem()" class="bot">📥</span>
 
             </div>
 
@@ -407,6 +349,7 @@
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/desenho.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/versoes.js"></script>
     <script type="text/javascript" src="js/start.js">
 
     </script>

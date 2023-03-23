@@ -240,3 +240,10 @@ section {
     overflow: scroll;
     background-color: orange;
 }
+
+#versoes {
+    display: block;
+    width: auto;
+    height: 130px;
+    overflow: scroll;
+}

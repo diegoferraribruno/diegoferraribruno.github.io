@@ -191,9 +191,11 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
         zoomIndex = 0;
         modeTo("zoom");
     } else {
-        zoomIndex = 3;
+        zoomIndex = 4;
         modeTo("zoom");
     }
+    document.getElementById("largura").value = W
+    document.getElementById("altura").value = H
 }
 //function handleOrientation() {
 var previousOrientation = window.orientation;
@@ -324,47 +326,33 @@ function readURL() {
     } else {
     }
 }
-function x2(w = 320, h = 320) {
-    let newSize = 320;
-    let newSizeb = 320;
-    if (x2size < 4) {
-        newSize = newSize * x2size;
-        newSizeb = newSize * 2;
-    } else {
-
-        newSize = 320 * x2size;
-        newSizeb = 320;
+function x2(w = document.getElementById("largura").value, h = document.getElementById("altura").value) {
+    w = w * 2;
+    h = h * 2;
+    if (w > 2500) {
+        w = w / 4;
+        h = h / 4;
     }
-
     var resultado = confirm(
         "\t\t\t\t↔️ Deseja mudar o tamanho da tela de \n" +
-        `\t\t\t\t\t\t${newSize}px x ${newSize}px\n` +
+        `\t\t\t\t\t\t${w}px x ${h}px\n` +
         `\t\t\t\t\t\t\tpara\n` +
-        `\t\t\t\t\t\t${newSizeb}px x ${newSizeb}px\n\n` +
+        `\t\t\t\t\t\t${w}px x ${h}px\n\n` +
         `\t\t\t\t\t utilize a lupa 🔎 para zoom \n` +
         `\t\t\t\t e a mão 🖐 para navegar pela tela\n\n`
     );
     if (resultado === true) {
         //dobra o tamanho do canva
-        x2size *= 2;
-        if (x2size > 4) {
-            x2size = 1;
-            zoomIndex = 0;
-            modeTo("zoom");
-            win.style.width = `320px`;
-            win.style.height = `320px`;
-        } else {
-            zoomIndex = 0;
-            modeTo("zoom");
-        }
-        let W = w * x2size;
-        let H = h * x2size;
-        canvasDiv.style.width = W + "px"; //add 30px for scroll
-        canvasDiv.style.height = H + "px"; //add 30px for scroll
-        canvas.width = W;
-        canvas.height = H;
+        zoomIndex = 4;
+        modeTo("zoom");
+        canvasDiv.style.width = w + "px"; //add 30px for scroll
+        canvasDiv.style.height = h + "px"; //add 30px for scroll
+        canvas.width = w;
+        canvas.height = h;
         win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 60 + "px";
+        document.getElementById("largura").value = w
+        document.getElementById("altura").value = h
     }
     setTimeout(() => comandosExec(), 40)
 }
@@ -861,8 +849,9 @@ function criarPinceis() {
     for (i = 0; i < 10; i++) {
         let brush2 = new Image();
         brush2.src = 'img/brush' + i + '.png';
+        brush2.id = "br" + i
         brush2.setAttribute("onmousedown", "selectBrush('" + i + "')")
-        brush2.setAttribute("style", "width:32px; height:32px; margin-top:6px;")
+        brush2.setAttribute("style", "width:30px; height:30px; margin-top:6px;")
         copo.push(brush2)
 
         brush2.setAttribute("onmousedown", "selectBrush('" + i + "')")
@@ -893,6 +882,8 @@ createColorBrush()
 
 function selectBrush(numero) {
     brush = copo[numero]
+    removeClass('selectedBr')
+    document.getElementById("br" + numero).classList.add("selectedBr")
     changeBrush()
 }
 var changedBrush = false
@@ -1119,6 +1110,7 @@ function handleMove(evt) {
                 stroke,
                 linejoin
             );
+
         } else {
             desenha(
                 "brush",
@@ -1131,6 +1123,8 @@ function handleMove(evt) {
                 strokeWidth,
                 brushCount
             );
+            ultimoToque.x = x
+            ultimoToque.y = y
         }
     }
     if (isPicking) {
@@ -1156,6 +1150,7 @@ function handleMove(evt) {
     }
     cursor.style.left = evt.pageX + "px";
     cursor.style.top = evt.pageY + "px";
+
 }
 function handleUp(evt) {
     offsetX = canvas.getBoundingClientRect().left;
@@ -1309,10 +1304,8 @@ function clearArea() {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         comandos = []
-        comando = ["b", "destination-out", "#ffffff"];
-        comandos.push(comando)
-        comandosExec()
         convertToImg()
+        comandosExec()
     }
 }
 
@@ -1866,7 +1859,6 @@ function mudaCor(valor) {
         document.getElementById("S").value = saturation;
         document.getElementById("L").value = lightness;
         document.getElementById("A").value = alpha;
-        document.getElementById("A2").value = alpha;
         hsla[0] = hue;
         hsla[1] = saturation;
         hsla[2] = lightness;

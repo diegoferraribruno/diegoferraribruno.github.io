@@ -1,5 +1,9 @@
 let startText = 0
-let texts = [["🖐 😍 - oie.", "desenhe aqui.", "🖌️ 👆️"], ["Ou tire uma 📷", "depois apague 🧽,", "use o ⭕ por baixo ,"], ["e tire outra 📷", "para fazer uma bela", "foto-montagem."]]
+let texts = [
+  ["🖐 😍 oie.", "Pode desenhar aqui!", "🖌️ 👆️"],
+  ["Ou tirar uma 📷", "depois apagar 🧽 e", "no modo por baixo ⭕,"],
+  ["tirar outra 📷", "E fazer uma bela", "foto-montagem!"]
+]
 function start() {
 
   setTimeout(() => {
@@ -16,7 +20,7 @@ function start() {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         comandosExec();
-      }, 2500);
+      }, 3200);
       startText++
       if (startText >= texts.length) {
         startText = 0
@@ -25,6 +29,6 @@ function start() {
       limpaCabeca();
 
     }
-  }, 5000);
+  }, 4000);
 }
 start()
