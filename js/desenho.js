@@ -1174,6 +1174,8 @@ function handleUp(evt) {
             emoji,
             size
         );
+        ultimoToque.x = x
+        ultimoToque.y = y
         isEmoji = false
     }
     if (mode === "recortar") {
@@ -1335,6 +1337,9 @@ async function modeTo(qual) {
             oldMode = mode;
             mode = qual;
             mostraMenu(qual);
+        } else {
+            mode = "pintar"
+            mostraMenu("pintar");
         }
     } else {
         if (qual != "apagar") { mostraMenu(qual); }
