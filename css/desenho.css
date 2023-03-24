@@ -54,6 +54,7 @@ body {
     overflow-y: hidden;
     box-shadow: 2px 2px 3px #515054,
         -2px -2px 3px #9d9ca2;
+
 }
 
 #canvas_div2 {
@@ -429,4 +430,14 @@ input[type="range"] {
 #alert {
     font-size: 1.75em;
     z-index: 5000;
+}
+
+#anime {
+    margin-top: 0px;
+    margin-bottom: 4px;
+    display: block;
+    float: right;
+    position: fixed;
+    right: 2px;
+    bottom: 0px;
 }
