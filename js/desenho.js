@@ -24,7 +24,7 @@ var mode = "cores";
 var linejoin = "round";
 var lineJoinsCount = 0;
 const lineJoins = ["miter", "round"];
-var ultimoToque = { x: 160, y: 160 };
+var ultimoToque = { x: canvas.width / 2, y: canvas.height / 2 };
 var zoomFactor = 1;
 var zoomScale = [0.5, 1, 2, 4, 8];
 var zoomIndex = 1;
@@ -42,7 +42,7 @@ audio2.volume = 0.4;
 var useFrontCamera = true; //moved up from modeto("cam") to test.
 var videoStream;
 let rotationDeg = 0;
-var origin = { x: 0, y: 0 };
+var origin = { x: canvas.width / 2, y: canvas.height / 2 };
 var cropEnd = { x: 0, y: 0 };
 var emoji = "😍"
 function redondo(numero) {
@@ -1015,6 +1015,7 @@ function changeGCO(GCO = globalComposite) {
 
 function handleStart(evt) {
     removeClass();
+    cursor.style.opacity = 0.4
     changedBrush = false;
     evt.preventDefault();
     origin.x = redondo((evt.pageX - offsetX) / zoomFactor)
@@ -1080,9 +1081,7 @@ function handleStart(evt) {
 
 
 function handleMove(evt) {
-
     evt.preventDefault();
-
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
 
@@ -1098,7 +1097,7 @@ function handleMove(evt) {
         desenhaRetangulo();
     }
     if (isDrawing === true) {
-        evt.preventDefault();
+        //  evt.preventDefault();
         mouseOver = true;
         if (brushMode == 0) {
             desenha(
@@ -1142,11 +1141,7 @@ function handleMove(evt) {
         }
     }
     if (isGrabing) {
-
-        evt.preventDefault();
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
-        ultimoToque.x = x
-        ultimoToque.y = y
     }
     if (!isGrabing && mode != "recortar") {
         origin.x = x
@@ -1154,9 +1149,11 @@ function handleMove(evt) {
     }
     cursor.style.left = evt.pageX + "px";
     cursor.style.top = evt.pageY + "px";
+    cursor.style.opacity = 0.6
 
 }
 function handleUp(evt) {
+    cursor.style.opacity = 0
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     let over = checkOverCanvas(evt.pageX, evt.pageY)
@@ -1205,7 +1202,12 @@ function handleUp(evt) {
         ultimoToque.y = y
         isDrawing = false;
     }
-    isGrabing = false;
+    if (isGrabing) {
+        origin.x = x
+        origin.y = y
+        isGrabing = false;
+
+    }
 }
 
 function handleEnd(evt) {

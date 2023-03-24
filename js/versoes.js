@@ -1,9 +1,10 @@
 let vers = [
     {
-        versao: " 1.0.3",
+        versao: " 1.0.3 c",
         notas: [
             "novo sistema de notas de versao",
-            "mais ajustes no sistema de zoom"
+            "mais ajustes no sistema de zoom",
+            "esconde o cursor :)"
         ]
     },
     {
@@ -27,15 +28,15 @@ let vers = [
     {
         versao: " 0.9 beta",
         notas: [
-
-            "menos botoes. mais menus.. vamos testar",
+            "menos botoes. mais menus.",
             "cursor do color picker corrigido",
             "menus mais bonitos"
         ]
     },
     {
-        versao: " 0.9.9 alpha 19/03/2023",
+        versao: " 0.9.9 alpha",
         notas: [
+            "19/03/2023",
             "Novo estilo de pintura e pinceis",
             '< a href = "http://tricedesigns.com/sketching-with-html5-canvas-and-brush-images/" target = "blank" >' +
             'com códigos de Andrew Trice</a >  ',
@@ -65,7 +66,7 @@ let vers = [
         ]
     },
     {
-        versao: "0.9.7d",
+        versao: "0.9.7",
         notas: [
             "nova rotacao do canvas. (em desenvolvimento)",
             "removido o canvas de recorte",
