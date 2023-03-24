@@ -394,7 +394,9 @@ function resizeScreen() {
 }
 
 function startup() {
-    window.scrollTo(0, 1);
+    window.scrollTo(0, 1000);
+    setTimeout(() => window.scrollTo(0, 1), 100)
+
     document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(detail) {
         trocaEmoji(event.detail.unicode);
         emojipicker();
@@ -1123,8 +1125,7 @@ function handleMove(evt) {
                 strokeWidth,
                 brushCount
             );
-            ultimoToque.x = x
-            ultimoToque.y = y
+
         }
     }
     if (isPicking) {
@@ -1156,14 +1157,14 @@ function handleUp(evt) {
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     let over = checkOverCanvas(evt.pageX, evt.pageY)
+    x = redondo((evt.pageX - offsetX) / zoomFactor)
+    y = redondo((evt.pageY - offsetY) / zoomFactor)
     if (isSelecting === true && over === true) {
-        cropEnd.x = redondo((evt.pageX - offsetX) / zoomFactor)
-        cropEnd.y = redondo((evt.pageY - offsetY) / zoomFactor)
+        cropEnd.x = x
+        cropEnd.y = y
         desenhaRetangulo();
     }
     if (mode === "emoji" && isEmoji) {
-        x = (evt.pageX - offsetX) / zoomFactor
-        y = (evt.pageY - offsetY) / zoomFactor
         let size = document.getElementById("emosize").value
         desenha(
             "e",
@@ -1181,8 +1182,7 @@ function handleUp(evt) {
     }
 
     if (isPicking) {
-        x = (evt.pageX - offsetX) / zoomFactor
-        y = (evt.pageY - offsetY) / zoomFactor
+
         var imageData = context.getImageData(x, y, 1, 1).data;
         if (imageData[3] > 1) {
             RGBAToHSLA(
@@ -1195,7 +1195,11 @@ function handleUp(evt) {
         }
         isPicking = false
     }
-    isDrawing = false;
+    if (isDrawing) {
+        ultimoToque.x = x
+        ultimoToque.y = y
+        isDrawing = false;
+    }
     isGrabing = false;
 }
 
@@ -1939,7 +1943,7 @@ function ZOOM(a) {
     if (zoomFactor == 1) {
         setTimeout(
             () =>
-                scrollCanva(canvas.width, canvas.height),
+                scrollCanva(-canvas.width, -canvas.height),
             30
         );
     } else {
@@ -1947,8 +1951,8 @@ function ZOOM(a) {
         setTimeout(
             () =>
                 scrollCanva(
-                    ultimoToque.x * zoomFactor - canvas.width / 2,
-                    ultimoToque.y * zoomFactor - canvas.height / 2
+                    ultimoToque.x * zoomFactor - 160,
+                    ultimoToque.y * zoomFactor - 160
                 ),
             30
         );
