@@ -1127,6 +1127,7 @@ function handleMove(evt) {
             );
 
         }
+
     }
     if (isPicking) {
         var imageData = context.getImageData(x, y, 1, 1).data;
@@ -1144,6 +1145,8 @@ function handleMove(evt) {
 
         evt.preventDefault();
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
+        ultimoToque.x = x
+        ultimoToque.y = y
     }
     if (!isGrabing && mode != "recortar") {
         origin.x = x
@@ -1945,23 +1948,14 @@ function ZOOM(a) {
         win.scrollLeft = 0;
     }, 10);
     zoomFactor = Number(a);
-    if (zoomFactor == 1) {
-        setTimeout(
-            () =>
-                scrollCanva(-canvas.width, -canvas.height),
-            30
-        );
-    } else {
-
-        setTimeout(
-            () =>
-                scrollCanva(
-                    ultimoToque.x * zoomFactor - 160,
-                    ultimoToque.y * zoomFactor - 160
-                ),
-            30
-        );
-    }
+    setTimeout(
+        () =>
+            scrollCanva(
+                ultimoToque.x * zoomFactor - 160,
+                ultimoToque.y * zoomFactor - 160
+            ),
+        30
+    );
     setTimeout(() => setZoom(zoomFactor, canvasDiv), 10);
 
     setStrokeSize(strokeWidth);
