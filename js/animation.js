@@ -139,6 +139,8 @@ function changeFrame(frame) {
 	context.setTransform(1, 0, 0, 1, 0, 0);
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	comandos = []
+	      convertToImg()
+        comandosExec()
 	if (workingframe < animacao.length){
 
 	    blob = dataURItoBlob(animacao[workingframe]);
@@ -146,7 +148,9 @@ function changeFrame(frame) {
         let imagem = new Image();
         imagem.src = URL.createObjectURL(blob);
         imagem.onload = function () {
-            context.drawImage(imagem, 0, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
+			comando = ["i", "source-over", imagem, 0, 0, imagem.width, imagem.height]
+            context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
+            comandos.push(comando)
 	//desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
 	}
     //comandosExec()
