@@ -7,7 +7,7 @@ var animacao = []
 
 var anime_menu = {
     "new_frame()": "➕",
-    "prev_frame": "⏮️",
+    "prev_frame()": "⏮️",
     "play()": "▶️",
     "next_frame()": "⏭️",
     "anime_ajustes()": "🎚️",
@@ -31,10 +31,16 @@ function criaAnime() {
             anime.appendChild(item)
         }, 80 * index)
     })
+    let contador = document.createElement("div")
+    contador.innerHTML = workingframe
+     contador.id = "contador"
+    contador.classList.add("shadow")
+    contador.classList.add("bot")
+   anime.appendChild(contador)
 }
 
 setTimeout(() => { criaAnime() }, 10)
-setTimeout(() => { limpaAnime() }, 500)
+setTimeout(() => { limpaAnime() }, 1200)
 
 function limpaAnime() {
     anime.innerHTML = "<div id='ui'class='bot shadow' title='Links do diego' onclick='criaAnime()'>📽️</div>"
@@ -58,34 +64,40 @@ function criaPlayer() {
 criaPlayer()
 
 function criaBackPlayer() {
-
+	for (i=1;i<5;i++){
     var player = document.createElement('div')
-    player.id = "bplayer"
+    player.id = "bplayer"+i
     player.style.width = canvas.width + "px"
     player.style.height = canvas.height + "px"
     player.style.position = "absolute"
-    player.style.border = "2px solid green"
-    player.style.zIndex = -1
-    player.style.opacity = 0.5
-    player.setAttribute("onmousedown", "stop()")
-    document.getElementById("canvas_div2").appendChild(player)
-
+    player.style.marginTop = - canvas.height -4+ "px"
+   // player.style.border = "2px solid green"
+    player.style.backgroundColor = "#ffffff"
+    player.style.zIndex = -1*i
+    player.style.opacity = 0.3
+    document.getElementById("canvas_div").appendChild(player)
+}
 }
 
 criaBackPlayer()
 
+let workingframe = 0
 function new_frame() {
-    len = animacao.length
     swapImg = canvas.toDataURL('image/png');
     blobb = dataURItoBlob(swapImg)
-    animacao.push(swapImg)
+    save_frame(swapImg)
     //swapImg = []
     //blobb = []
-    changeFrame(len)
+    len = animacao.length
 
+    workingframe++
+    changeFrame(workingframe)
+document.getElementById("contador").innerHTML = workingframe
 
 }
-
+function save_frame(imagem) {
+	animacao[workingframe] = imagem
+	}
 
 let playing = 0
 var inter
@@ -105,39 +117,66 @@ function playerPlay(frame) {
 }
 
 function changeFrame(frame) {
-    document.getElementById("bplayer").style.backgroundImage = 'url("' + animacao[frame] + '")'
-    Fundo("none")
-    context.setTransform(1, 0, 0, 1, 0, 0);
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    comandos = []
-    comandosExec()
+	let old0 = frame
+
+	if (frame > 0 ){
+		let old1 = frame-1;
+		document.getElementById("bplayer"+1).style.backgroundImage = 'url("' + animacao[old1] + '")'
+	}
+	if (frame > 1 ){
+		let old2 = frame-2
+		document.getElementById("bplayer"+2).style.backgroundImage = 'url("' + animacao[old2] + '")'
+	}
+	if (frame > 2 ){
+		let old3 = frame-3;
+		document.getElementById("bplayer"+3).style.backgroundImage = 'url("' + animacao[old3] + '")'
+	}
+		if (frame > 3 ){
+		let old4 = frame-4;
+		document.getElementById("bplayer"+4).style.backgroundImage = 'url("' + animacao[old4] + '")'
+	}
+	Fundo("none")
+	context.setTransform(1, 0, 0, 1, 0, 0);
+	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+	comandos = []
+	if (workingframe < animacao.length){
+
+	    blob = dataURItoBlob(animacao[workingframe]);
+	     console.log(blob)
+        let imagem = new Image();
+        imagem.src = URL.createObjectURL(blob);
+        imagem.onload = function () {
+            context.drawImage(imagem, 0, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
+	//desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
+	}
+    //comandosExec()
 }
 
-
+}
 
 function next_frame() {
-    playing++
-    if (playing >= animacao.length) {
-        playing--
+    workingframe++
+    if (workingframe > animacao.length) {
+        workingframe=0
     }
-    changeFrame(playing)
-
+    changeFrame(workingframe)
+document.getElementById("contador").innerHTML = workingframe
 
 }
 function prev_frame() {
-    playing--
-    if (playing < 0) {
-        playing++
+    workingframe--
+    if (workingframe < 0) {
+        workingframe=animacao.length-1
     }
-    changeFrame(playing)
+    changeFrame(workingframe)
     /* let imagem = animacao[playing]
      context.drawImage(imagem, 0, 0, imagem.width, imagem.height);*/
-
+document.getElementById("contador").innerHTML = workingframe
 }
 var cont
 
 function export_anim() {
-    Alert("sinto muito, função ainda em desenvolvimento. Salve as imagens individualmente, quadro a quadro...")
+    Alert("Sprite-frame sendo baixado.")
     let len = animacao.length
     let exp = document.createElement("canvas")
     exp.width = canvas.width * len

@@ -1,4 +1,10 @@
 let vers = [
+  {
+        versao: " 1.1",
+        notas: [
+            "Animação!!!"
+        ]
+    },
     {
         versao: " 1.0.3 c",
         notas: [
