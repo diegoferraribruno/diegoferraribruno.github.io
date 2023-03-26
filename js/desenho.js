@@ -197,12 +197,12 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
 	document.getElementById("player").style.backgroundSize = "cover";
 
 	if (W >window.innerWidth) {
-		let escala = (window.innerWidth-20) / W
+		let escala = (window.innerWidth-8) / W
 
 	document.getElementById("player").style.height = H*escala +"px"
 	document.getElementById("player").style.width = W* escala+"px"
-	document.getElementById("player").style.left = "10px"
-	document.getElementById("player").style.top =  "10px"
+	document.getElementById("player").style.left = "4px"
+	document.getElementById("player").style.top =  "4px"
 
 	}
     if (W < screen.width || H < screen.height) {
@@ -242,6 +242,13 @@ var checkOrientation = function () {
         }
         win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
+
+		let escala = (window.innerWidth-8) / W
+
+	document.getElementById("player").style.height = H*escala +"px"
+	document.getElementById("player").style.width = W* escala+"px"
+	document.getElementById("player").style.left = "4px"
+	document.getElementById("player").style.top =  "4px"
 
         // orientation changed, do your magic here
     }
@@ -408,6 +415,13 @@ function resizeScreen() {
     }
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";
+    		let escala = (window.innerWidth-8) / W
+
+	document.getElementById("player").style.height = H*escala +"px"
+	document.getElementById("player").style.width = W* escala+"px"
+	document.getElementById("player").style.left = "4px"
+	document.getElementById("player").style.top =  "4px"
+
     setTimeout(() => comandosExec(), 40)
 }
 
