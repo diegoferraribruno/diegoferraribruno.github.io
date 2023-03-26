@@ -1,7 +1,7 @@
 var anime = document.createElement("div")
 anime.id = "anime"
 document.body.appendChild(anime)
-var fps = 15
+var fps = 6
 var animacao = []
 
 
@@ -23,6 +23,8 @@ function criaAnime() {
         setTimeout(() => {
             let item = document.createElement("div")
             item.setAttribute("onClick", key)
+            item.id = key
+
             //item.href = key
             //item.target = "iframe"
             item.innerText = anime_menu[key]
@@ -39,8 +41,8 @@ function criaAnime() {
    anime.appendChild(contador)
 }
 
-setTimeout(() => { criaAnime() }, 10)
-setTimeout(() => { limpaAnime() }, 1200)
+setTimeout(() => { criaAnime() }, 200)
+//setTimeout(() => { limpaAnime() }, 1200)
 
 function limpaAnime() {
     anime.innerHTML = "<div id='ui'class='bot shadow' title='Animação' onclick='criaAnime()'>📽️</div>"
@@ -65,9 +67,10 @@ function criaPlayer() {
 	menuanime.id = "menuanime"
 	menuanime.innerHTML = `<span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">
 	 🎚 Ajustes de animação ❌</span>
-	 <span class="botao">⏱️ FPS <input type="number" id="fpsnumber" min="1" max="60" step="1" value="15"
+	 <span class="botao">⏱️ FPS <input type="number" id="fpsnumber" min="1" max="60" step="1" value="6"
       onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px"> <span onmousedown="play()">▶️</span></span>
-                        <span class="botao"  onmousedown="removeFrame()" > remover quadro atual ➖</span>`
+                        <span class="botao"  onmousedown="removeFrame()" >🗑 Remover quadro atual ➖</span>
+                        <span class="botao"  onmousedown="cloneFrame()" >🧬 clonar o quadro atual</span>`
 	document.getElementById("menus").appendChild(menuanime)
 
 
@@ -192,8 +195,13 @@ document.getElementById("contador").innerHTML = workingframe
 var cont
 
 function export_anim() {
-    Alert("Sprite-frame sendo baixado.")
     let len = animacao.length
+    if (len==0){
+	Alert("Adicione ➕ quadros a sua animação antes de exportar.")
+		return
+		}
+    Alert("Sprite-frame sendo baixado.")
+
     let exp = document.createElement("canvas")
     exp.width = canvas.width * len
     exp.height = canvas.height
@@ -235,3 +243,12 @@ function removeFrame(){
 	prev_frame()
 	animacao.splice(workingframe+1,1)
 	}
+function cloneFrame(){
+	animacao.splice(workingframe+1, 0, animacao[workingframe]);
+	next_frame()
+	}
+var checkSave = setInterval (()=>{
+	if (comandos.length >1){
+document.getElementById("new_frame()").classList.toggle("blink")
+	}
+},1500)

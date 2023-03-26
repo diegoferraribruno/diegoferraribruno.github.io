@@ -75,13 +75,13 @@ body {
 
 .bot {
     border-radius: 20px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 3px;
+    margin-right: 3px;
     margin-bottom: 4px;
     height: 34px;
     width: 34px;
     font-size: 32px;
-    display: inline-flex;
+    display: inline-block;
     position: relative;
     background-color: #777755cc;
     line-height: 34px;
@@ -251,3 +251,6 @@ section {
     height: 130px;
     overflow: scroll;
 }
+.blink{
+border:1px #cccccc solid;
+background-color:#bbbbbb}
