@@ -1,8 +1,11 @@
 let vers = [
   {
-        versao: " 1.1",
+        versao: " 1.2",
         notas: [
-            "Animação!!!"
+            "1.1 Animação!!!",
+            "1.1 Menu animação",
+            "1.2 remove quadro",
+            "Menu quadros por segundo"
         ]
     },
     {

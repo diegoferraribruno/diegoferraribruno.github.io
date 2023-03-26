@@ -1,7 +1,7 @@
 var anime = document.createElement("div")
 anime.id = "anime"
 document.body.appendChild(anime)
-const fps = 15
+var fps = 15
 var animacao = []
 
 
@@ -43,7 +43,7 @@ setTimeout(() => { criaAnime() }, 10)
 setTimeout(() => { limpaAnime() }, 1200)
 
 function limpaAnime() {
-    anime.innerHTML = "<div id='ui'class='bot shadow' title='Links do diego' onclick='criaAnime()'>📽️</div>"
+    anime.innerHTML = "<div id='ui'class='bot shadow' title='Animação' onclick='criaAnime()'>📽️</div>"
 }
 //limpaanime()
 function criaPlayer() {
@@ -58,6 +58,18 @@ function criaPlayer() {
     player.style.visibility = "hidden"
     player.setAttribute("onmousedown", "stop()")
     document.getElementById("canvas_div2").appendChild(player)
+	let menuanime = document.createElement('div')
+
+	menuanime.classList.add("submenu")
+	menuanime.classList.add("fundobranco")
+	menuanime.id = "menuanime"
+	menuanime.innerHTML = `<span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">
+	 🎚 Ajustes de animação ❌</span>
+	 <span class="botao">⏱️ FPS <input type="number" id="fpsnumber" min="1" max="60" step="1" value="15"
+      onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px"> <span onmousedown="play()">▶️</span></span>
+                        <span class="botao"  onmousedown="removeFrame()" > remover quadro atual ➖</span>`
+	document.getElementById("menus").appendChild(menuanime)
+
 
 }
 
@@ -74,7 +86,7 @@ function criaBackPlayer() {
    // player.style.border = "2px solid green"
     player.style.backgroundColor = "#ffffff"
     player.style.zIndex = -1*i
-    player.style.opacity = 0.3
+    player.style.opacity = 0.5
     document.getElementById("canvas_div").appendChild(player)
 }
 }
@@ -104,7 +116,7 @@ var inter
 
 function play() {
     clearInterval(inter);
-    inter = setInterval(() => { playerPlay(playing); playing++; if (playing >= animacao.length) { playing = 0; }; }, 200)
+    inter = setInterval(() => { playerPlay(playing); playing++; if (playing >= animacao.length) { playing = 0; }; }, 1000/fps)
 }
 function stop() {
     clearInterval(inter);
@@ -214,7 +226,12 @@ function export_anim() {
 }
 
 function anime_ajustes() {
-
-    Alert("🎚️ ajustes ainda em construcao")
+mostraMenu("anime")
 }
-
+function changeFPS(valor){
+	fps = valor
+	}
+function removeFrame(){
+	prev_frame()
+	animacao.splice(workingframe+1,1)
+	}
