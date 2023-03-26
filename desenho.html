@@ -86,9 +86,10 @@
             <div id="menuimagem" class="fundobranco submenu aparece menu">
                 <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">📤 Enviar uma imagem
                     ❌</span><br>
-                <input type="file" id="input" class="custom-file-input" accept=".png, .jpg, .jpeg, .gif .bmp"
-                    title="📤" />
-                <br>Ajustar tela ao tamanho da imagem: <input type="checkbox" id="ajustar" checked="true">
+                    <span class="botao"> Ajustar tela ao tamanho da imagem <input type="checkbox" id="ajustar" checked="true">
+                <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
+                    title="📤" /></span>
+
             </div>
 
             <div id="menuemoji" class="fundobranco submenu menu">
@@ -212,10 +213,9 @@
                 <span id="oculos" class="botao" onmousedown="pixel()">👓 Suavização de pixels </span>
 
                 <span id="fundo falso" class="botao"> Adicionar Fundo falso:<br>
-                    <span onmousedown="Fundo('img')" class="bloquinho">🌎</span>
-                    <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
+                     <span onmousedown="Fundo2('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
                     </span>
-                    <span onmousedown="Fundo('white')" class="bloquinho"
+                    <span onmousedown="Fundo2('white')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 100%, 1)">
                     </span>
                     <span onmousedown="Fundo('img/grid.png')" class="bloquinho"
@@ -224,9 +224,12 @@
                         style="background-image: url('./img/grid2.png'); background-color: #fff"></span>
                     <span onmousedown="Fundo('img/grid3.png')" class="bloquinho"
                         style="background-image: url('./img/grid3.png')"></span>
+                        <span onmousedown="Fundo('img')" class="bloquinho">🌎</span>
+
                     <span onmousedown="Fundo('none')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 100%, 0)">
                         ❌</span>
+
                     <span>
                         <input type="file" id="input2" class="custom-file-input"
                             accept=".png, .jpg, .jpeg, .gif .bmp" />
@@ -325,7 +328,7 @@
 
             </div>
 
-            <div id="canvas_window">
+            <div id="canvas_window" style="background-color: hsla(0, 100%, 100%, 0.4)">
                 <span id="cursor"
                     style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
                     class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>

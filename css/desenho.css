@@ -364,8 +364,7 @@ input[type="range"] {
     color: #eeeeee;
 }
 
-.custom-file-input::before {
-    content: '📷';
+.custom-file-input{
     display: inline-block;
     background: linear-gradient(top, #f9f9f9, #e3e3e3);
     border: 1px solid #999;
@@ -443,4 +442,8 @@ input[type="range"] {
 }
 #contador_{
 padding-left:10px;
+}
+.filter{
+	background-color:hsla(0, 100%, 100%, 0.9);
+    pointer-events: none;
 }

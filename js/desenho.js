@@ -185,9 +185,27 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
     canvasDiv.style.height = H + "px"; //add 30px for scroll
     canvas.width = W;
     canvas.height = H;
-    win.style.width = parseInt(window.innerWidth, 10) - 48 + "px";
-    win.style.height = parseInt(window.innerHeight, 10) - 48 + "px";
-    if (W < screen.width && H < screen.height) {
+
+     for (i=0;i<5;i++){
+		document.getElementById("bplayer"+i).style.width  = W+"px"
+	document.getElementById("bplayer"+i).style.height = H + "px"
+	document.getElementById("bplayer"+i).style.marginTop = - H -4+ "px"
+		}
+
+	document.getElementById("player").style.height = H + "px"
+	document.getElementById("player").style.width = W + "px"
+	document.getElementById("player").style.backgroundSize = "cover";
+
+	if (W >window.innerWidth) {
+		let escala = (window.innerWidth-20) / W
+
+	document.getElementById("player").style.height = H*escala +"px"
+	document.getElementById("player").style.width = W* escala+"px"
+	document.getElementById("player").style.left = "10px"
+	document.getElementById("player").style.top =  "10px"
+
+	}
+    if (W < screen.width || H < screen.height) {
         zoomIndex = 0;
         modeTo("zoom");
     } else {
@@ -273,9 +291,9 @@ function night() {
     }
     nightmode = !nightmode
     if (nightmode) {
-        Fundo('black')
+        Fundo2('black')
     } else {
-        Fundo("white")
+        Fundo2("white")
     }
 
 }
@@ -401,8 +419,7 @@ function startup() {
         trocaEmoji(event.detail.unicode);
         emojipicker();
     });
-    Fundo("white")
-    Fundo('img/grid3.png')
+    Fundo("none")
     counter = setInterval(() => undoing(), 30)
     document.onkeydown = function (event) {
         //on enter key
@@ -412,6 +429,7 @@ function startup() {
     };
     modeTo("pintar")
     removeClass();
+    tamanhom()
     document.getElementById(
         "globalComposite"
     ).innerHTML =
@@ -1488,7 +1506,7 @@ function camera() {
             !"mediaDevices" in navigator ||
             !"getUserMedia" in navigator.mediaDevices
         ) {
-            alert("Camera API is not available in your browser");
+            Alert("Camera API is not available in your browser");
             return;
         }
 
@@ -1578,7 +1596,7 @@ function camera() {
                 videoStream = await navigator.mediaDevices.getUserMedia(constraints);
                 video.srcObject = videoStream;
             } catch (err) {
-                alert("Could not access the camera");
+                Alert("Could not access the camera");
             }
         }
 
@@ -2035,6 +2053,19 @@ function cursorColor() {
             break;
     }
 }
+
+function Fundo2(qual) {
+	let bgcor = "hsla(0, 100%, 0%, 0.7)"
+	if (qual === "black") {
+       bgcor = "hsla(0, 100%, 0%, 0.7)";
+    } else if (qual === "white") {
+       bgcor = "hsla(0, 100%, 100%, 0.7)";
+    }
+        win.style.backgroundColor = bgcor;
+    for (i=0;i<5;i++){
+		document.getElementById("bplayer"+i).style.backgroundColor  = bgcor
+		}
+}
 function Fundo(qual) {
     if (qual === "img") {
         var item = prompt(
@@ -2042,7 +2073,7 @@ function Fundo(qual) {
             "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
         );
         if (item == null || item == "") {
-            alert("fundo do app removido");
+            //alert("fundo do app removido");
             canvasDiv.style.backgroundImage = `none`;
         } else {
             canvasDiv.style.backgroundImage = `url(${item})`;
@@ -2053,7 +2084,7 @@ function Fundo(qual) {
             "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
         );
         if (item == null || item == "") {
-            alert("fundo do app removido");
+            Alert("fundo do app removido");
             canvasDiv.style.backgroundImage = `none`;
         } else {
             canvasDiv.style.backgroundImage = `url(${item})`;

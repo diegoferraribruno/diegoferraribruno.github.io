@@ -56,10 +56,14 @@ function criaPlayer() {
     player.style.width = canvas.width + "px"
     player.style.height = canvas.height + "px"
     player.style.position = "absolute"
-    player.style.border = "1px solid red"
+    player.style.display = "block"
+    player.style.top = "10px"
+
+    player.style.left = "10px"
+    player.style.border = "1px solid #88ccee"
     player.style.visibility = "hidden"
     player.setAttribute("onmousedown", "stop()")
-    document.getElementById("canvas_div2").appendChild(player)
+    document.getElementById("tela").appendChild(player)
 	let menuanime = document.createElement('div')
 
 	menuanime.classList.add("submenu")
@@ -79,17 +83,18 @@ function criaPlayer() {
 criaPlayer()
 
 function criaBackPlayer() {
-	for (i=1;i<5;i++){
+	for (i=0;i<5;i++){
     var player = document.createElement('div')
     player.id = "bplayer"+i
+    player.style.display = "block"
     player.style.width = canvas.width + "px"
     player.style.height = canvas.height + "px"
     player.style.position = "absolute"
     player.style.marginTop = - canvas.height -4+ "px"
    // player.style.border = "2px solid green"
-    player.style.backgroundColor = "#ffffff"
-    player.style.zIndex = -1*i
-    player.style.opacity = 0.5
+	player.classList.add("filter")
+    player.style.zIndex = -1*i-1
+    player.style.opacity = 0.4
     document.getElementById("canvas_div").appendChild(player)
 }
 }
@@ -118,12 +123,18 @@ let playing = 0
 var inter
 
 function play() {
+	if (animacao.length > 0){
     clearInterval(inter);
     inter = setInterval(() => { playerPlay(playing); playing++; if (playing >= animacao.length) { playing = 0; }; }, 1000/fps)
+	document.getElementById("play()").innerHTML = ' <span onmousedown="stop()" >⏹️</span>'}
+	else{
+	Alert("Adicione ➕ quadros a sua animação antes dar o Play")
+	}
 }
 function stop() {
     clearInterval(inter);
     document.getElementById("player").style.visibility = "hidden"
+    document.getElementById("play()").innerHTML =  "▶️"
 }
 
 function playerPlay(frame) {
@@ -150,7 +161,6 @@ function changeFrame(frame) {
 		let old4 = frame-4;
 		document.getElementById("bplayer"+4).style.backgroundImage = 'url("' + animacao[old4] + '")'
 	}
-	Fundo("none")
 	context.setTransform(1, 0, 0, 1, 0, 0);
 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	comandos = []
@@ -248,7 +258,7 @@ function cloneFrame(){
 	next_frame()
 	}
 var checkSave = setInterval (()=>{
-	if (comandos.length >1){
-document.getElementById("new_frame()").classList.toggle("blink")
+	if (comandos.length >2){
+		document.getElementById("new_frame()").classList.toggle("blink")
 	}
 },1500)

@@ -1,13 +1,16 @@
 let vers = [
   {
-        versao: " 1.3",
+        versao: " 1.3.1",
         notas: [
             "1.1 Animação!!!",
             "1.1 Menu animação",
             "1.2 remove quadro",
             "1.2 Menu quadros por segundo",
             "1.3 botao + piscando pra lembrar de salvar o quadro",
-            "1.3 botao clonar quadro de animação"
+            "1.3 botao clonar quadro de animação",
+            "1.3.1 player fixo tamanho proporcional",
+            "1.3.1 botao play/stop "
+
         ]
     },
     {
