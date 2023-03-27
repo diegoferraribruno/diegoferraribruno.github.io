@@ -83,10 +83,14 @@ body {
     font-size: 32px;
     display: inline-block;
     position: relative;
-    background-color: #777755cc;
+    background-color: #222222cc;
     line-height: 34px;
     vertical-align: middle;
     text-align: center;
+     text-shadow: -1px 0 #eeeeee66, 0 1px #eeeeee66, 1px 0 #eeeeee66, 0 -1px #eeeeee66;
+    animation:animatezoom 0.6s}@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)};
+
+
 }
 
 a,
@@ -191,6 +195,7 @@ a:visited {
 
 #anime {
     background-size: 34px 34px;
+    animation:animatezoom 0.6s}@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}
 }
 
 #apoio {
@@ -199,14 +204,16 @@ a:visited {
 
 #blog {
     display: inline-block;
-    line-height: 22px;
+    line-height: 18px;
     color: #eeeeee;
     background-color: #333333;
     border-radius: 16px;
     margin: 8px;
     padding: 10px;
     overflow-y: scroll;
-    height: 260px;
+    height: 90vh;
+    font-size:0.8em;
+    text-align: justify;
 }
 
 h6 {
@@ -231,7 +238,7 @@ section {
 
 .bloco {
     width: 320px;
-    height: 400px;
+    height: 320px;
     display: block;
     margin: 10px;
 

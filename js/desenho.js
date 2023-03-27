@@ -243,7 +243,7 @@ var checkOrientation = function () {
         win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
 
-		let escala = (window.innerWidth-8) / W
+		let escala = (window.innerWidth-8) / canvas.width
 
 	document.getElementById("player").style.height = H*escala +"px"
 	document.getElementById("player").style.width = W* escala+"px"
@@ -415,13 +415,14 @@ function resizeScreen() {
     }
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";
-    		let escala = (window.innerWidth-8) / W
+if (document.getElementById("player").style.height > window.innerWidth){
+    let escala = (window.innerWidth-8) / canvas.width
 
-	document.getElementById("player").style.height = H*escala +"px"
-	document.getElementById("player").style.width = W* escala+"px"
+	document.getElementById("player").style.height = canvas.height*escala +"px"
+	document.getElementById("player").style.width = canvas.width* escala+"px"
 	document.getElementById("player").style.left = "4px"
 	document.getElementById("player").style.top =  "4px"
-
+}
     setTimeout(() => comandosExec(), 40)
 }
 
@@ -1341,15 +1342,31 @@ var Trig = {
 }
 function clearArea() {
     let confirma = confirm(
-        "Limpar todo o desenho? \n(impossível desfazer)"
+        "Limpar o quadro? \n(impossível desfazer)"
     );
+
     if (confirma === true) {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         comandos = []
+ }
+ if (animacao.length > 0){
+         let confirma2 = confirm(
+        "Apagar outros quadros da animaçãso? \n(impossível desfazer)"
+    );
+      if (confirma2 === true) {
+		  animacao = []
+		  workingframe = 0
+    for (i=0;i<5;i++){
+		document.getElementById("bplayer"+i).style.backgroundImage = 'none'
+		}
+		changeFrame(workingframe)
+
+		  }}
         convertToImg()
         comandosExec()
-    }
+
+	modeTo(oldMode)
 }
 
 let oldMode = mode;
@@ -2156,3 +2173,9 @@ function trocaEmoji(emo) {
     emoexemplo = document.getElementById("emoexemplo")
 
 }
+
+
+function hidecustom(){
+	document.getElementById("custom").classList.toggle("anime")
+	document.getElementById("custom").classList.toggle("aparece")
+	}

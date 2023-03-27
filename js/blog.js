@@ -1,9 +1,9 @@
 var posts = [
 	{
 		id: 1,
-		titulo: "Começando um  novo projeto de blog",
+		titulo: "Começando um  novo blog",
 		data: "15/03/2023 10:00",
-		conteudo: "Começando um novo blog aqui"
+		conteudo: "só para fazer o primeiro post."
 	},
 	{
 		id: 2,
@@ -32,9 +32,20 @@ var posts = [
 		id: 5,
 		titulo: "Finalizado histórico com novos pincéis",
 		data: "19/03/2023 10:00",
-		conteudo: "foram 4 dias exaustivos pensando, mudando códigos " +
+		conteudo: "Foram 4 dias exaustivos pensando, mudando códigos " +
 			"e cuidando do filho doente, com direito a madrugada no hospital e dia de ressaca com dor de cabeça.<br>" +
 			"Bem, apesar das gambiarras, nosso app de Desenho está funcionando aparentemente bem com a nova mudança de pinceis no histórico.<br>"
+	},
+	{
+		id: 6,
+		titulo: "Muita animação",
+		data: "26/03/2023 23:50",
+		conteudo: "Depois de consertar muita coisa por conta da mudança do modo de entrada, " +
+			"achei que o app estava usável o suficiente para implemplementar a função de animação<br>" +
+			"Foi um surto criativo, o código simplesmente fluiu em 1 dia já estava animando e exportando, dois dias depois, "+
+			"seu menu de ajustes, completo com velocidade, clonagem e remoção de quadros de"+
+			" animação.<br> Só falta importar os quadros de animação de volta. <br>"+
+			"(update das 02:00 - Importação de animações) <br> Espero que esteja intuitivo.<br> Ah e o filho já ta bem!"
 	}
 
 ]

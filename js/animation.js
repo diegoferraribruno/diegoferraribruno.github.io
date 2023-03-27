@@ -16,7 +16,9 @@ var anime_menu = {
 }
 
 function criaAnime() {
-    anime.innerHTML = "<div  id='ui' class='bot shadow' title='Anime player' onclick='limpaAnime()'> 📽️</div>"
+
+    anime.classList.add("anime")
+    anime.innerHTML = "<div  id='ui' class=' bot shadow ' title='Anime player' onclick='limpaAnime()'> 📽️</div>"
     //<!--🚀-->
 
     Object.keys(anime_menu).forEach((key, index) => {
@@ -45,7 +47,7 @@ setTimeout(() => { criaAnime() }, 200)
 //setTimeout(() => { limpaAnime() }, 1200)
 
 function limpaAnime() {
-    anime.innerHTML = "<div id='ui'class='bot shadow' title='Animação' onclick='criaAnime()'>📽️</div>"
+    anime.classList.toggle("hideanime")
 }
 //limpaanime()
 function criaPlayer() {
@@ -58,7 +60,7 @@ function criaPlayer() {
     player.style.position = "absolute"
     player.style.display = "block"
     player.style.top = "10px"
-
+	player.backgroundSize = "cover"
     player.style.left = "10px"
     player.style.border = "1px solid #88ccee"
     player.style.visibility = "hidden"
@@ -74,13 +76,45 @@ function criaPlayer() {
 	 <span class="botao">⏱️ FPS <input type="number" id="fpsnumber" min="1" max="60" step="1" value="6"
       onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px"> <span onmousedown="play()">▶️</span></span>
                         <span class="botao"  onmousedown="removeFrame()" >🗑 Remover quadro atual ➖</span>
-                        <span class="botao"  onmousedown="cloneFrame()" >🧬 clonar o quadro atual</span>`
+                        <span class="botao"  onmousedown="cloneFrame()" >🧬 clonar o quadro atual</span>
+                          `
 	document.getElementById("menus").appendChild(menuanime)
-
+setTimeout(()=>{var inputSprite = document.getElementById('inputSprite');
+inputSprite.addEventListener('change',  importSprite);},10)
 
 }
 
 criaPlayer()
+
+function importSprite(e){
+	imagem = new Image;
+    imagem.src = URL.createObjectURL(e.target.files[0]);
+    imagem.onload = function () {
+		let quadros = imagem.width / canvas.width
+		let largura = document.getElementById("larguraS").value
+		let altura = document.getElementById("alturaS").value
+        let auto = document.getElementById("autodetectar").checked
+        if (auto === false) {
+			quadros = document.getElementById("fnumber").value
+			tamanho(largura,altura)
+			}
+          for (i=0; i<quadros; i++){
+		 context.setTransform(1, 0, 0, 1, 0, 0);
+			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+			context.drawImage(imagem, i*canvas.width, 0, imagem.width, imagem.height,0, 0, imagem.width, imagem.height);
+			swapImg = canvas.toDataURL('image/png');
+			blobb = dataURItoBlob(swapImg)
+			animacao[workingframe] = swapImg
+			workingframe++
+
+		  }
+		   setTimeout(()=> {
+			   changeFrame(workingframe-1);
+			   removeClass()
+	   document.getElementById("contador").innerHTML = workingframe;
+	   },200)
+        }
+}
 
 function criaBackPlayer() {
 	for (i=0;i<5;i++){
@@ -139,11 +173,14 @@ function stop() {
 
 function playerPlay(frame) {
     document.getElementById("player").style.backgroundImage = 'url("' + animacao[frame] + '")';
+    document.getElementById("player").style.backgroundSize = "cover"
     document.getElementById("player").style.visibility = "visible"
 }
 
 function changeFrame(frame) {
 	let old0 = frame
+
+	   document.getElementById("contador").innerHTML = workingframe;
 
 	if (frame > 0 ){
 		let old1 = frame-1;
@@ -169,7 +206,6 @@ function changeFrame(frame) {
 	if (workingframe < animacao.length){
 
 	    blob = dataURItoBlob(animacao[workingframe]);
-	     console.log(blob)
         let imagem = new Image();
         imagem.src = URL.createObjectURL(blob);
         imagem.onload = function () {
@@ -196,6 +232,7 @@ function prev_frame() {
     workingframe--
     if (workingframe < 0) {
         workingframe=animacao.length-1
+        if (workingframe < 0) { workingframe=0}
     }
     changeFrame(workingframe)
     /* let imagem = animacao[playing]
@@ -225,7 +262,7 @@ function export_anim() {
         blob = dataURItoBlob(animacao[i]);
         let imagem = new Image();
         imagem.src = URL.createObjectURL(blob);
-        let pos = i * 320
+        let pos = i * canvas.width
         imagem.onload = function () {
             cont.drawImage(imagem, 0, 0, imagem.width, imagem.height, pos, 0, imagem.width, imagem.height);
         }

@@ -5,41 +5,41 @@ var usuarios = [{
     bio: "Pai, artista, designer, programador",
     twitter: "@diegofbrasil",
     instagram: "@diegoferraribruno",
-    curriculo: `Currículo profissional<br> 
+    curriculo: `Currículo profissional<br>
     Diego Ferrari Bruno
 
-    <br>• Nascimento: 06/09/1982 
+    <br>• Nascimento: 06/09/1982
     <br>• Endereço: Cambuci, São Paulo – SP.
     <br>• Cel.: +55-onze-96223-oitenta38
     <br>• Web-site: https://diegoferraribruno.github.io
-    
-    <br>• twitter: @diegoferraribr1
+
+    <br>• twitter: <a href="https://twitter.com/diegoFerrariBr1/" target="_blanc"> @diegoferraribr1</a>
     <br>• instagram: @diegoferraribruno
-    
+
     <br><br>•Resumo Profissional:
-    
+
         <br>• Direção de arte, produção de web-sites e vídeos.
         <br>• Gerenciamento de setores de criação e marketing.
         <br>• Desenvolvimento de projetos integrando arte e tecnologia
         <br>• Desenvolvimento de Games e aplicativos em Html, CSS e javaScript
-    
+
         <br><br>•Áreas de atuação:
-    
+
         <br>• Direção, filmagem e edição de vídeo.
         <br>• Ilustração 2D e 3D
         <br>• Animação 2D e 3D
         <br>• Web-Design
         <br>• Game Design
-    
+
         <br><br>•Formação acadêmica
-    
+
         <br>• 2001 - Colegial Técnico em Publicidade - FECAP
         <br>• 2005 - Ensino superior: Tecnologia em Design de Multimídia - SENAC
-    
+
         <br><br>•Experiência Profissional
-    
+
         <br>• 2001 - 2003 - Freelancer: restauração digital de fotografias
-        <br>• 2003 - (6 meses) Estágio como web-designer na Statos.com 
+        <br>• 2003 - (6 meses) Estágio como web-designer na Statos.com
         <br>• 2004 - 2005 - Freelancer: ilustração e web-design
         <br>• 2005 - (6 meses) Diretor de Arte e sócio da "A Selva Comunicação"
         <br>• 2006 - 2008 - Freelancer Web-design, ilustração, animação e modelagem 3D.
@@ -47,21 +47,24 @@ var usuarios = [{
         <br>• 2008-2011 - Diretor de arte e sócio da empresa de comunicação "SUR10 COMUNICA!"
         <br>• 2011 - 2012 - Cinegrafista e editor de vídeo na empresa Funf Sports.
         <br>• 2013 - 2015 - Praticando permacultura e bioconstrução no Sitio dos Macacos (Caparó-ES)
-        <br>• 2017 - virei Pai 
+        <br>• 2017 - virei Pai
         <br>• 2017 – Uber Driving em São Paulo
         <br>• 2018 - Arte na casa 3 e serviços de design para a Fruto do ventre.
-        <br>• 2018 - Filmei, e produzi um curso de bonecos em biscuit com o professor Guilherme Pires.
+        <br>• 2018 - Filmei, e produzi um curso de bonecos em biscuit
+        com o professor Guilherme Pires.
         <br>• 2019 - Uber Driving
-        
+
         <br><br>•Trabalhos voluntário e projetos sociais
-    
-        <br>• 2008 - 2010 -  Direção de Marketing desenvolvimento de web-site e produção de vídeos na Associação dos Surdos de São Paulo 
+
+        <br>• 2008 - 2010 -  Direção de Marketing desenvolvimento
+        de web-site e produção de vídeos na Associação dos Surdos de São Paulo
         <br>• 2009 - Participação Projeto alemão - Vamos em Sinais 2009 
-        <br>• 2010 - Co-fundador do Projeto Vamos em Sinais 2010 - Viajando de Bicicleta e realizando oficinas de LIBRAS em escolas pelo Brasil)
+        <br>• 2010 - Co-fundador do Projeto Vamos em Sinais 2010 
+        - Viajando de Bicicleta e realizando oficinas de LIBRAS em escolas pelo Brasil)
         <br>• 2013 -  Coordenador Adjunto de Comunicação, cultura e arte da ONG, Caparaom.
-    
+
         <br><br>•Cursos extra-curriculares
-    
+
         <br>• 2000 - Paraquedismo ASL (1 aula e o 1º salto)
         <br>• 2001 - LightWave 3D (software de ilustração e animação 3D)
         <br>• 2002 - Iniciando um Pequeno Grande Negócio (Sebrae - via internet)
@@ -73,7 +76,7 @@ var usuarios = [{
         <br>• 2008 - Por dentro do Cinema (Escola São Paulo)
         <br>• 2008 - Produção de Video-clipe  (Escola São Paulo)
         <br>• 2008 - Produção avançada para Cinema  (Escola São Paulo)
-        <br>• 2009 - Estamparia (de camisetas)/ Silk Screen / Serigrafia (Escola de São Paulo)
+        <br>• 2009 - Estamparia / Silk Screen / Serigrafia (Escola de São Paulo)
         <br>• 2011 - Curso de Teatro na Oficina dos Menestréis - Direção de Deto Montenegro
         <br>• 2011 - Curso Básico de Teatro (Teatro Escola Macunaína)
         <br>• 2012 - Curso de Ecovilas (Prof. Marcelo Bueno - Casa de Jaya)
@@ -87,9 +90,9 @@ var usuarios = [{
         <br>• 2017 - curso de modelagem de bonecos em Biscuit
         <br>• 2020 - autodidata no desenvolvimento de games com Godot Game Engine,
         <br>• 2022 - curso JavaScript Advanced Concepts (ZTM).
-    
+
         <br><br>•Experiência em Informática e domínio das ferramentas:
-    
+
         <br><br>•Antes de 2013:
         <br>• Adobe Photoshop (tratamento de imagem)
         <br>• Adobe Illustrator (ilustração)
@@ -99,7 +102,7 @@ var usuarios = [{
         <br>• Adobe Premiere (edição de vídeo)
         <br>• Final Cut Pro (Edição de Vídeo)
         <br>• Newtek Lightwave 3D (Modelagem e animação 3D)
-          
+
         <br><br>•Após 2016:
         <br>• Programas de ilustração: Gimp, InkScape, krita
         <br>• Programas de audio e video: Audacity, KdenLive, OBS Studio
@@ -107,17 +110,23 @@ var usuarios = [{
         <br>• Editores de códigos: qualquer um que deixe o codigo colorido.
         <br>• Linguagens de programação: GDScript, HTML, PHP, CSS e JavaScript.
         <br>• Conhecimento dos Sistemas operacionais Linux, Mac e Windows.
-    
+
         <br><br>•Oficinas e Palestras Realizadas
-        <br>• Iº Seminário Internacional Bike Tour 2010 - "Pedalando pela inclusão/Vamos em Sinais"
-        <br>• 9ª REATECH 2010 - "Pedalando pela inclusão/Vamos em Sinais"
-        <br>• Mais de 70 oficinas de Língua Brasileira de Sinais realizadas em escolas pelo Brasil. Em 2010
-        <br>• Encontro de Jovens Surdos de Belo Horizonte-MG 2010 – “Pedalando pela inclusão/VES"
-        <br>• 20 Oficinas de Língua Brasileira de Sinais realizadas no Senac lapa Tito em 2011.
-        <br>• 2022 Desenvolvi uma série de videos tutoriais sobre softwares livres chamada “padawan cuts” no canal "Dever da esperança" do youtube.
-    
+        <br> • I Seminário Internacional Bike Tour 2010: 
+        "Pedalando pela inclusão/Vamos em Sinais"
+        <br> • IX REATECH 2010 : "Pedalando pela inclusão - Vamos em Sinais"
+        <br> • Mais de 70 oficinas de Língua Brasileira 
+        de Sinais realizadas em escolas pelo Brasil. Em 2010
+        <br>• Encontro de Jovens Surdos de Belo Horizonte-MG 2010 
+        – “Pedalando pela inclusão/VES"
+        <br>• 20 Oficinas de Língua Brasileira de Sinais realizadas
+         no Senac lapa Tito em 2011.
+        <br>• 2022 Desenvolvi uma série de videos tutoriais
+        sobre softwares livres chamada “padawan cuts”
+        no canal "Dever da esperança" do youtube.
+
         <br><br>•Fluência nas línguas:
-    
+
         <br>• Português
         <br>• Inglês
         <br>• LIBRAS - Lingua Brasileira de Sinais`
@@ -139,8 +148,11 @@ function createAvatar(id = 0) {
         document.getElementById("bio").appendChild(avatar)
         document.getElementById("bio").innerHTML +=
             "<b>" + usuarios[id].nome + "</b><br>" + usuarios[id].bio +
-            "<br><a href='" + usuarios[id].link + "' target='blank'>link</a><br><br><br>" +
-            "<div style='height:300px; display:block; overflow:scroll;'>" + usuarios[id].curriculo + "</div>"
+            "<br><a href='" + usuarios[id].link + "' target='blank'>link</a><br><br><br>"
+            if(   document.getElementById("blog")){
+				 document.getElementById("bio").innerHTML +=
+            "<span style='height:230px; width:300px; display:block; overflow-y:scroll; padding:0px;'>" + usuarios[id].curriculo + "</span>"
+            }
             ;
     } else if (!document.getElementById("avatar2")) {
 

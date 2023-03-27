@@ -45,7 +45,7 @@
             </div>
 
             <div id="menutamanho" class="fundobranco submenu">
-                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()"> ↔️ Redimensionar a
+                <span class="botao" title="fechar menu tamanho da tela" onmousedown="removeClass()"> ↔️ Tamanho da
                     tela ❌</span><br>
 
                 <span class="botao">
@@ -70,26 +70,34 @@
                     </span>
                     <span onmousedown="tamanho(128,128)">128x128
                         <span style="border: 1px solid gray; width: 20px; height: 20px; display: inline-block;"></span>
-                    </span><br>HD
-                    <span onmousedown="tamanho(640,360)">640x360
+                    </span><br>
+                    <span onmousedown="tamanho(640,360)">SD: 640x360
                         <span style="border: 1px solid gray; width: 12px; height: 6px; display: inline-block;"></span>
                     </span>
-                    <span onmousedown="tamanho(1280,720)">1280x720
+                    <span onmousedown="tamanho(1280,720)">HD: 1280x720
                         <span style="border: 1px solid gray; width: 26px; height: 14px; display: inline-block;"></span>
-                    </span>
-                    <span onmousedown="tamanho(1920,1080)">1920x1080
+                    </span><br>
+                    <span onmousedown="tamanho(1920,1080)"> Full HD 1920x1080
                         <span style="border: 1px solid gray; width: 40px; height: 20px; display: inline-block;"></span>
                     </span>
                 </span>
             </div>
 
             <div id="menuimagem" class="fundobranco submenu aparece menu">
-                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">📤 Enviar uma imagem
+                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()"> Carregar imagem/ upload
                     ❌</span><br>
-                    <span class="botao"> Ajustar tela ao tamanho da imagem <input type="checkbox" id="ajustar" checked="true">
+                    <span class="botao">📤 Enviar imagem <br> Ajustar tela ao tamanho da imagem <input type="checkbox" id="ajustar" checked="true">
                 <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
+                    title="Enviar Arquivo de imagem" /></span>
+				<span class="botao"> 📤 Enviar uma animação <br>
+                           Auto detectar quadros<input type="checkbox" id="autodetectar"  onchange="hidecustom()" checked="true">
+      <span id="custom" class="esconde">  Frames/quadros<input type="number" id="fnumber" min="1" max="60" step="1" value="2"
+      style="width: 40px; margin-left: 8px"><br> largura: <input id="larguraS" type="number" maxlength="4" max="1920" value="320"
+                        style="width:60px; padding: 4px;" /> pixels<br>
+                    altura: <input id="alturaS" type="number" maxlength="4" max="1920" value="320"
+                        style="width:60px;padding: 4px;" /> pixels<br></span>
+                <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp"
                     title="📤" /></span>
-
             </div>
 
             <div id="menuemoji" class="fundobranco submenu menu">
