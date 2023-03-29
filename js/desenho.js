@@ -5,7 +5,7 @@ const contextV = canvasV.getContext("2d");
 let isDrawing = false;
 let isGrabing = false;
 let isPicking = false;
-var isSelecting = false;
+var isSelecting = false
 let x = 0;
 let y = 0;
 var offsetX;
@@ -75,10 +75,12 @@ function cortar() {
                 } else {
                     noy = [cropEnd.y, origin.y]
                 }
-                canvas.width = nox[0] - nox[1];
-                canvas.height = noy[0] - noy[1];
-                canvasDiv.style.width = nox[0] - nox[1] + "px"
-                canvasDiv.style.height = noy[0] - noy[1] + "px"
+                let W = nox[0] - nox[1];
+                let H = noy[0] - noy[1];
+                canvas.width = W
+                canvas.height = H
+                canvasDiv.style.width = W + "px"
+                canvasDiv.style.height = H + "px"
                 let oldGCO = context.globalCompositeOperation;
                 changeGCO("source-over");
                 context.imageSmoothingEnabled = false;
@@ -86,6 +88,7 @@ function cortar() {
                 comandos.length = 0
                 comandos.push(comando)
                 comandosExec()
+                tamanho(W, H)
                 changeGCO(oldGCO);
 
             }
@@ -186,25 +189,25 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
     canvas.width = W;
     canvas.height = H;
 
-     for (i=0;i<5;i++){
-		document.getElementById("bplayer"+i).style.width  = W+"px"
-	document.getElementById("bplayer"+i).style.height = H + "px"
-	document.getElementById("bplayer"+i).style.marginTop = - H -4+ "px"
-		}
+    for (i = 0; i < 5; i++) {
+        document.getElementById("bplayer" + i).style.width = W + "px"
+        document.getElementById("bplayer" + i).style.height = H + "px"
+        document.getElementById("bplayer" + i).style.marginTop = - H - 4 + "px"
+    }
 
-	document.getElementById("player").style.height = H + "px"
-	document.getElementById("player").style.width = W + "px"
-	document.getElementById("player").style.backgroundSize = "cover";
+    document.getElementById("player").style.height = H + "px"
+    document.getElementById("player").style.width = W + "px"
+    document.getElementById("player").style.backgroundSize = "cover";
 
-	if (W >window.innerWidth) {
-		let escala = (window.innerWidth-8) / W
+    if (W > window.innerWidth) {
+        let escala = (window.innerWidth - 8) / W
 
-	document.getElementById("player").style.height = H*escala +"px"
-	document.getElementById("player").style.width = W* escala+"px"
-	document.getElementById("player").style.left = "4px"
-	document.getElementById("player").style.top =  "4px"
+        document.getElementById("player").style.height = H * escala + "px"
+        document.getElementById("player").style.width = W * escala + "px"
+        document.getElementById("player").style.left = "4px"
+        document.getElementById("player").style.top = "4px"
 
-	}
+    }
     if (W < screen.width || H < screen.height) {
         zoomIndex = 0;
         modeTo("zoom");
@@ -243,12 +246,12 @@ var checkOrientation = function () {
         win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
 
-		let escala = (window.innerWidth-8) / canvas.width
+        let escala = (window.innerWidth - 8) / canvas.width
 
-	document.getElementById("player").style.height = H*escala +"px"
-	document.getElementById("player").style.width = W* escala+"px"
-	document.getElementById("player").style.left = "4px"
-	document.getElementById("player").style.top =  "4px"
+        document.getElementById("player").style.height = H * escala + "px"
+        document.getElementById("player").style.width = W * escala + "px"
+        document.getElementById("player").style.left = "4px"
+        document.getElementById("player").style.top = "4px"
 
         // orientation changed, do your magic here
     }
@@ -415,14 +418,14 @@ function resizeScreen() {
     }
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";
-if (document.getElementById("player").style.height > window.innerWidth){
-    let escala = (window.innerWidth-8) / canvas.width
+    if (document.getElementById("player").style.height > window.innerWidth) {
+        let escala = (window.innerWidth - 8) / canvas.width
 
-	document.getElementById("player").style.height = canvas.height*escala +"px"
-	document.getElementById("player").style.width = canvas.width* escala+"px"
-	document.getElementById("player").style.left = "4px"
-	document.getElementById("player").style.top =  "4px"
-}
+        document.getElementById("player").style.height = canvas.height * escala + "px"
+        document.getElementById("player").style.width = canvas.width * escala + "px"
+        document.getElementById("player").style.left = "4px"
+        document.getElementById("player").style.top = "4px"
+    }
     setTimeout(() => comandosExec(), 40)
 }
 
@@ -435,7 +438,7 @@ function startup() {
         emojipicker();
     });
     Fundo("none")
-    counter = setInterval(() => undoing(), 30)
+    counter = setInterval(() => undoing(), 70)
     document.onkeydown = function (event) {
         //on enter key
         if (event.keyCode === 13 && mode == "recortar") {
@@ -637,6 +640,7 @@ var counterU;
 
 function undoT() {
     desfazendo = true
+    undoing()
 }
 function undoTEnd() {
     desfazendo = false
@@ -662,6 +666,7 @@ function redoTEnd() {
 }
 function redoT() {
     refazendo = true
+    undoing()
 }
 function redo() {
     let len = comandos.length;
@@ -712,27 +717,7 @@ function memorySwap(GCO) {
 }
 var executing = false
 var undoLevel = 0
-/*let usedBrushes = []
-function clearBrushes() {
-    //preciso arrumar isso aqui para limpar os brushes nao usados.
-    len = comandos.length
 
-    for (i = 0; i < len; i++) {
-        if (comandos[i][0] == "brush") {
-            console.log(comandos[i][8])
-            if (!usedBrushes.includes(comandos[i][8])) {
-                usedBrushes.push[comandos[i][8]]
-            }
-        }
-    }
-    let len2 = newBrushes.length
-    let superNewBrushes = []
-    for (i = 0; i < len2; i++) {
-        if (!usedBrushes.icludes(newBrushes[i].key)) {
-            newBrushes[i] = []
-        }
-    }
-}*/
 
 function comandosExec() {
     if (executing == false) {
@@ -880,34 +865,34 @@ let brushesImg = {}
 
 var copo = []
 
-function criarPinceis() {
-    for (i = 0; i < 10; i++) {
-        let brush2 = new Image();
-        brush2.src = 'img/brush' + i + '.png';
-        brush2.id = "br" + i
-        brush2.setAttribute("onmousedown", "selectBrush('" + i + "')")
-        brush2.setAttribute("style", "width:30px; height:30px; margin-top:6px;")
-        copo.push(brush2)
+var basicBrushes = []
+var selectedBasicBrush = 0
+function createBasicBrushes() {
 
-        brush2.setAttribute("onmousedown", "selectBrush('" + i + "')")
+    for (i = 0; i < 10; i++) {
+        let prush = new Image();
+        prush.src = `img/brush${i}.png`;
+        basicBrushes.push(prush)
+        prush.id = "br" + i
+        prush.setAttribute("onmousedown", "selectBrush(" + i + ")")
+        prush.setAttribute("style", "width:30px; height:32px; margin-top:2px;")
+        document.getElementById("pinceis").appendChild(prush)
     }
-    for (i in copo) { document.getElementById("pinceis").appendChild(copo[i]) }
-    for (i in copo) { document.getElementById("pinceis").appendChild(copo[i]) }
 }
-criarPinceis()
+createBasicBrushes()
 
 var brush = new Image();
 brush.src = 'img/brush1.png';
 
 brush.onload = function () {
     changeBrush()
-    //	document.getElementById("pinceis").appendChild(brush)
-    //brush.setAttribute("onmousedown","changeBrush('img/brush1.png')")
 }
 var newBrush = document.createElement("img")
 newBrush.src = brush.src
+
 var newBrushes = {}
 var brushCount = 0
+var lastbrush = 0
 
 function createColorBrush() {
     brushCount++
@@ -916,13 +901,15 @@ function createColorBrush() {
 createColorBrush()
 
 function selectBrush(numero) {
-    brush = copo[numero]
     removeClass('selectedBr')
     document.getElementById("br" + numero).classList.add("selectedBr")
-    changeBrush()
+    changeBrush(numero)
 }
 var changedBrush = false
-function changeBrush(src = brush, tam = strokeWidth, cor = strokeColor) {
+var brushName = ""
+function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
+    brushName = "" + numero + tam + cor
+    lastbrush = numero
     brushMode = 1
     var brushCanva = document.getElementById("brushCanva")
     var brushCtx = brushCanva.getContext("2d");
@@ -932,7 +919,7 @@ function changeBrush(src = brush, tam = strokeWidth, cor = strokeColor) {
 
     brushCtx.fillRect(0, 0, tam, tam)
     brushCtx.globalCompositeOperation = 'destination-in'
-    brushCtx.drawImage(src, 0, 0, tam, tam)
+    brushCtx.drawImage(basicBrushes[numero], 0, 0, tam, tam)
     brushCtx.globalCompositeOperation = 'destination-over'
     setTimeout(() => {
         let newNewBrush = new Image();
@@ -942,17 +929,69 @@ function changeBrush(src = brush, tam = strokeWidth, cor = strokeColor) {
         cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
         cursor.style.opacity = 0.8
         if (changedBrush == false) {
-            brushCount++
+
+
             changedBrush = true;
+            let existe = document.getElementById(brushName)
+            if (!existe) {
+
+                setTimeout(() => {
+
+                    let favbrush = newBrushes[brushName][0]
+                    favbrush.style.maxHeight = "32px";
+
+                    let favBrushButton = document.createElement("div")
+                    favBrushButton.id = brushName
+                    favBrushButton.style.Height = "30px";
+                    favBrushButton.style.width = "30px";
+                    favBrushButton.style.lineHeight = "30px";
+                    favBrushButton.style.marginRight = "4px";
+                    favBrushButton.style.verticalAlign = "middle"
+                    favBrushButton.style.display = "inline-block"
+
+                    favBrushButton.setAttribute("onmousedown", "favBrush('" + brushName + "')")
+                    favBrushButton.appendChild(favbrush)
+                    if (strokeWidth > 10) {
+                        favBrushButton.innerHTML += "<span class='favbrush'>" + strokeWidth + "</span>"
+                    } else {
+                        favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeWidth + "</span>"
+                    }
+                    document.getElementById("pinceis2").prepend(favBrushButton)
+                    clearBrushes()
+
+                }, 20)
+            }
+
+
         }
-        newBrushes[brushCount] = newNewBrush
-    }, 0)
+        brushCount++
+        newBrushes[brushName] = [newNewBrush, numero, strokeWidth, strokeColor]
+    }, 10)
+}
 
-
-    //document.getElementById("menupintar").appendChild(newBrush)
-
+function favBrush(qual) {
+    let brr = newBrushes[qual]
+    lastbrush = brr[1]
+    strokeColor = brr[3]
+    setStrokeSize(brr[2])
 
 }
+
+let novoBrushes = {}
+
+function clearBrushes() {
+    Object.keys(newBrushes).forEach((key) => {
+        let existe = document.getElementById(key)
+        if (existe != null) {
+            novoBrushes[key] = newBrushes[key]
+        }
+    })
+    newBrushes = {}
+    Object.keys(novoBrushes).forEach((key) => {
+        newBrushes[key] = novoBrushes[key]
+    })
+}
+
 function desenha(
     CMD,
     GCO,
@@ -1051,8 +1090,12 @@ function handleStart(evt) {
     cursor.style.opacity = 0.4
     changedBrush = false;
     evt.preventDefault();
-    origin.x = redondo((evt.pageX - offsetX) / zoomFactor)
-    origin.y = redondo((evt.pageY - offsetY) / zoomFactor)
+    origin.x = (evt.pageX - offsetX) / zoomFactor
+    origin.y = (evt.pageY - offsetY) / zoomFactor
+    if (pixelGood) {
+        origin.x = redondo((evt.pageX - offsetX) / zoomFactor)
+        origin.y = redondo((evt.pageY - offsetY) / zoomFactor)
+    }
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     if (mode === "recortar") {
@@ -1076,8 +1119,13 @@ function handleStart(evt) {
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
 
-        let x = (evt.pageX - offsetX) / zoomFactor;
-        let y = (evt.pageY - offsetY) / zoomFactor;
+        if (pixelGood) {
+            x = redondo((evt.pageX - offsetX) / zoomFactor)
+            y = redondo((evt.pageY - offsetY) / zoomFactor)
+        } else {
+            x = (evt.pageX - offsetX) / zoomFactor
+            y = (evt.pageY - offsetY) / zoomFactor
+        }
         if (brushMode == 0) {
             desenha(
                 "p",
@@ -1101,7 +1149,7 @@ function handleStart(evt) {
                 origin.y,
                 strokeColor,
                 strokeWidth,
-                brushCount
+                brushName
             );
         }
 
@@ -1117,15 +1165,19 @@ function handleMove(evt) {
     evt.preventDefault();
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
+    x = (evt.pageX - offsetX) / zoomFactor
+    y = (evt.pageY - offsetY) / zoomFactor
+    if (pixelGood) {
+        let x = redondo((evt.pageX - offsetX) / zoomFactor)
+        let y = redondo((evt.pageY - offsetY) / zoomFactor)
+    }
 
-    let x = (evt.pageX - offsetX) / zoomFactor
-    let y = (evt.pageY - offsetY) / zoomFactor
 
     let over = checkOverCanvas(x, y)
 
     if (isSelecting === true) {
-        cropEnd.x = redondo((evt.pageX - canvas.offsetLeft) / zoomFactor)
-        cropEnd.y = redondo((evt.pageY - canvas.offsetTop) / zoomFactor)
+        cropEnd.x = x
+        cropEnd.y = y
         context.strokeStyle = "#ffccccdd";
         desenhaRetangulo();
     }
@@ -1155,7 +1207,7 @@ function handleMove(evt) {
                 origin.y,
                 strokeColor,
                 strokeWidth,
-                brushCount
+                brushName
             );
 
         }
@@ -1279,8 +1331,8 @@ function desenhaRetangulo() {
     context.rect(
         origin.x,
         origin.y,
-        cropEnd.x - origin.x,
-        cropEnd.y - origin.y
+        (cropEnd.x - origin.x),
+        (cropEnd.y - origin.y)
     );
     context.stroke();
     context.globalCompositeOperation = "destination-over";
@@ -1290,6 +1342,7 @@ function desenhaRetangulo() {
         0,
         tempImg.width,
         tempImg.height);
+
 }
 
 function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
@@ -1305,8 +1358,15 @@ function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
 }
 
 function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
-    let start = { x: x1, y: y1 }
-    let end = { x: x2, y: y2 }
+    let start
+    let end
+    if (pixelGood) {
+        start = { x: (x1 / zoomFactor) * zoomFactor, y: (y1 / zoomFactor) * zoomFactor }
+        end = { x: (x2 / zoomFactor) * zoomFactor, y: (y2 / zoomFactor) * zoomFactor }
+    } else {
+        start = { x: x1, y: y1 }
+        end = { x: x2, y: y2 }
+    }
     var halfBrushW = stroke / 2;
     var halfBrushH = stroke / 2;
     var distance = parseInt(Trig.distanceBetween2Points(start, end));
@@ -1321,7 +1381,7 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
         x = start.x + (Math.sin(angle) * z) - halfBrushW;
         y = start.y + (Math.cos(angle) * z) - halfBrushH;
         //console.log( x, y, angle, z );
-        context.drawImage(newBrushes[linejoin], x, y, stroke, stroke);
+        context.drawImage(newBrushes[linejoin][0], redondo(x), redondo(y), stroke, stroke);
     }
     //  }
 }
@@ -1349,24 +1409,25 @@ function clearArea() {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         comandos = []
- }
- if (animacao.length > 0){
-         let confirma2 = confirm(
-        "Apagar outros quadros da animaçãso? \n(impossível desfazer)"
-    );
-      if (confirma2 === true) {
-		  animacao = []
-		  workingframe = 0
-    for (i=0;i<5;i++){
-		document.getElementById("bplayer"+i).style.backgroundImage = 'none'
-		}
-		changeFrame(workingframe)
+    }
+    if (animacao.length > 0) {
+        let confirma2 = confirm(
+            "Apagar outros quadros da animaçãso? \n(impossível desfazer)"
+        );
+        if (confirma2 === true) {
+            animacao = []
+            workingframe = 0
+            for (i = 0; i < 5; i++) {
+                document.getElementById("bplayer" + i).style.backgroundImage = 'none'
+            }
+            changeFrame(workingframe)
 
-		  }}
-        convertToImg()
-        comandosExec()
+        }
+    }
+    convertToImg()
+    comandosExec()
 
-	modeTo(oldMode)
+    modeTo(oldMode)
 }
 
 let oldMode = mode;
@@ -1449,13 +1510,13 @@ async function modeTo(qual) {
             memorySwap(globalComposite);
             break;
         case "cores":
-            setStrokeSize(strokeWidth);
-            setStrokeColor();
+            //  setStrokeSize(strokeWidth);
+            //  setStrokeColor();
             changeGCO();
             memorySwap(globalComposite);
             break;
         case "fundo":
-            setStrokeSize(strokeWidth);
+            //  setStrokeSize(strokeWidth);
             changeGCO();
             memorySwap(globalComposite);
             break;
@@ -1744,21 +1805,23 @@ function criapaleta3() {
             "style='background-color:hsla(0, 0%, 0%, " + hsla[3] * 4 + ")'> </span>";
     }
 } criapaleta3()
-let strokeRange = [0.3, 0.5, 0.7, 1, 2]
+
+let stroke_range = [1, 2]
 
 function initStrokeRange() {
     let r = 2;
     while (r <= 500) {
         r = r * 1.3;
-        strokeRange.push(Math.floor(r))
+        stroke_range.push(Math.floor(r))
     }
 }
 
 function strokeSizeRange(value) {
     setStrokeSize(
-        strokeRange[value]
+        stroke_range[value]
     )
 }
+
 function setStrokeSize(value = strokeWidth) {
     let brushes = ["cursor"];
     for (i in brushes) {
@@ -1930,9 +1993,9 @@ function mudaCor(valor) {
     toHslaObject(strokeColor);
     setStrokeColor();
     criaPaleta();
-    desenha("CB", brush,
+    desenha("CB", lastbrush,
         strokeWidth, strokeColor,
-        brushCount)
+        "" + lastbrush + strokeWidth + strokeColor)
 
 }
 // Save | Download image from stackoverflow
@@ -1976,9 +2039,9 @@ function setZoom(zoom, el) {
     for (var i = 0; i < p.length; i++) {
         el.style[p[i] + "Transform"] = s;
         el.style[p[i] + "TransformOrigin"] = oString;
+
         document.getElementById("canvas_div2").style.width = canvas.width + "px";
         document.getElementById("canvas_div2").style.height = canvas.height + "px";
-
     }
 
     el.style["transform"] = s;
@@ -2030,10 +2093,11 @@ function resetCanva() {
 // cursor area //
 
 function cursorMove(e) {
-    var x = e.clientX;
-    var y = e.clientY;
-    cursor.style.left = x + "px";
-    cursor.style.top = y + "px";
+    var x = e.clientX
+    var y = e.clientY
+
+    cursor.style.left = x -1 + "px";
+    cursor.style.top = y + 1 + "px";
     document.body.style.cursor = "none";
     cursor.style.visibility = "visible";
 }
@@ -2086,16 +2150,16 @@ function cursorColor() {
 }
 
 function Fundo2(qual) {
-	let bgcor = "hsla(0, 100%, 0%, 0.7)"
-	if (qual === "black") {
-       bgcor = "hsla(0, 100%, 0%, 0.7)";
+    let bgcor = "hsla(0, 100%, 10%, 0.7)"
+    if (qual === "black") {
+        bgcor = "hsla(0, 0%, 10%, 0.7)";
     } else if (qual === "white") {
-       bgcor = "hsla(0, 100%, 100%, 0.7)";
+        bgcor = "hsla(0, 0%, 90%, 0.7)";
     }
-        win.style.backgroundColor = bgcor;
-    for (i=0;i<5;i++){
-		document.getElementById("bplayer"+i).style.backgroundColor  = bgcor
-		}
+    win.style.backgroundColor = bgcor;
+    for (i = 0; i < 5; i++) {
+        document.getElementById("bplayer" + i).style.backgroundColor = bgcor
+    }
 }
 function Fundo(qual) {
     if (qual === "img") {
@@ -2131,9 +2195,11 @@ function Fundo(qual) {
         canvasDiv.style.backgroundImage = `url(${qual})`;
     }
 }
+var pixelGood = false
 function pixel() {
     canvas.classList.toggle("pixel");
     canvasDiv.classList.toggle("pixel");
+    pixelGood = !pixelGood
 }
 
 convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
@@ -2175,7 +2241,6 @@ function trocaEmoji(emo) {
 }
 
 
-function hidecustom(){
-	document.getElementById("custom").classList.toggle("anime")
-	document.getElementById("custom").classList.toggle("aparece")
-	}
+function hidecustom() {
+    document.getElementById("custom").classList.toggle("esconde")
+}

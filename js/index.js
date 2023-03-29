@@ -96,6 +96,7 @@ function criaConteudo() {
         var conteudo = document.createElement("div")
         conteudo.id = "conteudo"
         conteudo.classList.add("day")
+        conteudo.classList.add("fundobranco")
         document.body.appendChild(conteudo)
     } else {
         cancela("conteudo")
@@ -105,7 +106,7 @@ function apoio() {
     let ap = document.getElementById("conteudo")
     if (ap) {
         let apoioHTML = `
-			    <div onClick='cancela("conteudo")' style=' float:right'class='bot'>❌</div>
+			    <div onClick='cancela("conteudo")' style=' float:right'class='bot'>❎</div>
            Este website é um projeto de
             <a href="https://github.com/diegoferraribruno"> código livre</a> em constante evolução.<br><br>
            Se desejar contribuir financeiramente com seu desenvolvedor, você pode via:</b>

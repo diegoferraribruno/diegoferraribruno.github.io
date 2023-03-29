@@ -11,14 +11,14 @@ var anime_menu = {
     "play()": "▶️",
     "next_frame()": "⏭️",
     "anime_ajustes()": "🎚️",
-    "modeTo('salvar')": "📥",
+    "export_anim()": "🎞️",
     // "Identifica": "🪪",
 }
 
 function criaAnime() {
 
     anime.classList.add("anime")
-    anime.innerHTML = "<div  id='ui' class=' bot shadow ' title='Anime player' onclick='limpaAnime()'> 🎞️</div>"
+    anime.innerHTML = "<div  id='ui' class=' bot shadow ' title='Anime player' onclick='limpaAnime()'> 📽️</div>"
     //<!--🚀-->
 
     Object.keys(anime_menu).forEach((key, index) => {
@@ -255,10 +255,6 @@ function export_anim() {
 	Alert("Adicione ➕ quadros a sua animação antes de exportar.")
 		return
 		}
-	if ( document.getElementById("filenameS").value ==""){
-	Alert("escreva um titulo para seu arquivo de imagem .png")
-		return
-		}
     Alert("Sprite-frame sendo baixado.")
 
     let exp = document.createElement("canvas")
@@ -281,12 +277,11 @@ function export_anim() {
     }
 
     setTimeout(() => {
-		let fname = document.getElementById("filenameS").value
         var dataURL = document.getElementById("exp")
             .toDataURL("image/png")
             .replace("image/png", "image/octet-stream");
         //downloadImage(dataURL, 'my-canvas.jpeg');
-        downloadImage(dataURL, `${fname}.png`);
+        downloadImage(dataURL, `anima1.png`);
     }, 400)
     setTimeout(() => {
         removeElement("exp")
@@ -294,8 +289,7 @@ function export_anim() {
 }
 
 function anime_ajustes() {
-	removeClass()
-	mostraMenu("anime")
+mostraMenu("anime")
 }
 function changeFPS(valor){
 	fps = valor

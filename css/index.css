@@ -225,10 +225,6 @@ h2 {
     margin-top: 14px
 }
 
-#emojipicker {
-    height: 300px;
-}
-
 section {
     display: flex;
     background-color: orange;

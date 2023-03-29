@@ -51,18 +51,19 @@ body {
     margin-top: 0px;
     width: 320px;
     height: 320px;
-    overflow: hidden;
+    overflow-y: hidden;
     box-shadow: 2px 2px 3px #515054,
         -2px -2px 3px #9d9ca2;
 
 }
 
 #canvas_div2 {
-
+    width: 320px;
+    height: 320px;
     text-align: center;
     display: flex;
     margin: auto;
-    text-align: center;
+    align: center;
 }
 
 #canvas_window {
@@ -181,17 +182,7 @@ body {
     line-height: 36px;
     text-align: center;
     text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
-    animation: animatezoom 0.6s
-}
-
-@keyframes animatezoom {
-    from {
-        transform: scale(0)
-    }
-
-    to {
-        transform: scale(1)
-    }
+    animation:animatezoom 0.6s}@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}
 }
 
 .selected {
@@ -239,7 +230,7 @@ body {
     width: 2px;
     height: 2px;
     border-style: solid;
-    border-radius: 2px;
+    border-radius: 200px;
     border-color: gray;
     color: #000000ee;
     border-width: thin;
@@ -253,22 +244,15 @@ body {
 }
 
 #salvaCor {
-    height: 32px;
-    width: 32px;
-    margin-right: auto;
-    margin-left: auto;
-    line-height: 1em;
-    font-size: 1.5em;
+    "height: 32px; width:32px; margin-right:auto; margin-left:auto; margin-top: 30px; line-height: 1em; font-size: 1.5em; background-color: rgba(247, 161, 165, 0.15);"
 }
 
 .disable-scroll {
     overflow-y: hidden;
 }
-
-.esconde {
-    display: none;
+.esconde{
+	display:none;
 }
-
 .aparece {
     visibility: visible;
 }
@@ -383,7 +367,7 @@ input[type="range"] {
     color: #eeeeee;
 }
 
-.custom-file-input {
+.custom-file-input{
     display: inline-block;
     background: linear-gradient(top, #f9f9f9, #e3e3e3);
     border: 1px solid #999;
@@ -445,7 +429,7 @@ input[type="range"] {
 }
 
 #alert {
-    font-size: 1.5em;
+    font-size: 1.75em;
     z-index: 5000;
 }
 
@@ -457,49 +441,24 @@ input[type="range"] {
     position: fixed;
     right: 2px;
     bottom: 0px;
-    animation: animateright 0.4s
+    animation:animateright 0.4s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}
 }
-
-@keyframes animateright {
-    from {
-        right: -300px;
-        opacity: 0
-    }
-
-    to {
-        right: 0;
-        opacity: 1
-    }
+#contador_{
+padding-left:10px;
 }
-
-#contador_ {
-    padding-left: 10px;
-}
-
-.filter {
-    background-color: hsla(0, 100%, 100%, 0.9);
+.filter{
+	background-color:hsla(0, 100%, 100%, 0.9);
     pointer-events: none;
 }
-
-.hideanime {
-    margin-top: 0px;
+.hideanime{
+margin-top: 0px;
     margin-bottom: 4px;
     display: block;
     float: right;
     position: fixed;
     right: -278px;
     bottom: 0px;
-}
+/*animation:animateright 0.4s}@keyframes animateright{from{right:0px;opacity:1} to{right:-290px;opacity:0}/*
 
-.favbrush {
-    display: block;
-    position: relative;
-    margin-top: -40px;
-    margin-right: auto;
-    margin-left: auto;
-    text-align: center;
-    color: #ffffffee;
-    font-weight: 600;
-    font-size: 0.7em;
-    text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
+
 }
