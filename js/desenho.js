@@ -6,6 +6,7 @@ let isDrawing = false;
 let isGrabing = false;
 let isPicking = false;
 var isSelecting = false
+var isEmoji = false;
 let x = 0;
 let y = 0;
 var offsetX;
@@ -1093,8 +1094,9 @@ function handleStart(evt) {
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
     if (pixelGood) {
-        origin.x = redondo((evt.pageX - offsetX) / zoomFactor)
-        origin.y = redondo((evt.pageY - offsetY) / zoomFactor)
+        console.log("pixelgood")
+        origin.x = redondo(origin.x)
+        origin.y = redondo(origin.y)
     }
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
@@ -1118,13 +1120,11 @@ function handleStart(evt) {
 
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
-
+        x = (evt.pageX - offsetX) / zoomFactor
+        y = (evt.pageY - offsetY) / zoomFactor
         if (pixelGood) {
-            x = redondo((evt.pageX - offsetX) / zoomFactor)
-            y = redondo((evt.pageY - offsetY) / zoomFactor)
-        } else {
-            x = (evt.pageX - offsetX) / zoomFactor
-            y = (evt.pageY - offsetY) / zoomFactor
+            x = redondo(x)
+            y = redondo(y)
         }
         if (brushMode == 0) {
             desenha(
@@ -1168,8 +1168,8 @@ function handleMove(evt) {
     x = (evt.pageX - offsetX) / zoomFactor
     y = (evt.pageY - offsetY) / zoomFactor
     if (pixelGood) {
-        let x = redondo((evt.pageX - offsetX) / zoomFactor)
-        let y = redondo((evt.pageY - offsetY) / zoomFactor)
+        x = redondo(x)
+        y = redondo(y)
     }
 
 
@@ -1242,8 +1242,12 @@ function handleUp(evt) {
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     let over = checkOverCanvas(evt.pageX, evt.pageY)
-    x = redondo((evt.pageX - offsetX) / zoomFactor)
-    y = redondo((evt.pageY - offsetY) / zoomFactor)
+    x = (evt.pageX - offsetX) / zoomFactor
+    y = (evt.pageY - offsetY) / zoomFactor
+    if (pixelGood) {
+        x = redondo(x)
+        y = redondo(y)
+    }
     if (isSelecting === true && over === true) {
         cropEnd.x = x
         cropEnd.y = y
@@ -1380,8 +1384,12 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     for (var z = 0; (z <= distance || z == 0); z++) {
         x = start.x + (Math.sin(angle) * z) - halfBrushW;
         y = start.y + (Math.cos(angle) * z) - halfBrushH;
+        if (pixelGood) {
+            x = redondo(x)
+            y = redondo(y)
+        }
         //console.log( x, y, angle, z );
-        context.drawImage(newBrushes[linejoin][0], redondo(x), redondo(y), stroke, stroke);
+        context.drawImage(newBrushes[linejoin][0], x, y, stroke, stroke);
     }
     //  }
 }
@@ -2096,7 +2104,7 @@ function cursorMove(e) {
     var x = e.clientX
     var y = e.clientY
 
-    cursor.style.left = x -1 + "px";
+    cursor.style.left = x - 1 + "px";
     cursor.style.top = y + 1 + "px";
     document.body.style.cursor = "none";
     cursor.style.visibility = "visible";

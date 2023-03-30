@@ -1,6 +1,6 @@
 let vers = [
     {
-        versao: " 1.4",
+        versao: " 1.4.1",
         notas: [
             "🪄 historico de pinceis usados",
             "🔲 pincel quadrado tamanho minimo 1 px",
@@ -8,6 +8,7 @@ let vers = [
             "❎ icone fechar janela mudou",
             "💡 icone fechar janela mudou",
             "✂️ tesoura funciona mas vai dar ruim com a animação. use com cuidado",
+            "👓 Pixels alinhados + nitidez "
         ]
     },
     {
