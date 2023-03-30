@@ -1,14 +1,18 @@
 let vers = [
     {
-        versao: " 1.4.1",
+        versao: " 1.4.2",
         notas: [
             "🪄 historico de pinceis usados",
             "🔲 pincel quadrado tamanho minimo 1 px",
             "🎞️ icone da animação mudou",
             "❎ icone fechar janela mudou",
             "💡 icone fechar janela mudou",
-            "✂️ tesoura funciona mas vai dar ruim com a animação. use com cuidado",
-            "👓 Pixels alinhados + nitidez "
+            "✂️ tesoura nao funcionando ",
+            "👓 Pixels alinhados + nitidez ",
+            "🔎 Aproximação máxima passou para <b>32x</b> já que agora podemos desenhar pixels quadrados",
+            //"+ botao + mostra o diquete para lembrar de salvar.",
+            " mudança posição dp icone de fechar janela. e alguns menus"
+
         ]
     },
     {

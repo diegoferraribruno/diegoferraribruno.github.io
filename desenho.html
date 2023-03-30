@@ -45,8 +45,8 @@
             </div>
 
             <div id="menutamanho" class="fundobranco submenu">
-                <span class="botao" title="fechar menu tamanho da tela" onmousedown="removeClass()"> ↔️ Tamanho da
-                    tela ❎</span><br>
+                <span class="botao" title="fechar menu tamanho da tela" onmousedown="removeClass()"> ↔️ 🖼️ Tamanho do
+                    quadro ❎</span><br>
 
                 <span class="botao">
                     <div onmousedown="tamanho()" class="bot"
@@ -54,31 +54,31 @@
                         ok
                     </div>
                     Tamanho Atual:<br>
-                    largura: <input id="largura" type="number" maxlength="4" max="1920" value="320"
+                    Largura: <input id="largura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px; padding: 4px;" /> pixels<br>
-                    altura: <input id="altura" type="number" maxlength="4" max="1920" value="320"
+                    Altura: <input id="altura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px;padding: 4px;" /> pixels<br>
                     <span title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela?
                         ↔️</span>
                 </span>
-                <span class="botao" title="formatos">
+                <span class="botao" style="font-size: 0.9em;" title="formatos">
                     <span onmousedown="tamanho(32,32)">32x32
-                        <span style="border: 1px solid gray; width: 5px; height: 5px; display: inline-block;"></span>
+                        <span style="border: 1px solid gray; width: 4px; height: 4px; display: inline-block;"></span>
                     </span>
                     <span onmousedown="tamanho(64,64)">64x64
-                        <span style="border: 1px solid gray; width: 10px; height: 10px; display: inline-block;"></span>
+                        <span style="border: 1px solid gray; width: 7px; height: 7px; display: inline-block;"></span>
                     </span>
                     <span onmousedown="tamanho(128,128)">128x128
-                        <span style="border: 1px solid gray; width: 20px; height: 20px; display: inline-block;"></span>
+                        <span style="border: 1px solid gray; width: 12px; height: 12px; display: inline-block;"></span>
                     </span><br>
                     <span onmousedown="tamanho(640,360)">SD: 640x360
-                        <span style="border: 1px solid gray; width: 12px; height: 6px; display: inline-block;"></span>
+                        <span style="border: 1px solid gray; width: 16px; height: 9px; display: inline-block;"></span>
                     </span>
                     <span onmousedown="tamanho(1280,720)">HD: 1280x720
-                        <span style="border: 1px solid gray; width: 26px; height: 14px; display: inline-block;"></span>
+                        <span style="border: 1px solid gray; width: 32px; height: 18px; display: inline-block;"></span>
                     </span><br>
-                    <span onmousedown="tamanho(1920,1080)"> Full HD 1920x1080
-                        <span style="border: 1px solid gray; width: 40px; height: 20px; display: inline-block;"></span>
+                    <span onmousedown="tamanho(1920,1080)"> Full HD: 1920x1080
+                        <span style="border: 1px solid gray; width: 50px; height: 25px; display: inline-block;"></span>
                     </span>
                 </span>
             </div>
@@ -116,16 +116,19 @@
                     <span id="emoExemplo">😍</span></span>
             </div>
 
-            <div id="menupintar" class="fundobranco submenu menu">
-                <span class="botao">
-                    <span id="mostraCor" title="cores" class="bot" onmousedown="modeTo('cores')">🎨</span>
-                    <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
-                    <span title="Pega cor" class="bot" onmousedown="modeTo('picker')">💉</span>
 
+
+            <div id="menupintar" class="fundobranco submenu menu">
+                <span title="fechar" onmousedown="removeClass()"
+                    style="display: block; position: relative; float: right; margin-right: -8px; ">
+                    ❎
+                </span>
+                <span class="botao"><span title="pintar" class="bot selected" onmousedown="modeTo('pintar')">🖌️</span>
+                    <span id="mostraCor" title="cores" class="bot" onmousedown="modeTo('cores')">🎨</span>
+                    <span title="Pega cor" class="bot" onmousedown="modeTo('picker')">💉</span>
+                    <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
                     <span title="Preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
-                    <span title="pintar emoji" class="bot selected" onmousedown="modeTo('emoji')">😍</span>
-                    <span title="pintar" class="bot selected" onmousedown="modeTo('pintar')">🖌️<span
-                            style="position:absolute; left:0px;"> ❎</span></span>
+
                 </span>
                 <div class="botao " id="pinceis" style="background-color:#ffffffcc; height:46px;">
                 </div>
@@ -168,13 +171,14 @@
                         oninput="mudaCorAlpha()" step="0.1" value="1"></div>
             </div>
 
+
+
             <div id="menucores" class="submenu fundobranco">
                 <span class="botao"> <span title="pintar" class="bot selected" onmousedown="modeTo('pintar')">🖌️</span>
                     <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
                     <span id="picker" title="Pega cor" class="bot" onmousedown="modeTo('picker')">💉</span>
 
                     <span id="preencher" title="Preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
-                    <span title="pintar emoji" class="bot selected" onmousedown="modeTo('emoji')">😍</span>
                     <span title="cores" class="bot" onmousedown="modeTo('cores')">🎨 <span
                             style="position:absolute; left:0px;"> ❎
                         </span></span>
@@ -217,7 +221,7 @@
                     <span title="Configurações" class="bot" onmousedown="modeTo('fundo')">🖥️ <span
                             style="position:absolute; left:0px;"> ❎
                         </span></span></span>
-                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
+                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Tamanho do quadro 🖼️</span>
                 <!--
                 <span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span-->
 
@@ -228,17 +232,17 @@
 
                 <span id=" fundo falso" class="botao"> Adicionar Fundo falso:<br>
                     <span onmousedown="Fundo2('black')" class="bloquinho"
-                        style="background-color: hsla(0, 100%, 0%, 1)">
+                        style="background-color: hsla(0, 100%, 0%, 1)">&nbsp;
                     </span>
                     <span onmousedown="Fundo2('white')" class="bloquinho"
-                        style="background-color: hsla(0, 100%, 100%, 1)">
+                        style="background-color: hsla(0, 100%, 100%, 1)">&nbsp;
                     </span>
                     <span onmousedown="Fundo('img/grid.png')" class="bloquinho"
                         style="background-image: url('./img/grid.png')">.</span>
                     <span onmousedown="Fundo('img/grid2.png')" class="bloquinho"
-                        style="background-image: url('./img/grid2.png'); background-color: #fff"></span>
+                        style="background-image: url('./img/grid2.png'); background-color: #fff">&nbsp;</span>
                     <span onmousedown="Fundo('img/grid3.png')" class="bloquinho"
-                        style="background-image: url('./img/grid3.png')"></span>
+                        style="background-image: url('./img/grid3.png')">&nbsp;</span>
                     <span onmousedown="Fundo('img')" class="bloquinho">🌎</span>
 
                     <span onmousedown="Fundo('none')" class="bloquinho"
@@ -281,11 +285,11 @@
             <div id="menusalvar" class="fundobranco submenu">
                 <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">📥 Baixar / Salvar
                     ❎</span>
-                <span class="botao">📥 🖼️ Salvar Quadro <br>
+                <span class="botao">📥 🖼️ Salvar quadro atual <br>
                     Título: <input id="filename" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
                         value="desenho" onfocus="this.value=''"> <span onclick="salvaImagem()" class="bot">📥</span>
                 </span>
-                <span class="botao"> 🎞️ Salvar sequencia de quadros<br>
+                <span class="botao">📥 🎞️ Salvar sequencia de quadros<br>
                     Título: <input id="filenameS" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
                         value="anima" onfocus="this.value=''"> <span onclick="export_anim()" class="bot">📥</span>
             </div>

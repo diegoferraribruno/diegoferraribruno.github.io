@@ -27,7 +27,7 @@ var lineJoinsCount = 0;
 const lineJoins = ["miter", "round"];
 var ultimoToque = { x: canvas.width / 2, y: canvas.height / 2 };
 var zoomFactor = 1;
-var zoomScale = [0.5, 1, 2, 4, 8];
+var zoomScale = [0.5, 1, 2, 4, 8, 16, 32];
 var zoomIndex = 1;
 var mouseOver = false;
 var layer1 = [];
@@ -46,6 +46,8 @@ let rotationDeg = 0;
 var origin = { x: canvas.width / 2, y: canvas.height / 2 };
 var cropEnd = { x: 0, y: 0 };
 var emoji = "😍"
+var pixelGood = false
+
 function redondo(numero) {
     return Math.floor(numero, 10)
 }
@@ -61,8 +63,8 @@ function cortar() {
             let myImg = document.createElement("img");
             myImg.src = URL.createObjectURL(blob);
             myImg.onload = async function () {
-                let noy
-                let nox
+                let noy = []
+                let nox = []
                 let pos = { x: -origin.x, y: -origin.y }
                 if (cropEnd.x < origin.x) {
                     nox = [origin.x, cropEnd.x]
@@ -76,6 +78,10 @@ function cortar() {
                 } else {
                     noy = [cropEnd.y, origin.y]
                 }
+                let x0 = nox[0]
+                let y0 = noy[0]
+                let y1 = noy[1]
+                let x1 = nox[1]
                 let W = nox[0] - nox[1];
                 let H = noy[0] - noy[1];
                 canvas.width = W
@@ -91,6 +97,8 @@ function cortar() {
                 comandosExec()
                 tamanho(W, H)
                 changeGCO(oldGCO);
+                //   cortarAnima(x0, x1, y0, y1)
+
 
             }
         }, 100)
@@ -100,7 +108,6 @@ function cortar() {
         modeTo("recortar")
     }, 200)
 }
-
 
 function rotacionar() {
     rotationDeg = (rotationDeg + 90) % 360,
@@ -213,7 +220,7 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
         zoomIndex = 0;
         modeTo("zoom");
     } else {
-        zoomIndex = 4;
+        zoomIndex = 6;
         modeTo("zoom");
     }
     document.getElementById("largura").value = W
@@ -372,7 +379,7 @@ function x2(w = document.getElementById("largura").value, h = document.getElemen
     );
     if (resultado === true) {
         //dobra o tamanho do canva
-        zoomIndex = 4;
+        zoomIndex = 0;
         modeTo("zoom");
         canvasDiv.style.width = w + "px"; //add 30px for scroll
         canvasDiv.style.height = h + "px"; //add 30px for scroll
@@ -431,8 +438,11 @@ function resizeScreen() {
 }
 
 function startup() {
-    window.scrollTo(0, 1000);
-    setTimeout(() => window.scrollTo(0, 1), 100)
+    window.scrollTo(0, 1600);
+    setTimeout(() => {
+        window.scrollTo(0, 400)
+        setTimeout(window.scrollTo(0, 0), 160)
+    }, 1000);
 
     document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(detail) {
         trocaEmoji(event.detail.unicode);
@@ -1384,9 +1394,9 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     for (var z = 0; (z <= distance || z == 0); z++) {
         x = start.x + (Math.sin(angle) * z) - halfBrushW;
         y = start.y + (Math.cos(angle) * z) - halfBrushH;
-        if (pixelGood) {
-            x = redondo(x)
-            y = redondo(y)
+        if (stroke == 1) {
+            x = redondo(x) + 1
+            y = redondo(y) + 1
         }
         //console.log( x, y, angle, z );
         context.drawImage(newBrushes[linejoin][0], x, y, stroke, stroke);
@@ -1410,7 +1420,7 @@ var Trig = {
 }
 function clearArea() {
     let confirma = confirm(
-        "Limpar o quadro? \n(impossível desfazer)"
+        "🗑 🖼️ Limpar o quadro? \n(impossível desfazer)"
     );
 
     if (confirma === true) {
@@ -1420,7 +1430,7 @@ function clearArea() {
     }
     if (animacao.length > 0) {
         let confirma2 = confirm(
-            "Apagar outros quadros da animaçãso? \n(impossível desfazer)"
+            "🗑 🎞️ Apagar toda a animação? \n(impossível desfazer)"
         );
         if (confirma2 === true) {
             animacao = []
@@ -1462,6 +1472,7 @@ async function modeTo(qual) {
             mostraMenu(qual);
         } else {
             mode = "pintar"
+            oldMode = "pintar"
             mostraMenu("pintar");
         }
     } else {
@@ -1484,7 +1495,7 @@ async function modeTo(qual) {
         case "zoom":
             removeClass();
             zoomIndex++;
-            if (zoomIndex > 4) {
+            if (zoomIndex > 6) {
                 zoomIndex = 0;
             }
             ZOOMf(zoomIndex);
@@ -2203,7 +2214,6 @@ function Fundo(qual) {
         canvasDiv.style.backgroundImage = `url(${qual})`;
     }
 }
-var pixelGood = false
 function pixel() {
     canvas.classList.toggle("pixel");
     canvasDiv.classList.toggle("pixel");

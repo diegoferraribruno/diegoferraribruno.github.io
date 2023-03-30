@@ -163,7 +163,8 @@ body {
     display: inline-block;
     margin: 1px 3px 1px 3px;
     touch-action: manipulation;
-
+    line-height: 26px;
+    vertical-align: middle;
 }
 
 .mais {
@@ -396,7 +397,7 @@ input[type="range"] {
     text-shadow: 1px 1px #fff;
     font-weight: 700;
     font-size: 10pt;
-
+    margin: 4px;
 }
 
 .destination-over {
@@ -422,7 +423,7 @@ input[type="range"] {
     line-height: 32px;
     min-height: 34px;
     max-height: 360px;
-    padding: 4px;
+    padding-top: 4px;
     border: solid 1px #55555555;
     background-color: none;
     margin-left: auto;
@@ -472,8 +473,8 @@ input[type="range"] {
     }
 }
 
-#contador_ {
-    padding-left: 10px;
+#contador {
+    text-shadow: -2px 0 rgb(199, 199, 199), 0 2px #d2d2d2, 2px 0 #e2e2e2, 0 -2px #a9a9a9;
 }
 
 .filter {
