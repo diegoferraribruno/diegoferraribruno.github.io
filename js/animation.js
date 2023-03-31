@@ -332,48 +332,65 @@ var checkSave = setInterval(() => {
 
     }
 }, 1500)
-var newAnima = []
+let swapImg = new Image()
+
+let newAnima = []
 function cortarAnima(x1, y1, x2, y2) {
-    //save_frame()
+    let canvass = document.createElement("canvas")
+    let contexts = canvass.getContext("2d");
+    canvass.id = "canvass"
+
+    let frame = 0
     let len = animacao.length
-    // let oldWF = workingframe
+
     for (i = 0; i < len; i++) {
-        //console.log(x1, x2, y1, y2)
-        //console.log(len, i)
-        //console.log(animacao[i])
-        /*  workingframe = i
-          if (workingframe < len) {*/
-
-        blob = dataURItoBlob(animacao[i]);
-        let imagem = new Image();
-        imagem.src = URL.createObjectURL(blob);
-        imagem.id = i
-        //imagem.onload = function () {
-        console.log("log2", x1, x2, y1, y2, i)
-
-        context.drawImage(imagem, x1, y1, x2, y2, 0, 0, x2, y2)
-
-        swapImg = canvas.toDataURL('image/png');
-        blobb = dataURItoBlob(swapImg)
-        newAnima.push(swapImg)
-        //desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
-        //}
-
-        //comandosExec()
+        framesToCanvas(x1, y1, x2, y2, i)
     }
 
+    function framesToCanvas(x2, y2, x1, y1, frame = 0) {
+        let imagem = new Image()
+        let W = x2 - x1
+        let H = y2 - y1
+        canvass.width = W
+        canvass.height = H
+        imagem.width = W
+        imagem.height = H
+        blob = dataURItoBlob(animacao[frame]);
+        //imagem = new Image();
+        imagem.src = URL.createObjectURL(blob);
+        imagem.onload =
+            function () {
+                contexts.setTransform(1, 0, 0, 1, 0, 0);
+                contexts.clearRect(0, 0, contexts.canvas.width, contexts.canvas.height);
+                contexts.drawImage(imagem, x1, y1, x2, y2, 0, 0, x2, y2);
+                canvasToFrame(frame)
+            }
+    }
+
+    function canvasToFrame(frame = 0) {
+
+        swapImg = canvass.toDataURL('image/png');
+        blobb = dataURItoBlob(swapImg)
+        newAnima[frame] = swapImg
+
+    }
     setTimeout(() => {
-        animacao = []
         let len = newAnima.length
+
+        animacao.length = 0
         for (i = 0; i < len; i++) {
             animacao.push(newAnima[i])
         }
+        swapImg = canvas.toDataURL('image/png');
+        blobb = dataURItoBlob(swapImg)
+        save_frame(swapImg)
+        setTimeout(function () {
+            swapImg = canvas.toDataURL('image/png');
+            blobb = dataURItoBlob(swapImg)
+            new_frame();
+        }, 10)
 
-    }, 300)
-    //        let imagem = animacao[0]
-    //context.setTransform(1, 0, 0, 1, 0, 0);
-    //context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    //context.drawImage(animacao[i], x1, y1, x2, y2, 0, 0, x2, y2);
+    }, 100
+    )
 
-    //workingframe = oldWF
 }

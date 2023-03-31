@@ -78,12 +78,12 @@ function cortar() {
                 } else {
                     noy = [cropEnd.y, origin.y]
                 }
-                let x0 = nox[0]
-                let y0 = noy[0]
-                let y1 = noy[1]
-                let x1 = nox[1]
-                let W = nox[0] - nox[1];
-                let H = noy[0] - noy[1];
+                let x0 = redondo(nox[0])
+                let y0 = redondo(noy[0])
+                let x1 = redondo(nox[1])
+                let y1 = redondo(noy[1])
+                let W = x0 - x1;
+                let H = y0 - y1;
                 canvas.width = W
                 canvas.height = H
                 canvasDiv.style.width = W + "px"
@@ -92,12 +92,15 @@ function cortar() {
                 changeGCO("source-over");
                 context.imageSmoothingEnabled = false;
                 let comando = ["f", "source-over", blob, pos.x, pos.y, myImg.width, myImg.height];
-                comandos.length = 0
+                comandos.length = 1
                 comandos.push(comando)
                 comandosExec()
                 tamanho(W, H)
                 changeGCO(oldGCO);
-                //   cortarAnima(x0, x1, y0, y1)
+                var len = animacao.length
+                //for (i = 0; 1 < len; i++) {
+                setTimeout(cortarAnima(x0, y0, x1, y1), 400)
+                //}
 
 
             }
