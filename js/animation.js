@@ -276,7 +276,7 @@ function prev_frame() {
     document.getElementById("contador").innerHTML = workingframe
 }
 var cont
-
+var spritao = new Image();
 function export_anim() {
     let len = animacao.length
     if (len == 0) {
@@ -308,16 +308,44 @@ function export_anim() {
         }
     }
 
+
     setTimeout(() => {
         let fname = document.getElementById("filenameS").value
         var dataURL = document.getElementById("exp")
             .toDataURL("image/png")
             .replace("image/png", "image/octet-stream");
         //downloadImage(dataURL, 'my-canvas.jpeg');
-        downloadImage(dataURL, `${fname}.png`);
+        if (document.getElementById("seq").checked) { downloadImage(dataURL, `${fname}.png`); }
+        spritao.src = dataURL
+
     }, 400)
     setTimeout(() => {
-        removeElement("exp")
+
+        if (document.getElementById("gif").checked) {
+            exp.width = canvas.width
+            let myanima = new Image()
+            myanima.src = spritao.src
+            myanima.onload = function () {
+
+                var encoder = new GIFEncoder();
+                encoder.setRepeat(0); //auto-loop
+                encoder.setDelay(1000 / fps);
+                console.log(encoder.start())
+
+                for (i = 0; i < animacao.length; i++) {
+                    cont.fillStyle = "rgb(255,255,255)"
+                    cont.fillRect(0, 0, canvas.width, canvas.height); //GIF can't do transparent so do white
+                    cont.drawImage(myanima, -320 * i, 0, myanima.width, myanima.height)
+                    console.log(encoder.addFrame(cont));
+                }
+                encoder.finish();
+                encoder.download("download.gif");
+                //document.getElementById('image').src = 'data:image/gif;base64,' + encode64(encoder.stream().getData())
+            }
+
+        } else {
+            removeElement("exp")
+        }
     }, 1000)
 }
 
