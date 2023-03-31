@@ -25,7 +25,7 @@ function start() {
       if (startText >= texts.length) {
         startText = 0
       }
-      start()
+      //start()
       limpaCabeca();
 
     }

@@ -323,23 +323,26 @@ input.addEventListener('change', handleFiles);
 var input2 = document.getElementById('input2');
 input2.addEventListener('change', readURL, true);
 var imagem = new Image;
-
+var backgroundSprite = new Image;
 function handleFiles(e) {
+
     imagem = new Image;
     imagem.src = URL.createObjectURL(e.target.files[0]);
     imagem.onload = function () {
-        let ajustar = document.getElementById("ajustar").checked
-        if (ajustar === true) {
-            tamanho(imagem.width, imagem.height)
+        {
+            let ajustar = document.getElementById("ajustar").checked
+            if (ajustar === true) {
+                tamanho(imagem.width, imagem.height)
+            } else if (imagem.width > canvas.width) {
+                let proporcao = canvas.width / imagem.width
+                imagem.height = imagem.height * proporcao
+                imagem.width = imagem.width * proporcao
+                let centerx = canvas.width / 2 - imagem.width / 2
+                let centery = canvas.height / 2 - imagem.height / 2
+            }
+
+            desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
         }
-        if (imagem.width > canvas.width) {
-            let proporcao = canvas.width / imagem.width
-            imagem.height = imagem.height * proporcao
-            imagem.width = imagem.width * proporcao
-            let centerx = canvas.width / 2 - imagem.width / 2
-            let centery = canvas.height / 2 - imagem.height / 2
-        }
-        desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
     }
 }
 function readURL() {
@@ -461,7 +464,7 @@ function startup() {
     };
     modeTo("pintar")
     removeClass();
-    tamanhom()
+
     document.getElementById(
         "globalComposite"
     ).innerHTML =

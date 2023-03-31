@@ -92,34 +92,42 @@ function importSprite(e) {
     imagem = new Image;
     imagem.src = URL.createObjectURL(e.target.files[0]);
     imagem.onload = function () {
-        let quadros = imagem.width / canvas.width
-        let largura = document.getElementById("larguraS").value
-        let altura = document.getElementById("alturaS").value
-        let auto = document.getElementById("autodetectar").checked
-        if (auto === false) {
-            quadros = document.getElementById("fnumber").value
-            tamanho(largura, altura)
-        }
-        for (i = 0; i < quadros; i++) {
-            context.setTransform(1, 0, 0, 1, 0, 0);
-            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-            context.drawImage(imagem, i * canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
-            swapImg = canvas.toDataURL('image/png');
-            blobb = dataURItoBlob(swapImg)
-            animacao[workingframe] = swapImg
-            workingframe++
+        if (document.getElementById("loadBackgroundAnimation").checked) {
+            background_anim = true
+            backgroundSprite.src = URL.createObjectURL(e.target.files[0]);
+            backgroundSprite.onload = function () {
+                changeBackGroundAnimation(workingframe)
+            }
+        } else {
+            let quadros = imagem.width / canvas.width
+            let largura = document.getElementById("larguraS").value
+            let altura = document.getElementById("alturaS").value
+            let auto = document.getElementById("autodetectar").checked
+            if (auto === false) {
+                quadros = document.getElementById("fnumber").value
+                tamanho(largura, altura)
+            }
+            for (i = 0; i < quadros; i++) {
+                context.setTransform(1, 0, 0, 1, 0, 0);
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                context.drawImage(imagem, i * canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
+                swapImg = canvas.toDataURL('image/png');
+                blobb = dataURItoBlob(swapImg)
+                animacao[workingframe] = swapImg
+                workingframe++
 
+            }
+            setTimeout(() => {
+                changeFrame(workingframe - 1);
+                removeClass()
+                document.getElementById("contador").innerHTML = workingframe;
+            }, 200)
         }
-        setTimeout(() => {
-            changeFrame(workingframe - 1);
-            removeClass()
-            document.getElementById("contador").innerHTML = workingframe;
-        }, 200)
     }
 }
 
 function criaBackPlayer() {
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 6; i++) {
         var player = document.createElement('div')
         player.id = "bplayer" + i
         player.style.display = "block"
@@ -204,7 +212,6 @@ function changeFrame(frame) {
     let old0 = frame
 
     document.getElementById("contador").innerHTML = workingframe;
-
     if (frame > 0) {
         let old1 = frame - 1;
         document.getElementById("bplayer" + 1).style.backgroundImage = 'url("' + animacao[old1] + '")'
@@ -221,6 +228,12 @@ function changeFrame(frame) {
         let old4 = frame - 4;
         document.getElementById("bplayer" + 4).style.backgroundImage = 'url("' + animacao[old4] + '")'
     }
+    if (background_anim == true) {
+        document.getElementById("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
+        document.getElementById("bplayer0").style.backgroundPositionX = - canvas.width * workingframe + "px"
+        //document.getElementById("bplayer0").style.backgroundSize = "initial"
+    }
+
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     comandos = []
@@ -393,4 +406,20 @@ function cortarAnima(x1, y1, x2, y2) {
     }, 100
     )
 
+}
+var background_anim = false
+
+function loadBackGroundAnimation(imagem) {
+
+}
+
+
+function changeBackGroundAnimation(frame) {
+
+    if (background_anim == true) {
+        document.getElementById("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
+        document.getElementById("bplayer0").style.backgroundPositionX = - canvas.width * frame + "px"
+        document.getElementById("bplayer0").style.backgroundSize = "initial"
+
+    }
 }
