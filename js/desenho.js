@@ -909,7 +909,7 @@ newBrush.src = brush.src
 
 var newBrushes = {}
 var brushCount = 0
-var lastbrush = 0
+var lastbrush = 1
 
 function createColorBrush() {
     brushCount++

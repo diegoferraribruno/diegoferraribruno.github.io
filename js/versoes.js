@@ -4,10 +4,11 @@ let vers = [
         notas: [
             "🎞️ Exporta Gif Animado"
         ]
-        
+    },
+    {
         versao: " 1.4.4",
         notas: [
-            "🎞️carregar Animação como plano de fundo" 
+            "🎞️carregar Animação como plano de fundo",
             "✂️ tesoura funcionando para toda animacão! (2 dias nisso aff)",
             "🪄 historico de pinceis usados",
             "🔲 pincel quadrado tamanho minimo 1 px",
@@ -16,7 +17,7 @@ let vers = [
             "💡 icone fechar janela mudou",
             "👓 Pixels alinhados + nitidez ",
             "🔎 Aproximação máxima passou para <b>32x</b> já que agora podemos desenhar pixels quadrados",
-            " botao ➕ mostra o 💾 para lembrar de salvar.",
+            " botao ➕ mostra o 💾 para lembrar de salvar."
 
         ]
     },
