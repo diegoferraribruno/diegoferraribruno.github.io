@@ -1,8 +1,10 @@
 let vers = [
     {
-        versao: " 1.5",
+        versao: " 1.5.1",
         notas: [
-            "🎞️ Exporta Gif Animado"
+            "🎞️ Exporta Gif Animado",
+            "❎ icone fechar janela padronizado",
+            "🖌️ pincel suave como primeira opção",
         ]
     },
     {

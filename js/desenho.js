@@ -1919,9 +1919,10 @@ function backPaint() {
 }
 function Alert(text) {
     let alert = document.getElementById("alert")
-    alert.innerHTML = text;
-    alert.style.visibility = "visible"
-    setTimeout(() => { alert.style.visibility = "hidden"; }, 3000)
+    alert.classList.add("aparece")
+    let aconteudo = document.getElementById("alertconteudo")
+    aconteudo.innerHTML = text;
+    setTimeout(() => { removeClass() }, 2000)
 
 }
 function mudaCorBG(cor) {
