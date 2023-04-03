@@ -244,14 +244,14 @@ var checkOrientation = function () {
 
             document.getElementById("ferramentas").classList.add("horizontal");
             document.getElementById("ferramentas2").classList.add("horizontal2");
-            document.getElementsById("menus").style.top = "100px";
+            document.getElementById("menus").style.top = "100px";
 
             // alert(`virou, ${screen.width} , ${screen.height}`)
 
         } else {
             document.getElementById("ferramentas").classList.remove("horizontal");
             document.getElementById("ferramentas2").classList.remove("horizontal2");
-            document.getElementsById("menus").style.top = "0px";
+            document.getElementById("menus").style.top = "0px";
 
         }
         win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
@@ -1586,31 +1586,62 @@ function cut() {
 
 }
 
+var stop_motion = true
+
+function stopMotion() {
+    stop_motion = !stop_motion
+    document.getElementById("video").classList.toggle("destination-over")
+    if (stop_motion == false) {
+        document.getElementById("stopMotion").innerHTML = "📷"
+
+        Alert("Modo foto 📷.");
+    } else {
+        Alert("Modo sequencia de quadros 🎞️.");
+        document.getElementById("stopMotion").innerHTML = "🎞️"
+
+    }
+}
+
 function camera() {
 
     // ok, browser supports it*/
     if (!document.getElementById("videoC")) {
+        const botao2 = document.createElement("div");
+        botao2.setAttribute("id", "stopMotion")
+        if (stop_motion == true) {
+            botao2.innerHTML = "🎞️"
+            Alert("Modo sequencia de quadros 🎞️.");
+        } else {
+            botao2.innerHTML = "📷"
+            Alert("Modo foto 📷.");
+        }
+        botao2.setAttribute("onmousedown", "stopMotion()")
+        botao2.setAttribute("style", "position: absolute; top: 180px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.7 ")
+
 
         const botao = document.createElement("div");
         botao.setAttribute("id", "btnChangeCam")
         botao.setAttribute("value", "muda")
         //        botao.setAttribute("class", "bloquinho")
-        botao.setAttribute("style", "position: absolute; top: 270px; left:40px; width:32x; height:32px; font-size:32px;")
+        botao.setAttribute("style", "position: absolute; top: 220px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.7 ")
         botao.innerHTML = "🔃"
         const videoE = document.createElement("video");
         const escala = canvas.height / 320
         videoE.id = "video"
         videoE.height = canvas.height; // in px
         videoE.width = 430 * (escala); // in px
-        videoE.setAttribute('style', `position:relative; width:auto; height:auto ;`)
+        videoE.setAttribute('style', `position:relative; width:auto; height:auto;`)
+        if (stop_motion == true) videoE.setAttribute("class", "destination-over")
+
 
         let vcW = 430 * escala * 2;
         let vcH = 320 * escala * 2;
         const videoC = document.createElement("div");
-        videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px;`)
+        videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px; `)
         videoC.setAttribute("id", "videoC")
         videoC.appendChild(videoE);
-        document.getElementById("tela").appendChild(botao);
+        videoC.appendChild(botao);
+        videoC.appendChild(botao2);
         canvasDiv.appendChild(videoC)
         setTimeout(() => win.classList.add("flip"), 900)
 
@@ -1691,6 +1722,7 @@ function camera() {
         });
 
         //diego
+
         video.addEventListener('click', function (e) {
 
             let W = canvasV.width;
@@ -1702,7 +1734,13 @@ function camera() {
             let offsetH = (H - canvas.height) / -2
 
             desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
-            removeVideo();
+            if (stop_motion == false) {
+
+                removeVideo();
+            } else {
+                new_frame()
+                audio2.play()
+            }
         })
         // initialize
         async function initializeCamera() {
@@ -1726,7 +1764,7 @@ function removeVideo() {
         stopVideoStream()
         removeElement("video")
         removeElement("videoC")
-        removeElement("btnChangeCam")
+        //removeElement("btnChangeCam")
         if (oldMode == "cam" || oldMode == "zoom") {
             modeTo("apagar")
         } else {

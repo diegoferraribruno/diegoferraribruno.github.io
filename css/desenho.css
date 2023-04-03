@@ -401,7 +401,7 @@ input[type="range"] {
 }
 
 .destination-over {
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .vid {
@@ -503,4 +503,12 @@ input[type="range"] {
     font-weight: 600;
     font-size: 0.7em;
     text-shadow: -1px 0 #555555, 0 1px #555555, 1px 0 #555555, 0 -1px #555555;
+}
+
+.close {
+    display: block;
+    position: absolute;
+    right: 4px;
+    top: 0px;
+    font-size: x-large;
 }

@@ -4,7 +4,7 @@ let vers = [
         notas: [
             "🎞️ Exporta Gif Animado",
             "❎ icone fechar janela padronizado",
-            "🖌️ pincel suave como primeira opção",
+            "🖌️ pincel suave como primeira opção"
         ]
     },
     {
