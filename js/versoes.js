@@ -1,17 +1,19 @@
 let vers = [
     {
-        versao: " 1.5.1",
+        versao: " 1.5.3",
         notas: [
-            "🎞️ Exporta Gif Animado",
+            "📷 + 🎞️ camera faz sequencia de quadros conforme o click",
+            "🎞️  Exporta Gif Animado (✂️recortado inclusive) ",
             "❎ icone fechar janela padronizado",
-            "🖌️ pincel suave como primeira opção"
+            "🖌️ pincel suave como primeira opção",
+            "- remoção de quadros aprimorada"
         ]
     },
     {
         versao: " 1.4.4",
         notas: [
             "🎞️carregar Animação como plano de fundo",
-            "✂️ tesoura funcionando para toda animacão! (2 dias nisso aff)",
+            "✂️ tesoura funcionando para toda animacão! (3 dias nisso aff)",
             "🪄 historico de pinceis usados",
             "🔲 pincel quadrado tamanho minimo 1 px",
             "🎞️ icone da animação mudou",
@@ -20,7 +22,6 @@ let vers = [
             "👓 Pixels alinhados + nitidez ",
             "🔎 Aproximação máxima passou para <b>32x</b> já que agora podemos desenhar pixels quadrados",
             " botao ➕ mostra o 💾 para lembrar de salvar."
-
         ]
     },
     {

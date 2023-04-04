@@ -401,7 +401,7 @@ input[type="range"] {
 }
 
 .destination-over {
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .vid {
@@ -475,6 +475,9 @@ input[type="range"] {
 
 #contador {
     text-shadow: -2px 0 rgb(199, 199, 199), 0 2px #d2d2d2, 2px 0 #e2e2e2, 0 -2px #a9a9a9;
+    display: block;
+    margin-top: -32px;
+    font-size: 26px;
 }
 
 .filter {
@@ -488,8 +491,9 @@ input[type="range"] {
     display: block;
     float: right;
     position: fixed;
-    right: -278px;
+    right: -240px;
     bottom: 0px;
+
 }
 
 .favbrush {

@@ -38,9 +38,9 @@ function criaAnime() {
     let contador = document.createElement("div")
     contador.innerHTML = workingframe
     contador.id = "contador"
-    contador.classList.add("shadow")
-    contador.classList.add("bot")
-    anime.appendChild(contador)
+    //contador.classList.add("shadow")
+    //contador.classList.add("bot")
+    document.getElementById("ui").appendChild(contador)
 }
 
 setTimeout(() => { criaAnime() }, 200)
@@ -148,20 +148,15 @@ criaBackPlayer()
 let workingframe = 0
 
 function new_frame() {
+    let len = comandos.length
+    if (len > 1 && comandos[len - 1][0] != "i") {
 
-    if (comandos.length > 1) {
         swapImg = canvas.toDataURL('image/png');
-        blobb = dataURItoBlob(swapImg)
         save_frame(swapImg)
-
-
-        //swapImg = []
-        //blobb = []
-        // len = animacao.length
-
         workingframe++
         changeFrame(workingframe)
         document.getElementById("contador").innerHTML = workingframe
+
     } else {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -256,12 +251,18 @@ function changeFrame(frame) {
 }
 
 function next_frame() {
-    workingframe++
-    if (workingframe > animacao.length) {
-        workingframe = 0
+    let len = comandos.length
+    if (len > 1 && comandos[len - 1][0] != "i") {
+        new_frame()
+        console.log("quadro salvo")
+    } else {
+        workingframe++
+        if (workingframe >= animacao.length) {
+            workingframe = 0
+        }
+        changeFrame(workingframe)
+        document.getElementById("contador").innerHTML = workingframe
     }
-    changeFrame(workingframe)
-    document.getElementById("contador").innerHTML = workingframe
 
 }
 function prev_frame() {
@@ -335,12 +336,11 @@ function export_anim() {
                 for (i = 0; i < animacao.length; i++) {
                     cont.fillStyle = "rgb(255,255,255)"
                     cont.fillRect(0, 0, canvas.width, canvas.height); //GIF can't do transparent so do white
-                    cont.drawImage(myanima, -320 * i, 0, myanima.width, myanima.height)
+                    cont.drawImage(myanima, - canvas.width * i, 0, myanima.width, myanima.height)
                     console.log(encoder.addFrame(cont));
                 }
                 encoder.finish();
                 encoder.download("download.gif");
-                //document.getElementById('image').src = 'data:image/gif;base64,' + encode64(encoder.stream().getData())
             }
 
         } else {
@@ -357,8 +357,8 @@ function changeFPS(valor) {
     fps = valor
 }
 function removeFrame() {
+    animacao.splice(workingframe, 1)
     prev_frame()
-    animacao.splice(workingframe + 1, 1)
 }
 function cloneFrame() {
     animacao.splice(workingframe + 1, 0, animacao[workingframe]);

@@ -1110,7 +1110,6 @@ function handleStart(evt) {
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
     if (pixelGood) {
-        console.log("pixelgood")
         origin.x = redondo(origin.x)
         origin.y = redondo(origin.y)
     }
@@ -1499,7 +1498,7 @@ async function modeTo(qual) {
         case "rotacionar":
             break;
         case "zoom":
-            removeClass();
+            //removeClass();
             zoomIndex++;
             if (zoomIndex > 6) {
                 zoomIndex = 0;
@@ -1594,13 +1593,17 @@ function stopMotion() {
     if (stop_motion == false) {
         document.getElementById("stopMotion").innerHTML = "📷"
 
+        canvas.style.opacity = 1
         Alert("Modo foto 📷.");
     } else {
         Alert("Modo sequencia de quadros 🎞️.");
         document.getElementById("stopMotion").innerHTML = "🎞️"
 
+        canvas.style.opacity = 0.3
     }
 }
+
+
 
 function camera() {
 
@@ -1611,9 +1614,13 @@ function camera() {
         if (stop_motion == true) {
             botao2.innerHTML = "🎞️"
             Alert("Modo sequencia de quadros 🎞️.");
+
+            canvas.style.opacity = 0.3
         } else {
             botao2.innerHTML = "📷"
             Alert("Modo foto 📷.");
+
+            canvas.style.opacity = 1
         }
         botao2.setAttribute("onmousedown", "stopMotion()")
         botao2.setAttribute("style", "position: absolute; top: 180px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.7 ")
@@ -1629,13 +1636,13 @@ function camera() {
         const escala = canvas.height / 320
         videoE.id = "video"
         videoE.height = canvas.height; // in px
-        videoE.width = 430 * (escala); // in px
+        videoE.width = redondo(430 * (escala)); // in px
         videoE.setAttribute('style', `position:relative; width:auto; height:auto;`)
         if (stop_motion == true) videoE.setAttribute("class", "destination-over")
 
 
-        let vcW = 430 * escala * 2;
-        let vcH = 320 * escala * 2;
+        let vcW = redondo(430 * escala * 2);
+        let vcH = redondo(320 * escala * 2);
         const videoC = document.createElement("div");
         videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px; `)
         videoC.setAttribute("id", "videoC")
@@ -1738,8 +1745,22 @@ function camera() {
 
                 removeVideo();
             } else {
-                new_frame()
-                audio2.play()
+                setTimeout(() => {
+                    swapImg = canvas.toDataURL('image/png');
+
+                    save_frame(swapImg)
+
+                    workingframe++
+                    changeFrame(workingframe)
+                    document.getElementById("contador").innerHTML = workingframe
+                }, 30)
+                /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
+                   contextV.clearRect(0, 0, W, H);
+                   contextV.setTransform(1, 0, 0, 1, 0, 0);
+                   contextV.clearRect(0, 0, W, H);*/
+
+
+                //audio2.play()
             }
         })
         // initialize
@@ -1760,6 +1781,7 @@ function camera() {
     }
 }
 function removeVideo() {
+    canvas.style.opacity = 1
     setTimeout(() => {
         stopVideoStream()
         removeElement("video")
@@ -2140,6 +2162,8 @@ function ZOOM(a) {
     document.getElementById("tzoom").value = zoomFactor;
     document.getElementById("zoombar").value =
         zoomScale.indexOf(zoomFactor);
+    document.getElementById("x1").innerHTML = zoomFactor + "x";
+
 }
 
 function scrollCanva(a, b) {
@@ -2302,7 +2326,6 @@ function trocaEmoji(emo) {
     emoexemplo = document.getElementById("emoexemplo")
 
 }
-
 
 function hidecustom() {
     document.getElementById("custom").classList.toggle("esconde")
