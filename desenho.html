@@ -18,8 +18,8 @@
                 Toque numa área pintada<br>
                 para capturar uma cor
             </div>
-            <div id="alert" class="submenu fundobranco">
-                <span class="botao" onmousedown="removeClass()">
+            <div id="menualerta" class="submenu fundobranco">
+                <span class="botao" onmousedown="closeAlert()">
                     <span class="close"> ❎</span>
                     <span id="alertconteudo">
                         Toque numa área pintada<br>
@@ -128,7 +128,7 @@
 
             <div id="menupintar" class="fundobranco submenu menu">
 
-                <span class="botao"><span title="pintar" class="bot selected" onmousedown="modeTo('pintar')">🖌️</span>
+                <span class="botao"><span title="pintar" class="bot" onmousedown="modeTo('pintar')">🖌️</span>
                     <span id="mostraCor2" title="cores" class="bot" onmousedown="modeTo('cores')">🎨</span>
                     <span title="Pega cor" id="picker" class="bot" onmousedown="modeTo('picker')">💉</span>
                     <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
@@ -291,6 +291,18 @@
                 <span onmousedown="scrollCanva(80,0)">➡️</span -->
             </div>
 
+            <div id="menucam" class="submenu fundobranco">
+                <span id="stopMotion" class="bot" onmousedown="stopMotion()">
+                    🎞️
+                </span>
+                <span id="btnChangeCam" title="Trocar camera" class="bot" onmousedown="changeCamera()">
+                    🔃
+                </span>
+
+                <span class="bot" title="fechar camera" onmousedown="modeTo('cam')">❎</span>
+
+            </div>
+
             <div id="menusalvar" class="fundobranco submenu">
                 <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">📥 Baixar / Salvar<span
                         class="close">❎</span></span>
@@ -298,8 +310,7 @@
                     Título: <input id="filename" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
                         value="desenho" onfocus="this.value=''"> <span onclick="salvaImagem()" class="bot">📥</span>
                 </span>
-                <span class="botao">📥 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq"
-                        checked="true">
+                <span class="botao">📥 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq">
                     <br> Exportar Gif animado: <input type="checkbox" id="gif" checked="true"><br>
                     Título: <input id="filenameS" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
                         value="anima" onfocus="this.value=''"> <span onclick="export_anim()" class="bot">📥</span>
@@ -382,7 +393,7 @@
 
             </div>
 
-            <div id="menucam" style="display:block; visibility:hidden;"></div>
+
         </div>
     </div>
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"

@@ -1514,6 +1514,7 @@ async function modeTo(qual) {
             mode = "zoom"
             break;
         case "cam":
+
             camera();
             changeGCO();
             memorySwap(globalComposite);
@@ -1609,29 +1610,17 @@ function camera() {
 
     // ok, browser supports it*/
     if (!document.getElementById("videoC")) {
-        const botao2 = document.createElement("div");
-        botao2.setAttribute("id", "stopMotion")
-        if (stop_motion == true) {
-            botao2.innerHTML = "🎞️"
-            Alert("Modo sequencia de quadros 🎞️.");
+        const botao2 = document.getElementById("stopMotion")
 
-            canvas.style.opacity = 0.3
-        } else {
-            botao2.innerHTML = "📷"
-            Alert("Modo foto 📷.");
-
-            canvas.style.opacity = 1
-        }
-        botao2.setAttribute("onmousedown", "stopMotion()")
-        botao2.setAttribute("style", "position: absolute; top: 180px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.7 ")
+        // botao2.setAttribute("onmousedown", "stopMotion()")
+        //botao2.setAttribute("style", "position: absolute; top: 180px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.5 ")
 
 
-        const botao = document.createElement("div");
-        botao.setAttribute("id", "btnChangeCam")
-        botao.setAttribute("value", "muda")
+        const botao = document.getElementById("btnChangeCam")
+        //botao.setAttribute("value", "muda")
         //        botao.setAttribute("class", "bloquinho")
-        botao.setAttribute("style", "position: absolute; top: 220px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.7 ")
-        botao.innerHTML = "🔃"
+        //botao.setAttribute("style", "position: absolute; top: 220px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.5 ")
+        //botao.innerHTML = "🔃"
         const videoE = document.createElement("video");
         const escala = canvas.height / 320
         videoE.id = "video"
@@ -1647,11 +1636,23 @@ function camera() {
         videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px; `)
         videoC.setAttribute("id", "videoC")
         videoC.appendChild(videoE);
-        videoC.appendChild(botao);
-        videoC.appendChild(botao2);
+        //videoC.appendChild(botao);
+        //videoC.appendChild(botao2);
+
         canvasDiv.appendChild(videoC)
         setTimeout(() => win.classList.add("flip"), 900)
+        if (stop_motion == true) {
+            botao2.innerHTML = "🎞️"
+            videoC.style.opacity = 0.6
+            Alert("Modo sequencia de quadros 🎞️.");
 
+            canvas.style.opacity = 0.3
+        } else {
+            botao2.innerHTML = "📷"
+            Alert("Modo foto 📷.");
+            videoC.style.opacity = 1
+            canvas.style.opacity = 1
+        }
         videoE.toggleAttribute("autoplay", "autoplay")
         videoE.toggleAttribute("playsinline", "playsinline")
         if (globalComposite == "destination-over") {
@@ -1690,7 +1691,6 @@ function camera() {
             else {
                 video.onplaying = undefined; //Remove event handler.
                 let proporcao = videoWidth / videoHeight
-                //diegos magic
 
                 let canvas = document.getElementById("canvas")
                 let videoC = document.getElementById("videoC")
@@ -1719,14 +1719,14 @@ function camera() {
             }
         };
 
-        const btnChangeCamera = document.querySelector("#btnChangeCam");
-
-        // switch camera
-        btnChangeCamera.addEventListener("click", function () {
-            useFrontCamera = !useFrontCamera;
-            win.classList.toggle("flip");
-            initializeCamera();
-        });
+        /*   const btnChangeCamera = document.querySelector("#btnChangeCam");
+   
+           // switch camera
+           btnChangeCamera.addEventListener("click", function () {
+               useFrontCamera = !useFrontCamera;
+               win.classList.toggle("flip");
+               initializeCamera();
+           });*/
 
         //diego
 
@@ -1746,14 +1746,20 @@ function camera() {
                 removeVideo();
             } else {
                 setTimeout(() => {
-                    swapImg = canvas.toDataURL('image/png');
+                    if (
+                        !isCanvasBlank(canvas)
+                    ) {
 
-                    save_frame(swapImg)
+                        swapImg = canvas.toDataURL('image/png');
 
-                    workingframe++
-                    changeFrame(workingframe)
-                    document.getElementById("contador").innerHTML = workingframe
-                }, 30)
+                        save_frame(swapImg)
+
+                        workingframe++
+                        changeFrame(workingframe)
+                        document.getElementById("contador").innerHTML = workingframe
+                    }
+
+                }, 10)
                 /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
                    contextV.clearRect(0, 0, W, H);
                    contextV.setTransform(1, 0, 0, 1, 0, 0);
@@ -1779,6 +1785,20 @@ function camera() {
         initializeCamera();
 
     }
+}
+function isCanvasBlank(canvas) {
+    const context = canvas.getContext('2d');
+    const pixelBuffer = new Uint32Array(context.getImageData(0, 0, canvas.width, canvas.height).data.buffer);
+    return !pixelBuffer.some(color => color !== 0);
+}
+function canvasOpacity(value) {
+    canvas.style.opacity = value
+}
+
+function changeCamera() {
+    useFrontCamera = !useFrontCamera;
+    win.classList.toggle("flip");
+    initializeCamera();
 }
 function removeVideo() {
     canvas.style.opacity = 1
@@ -1978,12 +1998,15 @@ function backPaint() {
     //removeClass()
 }
 function Alert(text) {
-    let alert = document.getElementById("alert")
+    let alert = document.getElementById("menualerta")
     alert.classList.add("aparece")
     let aconteudo = document.getElementById("alertconteudo")
     aconteudo.innerHTML = text;
-    setTimeout(() => { removeClass() }, 2000)
+    setTimeout(() => { closeAlert() }, 2000)
 
+}
+function closeAlert() {
+    document.getElementById("menualerta").classList.remove("aparece")
 }
 function mudaCorBG(cor) {
     if (cor === "strokeColor") {

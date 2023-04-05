@@ -1,8 +1,12 @@
 let vers = [
     {
-        versao: " 1.5.3",
+        versao: " 1.5.4",
         notas: [
+            "🎚️ Transparencia do quadro",
+            "📷 menu camera",
+            "⚠️ mudança no sistema de alerta",
             "📷 + 🎞️ camera faz sequencia de quadros conforme o click",
+            "(sem quadros brancos)",
             "🎞️  Exporta Gif Animado (✂️recortado inclusive) ",
             "❎ icone fechar janela padronizado",
             "🖌️ pincel suave como primeira opção",

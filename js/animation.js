@@ -64,6 +64,7 @@ function criaPlayer() {
     player.style.left = "10px"
     player.style.border = "1px solid #88ccee"
     player.style.display = "none"
+    player.style.zIndex = 1000
     player.setAttribute("onmousedown", "stop()")
     document.getElementById("tela").appendChild(player)
     let menuanime = document.createElement('div')
@@ -77,6 +78,9 @@ function criaPlayer() {
       onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px"> <span onmousedown="play()">▶️</span></span>
                         <span class="botao"  onmousedown="removeFrame()" >🗑 Remover quadro atual ➖</span>
                         <span class="botao"  onmousedown="cloneFrame()" >🧬 clonar o quadro atual</span>
+                        <span class="botao">
+                        Transparencia do quadro <input type="range" id="canvasOpacity" name="transparencia" min="0.01" max="1"
+                            oninput="canvasOpacity(this.value)" step="0.01" value="1"></span>
                           `
     document.getElementById("menus").appendChild(menuanime)
     setTimeout(() => {
@@ -272,8 +276,6 @@ function prev_frame() {
         if (workingframe < 0) { workingframe = 0 }
     }
     changeFrame(workingframe)
-    /* let imagem = animacao[playing]
-     context.drawImage(imagem, 0, 0, imagem.width, imagem.height);*/
     document.getElementById("contador").innerHTML = workingframe
 }
 var cont
@@ -288,7 +290,7 @@ function export_anim() {
         Alert("escreva um titulo para seu arquivo de imagem .png")
         return
     }
-    Alert("Sprite-frame sendo baixado.")
+    Alert("Seu arquivo esta sendo preparado.<br> Por favor, aguarde...")
 
     let exp = document.createElement("canvas")
     exp.width = canvas.width * len
@@ -315,7 +317,6 @@ function export_anim() {
         var dataURL = document.getElementById("exp")
             .toDataURL("image/png")
             .replace("image/png", "image/octet-stream");
-        //downloadImage(dataURL, 'my-canvas.jpeg');
         if (document.getElementById("seq").checked) { downloadImage(dataURL, `${fname}.png`); }
         spritao.src = dataURL
 
@@ -451,3 +452,4 @@ function changeBackGroundAnimation(frame) {
 
     }
 }
+

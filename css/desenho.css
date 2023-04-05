@@ -219,7 +219,7 @@ body {
     border-radius: 0px;
 }
 
-#mostraCor2 {
+/*#mostraCor2 {
     width: 2px;
     height: 2px;
     border-style: solid;
@@ -231,7 +231,7 @@ body {
     font-size: 1.125em;
     float: left;
     margin-left: 10px;
-}
+}*/
 
 #cursor {
     pointer-events: none;
@@ -445,7 +445,7 @@ input[type="range"] {
     font-size: 0.75em;
 }
 
-#alert {
+#menualerta {
     font-size: 1.5em;
     z-index: 5000;
 }
