@@ -373,6 +373,13 @@ var checkSave = setInterval(() => {
         document.getElementById("new_frame()").classList.toggle("blink")
 
     }
+    if (undoLevel == 0) {
+        document.getElementById("redo").classList.add("esconde")
+
+    } else {
+        document.getElementById("redo").classList.remove("esconde")
+
+    }
 }, 1500)
 let swapImg = new Image()
 
