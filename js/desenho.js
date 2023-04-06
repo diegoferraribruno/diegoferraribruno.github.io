@@ -1814,10 +1814,8 @@ button.addEventListener('click', event => {
     } else {
         videoConstraints.deviceId = { exact: select.value };
     }
-    const constraints = {
-        video: videoConstraints,
-        audio: false
-    };
+    constraints[video] = videoConstraints
+    constraints[audio] = false
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(stream => {
