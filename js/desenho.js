@@ -1843,6 +1843,8 @@ function isCanvasBlank(canvas) {
 }
 function canvasOpacity(value) {
     canvas.style.opacity = value
+    let vid = document.getElementById("video")
+    if (vid) { vid.style.opacity = value }
 }
 
 function changeCamera() {
