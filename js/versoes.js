@@ -1,5 +1,10 @@
 let vers = [
     {
+        versao: "1.6.0",
+        notas: "testando troca de camera"
+
+    },
+    {
         versao: " 1.5.4",
         notas: [
             "🎚️ Transparencia do quadro",
