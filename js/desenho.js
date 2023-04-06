@@ -1604,6 +1604,7 @@ function stopMotion() {
     }
 }
 
+navigator.mediaDevices.enumerateDevices().then(gotDevices);
 
 
 function camera() {
@@ -1786,7 +1787,8 @@ async function initializeCamera() {
         Alert("Could not access the camera");
     }
 }
-navigator.mediaDevices.enumerateDevices().then(gotDevices);
+
+
 const select = document.getElementById('select');
 const button = document.getElementById('sbutton');
 
@@ -1805,7 +1807,7 @@ function gotDevices(mediaDevices) {
         }
     });
 }
-button.addEventListener('click', event => {
+function trocaCamera() {
     stopVideoStream()
     //removeVideo()
     /*    if (typeof currentStream !== 'undefined') {
@@ -1834,7 +1836,7 @@ button.addEventListener('click', event => {
             });
         initializeCamera();
     }, 10)
-});
+}
 
 function isCanvasBlank(canvas) {
     const context = canvas.getContext('2d');
