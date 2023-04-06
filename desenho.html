@@ -103,6 +103,8 @@
                         checked="true">
                     <br>carregar como plano de fundo?
                     <input type="checkbox" id="loadBackgroundAnimation">
+                    <br>sobrepor plano de fundo
+                    <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
                     <span id="custom" class="esconde"> Frames/quadros<input type="number" id="fnumber" min="1" max="60"
                             step="1" value="2" style="width: 40px; margin-left: 8px"><br> largura: <input id="larguraS"
                             type="number" maxlength="4" max="1920" value="320" style="width:60px; padding: 4px;" />
@@ -316,7 +318,8 @@
                         value="desenho" onfocus="this.value=''"> <span onclick="salvaImagem()" class="bot">📥</span>
                 </span>
                 <span class="botao">📥 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq">
-                    <br> Exportar Gif animado: <input type="checkbox" id="gif" checked="true"><br>
+                    <br> Exportar Gif animado: <input type="checkbox" id="gif" checked="true">
+                    <br> Unir quadro com fundo <input type="checkbox" id="unir" checked="true"><br>
                     Título: <input id="filenameS" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
                         value="anima" onfocus="this.value=''"> <span onclick="export_anim()" class="bot">📥</span>
             </div>

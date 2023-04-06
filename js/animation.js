@@ -307,7 +307,20 @@ function export_anim() {
         imagem.src = URL.createObjectURL(blob);
         let pos = i * canvas.width
         imagem.onload = function () {
+            cont.globalCompositeOperation = "source-over"
             cont.drawImage(imagem, 0, 0, imagem.width, imagem.height, pos, 0, imagem.width, imagem.height);
+            if (document.getElementById("unir").checked && background_anim == true) {
+                if (!document.getElementById("sobrepor").checked) {
+                    cont.globalCompositeOperation = "destination-over"
+                    cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
+
+                } else {
+                    cont.globalCompositeOperation = "source-under"
+                    cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
+                    cont.globalCompositeOperation = "destination-over"
+                }
+
+            }
         }
     }
 
@@ -317,7 +330,9 @@ function export_anim() {
         var dataURL = document.getElementById("exp")
             .toDataURL("image/png")
             .replace("image/png", "image/octet-stream");
-        if (document.getElementById("seq").checked) { downloadImage(dataURL, `${fname}.png`); }
+        if (document.getElementById("seq").checked) {
+            downloadImage(dataURL, `${fname}.png`);
+        }
         spritao.src = dataURL
 
     }, 400)
@@ -445,11 +460,6 @@ function cortarAnima(x1, y1, x2, y2) {
 }
 var background_anim = false
 
-function loadBackGroundAnimation(imagem) {
-
-}
-
-
 function changeBackGroundAnimation(frame) {
 
     if (background_anim == true) {
@@ -460,3 +470,6 @@ function changeBackGroundAnimation(frame) {
     }
 }
 
+function sobreporFundo() {
+    document.getElementById("bplayer0").style.zIndex = document.getElementById("bplayer0").style.zIndex * -1
+}
