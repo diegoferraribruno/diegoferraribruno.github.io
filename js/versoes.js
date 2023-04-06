@@ -1,6 +1,6 @@
 let vers = [
     {
-        versao: "1.6.1e",
+        versao: "1.6.1f",
         notas: ["testando troca de camera"]
 
     },
