@@ -1791,51 +1791,59 @@ async function initializeCamera() {
 
 const select = document.getElementById('select');
 const button = document.getElementById('sbutton');
-
+const cameras = []
+var selectedCam = 0
 function gotDevices(mediaDevices) {
-    select.innerHTML = '';
+    //select.innerHTML = '';
     select.appendChild(document.createElement('option'));
     let count = 1;
     mediaDevices.forEach(mediaDevice => {
         if (mediaDevice.kind === 'videoinput') {
             const option = document.createElement('option');
             option.value = mediaDevice.deviceId;
+            cameras.push(mediaDevice.deviceId)
             const label = mediaDevice.label || `Camera ${count++}`;
             const textNode = document.createTextNode(label);
             option.appendChild(textNode);
             select.appendChild(option);
+            console.log(mediaDevice)
         }
     });
 }
 function trocaCamera() {
-    stopVideoStream()
-    //removeVideo()
-    /*    if (typeof currentStream !== 'undefined') {
-        stopMediaTracks(currentStream);
-        }*/
-    const videoConstraints = {};
-    if (select.value === '') {
-        videoConstraints.facingMode = 'environment';
-    } else {
-        videoConstraints.deviceId = { exact: select.value };
+    // useFrontCamera = !useFrontCamera;
+    selectedCam++
+    if (selectedCam == cameras.length) {
+        selectedCam = 0
     }
-    constraints["video"] = videoConstraints
-    constraints["audio"] = false
+    constraints.video.deviceId = { exact: cameras[selectedCam] };
+    initializeCamera();
+
+
+    /*
     setTimeout(() => {
+        constraints.video.deviceId = { exact: select.value };
         //camera()
         navigator.mediaDevices
             .getUserMedia(constraints)
             .then(stream => {
                 currentStream = stream;
                 video.srcObject = stream;
+                initializeCamera();
                 return navigator.mediaDevices.enumerateDevices();
             })
-            .then(gotDevices)
+            //.then(gotDevices)
             .catch(error => {
                 console.error(error);
             });
-        initializeCamera();
-    }, 10)
+    }, 0)
+    stopVideoStream()
+    //removeVideo()
+    /*    if (typeof currentStream !== 'undefined') {
+        stopMediaTracks(currentStream);
+        }*/
+
+
 }
 
 function isCanvasBlank(canvas) {
@@ -1848,9 +1856,9 @@ function canvasOpacity(value) {
 }
 
 function changeCamera() {
-    useFrontCamera = !useFrontCamera;
+
     win.classList.toggle("flip");
-    initializeCamera();
+
 }
 function removeVideo() {
     canvas.style.opacity = 1
