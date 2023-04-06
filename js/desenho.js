@@ -1806,9 +1806,10 @@ function gotDevices(mediaDevices) {
     });
 }
 button.addEventListener('click', event => {
+    stopVideoStream()
     //removeVideo()
     /*    if (typeof currentStream !== 'undefined') {
-            stopMediaTracks(currentStream);
+        stopMediaTracks(currentStream);
         }*/
     const videoConstraints = {};
     if (select.value === '') {
