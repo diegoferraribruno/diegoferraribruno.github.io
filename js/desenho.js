@@ -1770,20 +1770,21 @@ function camera() {
             }
         })
         // initialize
-        async function initializeCamera() {
-            stopVideoStream();
-            constraints.video.facingMode = useFrontCamera ? "user" : "environment";
 
-            try {
-                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
-                video.srcObject = videoStream;
-            } catch (err) {
-                Alert("Could not access the camera");
-            }
-        }
 
         initializeCamera();
 
+    }
+}
+async function initializeCamera() {
+    stopVideoStream();
+    constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+
+    try {
+        videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+        video.srcObject = videoStream;
+    } catch (err) {
+        Alert("Could not access the camera");
     }
 }
 function isCanvasBlank(canvas) {
