@@ -1811,16 +1811,6 @@ function gotDevices(mediaDevices) {
     });
 }
 function trocaCamera() {
-    // useFrontCamera = !useFrontCamera;
-    selectedCam++
-    if (selectedCam == cameras.length) {
-        selectedCam = 0
-    }
-    constraints.video.deviceId = { exact: cameras[selectedCam] };
-    initializeCamera();
-
-
-    /*
     setTimeout(() => {
         constraints.video.deviceId = { exact: select.value };
         //camera()
@@ -1856,9 +1846,17 @@ function canvasOpacity(value) {
 }
 
 function changeCamera() {
+    //useFrontCamera = !useFrontCamera;
+    selectedCam++
+    if (selectedCam == cameras.length) {
+        selectedCam = 0
+    }
+    constraints.video.deviceId = { exact: cameras[selectedCam] };
 
+    initializeCamera();
+}
+function flipCamera() {
     win.classList.toggle("flip");
-
 }
 function removeVideo() {
     canvas.style.opacity = 1
