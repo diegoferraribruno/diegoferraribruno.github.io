@@ -317,19 +317,18 @@
                     Título: <input id="filename" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
                         value="desenho" onfocus="this.value=''"> <span onclick="salvaImagem()" class="bot">📥</span>
                 </span>
-                <span class="botao">📥 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq">
+                <span class="botao">📥 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq" >
                     <br> Exportar Gif animado: <input type="checkbox" id="gif" checked="true">
-                    <br> Unir quadro com fundo <input type="checkbox" id="unir" checked="true"><br>
+                    <br> Unir quadro com fundo <input type="checkbox" id="unir"><br>
                     Título: <input id="filenameS" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
                         value="anima" onfocus="this.value=''"> <span onclick="export_anim()" class="bot">📥</span>
             </div>
 
 
             <div id="menurecortar" class="fundobranco submenu">
+            <span class="botao" >Recomendavel salvar sequencia de quadros antes de recortar <span id="salvar" title="salvar imagem" class="bot" onclick="modeTo('salvar')">📥</span></span>
                 <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
-                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar
-                    para
-                    seleção</span>
+                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar para seleção</span>
                 <span onmousedown="comandosExec()" title="Cancela" class="botao">
                     ❎ Cancelar</span>
 

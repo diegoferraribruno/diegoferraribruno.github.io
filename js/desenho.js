@@ -99,7 +99,7 @@ function cortar() {
                 changeGCO(oldGCO);
                 var len = animacao.length
                 //for (i = 0; 1 < len; i++) {
-                setTimeout(cortarAnima(x0, y0, x1, y1), 400)
+                setTimeout(cortarAnima(x0, y0, x1, y1), 1200)
                 //}
 
 
@@ -1721,7 +1721,7 @@ function camera() {
         };
 
         /*   const btnChangeCamera = document.querySelector("#btnChangeCam");
-   
+
            // switch camera
            btnChangeCamera.addEventListener("click", function () {
                useFrontCamera = !useFrontCamera;

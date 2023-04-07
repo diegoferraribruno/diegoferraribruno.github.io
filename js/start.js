@@ -5,8 +5,8 @@ let texts = [
   ["tirar outra 📷", "E fazer uma bela", "foto-montagem!"]
 ]
 function start() {
-
   setTimeout(() => {
+/*
 
     if (comandos.length == "1") {
       // alert("desenha no xadrez")
@@ -20,15 +20,15 @@ function start() {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         comandosExec();
-      }, 3200);
+      }, 1200);
       startText++
       if (startText >= texts.length) {
         startText = 0
       }
       //start()
-      limpaCabeca();
 
-    }
-  }, 4000);
+    }*/
+      limpaCabeca();
+  }, 1500);
 }
 start()

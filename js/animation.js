@@ -191,7 +191,7 @@ function play() {
             1000 / fps)
 
     } else {
-        Alert("Adicione ➕ quadros a sua animação antes dar o Play")
+        Alert("Por favor,<br> adicione ➕ quadros a sua animação")
     }
 }
 function stop() {
@@ -382,9 +382,9 @@ function cloneFrame() {
 }
 var checkSave = setInterval(() => {
     if (comandos.length < 3) {
-        document.getElementById("new_frame()").innerHTML = "➕"
+       // document.getElementById("new_frame()").innerHTML = "➕"
     } else {
-        document.getElementById("new_frame()").innerHTML = "💾"
+       // document.getElementById("new_frame()").innerHTML = "💾"
         document.getElementById("new_frame()").classList.toggle("blink")
 
     }
@@ -395,10 +395,11 @@ var checkSave = setInterval(() => {
         document.getElementById("redo").classList.remove("esconde")
 
     }
-}, 1500)
+}, 1400)
 let swapImg = new Image()
 
 let newAnima = []
+
 function cortarAnima(x1, y1, x2, y2) {
     let canvass = document.createElement("canvas")
     let contexts = canvass.getContext("2d");
