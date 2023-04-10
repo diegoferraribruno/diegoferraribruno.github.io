@@ -386,7 +386,7 @@ input[type="range"] {
 }
 
 .destination-over {
-    opacity: 0.7;
+    opacity: 0.5;
 }
 
 .vid {
