@@ -264,7 +264,7 @@ function next_frame() {
         if (workingframe >= animacao.length) {
             workingframe = 0
         }
-    changeFrame(workingframe)
+        changeFrame(workingframe)
         document.getElementById("contador").innerHTML = workingframe
     }
 
@@ -354,7 +354,7 @@ async function export_anim() {
                     console.log(encoder.addFrame(cont));
                 }
                 encoder.finish();
-                encoder.download("download.gif");
+                encoder.download(fname+".gif");
             }
 
         } else {

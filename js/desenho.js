@@ -1606,7 +1606,7 @@ function stopMotion() {
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices);
 
-
+let fotografando = false
 function camera() {
 
     // ok, browser supports it*/
@@ -1642,6 +1642,7 @@ function camera() {
 
         canvasDiv.appendChild(videoC)
         setTimeout(() => win.classList.add("flip"), 900)
+        fotografando = true
         if (stop_motion == true) {
             botao2.innerHTML = "🎞️"
             videoC.style.opacity = 0.6
@@ -1727,47 +1728,52 @@ function camera() {
                useFrontCamera = !useFrontCamera;
                win.classList.toggle("flip");
                initializeCamera();
-           });*/
-
-        //diego
-
-        video.addEventListener('click', function (e) {
-
-            let W = canvasV.width;
-            let H = canvasV.height;
-            contextV.drawImage(video, 0, 0, W, H)
-            img_b64 = canvasV.toDataURL("image/png");
-            blob = dataURItoBlob(img_b64)
-            let offsetW = (W - canvas.width) / -2
-            let offsetH = (H - canvas.height) / -2
-
-            desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+            });*/
+            
+            //diego
+            
+            video.addEventListener('click', function (e) {
+                if (fotografando == true){
+                    fotografando = false
+                    let W = canvasV.width;
+                    let H = canvasV.height;
+                let offsetW = (W - canvas.width) / -2
+                let offsetH = (H - canvas.height) / -2
+                contextV.drawImage(video, 0, 0, W, H)
+                if (
+                    !isCanvasBlank(canvasV)
+                ) {
+                img_b64 = canvasV.toDataURL("image/png");
+                blob =  dataURItoBlob(img_b64)
+                if(blob != undefined)
+                desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+                
+            }
             if (stop_motion == false) {
                 removeVideo();
             } else {
-                setTimeout(() => {
                     if (
                         !isCanvasBlank(canvas)
-                    ) {
+                    ) setTimeout(()=>{
 
                         swapImg = canvas.toDataURL('image/png');
-
+                        
                         save_frame(swapImg)
-
+                        
                         workingframe++
                         changeFrame(workingframe)
                         document.getElementById("contador").innerHTML = workingframe
-                    }
-
-                }, 120)
-                /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
-                   contextV.clearRect(0, 0, W, H);
-                   contextV.setTransform(1, 0, 0, 1, 0, 0);
-                   contextV.clearRect(0, 0, W, H);*/
-
-
-                //audio2.play()
-            }
+                    },30)
+                    /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
+                    contextV.clearRect(0, 0, W, H);
+                    contextV.setTransform(1, 0, 0, 1, 0, 0);
+                    contextV.clearRect(0, 0, W, H);*/
+                    
+                    
+                    //audio2.play()
+                }
+                setTimeout(()=>fotografando = true,100)
+        }
         })
         // initialize
 

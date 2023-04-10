@@ -1,7 +1,9 @@
 let vers = [
     {
-        versao: "1.6.3",
-        notas: ["📷 testando troca de camera",
+        versao: "1.6.4",
+        notas: [
+            "capturando quadros corretamente com maoir intervalo de tempo",
+            "📷 testando troca de camera",
             "🎞️ unir fundo a animação ao exportar para colorir inclusive com opção de sobreposição para pintar por baixo",
             " salve antes de ✂️ recortar ",
             " adeus mensagem de desenhe aqui."

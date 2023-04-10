@@ -83,7 +83,6 @@ body {
     position: relative;
     width: 110px;
     display: inline-block;
-    float: left;
 }
 
 #paleta2 {
@@ -212,7 +211,6 @@ body {
     width: 36px;
 }
 
-#mostraCor {}
 
 .linha {
     width: 1px;
@@ -298,19 +296,6 @@ range {
 
 .pixel {
     image-rendering: pixelated;
-}
-
-input[type="range"][orient="vertical"] {
-    /* writing-mode: bt-lr;*/
-    /* IE */
-    /*-webkit-appearance: slider-vertical;*/
-    /* Chromium */
-    /*width: 8px;
-    height: 175px;
-    padding: 0 5px;
-    float: left;
-    margin-top: 4px;
-    margin-right: 4px;*/
 }
 
 input[type="range"] {
