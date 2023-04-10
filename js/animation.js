@@ -338,6 +338,7 @@ async function export_anim() {
 
         if (document.getElementById("gif").checked) {
             exp.width = canvas.width
+            exp.height = canvas.height
             let myanima = new Image()
             myanima.src = spritao.src
             myanima.onload = function () {
@@ -351,17 +352,17 @@ async function export_anim() {
                     cont.fillStyle = "rgb(255,255,255)"
                     cont.fillRect(0, 0, canvas.width, canvas.height); //GIF can't do transparent so do white
                     cont.drawImage(myanima, - canvas.width * i, 0, myanima.width, myanima.height)
-                    console.log(encoder.addFrame(cont));
+                    encoder.addFrame(cont);
                 }
                 encoder.finish();
                 encoder.download(fname+".gif");
             }
 
-        } else {
-            removeElement("exp")
         }
+            removeElement("exp")
+        
     }
-    }, 1600)
+    }, 1200+(100*len))
 }
 
 function anime_ajustes() {
@@ -454,7 +455,7 @@ function cortarAnima(x1, y1, x2, y2) {
             new_frame();
         }, 10)
 
-    }, 100
+    }, 100*len
     )
 
 }
