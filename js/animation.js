@@ -264,7 +264,7 @@ function next_frame() {
         if (workingframe >= animacao.length) {
             workingframe = 0
         }
-        changeFrame(workingframe)
+    changeFrame(workingframe)
         document.getElementById("contador").innerHTML = workingframe
     }
 
@@ -280,7 +280,7 @@ function prev_frame() {
 }
 var cont
 var spritao = new Image();
-function export_anim() {
+async function export_anim() {
     let len = animacao.length
     if (len == 0) {
         Alert("Adicione ➕ quadros a sua animação antes de exportar.")
@@ -334,9 +334,7 @@ function export_anim() {
             downloadImage(dataURL, `${fname}.png`);
         }
         spritao.src = dataURL
-
-    }, 400)
-    setTimeout(() => {
+        spritao.onload = function (){
 
         if (document.getElementById("gif").checked) {
             exp.width = canvas.width
@@ -362,7 +360,8 @@ function export_anim() {
         } else {
             removeElement("exp")
         }
-    }, 1000)
+    }
+    }, 1600)
 }
 
 function anime_ajustes() {

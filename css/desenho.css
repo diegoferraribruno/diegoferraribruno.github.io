@@ -432,7 +432,7 @@ input[type="range"] {
     margin-bottom: 2px;
     border-radius: 12px;
     vertical-align: bottom;
-    overflow: scroll;
+    overflow:auto;
 }
 
 .botao:hover {
@@ -498,6 +498,7 @@ input[type="range"] {
 }
 
 .favbrush {
+    height: 46px;
     display: block;
     position: relative;
     margin-top: -40px;
@@ -516,4 +517,21 @@ input[type="range"] {
     right: 4px;
     top: 0px;
     font-size: x-large;
+}
+#pinceis2{
+    background-color:#ffffffcc;
+    
+     display: inline-block; 
+     vertical-align: top; 
+     height:48px; 
+     width:320px;
+}
+
+#pinceis2 {
+    overflow: hidden;
+    overflow-y: auto;
+  }
+#pinceis{
+    overflow: hidden;
+    background-color:#ffffffcc; height:46px;
 }

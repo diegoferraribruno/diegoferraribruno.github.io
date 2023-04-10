@@ -963,7 +963,7 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
                     favBrushButton.style.width = "30px";
                     favBrushButton.style.lineHeight = "30px";
                     favBrushButton.style.marginRight = "4px";
-                    favBrushButton.style.verticalAlign = "middle"
+                    favBrushButton.style.verticalAlign = "top"
                     favBrushButton.style.display = "inline-block"
 
                     favBrushButton.setAttribute("onmousedown", "favBrush('" + brushName + "')")
@@ -1743,7 +1743,6 @@ function camera() {
 
             desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
             if (stop_motion == false) {
-
                 removeVideo();
             } else {
                 setTimeout(() => {
@@ -1760,7 +1759,7 @@ function camera() {
                         document.getElementById("contador").innerHTML = workingframe
                     }
 
-                }, 10)
+                }, 120)
                 /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
                    contextV.clearRect(0, 0, W, H);
                    contextV.setTransform(1, 0, 0, 1, 0, 0);

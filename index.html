@@ -14,9 +14,9 @@
     <div id="container">
         <section>
 
+            <div id="gitbio" class="bloco"></div>
             <div id="blog" class="bloco">📔 Mini - Blog do Diego</div>
             <div id="bio" class="bloco"></div>
-
 
             <span class="bloco">
                 <img id="foto" src="galeria/01/desenho1.png" class="shadow">
@@ -39,6 +39,22 @@
     <script type="text/javascript" src="js/blog.js"></script>
     <script type="text/javascript" src="js/usuario.js"></script>
     <script type="text/javascript" src="js/galeria.js"></script>
+    <script>
+        async function githubBio(){
+             const res = await fetch('https://api.github.com/users/diegoferraribruno');
+      const json = await res.json();
+    console.log(json)
+    let gavatar = document.createElement("img")
+    gavatar.src = json.avatar_url
+    gavatar.style.maxWidth = "220px"
+    let para = document.createElement("p")
+    para.innerText = json.bio
+    document.getElementById("gitbio").appendChild(gavatar)
+    document.getElementById("gitbio").appendChild(para)
+    
+}
+githubBio()
+    </script>
 </body>
 
 
