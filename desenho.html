@@ -327,10 +327,13 @@
 
 
             <div id="menurecortar" class="fundobranco submenu">
+                <span class="botao" onmousedown="removeClass()">✂️ Recortar o quadro (crop)<span class="close">❎</span></span>
+               
             <span class="botao" >Recomendavel salvar sequencia de quadros antes de recortar <span id="salvar" title="salvar imagem" class="bot" onclick="modeTo('salvar')">📥</span></span>
                 <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
-                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar para seleção</span>
-                <span onmousedown="comandosExec()" title="Cancela" class="botao">
+                <span id="recortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)">✂️ Recortar automaticamente</span>
+                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar para seleção</span>    
+                <span onmousedown="comandosExec(), removeClass()" title="Cancela" class="botao">
                     ❎ Cancelar</span>
 
             </div>
@@ -408,6 +411,7 @@
     style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/brushes.js"></script>
     <script type="text/javascript" src="js/camera.js"></script>
+    <script type="text/javascript" src="js/recortar.js"></script>
     <script type="text/javascript" src="js/desenho.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/versoes.js"></script>

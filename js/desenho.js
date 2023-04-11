@@ -46,69 +46,11 @@ var origin = { x: canvas.width / 2, y: canvas.height / 2 };
 var cropEnd = { x: 0, y: 0 };
 var emoji = "😍"
 var pixelGood = false
+var autoCropMax = { x: 0, y: 0 }
+var autoCropMin = { x: canvas.width, y: canvas.height };
 
 function redondo(numero) {
     return Math.floor(numero, 10)
-}
-
-function cortar() {
-    if (cropEnd.x != 0) {
-        comandosExec()
-        setTimeout(() => {
-            let swapImg = [];
-            let blob = [];
-            swapImg = canvas.toDataURL("image/png");
-            blob = dataURItoBlob(swapImg);
-            let myImg = document.createElement("img");
-            myImg.src = URL.createObjectURL(blob);
-            myImg.onload = async function () {
-                let noy = []
-                let nox = []
-                let pos = { x: -origin.x, y: -origin.y }
-                if (cropEnd.x < origin.x) {
-                    nox = [origin.x, cropEnd.x]
-                    pos.x = -cropEnd.x;
-                } else {
-                    nox = [cropEnd.x, origin.x]
-                }
-                if (cropEnd.y < origin.y) {
-                    noy = [origin.y, cropEnd.y]
-                    pos.y = -cropEnd.y;
-                } else {
-                    noy = [cropEnd.y, origin.y]
-                }
-                let x0 = redondo(nox[0])
-                let y0 = redondo(noy[0])
-                let x1 = redondo(nox[1])
-                let y1 = redondo(noy[1])
-                let W = x0 - x1;
-                let H = y0 - y1;
-                canvas.width = W
-                canvas.height = H
-                canvasDiv.style.width = W + "px"
-                canvasDiv.style.height = H + "px"
-                let oldGCO = context.globalCompositeOperation;
-                changeGCO("source-over");
-                context.imageSmoothingEnabled = false;
-                let comando = ["f", "source-over", blob, pos.x, pos.y, myImg.width, myImg.height];
-                comandos.length = 1
-                comandos.push(comando)
-                comandosExec()
-                tamanho(W, H)
-                changeGCO(oldGCO);
-                var len = animacao.length
-                //for (i = 0; 1 < len; i++) {
-                setTimeout(cortarAnima(x0, y0, x1, y1), 1200)
-                //}
-
-
-            }
-        }, 100)
-
-    };
-    setTimeout(() => {
-        modeTo("recortar")
-    }, 200)
 }
 
 function rotacionar() {
@@ -552,7 +494,7 @@ transform: rotate(${rotationDeg}deg);`)
 }
 function comandoR() {
     if (rotationDeg != 0) {
-        comando = ["r", rotationDeg];
+        let comando = ["r", rotationDeg];
         comandos.push(comando)
         rotationDeg = 0
     }
@@ -821,19 +763,6 @@ function exec(coma = 0) {
                 coma++;
                 exec(coma)
                 break;
-            /* case "c":
-                 changeGCO(comandos[coma][1]);
-                 context.putImageData(
-                     comandos[coma][2],
-                     comandos[coma][3],
-                     comandos[coma][4],
-                     comandos[coma][5],
-                     comandos[coma][6],
-                     comandos[coma][7],
-                     comandos[coma][8]);
-                 coma++;
-                 exec(coma)
-                 break*/
             case "b":
                 changeGCO(comandos[coma][1]);
                 context.fillStyle = comandos[coma][2];
@@ -907,6 +836,7 @@ function desenha(
                 comando[8]
 
             );
+            autoCrop(X,Y,stroke,stroke)
             break;
         case "f":
             comando = ["f", GCO, X, Y, eoX, eoY, strokeColor]
@@ -923,12 +853,16 @@ function desenha(
                     myImg.height);
                 comandos.push(comando)
                 changeGCO(oldGCO)
+                autoCrop(imagem.width,imagem.height)
+                autoCrop(0,0)
             }
             break;
         case "i":
             comando = ["i", GCO, imagem, 0, 0, imagem.width, imagem.height]
             context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
             comandos.push(comando)
+            autoCrop(imagem.width,imagem.height)
+            autoCrop(0,0)
             break;
 
         case "b":
@@ -945,6 +879,7 @@ function desenha(
             context.textBaseline = "middle";
             context.fillText(eoX, X, Y)
             comandos.push(comando)
+            autoCrop(X,Y,eoY,eoY)
             break
         case "brush":
             comando = ["brush", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin]
@@ -952,6 +887,7 @@ function desenha(
             drawBrush(GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin)
             //context.drawImage(brush, X, Y, 8, 8);
             comandos.push(comando)
+            autoCrop(X,Y,stroke,stroke)
             break;
 
 
@@ -1311,9 +1247,14 @@ async function modeTo(qual) {
             mode = qual;
             break;
         case "recortar":
+          /*  let len = comandos.length
+            if (len > 1 && comandos[len - 1][0] != "i") {
+                new_frame()
+                console.log("quadro salvo")
+            }*/
             cut()
             mode = qual;
-            removeClass();
+            //removeClass();
             break;
         case "rotacionar":
             break;
@@ -1395,15 +1336,6 @@ async function modeTo(qual) {
             break;
     }
     cursorColor();
-}
-let tempImg
-
-function cut() {
-    swapImg = canvas.toDataURL("image/png");
-    blob = dataURItoBlob(swapImg);
-    tempImg = document.createElement("img");
-    tempImg.src = URL.createObjectURL(blob)
-
 }
 
 function toggleSelect(id) {
@@ -1491,7 +1423,7 @@ function setStrokeSize(value = strokeWidth) {
     let brushes = ["cursor"];
     for (i in brushes) {
         let tamanho = document.getElementById(brushes[i]);
-        if (mode == "pintar" || mode == "cores" || mode == "cores" || mode == "picker") {
+        if (mode == "pintar" || mode == "cores" || mode == "cores" || mode == "picker" || mode == "recortar") {
             strokeWidth = value;
             tamanho.style.width = value * zoomFactor + "px";
             tamanho.style.height = value * zoomFactor + "px";
@@ -1802,11 +1734,13 @@ function cursorColor() {
             cursor.style.opacity = 1
             break;
         case "recortar":
-            cursor.innerHTML = "✂️";
-            cursor.style.width = 1 + "px";
+            
+            cursor.innerHTML = '<div style="width:32px; margin-top:0px; margin-left:-12px;">✂️</div>'
+            cursor.style.width = 2 + "px";
             cursor.style.height = 1 + "px";
             cursor.style.margingLeft = 24 + "px";
-            cursor.style.margingTop = 23 + "px";
+            cursor.style.margingTop = 52 + "px";
+            cursor.style.opacity = 1
             break;
         case "cam":
             cursor.innerHTML = "📷";

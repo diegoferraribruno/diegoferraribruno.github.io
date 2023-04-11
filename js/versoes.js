@@ -1,8 +1,9 @@
 let vers = [
     {
-        versao: "1.7.0",
+        versao: "1.7.2",
         notas: [
             "🔴⏱️ Botao de gravaçao automática de quadros por tempo",
+            "✂️ recortar automático!"
         ]
 
     },
