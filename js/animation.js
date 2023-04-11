@@ -179,6 +179,12 @@ let playing = 0
 var inter
 
 function play() {
+    let len = comandos.length
+    if (len > 1 && comandos[len - 1][0] != "i") {
+        new_frame()
+        console.log("quadro salvo")
+        prev_frame()
+    }
     if (animacao.length > 0) {
         clearInterval(inter);
         inter = setInterval(() => {
@@ -270,6 +276,12 @@ function next_frame() {
 
 }
 function prev_frame() {
+
+    let len = comandos.length
+    if (len > 1 && comandos[len - 1][0] != "i") {
+        new_frame()
+        console.log("quadro salvo")
+    }
     workingframe--
     if (workingframe < 0) {
         workingframe = animacao.length - 1
@@ -401,6 +413,7 @@ let swapImg = new Image()
 let newAnima = []
 
 function cortarAnima(x1, y1, x2, y2) {
+    setTimeout(()=>Alert("recortando o quadro, aguarde."),10)
     let canvass = document.createElement("canvas")
     let contexts = canvass.getContext("2d");
     canvass.id = "canvass"
