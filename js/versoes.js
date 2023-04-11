@@ -1,8 +1,15 @@
 let vers = [
     {
+        versao: "1.7.0",
+        notas: [
+            "🔴⏱️ Botao de gravaçao automática de quadros por tempo",
+        ]
+
+    },
+    {
         versao: "1.6.5",
         notas: [
-            "recortando os quadros corretamente",
+            "recortando os quadros com maior intervalo de tempo",
             "capturando quadros corretamente com maoir intervalo de tempo",
             "📷 testando troca de camera",
             "🎞️ unir fundo a animação ao exportar para colorir inclusive com opção de sobreposição para pintar por baixo",

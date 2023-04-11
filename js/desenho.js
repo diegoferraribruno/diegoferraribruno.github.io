@@ -1553,55 +1553,91 @@ function camera() {
             
             //diego
             
-            video.addEventListener('click', function (e) {
-                if (fotografando == true){
-                    fotografando = false
-                    let W = canvasV.width;
-                    let H = canvasV.height;
-                let offsetW = (W - canvas.width) / -2
-                let offsetH = (H - canvas.height) / -2
-                contextV.drawImage(video, 0, 0, W, H)
-                if (
-                    !isCanvasBlank(canvasV)
-                ) {
-                img_b64 = canvasV.toDataURL("image/png");
-                blob =  dataURItoBlob(img_b64)
-                if(blob != undefined)
-                desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
-                
-            }
-            if (stop_motion == false) {
-                removeVideo();
-            } else {
-                    if (
-                        !isCanvasBlank(canvas)
-                    ) setTimeout(()=>{
-
-                        swapImg = canvas.toDataURL('image/png');
-                        
-                        save_frame(swapImg)
-                        
-                        workingframe++
-                        changeFrame(workingframe)
-                        document.getElementById("contador").innerHTML = workingframe
-                    },30)
-                    /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
-                    contextV.clearRect(0, 0, W, H);
-                    contextV.setTransform(1, 0, 0, 1, 0, 0);
-                    contextV.clearRect(0, 0, W, H);*/
-                    
-                    
-                    //audio2.play()
-                }
-                setTimeout(()=>fotografando = true,100)
-        }
-        })
+            video.addEventListener('click', tirafoto)
         // initialize
 
         initializeCamera();
 
     }
 }
+function recMotion(){
+    let vezes = document.getElementById("times").value *fps
+    for (i = 0; i<vezes; i++){
+        setTimeout(()=>{
+            let W = canvasV.width;
+            let H = canvasV.height;
+        let offsetW = (W - canvas.width) / -2
+        let offsetH = (H - canvas.height) / -2
+        contextV.drawImage(video, 0, 0, W, H)
+        if (
+            !isCanvasBlank(canvasV)
+        ) {
+        img_b64 = canvasV.toDataURL("image/png");
+        blob =  dataURItoBlob(img_b64)
+        if(blob != undefined){
+    
+            desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+        }setTimeout(()=>{
+
+            swapImg = canvas.toDataURL('image/png');
+            
+            save_frame(swapImg)
+            
+            workingframe++
+            changeFrame(workingframe)
+            document.getElementById("contador").innerHTML = workingframe
+        },40)
+        }},500*i)
+    }
+}
+async function tirafoto() {
+    //console.log 
+    if (fotografando == true){
+        console.log("oie")
+        fotografando = false
+        let W = canvasV.width;
+        let H = canvasV.height;
+    let offsetW = (W - canvas.width) / -2
+    let offsetH = (H - canvas.height) / -2
+    contextV.drawImage(video, 0, 0, W, H)
+    if (
+        !isCanvasBlank(canvasV)
+    ) {
+    img_b64 = canvasV.toDataURL("image/png");
+    blob =  dataURItoBlob(img_b64)
+    if(blob != undefined){
+
+        desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+    }
+    }
+}
+if (stop_motion == false) {
+    removeVideo();
+} else {
+        if (
+            !isCanvasBlank(canvas)
+        ) setTimeout(()=>{
+
+            swapImg = canvas.toDataURL('image/png');
+            
+            save_frame(swapImg)
+            
+            workingframe++
+            changeFrame(workingframe)
+            document.getElementById("contador").innerHTML = workingframe
+        },30)
+        /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
+        contextV.clearRect(0, 0, W, H);
+        contextV.setTransform(1, 0, 0, 1, 0, 0);
+        contextV.clearRect(0, 0, W, H);*/
+        
+        
+        //audio2.play()
+    }
+    setTimeout(()=>fotografando = true,100)
+}
+
+
 async function initializeCamera() {
     stopVideoStream();
     constraints.video.facingMode = useFrontCamera ? "user" : "environment";
