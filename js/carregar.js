@@ -23,7 +23,9 @@ function handleFiles(e) {
                 let centery = canvas.height / 2 - imagem.height / 2
             }
 
-            desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
+            desenha("img", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
+            swapImg = canvas.toDataURL('image/png');
+            animacao[workingframe] = swapImg
         }
     }
 }
@@ -51,3 +53,41 @@ function readURL() {
     }
 }
 
+
+function importSprite(e) {
+    imagem = new Image;
+    imagem.src = URL.createObjectURL(e.target.files[0]);
+    imagem.onload = function () {
+        if (document.getElementById("loadBackgroundAnimation").checked) {
+            background_anim = true
+            backgroundSprite.src = URL.createObjectURL(e.target.files[0]);
+            backgroundSprite.onload = function () {
+                changeBackGroundAnimation(workingframe)
+            }
+        } else {
+            let quadros = imagem.width / canvas.width
+            let largura = document.getElementById("larguraS").value
+            let altura = document.getElementById("alturaS").value
+            let auto = document.getElementById("autodetectar").checked
+            if (auto === false) {
+                quadros = document.getElementById("fnumber").value
+                tamanho(largura, altura)
+            }
+            for (i = 0; i < quadros; i++) {
+                context.setTransform(1, 0, 0, 1, 0, 0);
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                context.drawImage(imagem, i * canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
+                swapImg = canvas.toDataURL('image/png');
+                blobb = dataURItoBlob(swapImg)
+                animacao[workingframe] = swapImg
+                workingframe++
+
+            }
+            setTimeout(() => {
+                changeFrame(workingframe - 1);
+                removeClass()
+                document.getElementById("contador").innerHTML = workingframe;
+            }, 200)
+        }
+    }
+}

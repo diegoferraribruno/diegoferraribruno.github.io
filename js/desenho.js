@@ -234,6 +234,17 @@ function exec(coma = 0) {
                 coma++;
                 exec(coma)
                 break;
+            case "img":
+                context.globalCompositeOperation = comandos[coma][1]
+                context.drawImage(
+                    comandos[coma][2],
+                    comandos[coma][3],
+                    comandos[coma][4],
+                    comandos[coma][5],
+                    comandos[coma][6]);
+                coma++;
+                exec(coma)
+                break;
             case "b":
                 changeGCO(comandos[coma][1]);
                 context.fillStyle = comandos[coma][2];
@@ -330,6 +341,14 @@ function desenha(
             break;
         case "i":
             comando = ["i", GCO, imagem, 0, 0, imagem.width, imagem.height]
+            context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
+            comandos.push(comando)
+            autoCrop(imagem.width, imagem.height)
+            autoCrop(0, 0)
+            break;
+
+        case "img":
+            comando = ["img", GCO, imagem, 0, 0, imagem.width, imagem.height]
             context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
             comandos.push(comando)
             autoCrop(imagem.width, imagem.height)

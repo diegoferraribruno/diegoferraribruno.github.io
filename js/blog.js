@@ -42,10 +42,27 @@ var posts = [
 		data: "26/03/2023 23:50",
 		conteudo: "Depois de consertar muita coisa por conta da mudança do modo de entrada, " +
 			"achei que o app estava usável o suficiente para implemplementar a função de animação<br>" +
-			"Foi um surto criativo, o código simplesmente fluiu em 1 dia já estava animando e exportando, dois dias depois, "+
-			"seu menu de ajustes, completo com velocidade, clonagem e remoção de quadros de"+
-			" animação.<br> Só falta importar os quadros de animação de volta. <br>"+
+			"Foi um surto criativo, o código simplesmente fluiu em 1 dia já estava animando e exportando, dois dias depois, " +
+			"seu menu de ajustes, completo com velocidade, clonagem e remoção de quadros de" +
+			" animação.<br> Só falta importar os quadros de animação de volta. <br>" +
 			"(update das 02:00 - Importação de animações) <br> Espero que esteja intuitivo.<br> Ah e o filho já ta bem!"
+	},
+	{
+		id: 7,
+		titulo: "Novos recursos",
+		data: "12/04/2023 16:20",
+		conteudo: "Foi um longo caminho até aqui, muita treta, para gerar gif animados, para recortar automaticamente todos os quadros. " +
+			"mas finalmente posso dizer que este app de  está perfeitamente usavel na versão 1.7.4!<br>" +
+			"existem alguns recursos muito bons que precisam de uns videos tutoriais ainda.<br>" +
+			"como o 🔴 Botao de gravaçao automática de quadros por tempo ⏱️<br>" +
+			"E a função de carregar uma sequencia de quadros como fundo ou como sobreposição " +
+			"para que se possa fazer a colorização dos quadros sem tocar no desenho. " +
+			"Ainda preciso elaborar algo mais intuitivo para esta função." +
+			"Pode dar algum problem?  precisa de mais testes? certamente!<br>" +
+			"Gostaria de refazer todo seu código para a versão 2.0<br>" +
+			"e já estou no processo de separar grupos de funções em arquivos .js separados<br><br>" +
+			"Vamo que vamo!"
+
 	}
 
 ]
