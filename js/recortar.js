@@ -1,29 +1,37 @@
-let tempImg
+var tempImg
+var autoCropMax = { x: 0, y: 0 }
+var autoCropMin = { x: canvas.width, y: canvas.height };
 
-async function autoCrop(x,y,width=0,height=0){
-    if (autoCropMax.x < x+(width/2)){
-        autoCropMax.x = x+(width/2)
+function resetAutoCrop() {
+    console.log("reset")
+    autoCropMax.x = 0
+    autoCropMax.y = 0
+    autoCropMin.x = canvas.width
+    autoCropMin.y = canvas.height
+}
+async function autoCrop(x, y, width = 0, height = 0) {
+    if (autoCropMax.x < x + (width / 2)) {
+        autoCropMax.x = x + (width / 2)
     }
-    if (autoCropMax.y < y+(height/2)){
-        autoCropMax.y = y+(height/2)
+    if (autoCropMax.y < y + (height / 2)) {
+        autoCropMax.y = y + (height / 2)
     }
-    if (autoCropMin.x > x-(width/2)){
-        autoCropMin.x = x-(width/2)
+    if (autoCropMin.x > x - (width / 2)) {
+        autoCropMin.x = x - (width / 2)
     }
-    if (autoCropMin.y > y-(height/2)){
-        autoCropMin.y = y-(height/2)
+    if (autoCropMin.y > y - (height / 2)) {
+        autoCropMin.y = y - (height / 2)
     }
 }
-function cortar(auto=false) {
-    if (auto == true){
+
+function cortar(auto = false) {
+    if (auto == true) {
         origin.x = autoCropMin.x
         origin.y = autoCropMin.y
         cropEnd.x = autoCropMax.x
         cropEnd.y = autoCropMax.y
-        setTimeout(() => {
-        autoCropMax = { x: 0, y: 0 }
-        autoCropMin = { x: canvas.width, y: canvas.height };}
-        ,1000)
+        setTimeout(() => resetAutoCrop()
+            , 1000)
     }
     if (cropEnd.x != 0) {
         comandosExec()
@@ -99,7 +107,7 @@ function cut() {
 
 
 function cortarAnima(x1, y1, x2, y2) {
-    setTimeout(()=>Alert("recortando o quadro, aguarde."),10)
+    setTimeout(() => Alert("recortando o quadro, aguarde."), 10)
     let canvass = document.createElement("canvas")
     let contexts = canvass.getContext("2d");
     canvass.id = "canvass"
@@ -151,12 +159,12 @@ function cortarAnima(x1, y1, x2, y2) {
 
         }, 10)
 
-    }, 100*len
+    }, 100 * len
     )
-     len = newAnima.length
+    len = newAnima.length
     setTimeout(() => {
         prev_frame()
-    }, 120*len
+    }, 120 * len
     )
-    
+
 }

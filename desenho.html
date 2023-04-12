@@ -294,15 +294,16 @@
             <div id="menucam" class="submenu fundobranco">
                 <span title="espelhar a camera" class="bot" onmousedown="flipCamera()">🤳</span>
                 <span id="btnChangeCam" title="Trocar camera" class="bot" onmousedown="changeCamera()">
-                    🔃<span
-                        style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span>
+                    🔃<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span>
                 </span>
                 <span id="stopMotion" title="Modo de captura" class="bot" onmousedown="stopMotion()">
                     🎞️
                 </span>
-                <span id="stopMotion" title="Gravar automaticamente" class="bot" style="font-size: medium;" onmousedown="recMotion()">
+                <span id="stopMotion" title="Gravar automaticamente" class="bot" style="font-size: medium;"
+                    onmousedown="recMotion()">
                     🔴
-                </span> ⏱️<input id="times" type="number" value="2"  min="1"  step="1" max="48" size="2" style="width: 45px;">s
+                </span> ⏱️<input id="times" type="number" value="2" min="1" step="1" max="48" size="2"
+                    style="width: 45px;">s
                 <span class="close" title="fechar camera" onmousedown="modeTo('cam')">❎</span><br>
                 <select id="select" class="esconde" onchange="trocaCamera()">
                 </select>
@@ -318,7 +319,7 @@
                     Título: <input id="filename" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
                         value="desenho" onfocus="this.value=''"> <span onclick="salvaImagem()" class="bot">📥</span>
                 </span>
-                <span class="botao">📥 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq" >
+                <span class="botao">📥 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq">
                     <br> Exportar Gif animado: <input type="checkbox" id="gif" checked="true">
                     <br> Unir quadro com fundo <input type="checkbox" id="unir"><br>
                     Título: <input id="filenameS" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
@@ -327,12 +328,14 @@
 
 
             <div id="menurecortar" class="fundobranco submenu">
-                <span class="botao" onmousedown="removeClass()">✂️ Recortar o quadro (crop)<span class="close">❎</span></span>
-               
-            <span class="botao" >Recomendavel salvar sequencia de quadros antes de recortar <span id="salvar" title="salvar imagem" class="bot" onclick="modeTo('salvar')">📥</span></span>
-                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Redimensionar a tela</span>
-                <span id="recortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)">✂️ Recortar automaticamente</span>
-                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar para seleção</span>    
+                <span class="botao" onmousedown="removeClass()">✂️ (crop)<span class="close">❎</span></span>
+
+                <span class="botao">Recomendavel salvar antes <span id="salvar" title="salvar imagem" class="bot"
+                        onclick="modeTo('salvar')">📥</span></span>
+                <span id="recortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)">✂️ Recortar
+                    automaticamente</span>
+                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar para
+                    seleção</span>
                 <span onmousedown="comandosExec(), removeClass()" title="Cancela" class="botao">
                     ❎ Cancelar</span>
 
@@ -408,7 +411,7 @@
         </div>
     </div>
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
-    style="visibility: hidden; position: absolute; left:0px;"></canvas>
+        style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/brushes.js"></script>
     <script type="text/javascript" src="js/camera.js"></script>
     <script type="text/javascript" src="js/recortar.js"></script>

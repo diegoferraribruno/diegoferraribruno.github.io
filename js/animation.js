@@ -12,7 +12,6 @@ var anime_menu = {
     "next_frame()": "⏭️",
     "anime_ajustes()": "🎚️",
     "modeTo('salvar')": "📥",
-    // "Identifica": "🪪",
 }
 
 function criaAnime() {
@@ -26,9 +25,6 @@ function criaAnime() {
             let item = document.createElement("div")
             item.setAttribute("onClick", key)
             item.id = key
-
-            //item.href = key
-            //item.target = "iframe"
             item.innerText = anime_menu[key]
             item.classList.add("shadow")
             item.classList.add("bot")
@@ -38,8 +34,6 @@ function criaAnime() {
     let contador = document.createElement("div")
     contador.innerHTML = workingframe
     contador.id = "contador"
-    //contador.classList.add("shadow")
-    //contador.classList.add("bot")
     document.getElementById("ui").appendChild(contador)
 }
 
@@ -76,7 +70,7 @@ function criaPlayer() {
 	 🎚 Ajustes de animação ❎</span>
 	 <span class="botao">⏱️ FPS <input type="number" id="fpsnumber" min="1" max="60" step="1" value="6"
       onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px"> <span onmousedown="play()">▶️</span></span>
-                        <span class="botao"  onmousedown="removeFrame()" >🗑 Remover quadro atual ➖</span>
+                        <span class="botao"  onmousedown="removeFrame()" >🗑 Remover quadro atual <span class="bot">➖</span></span>
                         <span class="botao"  onmousedown="cloneFrame()" >🧬 clonar o quadro atual</span>
                         <span class="botao">
                         Transparencia do quadro <input type="range" id="canvasOpacity" name="transparencia" min="0.01" max="1"
@@ -346,35 +340,35 @@ async function export_anim() {
             downloadImage(dataURL, `${fname}.png`);
         }
         spritao.src = dataURL
-        spritao.onload = function (){
+        spritao.onload = function () {
 
-        if (document.getElementById("gif").checked) {
-            exp.width = canvas.width
-            exp.height = canvas.height
-            let myanima = new Image()
-            myanima.src = spritao.src
-            myanima.onload = function () {
+            if (document.getElementById("gif").checked) {
+                exp.width = canvas.width
+                exp.height = canvas.height
+                let myanima = new Image()
+                myanima.src = spritao.src
+                myanima.onload = function () {
 
-                var encoder = new GIFEncoder();
-                encoder.setRepeat(0); //auto-loop
-                encoder.setDelay(1000 / fps);
-                console.log(encoder.start())
+                    var encoder = new GIFEncoder();
+                    encoder.setRepeat(0); //auto-loop
+                    encoder.setDelay(1000 / fps);
+                    console.log(encoder.start())
 
-                for (i = 0; i < animacao.length; i++) {
-                    cont.fillStyle = "rgb(255,255,255)"
-                    cont.fillRect(0, 0, canvas.width, canvas.height); //GIF can't do transparent so do white
-                    cont.drawImage(myanima, - canvas.width * i, 0, myanima.width, myanima.height)
-                    encoder.addFrame(cont);
+                    for (i = 0; i < animacao.length; i++) {
+                        cont.fillStyle = "rgb(255,255,255)"
+                        cont.fillRect(0, 0, canvas.width, canvas.height); //GIF can't do transparent so do white
+                        cont.drawImage(myanima, - canvas.width * i, 0, myanima.width, myanima.height)
+                        encoder.addFrame(cont);
+                    }
+                    encoder.finish();
+                    encoder.download(fname + ".gif");
                 }
-                encoder.finish();
-                encoder.download(fname+".gif");
+
             }
+            removeElement("exp")
 
         }
-            removeElement("exp")
-        
-    }
-    }, 1200+(100*len))
+    }, 1200 + (100 * len))
 }
 
 function anime_ajustes() {
@@ -394,9 +388,7 @@ function cloneFrame() {
 }
 var checkSave = setInterval(() => {
     if (comandos.length < 3) {
-       // document.getElementById("new_frame()").innerHTML = "➕"
     } else {
-       // document.getElementById("new_frame()").innerHTML = "💾"
         document.getElementById("new_frame()").classList.toggle("blink")
 
     }
@@ -413,7 +405,7 @@ let swapImg = new Image()
 let newAnima = []
 
 function cortarAnima(x1, y1, x2, y2) {
-    setTimeout(()=>Alert("recortando o quadro, aguarde."),10)
+    setTimeout(() => Alert("recortando o quadro, aguarde."), 10)
     let canvass = document.createElement("canvas")
     let contexts = canvass.getContext("2d");
     canvass.id = "canvass"
@@ -468,7 +460,7 @@ function cortarAnima(x1, y1, x2, y2) {
             new_frame();
         }, 10)
 
-    }, 100*len
+    }, 100 * len
     )
 
 }
