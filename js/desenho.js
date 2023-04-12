@@ -46,8 +46,7 @@ var origin = { x: canvas.width / 2, y: canvas.height / 2 };
 var cropEnd = { x: 0, y: 0 };
 var emoji = "😍"
 var pixelGood = false
-var autoCropMax = { x: 0, y: 0 }
-var autoCropMin = { x: canvas.width, y: canvas.height };
+
 
 function redondo(numero) {
     return Math.floor(numero, 10)
@@ -836,7 +835,7 @@ function desenha(
                 comando[8]
 
             );
-            autoCrop(X,Y,stroke,stroke)
+            autoCrop(X, Y, stroke, stroke)
             break;
         case "f":
             comando = ["f", GCO, X, Y, eoX, eoY, strokeColor]
@@ -853,16 +852,16 @@ function desenha(
                     myImg.height);
                 comandos.push(comando)
                 changeGCO(oldGCO)
-                autoCrop(imagem.width,imagem.height)
-                autoCrop(0,0)
+                autoCrop(imagem.width, imagem.height)
+                autoCrop(0, 0)
             }
             break;
         case "i":
             comando = ["i", GCO, imagem, 0, 0, imagem.width, imagem.height]
             context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
             comandos.push(comando)
-            autoCrop(imagem.width,imagem.height)
-            autoCrop(0,0)
+            autoCrop(imagem.width, imagem.height)
+            autoCrop(0, 0)
             break;
 
         case "b":
@@ -879,7 +878,7 @@ function desenha(
             context.textBaseline = "middle";
             context.fillText(eoX, X, Y)
             comandos.push(comando)
-            autoCrop(X,Y,eoY,eoY)
+            autoCrop(X, Y, eoY, eoY)
             break
         case "brush":
             comando = ["brush", GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin]
@@ -887,7 +886,7 @@ function desenha(
             drawBrush(GCO, X, Y, eoX, eoY, strokeColor, stroke, linejoin)
             //context.drawImage(brush, X, Y, 8, 8);
             comandos.push(comando)
-            autoCrop(X,Y,stroke,stroke)
+            autoCrop(X, Y, stroke, stroke)
             break;
 
 
@@ -1247,11 +1246,11 @@ async function modeTo(qual) {
             mode = qual;
             break;
         case "recortar":
-          /*  let len = comandos.length
-            if (len > 1 && comandos[len - 1][0] != "i") {
-                new_frame()
-                console.log("quadro salvo")
-            }*/
+            /*  let len = comandos.length
+              if (len > 1 && comandos[len - 1][0] != "i") {
+                  new_frame()
+                  console.log("quadro salvo")
+              }*/
             cut()
             mode = qual;
             //removeClass();
@@ -1734,7 +1733,7 @@ function cursorColor() {
             cursor.style.opacity = 1
             break;
         case "recortar":
-            
+
             cursor.innerHTML = '<div style="width:32px; margin-top:0px; margin-left:-12px;">✂️</div>'
             cursor.style.width = 2 + "px";
             cursor.style.height = 1 + "px";
