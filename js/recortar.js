@@ -1,6 +1,9 @@
 var tempImg
 var autoCropMax = { x: 0, y: 0 }
 var autoCropMin = { x: canvas.width, y: canvas.height };
+var cropEnd = { x: 0, y: 0 };
+var newAnima = []
+var x2size = 1;
 
 function resetAutoCrop() {
     console.log("reset")
@@ -31,7 +34,7 @@ function cortar(autoCortar = false) {
         cropEnd.x = autoCropMax.x
         cropEnd.y = autoCropMax.y
         setTimeout(() => resetAutoCrop()
-            , 1000)
+            , 1800)
     }
     if (cropEnd.x != 0) {
         comandosExec()
@@ -78,21 +81,18 @@ function cortar(autoCortar = false) {
                 tamanho(W, H)
                 changeGCO(oldGCO);
                 var len = animacao.length
-                //for (i = 0; 1 < len; i++) {
-                setTimeout(cortarAnima(x0, y0, x1, y1), 1200)
-                //}
-
+                setTimeout(cortarAnima(x0, y0, x1, y1), 600)
+                setTimeout(() => { prev_frame() }, 600 + (50 * len))
 
             }
-        }, 100)
+        }, 200)
 
     };
+    len = animacao.length
     setTimeout(() => {
-        modeTo("recortar")
-    }, 200)
+        modeTo("salvar")
+    }, 300 * len)
 }
-
-
 
 function cut() {
 
@@ -104,10 +104,13 @@ function cut() {
 
 }
 
-
-
 function cortarAnima(x1, y1, x2, y2) {
-    setTimeout(() => Alert("recortando o quadro, aguarde."), 10)
+    setTimeout(() => {
+        removeClass()
+        Alert("recortando o quadro, aguarde.")
+    }
+        , 10)
+
     let canvass = document.createElement("canvas")
     let contexts = canvass.getContext("2d");
     canvass.id = "canvass"
@@ -115,8 +118,9 @@ function cortarAnima(x1, y1, x2, y2) {
     let frame = 0
     let len = animacao.length
 
-    for (i = 0; i < len; i++) {
+    for (i = 0; i < len - 1; i++) {
         framesToCanvas(x1, y1, x2, y2, i)
+        console.log(i);
     }
 
     function framesToCanvas(x2, y2, x1, y1, frame = 0) {
@@ -159,12 +163,139 @@ function cortarAnima(x1, y1, x2, y2) {
 
         }, 10)
 
-    }, 100 * len
-    )
-    len = newAnima.length
-    setTimeout(() => {
-        prev_frame()
-    }, 120 * len
-    )
+    }, 100 * len)
+
+
+}
+
+
+function x2(w = document.getElementById("largura").value, h = document.getElementById("altura").value) {
+    w = w * 2;
+    h = h * 2;
+    if (w > 2500) {
+        w = w / 4;
+        h = h / 4;
+    }
+    var resultado = confirm(
+        "\t\t\t\t↔️ Deseja mudar o tamanho da tela de \n" +
+        `\t\t\t\t\t\t${w}px x ${h}px\n` +
+        `\t\t\t\t\t\t\tpara\n` +
+        `\t\t\t\t\t\t${w}px x ${h}px\n\n` +
+        `\t\t\t\t\t utilize a lupa 🔎 para zoom \n` +
+        `\t\t\t\t e a mão 🖐 para navegar pela tela\n\n`
+    );
+    if (resultado === true) {
+        //dobra o tamanho do canva
+        zoomIndex = 0;
+        modeTo("zoom");
+        canvasDiv.style.width = w + "px"; //add 30px for scroll
+        canvasDiv.style.height = h + "px"; //add 30px for scroll
+        canvas.width = w;
+        canvas.height = h;
+        win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 60 + "px";
+        document.getElementById("largura").value = w
+        document.getElementById("altura").value = h
+    }
+    setTimeout(() => comandosExec(), 40)
+}
+
+
+
+function tamanhom() {
+    removeClass();
+    document.getElementById("menutamanho").classList.toggle("aparece")
+}
+
+function tamanho(W = document.getElementById("largura").value, H = document.getElementById("altura").value) {
+    canvasDiv.style.width = W + "px"; //add 30px for scroll
+    canvasDiv.style.height = H + "px"; //add 30px for scroll
+    canvas.width = W;
+    canvas.height = H;
+
+    for (i = 0; i < 5; i++) {
+        document.getElementById("bplayer" + i).style.width = W + "px"
+        document.getElementById("bplayer" + i).style.height = H + "px"
+        document.getElementById("bplayer" + i).style.marginTop = - H - 4 + "px"
+    }
+
+    document.getElementById("player").style.height = H + "px"
+    document.getElementById("player").style.width = W + "px"
+    document.getElementById("player").style.backgroundSize = "cover";
+
+    if (W > window.innerWidth) {
+        let escala = (window.innerWidth - 8) / W
+
+        document.getElementById("player").style.height = H * escala + "px"
+        document.getElementById("player").style.width = W * escala + "px"
+        document.getElementById("player").style.left = "4px"
+        document.getElementById("player").style.top = "4px"
+
+    }
+    if (W < screen.width || H < screen.height) {
+        zoomIndex = 0;
+        modeTo("zoom");
+    } else {
+        zoomIndex = 6;
+        modeTo("zoom");
+    }
+    document.getElementById("largura").value = W
+    document.getElementById("altura").value = H
+}
+
+function resizeScreen() {
+    desenhoDiv.style.width = window.innerWidth + "px";
+    desenhoDiv.style.height = window.innerHeight + "px";
+    if (screen.width > screen.height) {
+
+        document.getElementById("ferramentas").classList.add("horizontal");
+        document.getElementById("ferramentas2").classList.add("horizontal2");
+        // alert(`virou, ${screen.width} , ${screen.height}`)
+        win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) + "px";
+        document.getElementById("menus").style.top = "0px";
+    } else {
+        document.getElementById("ferramentas").classList.remove("horizontal");
+        document.getElementById("ferramentas2").classList.remove("horizontal2");
+        win.style.width = parseInt(window.innerWidth, 10) + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 132 + "px";
+        document.getElementById("menus").style.top = "90px";
+    }
+    canvasDiv.style.width = canvas.width + "px";
+    canvasDiv.style.height = canvas.height + "px";
+    if (document.getElementById("player").style.height > window.innerWidth) {
+        let escala = (window.innerWidth - 8) / canvas.width
+
+        document.getElementById("player").style.height = canvas.height * escala + "px"
+        document.getElementById("player").style.width = canvas.width * escala + "px"
+        document.getElementById("player").style.left = "4px"
+        document.getElementById("player").style.top = "4px"
+    }
+    setTimeout(() => comandosExec(), 40)
+}
+
+function desenhaRetangulo() {
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.globalCompositeOperation = "destination-over"
+    context.lineWidth = 0.5
+    context.strokeStyle = "#ff2200";
+    context.stroke();
+    context.setLineDash([1, 1]);
+    context.beginPath();
+    context.rect(
+        origin.x,
+        origin.y,
+        (cropEnd.x - origin.x),
+        (cropEnd.y - origin.y)
+    );
+    context.stroke();
+    context.globalCompositeOperation = "destination-over";
+    context.drawImage(
+        tempImg,
+        0,
+        0,
+        tempImg.width,
+        tempImg.height);
 
 }

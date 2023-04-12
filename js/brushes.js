@@ -1,11 +1,34 @@
+// Pinceis Cor e Tamanho
+var favoritas = [];
+var stroke = 1;
+var hsla = [0, 0, 0, 1];
+var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+var strokeWidth = 6;
+var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+var estrokeWidth = 36;
+var linejoin = "round";
+var lineJoinsCount = 0;
+const lineJoins = ["miter", "round"];
+var newBrushes = {}
+var brushCount = 0
+var lastbrush = 1
 var brushMode = 1
-
 let brushesImg = {}
-
 var copo = []
-
 var basicBrushes = []
+let novoBrushes = {}
 var selectedBasicBrush = 0
+var newBrush = document.createElement("img")
+var brush = new Image();
+var stroke_range = [1, 2]
+brush.src = 'img/brush1.png';
+brush.onload = function () {
+    changeBrush()
+}
+newBrush.src = brush.src
+
+
+
 function createBasicBrushes() {
 
     for (i = 0; i < 10; i++) {
@@ -20,18 +43,205 @@ function createBasicBrushes() {
 }
 createBasicBrushes()
 
-var brush = new Image();
-brush.src = 'img/brush1.png';
+function changeLine() {
+    brushMode = 0
+    lineJoinsCount++;
+    if (lineJoinsCount > 1) {
+        lineJoinsCount = 0;
+    }
+    linejoin = lineJoins[lineJoinsCount];
+    if (lineJoinsCount != 1) {
+        document.getElementById("line").innerHTML = " ➕";
+        document.getElementById("line2").innerHTML = " ➕";
+    } else {
+        document.getElementById("line").innerHTML = " ⚫";
+        document.getElementById("line2").innerHTML = " ⚫";
+    }
+}
 
-brush.onload = function () {
+function mudaCorQ(q = 0, valor) {
+    hsla[q] = Number(valor);
+    //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
+    setStrokeColor();
+    criaPaleta();
+
+}
+function mudaCorAlpha() {
+    let valor = document.getElementById("transparenciaE").value
+    strokeColor = `hsla(0, 100%, 0%, ${valor})`
+}
+function salvaCor() {
+    if (!favoritas.includes(strokeColor)) {
+        favoritas.push(strokeColor);
+    } else {
+        favoritas = favoritas.filter((item) => item !== strokeColor);
+    }
+    setTimeout(criaPaleta2(), 20);
+}
+
+criaPaleta();
+
+function setStrokeColor() {
+    strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+    let objs = [
+        "mostraCor",
+        "salvaCor",
+        "mostraCor2",
+        "pintar",
+        "cores",
+        "picker",
+        "preencher"
+    ];
+
+    let quantos = objs.length;
+    for (i = 0; i < quantos; i++) {
+        document.getElementById(objs[i]).style.backgroundColor = strokeColor;
+        document.getElementById(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
+    }
+    changeBrush()
+
+}
+setStrokeColor();
+
+function mudaCor(valor) {
+
+    if (valor == "P") {
+        strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
+        document.getElementById("mostraCor").style.color = strokeColor;
+
+        //     document.getElementById("menu").style.visibility = "hidden";
+    } else if (valor == "B") {
+        strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
+        document.getElementById("mostraCor").style.color = strokeColor;
+        //     document.getElementById("menu").style.visibility = "hidden";
+    } else {
+        strokeColor = valor;
+        //     document.getElementById("menu").style.visibility = "hidden";
+        cursorColor();
+    }
+    document.getElementById("mostraCor").style.backgroundColor =
+        strokeColor;
+    document.getElementById("mostraCor2").style.backgroundColor =
+        strokeColor;
+    document.getElementById("pintar").style.backgroundColor = strokeColor;
+
+    const toHslaObject = (hslaStr) => {
+        const [hue, saturation, lightness, alpha] = hslaStr
+            .match(/[\d\.]+/g)
+            .map(Number);
+        document.getElementById("H").value = hue;
+        document.getElementById("S").value = saturation;
+        document.getElementById("L").value = lightness;
+        document.getElementById("A").value = alpha;
+        hsla[0] = hue;
+        hsla[1] = saturation;
+        hsla[2] = lightness;
+        hsla[3] = alpha;
+    };
+    toHslaObject(strokeColor);
+    setStrokeColor();
+    criaPaleta();
+    desenha("CB", lastbrush,
+        strokeWidth, strokeColor,
+        "" + lastbrush + strokeWidth + strokeColor)
+
+}
+
+function criaPaleta() {
+    let paleta = `<span onmousedown='mudaCor("B")'  class='bloquinho' ` +
+        "style='background-color:hsla(0, 100%, 100%, " + hsla[3] * 4 + ")'> </span>";
+    let hue100 = 100;
+    for (i = 1; i < 15; i++) {
+        hue100 -= Math.floor(100 / 14)
+        let cor = document.getElementById("H").value
+        paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]}%,${hue100
+            }%,${hsla[3]
+            })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]
+            }%,${hue100}%,${hsla[3] * 4});'> </span>`;
+
+    }
+
+    document.getElementById("paleta").innerHTML = paleta;
+
+}
+
+function criaPaleta2() {
+    let paleta = "";
+    let quantas = favoritas.length;
+    for (i = 0; i < quantas; i++) {
+        paleta += `<span onmousedown='mudaCor("` + favoritas[i] + `")' class='bloquinho' style="background-color:` + favoritas[i] + `"> </span>`
+    }
+    document.getElementById("paleta2").innerHTML = paleta;
+}
+function criapaleta3() {
+    let paleta3 = '';
+    let c = 0;
+    while (c < 7) {
+        let cor = (c * 55)
+        c++;
+        paleta3 += `<span onmousedown='mudaCor("hsla(${cor},100%,50%,${hsla[3]
+            })")' class='bloquinho' style='background-color:hsla(${cor},100%,50%,${hsla[3] * 4 + 0.2});'> </span>`;
+        document.getElementById("paleta3").innerHTML = paleta3;
+        document.getElementById("paleta3").innerHTML +=
+            `<span onmousedown='mudaCor("hsla(0, 0%, 50%, ` + hsla[3] * 4 + `)")' class='bloquinho' ` +
+            "style='background-color:hsla(0, 0%, 50%, " + hsla[3] * 4 + ")'> </span>";
+        document.getElementById("paleta3").innerHTML +=
+            `<span onmousedown='mudaCor("P")' class='bloquinho' ` +
+            "style='background-color:hsla(0, 0%, 0%, " + hsla[3] * 4 + ")'> </span>";
+    }
+} criapaleta3()
+
+
+
+function initStrokeRange() {
+    let r = 2;
+    while (r <= 500) {
+        r = r * 1.3;
+        stroke_range.push(Math.floor(r))
+    }
+}
+
+function strokeSizeRange(value) {
+    setStrokeSize(
+        stroke_range[value]
+    )
+}
+
+function setStrokeSize(value = strokeWidth) {
+    let brushes = ["cursor"];
+    for (i in brushes) {
+        let tamanho = document.getElementById(brushes[i]);
+        if (mode == "pintar" || mode == "cores" || mode == "cores" || mode == "picker" || mode == "recortar") {
+            strokeWidth = value;
+            tamanho.style.width = value * zoomFactor + "px";
+            tamanho.style.height = value * zoomFactor + "px";
+            tamanho.style.lineHeight = value * zoomFactor + "px";
+            tamanho.style.marginTop =
+                (value / 2) * zoomFactor * -1 + "px";
+            tamanho.style.marginLeft =
+                (value * zoomFactor * -1) / 2 + "px";
+            if (i == 0) {
+                //tamanho.style.backgroundColor = strokeColor;
+            }
+
+            stroke = strokeWidth;
+            document.getElementById("tpx").value = value;
+        } else if (mode == "apagar") {
+            estrokeWidth = value;
+            tamanho.style.width = estrokeWidth * zoomFactor + "px";
+            tamanho.style.height = estrokeWidth * zoomFactor + "px";
+            tamanho.style.lineHeight = estrokeWidth * zoomFactor + "px";
+
+            tamanho.style.marginTop =
+                (estrokeWidth / 2) * zoomFactor * -1 + "px";
+            tamanho.style.marginLeft =
+                (estrokeWidth * zoomFactor * -1) / 2 + "px";
+            stroke = estrokeWidth;
+            document.getElementById("tpx2").value = value;
+        }
+    }
     changeBrush()
 }
-var newBrush = document.createElement("img")
-newBrush.src = brush.src
-
-var newBrushes = {}
-var brushCount = 0
-var lastbrush = 1
 
 function createColorBrush() {
     brushCount++
@@ -116,8 +326,6 @@ function favBrush(qual) {
 
 }
 
-let novoBrushes = {}
-
 function clearBrushes() {
     Object.keys(newBrushes).forEach((key) => {
         let existe = document.getElementById(key)
@@ -178,3 +386,30 @@ var Trig = {
         return Math.atan2(dx, dy);
     }
 }
+
+const RGBAToHSLA = (r, g, b, a) => {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    a /= 255;
+    const l = Math.max(r, g, b);
+    const s = l - Math.min(r, g, b);
+    const h = s
+        ? l === r
+            ? (g - b) / s
+            : l === g
+                ? 2 + (b - r) / s
+                : 4 + (r - g) / s
+        : 0;
+    const H = Math.floor(60 * h < 0 ? 60 * h + 360 : 60 * h);
+    const S = Math.floor(
+        100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)
+    );
+    const L = Math.floor((100 * (2 * l - s)) / 2);
+    const A = a;
+    hsla[0] = H;
+    hsla[1] = S;
+    hsla[2] = L;
+    hsla[3] = A;
+    return `hsla(${H},${S}%,${L}%,${a})`;
+};
