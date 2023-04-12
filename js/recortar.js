@@ -24,8 +24,8 @@ async function autoCrop(x, y, width = 0, height = 0) {
     }
 }
 
-function cortar(auto = false) {
-    if (auto == true) {
+function cortar(autoCortar = false) {
+    if (autoCortar == true) {
         origin.x = autoCropMin.x
         origin.y = autoCropMin.y
         cropEnd.x = autoCropMax.x
