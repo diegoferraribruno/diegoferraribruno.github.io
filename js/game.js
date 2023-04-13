@@ -185,7 +185,7 @@ setInterval(function () {
     }
 },
     150);
-setInterval(movePlayer, 22)
+setInterval(movePlayer, 10)
 let flip = 1;
 function movePlayer() {
     //CAMERA
@@ -237,8 +237,8 @@ function movePlayer() {
             let y1 = player.top - windowy / 2 - 64;
             let wx = container.scrollLeft;
             let wy = container.scrollTop;
-            let tx = wx + (x1 - wx) * 0.1;
-            let ty = wy + (y1 - wy) * 0.1;
+            let tx = wx + (x1 - wx) * 0.5;
+            let ty = wy + (y1 - wy) * 0.5;
             /*
               container.scrollTo(tx, ty)
               */
@@ -247,7 +247,7 @@ function movePlayer() {
         }
     }
 }
-var speed = 4
+var speed = 2
 container.style.width = screen.width + "px";
 container.style.height = screen.height + "px";
 
@@ -278,7 +278,7 @@ function frontEnd(move) {
             if (insideX(newUser)) {
                 user.left = newUser.left
                 avatar.style.left = user.left + "px";
-                document.getElementById("section").style.backgroundPosition = `-${user.left / 4}px 0px`;
+                moveBG()
             }
             if (insideY(newUser)) {
                 user.top = newUser.top
@@ -286,6 +286,12 @@ function frontEnd(move) {
             }
         }
     }
+}
+
+async function moveBG() {
+    document.getElementById("bg1").style.backgroundPosition = `-${user.left / 4}px 0px`;
+    //document.getElementById("bg2").style.backgroundPosition = `-${user.left / 2}px 0px`;
+
 }
 var map = {
     x: parseInt(
@@ -300,6 +306,6 @@ function insideX(quem = user) {
     else { return false }
 }
 function insideY(quem = user) {
-    if (quem.top < map.y - 32 && quem.top > 80) { return true }
+    if (quem.top < map.y - 100 && quem.top > 290) { return true }
     else { return false }
 }
