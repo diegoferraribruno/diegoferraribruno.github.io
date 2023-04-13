@@ -67,7 +67,7 @@ src.addEventListener('touchmove', (e) => {
     if (deltaY > 6) { keys.ArrowDown = true; send = true; } else { keys.ArrowDown = false };
     if (deltaX > 6) { keys.ArrowRight = true; send = true; } else { keys.ArrowRight = false };
     if (deltaX < -6) { keys.ArrowLeft = true; send = true; } else { keys.ArrowLeft = false };
-    //e.preventDefault(); < testar iphone.
+    e.preventDefault();// < testar iphone.
     //document.getElementById('manche').innerHTML = "X: "+Math.floor(clientX)+" Y:"+Math.floor(clientY)+"<br />dX: "+Math.floor(deltaX)+" dY: "+Math.floor(deltaY)
     // Process the data…
 }, false);
