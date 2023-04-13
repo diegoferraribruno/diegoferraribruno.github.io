@@ -40,6 +40,38 @@ let player = {
     height: 64
 }
 
+src.addEventListener('touchstart', (e) => {
+    document.documentElement.style.overflow = 'hidden';
+    // Cache the client X/Y coordinates
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+}, false);
+src.addEventListener('onmousepress', (e) => {
+    document.documentElement.style.overflow = 'hidden';
+    // Cache the client X/Y coordinates
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+}, false);
+
+src.addEventListener('touchmove', (e) => {
+    let deltaX;
+    let deltaY;
+    // Compute the change in X and Y coordinates.
+    // The first touch point in the changedTouches
+    // list is the touch point that was just removed from the surface.
+    deltaX = e.changedTouches[0].clientX - clientX;
+    deltaY = e.changedTouches[0].clientY - clientY;
+    document.getElementById("manche").style.left = 45 + deltaX + "px";
+    document.getElementById("manche").style.top = 45 + deltaY + "px";
+    if (deltaY < -6) { keys.ArrowUp = true; send = true; } else { keys.ArrowUp = false; };
+    if (deltaY > 6) { keys.ArrowDown = true; send = true; } else { keys.ArrowDown = false };
+    if (deltaX > 6) { keys.ArrowRight = true; send = true; } else { keys.ArrowRight = false };
+    if (deltaX < -6) { keys.ArrowLeft = true; send = true; } else { keys.ArrowLeft = false };
+    //e.preventDefault(); < testar iphone.
+    //document.getElementById('manche').innerHTML = "X: "+Math.floor(clientX)+" Y:"+Math.floor(clientY)+"<br />dX: "+Math.floor(deltaX)+" dY: "+Math.floor(deltaY)
+    // Process the data…
+}, false);
+
 
 function mouse_down(e) {
     clientX = e.clientX;
