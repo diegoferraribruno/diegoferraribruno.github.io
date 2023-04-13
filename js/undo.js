@@ -1,4 +1,3 @@
-
 var comandos = [];
 var comandosb = [];
 let desfazendo = false;
@@ -8,7 +7,6 @@ var counterU;
 let swapT
 let blobb
 let swaps = new Array()
-//let pL
 let posicoes = new Array(0)
 var executing = false
 var undoLevel = 0
