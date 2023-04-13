@@ -148,12 +148,12 @@ function createAvatar(id = 0) {
         document.getElementById("bio").appendChild(avatar)
         document.getElementById("bio").innerHTML +=
             "<b>" + usuarios[id].nome + "</b><br>" + usuarios[id].bio +
-            "<br><a href='" + usuarios[id].link + "' target='blank'>link</a><br><br><br>"
-            if(   document.getElementById("blog")){
-				 document.getElementById("bio").innerHTML +=
-            "<span style='height:230px; width:300px; display:block; overflow-y:scroll; padding:0px;'>" + usuarios[id].curriculo + "</span>"
-            }
-            ;
+            "<br><a href='" + usuarios[id].link + "' target='blank'>link</a><br>"
+        if (document.getElementById("blog")) {
+            document.getElementById("bio").innerHTML +=
+                "<span style='height:230px; width:300px; display:block; overflow-y:scroll; padding:0px;'>" + usuarios[id].curriculo + "</span>"
+        }
+        ;
     } else if (!document.getElementById("avatar2")) {
 
         var avatar = document.createElement("img")
@@ -164,7 +164,7 @@ function createAvatar(id = 0) {
         document.getElementById("bio2").appendChild(avatar)
         document.getElementById("bio2").innerHTML +=
             "<b>" + usuarios[id].nome + "</b><br>" + usuarios[id].bio +
-            "<br><a href='" + usuarios[id].link + "' target='blank'>link</a><br><br><br>"
+            "<br><a href='" + usuarios[id].link + "' target='blank'>link</a><br>"
             ;
     }
 
