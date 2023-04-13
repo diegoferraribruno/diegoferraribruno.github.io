@@ -2,14 +2,14 @@ let nightmode = false
 
 function Alert(text) {
     let alert = document.getElementById("menualerta")
-    alert.classList.add("aparece")
+    alert.classList.add("aparece2")
     let aconteudo = document.getElementById("alertconteudo")
     aconteudo.innerHTML = text;
     setTimeout(() => { closeAlert() }, 2000)
 
 }
 function closeAlert() {
-    document.getElementById("menualerta").classList.remove("aparece")
+    document.getElementById("menualerta").classList.remove("aparece2")
 }
 
 function removeElement(id) {

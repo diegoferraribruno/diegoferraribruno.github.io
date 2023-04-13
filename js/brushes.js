@@ -14,9 +14,9 @@ var brushCount = 0
 var lastbrush = 1
 var brushMode = 1
 let brushesImg = {}
-var copo = []
 var basicBrushes = []
 let novoBrushes = {}
+var customBrushes = []
 var selectedBasicBrush = 0
 var newBrush = document.createElement("img")
 var brush = new Image();
@@ -31,17 +31,45 @@ newBrush.src = brush.src
 
 function createBasicBrushes() {
 
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 9; i++) {
         let prush = new Image();
         prush.src = `img/brush${i}.png`;
         basicBrushes.push(prush)
         prush.id = "br" + i
         prush.setAttribute("onmousedown", "selectBrush(" + i + ")")
-        prush.setAttribute("style", "width:30px; height:32px; margin-top:2px;")
+        prush.setAttribute("style", "width:30px; height:30px; margin-top:2px;")
         document.getElementById("pinceis").appendChild(prush)
+
     }
+    let customBrush = document.createElement("span")
+    customBrush.id = "custombrush"
+    //customBrush.classList.add("bot")
+    customBrush.setAttribute("onmousedown", "customBrush()")
+    customBrush.innerHTML = "<span class='bot' style='display:inline-block; margin-top:-10px; font-size:18px; width:30px; height:30px;'>➕</div>"
+    document.getElementById("pinceis").appendChild(customBrush)
 }
 createBasicBrushes()
+
+function customBrush() {
+    mostraMenu("custombrush")
+}
+
+function criaCustom() {
+    i = basicBrushes.length
+
+    let newNewBrush2 = new Image();
+    newNewBrush2.src = canvas.toDataURL("image/png");
+    newNewBrush2.crossOrigin = "anonymous"
+    basicBrushes.push(newNewBrush2)
+
+    let prush = new Image();
+    prush = basicBrushes[i]
+    prush.id = "br" + i
+    prush.setAttribute("onmousedown", "selectBrush(" + i + ")")
+    prush.setAttribute("style", "width:30px; height:32px; margin-top:2px;")
+    document.getElementById("pinceis3").appendChild(prush)
+
+}
 
 function changeLine() {
     brushMode = 0
@@ -229,7 +257,7 @@ function setStrokeSize(value = strokeWidth) {
         } else if (mode == "apagar") {
             estrokeWidth = value;
             tamanho.style.width = estrokeWidth * zoomFactor + "px";
-            tamanho.style.height = estrokeWidth * zoomFactor + "px";
+            tamanho.style.height = estrokeWidth * zoomFactor + "px"; selectBrush
             tamanho.style.lineHeight = estrokeWidth * zoomFactor + "px";
 
             tamanho.style.marginTop =
@@ -256,6 +284,7 @@ function selectBrush(numero) {
 }
 var changedBrush = false
 var brushName = ""
+
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     brushName = "" + numero + tam + cor
     lastbrush = numero

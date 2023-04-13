@@ -1,8 +1,9 @@
 let vers = [
     {
-        versao: "1.8.0",
+        versao: "1.8.1",
         notas: [
-            "função de pintura de ladrilho (tile paint): quando ligada e o pincel sai da tela ele pinta do outro lado",
+            "🇬🇪 função de pintura de ladrilho (tile paint): quando ligada e o pincel sai da tela, aparece do outro lado",
+            "🖌️➕função de pincel personalizado."
         ]
 
     }, {

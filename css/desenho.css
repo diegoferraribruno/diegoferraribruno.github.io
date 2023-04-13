@@ -272,6 +272,10 @@ body {
     visibility: visible;
 }
 
+.aparece2 {
+    visibility: visible;
+}
+
 .naotoque {
     user-select: none;
     -moz-user-select: none;
@@ -417,7 +421,7 @@ input[type="range"] {
     margin-bottom: 2px;
     border-radius: 12px;
     vertical-align: bottom;
-    overflow:auto;
+    overflow: auto;
 }
 
 .botao:hover {
@@ -503,20 +507,23 @@ input[type="range"] {
     top: 0px;
     font-size: x-large;
 }
-#pinceis2{
-    background-color:#ffffffcc;
-    
-     display: inline-block; 
-     vertical-align: top; 
-     height:48px; 
-     width:320px;
+
+#pinceis2 {
+    background-color: #ffffffcc;
+
+    display: inline-block;
+    vertical-align: top;
+    height: 48px;
+    width: 320px;
 }
 
 #pinceis2 {
     overflow: hidden;
     overflow-y: auto;
-  }
-#pinceis{
+}
+
+#pinceis {
     overflow: hidden;
-    background-color:#ffffffcc; height:46px;
+    background-color: #ffffffcc;
+    height: 46px;
 }
