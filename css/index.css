@@ -262,8 +262,8 @@ h2 {
 
 #container {
     display: block;
-    width: 100vw;
-    height: 100vh;
+    width: 360px;
+    height: 640px;
     overflow: scroll;
     background-color: #78a350;
 }

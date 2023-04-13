@@ -131,8 +131,8 @@ document.getElementById('joypad').style.left = (windowx / 2 - 100) + "px";
 window.addEventListener('resize', function (event) {
     windowx = window.innerWidth
     windowy = window.innerHeight
-    container.style.width = windowx + "px";
-    container.style.height = windowy + "px";
+    container.style.width = screen.width + "px";
+    container.style.height = screen.height + "px";
     document.getElementById('joypad').style.top = (windowy - 160) + "px";
 });
 
@@ -191,7 +191,7 @@ function movePlayer() {
     if (send == true) {
         // sendServer(move, "m")
         if (move.x == 0 && move.y == 0) {
-            corpo.style.backgroundImage = "url('/game/danca.png')";
+            corpo.style.backgroundImage = "url('game/danca.png')";
             send = false;
         }
         oldpos = move;
@@ -216,8 +216,8 @@ function movePlayer() {
     }
 }
 var speed = 4
-container.style.width = windowx + "px";
-container.style.height = windowy + "px";
+container.style.width = screen.width + "px";
+container.style.height = screen.height + "px";
 
 function frontEnd(move) {
 
@@ -262,7 +262,6 @@ var map = {
         , 10)
     , y: parseInt(document.getElementById("map").style.height, 10)
 }
-console.log(map)
 
 function insideX(quem = user) {
     if (quem.left < map.x - 32 && quem.left > 16) { return true }
