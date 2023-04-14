@@ -1,5 +1,6 @@
 var foto = document.getElementById("foto")
 var userId = "01"
+var fotoN = 0
 
 
 var fotos = [
@@ -47,11 +48,28 @@ function criaImagem(x) {
 }
 
 // como fazer um loop para cada foto com a palavra for:
+let quantasfotos = fotos.length
 function criaGaleria() {
-    let quantas = fotos.length
-    for (i = 0; i < quantas; i++) {
+    for (i = 0; i < quantasfotos; i++) {
         criaImagem(i)
     }
 }
 
 criaGaleria() //executa a função
+
+function scrollg(x) {
+    if (x > 0) {
+        fotoN += 1
+    } else {
+        fotoN -= 1
+    }
+    if (fotoN < 0) {
+        fotoN = 0
+    } else if (fotoN >= quantasfotos) {
+        fotoN = quantasfotos - 1
+    }
+    if (fotoN < quantasfotos && fotoN >= 0) {
+        trocaFoto(fotoN)
+        document.getElementById("galeria").scrollLeft += x
+    }
+}

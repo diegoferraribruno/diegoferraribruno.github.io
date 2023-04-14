@@ -66,3 +66,18 @@
     background-position-y: bottom;
     background-image: url("/game/grama.png");
 }
+
+.player {
+    width: 64px;
+
+}
+
+.head {
+    transform: scaleX(1);
+    -webkit-transform: scaleX(1);
+}
+
+.headl {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}

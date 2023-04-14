@@ -133,6 +133,7 @@
                 <span class="botao"><span title="pintar" class="bot" onmousedown="modeTo('pintar')">🖌️</span>
                     <span id="mostraCor2" title="cores" class="bot" onmousedown="modeTo('cores')">🎨</span>
                     <span title="Pega cor" id="picker" class="bot" onmousedown="modeTo('picker')">💉</span>
+                    <span id="tilemapbot" class="bot" onclick="tilePaint()">🇬🇪</span>
                     <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
                     <span title="Preencher" id="preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
@@ -186,6 +187,7 @@
                 <span class="botao"><span title="pintar" class="bot selected" onmousedown="modeTo('pintar')">🖌️</span>
                     <span id="mostraCor" title="cores" class="bot" onmousedown="modeTo('cores')">🎨</span>
                     <span title="Pega cor" class="bot" onmousedown="modeTo('picker')">💉</span>
+                    <span id="tilemapbot" class="bot" onclick="tilePaint()">🇬🇪</span>
                     <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
                     <span title="Preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
@@ -219,7 +221,7 @@
                 <div class="botao "> <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                     pinceis personalizados</div>
                 <div class="botao " id="criaCustom" onmousedown="criaCustom()">
-                    arte como pincel.
+                    <span class="bot">🖼️ </span> ➡️ 🖌️ quadro como pincel
                 </div>
 
                 <div class="botao " id="pinceis3">
@@ -228,7 +230,6 @@
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
 
                 <span class="botao">
-                    <span id="tilemapbot" class="bot" onclick="tilePaint()">🇬🇪</span>
                     <span id="salvar" title="salvar imagem" class="bot" onclick="modeTo('salvar')">📥</span>
 
                     <span id="imagem" title="adicionar imagem" class="bot" onmousedown="modeTo('imagem')"> 📤</span>
