@@ -5,19 +5,26 @@ var userId = "01"
 var fotos = [
     {
         legenda: "<a href='http://diegoferraribruno.github.io/desenho.html' target='new'>App do diego</a>",
-        imagem: "desenho1.png"
+        imagem: "desenho0.png"
     },
     { legenda: "Ravi e Diego", imagem: "desenho2.png", stars: 0 },
     { legenda: "Diego, Diego, Diego e...", imagem: "desenho3.png" },
-    { legenda: "Arte feita no app", imagem: "desenho4.png" },
-    { legenda: "Arte feita no app", imagem: "desenho5.png" },
-    { legenda: "Arte feita no app", imagem: "desenho6.png" },
-    { legenda: "Arte feita no app", imagem: "desenho7.png" },
+    { legenda: "android feito no androis", imagem: "desenho4.png" },
+    //{ legenda: "Arte feita com antigo pincel", imagem: "desenho5.png" },
+    //{ legenda: "Arte feita no app", imagem: "desenho6.png" },
+    //{ legenda: "Arte feita no app", imagem: "desenho7.png" },
     { legenda: "Arte feita no app", imagem: "desenho8.png" },
     { legenda: "montagem usando o app", imagem: "desenho9.png" },
     { legenda: "Che o gato", imagem: "desenho10.png" },
     { legenda: "macaco digital", imagem: "desenho11.png" },
-    { legenda: "paisagem?", imagem: "desenho12.png" }
+    { legenda: "paisagem?", imagem: "desenho12.png" },
+    { legenda: "O que diz minha avó:", imagem: "desenho13.png" },
+    { legenda: "projeto de pincel", imagem: "desenho14.png" },
+    { legenda: "projeto de pincel", imagem: "desenho15.png" },
+    { legenda: "projeto de pincel", imagem: "desenho16.png" },
+    { legenda: "ladrilho infinito final", imagem: "desenho17.png" },
+
+
 ]
 //fotodafe.setAttribute("onclick", "trocaFoto()")
 
