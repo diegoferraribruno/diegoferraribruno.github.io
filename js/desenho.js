@@ -26,7 +26,7 @@ const images = []
 var videoStream;
 var origin = { x: canvas.width / 2, y: canvas.height / 2 };
 var pixelGood = false
-let tilepaint = false
+let tilepaint = true
 
 var audio2 = new Audio('./audio/back_001.wav');
 var audio = new Audio('./audio/switch12.wav');
@@ -378,9 +378,11 @@ function desenha(
             context.textAlign = "center";
             context.textBaseline = "middle";
             context.fillText(eoX, X, Y)
+
+            comandos.push(comando)
             if (tilepaint == true) {
                 console.log(X, Y, eoY, eoY)
-                if (X < strokeWidth / 2 && Y < strokeWidth) { //top left
+                if (X < eoY / 2 && Y < eoY / 2) { //top left
                     setTimeout(() => {
                         //top right
                         comando = ["e", GCO, X + canvas.width, Y, eoX, eoY]
@@ -388,104 +390,102 @@ function desenha(
                         comandos.push(comando)
 
                         //bottom left
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X, Y + canvas.height, eoX, eoY]
+                        context.fillText(eoX, X, Y + canvas.height)
                         comandos.push(comando)
-
                         //bottom right
-                        comando = ["brush", GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X + canvas.width, Y + canvas.height, eoX, eoY]
+                        context.fillText(eoX, X + canvas.width, Y + canvas.height)
                         comandos.push(comando)
 
 
                     }, 10)
-                } else if (X > canvas.width - strokeWidth / 2 && Y < strokeWidth) {//top right
+                } else if (X > canvas.width - eoY / 2 && Y < eoY - 2) {//top right
                     setTimeout(() => {
                         //top left
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X - canvas.width, Y, eoX, eoY]
+                        context.fillText(eoX, X - canvas.width, Y)
                         comandos.push(comando)
                         //bottom left
-                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X - canvas.width, Y + canvas.height, eoX, eoY]
+                        context.fillText(eoX, X - canvas.width, Y + canvas.height)
                         comandos.push(comando)
 
                         //bottom right
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X, Y + canvas.height, eoX, eoY]
+                        context.fillText(eoX, X, Y + canvas.height)
                         comandos.push(comando)
 
 
                     }, 10)
-                } else if (X < strokeWidth / 2 && Y > canvas.height - strokeWidth / 2) { //bottom left
+                } else if (X < eoY / 2 && Y > canvas.height - eoY / 2) { //bottom left
                     setTimeout(() => {
                         //bottom right
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X + canvas.width, Y, eoX + canvas.width, eoY]
+                        context.fillText(eoX, X + canvas.width, Y)
                         comandos.push(comando)
 
                         //top left
-                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X, Y - canvas.height, eoX, eoY - canvas.height]
+                        context.fillText(eoX, X, Y - canvas.height)
                         comandos.push(comando)
 
                         //top right
-                        comando = ["brush", GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height]
+                        context.fillText(eoX, X + canvas.width, Y - canvas.height)
                         comandos.push(comando)
 
 
                     }, 10)
                 }
-                else if (X > canvas.width - strokeWidth / 2 / 2 && Y > canvas.height - strokeWidth / 2) { //bottom right
+                else if (X > canvas.width - eoY / 2 / 2 && Y > canvas.height - eoY / 2) { //bottom right
                     setTimeout(() => {
                         //bottom left
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X - canvas.width, Y, eoX - canvas.width, eoY]
+                        context.fillText(eoX, X - canvas.width, Y)
                         comandos.push(comando)
 
                         //top left
-                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y - canvas.height, eoX - canvas.width, eoY - canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X - canvas.width, Y + canvas.height, eoX, eoY]
+                        context.fillText(eoX, X - canvas.width, Y - canvas.height)
                         comandos.push(comando)
 
                         //top right
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY - canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X, Y + canvas.height, eoX, eoY]
+                        context.fillText(eoX, X, Y - canvas.height)
                         comandos.push(comando)
 
 
                     }, 10)
                 }
-                else if (X < strokeWidth / 2) {
+                else if (X < eoY / 2) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X + canvas.width, Y, eoX, eoY]
+                        context.fillText(eoX, X + canvas.width, Y)
                         comandos.push(comando)
                     }, 10)
-                } else if (X > canvas.width - strokeWidth / 2) {
+                } else if (X > canvas.width - eoY / 2) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X - canvas.width, Y, eoX, eoY]
+                        context.fillText(eoX, X - canvas.width, Y)
                         comandos.push(comando)
                     }, 10)
 
 
-                } else if (Y < strokeWidth) {
+                } else if (Y < eoY) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X, Y + canvas.height, eoX, eoY]
+                        context.fillText(eoX, X, Y + canvas.height)
                         comandos.push(comando)
                     }, 10)
-                } else if (Y > canvas.height - strokeWidth / 2) {
+                } else if (Y > canvas.height - eoY / 2) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, stroke, linejoin]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, stroke, linejoin)
+                        comando = ["e", GCO, X, Y - canvas.height, eoX, eoY]
+                        context.fillText(eoX, X, Y - canvas.height)
                         comandos.push(comando)
                     }, 10)
                 }
             }
-            comandos.push(comando)
             autoCrop(X, Y, eoY, eoY)
             break;
         case "brush":
