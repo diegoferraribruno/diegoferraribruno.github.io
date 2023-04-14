@@ -381,7 +381,7 @@ function desenha(
 
             comandos.push(comando)
             if (tilepaint == true) {
-                console.log(X, Y, eoY, eoY)
+                // console.log(X, Y, eoY, eoY)
                 if (X < eoY / 2 && Y < eoY / 2) { //top left
                     setTimeout(() => {
                         //top right
@@ -496,7 +496,7 @@ function desenha(
             autoCrop(X, Y, stroke, stroke)
 
             if (tilepaint == true) {
-                console.log(X, Y, eoY, eoY)
+                // console.log(X, Y, eoY, eoY)
                 if (X < strokeWidth / 2 && Y < strokeWidth) { //top left
                     setTimeout(() => {
                         //top right

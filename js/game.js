@@ -15,7 +15,7 @@ var game = document.getElementById("game")
 const src = document.getElementById("manche");
 var container = document.getElementById("container")
 var send = false
-
+var seguemouse = false
 let clientX;
 let clientY;
 let drag = false;
@@ -74,11 +74,15 @@ src.addEventListener('touchmove', (e) => {
 
 
 function mouse_down(e) {
+
     clientX = e.clientX;
     clientY = e.clientY;
     drag = true;
-
-
+    let t = e.target.id
+    if (t == "head-player") {
+        seguemouse = true
+    }
+    console.log(t)
 }
 
 function mouse_up(event) {
@@ -89,9 +93,20 @@ function mouse_up(event) {
     clientX = 0;
     clientY = 0;
     send = true;
+    let t = event.target.id
+    if (t == 'game' && seguemouse == false) {
+
+        clickmove(event.layerX, event.layerY)
+    }
+    if (seguemouse == true) { seguemouse = false }
+
+
 }
 
 function mouse_position(e) {
+    if (seguemouse == true) {
+        clickmove(e.layerX, e.layerY)
+    }
     if (drag == true) {
         let deltaX;
         let deltaY;
@@ -113,7 +128,20 @@ document.addEventListener('touchend', function (e) {
     document.getElementById("manche").style.top = "0px";
     document.documentElement.style.overflow = 'auto';
 
-});
+}
+
+);
+document.addEventListener('mousedown', function (e) {
+    e.preventDefault()
+    let t = e.target.id
+    if (t == "head-player") {
+        seguemouse = true
+    }
+    console.log(t)
+
+}
+
+);
 
 
 
@@ -187,10 +215,65 @@ setInterval(function () {
     150);
 setInterval(movePlayer, 10)
 let flip = 1;
+
+let automove = false
+var TARGET = { x: 0, y: 0 }
+
+function clickmove(x, y) {
+    TARGET.x = x
+    TARGET.y = y
+}
+function autoMove() {
+    if (keys.ArrowDown == true && player.top >= TARGET.y && TARGET.y != 0) {
+
+        keys.ArrowDown = false
+        TARGET.y = 0
+    }
+    if (keys.ArrowUp == true && player.top <= TARGET.y && TARGET.y != 0) {
+        TARGET.y = 0
+        keys.ArrowUp = false
+    }
+    if (keys.ArrowLeft == true && player.left <= TARGET.x && TARGET.x != 0) {
+
+        keys.ArrowLeft = false
+        TARGET.x = 0
+    }
+    if (keys.ArrowRight == true && player.left >= TARGET.x && TARGET.x != 0) {
+        TARGET.x = 0
+        keys.ArrowRight = false
+    }
+    if (player.top < TARGET.y && TARGET.y != 0) {
+        keys.ArrowDown = true
+    }
+    if (player.top > TARGET.y && TARGET.y != 0) {
+        keys.ArrowUp = true
+    }
+    if (player.left < TARGET.x && TARGET.x != 0) {
+        keys.ArrowRight = true
+    }
+    if (player.left > TARGET.x && TARGET.x != 0) {
+        keys.ArrowLeft = true
+    }
+    //console.log(player.top, y)
+    /* if (player.top <= y + 10 * 2 && player.top >= y - 10 * 2) {
+         keys.ArrowDown = false
+         keys.ArrowUp = false
+         clearInterval(automove)
+     }*/
+
+    /*if (player.left < x - speed && player.left > x + speed) {
+        keys.ArrowLeft = false
+        keys.ArrowRight = false
+        clearInterval(automove)
+    }*/
+
+}
+
+
 function movePlayer() {
     //CAMERA
 
-
+    autoMove()
     let move = { x: 0, y: 0 }
     corpo = document.getElementById("corpo-" + id);
     if (keys.ArrowUp == true && keys.ArrowDown == false || keys.w == true && keys.s == false) {

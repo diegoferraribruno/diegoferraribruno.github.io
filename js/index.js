@@ -27,33 +27,42 @@ function createAvatar(id = 0, onde = "bio2") {
         "<br><a href='" + usuarios[id].link + "' target='blank'>link</a>";
 }
 
-var menu = {
-    "desenho.html": "🎨",
-    "galeria.html": "⬅️🖼️➡️",
-    "apoio.html": "💸",
-    "alfabeto.html": "🔫",
-    "index.html": "📔 ",
-    "https://diegoferraribruno.itch.io": "🎮"
-    // "Identifica": "🪪",
-}
+var menu = [{ url: "desenho.html", icon: "🎨", title: "Desenho" },
+{ url: "index.html", icon: "😆", title: "principal" },
+{ url: "apoio.html", icon: "💸", title: "Apoio" },
+{ url: "alfabeto.html", icon: "🔫", title: "jogo alfabeto" },
+{ url: "https://diegoferraribruno.itch.io", icon: "🎮", title: "Itch.io" }
+]
 
 function criaCabeca() {
     cabeca.innerHTML = "<div  id='djs' class='bot shadow' title='Links do diego' onclick='limpaCabeca()'> </div>"
     //<!--🚀-->
 
-    Object.keys(menu).forEach((key, index) => {
-        setTimeout(() => {
-
-            let item = document.createElement("div")
-            item.setAttribute("onClick", "confirmLink('" + key + "')")
-            //item.href = key
-            //item.target = "iframe"
-            item.innerText = menu[key]
-            item.classList.add("shadow")
-            item.classList.add("bot")
-            cabeca.appendChild(item)
-        }, 80 * index)
-    })
+    /*  Object.keys(menu).forEach((key, index) => {
+          setTimeout(() => {
+  
+              let item = document.createElement("div")
+              item.setAttribute("onClick", "confirmLink('" + key + "')")
+              //item.href = key
+              //item.target = "iframe"
+              item.innerText = menu[key]
+              item.classList.add("shadow")
+              item.classList.add("bot")
+              cabeca.appendChild(item)
+          }, 80 * index)
+      })*/
+    let len = menu.length
+    for (i = 0; i < len; i++) {
+        let item = document.createElement("div")
+        item.setAttribute("title", menu[i].title)
+        item.setAttribute("onClick", "confirmLink('" + menu[i].url + "')")
+        //item.href = key
+        //item.target = "iframe"
+        item.innerText = menu[i].icon
+        item.classList.add("shadow")
+        item.classList.add("bot")
+        cabeca.appendChild(item)
+    }
 }
 setTimeout(() => { criaCabeca() }, 100)
 //setTimeout(() => { limpaCabeca() }, 1100)
@@ -74,7 +83,7 @@ function confirmLink(url) {
                 let item = document.createElement("div")
                 item.id = "confirm"
                 item.classList.add("confirm")
-                item.innerHTML = " Ir para a página:<br> <div  class='shadow'><a href='" + url + "'> " + menu[url] + " " + url + " ✅</a> </div>"
+                item.innerHTML = " Ir para a página:<br> <div  class='shadow'><a href='" + url + "'> " + url + " ✅</a> </div>"
                 item.innerHTML += "<div onClick='cancela()' class='shadow'>cancela ❌</div>"
                 document.body.appendChild(item)
             } else {
