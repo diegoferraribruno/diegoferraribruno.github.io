@@ -11,7 +11,7 @@ var usuarios = [{
 }, {
     id: "02",
     nome: "Ravi F. P. B.",
-    link: "https://diegoferraribruno.github.io",
+    link: "https://diegoferraribruno.github.io/ravi/index.html",
     bio: "Filho, artista, matemático",
 }]
 
@@ -29,7 +29,7 @@ function createAvatar(id = 0, onde = "bio2") {
 
 var menu = {
     "desenho.html": "🎨",
-    "galeria.html": "🖼️",
+    "galeria.html": "⬅️🖼️➡️",
     "apoio.html": "💸",
     "alfabeto.html": "🔫",
     "index.html": "📔 ",
