@@ -3,7 +3,7 @@ let vers = [
         versao: "1.8.2",
         notas: [
             "🇬🇪 função de pintura de ladrilho (tile paint): quando ligada e o pincel sai da tela, aparece do outro lado",
-            "🖌️➕função de pincel personalizado."
+            "🖌️➕ 🖼️ ➡️ 🖌️função de pincel personalizado. transforma sua tela em um pincel. <br>(dica abuse da transparencia 💧 e apagador 🧽 para criar belos pincéis ;)"
         ]
 
     }, {
@@ -234,7 +234,7 @@ function textao() {
         let tete = vers[i].notas
         let lenn = tete.length
         for (k = 0; k < lenn; k++) {
-            lavem += vers[i].notas[k] + "<br>"
+            lavem += "🔹 " + vers[i].notas[k] + "<br>"
         }
     }
 }
