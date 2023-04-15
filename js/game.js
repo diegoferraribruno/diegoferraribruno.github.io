@@ -317,7 +317,7 @@ function movePlayer() {
         if (player != null) {
 
             let x1 = player.left - windowx / 2 + 32;
-            let y1 = player.top - windowy / 2 - 64;
+            let y1 = player.top + (player.height * 2) - windowy / 4 - 64;
             let wx = container.scrollLeft;
             let wy = container.scrollTop;
             let tx = wx + (x1 - wx) * 0.5;
