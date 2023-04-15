@@ -36,9 +36,9 @@ audio2.volume = 0.4;
 function tilePaint() {
     tilepaint = !tilepaint
     if (tilepaint == true) {
-        Alert("Modo de pintura de ladrilho ativado 🇬🇪")
+        Alert('<span title="infinity" class="emoji " id="emo -♾️">♾️</span> Modo infinito <br>Ativado ')
     } else {
-        Alert("Modo de pintura de ladrilho Desativado 🇬🇪")
+        Alert(' <span title="infinity" class="emoji " id="emo -♾️">♾️</span> Modo infinito <br>Desativado')
     }
 }
 
@@ -688,10 +688,12 @@ async function modeTo(qual) {
             oldMode = mode;
             mode = qual;
             mostraMenu(qual);
+
         } else {
             mode = "pintar"
             oldMode = "pintar"
             mostraMenu("pintar");
+            Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  Modo ${qual} <br> Ativado"`)
         }
     } else {
         if (qual != "apagar") { mostraMenu(qual); }
@@ -802,7 +804,7 @@ function backPaint() {
         document.getElementById(
             "globalComposite"
         ).innerHTML =
-            `<span style="position:absolute; width:30px; ` +
+            `< span style = "position:absolute; width:30px; ` +
             `display:block; color:white; margin-left:-4px; margin-top:-5px;">⭕</span> ` +
             `<span style="position:relative; float:left; width:30px; display:block;  ` +
             `color:black; left:1px; margin-top:0px;" title="Pintando por baixo">🔲</span>`;

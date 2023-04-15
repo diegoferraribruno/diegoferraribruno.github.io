@@ -1,9 +1,10 @@
 let vers = [
     {
-        versao: "1.8.4",
+        versao: "1.8.5",
         notas: [
-            "🇬🇪 função de pintura de ladrilho (tile paint) ligada! Se o pincel sai da tela, pinta do outro lado",
-            "🖌️➕ 🖼️ ➡️ 🖌️função de pincel personalizado. transforma sua tela em um pincel. <br>(dica abuse da transparencia 💧 e apagador 🧽 para criar belos pincéis ;)",
+            "🧽 alerta para modo apagador ativado",
+            "♾️ Modo de pintura Infinito (tile-map, backgrounds, pintura de ladrilho)",
+            "🖌️➕ 🖼️ ➡️ 🖌️função de pincel personalizado. transforma sua arte em um pincel. <br>(dica abuse da transparencia 💧 e apagador 🧽 para criar belos pincéis ;)",
             "😍 modulo do emoji-picker incorporado ao codigo e tambem com tile paint"
         ]
 

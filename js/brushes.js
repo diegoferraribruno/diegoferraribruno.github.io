@@ -28,7 +28,6 @@ brush.onload = function () {
 newBrush.src = brush.src
 
 
-
 function createBasicBrushes() {
 
     for (i = 0; i < 9; i++) {
@@ -58,8 +57,8 @@ function criaCustom() {
     i = basicBrushes.length
 
     let newNewBrush2 = new Image();
+    //newNewBrush2.crossOrigin = "anonymous"
     newNewBrush2.src = canvas.toDataURL("image/png");
-    newNewBrush2.crossOrigin = "anonymous"
     basicBrushes.push(newNewBrush2)
 
     let prush = new Image();
@@ -68,7 +67,7 @@ function criaCustom() {
     prush.setAttribute("onmousedown", "selectBrush(" + i + ")")
     prush.setAttribute("style", "width:30px; height:32px; margin-top:2px;")
     document.getElementById("pinceis3").appendChild(prush)
-
+    setTimeout(() => selectBrush(basicBrushes.length - 1), 350)
 }
 
 function changeLine() {
@@ -291,6 +290,7 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     brushMode = 1
     var brushCanva = document.getElementById("brushCanva")
     var brushCtx = brushCanva.getContext("2d");
+    // brushCanva.crossOrigin = "anonymous"
     brushCanva.height = tam
     brushCanva.width = tam
     brushCtx.fillStyle = cor;
@@ -301,8 +301,8 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     brushCtx.globalCompositeOperation = 'destination-over'
     setTimeout(() => {
         let newNewBrush = new Image();
+        // newBrush.crossOrigin = "anonymous"
         newNewBrush.src = brushCanva.toDataURL("image/png");
-        newBrush.crossOrigin = "anonymous"
         newBrush.src = newNewBrush.src
         cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
         cursor.style.opacity = 0.8
