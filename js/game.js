@@ -3,8 +3,8 @@ var user = {
     id: "player",
     name: "",
     serverPlayerPos: { x: 120, y: 400 },
-    left: 120,
-    top: 400,
+    left: 140,
+    top: 40,
     width: 32,
     height: 100,
     face: 0,
@@ -34,10 +34,10 @@ document.addEventListener('keyup', keyUp);
 let mode = "move"
 let oldpos = { x: 0, y: 0 }
 let player = {
-    top: 400,
-    left: 120,
+    top: 40,
+    left: 140,
     width: 32,
-    height: 32
+    height: 100
 }
 
 src.addEventListener('touchstart', (e) => {
@@ -96,7 +96,7 @@ function mouse_up(event) {
     let t = event.target.id
     if (t == 'game' && seguemouse == false) {
 
-        clickmove(event.layerX, event.layerY)
+        clickmove(event.layerX - player.width / 2, event.layerY - player.height)
     }
     if (seguemouse == true) { seguemouse = false }
 
@@ -357,7 +357,10 @@ function frontEnd(move) {
         if (avatar != null) {
             let newUser = {
                 left: user.left + (move.x * speed),
-                top: user.top + (move.y * speed)
+                top: user.top + (move.y * speed),
+                width: user.width,
+                height: user.height
+
             }
             if (insideX(newUser)) {
                 user.left = newUser.left
@@ -371,7 +374,6 @@ function frontEnd(move) {
         }
     }
 }
-
 async function moveBG() {
     document.getElementById("bg1").style.backgroundPosition = `-${user.left / 4}px 0px`;
     //document.getElementById("bg2").style.backgroundPosition = `-${user.left / 2}px 0px`;
@@ -386,10 +388,10 @@ var map = {
 }
 
 function insideX(quem = user) {
-    if (quem.left < map.x - 32 && quem.left > 16) { return true }
+    if (quem.left < map.x - quem.width * 2 && quem.left > quem.width / 2) { return true }
     else { return false }
 }
 function insideY(quem = user) {
-    if (quem.top < map.y - 100 && quem.top > 290) { return true }
+    if (quem.top < map.y - quem.height * 2 && quem.top > -quem.height) { return true }
     else { return false }
 }

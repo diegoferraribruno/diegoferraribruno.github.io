@@ -86,3 +86,9 @@
     width: 128px;
     height: 128px;
 }
+
+#game {
+    position: relative;
+    top: 166px;
+    display: block;
+}

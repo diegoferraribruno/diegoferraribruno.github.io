@@ -245,8 +245,10 @@ h2 {
 
 #section {
     display: flex;
+    position: relative;
     width: 1920px;
     height: 235px;
+    z-index: 3;
 }
 
 .bloco {

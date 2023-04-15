@@ -1,9 +1,10 @@
 var monstro = {
 
-    top: 320,
-    left: 50,
+    top: 520,
+    left: 850,
     width: 160,
-    height: 160
+    height: 160,
+    scale: 0.25
 
 }
 let monstrokeys = {
@@ -63,14 +64,14 @@ function autoMoveMonstro() {
 
         monstrokeys.ArrowDown = false
     }
-    if (monstrokeys.ArrowUp == true && monstro.top - monstro.height <= player.top + player.height * 2) {
+    if (monstrokeys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
         monstrokeys.ArrowUp = false
     }
-    if (monstrokeys.ArrowLeft == true && monstro.left - monstro.width <= player.left - player.width) {
+    if (monstrokeys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
 
         monstrokeys.ArrowLeft = false
     }
-    if (monstrokeys.ArrowRight == true && monstro.left - monstro.width >= player.left + player.width * 2) {
+    if (monstrokeys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
         monstrokeys.ArrowRight = false
     }
     if (monstro.top < player.top - player.height) {
@@ -79,7 +80,7 @@ function autoMoveMonstro() {
     if (monstro.top + monstro.height / 2 > player.top - player.height) {
         monstrokeys.ArrowUp = true
     }
-    if (monstro.left - monstro.width / 2 < player.left + player.width) {
+    if (monstro.left - monstro.width / 2 < player.left) {
         monstrokeys.ArrowRight = true
     }
     if (monstro.left + monstro.width / 2 > player.left - player.width) {
@@ -99,6 +100,7 @@ function autoMoveMonstro() {
     }*/
 
 }
+var audio2 = new Audio('./audio/back_001.wav');
 
 let pegou = false
 function frontMoveMonstro(move) {
@@ -107,7 +109,9 @@ function frontMoveMonstro(move) {
     if (avatar != null) {
         let newmonstro = {
             left: monstro.left + (move.x * mspeed),
-            top: monstro.top + (move.y * mspeed)
+            top: monstro.top + (move.y * mspeed),
+            width: monstro.height,
+            height: monstro.height
         }
         if (insideX(newmonstro)) {
             monstro.left = newmonstro.left
@@ -122,6 +126,7 @@ function frontMoveMonstro(move) {
 
     let col = doElsCollide(player, monstro)
     if (col != null && pegou == false) {
+        audio2.play()
         pegou = true
         document.getElementById("player").style.opacity = 0.5
         document.getElementById("monstro").style.scale = 2
@@ -143,14 +148,13 @@ function frontMoveMonstro(move) {
     // console.log(col)
 }
 
-let doElsCollide = function (rect1, rect2) {
+let doElsCollide = function (rect1, rectb) {
     //let rect1 ={}
-    /*    let rect2 = {}
-        rect2.width = rectb.width - 40
-        rect2.left = rectb.left - 40
-        rect2.top = rectb.top + 200
-        rect2.height = rectb.height - 80
-    console.log(rect1.left, rect2.left)*/
+    let rect2 = {}
+    rect2.width = rectb.width / 2
+    rect2.left = rectb.left + rectb.width / 2
+    rect2.top = rectb.top + rectb.height
+    rect2.height = rectb.height / 2
     if (
         rect1.left < rect2.left + rect2.width &&
         rect1.left + rect1.width > rect2.left &&
@@ -164,11 +168,12 @@ let doElsCollide = function (rect1, rect2) {
 };
 //anima
 let mframe = 0
-setInterval(animaMonstro, 90)
+setInterval(animaMonstro, 110)
 function animaMonstro() {
     let position = 320 * mframe
     let monstr = document.getElementById("monstro")
     monstr.style.backgroundPosition = `-${position}px 0px`;
+    monstr.style.rotate = -20 * mframe + "deg"
     mframe++
     if (mframe > 2) { mframe = 0 }
 }
