@@ -35,49 +35,53 @@ newMonster()
 
 function bot(inter) {
     setTimeout(() => {
-        /* let parado = Math.random() < 0.5 ? false : true;
-         if (!parado) {
-             for (i in monstrokeys) {
-                 monstrokeys[i] = Math.random() < 0.5 ? false : true;
-             }
-         } else {
-             /*            for (i in monstrokeys) {
-                 monstrokeys[i] = false;
-             }
-         }*/
-        autoMoveMonstro()
-        // send = true;
+        let parado = Math.random() < 0.5 ? false : true;
+        if (!parado) {
+            for (i in monstrokeys) {
+                monstrokeys[i] = Math.random() < 0.5 ? false : true;
+            }
+        } else {
+            autoMoveMonstro()
+            let parado2 = Math.random() < 0.5 ? false : true;
+            if (!parado2) {
+                for (i in monstrokeys) {
+                    monstrokeys[i] = false;
+                }
+            }
+        }
         inter = Math.random() * 2000
         bot(inter)
+        // send = true;
+
     }, inter)
 }
 bot(2000)
 
 function autoMoveMonstro() {
-    if (monstrokeys.ArrowDown == true && monstro.top >= player.top) {
+    if (monstrokeys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
 
         monstrokeys.ArrowDown = false
     }
-    if (monstrokeys.ArrowUp == true && monstro.top <= player.top) {
+    if (monstrokeys.ArrowUp == true && monstro.top - monstro.height <= player.top + player.height * 2) {
         monstrokeys.ArrowUp = false
     }
-    if (monstrokeys.ArrowLeft == true && monstro.left <= player.left) {
+    if (monstrokeys.ArrowLeft == true && monstro.left - monstro.width <= player.left - player.width) {
 
         monstrokeys.ArrowLeft = false
     }
-    if (monstrokeys.ArrowRight == true && monstro.left >= player.left) {
+    if (monstrokeys.ArrowRight == true && monstro.left - monstro.width >= player.left + player.width * 2) {
         monstrokeys.ArrowRight = false
     }
-    if (monstro.top < player.top) {
+    if (monstro.top < player.top - player.height) {
         monstrokeys.ArrowDown = true
     }
-    if (monstro.top > player.top) {
+    if (monstro.top + monstro.height / 2 > player.top - player.height) {
         monstrokeys.ArrowUp = true
     }
-    if (monstro.left < player.left) {
+    if (monstro.left - monstro.width / 2 < player.left + player.width) {
         monstrokeys.ArrowRight = true
     }
-    if (monstro.left > player.left) {
+    if (monstro.left + monstro.width / 2 > player.left - player.width) {
         monstrokeys.ArrowLeft = true
     }
     //console.log(player.top, y)
@@ -101,8 +105,8 @@ function frontMoveMonstro(move) {
     let avatar = document.getElementById("monstro")
     if (avatar != null) {
         let newmonstro = {
-            left: monstro.left + (move.x * speed),
-            top: monstro.top + (move.y * speed)
+            left: monstro.left + (move.x * mspeed),
+            top: monstro.top + (move.y * mspeed)
         }
         if (insideX(newmonstro)) {
             monstro.left = newmonstro.left
@@ -119,14 +123,14 @@ function frontMoveMonstro(move) {
     console.log(col)
 }
 
-let doElsCollide = function (rect1, rectb) {
+let doElsCollide = function (rect1, rect2) {
     //let rect1 ={}
-    let rect2 = {}
-    rect2.width = rectb.width - 40
-    rect2.left = rectb.left + 40
-    rect2.top = rectb.top + 120
-    rect2.height = rectb.height - 80
-    console.log(rect1.left, rect2.left)
+    /*    let rect2 = {}
+        rect2.width = rectb.width - 40
+        rect2.left = rectb.left - 40
+        rect2.top = rectb.top + 200
+        rect2.height = rectb.height - 80
+    console.log(rect1.left, rect2.left)*/
     if (
         rect1.left < rect2.left + rect2.width &&
         rect1.left + rect1.width > rect2.left &&
@@ -202,4 +206,4 @@ function moveMonstro() {
 
 }
 
-var speed = 2
+var mspeed = 1.5
