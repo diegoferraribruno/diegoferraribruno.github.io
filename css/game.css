@@ -81,3 +81,8 @@
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
+
+.monstro {
+    width: 128px;
+    height: 128px;
+}

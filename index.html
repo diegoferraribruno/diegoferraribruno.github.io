@@ -18,27 +18,7 @@
                 <div id="bg2" class="bg">
 
 
-                    <div id="players">
-                        <div class="player" id="player"
-                            style="position: relative; left: 120px; top: 400px; margin-top:-82px; margin-left:-16px; z-index: 2">
-                            <div id="pname-player" class="pname">Diego</div>
-                            <a name="player1"></a>
-                            <p id="corpo-player" class="color" style="  height: 32px;
-                    width: 32px;
-                    background: url('./game/danca.png') 0px 0px;
-                    margin: 48px 24px 24px 18px;
-                    padding: 0px 0px 0px 0px;
-                    position: absolute;
-                    filter: drop-shadow(0px 0px 4px red) hue-rotate(0deg);
-                    ">
-                            </p>
-                            <div id="head-player" class="head"
-                                style="border-radius: 32px; background: url('/game/1f606.png'); display:block; background-size: 100% 100%; width:64px; height:64px; filter :drop-shadow(0px 0px 4px hsl(0, 100%, 50%));">
-                            </div>
-                            <div id="rhand"></div>
-                            <p id="lhand"></p>
-                        </div>
-                    </div>
+
 
                     <div id="joypad"
                         style="position:fixed; z-index: 3000; width:130px; height: 130px; bottom: 42px; left:115px; right:20px; float:left;">
@@ -84,7 +64,29 @@
 
                     </div>
 
-                    <div id="game"> </div>
+                    <div id="game">
+                        <div id="players">
+                            <div class="player" id="player"
+                                style="position: relative; left: 120px; top: 400px; margin-top:-82px; margin-left:-16px; z-index: 2">
+                                <div id="pname-player" class="pname">Diego</div>
+                                <a name="player1"></a>
+                                <p id="corpo-player" class="color" style="  height: 32px;
+                    width: 32px;
+                    background: url('./game/danca.png') 0px 0px;
+                    margin: 48px 24px 24px 18px;
+                    padding: 0px 0px 0px 0px;
+                    position: absolute;
+                    filter: drop-shadow(0px 0px 4px red) hue-rotate(0deg);
+                    ">
+                                </p>
+                                <div id="head-player" class="head"
+                                    style="border-radius: 32px; background: url('/game/1f606.png'); display:block; background-size: 100% 100%; width:64px; height:64px; filter :drop-shadow(0px 0px 4px hsl(0, 100%, 50%));">
+                                </div>
+                                <div id="rhand"></div>
+                                <p id="lhand"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,6 +97,8 @@
     <script type="text/javascript" src="js/blog.js"></script>
     <script type="text/javascript" src="js/usuario.js"></script>
     <script type="text/javascript" src="js/galeria.js"></script>
+    <script type="text/javascript" src="js/monstro.js"></script>
+
     <script>
         /*  async function githubBio() {
               const res = await fetch('https://api.github.com/users/diegoferraribruno');

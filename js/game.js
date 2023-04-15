@@ -5,8 +5,8 @@ var user = {
     serverPlayerPos: { x: 120, y: 400 },
     left: 120,
     top: 400,
-    width: 64,
-    height: 64,
+    width: 32,
+    height: 100,
     face: 0,
     hue: 0
 }
@@ -36,8 +36,8 @@ let oldpos = { x: 0, y: 0 }
 let player = {
     top: 400,
     left: 120,
-    width: 64,
-    height: 64
+    width: 32,
+    height: 32
 }
 
 src.addEventListener('touchstart', (e) => {
@@ -329,6 +329,7 @@ function movePlayer() {
 
         }
     }
+
 }
 var speed = 2
 container.style.width = screen.width + "px";
