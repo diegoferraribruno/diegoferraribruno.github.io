@@ -1,9 +1,9 @@
 var monstro = {
 
-    top: 400,
-    left: 120,
-    width: 320,
-    height: 320
+    top: 320,
+    left: 50,
+    width: 160,
+    height: 160
 
 }
 let monstrokeys = {
@@ -15,16 +15,17 @@ let monstrokeys = {
 
 function newMonster() {
     let monstroimg = document.createElement("img")
-    monstroimg.src = "/game/itsartexe.png"
+    monstroimg.src = "/game/monstro.png"
     let monstro = document.createElement("div")
     monstro.id = "monstro"
     monstro.style.display = "block"
     monstro.style.position = "relative"
+    monstro.style.scale = 0.5
     document.getElementById("game").appendChild(monstro)
 
     monstroimg.onload = function () {
         let monstr = document.getElementById("monstro")
-        monstr.style.width = monstroimg.width + "px"
+        monstr.style.width = monstroimg.height + "px"
         monstr.style.height = monstroimg.height + "px"
         monstro.width = monstroimg.width
         monstro.height = monstroimg.height
@@ -99,7 +100,7 @@ function autoMoveMonstro() {
 
 }
 
-
+let pegou = false
 function frontMoveMonstro(move) {
 
     let avatar = document.getElementById("monstro")
@@ -120,7 +121,26 @@ function frontMoveMonstro(move) {
     }
 
     let col = doElsCollide(player, monstro)
-    console.log(col)
+    if (col != null && pegou == false) {
+        pegou = true
+        document.getElementById("player").style.opacity = 0.5
+        document.getElementById("monstro").style.scale = 2
+        document.getElementById("monstro").style.zIndex = 5
+        setTimeout(() => {
+            let avatar = document.getElementById("player")
+            avatar.style.opacity = 1
+            user.left = 170
+            avatar.style.left = user.left + "px";
+            user.top = 320
+            avatar.style.top = user.top + "px";
+            document.getElementById("monstro").style.scale = 0.5
+            document.getElementById("monstro").style.zIndex = 0
+
+            pegou = false
+        }, 1000)
+
+    }
+    // console.log(col)
 }
 
 let doElsCollide = function (rect1, rect2) {
@@ -142,6 +162,16 @@ let doElsCollide = function (rect1, rect2) {
         return null;
     }
 };
+//anima
+let mframe = 0
+setInterval(animaMonstro, 90)
+function animaMonstro() {
+    let position = 320 * mframe
+    let monstr = document.getElementById("monstro")
+    monstr.style.backgroundPosition = `-${position}px 0px`;
+    mframe++
+    if (mframe > 2) { mframe = 0 }
+}
 
 setInterval(moveMonstro, 10)
 function moveMonstro() {
