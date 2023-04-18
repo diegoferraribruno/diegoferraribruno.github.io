@@ -260,7 +260,7 @@ h2 {
     position: absolute;
     top: 64px;
     left: 80px;
-    z-index: 2;
+    z-index: 5;
 }
 
 #container {

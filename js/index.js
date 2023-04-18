@@ -146,7 +146,7 @@ function copyPix() {
     // Alert the copied text
     Alert("Chave PIX copiada: " + copyText.value);
 }
-
+/*
 (function alignBlocos() {
     let blocos = document.getElementsByClassName("bloco")
     for (i in blocos) {
@@ -157,4 +157,4 @@ function copyPix() {
         }
     }
 }
-)();
+)();*/

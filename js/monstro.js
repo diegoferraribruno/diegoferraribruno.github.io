@@ -65,34 +65,36 @@ function bot(inter) {
 bot(1000)
 
 function autoMoveMonstro() {
+    if (player.hidden == false) {
 
-    if (monstro.keys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
+        if (monstro.keys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
 
-        monstro.keys.ArrowDown = false
-    }
-    if (monstro.keys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
-        monstro.keys.ArrowUp = false
-    }
-    if (monstro.keys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
+            monstro.keys.ArrowDown = false
+        }
+        if (monstro.keys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
+            monstro.keys.ArrowUp = false
+        }
+        if (monstro.keys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
 
-        monstro.keys.ArrowLeft = false
-    }
-    if (monstro.keys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
-        monstro.keys.ArrowRight = false
-    }
-    if (monstro.top < player.top - player.height) {
-        monstro.keys.ArrowDown = true
-    }
-    if (monstro.top + monstro.height / 2 > player.top - player.height) {
-        monstro.keys.ArrowUp = true
-    }
-    if (monstro.left - monstro.width / 2 < player.left) {
-        monstro.keys.ArrowRight = true
-    }
-    if (monstro.left + monstro.width / 2 > player.left - player.width) {
-        monstro.keys.ArrowLeft = true
-    }
+            monstro.keys.ArrowLeft = false
+        }
+        if (monstro.keys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
+            monstro.keys.ArrowRight = false
+        }
+        if (monstro.top < player.top - player.height) {
+            monstro.keys.ArrowDown = true
+        }
+        if (monstro.top + monstro.height / 2 > player.top - player.height) {
+            monstro.keys.ArrowUp = true
+        }
+        if (monstro.left - monstro.width / 2 < player.left) {
+            monstro.keys.ArrowRight = true
+        }
+        if (monstro.left + monstro.width / 2 > player.left - player.width) {
+            monstro.keys.ArrowLeft = true
+        }
 
+    }
 }
 var audio2 = new Audio('./game/jumpscare1.ogg');
 
@@ -107,40 +109,50 @@ function frontMoveMonstro(move) {
             width: monstro.height,
             height: monstro.height
         }
-        if (insideX(newmonstro)) {
-            monstro.left = newmonstro.left
-            avatar.style.left = monstro.left + "px";
+        let blocs = blocosX.length
+        let colidiu = false
+        for (i = 0; i < blocs; i++) {
+
+            if (doMonsterCollide(blocosX[i], newmonstro)) {
+                colidiu = true;
+            }
         }
-        if (insideY(newmonstro)) {
-            monstro.top = newmonstro.top
-            avatar.style.top = monstro.top + "px";
+
+        if (colidiu == false) {
+            if (insideX(newmonstro)) {
+                monstro.left = newmonstro.left
+                avatar.style.left = monstro.left + "px";
+            }
+            if (insideY(newmonstro)) {
+                monstro.top = newmonstro.top
+                avatar.style.top = monstro.top + "px";
+            }
         }
-    }
+        let col = doMonsterCollide(player, monstro)
+        if (col != null && pegou == false) {
+            audio2.play()
+            pegou = true
+            document.getElementById("player").style.opacity = 0.5
+            document.getElementById("monstro").style.scale = 2
+            document.getElementById("monstro").style.zIndex = 5
+            setTimeout(() => {
+                let avatar = document.getElementById("player")
+                avatar.style.opacity = 1
+                user.left = 170
+                avatar.style.left = user.left + "px";
+                user.top = 140
+                avatar.style.top = user.top + "px";
+                document.getElementById("monstro").style.scale = 0.5
+                document.getElementById("monstro").style.zIndex = 0
 
-    let col = doElsCollide(player, monstro)
-    if (col != null && pegou == false) {
-        audio2.play()
-        pegou = true
-        document.getElementById("player").style.opacity = 0.5
-        document.getElementById("monstro").style.scale = 2
-        document.getElementById("monstro").style.zIndex = 5
-        setTimeout(() => {
-            let avatar = document.getElementById("player")
-            avatar.style.opacity = 1
-            user.left = 170
-            avatar.style.left = user.left + "px";
-            user.top = 320
-            avatar.style.top = user.top + "px";
-            document.getElementById("monstro").style.scale = 0.5
-            document.getElementById("monstro").style.zIndex = 0
+                pegou = false
+            }, 1000)
 
-            pegou = false
-        }, 1000)
-
+        }
     }
 }
 
-let doElsCollide = function (rect1, rectb) {
+let doMonsterCollide = function (rect1, rectb) {
     //let rect1 ={}
     let rect2 = {}
     rect2.width = rectb.width / 2
@@ -186,6 +198,4 @@ function moveMonstro() {
     }
 
     frontMoveMonstro(move)
-
-
 }

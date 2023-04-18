@@ -395,6 +395,14 @@ function frontEnd(move) {
             }
         }
     }
+
+    let blocs = blocosX.length
+    player.hidden = false
+    for (i = 0; i < blocs; i++) {
+
+        if (doElsCollide(player, blocosX[i])) { console.log(player.hidden = true) }
+    }
+
 }
 document.getElementById("bg1").style.backgroundPosition = "10px 0px"
 async function moveBG() {
@@ -420,3 +428,35 @@ function insideY(quem = user) {
     if (quem.top < map.y - quem.height * 2 && quem.top > 0) { return true }
     else { return false }
 }
+
+
+
+var blocosX = [];
+
+function alignBlocos() {
+    let blocos = document.getElementsByClassName("bloco")
+    for (i in blocos) {
+        if (blocos[i].id) {
+            let bloco = { id: i, left: i * 440, top: -260, width: 320, height: 320 }
+            blocosX.push(bloco)
+            blocos[i].setAttribute("style", "left:" + (i * 440) + "px; top:-260px")
+
+            console.log(bloco)
+        }
+    }
+}
+alignBlocos();
+let doElsCollide = function (rect1, rect2) {
+    //let rect1 ={}
+
+    if (
+        rect1.left < rect2.left + rect2.width &&
+        rect1.left + rect1.width > rect2.left &&
+        rect1.top < rect2.top + rect2.height &&
+        rect1.height + rect1.top > rect2.top
+    ) {
+        return rect1;
+    } else {
+        return null;
+    }
+};
