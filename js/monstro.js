@@ -23,7 +23,7 @@ function newMonster() {
     monstro.style.display = "block"
     monstro.style.position = "absolute"
     monstro.style.scale = 0.5
-    document.getElementById("map").appendChild(monstro)
+    document.getElementById("game").appendChild(monstro)
 
     monstroimg.onload = function () {
         let monstr = document.getElementById("monstro")
