@@ -5,14 +5,14 @@ var monstro = {
     width: 160,
     height: 160,
     scale: 0.25,
-    estado: ["deboas", "persegue"]
-
-}
-let monstrokeys = {
-    ArrowUp: false,
-    ArrowRight: false,
-    ArrowDown: false,
-    ArrowLeft: false,
+    speed: 1.5,
+    estado: ["deboas", "persegue"],
+    keys: {
+        ArrowUp: false,
+        ArrowRight: false,
+        ArrowDown: false,
+        ArrowLeft: false,
+    }
 }
 
 function newMonster() {
@@ -37,19 +37,18 @@ function newMonster() {
 newMonster()
 
 function bot(inter) {
-    autoMoveMonstro()
     setTimeout(() => {
         let parado = Math.random() < 0.5 ? false : true;
         if (!parado) {
-            for (i in monstrokeys) {
-                monstrokeys[i] = Math.random() < 0.5 ? false : true;
+            for (i in monstro.keys) {
+                monstro.keys[i] = Math.random() < 0.5 ? false : true;
             }
         } else {
             autoMoveMonstro()
             let parado2 = Math.random() < 0.5 ? false : true;
             if (!parado2) {
-                for (i in monstrokeys) {
-                    monstrokeys[i] = false;
+                for (i in monstro.keys) {
+                    monstro.keys[i] = false;
                 }
             }
         }
@@ -61,46 +60,38 @@ function bot(inter) {
 }
 bot(2000)
 
-function autoMoveMonstro() {
-    if (monstrokeys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
+function autoMoveMonstro(quem = monstro) {
+    let monstro = quem
 
-        monstrokeys.ArrowDown = false
-    }
-    if (monstrokeys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
-        monstrokeys.ArrowUp = false
-    }
-    if (monstrokeys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
+    if (player.hidden == false) {
 
-        monstrokeys.ArrowLeft = false
-    }
-    if (monstrokeys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
-        monstrokeys.ArrowRight = false
-    }
-    if (monstro.top < player.top - player.height) {
-        monstrokeys.ArrowDown = true
-    }
-    if (monstro.top + monstro.height / 2 > player.top - player.height) {
-        monstrokeys.ArrowUp = true
-    }
-    if (monstro.left - monstro.width / 2 < player.left) {
-        monstrokeys.ArrowRight = true
-    }
-    if (monstro.left + monstro.width / 2 > player.left - player.width) {
-        monstrokeys.ArrowLeft = true
-    }
-    //console.log(player.top, y)
-    /* if (player.top <= y + 10 * 2 && player.top >= y - 10 * 2) {
-         keys.ArrowDown = false
-         keys.ArrowUp = false
-         clearInterval(automove)
-     }*/
+        if (monstro.keys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
 
-    /*if (player.left < x - speed && player.left > x + speed) {
-        keys.ArrowLeft = false
-        keys.ArrowRight = false
-        clearInterval(automove)
-    }*/
+            monstro.keys.ArrowDown = false
+        }
+        if (monstro.keys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
+            monstro.keys.ArrowUp = false
+        }
+        if (monstro.keys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
 
+            monstro.keys.ArrowLeft = false
+        }
+        if (monstro.keys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
+            monstro.keys.ArrowRight = false
+        }
+        if (monstro.top < player.top - player.height) {
+            monstro.keys.ArrowDown = true
+        }
+        if (monstro.top + monstro.height / 2 > player.top - player.height) {
+            monstro.keys.ArrowUp = true
+        }
+        if (monstro.left - monstro.width / 2 < player.left) {
+            monstro.keys.ArrowRight = true
+        }
+        if (monstro.left + monstro.width / 2 > player.left - player.width) {
+            monstro.keys.ArrowLeft = true
+        }
+    }
 }
 var audio2 = new Audio('./game/jumpscare1.ogg');
 
@@ -110,15 +101,14 @@ function frontMoveMonstro(move) {
     let avatar = document.getElementById("monstro")
     if (avatar != null) {
         let newmonstro = {
-            left: monstro.left + (move.x * mspeed),
-            top: monstro.top + (move.y * mspeed),
+            left: monstro.left + (move.x * monstro.speed),
+            top: monstro.top + (move.y * monstro.speed),
             width: monstro.height,
             height: monstro.height
         }
         if (insideX(newmonstro)) {
             monstro.left = newmonstro.left
             avatar.style.left = monstro.left + "px";
-            //  moveBG()
         }
         if (insideY(newmonstro)) {
             monstro.top = newmonstro.top
@@ -147,7 +137,6 @@ function frontMoveMonstro(move) {
         }, 1000)
 
     }
-    // console.log(col)
 }
 
 let doElsCollide = function (rect1, rectb) {
@@ -182,65 +171,21 @@ function animaMonstro() {
 
 setInterval(moveMonstro, 10)
 function moveMonstro() {
-    //CAMERA
-
-    // autoMove()
     let move = { x: 0, y: 0 }
-    //  corpo = document.getElementById("corpo-" + id);
-    if (monstrokeys.ArrowUp == true && monstrokeys.ArrowDown == false) {
+    if (monstro.keys.ArrowUp == true && monstro.keys.ArrowDown == false) {
         move.y = -1
     }
-    if (monstrokeys.ArrowUp == false && monstrokeys.ArrowDown == true) {
+    if (monstro.keys.ArrowUp == false && monstro.keys.ArrowDown == true) {
         move.y = 1
     }
-    if (monstrokeys.ArrowRight == true && monstrokeys.ArrowLeft == false) {
+    if (monstro.keys.ArrowRight == true && monstro.keys.ArrowLeft == false) {
         move.x = 1
-        // corpo.style.backgroundImage = "url('/game/andaR.png')";
     }
-    if (keys.ArrowRight == false && keys.ArrowLeft == true) {
+    if (monstro.keys.ArrowRight == false && monstro.keys.ArrowLeft == true) {
         move.x = -1
-        //   corpo.style.backgroundImage = "url('/game/andaR.png')";
     }
-    /* if (move.x < 0) {
-         document.getElementById("head-" + id).className = "headl";
-         document.getElementById("corpo-" + id).className = "corpol";
-     }
-     else if (move.x > 0) {
-         document.getElementById("head-" + id).className = "head";
-         document.getElementById("corpo-" + id).className = "corpo";
-     }*/
+
     frontMoveMonstro(move)
-    /*
-        if (move.x == oldpos.x && move.y == oldpos.y) {
-            send = false;
-        }
-        if (send == true) {
-            // sendServer(move, "m")
-            if (move.x == 0 && move.y == 0) {
-                corpo.style.backgroundImage = "url('game/danca.png')";
-                send = false;
-            }
-            oldpos = move;
-        }
-        if (segue != 0 && (move.x != 0 || move.y != 0)) {
-            //disableScroll()
-            player = users[id]
-            if (player != null) {
 
-                let x1 = player.left - windowx / 2 + 32;
-                let y1 = player.top - windowy / 2 - 64;
-                let wx = container.scrollLeft;
-                let wy = container.scrollTop;
-                let tx = wx + (x1 - wx) * 0.5;
-                let ty = wy + (y1 - wy) * 0.5;
-                /*
-                  container.scrollTo(tx, ty)
-
-                container.scrollTo(tx, ty)
-
-            }
-         }*/
 
 }
-
-var mspeed = 1.5
