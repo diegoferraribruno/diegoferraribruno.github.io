@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/game.css">
+    <meta charset="UTF-8">
+    <title>Diego Ferrari Bruno</title>
+
+</head>
+
+<body onmouseup="mouse_up(event)" onmousemove="mouse_position(event)">
+    <div id="container">
+        <div id="map" style="width: 1920px; height: 1080px;">
+            <div id="bg1" class="bg">
+                <div id="bg2" class="bg">
+
+
+
+
+                    <div id="joypad"
+                        style="position:fixed; z-index: 3000; width:130px; height: 130px; bottom: 42px; left:115px; right:20px; float:left;">
+                        <div id="manche" onmousedown="mouse_down(event)"
+                            style="position: absolute; background-color: rgba(50, 50, 50, 0.2); width: 120px; height: 120px; left:30px; top: 0px; border-radius: 60px; z-index: 1800; background-image:url('game/setas.png'); background-position:center;background-repeat:no-repeat;">
+                        </div>
+                    </div>
+
+                    <div id="gitbio" class="bloco shadow"><img src="avatar/03.png" style="max-width: 220px;">
+                        <p>Hello, i am an artist, multimedia designer, father and game developer from Brazil,
+                            currently into JavaScript programing and making some games and apps (to make games) with
+                            it. :)</p>
+                    </div>
+                    <div id="blog" class="bloco shadow">📔 Mini - Blog do Diego</div>
+                    <div id="bio" class="bloco shadow"></div>
+
+                    <span id="galeria-container" class="bloco">
+                        <img id="foto" src="galeria/01/desenho0.png" class="shadow">
+                        <div id="legenda">Galeria</div>
+                        <span id="galery">
+                            <span class="bot" style="margin-bottom:  40px;" onmousedown="scrollg(-64)">⬅️</span>
+                            <span id="galeria">
+
+                            </span>
+                            <span class="bot" style="margin-bottom:  40px;" onmousedown="scrollg(64)">➡️</span>
+
+                        </span>
+                    </span>
+                    <!--div id="video" class="bloco">
+                            <iframe width="300" height="480" src="https://www.youtube.com/embed/BPTSugwTXOw"
+                            title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div-->
+
+                    <!--iframe name="iframe" id="iframe" src="galeria.html" width="360px" height="640px" class="borderless"></iframe -->
+
+
+
+                </div>
+            </div>
+        </div>
+        <div id="game">
+            <div id="players">
+                <div class="player" id="player"
+                    style="position: absolute; left: 120px; top: 400px; margin-top:-82px; margin-left:-16px; z-index: 2">
+                    <div id="pname-player" class="pname">Diego</div>
+                    <a name="player1"></a>
+                    <p id="corpo-player" class="color" style="  height: 32px;
+        width: 32px;
+        background: url('game/danca.png') 0px 0px;
+        margin: 48px 24px 24px 18px;
+        padding: 0px 0px 0px 0px;
+        position: absolute;
+        filter: drop-shadow(0px 0px 4px red) hue-rotate(0deg);
+        ">
+                    </p>
+                    <div id="head-player" class="head"
+                        style="border-radius: 32px; background: url('game/1f606.png'); display:block; background-size: 100% 100%; width:64px; height:64px; filter :drop-shadow(0px 0px 4px hsl(0, 100%, 50%));">
+                    </div>
+                    <div id="rhand"></div>
+                    <p id="lhand"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/blog.js"></script>
+    <script type="text/javascript" src="js/usuario.js"></script>
+    <script type="text/javascript" src="js/galeria.js"></script>
+    <script type="text/javascript" src="js/monstro.js"></script>
+
+    <script>
+        /*  async function githubBio() {
+              const res = await fetch('https://api.github.com/users/diegoferraribruno');
+              const json = await res.json();
+              // console.log(json)
+              let gavatar = document.createElement("img")
+              gavatar.src = json.avatar_url
+              gavatar.style.maxWidth = "220px"
+              let para = document.createElement("p")
+              para.innerText = json.bio
+              document.getElementById("gitbio").appendChild(gavatar)
+              document.getElementById("gitbio").appendChild(para)
+  
+          }
+          githubBio()
+        */
+    </script>
+</body>
+
+
+
+
+</html>

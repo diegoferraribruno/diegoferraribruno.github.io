@@ -37,7 +37,8 @@ let player = {
     top: 40,
     left: 140,
     width: 32,
-    height: 100
+    height: 100,
+    hidden: false
 }
 var speed = 2
 container.style.width = screen.width + "px";
@@ -109,7 +110,7 @@ function mouse_up(event) {
 
 function mouse_position(e) {
     if (seguemouse == true) {
-        clickmove(e.layerX, e.layerY)
+        clickmove(e.clientX, e.clientY)
     }
     if (drag == true) {
         let deltaX;
@@ -218,7 +219,7 @@ setInterval(function () {
 },
     150);
 setInterval(movePlayer, 10)
-let flip = 1;
+//let flip = 1;
 
 let automove = false
 var TARGET = { x: 0, y: 0 }
@@ -272,7 +273,11 @@ function autoMove() {
     }*/
 
 }
-
+let playerImg = {
+    "danca": "",
+    "andar": "",
+    "anda": ""
+}
 
 function movePlayer() {
     //CAMERA
@@ -288,11 +293,12 @@ function movePlayer() {
     }
     if (keys.ArrowRight == true && keys.ArrowLeft == false || keys.d == true && keys.a == false) {
         move.x = 1
-        corpo.style.backgroundImage = "url('game/andaR.png')";
+        corpo.style.backgroundImage = "url('" + playerImg["andar"].src + "')";
     }
     if (keys.ArrowRight == false && keys.ArrowLeft == true || keys.a == true && keys.d == false) {
         move.x = -1
-        corpo.style.backgroundImage = "url('game/andaR.png')";
+
+        corpo.style.backgroundImage = "url('" + playerImg["andar"].src + "')";;
     }
     if (move.x < 0) {
         document.getElementById("head-" + id).className = "headl";
@@ -310,7 +316,7 @@ function movePlayer() {
     if (send == true) {
         // sendServer(move, "m")
         if (move.x == 0 && move.y == 0) {
-            corpo.style.backgroundImage = "url('game/danca.png')";
+            corpo.style.backgroundImage = "url('" + playerImg["danca"].src + "')";;
             send = false;
         }
         oldpos = move;
@@ -336,6 +342,20 @@ function movePlayer() {
 
 }
 
+
+async function loadPlayer() {
+    let imagename = ["anda", "andar", "danca"]
+    for (i in imagename) {
+        let nome = imagename[i]
+        let sprite = new Image()
+        sprite.src = 'game/' + nome + '.png'
+        sprite.onload = function () {
+            playerImg[nome] = sprite
+        }
+    }
+
+}
+loadPlayer()
 
 function frontEnd(move) {
 
@@ -376,11 +396,14 @@ function frontEnd(move) {
         }
     }
 }
+document.getElementById("bg1").style.backgroundPosition = "10px 0px"
 async function moveBG() {
-    document.getElementById("bg1").style.backgroundPosition = `-${user.left / 4}px 0px`;
+    let bgx = document.getElementById("bg1").style.backgroundPositionX
+    document.getElementById("bg1").style.backgroundPosition = (keys.ArrowLeft + keys.ArrowRight) / 8 + parseFloat(bgx, 10) + 0.1 + "px 0px"
     //document.getElementById("bg2").style.backgroundPosition = `-${user.left / 2}px 0px`;
 
 }
+const nuvens = setInterval(moveBG, 40)
 var map = {
     x: parseInt(
 
