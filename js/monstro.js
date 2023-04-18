@@ -5,8 +5,9 @@ var monstro = {
     width: 160,
     height: 160,
     scale: 0.25,
-    speed: 1.5,
+    speed: 2.5,
     estado: ["deboas", "persegue"],
+    frame: 0,
     keys: {
         ArrowUp: false,
         ArrowRight: false,
@@ -38,60 +39,60 @@ newMonster()
 
 function bot(inter) {
     setTimeout(() => {
+
         let parado = Math.random() < 0.5 ? false : true;
         if (!parado) {
-            for (i in monstro.keys) {
-                monstro.keys[i] = Math.random() < 0.5 ? false : true;
-            }
-        } else {
             autoMoveMonstro()
+
+        } else {
             let parado2 = Math.random() < 0.5 ? false : true;
             if (!parado2) {
                 for (i in monstro.keys) {
                     monstro.keys[i] = false;
                 }
+            } else {
+                for (i in monstro.keys) {
+                    monstro.keys[i] = Math.random() < 0.5 ? false : true;
+                }
             }
         }
-        inter = Math.random() * 2000
+        inter = Math.random() * 1000
         bot(inter)
         // send = true;
 
     }, inter)
 }
-bot(2000)
+bot(1000)
 
-function autoMoveMonstro(quem = monstro) {
-    let monstro = quem
+function autoMoveMonstro() {
 
-    if (player.hidden == false) {
+    if (monstro.keys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
 
-        if (monstro.keys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
-
-            monstro.keys.ArrowDown = false
-        }
-        if (monstro.keys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
-            monstro.keys.ArrowUp = false
-        }
-        if (monstro.keys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
-
-            monstro.keys.ArrowLeft = false
-        }
-        if (monstro.keys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
-            monstro.keys.ArrowRight = false
-        }
-        if (monstro.top < player.top - player.height) {
-            monstro.keys.ArrowDown = true
-        }
-        if (monstro.top + monstro.height / 2 > player.top - player.height) {
-            monstro.keys.ArrowUp = true
-        }
-        if (monstro.left - monstro.width / 2 < player.left) {
-            monstro.keys.ArrowRight = true
-        }
-        if (monstro.left + monstro.width / 2 > player.left - player.width) {
-            monstro.keys.ArrowLeft = true
-        }
+        monstro.keys.ArrowDown = false
     }
+    if (monstro.keys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
+        monstro.keys.ArrowUp = false
+    }
+    if (monstro.keys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
+
+        monstro.keys.ArrowLeft = false
+    }
+    if (monstro.keys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
+        monstro.keys.ArrowRight = false
+    }
+    if (monstro.top < player.top - player.height) {
+        monstro.keys.ArrowDown = true
+    }
+    if (monstro.top + monstro.height / 2 > player.top - player.height) {
+        monstro.keys.ArrowUp = true
+    }
+    if (monstro.left - monstro.width / 2 < player.left) {
+        monstro.keys.ArrowRight = true
+    }
+    if (monstro.left + monstro.width / 2 > player.left - player.width) {
+        monstro.keys.ArrowLeft = true
+    }
+
 }
 var audio2 = new Audio('./game/jumpscare1.ogg');
 
@@ -158,15 +159,14 @@ let doElsCollide = function (rect1, rectb) {
     }
 };
 //anima
-let mframe = 0
 setInterval(animaMonstro, 110)
 function animaMonstro() {
-    let position = 320 * mframe
+    let position = 320 * monstro.frame
     let monstr = document.getElementById("monstro")
     monstr.style.backgroundPosition = `-${position}px 0px`;
-    monstr.style.rotate = -20 * mframe + "deg"
-    mframe++
-    if (mframe > 2) { mframe = 0 }
+    monstr.style.rotate = -20 * monstro.frame + "deg"
+    monstro.frame++
+    if (monstro.frame > 2) { monstro.frame = 0 }
 }
 
 setInterval(moveMonstro, 10)

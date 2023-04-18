@@ -40,7 +40,7 @@ let player = {
     height: 100,
     hidden: false
 }
-var speed = 2
+var speed = 4
 container.style.width = screen.width + "px";
 container.style.height = screen.height + "px";
 
