@@ -102,7 +102,7 @@ function autoMoveMonstro() {
     }*/
 
 }
-var audio2 = new Audio('./audio/back_001.wav');
+var audio2 = new Audio('./game/jumpscare1.ogg');
 
 let pegou = false
 function frontMoveMonstro(move) {
@@ -226,7 +226,7 @@ function moveMonstro() {
             //disableScroll()
             player = users[id]
             if (player != null) {
-    
+
                 let x1 = player.left - windowx / 2 + 32;
                 let y1 = player.top - windowy / 2 - 64;
                 let wx = container.scrollLeft;
@@ -235,9 +235,9 @@ function moveMonstro() {
                 let ty = wy + (y1 - wy) * 0.5;
                 /*
                   container.scrollTo(tx, ty)
-                  
+
                 container.scrollTo(tx, ty)
-    
+
             }
          }*/
 
