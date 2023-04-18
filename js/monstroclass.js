@@ -5,7 +5,7 @@ class Personagem { // Criação de uma classe em JavasScript é uma função que
         this.arma = arma;
         this.width = largura;
         this.height = altura;
-        this.img = 
+        this.img = imagem
 
     }
     ataque() {
