@@ -133,9 +133,13 @@ function frontMoveMonstro(move) {
         if (col != null && pegou == false) {
             audio2.play()
             pegou = true
+            player.hidden = true
             document.getElementById("player").style.opacity = 0.5
             document.getElementById("monstro").style.scale = 2
             document.getElementById("monstro").style.zIndex = 5
+            monstro.keys.ArrowDown = true
+            monstro.keys.ArrowRight = true
+
             setTimeout(() => {
                 let avatar = document.getElementById("player")
                 avatar.style.opacity = 1
@@ -145,7 +149,11 @@ function frontMoveMonstro(move) {
                 avatar.style.top = user.top + "px";
                 document.getElementById("monstro").style.scale = 0.5
                 document.getElementById("monstro").style.zIndex = 0
-
+                monstro.keys.ArrowDown = true
+                monstro.keys.ArrowRight = true
+                monstro.keys.ArrowUp = false
+                monstro.keys.ArrowLeft = false
+                player.hidden = true
                 pegou = false
             }, 1000)
 
