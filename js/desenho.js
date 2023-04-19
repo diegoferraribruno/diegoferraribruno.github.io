@@ -75,11 +75,6 @@ function startup() {
 
     // (optional) Android doesn't always fire orientationChange on 180 degree turns
     setInterval(checkOrientation, 2000);
-    window.scrollTo(0, 1600);
-    setTimeout(() => {
-        window.scrollTo(0, 400)
-        setTimeout(window.scrollTo(0, 0), 160)
-    }, 1000);
 
     document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(detail) {
         trocaEmoji(event.detail.unicode);
