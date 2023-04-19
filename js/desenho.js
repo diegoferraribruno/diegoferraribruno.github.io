@@ -804,7 +804,7 @@ function backPaint() {
         document.getElementById(
             "globalComposite"
         ).innerHTML =
-            `< span style = "position:absolute; width:30px; ` +
+            `<span style = "position:absolute; width:30px; ` +
             `display:block; color:white; margin-left:-4px; margin-top:-5px;">⭕</span> ` +
             `<span style="position:relative; float:left; width:30px; display:block;  ` +
             `color:black; left:1px; margin-top:0px;" title="Pintando por baixo">🔲</span>`;
