@@ -101,7 +101,7 @@ function mouse_up(event) {
     let t = event.target.id
     if (t == 'game' && seguemouse == false) {
 
-        clickmove(event.clientX - player.width / 2, event.clientY - player.height)
+        clickmove(event.layerX - player.width / 2, event.layerY - 14)
     }
     if (seguemouse == true) { seguemouse = false }
 
@@ -400,7 +400,7 @@ function frontEnd(move) {
     player.hidden = false
     for (i = 0; i < blocs; i++) {
 
-        if (doElsCollide(player, blocosX[i])) { console.log(player.hidden = true) }
+        if (doElsCollide(player, blocosX[i])) { player.hidden = true }
     }
 
 }
@@ -432,16 +432,14 @@ function insideY(quem = user) {
 
 
 var blocosX = [];
+let blocos = document.getElementsByClassName("bloco")
 
 function alignBlocos() {
-    let blocos = document.getElementsByClassName("bloco")
     for (i in blocos) {
         if (blocos[i].id) {
-            let bloco = { id: i, left: i * 440, top: -260, width: 320, height: 320 }
+            let bloco = { id: blocos[i].id, left: i * 440, top: -260, width: 320, height: 320 }
             blocosX.push(bloco)
             blocos[i].setAttribute("style", "left:" + (i * 440) + "px; top:-260px")
-
-            console.log(bloco)
         }
     }
 }
