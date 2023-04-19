@@ -5,7 +5,7 @@ window.onload = function () {
     setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 1000)
     setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 2000)
     setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 3000)
-    setTimeout(() => limpaCabeca(), 200)
+    setTimeout(() => limpaCabeca(), 400)
     setTimeout(() => document.getElementById("carregando").style.display = "none", 4000)
 }
 

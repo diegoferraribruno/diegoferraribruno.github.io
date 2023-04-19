@@ -42,7 +42,7 @@ function bot(inter) {
     setTimeout(() => {
 
         let parado = Math.random() < 0.5 ? false : true;
-        if (!parado) {
+        if (!parado && player.hidden == false) {
             autoMoveMonstro()
 
         } else {
@@ -66,36 +66,36 @@ function bot(inter) {
 bot(1000)
 
 function autoMoveMonstro() {
-    if (player.hidden == false) {
 
-        if (monstro.keys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
 
-            monstro.keys.ArrowDown = false
-        }
-        if (monstro.keys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
-            monstro.keys.ArrowUp = false
-        }
-        if (monstro.keys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
+    if (monstro.keys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
 
-            monstro.keys.ArrowLeft = false
-        }
-        if (monstro.keys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
-            monstro.keys.ArrowRight = false
-        }
-        if (monstro.top < player.top - player.height) {
-            monstro.keys.ArrowDown = true
-        }
-        if (monstro.top + monstro.height / 2 > player.top - player.height) {
-            monstro.keys.ArrowUp = true
-        }
-        if (monstro.left - monstro.width / 2 < player.left) {
-            monstro.keys.ArrowRight = true
-        }
-        if (monstro.left + monstro.width / 2 > player.left - player.width) {
-            monstro.keys.ArrowLeft = true
-        }
-
+        monstro.keys.ArrowDown = false
     }
+    if (monstro.keys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
+        monstro.keys.ArrowUp = false
+    }
+    if (monstro.keys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
+
+        monstro.keys.ArrowLeft = false
+    }
+    if (monstro.keys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
+        monstro.keys.ArrowRight = false
+    }
+    if (monstro.top < player.top - player.height) {
+        monstro.keys.ArrowDown = true
+    }
+    if (monstro.top + monstro.height / 2 > player.top - player.height) {
+        monstro.keys.ArrowUp = true
+    }
+    if (monstro.left - monstro.width / 2 < player.left) {
+        monstro.keys.ArrowRight = true
+    }
+    if (monstro.left + monstro.width / 2 > player.left - player.width) {
+        monstro.keys.ArrowLeft = true
+    }
+
+
 }
 var audio2 = new Audio('./game/jumpscare1.ogg');
 
@@ -124,7 +124,7 @@ function frontMoveMonstro(move) {
                 monstro.left = newmonstro.left
                 avatar.style.left = monstro.left + "px";
             }
-            if (insideY(newmonstro)) {
+            if (insideYMonstro(newmonstro)) {
                 monstro.top = newmonstro.top
                 avatar.style.top = monstro.top + "px";
             }
@@ -151,6 +151,10 @@ function frontMoveMonstro(move) {
 
         }
     }
+}
+function insideYMonstro(quem = user) {
+    if (quem.top < map.y - quem.height * 2 && quem.top > 0 - quem.height) { return true }
+    else { return false }
 }
 
 let doMonsterCollide = function (rect1, rectb) {
