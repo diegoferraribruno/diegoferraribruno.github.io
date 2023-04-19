@@ -165,11 +165,16 @@ a:visited {
 #legenda {
     display: block;
     font-size: small;
+    font-weight: bold;
     text-align: justify;
     padding: 0px;
     width: 96%;
     text-align: center;
     margin: 0px 4px 4px 4px;
+
+    text-shadow: -1px 0 #eeeeee66, 0 1px #eeeeee66, 1px 0 #eeeeee66, 0 -1px #eeeeee66;
+    background-color: #eeeeee;
+    border-radius: 8px;
 }
 
 .moldura {
