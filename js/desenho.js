@@ -171,6 +171,11 @@ function exec(coma = 0) {
     let scope = lenc - undoLevel
     if (scope > coma) {
         switch (comandos[coma][0]) {
+            case "FX":
+                context.filter = filters[comandos[coma][1]]
+                coma++
+                exec(coma)
+                break;
             case "CB":
                 if (!changedBrush) {
                     strokeColor = comandos[coma][3]
@@ -310,6 +315,9 @@ function desenha(
 ) {
     let comando = []
     switch (CMD) {
+        case "FX":
+            comando = ["FX", fx]
+            comandos.push(comando)
         case "CB":
             comando = ["CB", GCO, X, Y, eoX]
             comandos.push(comando)
@@ -789,6 +797,9 @@ async function modeTo(qual) {
                 emojiSizeRange();
             }, 40)
             changeGCO();
+
+            break;
+        case "FX":
 
             break;
         case _:

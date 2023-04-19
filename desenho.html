@@ -231,6 +231,7 @@
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
 
                 <span class="botao">
+                    <span id="FX" title="filtros" class="bot" onclick="modeTo('FX')">🪄 </span>
                     <span id="salvar" title="salvar imagem" class="bot" onclick="modeTo('salvar')">📥</span>
 
                     <span id="imagem" title="adicionar imagem" class="bot" onmousedown="modeTo('imagem')"> 📤</span>
@@ -323,7 +324,20 @@
                         value="1"-->
 
             </div>
+            <div id="menuFX" class="fundobranco submenu">
+                <span title="fechar efeitos" onmousedown="removeClass()" class="close">❎</span>
+                <span class="botao" onclick="FX(1)">
 
+                    <span class="bot">🌈<span style="display:inline-block; margin-left: -30px;"></span>🚫</span>
+                    Escala de cinza
+                </span>
+                <span class="botao" onclick="FX(2)">🌈 Sepia </span>
+                <span class="botao" onclick="FX(3)"> ◒ Contraste 150% </span>
+                <span class="botao" onclick="FX(4)"> ◒ Alto Contraste 300% </span>
+                <span class="botao" onclick="FX(5)"> 👓 desfoque </span>
+                <span class="botao" onclick="FX(6)"> ☯️ invertido </span>
+                <span class="botao" onclick="FX(0)">🚫 Remover Filtros</span>
+            </div>
             <div id="menusalvar" class="fundobranco submenu">
                 <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">📥 Baixar / Salvar<span
                         class="close">❎</span></span>
@@ -442,6 +456,8 @@
     <!--script type="text/javascript" src="js/rotacionar.js"></script-->
     <script type="text/javascript" src="js/save.js"></script>
     <script type="text/javascript" src="js/carregar.js"></script>
+    <script type="text/javascript" src="js/FX.js"></script>
+
 
     <!-- para exportar gifs animados-->
     <script src="js/gif/b64.js"></script>

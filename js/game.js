@@ -4,7 +4,7 @@ var user = {
     name: "",
     serverPlayerPos: { x: 120, y: 400 },
     left: 140,
-    top: 40,
+    top: 120,
     width: 32,
     height: 100,
     face: 0,
@@ -34,7 +34,7 @@ document.addEventListener('keyup', keyUp);
 let mode = "move"
 let oldpos = { x: 0, y: 0 }
 let player = {
-    top: 40,
+    top: 120,
     left: 140,
     width: 32,
     height: 100,
@@ -327,7 +327,7 @@ function movePlayer() {
         if (player != null) {
 
             let x1 = player.left - windowx / 2 + 32;
-            let y1 = player.top + (player.height * 2) - windowy / 4 - 64;
+            let y1 = player.top + (player.height) - windowy / 4 - 64;
             let wx = container.scrollLeft;
             let wy = container.scrollTop;
             let tx = wx + (x1 - wx) * 0.5;
@@ -437,9 +437,11 @@ let blocos = document.getElementsByClassName("bloco")
 function alignBlocos() {
     for (i in blocos) {
         if (blocos[i].id) {
-            let bloco = { id: blocos[i].id, left: i * 440, top: -260, width: 320, height: 320 }
+            let esq = (i * 440) + 16
+            let topo = -280
+            let bloco = { id: blocos[i].id, left: i * esq, top: topo, width: 320, height: 320 }
             blocosX.push(bloco)
-            blocos[i].setAttribute("style", "left:" + (i * 440) + "px; top:-260px")
+            blocos[i].setAttribute("style", "left:" + esq + "px; top:" + topo + "px")
         }
     }
 }

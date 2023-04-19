@@ -121,6 +121,7 @@ a:visited {
     position: fixed;
     left: 2px;
     bottom: 0px;
+    z-index: 300;
 }
 
 .confirm {
@@ -208,6 +209,8 @@ a:visited {
     animation: animatezoom 0.6s
 }
 
+.entra {}
+
 @keyframes animatezoom {
     from {
         transform: scale(0)
@@ -289,9 +292,16 @@ h2 {
 #gitbio {
     padding: 0px 10px 10px 10px;
     background-color: #333;
-    font-size: 0.8em;
-    font-weight: normal;
+    font-size: 0.9em;
+    font-weight: 600;
     color: #dfb000;
 }
 
-/**/
+.carregandoc {
+    display: block;
+    width: 40%;
+    height: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    animation: animatezoom 0.6s;
+}
