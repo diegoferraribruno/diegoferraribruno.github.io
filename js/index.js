@@ -145,15 +145,3 @@ function copyPix() {
     // Alert the copied text
     Alert("Chave PIX copiada: " + copyText.value);
 }
-/*
-(function alignBlocos() {
-    let blocos = document.getElementsByClassName("bloco")
-    for (i in blocos) {
-        if (blocos[i].id) {
-
-            blocos[i].setAttribute("style", "left:" + i * 400 + "px")
-            console.log(blocos[i])
-        }
-    }
-}
-)();*/

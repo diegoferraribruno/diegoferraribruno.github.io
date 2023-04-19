@@ -4,7 +4,7 @@ var user = {
     name: "",
     serverPlayerPos: { x: 120, y: 400 },
     left: 140,
-    top: 200,
+    top: 400,
     width: 32,
     height: 100,
     face: 0,
@@ -35,7 +35,7 @@ document.addEventListener('keyup', keyUp);
 let mode = "move"
 let oldpos = { x: 0, y: 0 }
 let player = {
-    top: 200,
+    top: 400,
     left: 140,
     width: 32,
     height: 100,
@@ -143,7 +143,7 @@ document.addEventListener('mousedown', function (e) {
     if (t == "head-player") {
         seguemouse = true
     }
-    console.log(t)
+    // console.log(t)
 
 }
 
@@ -401,9 +401,8 @@ function frontEnd(move) {
     player.hidden = false
     for (i = 0; i < blocs; i++) {
 
-        if (doElsCollide(player, blocosX[i])) { console.log(player.hidden = true) }
+        if (doElsCollide(player, blocosX[i])) { player.hidden = true }
     }
-
 }
 document.getElementById("bg1").style.backgroundPosition = "10px 0px"
 async function moveBG() {
@@ -458,7 +457,8 @@ window.onload = function () {
     setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 3000)
     setTimeout(() => limpaCabeca(), 400)
     setTimeout(() => { document.getElementById("carregando").style.display = "none"; gamestate = "play"; }, 4000)
-    setTimeout(() => keys.ArrowUp = true, 5000)
+    setTimeout(() => { keys.ArrowUp = true; setTimeout(() => keys.ArrowUp = false, 1500) }, 3980)
+
     // window.addEventListener("orientationchange", checkOrientation, false);
 }
 let orient = setInterval(() => checkO(), 2000);

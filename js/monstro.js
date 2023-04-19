@@ -114,7 +114,7 @@ function frontMoveMonstro(move) {
             height: monstro.height
         }
         let blocs = blocosX.length
-        let colidiu = false
+        var colidiu = false
         for (i = 0; i < blocs; i++) {
 
             if (doMonsterCollide(blocosX[i], newmonstro)) {
