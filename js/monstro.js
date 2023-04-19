@@ -39,21 +39,24 @@ function newMonster() {
 newMonster()
 
 function bot(inter) {
+
     setTimeout(() => {
 
-        let parado = Math.random() < 0.5 ? false : true;
-        if (!parado && player.hidden == false) {
-            autoMoveMonstro()
+        if (gamestate == "play") {
+            let parado = Math.random() < 0.5 ? false : true;
+            if (!parado && player.hidden == false) {
+                autoMoveMonstro()
 
-        } else {
-            let parado2 = Math.random() < 0.5 ? false : true;
-            if (!parado2) {
-                for (i in monstro.keys) {
-                    monstro.keys[i] = false;
-                }
             } else {
-                for (i in monstro.keys) {
-                    monstro.keys[i] = Math.random() < 0.5 ? false : true;
+                let parado2 = Math.random() < 0.5 ? false : true;
+                if (!parado2) {
+                    for (i in monstro.keys) {
+                        monstro.keys[i] = false;
+                    }
+                } else {
+                    for (i in monstro.keys) {
+                        monstro.keys[i] = Math.random() < 0.5 ? false : true;
+                    }
                 }
             }
         }

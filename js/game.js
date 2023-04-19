@@ -4,12 +4,13 @@ var user = {
     name: "",
     serverPlayerPos: { x: 120, y: 400 },
     left: 140,
-    top: 120,
+    top: 200,
     width: 32,
     height: 100,
     face: 0,
     hue: 0
 }
+var gamestate = "pause"
 var users = { "player": user }
 var game = document.getElementById("game")
 const src = document.getElementById("manche");
@@ -34,7 +35,7 @@ document.addEventListener('keyup', keyUp);
 let mode = "move"
 let oldpos = { x: 0, y: 0 }
 let player = {
-    top: 120,
+    top: 200,
     left: 140,
     width: 32,
     height: 100,
@@ -327,7 +328,7 @@ function movePlayer() {
         if (player != null) {
 
             let x1 = player.left - windowx / 2 + 32;
-            let y1 = player.top + (player.height) - windowy / 4 - 64;
+            let y1 = player.top + (player.height * 1.8) - windowy / 4 - 64;
             let wx = container.scrollLeft;
             let wy = container.scrollTop;
             let tx = wx + (x1 - wx) * 0.5;
@@ -437,7 +438,8 @@ let blocos = document.getElementsByClassName("bloco")
 function alignBlocos() {
     for (i in blocos) {
         if (blocos[i].id) {
-            let esq = (i * 440) + 16
+            let sobra = (windowx - 320) / 2
+            let esq = (i * 440) + sobra
             let topo = -280
             let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 340 }
             blocosX.push(bloco)
