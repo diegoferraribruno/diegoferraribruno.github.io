@@ -38,7 +38,7 @@ let player = {
     left: 140,
     width: 32,
     height: 100,
-    hidden: false
+    hidden: true
 }
 var speed = 4
 container.style.width = screen.width + "px";
@@ -400,7 +400,7 @@ function frontEnd(move) {
     player.hidden = false
     for (i = 0; i < blocs; i++) {
 
-        if (doElsCollide(player, blocosX[i])) { player.hidden = true }
+        if (doElsCollide(player, blocosX[i])) { console.log(player.hidden = true) }
     }
 
 }
@@ -439,7 +439,7 @@ function alignBlocos() {
         if (blocos[i].id) {
             let esq = (i * 440) + 16
             let topo = -280
-            let bloco = { id: blocos[i].id, left: i * esq, top: topo, width: 320, height: 320 }
+            let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 340 }
             blocosX.push(bloco)
             blocos[i].setAttribute("style", "left:" + esq + "px; top:" + topo + "px")
         }
