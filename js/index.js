@@ -1,15 +1,6 @@
 var cabeca = document.createElement("div")
 cabeca.id = "cabeca"
 document.body.appendChild(cabeca)
-window.onload = function () {
-    setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 1000)
-    setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 2000)
-    setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 3000)
-    setTimeout(() => limpaCabeca(), 400)
-    setTimeout(() => { document.getElementById("carregando").style.display = "none"; gamestate = "play"; }, 4000)
-    setTimeout(() => keys.ArrowUp = true, 5000)
-}
-
 
 var usuarios = [{
     id: "01",

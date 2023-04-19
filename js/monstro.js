@@ -123,7 +123,7 @@ function frontMoveMonstro(move) {
         }
 
         if (colidiu == false) {
-            if (insideX(newmonstro)) {
+            if (insideXMonstro(newmonstro)) {
                 monstro.left = newmonstro.left
                 avatar.style.left = monstro.left + "px";
             }
@@ -135,28 +135,22 @@ function frontMoveMonstro(move) {
         let col = doMonsterCollide(player, monstro)
         if (col != null && pegou == false) {
             audio2.play()
+            playershake()
             pegou = true
-            player.hidden = true
-            document.getElementById("player").style.opacity = 0.5
-            document.getElementById("monstro").style.scale = 2
-            document.getElementById("monstro").style.zIndex = 5
+
+            document.getElementById("monstro").classList.add("jumpscare")
+            //document.getElementById("monstro").style.zIndex = 5
             monstro.keys.ArrowDown = true
             monstro.keys.ArrowRight = true
 
             setTimeout(() => {
-                let avatar = document.getElementById("player")
-                avatar.style.opacity = 1
-                user.left = 170
-                avatar.style.left = user.left + "px";
-                user.top = 10
-                avatar.style.top = user.top + "px";
+                document.getElementById("monstro").classList.remove("jumpscare")
                 document.getElementById("monstro").style.scale = 0.5
-                document.getElementById("monstro").style.zIndex = 0
+                // document.getElementById("monstro").style.zIndex = 0
                 monstro.keys.ArrowDown = true
                 monstro.keys.ArrowRight = true
                 monstro.keys.ArrowUp = false
                 monstro.keys.ArrowLeft = false
-                player.hidden = true
                 pegou = false
             }, 1000)
 
@@ -167,11 +161,14 @@ function insideYMonstro(quem = user) {
     if (quem.top < map.y - quem.height * 2 && quem.top > 0 - quem.height) { return true }
     else { return false }
 }
-
+function insideXMonstro(quem = user) {
+    if (quem.left < map.x + quem.width / 2 && quem.left > - quem.width) { return true }
+    else { return false }
+}
 let doMonsterCollide = function (rect1, rectb) {
     //let rect1 ={}
     let rect2 = {}
-    rect2.width = rectb.width / 2
+    rect2.width = rectb.width
     rect2.left = rectb.left + rectb.width / 2
     rect2.top = rectb.top + rectb.height
     rect2.height = rectb.height / 2

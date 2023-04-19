@@ -412,6 +412,28 @@ async function moveBG() {
     //document.getElementById("bg2").style.backgroundPosition = `-${user.left / 2}px 0px`;
 
 }
+let deg = 0
+var avatar = document.getElementById("player")
+function playershake() {
+    avatar.style.opacity = 0.8
+    avatar.style.rotate = "0 deg"
+    var shaking = setInterval(() => {
+        deg += 20; avatar.style.rotate = deg + "deg";
+        avatar.classList.add("some")
+    }, 30)
+    setTimeout(() => {
+        clearInterval(shaking); setTimeout(() => {
+            avatar.style.rotate = "0deg";
+            avatar.style.opacity = 1
+            user.left = 170
+            avatar.style.left = user.left + "px";
+            user.top = 10
+            avatar.style.top = user.top + "px";
+            avatar.classList.remove("some")
+
+        }, 200)
+    }, 600)
+}
 const nuvens = setInterval(moveBG, 40)
 var map = {
     x: parseInt(
@@ -430,15 +452,30 @@ function insideY(quem = user) {
     else { return false }
 }
 
+window.onload = function () {
+    setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 1000)
+    setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 2000)
+    setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 3000)
+    setTimeout(() => limpaCabeca(), 400)
+    setTimeout(() => { document.getElementById("carregando").style.display = "none"; gamestate = "play"; }, 4000)
+    setTimeout(() => keys.ArrowUp = true, 5000)
+    // window.addEventListener("orientationchange", checkOrientation, false);
+}
+let orient = setInterval(() => checkO(), 2000);
 
+var previousOrientation = window.orientation;
+var checkO = function () {
 
+    container.style.width = screen.width + "px";
+    container.style.height = screen.height + "px";
+};
 var blocosX = [];
 let blocos = document.getElementsByClassName("bloco")
 
 function alignBlocos() {
     for (i in blocos) {
         if (blocos[i].id) {
-            let sobra = (windowx - 320) / 2
+            let sobra = 30
             let esq = (i * 440) + sobra
             let topo = -280
             let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 340 }

@@ -106,6 +106,26 @@ body {
 
 }
 
+.some {
+    animation: animatesome 0.8s
+}
+
+@keyframes animatesome {
+    from {
+        transform: scale(1)
+    }
+
+    to {
+        transform: scale(0)
+    }
+
+    ;
+
+
+}
+
+
+
 a,
 a:visited {
     /*text-decoration: none;
