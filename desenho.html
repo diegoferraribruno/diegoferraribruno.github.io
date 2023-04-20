@@ -305,7 +305,6 @@
             </div>
 
             <div id="menucam" class="submenu fundobranco">
-                <span title="espelhar a camera" class="bot" onmousedown="mostraMenu('camconfig')">🎚️</span>
                 <span title="espelhar a camera" class="bot" onmousedown="flipCamera()">🤳</span>
                 <span id="btnChangeCam" title="Trocar camera" class="bot" onmousedown="changeCamera()">
                     🔃<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span>
@@ -318,7 +317,9 @@
                     onmousedown="recMotion()">
                     🔴
                 </span> ⏱️<input id="times" type="number" value="2" min="1" step="1" max="48" size="2"
-                    style="width: 45px;">s
+                    style="width: 42px;">s <span title="Ajustes da camera" class="bot"
+                    onmousedown="mostraMenu('camconfig')">🎚️</span>
+
                 <span class="close" title="fechar camera" onmousedown="modeTo('cam')">❎</span><br>
                 <select id="select" class="esconde" onchange="trocaCamera()">
                 </select>
