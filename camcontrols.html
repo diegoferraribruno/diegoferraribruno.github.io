@@ -79,9 +79,10 @@
         video.srcObject = videoStream;
 
         const [track] = videoStream.getVideoTracks();
-        imageCapture = new ImageCapture(track);
+        // imageCapture = new ImageCapture(track);
 
-        const capabilities = track.getCapabilities();
+        const capabilities = navigator.mediaDevices.getSupportedConstraints()
+        console.log(capabilities)
         const settings = track.getSettings();
 
         // Warning: Chrome requires advanced constraints.

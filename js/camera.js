@@ -1,6 +1,6 @@
 
 var useFrontCamera = true;
-var stop_motion = true
+var stop_motion = false;
 
 function stopMotion() {
     stop_motion = !stop_motion
@@ -349,64 +349,83 @@ function stopVideoStream() {
 async function initializeCamera() {
     stopVideoStream();
     constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+    var capabilities = navigator.mediaDevices.getSupportedConstraints()
 
     try {
         videoStream = await navigator.mediaDevices.getUserMedia(constraints);
         video.srcObject = videoStream;
 
         const [track] = videoStream.getVideoTracks();
-        imageCapture = new ImageCapture(track);
+        try {
+            capabilities = track.getCapabilities();
+            const settings = track.getSettings();
+            for (const [key, value] of Object.entries(capabilities)) {
 
-        const capabilities = track.getCapabilities();
-        const settings = track.getSettings();
-
-        for (const [key, value] of Object.entries(capabilities)) {
-
-            if (value[0] == "manual") {
-                //console.log("criar checkbox:" + [key])
-                let constr = { "advanced": [{ [key]: "continuous" }] }
-                let checkbo = document.getElementById([key])
-                checkbo.oninput = async function () {
-                    if (checkbo.checked == true) {
-                        valor = 'manual'
-                    } else if (checkbo.checked == false) {
-                        valor = 'continuous'
+                if (value[0] == "manual") {
+                    //console.log("criar checkbox:" + [key])
+                    let constr = { "advanced": [{ [key]: "continuous" }] }
+                    let checkbo = document.getElementById([key])
+                    checkbo.oninput = async function () {
+                        if (checkbo.checked == true) {
+                            valor = 'manual'
+                        } else if (checkbo.checked == false) {
+                            valor = 'continuous'
+                        }
+                        await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [key]: valor }] })
+                        console.log(valor)
                     }
-                    await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [key]: valor }] })
-                    console.log(valor)
+                    track.applyConstraints(constr)
+                    console.log(`${key}: ${value}`);
                 }
-                track.applyConstraints(constr)
-                console.log(`${key}: ${value}`);
             }
+            for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom']) {
+                // Check whether pan/tilt/zoom is available or not.
+                const inputdiv = document.getElementById(ptz + "Div")
+                console.log(inputdiv)
+                if (ptz in settings) {
+
+                    inputdiv.style.display = "inline-block"
+                    // Map it to a slider element.
+                    const input = document.getElementById(ptz);
+                    const ilabel =
+                        console.log(ptz, capabilities[ptz])
+                    input.min = capabilities[ptz].min;
+                    input.max = capabilities[ptz].max;
+                    input.step = capabilities[ptz].step;
+                    input.value = settings[ptz];
+                    // input.disabled = false;
+                    input.oninput = async function () {
+                        await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: input.value }] })
+                    }
+                } else {
+                    inputdiv.style.display = "none"
+                    const input = document.getElementById(ptz).style.visibility = "hidden"
+                }
+            }
+        } catch {
+            document.getElementById("camoptions").innerHTML = "Sinto muito.<br>Seu navegador não possui a função de acesso aos recursos avançados.<br>Use o Google Chrome para usar este menu e mudar as configurações da camera"
+            /*console.log("this track does not contain the capabilities", track)
+            for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom']) {
+                const input = document.getElementById(ptz);
+                input.oninput = async function () {
+                    try {
+
+                        await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: input.value }] })
+                    }
+                    catch (err) {
+                        console.log(err)
+                        Alert(input.id + " nao funciona")
+                    }
+                }
+            }*/
         }
 
         // Warning: Chrome requires advanced constraints.
-        for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom']) {
-            // Check whether pan/tilt/zoom is available or not.
-            const inputdiv = document.getElementById(ptz + "Div")
-            console.log(inputdiv)
-            if (ptz in settings) {
-                inputdiv.style.display = "inline-block"
-                // Map it to a slider element.
-                const input = document.getElementById(ptz);
-                const ilabel =
-                    console.log(ptz, capabilities[ptz])
-                input.min = capabilities[ptz].min;
-                input.max = capabilities[ptz].max;
-                input.step = capabilities[ptz].step;
-                input.value = settings[ptz];
-                // input.disabled = false;
-                input.oninput = async function () {
-                    await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: input.value }] })
-                }
-            } else {
-                inputdiv.style.display = "none"
-                //  const input = document.getElementById(ptz).style.visibility = "hidden"
-            }
-        }
+
 
     } catch (err) {
         console.log(err)
         Alert("Could not access the camera");
     }
 }
+
