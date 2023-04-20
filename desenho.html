@@ -305,10 +305,12 @@
             </div>
 
             <div id="menucam" class="submenu fundobranco">
+                <span title="espelhar a camera" class="bot" onmousedown="mostraMenu('camconfig')">🎚️</span>
                 <span title="espelhar a camera" class="bot" onmousedown="flipCamera()">🤳</span>
                 <span id="btnChangeCam" title="Trocar camera" class="bot" onmousedown="changeCamera()">
                     🔃<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span>
                 </span>
+
                 <span id="stopMotion" title="Modo de captura" class="bot" onmousedown="stopMotion()">
                     🎞️
                 </span>
@@ -370,6 +372,58 @@
             <div id="menurotacionar" class="fundobranco submenu">
                 <span id="rotacionar" class="botao" onclick="rotacionar()">🔃 Rotacionar a tela </span>
                 <span id="rotacionar" class="botao" onclick="comandoR()">✔️ confirmar rotação </span>
+
+            </div>
+            <div id="menucamconfig" class="fundobranco submenu" style="opacity:0.8; background-color: #ffffff00;">
+                <span class="close" title="fechar cam config" onmousedown="mostraMenu('camconfig')">❎</span>
+                <div id="focusDistanceDiv" class="botao3">
+                    <input id="focusMode" type="checkbox"> Manual focusMode<br>
+                    <label for="focusDistance">focusDistance</label>
+                    <input id="focusDistance" title="focusDistance" type="range">
+                </div>
+                <div id="zoomDiv" class="botao3">
+                    <label for="zoom">Zoom</label>
+                    <input id="zoom" title="Zoom" type="range">
+                </div>
+                <div id="brightnessDiv" class="botao3">
+                    <label for="brightness">brightness</label>
+                    <input id="brightness" title="brightness" type="range">
+                </div>
+                <div id="exposureTimeDiv" class="botao3">
+                    <input id="exposureMode" type="checkbox"> Manual exposureMode<br>
+                    <label for="exposureTime">exposureTime</label>
+                    <input id="exposureTime" title="exposureTime" type="range">
+                </div>
+
+                <div id="saturationDiv" class="botao3">
+                    <label for="saturation">saturation</label>
+                    <input id="saturation" title="saturation" type="range">
+                </div>
+                <div id="contrastDiv" class="botao3">
+                    <label for="contrast">contrast</label>
+                    <input id="contrast" title="contrast" type="range">
+                </div>
+                <div id="sharpnessDiv" class="botao3">
+                    <label for="sharpness">"sharpness"</label>
+                    <input id="sharpness" title="sharpness" type="range">
+                </div>
+                <div id="whiteBalanceDiv" class="botao3">
+                    <input id="whiteBalanceMode" type="checkbox"> Manual whiteBalanceMode<br>
+                    <label for="whiteBalace">whiteBalace</label>
+                    <input id="whiteBalace" title="whiteBalace" type="range">
+                    <div id="colorTemperatureDiv">
+                        <label for="colorTemperature">colorTemperature</label>
+                        <input id="colorTemperature" title="colorTemperature" type="range">
+                    </div>
+                </div>
+                <div id="panDiv" class="botao3">
+                    <label for="pan">Pan</label>
+                    <input id="pan" title="Pan" type="range">
+                    <div id="tiltDiv" class="botao3">
+                    </div>
+                    <label for="tilt">Tilt</label>
+                    <input id="tilt" title="Tilt" type="range">
+                </div>
 
             </div>
         </div>

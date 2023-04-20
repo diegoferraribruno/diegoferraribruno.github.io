@@ -218,18 +218,6 @@ async function tirafoto() {
 }
 
 
-async function initializeCamera() {
-    stopVideoStream();
-    constraints.video.facingMode = useFrontCamera ? "user" : "environment";
-
-    try {
-        videoStream = await navigator.mediaDevices.getUserMedia(constraints);
-        video.srcObject = videoStream;
-    } catch (err) {
-        Alert("Could not access the camera");
-    }
-}
-
 
 const select = document.getElementById('select');
 const button = document.getElementById('sbutton');
@@ -336,6 +324,15 @@ const constraints = {
             max: 1920,
         },
     },
+    advanced: [{
+        exposureMode: 'manual'
+    },
+    {
+        whiteBalanceMode: 'manual',
+    },
+    {
+        focusMode: "manual"
+    }]
 };
 
 // stop video stream
@@ -345,5 +342,71 @@ function stopVideoStream() {
         videoStream.getTracks().forEach((track) => {
             track.stop();
         });
+    }
+}
+
+
+async function initializeCamera() {
+    stopVideoStream();
+    constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+
+    try {
+        videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+        video.srcObject = videoStream;
+
+        const [track] = videoStream.getVideoTracks();
+        imageCapture = new ImageCapture(track);
+
+        const capabilities = track.getCapabilities();
+        const settings = track.getSettings();
+
+        for (const [key, value] of Object.entries(capabilities)) {
+
+            if (value[0] == "manual") {
+                //console.log("criar checkbox:" + [key])
+                let constr = { "advanced": [{ [key]: "continuous" }] }
+                let checkbo = document.getElementById([key])
+                checkbo.oninput = async function () {
+                    if (checkbo.checked == true) {
+                        valor = 'manual'
+                    } else if (checkbo.checked == false) {
+                        valor = 'continuous'
+                    }
+                    await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [key]: valor }] })
+                    console.log(valor)
+                }
+                track.applyConstraints(constr)
+                console.log(`${key}: ${value}`);
+            }
+        }
+
+        // Warning: Chrome requires advanced constraints.
+        for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom']) {
+            // Check whether pan/tilt/zoom is available or not.
+            const inputdiv = document.getElementById(ptz + "Div")
+            console.log(inputdiv)
+            if (ptz in settings) {
+                inputdiv.style.display = "inline-block"
+                // Map it to a slider element.
+                const input = document.getElementById(ptz);
+                const ilabel =
+                    console.log(ptz, capabilities[ptz])
+                input.min = capabilities[ptz].min;
+                input.max = capabilities[ptz].max;
+                input.step = capabilities[ptz].step;
+                input.value = settings[ptz];
+                // input.disabled = false;
+                input.oninput = async function () {
+                    await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: input.value }] })
+                }
+            } else {
+                inputdiv.style.display = "none"
+                //  const input = document.getElementById(ptz).style.visibility = "hidden"
+            }
+        }
+
+    } catch (err) {
+        console.log(err)
+        Alert("Could not access the camera");
     }
 }

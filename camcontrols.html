@@ -74,11 +74,11 @@
     getMedia()
     async function getMedia() {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        const videoStream = await navigator.mediaDevices.getUserMedia(constraints);
         const video = document.querySelector('video');
-        video.srcObject = stream;
+        video.srcObject = videoStream;
 
-        const [track] = stream.getVideoTracks();
+        const [track] = videoStream.getVideoTracks();
         imageCapture = new ImageCapture(track);
 
         const capabilities = track.getCapabilities();
@@ -97,45 +97,8 @@
           input.step = capabilities[ptz].step;
           input.value = settings[ptz];
           input.disabled = false;
-          //constraints["advanced"].push({ [ptz]: input.value })
           input.oninput = async function () {
-            //constraints["advanced"].push({ [ptz]: input.value })
-
-            await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: input.value }] })
-            /*
-            constraints["video"]["advanced"].push({ [ptz]: input.value })
-
-            try {
-              // Warning: Chrome requires advanced constraints.
-              //  console.log(track,"huhu")
-              await console.log(imageCapture.track);
-              await imageCapture.track.applyConstraints(constraints);
-              await console.log(track.getSettings());
-
-              //   await track.applyConstraints({"focusMode":"manual","whiteBalanceMode":"manual"});
-            } catch (err) {
-              console.error("applyConstraints() failed: ", err);
-            }
-
-          }
-        }
-      } catch (err) {
-        console.error(err);
-      }
-
-          }
-        }
-      }
-
-
-    async function takePhoto() {
-      try {
-        const blob = await imageCapture.takePhoto();
-        console.log("Photo taken: " + blob.type + ", " + blob.size + "B");
-
-        const image = document.querySelector('img');
-        image.src = URL.createObjectURL(blob);
-      */
+            await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: input.value }] })
           }
         }
       } catch (err) {

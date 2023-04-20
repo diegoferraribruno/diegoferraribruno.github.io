@@ -424,6 +424,23 @@ input[type="range"] {
     overflow: auto;
 }
 
+.botao3 {
+    width: 100%;
+    line-height: 32px;
+    min-height: 34px;
+    max-height: 360px;
+    padding-top: 4px;
+    border: solid 1px #55555555;
+    background-color: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 12px;
+    vertical-align: bottom;
+    overflow: auto;
+}
+
 .botao:hover {
     background-color: #eeeeee22;
 }
@@ -526,4 +543,12 @@ input[type="range"] {
     overflow: hidden;
     background-color: #ffffffcc;
     height: 46px;
+}
+
+#menucamconfig {
+    margin-top: 60px;
+    width: 320px;
+    height: 160px;
+    overflow-y: scroll;
+    display: block;
 }
