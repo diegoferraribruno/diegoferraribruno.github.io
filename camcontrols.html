@@ -1,0 +1,72 @@
+<html>
+<body>
+<video autoplay></video>
+<img>
+<div>
+  <input id="pan" title="Pan" type="range" disabled />
+  <label for="pan">Pan</label>
+</div>
+<div>
+  <input id="tilt" title="Tilt" type="range" disabled />
+  <label for="tilt">Tilt</label>
+</div>
+<div>
+  <input id="zoom" title="Zoom" type="range" disabled />
+  <label for="zoom">Zoom</label>
+</div>
+<script>
+  let imageCapture;
+getMedia()
+  async function getMedia() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {pan: true, tilt: true, zoom: true},
+      });
+      const video = document.querySelector('video');
+      video.srcObject = stream;
+
+      const [track] = stream.getVideoTracks();
+      imageCapture = new ImageCapture(track);
+
+      const capabilities = track.getCapabilities();
+      const settings = track.getSettings();
+
+      for (const ptz of ['pan', 'tilt', 'zoom']) {
+        // Check whether pan/tilt/zoom is available or not.
+        if (!(ptz in settings)) continue;
+
+        // Map it to a slider element.
+        const input = document.getElementById(ptz);
+        input.min = capabilities[ptz].min;
+        input.max = capabilities[ptz].max;
+        input.step = capabilities[ptz].step;
+        input.value = settings[ptz];
+        input.disabled = false;
+        input.oninput = async event => {
+          try {
+            // Warning: Chrome requires advanced constraints.
+            await track.applyConstraints({[ptz]: input.value});
+          } catch (err) {
+            console.error("applyConstraints() failed: ", err);
+          }
+        };
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function takePhoto() {
+    try {
+      const blob = await imageCapture.takePhoto();
+      console.log("Photo taken: " + blob.type + ", " + blob.size + "B");
+
+      const image = document.querySelector('img');
+      image.src = URL.createObjectURL(blob);
+    } catch (err) {
+      console.error("takePhoto() failed: ", err);
+    }
+  }
+</script>
+</body>
+</html>

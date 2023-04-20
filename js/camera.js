@@ -17,217 +17,218 @@ function stopMotion() {
     }
 }
 
-navigator.mediaDevices.enumerateDevices().then(gotDevices);
+console.log(navigator.mediaDevices.enumerateDevices().then(console.log(gotDevices))
 
 let fotografando = false
 function camera() {
 
-    // ok, browser supports it*/
-    if (!document.getElementById("videoC")) {
-        const botao2 = document.getElementById("stopMotion")
+        // ok, browser supports it*/
+        if (!document.getElementById("videoC")) {
+            const botao2 = document.getElementById("stopMotion")
 
-        // botao2.setAttribute("onmousedown", "stopMotion()")
-        //botao2.setAttribute("style", "position: absolute; top: 180px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.5 ")
-
-
-        const botao = document.getElementById("btnChangeCam")
-        //botao.setAttribute("value", "muda")
-        //        botao.setAttribute("class", "bloquinho")
-        //botao.setAttribute("style", "position: absolute; top: 220px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.5 ")
-        //botao.innerHTML = "🔃"
-        const videoE = document.createElement("video");
-        const escala = canvas.height / 320
-        videoE.id = "video"
-        videoE.height = canvas.height; // in px
-        videoE.width = redondo(430 * (escala)); // in px
-        videoE.setAttribute('style', `position:relative; width:auto; height:auto;`)
-        if (stop_motion == true) videoE.setAttribute("class", "destination-over")
+            // botao2.setAttribute("onmousedown", "stopMotion()")
+            //botao2.setAttribute("style", "position: absolute; top: 180px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.5 ")
 
 
-        let vcW = redondo(430 * escala * 2);
-        let vcH = redondo(320 * escala * 2);
-        const videoC = document.createElement("div");
-        videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px; `)
-        videoC.setAttribute("id", "videoC")
-        videoC.appendChild(videoE);
-        //videoC.appendChild(botao);
-        //videoC.appendChild(botao2);
+            const botao = document.getElementById("btnChangeCam")
+            //botao.setAttribute("value", "muda")
+            //        botao.setAttribute("class", "bloquinho")
+            //botao.setAttribute("style", "position: absolute; top: 220px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.5 ")
+            //botao.innerHTML = "🔃"
+            const videoE = document.createElement("video");
+            const escala = canvas.height / 320
+            videoE.id = "video"
+            videoE.height = canvas.height; // in px
+            videoE.width = redondo(430 * (escala)); // in px
+            videoE.setAttribute('style', `position:relative; width:auto; height:auto;`)
+            if (stop_motion == true) videoE.setAttribute("class", "destination-over")
 
-        canvasDiv.appendChild(videoC)
-        setTimeout(() => win.classList.add("flip"), 900)
-        fotografando = true
-        if (stop_motion == true) {
-            botao2.innerHTML = "🎞️"
-            videoC.style.opacity = 0.6
-            Alert("Modo sequencia de quadros 🎞️.");
 
-            canvas.style.opacity = 0.3
-        } else {
-            botao2.innerHTML = "📷"
-            Alert("Modo foto 📷.");
-            videoC.style.opacity = 1
-            canvas.style.opacity = 1
-        }
-        videoE.toggleAttribute("autoplay", "autoplay")
-        videoE.toggleAttribute("playsinline", "playsinline")
-        if (globalComposite == "destination-over") {
-            videoE.setAttribute("class", "destination-over");
-        }
-        if (
-            !"mediaDevices" in navigator ||
-            !"getUserMedia" in navigator.mediaDevices
-        ) {
-            Alert("Camera API is not available in your browser");
-            return;
-        }
+            let vcW = redondo(430 * escala * 2);
+            let vcH = redondo(320 * escala * 2);
+            const videoC = document.createElement("div");
+            videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px; `)
+            videoC.setAttribute("id", "videoC")
+            videoC.appendChild(videoE);
+            //videoC.appendChild(botao);
+            //videoC.appendChild(botao2);
 
-        // get page elements
-        const video = document.querySelector("#video");
-        const canvasV = document.querySelector("#canvasV");
-        //Detect camera resolution using pause/play loop.
-        var retryCount = 0;
-        var retryLimit = 25;
-        video.onplaying = function (e) {
-            var videoWidth = this.videoWidth;
-            var videoHeight = this.videoHeight;
-            if (!videoWidth || !videoHeight) {
-                if (retryCount < retryLimit) {
-                    retryCount++;
-                    window.setTimeout(function () {
-                        video.pause();
-                        video.play();
-                    }, 100);
+            canvasDiv.appendChild(videoC)
+            setTimeout(() => win.classList.add("flip"), 900)
+            fotografando = true
+            if (stop_motion == true) {
+                botao2.innerHTML = "🎞️"
+                videoC.style.opacity = 0.6
+                Alert("Modo sequencia de quadros 🎞️.");
+
+                canvas.style.opacity = 0.3
+            } else {
+                botao2.innerHTML = "📷"
+                Alert("Modo foto 📷.");
+                videoC.style.opacity = 1
+                canvas.style.opacity = 1
+            }
+            videoE.toggleAttribute("autoplay", "autoplay")
+            videoE.toggleAttribute("playsinline", "playsinline")
+            if (globalComposite == "destination-over") {
+                videoE.setAttribute("class", "destination-over");
+            }
+            if (
+                !"mediaDevices" in navigator ||
+                !"getUserMedia" in navigator.mediaDevices
+            ) {
+                Alert("Camera API is not available in your browser");
+                return;
+            }
+
+            // get page elements
+            const video = document.querySelector("#video");
+            const canvasV = document.querySelector("#canvasV");
+            //Detect camera resolution using pause/play loop.
+            var retryCount = 0;
+            var retryLimit = 25;
+            video.onplaying = function (e) {
+                var videoWidth = this.videoWidth;
+                var videoHeight = this.videoHeight;
+                if (!videoWidth || !videoHeight) {
+                    if (retryCount < retryLimit) {
+                        retryCount++;
+                        window.setTimeout(function () {
+                            video.pause();
+                            video.play();
+                        }, 100);
+                    }
+                    else {
+                        video.onplaying = undefined; //Remove event handler.
+                        console.log('Failed to detect camera resolution after ' + retryCount + ' retries. Giving up!');
+                    }
                 }
                 else {
                     video.onplaying = undefined; //Remove event handler.
-                    console.log('Failed to detect camera resolution after ' + retryCount + ' retries. Giving up!');
+                    let proporcao = videoWidth / videoHeight
+
+                    let canvas = document.getElementById("canvas")
+                    let videoC = document.getElementById("videoC")
+
+                    let escala = canvas.width / 320
+                    let vcW = 430 * escala;
+                    let vcH = 321 * escala;
+
+                    if (proporcao > 1) {
+                        canvasV.height = canvas.height
+                        canvasV.width = canvas.height * proporcao
+
+                        let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
+                        let offsetH = -canvas.height - 5
+                        videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
+                    } else {
+                        proporcao = videoHeight / videoWidth
+                        canvasV.width = canvas.width
+                        canvasV.height = canvas.width * proporcao
+
+                        let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
+                        let offsetH = - canvas.height * escala - ((canvasV.height - canvas.height) / 2)
+                        videoC.setAttribute("style",
+                            `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
+                    }
                 }
-            }
-            else {
-                video.onplaying = undefined; //Remove event handler.
-                let proporcao = videoWidth / videoHeight
+            };
 
-                let canvas = document.getElementById("canvas")
-                let videoC = document.getElementById("videoC")
-
-                let escala = canvas.width / 320
-                let vcW = 430 * escala;
-                let vcH = 321 * escala;
-
-                if (proporcao > 1) {
-                    canvasV.height = canvas.height
-                    canvasV.width = canvas.height * proporcao
-
-                    let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
-                    let offsetH = -canvas.height - 5
-                    videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
-                } else {
-                    proporcao = videoHeight / videoWidth
-                    canvasV.width = canvas.width
-                    canvasV.height = canvas.width * proporcao
-
-                    let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
-                    let offsetH = - canvas.height * escala - ((canvasV.height - canvas.height) / 2)
-                    videoC.setAttribute("style",
-                        `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
-                }
-            }
-        };
-            
             video.addEventListener('click', tirafoto)
 
-        initializeCamera();
+            initializeCamera();
 
+        }
     }
-}
-function recMotion(){
-    let vezes = document.getElementById("times").value *fps
-    for (i = 0; i<vezes; i++){
-        setTimeout(()=>{
+function recMotion() {
+        let vezes = document.getElementById("times").value * fps
+        for (i = 0; i < vezes; i++) {
+            setTimeout(() => {
+                let W = canvasV.width;
+                let H = canvasV.height;
+                let offsetW = (W - canvas.width) / -2
+                let offsetH = (H - canvas.height) / -2
+                contextV.drawImage(video, 0, 0, W, H)
+                if (
+                    !isCanvasBlank(canvasV)
+                ) {
+                    img_b64 = canvasV.toDataURL("image/png");
+                    blob = dataURItoBlob(img_b64)
+                    if (blob != undefined) {
+
+                        desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+                    } setTimeout(() => {
+
+                        swapImg = canvas.toDataURL('image/png');
+
+                        save_frame(swapImg)
+
+                        workingframe++
+                        changeFrame(workingframe)
+                        document.getElementById("contador").innerHTML = workingframe
+                    }, 40)
+                }
+            }, 500 * i)
+        }
+    }
+async function tirafoto() {
+        //console.log 
+        if (fotografando == true) {
+            fotografando = false
             let W = canvasV.width;
             let H = canvasV.height;
-        let offsetW = (W - canvas.width) / -2
-        let offsetH = (H - canvas.height) / -2
-        contextV.drawImage(video, 0, 0, W, H)
-        if (
-            !isCanvasBlank(canvasV)
-        ) {
-        img_b64 = canvasV.toDataURL("image/png");
-        blob =  dataURItoBlob(img_b64)
-        if(blob != undefined){
-    
-            desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
-        }setTimeout(()=>{
+            let offsetW = (W - canvas.width) / -2
+            let offsetH = (H - canvas.height) / -2
+            contextV.drawImage(video, 0, 0, W, H)
+            if (
+                !isCanvasBlank(canvasV)
+            ) {
+                img_b64 = canvasV.toDataURL("image/png");
+                blob = dataURItoBlob(img_b64)
+                if (blob != undefined) {
 
-            swapImg = canvas.toDataURL('image/png');
-            
-            save_frame(swapImg)
-            
-            workingframe++
-            changeFrame(workingframe)
-            document.getElementById("contador").innerHTML = workingframe
-        },40)
-        }},500*i)
-    }
-}
-async function tirafoto() {
-    //console.log 
-    if (fotografando == true){
-        fotografando = false
-        let W = canvasV.width;
-        let H = canvasV.height;
-    let offsetW = (W - canvas.width) / -2
-    let offsetH = (H - canvas.height) / -2
-    contextV.drawImage(video, 0, 0, W, H)
-    if (
-        !isCanvasBlank(canvasV)
-    ) {
-    img_b64 = canvasV.toDataURL("image/png");
-    blob =  dataURItoBlob(img_b64)
-    if(blob != undefined){
+                    desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+                }
+            }
+        }
+        if (stop_motion == false) {
+            removeVideo();
+        } else {
+            if (
+                !isCanvasBlank(canvas)
+            ) setTimeout(() => {
 
-        desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
-    }
-    }
-}
-if (stop_motion == false) {
-    removeVideo();
-} else {
-        if (
-            !isCanvasBlank(canvas)
-        ) setTimeout(()=>{
+                swapImg = canvas.toDataURL('image/png');
 
-            swapImg = canvas.toDataURL('image/png');
-            
-            save_frame(swapImg)
-            
-            workingframe++
-            changeFrame(workingframe)
-            document.getElementById("contador").innerHTML = workingframe
-        },30)
-        /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
-        contextV.clearRect(0, 0, W, H);
-        contextV.setTransform(1, 0, 0, 1, 0, 0);
-        contextV.clearRect(0, 0, W, H);*/
-        
-        
-        //audio2.play()
+                save_frame(swapImg)
+
+                workingframe++
+                changeFrame(workingframe)
+                document.getElementById("contador").innerHTML = workingframe
+            }, 30)
+            /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
+            contextV.clearRect(0, 0, W, H);
+            contextV.setTransform(1, 0, 0, 1, 0, 0);
+            contextV.clearRect(0, 0, W, H);*/
+
+
+            //audio2.play()
+        }
+        setTimeout(() => fotografando = true, 100)
     }
-    setTimeout(()=>fotografando = true,100)
-}
 
 
 async function initializeCamera() {
-    stopVideoStream();
-    constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+        stopVideoStream();
+        constraints.video.facingMode = useFrontCamera ? "user" : "environment";
 
-    try {
-        videoStream = await navigator.mediaDevices.getUserMedia(constraints);
-        video.srcObject = videoStream;
-    } catch (err) {
-        Alert("Could not access the camera");
+        try {
+            videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+            video.srcObject = videoStream;
+        } catch (err) {
+            Alert("Could not access the camera");
+        }
     }
-}
 
 
 const select = document.getElementById('select');
