@@ -45,12 +45,36 @@
   </div>
   <script>
     let imageCapture;
+    let constraints = {
+      video: {
+        width: {
+          min: 480,
+          ideal: 960,
+          max: 1920,
+        },
+        height: {
+          min: 320,
+          ideal: 640,
+          max: 1920,
+        },
+      },
+      advanced: [{
+        exposureMode: 'manual'
+
+      },
+      {
+        whiteBalanceMode: 'manual',
+      },
+      {
+
+        focusMode: "manual"
+      }
+      ]
+    }
     getMedia()
     async function getMedia() {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { pan: true, tilt: true, zoom: true },
-        });
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         const video = document.querySelector('video');
         video.srcObject = stream;
 
@@ -59,7 +83,6 @@
 
         const capabilities = track.getCapabilities();
         const settings = track.getSettings();
-        track.applyConstraints({ exposureMode: 'manual', whiteBalanceMode: 'manual' })
 
         // Warning: Chrome requires advanced constraints.
         for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'whiteBalace', 'focusDistance', 'pan', 'tilt', 'zoom']) {
@@ -74,21 +97,36 @@
           input.step = capabilities[ptz].step;
           input.value = settings[ptz];
           input.disabled = false;
-          input.oninput = async event => {
+          //constraints["advanced"].push({ [ptz]: input.value })
+          input.oninput = async function () {
+            //constraints["advanced"].push({ [ptz]: input.value })
+
+            await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: input.value }] })
+            /*
+            constraints["video"]["advanced"].push({ [ptz]: input.value })
+
             try {
               // Warning: Chrome requires advanced constraints.
               //  console.log(track,"huhu")
-              await track.applyConstraints({ [ptz]: input.value });
+              await console.log(imageCapture.track);
+              await imageCapture.track.applyConstraints(constraints);
+              await console.log(track.getSettings());
+
               //   await track.applyConstraints({"focusMode":"manual","whiteBalanceMode":"manual"});
             } catch (err) {
               console.error("applyConstraints() failed: ", err);
             }
-          };
+
+          }
         }
       } catch (err) {
         console.error(err);
       }
-    }
+
+          }
+        }
+      }
+
 
     async function takePhoto() {
       try {
@@ -97,9 +135,14 @@
 
         const image = document.querySelector('img');
         image.src = URL.createObjectURL(blob);
+      */
+          }
+        }
       } catch (err) {
         console.error("takePhoto() failed: ", err);
       }
+
+
     }
   </script>
 </body>
