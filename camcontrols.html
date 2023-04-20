@@ -1,79 +1,107 @@
 <html>
+
 <body>
-<video autoplay></video>
-<img>
-<div>
-  <input id="pan" title="Pan" type="range" disabled />
-  <label for="pan">Pan</label>
-</div>
-<div>
-  <input id="tilt" title="Tilt" type="range" disabled />
-  <label for="tilt">Tilt</label>
-</div>
-<div>
-  <input id="zoom" title="Zoom" type="range" disabled />
-  <label for="zoom">Zoom</label>
-</div>
-<div>
-  <input id="focusDistance" title="focusDistance" type="range" disabled />
-  <label for="focusDistance">focusDistance</label>
-</div>
+  <video autoplay></video>
+  <img>
+  <div>
+    <input id="pan" title="Pan" type="range" disabled />
+    <label for="pan">Pan</label>
+  </div>
+  <div>
+    <input id="tilt" title="Tilt" type="range" disabled />
+    <label for="tilt">Tilt</label>
+  </div>
+  <div>
+    <input id="zoom" title="Zoom" type="range" disabled />
+    <label for="zoom">Zoom</label>
+  </div>
+  <div>
+    <input id="brightness" title="brightness" type="range" disabled />
+    <label for="brightness">brightness</label>
+  </div>
+  <div>
+    <input id="focusDistance" title="focusDistance" type="range" disabled />
+    <label for="focusDistance">focusDistance</label>
+  </div>
+  <div>
+    <input id="colorTemperature" title="colorTemperature" type="range" disabled />
+    <label for="colorTemperature">colorTemperature</label>
+  </div>
+  <div>
+    <input id="exposureTime" title="exposureTime" type="range" disabled />
+    <label for="exposureTime">exposureTime</label>
+  </div>
+  <div>
+    <input id="saturation" title="saturation" type="range" disabled />
+    <label for="saturation">saturation</label>
+  </div>
+  <div>
+    <input id="contrast" title="contrast" type="range" disabled />
+    <label for="contrast">contrast</label>
+  </div>
+  <div>
+    <input id="sharpness" title="sharpness" type="range" disabled />
+    <label for="sharpness">"sharpness"</label>
+  </div>
+  <script>
+    let imageCapture;
+    getMedia()
+    async function getMedia() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { pan: true, tilt: true, zoom: true },
+        });
+        const video = document.querySelector('video');
+        video.srcObject = stream;
 
-<script>
-  let imageCapture;
-getMedia()
-  async function getMedia() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {pan: true, tilt: true, zoom: true},
-      });
-      const video = document.querySelector('video');
-      video.srcObject = stream;
+        const [track] = stream.getVideoTracks();
+        imageCapture = new ImageCapture(track);
 
-      const [track] = stream.getVideoTracks();
-      imageCapture = new ImageCapture(track);
+        const capabilities = track.getCapabilities();
+        const settings = track.getSettings();
+        track.applyConstraints({ exposureMode: 'manual', whiteBalanceMode: 'manual' })
 
-      const capabilities = track.getCapabilities();
-      const settings = track.getSettings();
-                     
-            // Warning: Chrome requires advanced constraints.
-           track.applyConstraints({"focusMode":"manual" });
-          for (const ptz of ['focusDistance','pan', 'tilt', 'zoom']) {
-        // Check whether pan/tilt/zoom is available or not.
-        if (!(ptz in settings)) continue;
+        // Warning: Chrome requires advanced constraints.
+        for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'whiteBalace', 'focusDistance', 'pan', 'tilt', 'zoom']) {
+          // Check whether pan/tilt/zoom is available or not.
+          if (!(ptz in settings)) continue;
 
-        // Map it to a slider element.
-        const input = document.getElementById(ptz);
-       // input.min = capabilities[ptz].min;
-        //input.max = capabilities[ptz].max;
-       // input.step = capabilities[ptz].step;
-        input.value = settings[ptz];
-        input.disabled = false;
-        input.oninput = async event => {
-          try {
-            // Warning: Chrome requires advanced constraints.
-            await track.applyConstraints({[ptz]: input.value});
-          } catch (err) {
-            console.error("applyConstraints() failed: ", err);
-          }
-        };
+          // Map it to a slider element.
+          const input = document.getElementById(ptz);
+          console.log(ptz, capabilities[ptz])
+          input.min = capabilities[ptz].min;
+          input.max = capabilities[ptz].max;
+          input.step = capabilities[ptz].step;
+          input.value = settings[ptz];
+          input.disabled = false;
+          input.oninput = async event => {
+            try {
+              // Warning: Chrome requires advanced constraints.
+              //  console.log(track,"huhu")
+              await track.applyConstraints({ [ptz]: input.value });
+              //   await track.applyConstraints({"focusMode":"manual","whiteBalanceMode":"manual"});
+            } catch (err) {
+              console.error("applyConstraints() failed: ", err);
+            }
+          };
+        }
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
     }
-  }
 
-  async function takePhoto() {
-    try {
-      const blob = await imageCapture.takePhoto();
-      console.log("Photo taken: " + blob.type + ", " + blob.size + "B");
+    async function takePhoto() {
+      try {
+        const blob = await imageCapture.takePhoto();
+        console.log("Photo taken: " + blob.type + ", " + blob.size + "B");
 
-      const image = document.querySelector('img');
-      image.src = URL.createObjectURL(blob);
-    } catch (err) {
-      console.error("takePhoto() failed: ", err);
+        const image = document.querySelector('img');
+        image.src = URL.createObjectURL(blob);
+      } catch (err) {
+        console.error("takePhoto() failed: ", err);
+      }
     }
-  }
-</script>
+  </script>
 </body>
+
 </html>
