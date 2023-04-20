@@ -14,6 +14,11 @@
   <input id="zoom" title="Zoom" type="range" disabled />
   <label for="zoom">Zoom</label>
 </div>
+<div>
+  <input id="focusDistance" title="focusDistance" type="range" disabled />
+  <label for="focusDistance">focusDistance</label>
+</div>
+
 <script>
   let imageCapture;
 getMedia()
@@ -30,16 +35,18 @@ getMedia()
 
       const capabilities = track.getCapabilities();
       const settings = track.getSettings();
-
-      for (const ptz of ['pan', 'tilt', 'zoom']) {
+                     
+            // Warning: Chrome requires advanced constraints.
+           track.applyConstraints({"focusMode":"manual" });
+          for (const ptz of ['focusDistance','pan', 'tilt', 'zoom']) {
         // Check whether pan/tilt/zoom is available or not.
         if (!(ptz in settings)) continue;
 
         // Map it to a slider element.
         const input = document.getElementById(ptz);
-        input.min = capabilities[ptz].min;
-        input.max = capabilities[ptz].max;
-        input.step = capabilities[ptz].step;
+       // input.min = capabilities[ptz].min;
+        //input.max = capabilities[ptz].max;
+       // input.step = capabilities[ptz].step;
         input.value = settings[ptz];
         input.disabled = false;
         input.oninput = async event => {
