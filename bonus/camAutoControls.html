@@ -1,0 +1,165 @@
+<html>
+<title>Cam controls auto menu by Diego Ferrari Bruno this is a free app good luck!</title>
+check on how i used it on my app: diegoferraribruno.github.io/desenho.html
+
+<body>
+    <video autoplay></video>
+    <div id="menu"></div>
+    <img>
+
+    <script>
+        let imageCapture;
+        let constraints = {
+            video: {
+                width: {
+                    min: 480,
+                    ideal: 960,
+                    max: 1920,
+                },
+                height: {
+                    min: 320,
+                    ideal: 640,
+                    max: 1920,
+                },
+            },
+
+        }
+        var advanced = []
+        getMedia()
+        var capabilities = null
+        async function getMedia() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                const video = document.querySelector('video');
+                video.srcObject = stream;
+
+                const [track] = stream.getVideoTracks();
+                imageCapture = new ImageCapture(track);
+
+                capabilities = track.getCapabilities();
+                for (const [key, value] of Object.entries(capabilities)) {
+
+                    if (value[0] == "manual") {
+                        let constr = { "advanced": [{ [key]: "continuous" }] }
+                        console.log(constr)
+                        track.applyConstraints(constr)
+                        console.log(`${key}: ${value}`);
+                    }
+                }
+                //for (i in capabilities) { console.log(capabilities[i].key, capabilities[i]) }
+
+                const settings = track.getSettings();
+                /*for (i = 0; i < advanced.length; i++) {
+                  await track.applyConstraints({ "advanced": [advanced[i]] })
+                }*/
+
+                //}
+                // Warning: Chrome requires advanced constraints.
+                //for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'whiteBalace', 'focusDistance', 'pan', 'tilt', 'zoom']) {
+                // Check whether pan/tilt/zoom is available or not.
+                for (const [ptz, value] of Object.entries(capabilities)) {
+                    const config = document.createElement('div');
+                    config.innerHTML = ptz
+
+                    // Map it to a slider element.
+                    document.getElementById("menu").appendChild(config)
+                    const input = document.createElement('input');
+
+                    input.id = ptz
+                    input.value = settings[ptz];
+                    //input.value = value
+                    if (typeof value === 'object' &&
+                        !Array.isArray(value) &&
+                        value !== null) {
+
+
+                        if (capabilities[ptz].step) {
+
+                            input.type = "range"
+                            input.min = capabilities[ptz].min;
+                            input.max = capabilities[ptz].max;
+                            input.step = capabilities[ptz].step;
+                            input.value = settings[ptz];
+                        }
+                    } else if (Array.isArray(value)) {
+                        if (value[0] == "manual") {
+
+                            config.innerHTML += " manual "
+                            input.type = "checkbox"
+                            input.checked == false
+
+                        }
+                    }
+                    else {
+                        input.value = settings[ptz];
+                    }
+
+                    input.disabled = false;
+                    config.appendChild(input)
+                    //constraints["advanced"].push({ [ptz]: input.value })
+                    input.oninput = async function () {
+
+                        var valor = input.value
+                        if (input.type == "checkbox") {
+
+                            if (input.checked == true) {
+                                valor = 'manual'
+                            } else if (input.checked == false) {
+                                valor = 'continuous'
+                            }
+                            console.log(valor)
+                        }
+
+                        //constraints["advanced"].push({ [ptz]: input.value })
+
+                        try {
+                            console.log([ptz], valor)
+                            await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: valor }] })
+
+                        } catch (err) {
+                            console.error("applyConstraints() failed: ", err);
+                        }
+
+                        /*
+                        constraints["video"]["advanced"].push({ [ptz]: input.value })
+               
+                          // Warning: Chrome requires advanced constraints.
+                          //  console.log(track,"huhu")
+                          await console.log(imageCapture.track);
+                          await imageCapture.track.applyConstraints(constraints);
+                          await console.log(track.getSettings());
+                          
+                          //   await track.applyConstraints({"focusMode":"manual","whiteBalanceMode":"manual"});
+                          
+                        }
+                    }
+                  } catch (err) {
+                    console.error(err);
+                  }
+                  
+                }
+              }
+              }
+                  
+               
+                async function takePhoto() {
+                  try {
+                    const blob = await imageCapture.takePhoto();
+                    console.log("Photo taken: " + blob.type + ", " + blob.size + "B");
+                    
+                    const image = document.querySelector('img');
+                    image.src = URL.createObjectURL(blob);
+                    */
+                        // }
+                    }
+                }
+            } catch (err) {
+                console.error("takePhoto() failed: ", err);
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
