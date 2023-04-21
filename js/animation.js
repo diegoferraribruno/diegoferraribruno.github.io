@@ -1,6 +1,8 @@
 var anime = document.createElement("div")
 anime.id = "anime"
 document.body.appendChild(anime)
+
+
 var fps = 6
 var animacao = []
 
@@ -11,7 +13,6 @@ var anime_menu = {
     "play()": "▶️",
     "next_frame()": "⏭️",
     "anime_ajustes()": "🎚️",
-    "modeTo('salvar')": "📥",
 }
 
 function criaAnime() {
@@ -35,6 +36,12 @@ function criaAnime() {
     contador.innerHTML = workingframe
     contador.id = "contador"
     document.getElementById("ui").appendChild(contador)
+    var filme = document.createElement('div')
+    filme.id = "filme"
+    filme.innerHTML = "oi"
+    anime.innerHTML += "<span id='lixo' class='bot' onmousedown='lixeira()'>🗑</span><span class='bot' id='clone' onmousedown='cloneFrame()'>🧬 </span></div>"
+    document.getElementById("anime").appendChild(filme)
+
 }
 
 setTimeout(() => { criaAnime() }, 200)
@@ -125,11 +132,13 @@ function new_frame() {
         blobb = dataURItoBlob(swapImg)
         animacao.splice(workingframe + 1, 0, swapImg);
         next_frame()
+        adicionaQuadro()
     }
 
 }
 function save_frame(imagem) {
     animacao[workingframe] = imagem
+    setTimeout(() => { adicionaQuadro() }, 30)
 }
 
 let playing = 0
@@ -172,6 +181,7 @@ function playerPlay(frame) {
 
 function changeFrame(frame) {
     let old0 = frame
+    workingframe = frame
 
     document.getElementById("contador").innerHTML = workingframe;
     if (frame > 0) {
@@ -212,6 +222,7 @@ function changeFrame(frame) {
             comandos.push(comando)
             //desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
         }
+        scrollFilme()
         //comandosExec()
     }
 
@@ -237,15 +248,24 @@ function prev_frame() {
     let len = comandos.length
     if (len > 1 && comandos[len - 1][0] != "i") {
         new_frame()
+        setTimeout(() => {
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+            workingframe--
+            prev_frame()
+
+        }, 30)
         console.log("quadro salvo")
+    } else {
+
+        workingframe--
+        if (workingframe < 0) {
+            workingframe = animacao.length - 1
+            if (workingframe < 0) { workingframe = 0 }
+        }
+        changeFrame(workingframe)
+        document.getElementById("contador").innerHTML = workingframe
     }
-    workingframe--
-    if (workingframe < 0) {
-        workingframe = animacao.length - 1
-        if (workingframe < 0) { workingframe = 0 }
-    }
-    changeFrame(workingframe)
-    document.getElementById("contador").innerHTML = workingframe
 }
 
 function anime_ajustes() {
@@ -258,10 +278,12 @@ function changeFPS(valor) {
 function removeFrame() {
     animacao.splice(workingframe, 1)
     prev_frame()
+    adicionaQuadro()
 }
-function cloneFrame() {
-    animacao.splice(workingframe + 1, 0, animacao[workingframe]);
+function cloneFrame(frame = workingframe) {
+    animacao.splice(frame + 1, 0, animacao[frame]);
     next_frame()
+    adicionaQuadro()
 }
 var checkSave = setInterval(() => {
     if (comandos.length < 3) {
@@ -293,4 +315,123 @@ function changeBackGroundAnimation(frame) {
 
 function sobreporFundo() {
     document.getElementById("bplayer0").style.zIndex = document.getElementById("bplayer0").style.zIndex * -1
+}
+
+
+var animSize = 0
+function adicionaQuadro() {
+    let filme = document.getElementById("filme")
+    filme.innerHTML = ""
+    setTimeout(() => {
+        let animSize = animacao.length
+        for (i = 0; i < animSize; i++) {
+            let cont = document.createElement("div")
+            cont.id = i
+            cont.classList.add("quadrofilme")
+            cont.style.backgroundImage = 'url("' + animacao[i] + '")';
+            cont.addEventListener("dragover", dragOver);
+            cont.addEventListener("drop", drop);
+            let thumb = document.createElement("div")
+            thumb.innerHTML = i
+            thumb.style.backgroundImage = 'url("' + animacao[i] + '")';
+            //thumb.src = animacao[i];
+
+            thumb.id = i + "thumb"
+            thumb.classList.add("thumb")
+            thumb.draggable = true
+            thumb.addEventListener("click", function (event) { changeFrame(parseInt(event.target.id, 10)) });
+            thumb.addEventListener("dragstart", dragStart);
+            thumb.addEventListener("dragend", dragEnd);
+            //filme.innerHTML += '<div class="numero naotoque" style="z-index:-1">' + i + '</div>'
+            cont.appendChild(thumb)
+            filme.appendChild(cont)
+            //document.getElementById("lixo").addEventListener("onmousedown", lixeira)
+            setTimeout(() => {
+                document.getElementById("lixo").addEventListener("drop", drop);
+                document.getElementById("lixo").addEventListener("dragover", dragOver);
+                document.getElementById("clone").addEventListener("drop", drop);
+                document.getElementById("clone").addEventListener("dragover", dragOver);
+            }, 10)
+            /*   document.getElementById("clone").addEventListener("drop", drop);
+               document.getElementById("clone").addEventListener("dragover", dragOver);*/
+        }
+        scrollFilme()
+        //  filme.innerHTML += '<span class="bot" id="clone">🧬 </span>'
+    }
+        , 10)
+}
+function scrollFilme(onde = workingframe) {
+    filme.scrollLeft = onde * 32
+
+    removeClass("wf")
+    let thum = document.getElementById(workingframe + "thumb")
+    if (thum) { thum.classList.add("wf") }
+
+}
+function lixeira() {
+    mostraMenu("lixeira")
+}
+function dragStart(event) {
+    event.dataTransfer.setData("draggedImageId", event.target.id);
+    let tomba = document.querySelectorAll(".thumb")
+    tomba.forEach(element => {
+        if (element.id != event.target.id)
+            element.classList.toggle("hidden")
+    });
+    setTimeout(() => event.target.classList.toggle("hidden"));
+}
+
+function dragEnd(event) {
+    event.target.classList.toggle("hidden");
+    let tomba = document.querySelectorAll(".thumb")
+    tomba.forEach(element => {
+        element.classList.remove("hidden")
+    });
+}
+
+function dragOver(event) {
+    event.preventDefault();
+}
+
+function drop(event) {
+    event.preventDefault()
+
+    console.log(event)
+    const draggedImageId = event.dataTransfer.getData("draggedImageId");
+    const draggedImage = document.getElementById(draggedImageId);
+    const fromContainer = draggedImage.parentNode;
+    const toContainer = event.currentTarget;
+    if (toContainer.id == "lixo") {
+
+        animacao.splice(fromContainer.id, 1);
+        animSize = animacao.length
+        adicionaQuadro()
+        setTimeout(() => prev_frame(), 10)
+
+    } else if (toContainer.id == "clone") {
+        cloneFrame(fromContainer.id)
+    }
+    else if (toContainer !== fromContainer) {
+        console.log(toContainer.id, fromContainer.id)
+        swapItems(toContainer.id, fromContainer.id)
+        //* fromContainer.appendChild(toContainer.firstElementChild);
+        //* toContainer.appendChild(draggedImage);
+        adicionaQuadro()
+    }
+    //}
+}
+function swapItems(a = Number, b = Number) {
+
+    animacao[a] = animacao.splice(b, 1, animacao[a])[0];
+
+    //let tomba = document.querySelectorAll(".quadrofilme")
+    setTimeout(() => {
+
+        let animSize = animacao.length
+        for (i = 0; i < animSize; i++) {
+
+            document.getElementById(i).style.backgroundImage = 'url("' + animacao[i] + '")';
+            //document.getElementById(i + "thumb").style.backgroundImage = 'url("' + animacao[i] + '")';
+        };
+    }, 200)
 }

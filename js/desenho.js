@@ -639,34 +639,32 @@ function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     context.stroke();
 }
 
-function clearArea() {
-    let confirma = confirm(
-        "🗑 🖼️ Limpar o quadro? \n(impossível desfazer)"
-    );
-
-    if (confirma === true) {
+function limpar(what) {
+    if (what == "quadro") {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         comandos = []
     }
-    if (animacao.length > 0) {
-        let confirma2 = confirm(
-            "🗑 🎞️ Apagar toda a animação? \n(impossível desfazer)"
-        );
-        if (confirma2 === true) {
-            animacao = []
-            workingframe = 0
-            for (i = 0; i < 5; i++) {
-                document.getElementById("bplayer" + i).style.backgroundImage = 'none'
-            }
-            changeFrame(workingframe)
+    if (what == "animacao")
+        if (animacao.length > 0) {
+            let confirma2 = confirm(
+                "🗑 🎞️ Apagar toda a animação? \n(impossível desfazer)"
+            );
+            if (confirma2 === true) {
+                animacao = []
+                workingframe = 0
+                for (i = 0; i < 5; i++) {
+                    document.getElementById("bplayer" + i).style.backgroundImage = 'none'
+                }
+                changeFrame(workingframe)
 
+            }
         }
-    }
+
     convertToImg()
     comandosExec()
 
-    modeTo(oldMode)
+    // modeTo(oldMode)
 }
 
 let oldMode = mode;

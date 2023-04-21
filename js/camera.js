@@ -182,14 +182,15 @@ async function tirafoto() {
         removeVideo();
     } else {
         if (
-            !isCanvasBlank(canvas)
-        ) setTimeout(() => {
+            isCanvasBlank(canvas)
+        ) { workingframe-- }
+        setTimeout(() => {
 
+            workingframe++
             swapImg = canvas.toDataURL('image/png');
 
             save_frame(swapImg)
 
-            workingframe++
             changeFrame(workingframe)
             document.getElementById("contador").innerHTML = workingframe
         }, 30)
@@ -435,4 +436,3 @@ async function initializeCamera() {
         Alert("Could not access the camera");
     }
 }
-

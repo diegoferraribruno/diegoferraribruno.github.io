@@ -1,6 +1,8 @@
 let vers = [{
-    versao: "1.9.0",
+    versao: "1.9.3",
     notas: [
+        "Timeline da animação com arrasta e solta para mudar os quadros de lugar. tb podese soltar os quadros sobre a lixeira ou sobre o clone :)",
+        "📷 controle total das configuraçoes da camera com zoom e tudo mais. ",
         "🪄 Efeitos no quadro (precisa aprimorar) mas funciona",
         "😆 A página principal do site também está ficando divertida! cuidado com o monstro!"
     ]

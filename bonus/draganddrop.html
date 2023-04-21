@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .row {
+            display: flex;
+            column-gap: 0.5rem;
+            padding: 0.4rem;
+            border: solid 2px black;
+            background: rgb(0, 0, 0);
+        }
+
+        .quadrofilme {
+            width: 32px;
+            height: 32px;
+            border: solid 4px black;
+            background: white;
+        }
+
+        .thumb {
+            width: 32px;
+            height: 32px;
+            display: block;
+            background-size: cover;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #lixo {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="filme" class="row">
+    </div>
+    <script type="text/javascript" src="123blob.js"></script>
+    <script>
+        let animSize = animacao.length
+        const filme = document.getElementById("filme")
+        function adicionaQuadro() {
+            filme.innerHTML = " <div id='lixo' class='quadrofilme'>lixo<br>lixo</div>"
+            setTimeout(() => {
+                for (i = 0; i < animSize; i++) {
+                    let cont = document.createElement("div")
+                    cont.id = i
+                    cont.classList.add("quadrofilme")
+                    cont.style.backgroundImage = 'url("' + animacao[i] + '")';
+                    cont.addEventListener("dragover", dragOver);
+                    cont.addEventListener("drop", drop);
+                    let thumb = document.createElement("div")
+                    thumb.innerHTML = i
+                    thumb.style.backgroundImage = 'url("' + animacao[i] + '")';
+                    thumb.id = i + "thumb"
+                    thumb.classList.add("thumb")
+                    thumb.draggable = true
+                    thumb.addEventListener("dragstart", dragStart);
+                    thumb.addEventListener("dragend", dragEnd);
+                    cont.appendChild(thumb)
+                    filme.appendChild(cont)
+                    document.getElementById("lixo").addEventListener("drop", drop);
+                    document.getElementById("lixo").addEventListener("dragover", dragOver);
+                }
+
+            }
+                , 10)
+        }
+        adicionaQuadro()
+
+        function dragStart(event) {
+            event.dataTransfer.setData("draggedImageId", event.target.id);
+            let tomba = document.querySelectorAll(".thumb")
+            tomba.forEach(element => {
+                element.classList.toggle("hidden")
+            });
+            setTimeout(() => event.target.classList.toggle("hidden"));
+        }
+
+        function dragEnd(event) {
+            event.target.classList.toggle("hidden");
+            let tomba = document.querySelectorAll(".thumb")
+            tomba.forEach(element => {
+                element.classList.toggle("hidden")
+            });
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault()
+
+            console.log(event)
+            const draggedImageId = event.dataTransfer.getData("draggedImageId");
+            const draggedImage = document.getElementById(draggedImageId);
+            const fromContainer = draggedImage.parentNode;
+            const toContainer = event.currentTarget;
+            if (toContainer.id == "lixo") {
+                animacao.splice(fromContainer.id, 1);
+                animSize = animacao.length
+                adicionaQuadro()
+            } else if (toContainer !== fromContainer) {
+                console.log(toContainer.id, fromContainer.id)
+                swapItems(toContainer.id, fromContainer.id)
+                fromContainer.appendChild(toContainer.firstElementChild);
+                toContainer.appendChild(draggedImage);
+            }
+            //}
+        }
+        function swapItems(a = Number, b = Number) {
+            animacao[a] = animacao.splice(b, 1, animacao[a])[0];
+
+            let tomba = document.querySelectorAll(".quadrofilme")
+            for (i = 0; i < animSize; i++) {
+                document.getElementById(i).style.backgroundImage = 'url("' + animacao[i] + '")';
+            };
+        }
+
+    </script>
+</body>
+
+</html>

@@ -4,16 +4,16 @@ import Database from './database.js';
 
 // via https://unpkg.com/browse/emojibase-data@6.0.0/meta/groups.json
 const allGroups = [
-  [-1, '✨', 'custom'],
-  [0, '😀', 'smileys-emotion'],
-  [1, '👋', 'people-body'],
-  [3, '🐱', 'animals-nature'],
-  [4, '🍎', 'food-drink'],
-  [5, '🏠️', 'travel-places'],
-  [6, '⚽', 'activities'],
-  [7, '📝', 'objects'],
-  [8, '⛔️', 'symbols'],
-  [9, '🏁', 'flags']
+	[-1, '✨', 'custom'],
+	[0, '😀', 'smileys-emotion'],
+	[1, '👋', 'people-body'],
+	[3, '🐱', 'animals-nature'],
+	[4, '🍎', 'food-drink'],
+	[5, '🏠️', 'travel-places'],
+	[6, '⚽', 'activities'],
+	[7, '📝', 'objects'],
+	[8, '⛔️', 'symbols'],
+	[9, '🏁', 'flags']
 ].map(([id, emoji, name]) => ({ id, emoji, name }));
 
 const groups = allGroups.slice(1);
@@ -26,8 +26,8 @@ const NUM_SKIN_TONES = 6;
 const rIC = typeof requestIdleCallback === 'function' ? requestIdleCallback : setTimeout;
 
 // check for ZWJ (zero width joiner) character
-function hasZwj (emoji) {
-  return emoji.unicode.includes('\u200d')
+function hasZwj(emoji) {
+	return emoji.unicode.includes('\u200d')
 }
 
 // Find one good representative emoji from each version to test by checking its color.
@@ -40,17 +40,17 @@ function hasZwj (emoji) {
 // "face without mouth" plus "fog".) These emoji can only be filtered using the width test,
 // which happens in checkZwjSupport.js.
 const versionsAndTestEmoji = {
-  '🫠': 14,
-  '🥲': 13.1, // smiling face with tear, technically from v13 but see note above
-  '🥻': 12.1, // sari, technically from v12 but see note above
-  '🥰': 11,
-  '🤩': 5,
-  '👱‍♀️': 4,
-  '🤣': 3,
-  '👁️‍🗨️': 2,
-  '😀': 1,
-  '😐️': 0.7,
-  '😃': 0.6
+	'🫠': 14,
+	'🥲': 13.1, // smiling face with tear, technically from v13 but see note above
+	'🥻': 12.1, // sari, technically from v12 but see note above
+	'🥰': 11,
+	'🤩': 5,
+	'👱‍♀️': 4,
+	'🤣': 3,
+	'👁️‍🗨️': 2,
+	'😀': 1,
+	'😐️': 0.7,
+	'😃': 0.6
 };
 
 const TIMEOUT_BEFORE_LOADING_MESSAGE = 1000; // 1 second
@@ -62,20 +62,20 @@ const DEFAULT_NUM_COLUMNS = 8;
 // a bit of my own curation. (E.g. avoid the "OK" gesture because of connotations:
 // https://emojipedia.org/ok-hand/)
 const MOST_COMMONLY_USED_EMOJI = [
-  '😊',
-  '😒',
-  '♥️',
-  '👍️',
-  '😍',
-  '😂',
-  '😭',
-  '☺️',
-  '😔',
-  '😩',
-  '😏',
-  '💕',
-  '🙌',
-  '😘'
+	'😊',
+	'😒',
+	'♥️',
+	'👍️',
+	'😍',
+	'😂',
+	'😭',
+	'☺️',
+	'😔',
+	'😩',
+	'😏',
+	'💕',
+	'🙌',
+	'😘'
 ];
 
 // It's important to list Twemoji Mozilla before everything else, because Mozilla bundles their
@@ -84,7 +84,7 @@ const MOST_COMMONLY_USED_EMOJI = [
 // newer emoji in another font:
 // https://github.com/nolanlawson/emoji-picker-element/pull/268#issuecomment-1073347283
 const FONT_FAMILY = '"Twemoji Mozilla","Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol",' +
-  '"Noto Color Emoji","EmojiOne Color","Android Emoji",sans-serif';
+	'"Noto Color Emoji","EmojiOne Color","Android Emoji",sans-serif';
 
 /* istanbul ignore next */
 const DEFAULT_CATEGORY_SORTING = (a, b) => a < b ? -1 : a > b ? 1 : 0;
@@ -92,60 +92,60 @@ const DEFAULT_CATEGORY_SORTING = (a, b) => a < b ? -1 : a > b ? 1 : 0;
 // Test if an emoji is supported by rendering it to canvas and checking that the color is not black
 
 const getTextFeature = (text, color) => {
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = 1;
+	const canvas = document.createElement('canvas');
+	canvas.width = canvas.height = 1;
 
-  const ctx = canvas.getContext('2d');
-  ctx.textBaseline = 'top';
-  ctx.font = `100px ${FONT_FAMILY}`;
-  ctx.fillStyle = color;
-  ctx.scale(0.01, 0.01);
-  ctx.fillText(text, 0, 0);
+	const ctx = canvas.getContext('2d');
+	ctx.textBaseline = 'top';
+	ctx.font = `100px ${FONT_FAMILY}`;
+	ctx.fillStyle = color;
+	ctx.scale(0.01, 0.01);
+	ctx.fillText(text, 0, 0);
 
-  return ctx.getImageData(0, 0, 1, 1).data
+	return ctx.getImageData(0, 0, 1, 1).data
 };
 
 const compareFeatures = (feature1, feature2) => {
-  const feature1Str = [...feature1].join(',');
-  const feature2Str = [...feature2].join(',');
-  // This is RGBA, so for 0,0,0, we are checking that the first RGB is not all zeroes.
-  // Most of the time when unsupported this is 0,0,0,0, but on Chrome on Mac it is
-  // 0,0,0,61 - there is a transparency here.
-  return feature1Str === feature2Str && !feature1Str.startsWith('0,0,0,')
+	const feature1Str = [...feature1].join(',');
+	const feature2Str = [...feature2].join(',');
+	// This is RGBA, so for 0,0,0, we are checking that the first RGB is not all zeroes.
+	// Most of the time when unsupported this is 0,0,0,0, but on Chrome on Mac it is
+	// 0,0,0,61 - there is a transparency here.
+	return feature1Str === feature2Str && !feature1Str.startsWith('0,0,0,')
 };
 
-function testColorEmojiSupported (text) {
-  // Render white and black and then compare them to each other and ensure they're the same
-  // color, and neither one is black. This shows that the emoji was rendered in color.
-  const feature1 = getTextFeature(text, '#000');
-  const feature2 = getTextFeature(text, '#fff');
-  return feature1 && feature2 && compareFeatures(feature1, feature2)
+function testColorEmojiSupported(text) {
+	// Render white and black and then compare them to each other and ensure they're the same
+	// color, and neither one is black. This shows that the emoji was rendered in color.
+	const feature1 = getTextFeature(text, '#000');
+	const feature2 = getTextFeature(text, '#fff');
+	return feature1 && feature2 && compareFeatures(feature1, feature2)
 }
 
 // rather than check every emoji ever, which would be expensive, just check some representatives from the
 
-function determineEmojiSupportLevel () {
-  const entries = Object.entries(versionsAndTestEmoji);
-  try {
-    // start with latest emoji and work backwards
-    for (const [emoji, version] of entries) {
-      if (testColorEmojiSupported(emoji)) {
-        return version
-      }
-    }
-  } catch (e) { // canvas error
-  } finally {
-  }
-  // In case of an error, be generous and just assume all emoji are supported (e.g. for canvas errors
-  // due to anti-fingerprinting add-ons). Better to show some gray boxes than nothing at all.
-  return entries[0][1] // first one in the list is the most recent version
+function determineEmojiSupportLevel() {
+	const entries = Object.entries(versionsAndTestEmoji);
+	try {
+		// start with latest emoji and work backwards
+		for (const [emoji, version] of entries) {
+			if (testColorEmojiSupported(emoji)) {
+				return version
+			}
+		}
+	} catch (e) { // canvas error
+	} finally {
+	}
+	// In case of an error, be generous and just assume all emoji are supported (e.g. for canvas errors
+	// due to anti-fingerprinting add-ons). Better to show some gray boxes than nothing at all.
+	return entries[0][1] // first one in the list is the most recent version
 }
 
 // Check which emojis we know for sure aren't supported, based on Unicode version level
 const emojiSupportLevelPromise = new Promise(resolve => (
-  rIC(() => (
-    resolve(determineEmojiSupportLevel()) // delay so ideally this can run while IDB is first populating
-  ))
+	rIC(() => (
+		resolve(determineEmojiSupportLevel()) // delay so ideally this can run while IDB is first populating
+	))
 ));
 // determine which emojis containing ZWJ (zero width joiner) characters
 // are supported (rendered as one glyph) rather than unsupported (rendered as two or more glyphs)
@@ -160,80 +160,80 @@ const LIGHT_SKIN_TONE_MODIFIER = 0xdffb;
 // TODO: this is a naive implementation, we can improve it later
 // It's only used for the skintone picker, so as long as people don't customize with
 // really exotic emoji then it should work fine
-function applySkinTone (str, skinTone) {
-  if (skinTone === 0) {
-    return str
-  }
-  const zwjIndex = str.indexOf(ZWJ);
-  if (zwjIndex !== -1) {
-    return str.substring(0, zwjIndex) +
-      String.fromCodePoint(LIGHT_SKIN_TONE + skinTone - 1) +
-      str.substring(zwjIndex)
-  }
-  if (str.endsWith(VARIATION_SELECTOR)) {
-    str = str.substring(0, str.length - 1);
-  }
-  return str + SKINTONE_MODIFIER + String.fromCodePoint(LIGHT_SKIN_TONE_MODIFIER + skinTone - 1)
+function applySkinTone(str, skinTone) {
+	if (skinTone === 0) {
+		return str
+	}
+	const zwjIndex = str.indexOf(ZWJ);
+	if (zwjIndex !== -1) {
+		return str.substring(0, zwjIndex) +
+			String.fromCodePoint(LIGHT_SKIN_TONE + skinTone - 1) +
+			str.substring(zwjIndex)
+	}
+	if (str.endsWith(VARIATION_SELECTOR)) {
+		str = str.substring(0, str.length - 1);
+	}
+	return str + SKINTONE_MODIFIER + String.fromCodePoint(LIGHT_SKIN_TONE_MODIFIER + skinTone - 1)
 }
 
-function halt (event) {
-  event.preventDefault();
-  event.stopPropagation();
+function halt(event) {
+	event.preventDefault();
+	event.stopPropagation();
 }
 
 // Implementation left/right or up/down navigation, circling back when you
 // reach the start/end of the list
-function incrementOrDecrement (decrement, val, arr) {
-  val += (decrement ? -1 : 1);
-  if (val < 0) {
-    val = arr.length - 1;
-  } else if (val >= arr.length) {
-    val = 0;
-  }
-  return val
+function incrementOrDecrement(decrement, val, arr) {
+	val += (decrement ? -1 : 1);
+	if (val < 0) {
+		val = arr.length - 1;
+	} else if (val >= arr.length) {
+		val = 0;
+	}
+	return val
 }
 
 // like lodash's uniqBy but much smaller
-function uniqBy (arr, func) {
-  const set = new Set();
-  const res = [];
-  for (const item of arr) {
-    const key = func(item);
-    if (!set.has(key)) {
-      set.add(key);
-      res.push(item);
-    }
-  }
-  return res
+function uniqBy(arr, func) {
+	const set = new Set();
+	const res = [];
+	for (const item of arr) {
+		const key = func(item);
+		if (!set.has(key)) {
+			set.add(key);
+			res.push(item);
+		}
+	}
+	return res
 }
 
 // We don't need all the data on every emoji, and there are specific things we need
 // for the UI, so build a "view model" from the emoji object we got from the database
 
-function summarizeEmojisForUI (emojis, emojiSupportLevel) {
-  const toSimpleSkinsMap = skins => {
-    const res = {};
-    for (const skin of skins) {
-      // ignore arrays like [1, 2] with multiple skin tones
-      // also ignore variants that are in an unsupported emoji version
-      // (these do exist - variants from a different version than their base emoji)
-      if (typeof skin.tone === 'number' && skin.version <= emojiSupportLevel) {
-        res[skin.tone] = skin.unicode;
-      }
-    }
-    return res
-  };
+function summarizeEmojisForUI(emojis, emojiSupportLevel) {
+	const toSimpleSkinsMap = skins => {
+		const res = {};
+		for (const skin of skins) {
+			// ignore arrays like [1, 2] with multiple skin tones
+			// also ignore variants that are in an unsupported emoji version
+			// (these do exist - variants from a different version than their base emoji)
+			if (typeof skin.tone === 'number' && skin.version <= emojiSupportLevel) {
+				res[skin.tone] = skin.unicode;
+			}
+		}
+		return res
+	};
 
-  return emojis.map(({ unicode, skins, shortcodes, url, name, category }) => ({
-    unicode,
-    name,
-    shortcodes,
-    url,
-    category,
-    id: unicode || name,
-    skins: skins && toSimpleSkinsMap(skins),
-    title: (shortcodes || []).join(', ')
-  }))
+	return emojis.map(({ unicode, skins, shortcodes, url, name, category }) => ({
+		unicode,
+		name,
+		shortcodes,
+		url,
+		category,
+		id: unicode || name,
+		skins: skins && toSimpleSkinsMap(skins),
+		title: (shortcodes || []).join(', ')
+	}))
 }
 
 // import rAF from one place so that the bundle size is a bit smaller
@@ -243,69 +243,69 @@ const rAF = requestAnimationFrame;
 
 let resizeObserverSupported = typeof ResizeObserver === 'function';
 
-function calculateWidth (node, onUpdate) {
-  let resizeObserver;
-  if (resizeObserverSupported) {
-    resizeObserver = new ResizeObserver(entries => (
-      onUpdate(entries[0].contentRect.width)
-    ));
-    resizeObserver.observe(node);
-  } else { // just set the width once, don't bother trying to track it
-    rAF(() => (
-      onUpdate(node.getBoundingClientRect().width)
-    ));
-  }
+function calculateWidth(node, onUpdate) {
+	let resizeObserver;
+	if (resizeObserverSupported) {
+		resizeObserver = new ResizeObserver(entries => (
+			onUpdate(entries[0].contentRect.width)
+		));
+		resizeObserver.observe(node);
+	} else { // just set the width once, don't bother trying to track it
+		rAF(() => (
+			onUpdate(node.getBoundingClientRect().width)
+		));
+	}
 
-  // cleanup function (called on destroy)
-  return {
-    destroy () {
-      if (resizeObserver) {
-        resizeObserver.disconnect();
-      }
-    }
-  }
+	// cleanup function (called on destroy)
+	return {
+		destroy() {
+			if (resizeObserver) {
+				resizeObserver.disconnect();
+			}
+		}
+	}
 }
 
 // get the width of the text inside of a DOM node, via https://stackoverflow.com/a/59525891/680742
-function calculateTextWidth (node) {
-  /* istanbul ignore else */
-  {
-    const range = document.createRange();
-    range.selectNode(node.firstChild);
-    return range.getBoundingClientRect().width
-  }
+function calculateTextWidth(node) {
+	/* istanbul ignore else */
+	{
+		const range = document.createRange();
+		range.selectNode(node.firstChild);
+		return range.getBoundingClientRect().width
+	}
 }
 
 let baselineEmojiWidth;
 
-function checkZwjSupport (zwjEmojisToCheck, baselineEmoji, emojiToDomNode) {
-  for (const emoji of zwjEmojisToCheck) {
-    const domNode = emojiToDomNode(emoji);
-    const emojiWidth = calculateTextWidth(domNode);
-    if (typeof baselineEmojiWidth === 'undefined') { // calculate the baseline emoji width only once
-      baselineEmojiWidth = calculateTextWidth(baselineEmoji);
-    }
-    // On Windows, some supported emoji are ~50% bigger than the baseline emoji, but what we really want to guard
-    // against are the ones that are 2x the size, because those are truly broken (person with red hair = person with
-    // floating red wig, black cat = cat with black square, polar bear = bear with snowflake, etc.)
-    // So here we set the threshold at 1.8 times the size of the baseline emoji.
-    const supported = emojiWidth / 1.8 < baselineEmojiWidth;
-    supportedZwjEmojis.set(emoji.unicode, supported);
-  }
+function checkZwjSupport(zwjEmojisToCheck, baselineEmoji, emojiToDomNode) {
+	for (const emoji of zwjEmojisToCheck) {
+		const domNode = emojiToDomNode(emoji);
+		const emojiWidth = calculateTextWidth(domNode);
+		if (typeof baselineEmojiWidth === 'undefined') { // calculate the baseline emoji width only once
+			baselineEmojiWidth = calculateTextWidth(baselineEmoji);
+		}
+		// On Windows, some supported emoji are ~50% bigger than the baseline emoji, but what we really want to guard
+		// against are the ones that are 2x the size, because those are truly broken (person with red hair = person with
+		// floating red wig, black cat = cat with black square, polar bear = bear with snowflake, etc.)
+		// So here we set the threshold at 1.8 times the size of the baseline emoji.
+		const supported = emojiWidth / 1.8 < baselineEmojiWidth;
+		supportedZwjEmojis.set(emoji.unicode, supported);
+	}
 }
 
 // Measure after style/layout are complete
 
 const requestPostAnimationFrame = callback => {
-  rAF(() => {
-    setTimeout(callback);
-  });
+	rAF(() => {
+		setTimeout(callback);
+	});
 };
 
 // like lodash's uniq
 
-function uniq (arr) {
-  return uniqBy(arr, _ => _)
+function uniq(arr) {
+	return uniqBy(arr, _ => _)
 }
 
 /* src/picker/components/Picker/Picker.svelte generated by Svelte v3.46.4 */
@@ -366,8 +366,8 @@ function create_each_block_4(key_1, ctx) {
 			attr(div, "id", div_id_value = "skintone-" + /*i*/ ctx[65]);
 
 			attr(div, "class", div_class_value = "emoji hide-focus " + (/*i*/ ctx[65] === /*activeSkinTone*/ ctx[20]
-			? 'active'
-			: ''));
+				? 'active'
+				: ''));
 
 			attr(div, "aria-selected", div_aria_selected_value = /*i*/ ctx[65] === /*activeSkinTone*/ ctx[20]);
 			attr(div, "role", "option");
@@ -389,8 +389,8 @@ function create_each_block_4(key_1, ctx) {
 			}
 
 			if (dirty[0] & /*skinTones, activeSkinTone*/ 1049088 && div_class_value !== (div_class_value = "emoji hide-focus " + (/*i*/ ctx[65] === /*activeSkinTone*/ ctx[20]
-			? 'active'
-			: ''))) {
+				? 'active'
+				: ''))) {
 				attr(div, "class", div_class_value);
 			}
 
@@ -558,15 +558,15 @@ function create_each_block_2(key_1, ctx) {
 			attr(button, "role", button_role_value = /*searchMode*/ ctx[4] ? 'option' : 'menuitem');
 
 			attr(button, "aria-selected", button_aria_selected_value = /*searchMode*/ ctx[4]
-			? /*i*/ ctx[65] == /*activeSearchItem*/ ctx[5]
-			: '');
+				? /*i*/ ctx[65] == /*activeSearchItem*/ ctx[5]
+				: '');
 
 			attr(button, "aria-label", button_aria_label_value = /*labelWithSkin*/ ctx[28](/*emoji*/ ctx[63], /*currentSkinTone*/ ctx[8]));
 			attr(button, "title", button_title_value = /*emoji*/ ctx[63].title);
 
 			attr(button, "class", button_class_value = "emoji " + (/*searchMode*/ ctx[4] && /*i*/ ctx[65] === /*activeSearchItem*/ ctx[5]
-			? 'active'
-			: ''));
+				? 'active'
+				: ''));
 
 			attr(button, "id", button_id_value = "emo-" + /*emoji*/ ctx[63].id);
 			this.first = button;
@@ -595,8 +595,8 @@ function create_each_block_2(key_1, ctx) {
 			}
 
 			if (dirty[0] & /*searchMode, currentEmojisWithCategories, activeSearchItem*/ 32816 && button_aria_selected_value !== (button_aria_selected_value = /*searchMode*/ ctx[4]
-			? /*i*/ ctx[65] == /*activeSearchItem*/ ctx[5]
-			: '')) {
+				? /*i*/ ctx[65] == /*activeSearchItem*/ ctx[5]
+				: '')) {
 				attr(button, "aria-selected", button_aria_selected_value);
 			}
 
@@ -609,8 +609,8 @@ function create_each_block_2(key_1, ctx) {
 			}
 
 			if (dirty[0] & /*searchMode, currentEmojisWithCategories, activeSearchItem*/ 32816 && button_class_value !== (button_class_value = "emoji " + (/*searchMode*/ ctx[4] && /*i*/ ctx[65] === /*activeSearchItem*/ ctx[5]
-			? 'active'
-			: ''))) {
+				? 'active'
+				: ''))) {
 				attr(button, "class", button_class_value);
 			}
 
@@ -630,12 +630,12 @@ function create_each_block_1(key_1, ctx) {
 	let div0;
 
 	let t_value = (/*searchMode*/ ctx[4]
-	? /*i18n*/ ctx[0].searchResultsLabel
-	: /*emojiWithCategory*/ ctx[66].category
-		? /*emojiWithCategory*/ ctx[66].category
-		: /*currentEmojisWithCategories*/ ctx[15].length > 1
-			? /*i18n*/ ctx[0].categories.custom
-			: /*i18n*/ ctx[0].categories[/*currentGroup*/ ctx[13].name]) + "";
+		? /*i18n*/ ctx[0].searchResultsLabel
+		: /*emojiWithCategory*/ ctx[66].category
+			? /*emojiWithCategory*/ ctx[66].category
+			: /*currentEmojisWithCategories*/ ctx[15].length > 1
+				? /*i18n*/ ctx[0].categories.custom
+				: /*i18n*/ ctx[0].categories[/*currentGroup*/ ctx[13].name]) + "";
 
 	let t;
 	let div0_id_value;
@@ -670,8 +670,8 @@ function create_each_block_1(key_1, ctx) {
 			attr(div0, "id", div0_id_value = "menu-label-" + /*i*/ ctx[65]);
 
 			attr(div0, "class", div0_class_value = "category " + (/*currentEmojisWithCategories*/ ctx[15].length === 1 && /*currentEmojisWithCategories*/ ctx[15][0].category === ''
-			? 'gone'
-			: ''));
+				? 'gone'
+				: ''));
 
 			attr(div0, "aria-hidden", "true");
 			attr(div1, "class", "emoji-menu");
@@ -693,20 +693,20 @@ function create_each_block_1(key_1, ctx) {
 			ctx = new_ctx;
 
 			if (dirty[0] & /*searchMode, i18n, currentEmojisWithCategories, currentGroup*/ 40977 && t_value !== (t_value = (/*searchMode*/ ctx[4]
-			? /*i18n*/ ctx[0].searchResultsLabel
-			: /*emojiWithCategory*/ ctx[66].category
-				? /*emojiWithCategory*/ ctx[66].category
-				: /*currentEmojisWithCategories*/ ctx[15].length > 1
-					? /*i18n*/ ctx[0].categories.custom
-					: /*i18n*/ ctx[0].categories[/*currentGroup*/ ctx[13].name]) + "")) set_data(t, t_value);
+				? /*i18n*/ ctx[0].searchResultsLabel
+				: /*emojiWithCategory*/ ctx[66].category
+					? /*emojiWithCategory*/ ctx[66].category
+					: /*currentEmojisWithCategories*/ ctx[15].length > 1
+						? /*i18n*/ ctx[0].categories.custom
+						: /*i18n*/ ctx[0].categories[/*currentGroup*/ ctx[13].name]) + "")) set_data(t, t_value);
 
 			if (dirty[0] & /*currentEmojisWithCategories*/ 32768 && div0_id_value !== (div0_id_value = "menu-label-" + /*i*/ ctx[65])) {
 				attr(div0, "id", div0_id_value);
 			}
 
 			if (dirty[0] & /*currentEmojisWithCategories*/ 32768 && div0_class_value !== (div0_class_value = "category " + (/*currentEmojisWithCategories*/ ctx[15].length === 1 && /*currentEmojisWithCategories*/ ctx[15][0].category === ''
-			? 'gone'
-			: ''))) {
+				? 'gone'
+				: ''))) {
 				attr(div0, "class", div0_class_value);
 			}
 
@@ -1007,8 +1007,8 @@ function create_fragment(ctx) {
 			attr(input, "aria-autocomplete", "list");
 
 			attr(input, "aria-activedescendant", input_aria_activedescendant_value = /*activeSearchItemId*/ ctx[26]
-			? `emo-${/*activeSearchItemId*/ ctx[26]}`
-			: '');
+				? `emo-${/*activeSearchItemId*/ ctx[26]}`
+				: '');
 
 			attr(label, "class", "sr-only");
 			attr(label, "for", "search");
@@ -1025,20 +1025,20 @@ function create_fragment(ctx) {
 			attr(button0, "aria-controls", "skintone-list");
 
 			attr(div2, "class", div2_class_value = "skintone-button-wrapper " + (/*skinTonePickerExpandedAfterAnimation*/ ctx[19]
-			? 'expanded'
-			: ''));
+				? 'expanded'
+				: ''));
 
 			attr(span1, "id", "skintone-description");
 			attr(span1, "class", "sr-only");
 			attr(div3, "id", "skintone-list");
 
 			attr(div3, "class", div3_class_value = "skintone-list " + (/*skinTonePickerExpanded*/ ctx[6]
-			? ''
-			: 'hidden no-animate'));
+				? ''
+				: 'hidden no-animate'));
 
 			set_style(div3, "transform", "translateY(" + (/*skinTonePickerExpanded*/ ctx[6]
-			? 0
-			: 'calc(-1 * var(--num-skintones) * var(--total-emoji-size))') + ")");
+				? 0
+				: 'calc(-1 * var(--num-skintones) * var(--total-emoji-size))') + ")");
 
 			attr(div3, "role", "listbox");
 			attr(div3, "aria-label", div3_aria_label_value = /*i18n*/ ctx[0].skinTonesLabel);
@@ -1057,18 +1057,18 @@ function create_fragment(ctx) {
 			attr(div8, "aria-live", "polite");
 
 			attr(div10, "class", div10_class_value = "tabpanel " + (!/*databaseLoaded*/ ctx[14] || /*message*/ ctx[18]
-			? 'gone'
-			: ''));
+				? 'gone'
+				: ''));
 
 			attr(div10, "role", div10_role_value = /*searchMode*/ ctx[4] ? 'region' : 'tabpanel');
 
 			attr(div10, "aria-label", div10_aria_label_value = /*searchMode*/ ctx[4]
-			? /*i18n*/ ctx[0].searchResultsLabel
-			: /*i18n*/ ctx[0].categories[/*currentGroup*/ ctx[13].name]);
+				? /*i18n*/ ctx[0].searchResultsLabel
+				: /*i18n*/ ctx[0].categories[/*currentGroup*/ ctx[13].name]);
 
 			attr(div10, "id", div10_id_value = /*searchMode*/ ctx[4]
-			? ''
-			: `tab-${/*currentGroup*/ ctx[13].id}`);
+				? ''
+				: `tab-${/*currentGroup*/ ctx[13].id}`);
 
 			attr(div10, "tabindex", "0");
 			attr(div11, "class", div11_class_value = "favorites emoji-menu " + (/*message*/ ctx[18] ? 'gone' : ''));
@@ -1161,8 +1161,8 @@ function create_fragment(ctx) {
 			}
 
 			if (dirty[0] & /*activeSearchItemId*/ 67108864 && input_aria_activedescendant_value !== (input_aria_activedescendant_value = /*activeSearchItemId*/ ctx[26]
-			? `emo-${/*activeSearchItemId*/ ctx[26]}`
-			: '')) {
+				? `emo-${/*activeSearchItemId*/ ctx[26]}`
+				: '')) {
 				attr(input, "aria-activedescendant", input_aria_activedescendant_value);
 			}
 
@@ -1191,8 +1191,8 @@ function create_fragment(ctx) {
 			}
 
 			if (dirty[0] & /*skinTonePickerExpandedAfterAnimation*/ 524288 && div2_class_value !== (div2_class_value = "skintone-button-wrapper " + (/*skinTonePickerExpandedAfterAnimation*/ ctx[19]
-			? 'expanded'
-			: ''))) {
+				? 'expanded'
+				: ''))) {
 				attr(div2, "class", div2_class_value);
 			}
 
@@ -1204,15 +1204,15 @@ function create_fragment(ctx) {
 			}
 
 			if (dirty[0] & /*skinTonePickerExpanded*/ 64 && div3_class_value !== (div3_class_value = "skintone-list " + (/*skinTonePickerExpanded*/ ctx[6]
-			? ''
-			: 'hidden no-animate'))) {
+				? ''
+				: 'hidden no-animate'))) {
 				attr(div3, "class", div3_class_value);
 			}
 
 			if (dirty[0] & /*skinTonePickerExpanded*/ 64) {
 				set_style(div3, "transform", "translateY(" + (/*skinTonePickerExpanded*/ ctx[6]
-				? 0
-				: 'calc(-1 * var(--num-skintones) * var(--total-emoji-size))') + ")");
+					? 0
+					: 'calc(-1 * var(--num-skintones) * var(--total-emoji-size))') + ")");
 			}
 
 			if (dirty[0] & /*i18n*/ 1 && div3_aria_label_value !== (div3_aria_label_value = /*i18n*/ ctx[0].skinTonesLabel)) {
@@ -1256,8 +1256,8 @@ function create_fragment(ctx) {
 			}
 
 			if (dirty[0] & /*databaseLoaded, message*/ 278528 && div10_class_value !== (div10_class_value = "tabpanel " + (!/*databaseLoaded*/ ctx[14] || /*message*/ ctx[18]
-			? 'gone'
-			: ''))) {
+				? 'gone'
+				: ''))) {
 				attr(div10, "class", div10_class_value);
 			}
 
@@ -1266,14 +1266,14 @@ function create_fragment(ctx) {
 			}
 
 			if (dirty[0] & /*searchMode, i18n, currentGroup*/ 8209 && div10_aria_label_value !== (div10_aria_label_value = /*searchMode*/ ctx[4]
-			? /*i18n*/ ctx[0].searchResultsLabel
-			: /*i18n*/ ctx[0].categories[/*currentGroup*/ ctx[13].name])) {
+				? /*i18n*/ ctx[0].searchResultsLabel
+				: /*i18n*/ ctx[0].categories[/*currentGroup*/ ctx[13].name])) {
 				attr(div10, "aria-label", div10_aria_label_value);
 			}
 
 			if (dirty[0] & /*searchMode, currentGroup*/ 8208 && div10_id_value !== (div10_id_value = /*searchMode*/ ctx[4]
-			? ''
-			: `tab-${/*currentGroup*/ ctx[13].id}`)) {
+				? ''
+				: `tab-${/*currentGroup*/ ctx[13].id}`)) {
 				attr(div10, "id", div10_id_value);
 			}
 
@@ -1477,8 +1477,8 @@ function instance($$self, $$props, $$invalidate) {
 
 		// -1 is custom emoji
 		const emoji = group === -1
-		? customEmoji
-		: await database.getEmojiByGroup(group);
+			? customEmoji
+			: await database.getEmojiByGroup(group);
 
 		return summarizeEmojis(await filterEmojisByVersion(emoji));
 	}
@@ -1746,7 +1746,7 @@ function instance($$self, $$props, $$invalidate) {
 					try {
 						await database.ready();
 						$$invalidate(14, databaseLoaded = true); // eslint-disable-line no-unused-vars
-					} catch(err) {
+					} catch (err) {
 						console.error(err);
 						$$invalidate(18, message = i18n.networkErrorMessage);
 					} finally {
@@ -2100,162 +2100,162 @@ const DEFAULT_DATA_SOURCE = 'https://cdn.jsdelivr.net/npm/emoji-picker-element-d
 const DEFAULT_LOCALE = 'en';
 
 var enI18n = {
-  categoriesLabel: 'Categories',
-  emojiUnsupportedMessage: 'Your browser does not support color emoji.',
-  favoritesLabel: 'Favorites',
-  loadingMessage: 'Loading…',
-  networkErrorMessage: 'Could not load emoji.',
-  regionLabel: 'Emoji picker',
-  searchDescription: 'When search results are available, press up or down to select and enter to choose.',
-  searchLabel: 'Search',
-  searchResultsLabel: 'Search results',
-  skinToneDescription: 'When expanded, press up or down to select and enter to choose.',
-  skinToneLabel: 'Choose a skin tone (currently {skinTone})',
-  skinTonesLabel: 'Skin tones',
-  skinTones: [
-    'Default',
-    'Light',
-    'Medium-Light',
-    'Medium',
-    'Medium-Dark',
-    'Dark'
-  ],
-  categories: {
-    custom: 'Custom',
-    'smileys-emotion': 'Smileys and emoticons',
-    'people-body': 'People and body',
-    'animals-nature': 'Animals and nature',
-    'food-drink': 'Food and drink',
-    'travel-places': 'Travel and places',
-    activities: 'Activities',
-    objects: 'Objects',
-    symbols: 'Symbols',
-    flags: 'Flags'
-  }
+	categoriesLabel: 'Categories',
+	emojiUnsupportedMessage: 'Your browser does not support color emoji.',
+	favoritesLabel: 'Favorites',
+	loadingMessage: 'Loading…',
+	networkErrorMessage: 'Could not load emoji.',
+	regionLabel: 'Emoji picker',
+	searchDescription: 'When search results are available, press up or down to select and enter to choose.',
+	searchLabel: 'Search',
+	searchResultsLabel: 'Search results',
+	skinToneDescription: 'When expanded, press up or down to select and enter to choose.',
+	skinToneLabel: 'Choose a skin tone (currently {skinTone})',
+	skinTonesLabel: 'Skin tones',
+	skinTones: [
+		'Default',
+		'Light',
+		'Medium-Light',
+		'Medium',
+		'Medium-Dark',
+		'Dark'
+	],
+	categories: {
+		custom: 'Custom',
+		'smileys-emotion': 'Smileys and emoticons',
+		'people-body': 'People and body',
+		'animals-nature': 'Animals and nature',
+		'food-drink': 'Food and drink',
+		'travel-places': 'Travel and places',
+		activities: 'Activities',
+		objects: 'Objects',
+		symbols: 'Symbols',
+		flags: 'Flags'
+	}
 };
 
 const PROPS = [
-  'customEmoji',
-  'customCategorySorting',
-  'database',
-  'dataSource',
-  'i18n',
-  'locale',
-  'skinToneEmoji'
+	'customEmoji',
+	'customCategorySorting',
+	'database',
+	'dataSource',
+	'i18n',
+	'locale',
+	'skinToneEmoji'
 ];
 
 class PickerElement extends HTMLElement {
-  constructor (props) {
-    super();
-    this.attachShadow({ mode: 'open' });
-    const style = document.createElement('style');
-    style.textContent = ":host{--emoji-size:1.375rem;--emoji-padding:0.5rem;--category-emoji-size:var(--emoji-size);--category-emoji-padding:var(--emoji-padding);--indicator-height:3px;--input-border-radius:0.5rem;--input-border-size:1px;--input-font-size:1rem;--input-line-height:1.5;--input-padding:0.25rem;--num-columns:8;--outline-size:2px;--border-size:1px;--skintone-border-radius:1rem;--category-font-size:1rem;display:flex;width:min-content;height:400px}:host,:host(.light){--background:#fff;--border-color:#e0e0e0;--indicator-color:#385ac1;--input-border-color:#999;--input-font-color:#111;--input-placeholder-color:#999;--outline-color:#999;--category-font-color:#111;--button-active-background:#e6e6e6;--button-hover-background:#d9d9d9}:host(.dark){--background:#222;--border-color:#444;--indicator-color:#5373ec;--input-border-color:#ccc;--input-font-color:#efefef;--input-placeholder-color:#ccc;--outline-color:#fff;--category-font-color:#efefef;--button-active-background:#555555;--button-hover-background:#484848}@media (prefers-color-scheme:dark){:host{--background:#222;--border-color:#444;--indicator-color:#5373ec;--input-border-color:#ccc;--input-font-color:#efefef;--input-placeholder-color:#ccc;--outline-color:#fff;--category-font-color:#efefef;--button-active-background:#555555;--button-hover-background:#484848}}:host([hidden]){display:none}button{margin:0;padding:0;border:0;background:0 0;box-shadow:none;-webkit-tap-highlight-color:transparent}button::-moz-focus-inner{border:0}input{padding:0;margin:0;line-height:1.15;font-family:inherit}input[type=search]{-webkit-appearance:none}:focus{outline:var(--outline-color) solid var(--outline-size);outline-offset:calc(-1*var(--outline-size))}:host([data-js-focus-visible]) :focus:not([data-focus-visible-added]){outline:0}:focus:not(:focus-visible){outline:0}.hide-focus{outline:0}*{box-sizing:border-box}.picker{contain:content;display:flex;flex-direction:column;background:var(--background);border:var(--border-size) solid var(--border-color);width:100%;height:100%;overflow:hidden;--total-emoji-size:calc(var(--emoji-size) + (2 * var(--emoji-padding)));--total-category-emoji-size:calc(var(--category-emoji-size) + (2 * var(--category-emoji-padding)))}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.hidden{opacity:0;pointer-events:none}.abs-pos{position:absolute;left:0;top:0}.gone{display:none!important}.skintone-button-wrapper,.skintone-list{background:var(--background);z-index:3}.skintone-button-wrapper.expanded{z-index:1}.skintone-list{position:absolute;inset-inline-end:0;top:0;z-index:2;overflow:visible;border-bottom:var(--border-size) solid var(--border-color);border-radius:0 0 var(--skintone-border-radius) var(--skintone-border-radius);will-change:transform;transition:transform .2s ease-in-out;transform-origin:center 0}@media (prefers-reduced-motion:reduce){.skintone-list{transition-duration:.001s}}@supports not (inset-inline-end:0){.skintone-list{right:0}}.skintone-list.no-animate{transition:none}.tabpanel{overflow-y:auto;-webkit-overflow-scrolling:touch;will-change:transform;min-height:0;flex:1;contain:content}.emoji-menu{display:grid;grid-template-columns:repeat(var(--num-columns),var(--total-emoji-size));justify-content:space-around;align-items:flex-start;width:100%}.category{padding:var(--emoji-padding);font-size:var(--category-font-size);color:var(--category-font-color)}.custom-emoji,.emoji,button.emoji{height:var(--total-emoji-size);width:var(--total-emoji-size)}.emoji,button.emoji{font-size:var(--emoji-size);display:flex;align-items:center;justify-content:center;border-radius:100%;line-height:1;overflow:hidden;font-family:var(--font-family);cursor:pointer}@media (hover:hover) and (pointer:fine){.emoji:hover,button.emoji:hover{background:var(--button-hover-background)}}.emoji.active,.emoji:active,button.emoji.active,button.emoji:active{background:var(--button-active-background)}.custom-emoji{padding:var(--emoji-padding);object-fit:contain;pointer-events:none;background-repeat:no-repeat;background-position:center center;background-size:var(--emoji-size) var(--emoji-size)}.nav,.nav-button{align-items:center}.nav{display:grid;justify-content:space-between;contain:content}.nav-button{display:flex;justify-content:center}.nav-emoji{font-size:var(--category-emoji-size);width:var(--total-category-emoji-size);height:var(--total-category-emoji-size)}.indicator-wrapper{display:flex;border-bottom:1px solid var(--border-color)}.indicator{width:calc(100%/var(--num-groups));height:var(--indicator-height);opacity:var(--indicator-opacity);background-color:var(--indicator-color);will-change:transform,opacity;transition:opacity .1s linear,transform .25s ease-in-out}@media (prefers-reduced-motion:reduce){.indicator{will-change:opacity;transition:opacity .1s linear}}.pad-top,input.search{background:var(--background);width:100%}.pad-top{height:var(--emoji-padding);z-index:3}.search-row{display:flex;align-items:center;position:relative;padding-inline-start:var(--emoji-padding);padding-bottom:var(--emoji-padding)}.search-wrapper{flex:1;min-width:0}input.search{padding:var(--input-padding);border-radius:var(--input-border-radius);border:var(--input-border-size) solid var(--input-border-color);color:var(--input-font-color);font-size:var(--input-font-size);line-height:var(--input-line-height)}input.search::placeholder{color:var(--input-placeholder-color)}.favorites{display:flex;flex-direction:row;border-top:var(--border-size) solid var(--border-color);contain:content}.message{padding:var(--emoji-padding)}";
-    this.shadowRoot.appendChild(style);
-    this._ctx = {
-      // Set defaults
-      locale: DEFAULT_LOCALE,
-      dataSource: DEFAULT_DATA_SOURCE,
-      skinToneEmoji: DEFAULT_SKIN_TONE_EMOJI,
-      customCategorySorting: DEFAULT_CATEGORY_SORTING,
-      customEmoji: null,
-      i18n: enI18n,
-      ...props
-    };
-    // Handle properties set before the element was upgraded
-    for (const prop of PROPS) {
-      if (prop !== 'database' && Object.prototype.hasOwnProperty.call(this, prop)) {
-        this._ctx[prop] = this[prop];
-        delete this[prop];
-      }
-    }
-    this._dbFlush(); // wait for a flush before creating the db, in case the user calls e.g. a setter or setAttribute
-  }
+	constructor(props) {
+		super();
+		this.attachShadow({ mode: 'open' });
+		const style = document.createElement('style');
+		style.textContent = ":host{--emoji-size:1.375rem;--emoji-padding:0.5rem;--category-emoji-size:var(--emoji-size);--category-emoji-padding:var(--emoji-padding);--indicator-height:3px;--input-border-radius:0.5rem;--input-border-size:1px;--input-font-size:1rem;--input-line-height:1.5;--input-padding:0.25rem;--num-columns:8;--outline-size:2px;--border-size:1px;--skintone-border-radius:1rem;--category-font-size:1rem;display:flex;width:min-content;height:400px}:host,:host(.light){--background:#fff;--border-color:#e0e0e0;--indicator-color:#385ac1;--input-border-color:#999;--input-font-color:#111;--input-placeholder-color:#999;--outline-color:#999;--category-font-color:#111;--button-active-background:#e6e6e6;--button-hover-background:#d9d9d9}:host(.dark){--background:#222;--border-color:#444;--indicator-color:#5373ec;--input-border-color:#ccc;--input-font-color:#efefef;--input-placeholder-color:#ccc;--outline-color:#fff;--category-font-color:#efefef;--button-active-background:#555555;--button-hover-background:#484848}@media (prefers-color-scheme:dark){:host{--background:#222;--border-color:#444;--indicator-color:#5373ec;--input-border-color:#ccc;--input-font-color:#efefef;--input-placeholder-color:#ccc;--outline-color:#fff;--category-font-color:#efefef;--button-active-background:#555555;--button-hover-background:#484848}}:host([hidden]){display:none}button{margin:0;padding:0;border:0;background:0 0;box-shadow:none;-webkit-tap-highlight-color:transparent}button::-moz-focus-inner{border:0}input{padding:0;margin:0;line-height:1.15;font-family:inherit}input[type=search]{-webkit-appearance:none}:focus{outline:var(--outline-color) solid var(--outline-size);outline-offset:calc(-1*var(--outline-size))}:host([data-js-focus-visible]) :focus:not([data-focus-visible-added]){outline:0}:focus:not(:focus-visible){outline:0}.hide-focus{outline:0}*{box-sizing:border-box}.picker{contain:content;display:flex;flex-direction:column;background:var(--background);border:var(--border-size) solid var(--border-color);width:100%;height:100%;overflow:hidden;--total-emoji-size:calc(var(--emoji-size) + (2 * var(--emoji-padding)));--total-category-emoji-size:calc(var(--category-emoji-size) + (2 * var(--category-emoji-padding)))}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.hidden{opacity:0;pointer-events:none}.abs-pos{position:absolute;left:0;top:0}.gone{display:none!important}.skintone-button-wrapper,.skintone-list{background:var(--background);z-index:3}.skintone-button-wrapper.expanded{z-index:1}.skintone-list{position:absolute;inset-inline-end:0;top:0;z-index:2;overflow:visible;border-bottom:var(--border-size) solid var(--border-color);border-radius:0 0 var(--skintone-border-radius) var(--skintone-border-radius);will-change:transform;transition:transform .2s ease-in-out;transform-origin:center 0}@media (prefers-reduced-motion:reduce){.skintone-list{transition-duration:.001s}}@supports not (inset-inline-end:0){.skintone-list{right:0}}.skintone-list.no-animate{transition:none}.tabpanel{overflow-y:auto;-webkit-overflow-scrolling:touch;will-change:transform;min-height:0;flex:1;contain:content}.emoji-menu{display:grid;grid-template-columns:repeat(var(--num-columns),var(--total-emoji-size));justify-content:space-around;align-items:flex-start;width:100%}.category{padding:var(--emoji-padding);font-size:var(--category-font-size);color:var(--category-font-color)}.custom-emoji,.emoji,button.emoji{height:var(--total-emoji-size);width:var(--total-emoji-size)}.emoji,button.emoji{font-size:var(--emoji-size);display:flex;align-items:center;justify-content:center;border-radius:100%;line-height:1;overflow:hidden;font-family:var(--font-family);cursor:pointer}@media (hover:hover) and (pointer:fine){.emoji:hover,button.emoji:hover{background:var(--button-hover-background)}}.emoji.active,.emoji:active,button.emoji.active,button.emoji:active{background:var(--button-active-background)}.custom-emoji{padding:var(--emoji-padding);object-fit:contain;pointer-events:none;background-repeat:no-repeat;background-position:center center;background-size:var(--emoji-size) var(--emoji-size)}.nav,.nav-button{align-items:center}.nav{display:grid;justify-content:space-between;contain:content}.nav-button{display:flex;justify-content:center}.nav-emoji{font-size:var(--category-emoji-size);width:var(--total-category-emoji-size);height:var(--total-category-emoji-size)}.indicator-wrapper{display:flex;border-bottom:1px solid var(--border-color)}.indicator{width:calc(100%/var(--num-groups));height:var(--indicator-height);opacity:var(--indicator-opacity);background-color:var(--indicator-color);will-change:transform,opacity;transition:opacity .1s linear,transform .25s ease-in-out}@media (prefers-reduced-motion:reduce){.indicator{will-change:opacity;transition:opacity .1s linear}}.pad-top,input.search{background:var(--background);width:100%}.pad-top{height:var(--emoji-padding);z-index:3}.search-row{display:flex;align-items:center;position:relative;padding-inline-start:var(--emoji-padding);padding-bottom:var(--emoji-padding)}.search-wrapper{flex:1;min-width:0}input.search{padding:var(--input-padding);border-radius:var(--input-border-radius);border:var(--input-border-size) solid var(--input-border-color);color:var(--input-font-color);font-size:var(--input-font-size);line-height:var(--input-line-height)}input.search::placeholder{color:var(--input-placeholder-color)}.favorites{display:flex;flex-direction:row;border-top:var(--border-size) solid var(--border-color);contain:content}.message{padding:var(--emoji-padding)}";
+		this.shadowRoot.appendChild(style);
+		this._ctx = {
+			// Set defaults
+			locale: DEFAULT_LOCALE,
+			dataSource: DEFAULT_DATA_SOURCE,
+			skinToneEmoji: DEFAULT_SKIN_TONE_EMOJI,
+			customCategorySorting: DEFAULT_CATEGORY_SORTING,
+			customEmoji: null,
+			i18n: enI18n,
+			...props
+		};
+		// Handle properties set before the element was upgraded
+		for (const prop of PROPS) {
+			if (prop !== 'database' && Object.prototype.hasOwnProperty.call(this, prop)) {
+				this._ctx[prop] = this[prop];
+				delete this[prop];
+			}
+		}
+		this._dbFlush(); // wait for a flush before creating the db, in case the user calls e.g. a setter or setAttribute
+	}
 
-  connectedCallback () {
-    this._cmp = new Picker({
-      target: this.shadowRoot,
-      props: this._ctx
-    });
-  }
+	connectedCallback() {
+		this._cmp = new Picker({
+			target: this.shadowRoot,
+			props: this._ctx
+		});
+	}
 
-  disconnectedCallback () {
-    this._cmp.$destroy();
-    this._cmp = undefined;
+	disconnectedCallback() {
+		this._cmp.$destroy();
+		this._cmp = undefined;
 
-    const { database } = this._ctx;
-    if (database) {
-      database.close()
-        // only happens if the database failed to load in the first place, so we don't care)
-        .catch(err => console.error(err));
-    }
-  }
+		const { database } = this._ctx;
+		if (database) {
+			database.close()
+				// only happens if the database failed to load in the first place, so we don't care)
+				.catch(err => console.error(err));
+		}
+	}
 
-  static get observedAttributes () {
-    return ['locale', 'data-source', 'skin-tone-emoji'] // complex objects aren't supported, also use kebab-case
-  }
+	static get observedAttributes() {
+		return ['locale', 'data-source', 'skin-tone-emoji'] // complex objects aren't supported, also use kebab-case
+	}
 
-  attributeChangedCallback (attrName, oldValue, newValue) {
-    // convert from kebab-case to camelcase
-    // see https://github.com/sveltejs/svelte/issues/3852#issuecomment-665037015
-    this._set(
-      attrName.replace(/-([a-z])/g, (_, up) => up.toUpperCase()),
-      newValue
-    );
-  }
+	attributeChangedCallback(attrName, oldValue, newValue) {
+		// convert from kebab-case to camelcase
+		// see https://github.com/sveltejs/svelte/issues/3852#issuecomment-665037015
+		this._set(
+			attrName.replace(/-([a-z])/g, (_, up) => up.toUpperCase()),
+			newValue
+		);
+	}
 
-  _set (prop, newValue) {
-    this._ctx[prop] = newValue;
-    if (this._cmp) {
-      this._cmp.$set({ [prop]: newValue });
-    }
-    if (['locale', 'dataSource'].includes(prop)) {
-      this._dbFlush();
-    }
-  }
+	_set(prop, newValue) {
+		this._ctx[prop] = newValue;
+		if (this._cmp) {
+			this._cmp.$set({ [prop]: newValue });
+		}
+		if (['locale', 'dataSource'].includes(prop)) {
+			this._dbFlush();
+		}
+	}
 
-  _dbCreate () {
-    const { locale, dataSource, database } = this._ctx;
-    // only create a new database if we really need to
-    if (!database || database.locale !== locale || database.dataSource !== dataSource) {
-      this._set('database', new Database({ locale, dataSource }));
-    }
-  }
+	_dbCreate() {
+		const { locale, dataSource, database } = this._ctx;
+		// only create a new database if we really need to
+		if (!database || database.locale !== locale || database.dataSource !== dataSource) {
+			this._set('database', new Database({ locale, dataSource }));
+		}
+	}
 
-  // Update the Database in one microtask if the locale/dataSource change. We do one microtask
-  // so we don't create two Databases if e.g. both the locale and the dataSource change
-  _dbFlush () {
-    Promise.resolve().then(() => (
-      this._dbCreate()
-    ));
-  }
+	// Update the Database in one microtask if the locale/dataSource change. We do one microtask
+	// so we don't create two Databases if e.g. both the locale and the dataSource change
+	_dbFlush() {
+		Promise.resolve().then(() => (
+			this._dbCreate()
+		));
+	}
 }
 
 const definitions = {};
 
 for (const prop of PROPS) {
-  definitions[prop] = {
-    get () {
-      if (prop === 'database') {
-        // in rare cases, the microtask may not be flushed yet, so we need to instantiate the DB
-        // now if the user is asking for it
-        this._dbCreate();
-      }
-      return this._ctx[prop]
-    },
-    set (val) {
-      if (prop === 'database') {
-        throw new Error('database is read-only')
-      }
-      this._set(prop, val);
-    }
-  };
+	definitions[prop] = {
+		get() {
+			if (prop === 'database') {
+				// in rare cases, the microtask may not be flushed yet, so we need to instantiate the DB
+				// now if the user is asking for it
+				this._dbCreate();
+			}
+			return this._ctx[prop]
+		},
+		set(val) {
+			if (prop === 'database') {
+				throw new Error('database is read-only')
+			}
+			this._set(prop, val);
+		}
+	};
 }
 
 Object.defineProperties(PickerElement.prototype, definitions);
 
 /* istanbul ignore else */
 if (!customElements.get('emoji-picker')) { // if already defined, do nothing (e.g. same script imported twice)
-  customElements.define('emoji-picker', PickerElement);
+	customElements.define('emoji-picker', PickerElement);
 }
 
 export { PickerElement as default };

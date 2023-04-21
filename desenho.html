@@ -373,10 +373,22 @@
                     seleção</span>
 
             </div>
+            <div id="menulixeira" class="fundobranco submenu">
+                <div class="botao">⚠️ impossivel desfazer ⚠️
+                    <span class="close">❎</span>
+                </div>
+
+                <div class="botao" onclick="limpar('quadro'), removeClass()">🖼️ 🗑 limpar quadro</div>
+                <div class="botao" onclick="limpar('animacao'), removeClass()"> 🎞️ 🗑 Apagar toda a animação</div>
+                <span class="botao" onmousedown="removeFrame(),removeClass()"> 🎞️ ➖ 🖼️ Remover quadro atual <span
+                        class="bot">➖</span></span>
+
+
+            </div>
 
             <div id="menurotacionar" class="fundobranco submenu">
                 <span id="rotacionar" class="botao" onclick="rotacionar()">🔃 Rotacionar a tela </span>
-                <span id="rotacionar" class="botao" onclick="comandoR()">✔️ confirmar rotação </span>
+                <span id="rotaciona" class="botao" onclick="comandoR()">✔️ confirmar rotação </span>
 
             </div>
             <div id="menucamconfig" class="fundobranco submenu" style="opacity:0.8; background-color: #ffffff00;">
@@ -437,8 +449,8 @@
                 </div>
 
             </div>
-        </div>
 
+        </div>
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
             <div id="ferramentas" class="ferramentas">
@@ -489,9 +501,7 @@
                         <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)"
                             onmouseout="mostra()">
                             Sinto muito, talvez haja uma incompatibilidade com seu navegador ou está offline e algo
-                            não
-                            carregou
-                            como deveria...<br>
+                            não carregou como deveria...<br>
                         </canvas>
                     </div>
                 </div>
@@ -501,6 +511,7 @@
 
         </div>
     </div>
+
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/zoom.js"></script>

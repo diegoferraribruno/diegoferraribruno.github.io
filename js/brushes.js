@@ -337,14 +337,14 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
                     document.getElementById("pinceis2").prepend(favBrushButton)
                     clearBrushes()
 
-                }, 20)
+                }, 25)
             }
 
 
         }
         brushCount++
         newBrushes[brushName] = [newNewBrush, numero, strokeWidth, strokeColor]
-    }, 10)
+    }, 20)
 }
 
 function favBrush(qual) {
