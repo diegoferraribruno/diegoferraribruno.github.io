@@ -22,19 +22,10 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices);
 let fotografando = false
 function camera() {
 
-    // ok, browser supports it*/
     if (!document.getElementById("videoC")) {
         const botao2 = document.getElementById("stopMotion")
-
-        // botao2.setAttribute("onmousedown", "stopMotion()")
-        //botao2.setAttribute("style", "position: absolute; top: 180px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.5 ")
-
-
         const botao = document.getElementById("btnChangeCam")
-        //botao.setAttribute("value", "muda")
-        //        botao.setAttribute("class", "bloquinho")
-        //botao.setAttribute("style", "position: absolute; top: 220px; left:40px; width:32x; height:32px; font-size:32px; opacity:0.5 ")
-        //botao.innerHTML = "🔃"
+
         const videoE = document.createElement("video");
         const escala = canvas.height / 320
         videoE.id = "video"
@@ -50,9 +41,6 @@ function camera() {
         videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px; `)
         videoC.setAttribute("id", "videoC")
         videoC.appendChild(videoE);
-        //videoC.appendChild(botao);
-        //videoC.appendChild(botao2);
-
         canvasDiv.appendChild(videoC)
         setTimeout(() => win.classList.add("flip"), 900)
         fotografando = true
@@ -172,7 +160,6 @@ function recMotion() {
     }
 }
 async function tirafoto() {
-    //console.log 
     if (fotografando == true) {
         fotografando = false
         let W = canvasV.width;
@@ -206,13 +193,6 @@ async function tirafoto() {
             changeFrame(workingframe)
             document.getElementById("contador").innerHTML = workingframe
         }, 30)
-        /*   contextV.setTransform(1, 0, 0, 1, 0, 0);
-        contextV.clearRect(0, 0, W, H);
-        contextV.setTransform(1, 0, 0, 1, 0, 0);
-        contextV.clearRect(0, 0, W, H);*/
-
-
-        //audio2.play()
     }
     setTimeout(() => fotografando = true, 100)
 }
@@ -224,7 +204,6 @@ const button = document.getElementById('sbutton');
 const cameras = []
 var selectedCam = 0
 function gotDevices(mediaDevices) {
-    //select.innerHTML = '';
     select.appendChild(document.createElement('option'));
     let count = 1;
     mediaDevices.forEach(mediaDevice => {
@@ -243,7 +222,6 @@ function gotDevices(mediaDevices) {
 function trocaCamera() {
     setTimeout(() => {
         constraints.video.deviceId = { exact: select.value };
-        //camera()
         navigator.mediaDevices
             .getUserMedia(constraints)
             .then(stream => {
@@ -252,16 +230,11 @@ function trocaCamera() {
                 initializeCamera();
                 return navigator.mediaDevices.enumerateDevices();
             })
-            //.then(gotDevices)
             .catch(error => {
                 console.error(error);
             });
     }, 0)
     stopVideoStream()
-    //removeVideo()
-    /*    if (typeof currentStream !== 'undefined') {
-        stopMediaTracks(currentStream);
-        }*/
 
 
 }
@@ -278,7 +251,6 @@ function canvasOpacity(value) {
 }
 
 function changeCamera() {
-    //useFrontCamera = !useFrontCamera;
     selectedCam++
     if (selectedCam == cameras.length) {
         selectedCam = 0
@@ -296,7 +268,6 @@ function removeVideo() {
         stopVideoStream()
         removeElement("video")
         removeElement("videoC")
-        //removeElement("btnChangeCam")
         if (oldMode == "cam" || oldMode == "zoom") {
             modeTo("apagar")
         } else {
@@ -310,6 +281,7 @@ function removeVideo() {
         blob = []
     }, 10)
 }
+
 // video constraints
 const constraints = {
     video: {
@@ -356,6 +328,8 @@ async function initializeCamera() {
         video.srcObject = videoStream;
 
         const [track] = videoStream.getVideoTracks();
+
+        //  cam config menu
         try {
             capabilities = track.getCapabilities();
             const settings = track.getSettings();
@@ -378,7 +352,8 @@ async function initializeCamera() {
                     console.log(`${key}: ${value}`);
                 }
             }
-            for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom']) {
+            const comumConstraints = ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom']
+            for (const ptz of comumConstraints) {
                 // Check whether pan/tilt/zoom is available or not.
                 const inputdiv = document.getElementById(ptz + "Div")
                 console.log(inputdiv)
@@ -387,8 +362,6 @@ async function initializeCamera() {
                     inputdiv.style.display = "inline-block"
                     // Map it to a slider element.
                     const input = document.getElementById(ptz);
-                    const ilabel =
-                        console.log(ptz, capabilities[ptz])
                     input.min = capabilities[ptz].min;
                     input.max = capabilities[ptz].max;
                     input.step = capabilities[ptz].step;
@@ -402,26 +375,60 @@ async function initializeCamera() {
                     const input = document.getElementById(ptz).style.visibility = "hidden"
                 }
             }
-        } catch {
-            document.getElementById("camoptions").innerHTML = "Sinto muito.<br>Seu navegador não possui a função de acesso aos recursos avançados.<br>Use o Google Chrome para usar este menu e mudar as configurações da camera"
-            /*console.log("this track does not contain the capabilities", track)
-            for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom']) {
-                const input = document.getElementById(ptz);
-                input.oninput = async function () {
-                    try {
+            // automenu
+            const jatem = ["whiteBalanceMode", "focusMode", "exposureMode"]
+            const comum = document.getElementById("comumConstraints")
+            comum.innerHTML = " configurações extras <br>"
+            for (const [pts, value] of Object.entries(capabilities)) {
+                if (!(comumConstraints.includes(pts) || jatem.includes(pts))) {
 
-                        await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: input.value }] })
+                    const config = document.createElement('div');
+                    config.innerHTML = pts
+                    comum.appendChild(config)
+                    // Map it to a slider element.
+                    const input = document.createElement('input');
+
+                    input.id = pts
+                    input.value = settings[pts];
+                    //input.value = value
+                    if (typeof value === 'object' &&
+                        !Array.isArray(value) &&
+                        value !== null) {
+
+
+                        if (capabilities[pts].step) {
+
+                            input.type = "range"
+                            input.min = capabilities[pts].min;
+                            input.max = capabilities[pts].max;
+                            input.step = capabilities[pts].step;
+                            input.value = settings[pts];
+                        }
+                    } else if (Array.isArray(value)) {
+                        if (value[0] == "manual") {
+
+                            config.innerHTML += " manual "
+                            input.type = "checkbox"
+                            input.checked == false
+
+                        }
                     }
-                    catch (err) {
-                        console.log(err)
-                        Alert(input.id + " nao funciona")
+                    else {
+                        input.value = settings[pts];
+                    }
+
+
+                    config.appendChild(input)
+                    input.oninput = async function () {
+                        await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [pts]: input.value }] })
                     }
                 }
-            }*/
+            }
+            //end automenu
+        } catch {
+            document.getElementById("camoptions").innerHTML = "Sinto muito.<br>Seu navegador não possui a função de acesso aos recursos avançados.<br>Use o Google Chrome para usar este menu e mudar as configurações da camera"
+
         }
-
-        // Warning: Chrome requires advanced constraints.
-
 
     } catch (err) {
         console.log(err)
