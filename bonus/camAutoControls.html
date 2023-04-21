@@ -57,12 +57,13 @@ check on how i used it on my app: diegoferraribruno.github.io/desenho.html
                 // Warning: Chrome requires advanced constraints.
                 //for (const ptz of ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'whiteBalace', 'focusDistance', 'pan', 'tilt', 'zoom']) {
                 // Check whether pan/tilt/zoom is available or not.
+                const comum = document.getElementById("comumConstraints")
                 for (const [ptz, value] of Object.entries(capabilities)) {
                     const config = document.createElement('div');
                     config.innerHTML = ptz
 
                     // Map it to a slider element.
-                    document.getElementById("menu").appendChild(config)
+                    comum.appendChild(config)
                     const input = document.createElement('input');
 
                     input.id = ptz
@@ -96,7 +97,6 @@ check on how i used it on my app: diegoferraribruno.github.io/desenho.html
 
                     input.disabled = false;
                     config.appendChild(input)
-                    //constraints["advanced"].push({ [ptz]: input.value })
                     input.oninput = async function () {
 
                         var valor = input.value
@@ -110,8 +110,6 @@ check on how i used it on my app: diegoferraribruno.github.io/desenho.html
                             console.log(valor)
                         }
 
-                        //constraints["advanced"].push({ [ptz]: input.value })
-
                         try {
                             console.log([ptz], valor)
                             await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ [ptz]: valor }] })
@@ -119,38 +117,6 @@ check on how i used it on my app: diegoferraribruno.github.io/desenho.html
                         } catch (err) {
                             console.error("applyConstraints() failed: ", err);
                         }
-
-                        /*
-                        constraints["video"]["advanced"].push({ [ptz]: input.value })
-               
-                          // Warning: Chrome requires advanced constraints.
-                          //  console.log(track,"huhu")
-                          await console.log(imageCapture.track);
-                          await imageCapture.track.applyConstraints(constraints);
-                          await console.log(track.getSettings());
-                          
-                          //   await track.applyConstraints({"focusMode":"manual","whiteBalanceMode":"manual"});
-                          
-                        }
-                    }
-                  } catch (err) {
-                    console.error(err);
-                  }
-                  
-                }
-              }
-              }
-                  
-               
-                async function takePhoto() {
-                  try {
-                    const blob = await imageCapture.takePhoto();
-                    console.log("Photo taken: " + blob.type + ", " + blob.size + "B");
-                    
-                    const image = document.querySelector('img');
-                    image.src = URL.createObjectURL(blob);
-                    */
-                        // }
                     }
                 }
             } catch (err) {
