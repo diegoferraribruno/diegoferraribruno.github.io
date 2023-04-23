@@ -10,7 +10,7 @@
     <title>Desenho HD 1.3 </title>
 </head>
 
-<body class="naotoque light" style="cursor: pointer;">
+<body class="naotoque fundobranco style=" cursor: pointer;">
     <div id="tela" style="overflow-y: hidden;" class="naotoque">
         <div id="menus">
             <div id="menupicker" class="submenu fundobranco">
@@ -118,7 +118,7 @@
                     ↕️<input type="range" id="emosize" name="strokeSize" min="16" max="320" step="8"
                         oninput="emojiSizeRange()" value="16" width="200px">
                     <span title="fechar menu emoji" onmousedown="removeClass()" class="close">❎</span></span>
-                <emoji-picker id="emojipicker" class="light"></emoji-picker>
+                <emoji-picker id="emojipicker" class="fundobranco"></emoji-picker>
 
                 <span class="botao ligth" onclick="emojipicker()"
                     style="display:inline-block; width:320px; max-height: 200px; overflow:hidden; line-height: 200px; vertical-align: middle;  background-image: url('img/grid3.png');">
@@ -381,7 +381,7 @@
 
                 <div class="botao" onclick="limpar('quadro'), removeClass()">🖼️ 🗑 limpar quadro</div>
                 <div class="botao" onclick="limpar('animacao'), removeClass()"> 🎞️ 🗑 Apagar toda a animação</div>
-                <span class="botao" onmousedown="removeFrame(),removeClass()"> 🎞️ ➖ 🖼️ Remover quadro atual <span
+                <span class="botao" onmousedown="removeFrame()"> 🎞️ ➖ 🖼️ Remover quadro atual <span
                         class="bot">➖</span></span>
 
 
@@ -455,7 +455,7 @@
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
             <div id="ferramentas" class="ferramentas">
-                <span id="fundo" title="Configurações" class="mais" onmousedown="modeTo('fundo')">🖥️</span>
+                <span id="fundo" title="Configurações" class="mais" onmousedown="modeTo('fundo')">🧰</span>
                 <span id="night" class="mais" onmousedown="night()">💡</span>
                 <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
                 <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"

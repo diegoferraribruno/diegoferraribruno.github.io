@@ -1,11 +1,11 @@
 let nightmode = false
 
-function Alert(text) {
+function Alert(text, time = 2) {
     let alert = document.getElementById("menualerta")
     alert.classList.add("aparece2")
     let aconteudo = document.getElementById("alertconteudo")
     aconteudo.innerHTML = text;
-    setTimeout(() => { closeAlert() }, 2000)
+    setTimeout(() => { closeAlert() }, time * 1000)
 
 }
 function closeAlert() {
@@ -82,18 +82,66 @@ var checkOrientation = function () {
 
 function night() {
     let testarray = document.getElementsByClassName("fundobranco");
-    let testarray2 = document.getElementsByClassName("light");
+    let testarray2 = document.getElementsByClassName("fundo2");
+    console.log("1111111", testarray, " 222222222222 ", testarray2)
     for (let i = 0; i < testarray.length; i++) {
         testarray[i].classList.toggle("dark")
+        testarray[i].classList.toggle("light")
+
+
     } for (let i = 0; i < testarray2.length; i++) {
-        testarray2[i].classList.toggle("dark")
+        testarray[i].classList.toggle("fundo2night")
+
     }
     nightmode = !nightmode
-    if (nightmode) {
-        Fundo2('black')
-    } else {
-        Fundo2("white")
+
+    win.classList.toggle("fundo2night");
+    for (i = 0; i < 5; i++) {
+        document.getElementById("bplayer" + i).classList.toggle("fundo2night")
+        document.getElementById("bplayer" + i).classList.toggle("fundo2")
     }
+
 
 }
 
+
+function Fundo(qual) {
+    if (qual === "img") {
+        var item = prompt(
+            "endereço da imagem de fundo",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
+        );
+        if (item == null || item == "") {
+            //alert("fundo do app removido");
+            canvasDiv.style.backgroundImage = `none`;
+        } else {
+            canvasDiv.style.backgroundImage = `url(${item})`;
+        }
+    } else if (qual === "cam") {
+        var item = prompt(
+            "endereço da imagem de fundo",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
+        );
+        if (item == null || item == "") {
+            Alert("fundo do app removido");
+            canvasDiv.style.backgroundImage = `none`;
+        } else {
+            canvasDiv.style.backgroundImage = `url(${item})`;
+        }
+    } else if (qual === "black") {
+        canvasDiv.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
+    } else if (qual === "white") {
+        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
+    } else if (qual === "none") {
+        canvasDiv.style.backgroundImage = `none`;
+        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
+    } else {
+        canvasDiv.style.backgroundImage = `url(${qual})`;
+    }
+}
+
+function pixel() {
+    canvas.classList.toggle("pixel");
+    canvasDiv.classList.toggle("pixel");
+    pixelGood = !pixelGood
+}

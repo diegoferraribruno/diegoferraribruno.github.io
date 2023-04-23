@@ -37,10 +37,10 @@ function criaAnime() {
     })
     let contador = document.createElement("div")
     contador.innerHTML = workingframe
-     contador.id = "contador"
+    contador.id = "contador"
     contador.classList.add("shadow")
     contador.classList.add("bot")
-   anime.appendChild(contador)
+    anime.appendChild(contador)
 }
 
 setTimeout(() => { criaAnime() }, 200)
@@ -54,83 +54,85 @@ function criaPlayer() {
 
     var player = document.createElement('div')
     player.id = "player"
-    player.classList.add("light")
+    player.classList.add("fundo2")
     player.style.width = canvas.width + "px"
     player.style.height = canvas.height + "px"
     player.style.position = "absolute"
     player.style.display = "block"
     player.style.top = "10px"
-	player.backgroundSize = "cover"
+    player.backgroundSize = "cover"
     player.style.left = "10px"
     player.style.border = "1px solid #88ccee"
     player.style.display = "none"
     player.setAttribute("onmousedown", "stop()")
     document.getElementById("tela").appendChild(player)
-	let menuanime = document.createElement('div')
+    let menuanime = document.createElement('div')
 
-	menuanime.classList.add("submenu")
-	menuanime.classList.add("fundobranco")
-	menuanime.id = "menuanime"
-	menuanime.innerHTML = `<span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">
+    menuanime.classList.add("submenu")
+    menuanime.classList.add("fundobranco")
+    menuanime.id = "menuanime"
+    menuanime.innerHTML = `<span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">
 	 🎚 Ajustes de animação ❌</span>
 	 <span class="botao">⏱️ FPS <input type="number" id="fpsnumber" min="1" max="60" step="1" value="6"
       onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px"> <span onmousedown="play()">▶️</span></span>
                         <span class="botao"  onmousedown="removeFrame()" >🗑 Remover quadro atual ➖</span>
                         <span class="botao"  onmousedown="cloneFrame()" >🧬 clonar o quadro atual</span>
                           `
-	document.getElementById("menus").appendChild(menuanime)
-setTimeout(()=>{var inputSprite = document.getElementById('inputSprite');
-inputSprite.addEventListener('change',  importSprite);},10)
+    document.getElementById("menus").appendChild(menuanime)
+    setTimeout(() => {
+        var inputSprite = document.getElementById('inputSprite');
+        inputSprite.addEventListener('change', importSprite);
+    }, 10)
 
 }
 
 criaPlayer()
 
-function importSprite(e){
-	imagem = new Image;
+function importSprite(e) {
+    imagem = new Image;
     imagem.src = URL.createObjectURL(e.target.files[0]);
     imagem.onload = function () {
-		let quadros = imagem.width / canvas.width
-		let largura = document.getElementById("larguraS").value
-		let altura = document.getElementById("alturaS").value
+        let quadros = imagem.width / canvas.width
+        let largura = document.getElementById("larguraS").value
+        let altura = document.getElementById("alturaS").value
         let auto = document.getElementById("autodetectar").checked
         if (auto === false) {
-			quadros = document.getElementById("fnumber").value
-			tamanho(largura,altura)
-			}
-          for (i=0; i<quadros; i++){
-		 context.setTransform(1, 0, 0, 1, 0, 0);
-			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-			context.drawImage(imagem, i*canvas.width, 0, imagem.width, imagem.height,0, 0, imagem.width, imagem.height);
-			swapImg = canvas.toDataURL('image/png');
-			blobb = dataURItoBlob(swapImg)
-			animacao[workingframe] = swapImg
-			workingframe++
-
-		  }
-		   setTimeout(()=> {
-			   changeFrame(workingframe-1);
-			   removeClass()
-	   document.getElementById("contador").innerHTML = workingframe;
-	   },200)
+            quadros = document.getElementById("fnumber").value
+            tamanho(largura, altura)
         }
+        for (i = 0; i < quadros; i++) {
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+            context.drawImage(imagem, i * canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
+            swapImg = canvas.toDataURL('image/png');
+            blobb = dataURItoBlob(swapImg)
+            animacao[workingframe] = swapImg
+            workingframe++
+
+        }
+        setTimeout(() => {
+            changeFrame(workingframe - 1);
+            removeClass()
+            document.getElementById("contador").innerHTML = workingframe;
+        }, 200)
+    }
 }
 
 function criaBackPlayer() {
-	for (i=0;i<5;i++){
-    var player = document.createElement('div')
-    player.id = "bplayer"+i
-    player.style.display = "block"
-    player.style.width = canvas.width + "px"
-    player.style.height = canvas.height + "px"
-    player.style.position = "absolute"
-    player.style.marginTop = - canvas.height -4+ "px"
-   // player.style.border = "2px solid green"
-	player.classList.add("filter")
-    player.style.zIndex = -1*i-1
-    player.style.opacity = 0.4
-    document.getElementById("canvas_div").appendChild(player)
-}
+    for (i = 0; i < 5; i++) {
+        var player = document.createElement('div')
+        player.id = "bplayer" + i
+        player.style.display = "block"
+        player.style.width = canvas.width + "px"
+        player.style.height = canvas.height + "px"
+        player.style.position = "absolute"
+        player.style.marginTop = - canvas.height - 4 + "px"
+        // player.style.border = "2px solid green"
+        player.classList.add("filter")
+        player.style.zIndex = -1 * i - 1
+        player.style.opacity = 0.4
+        document.getElementById("canvas_div").appendChild(player)
+    }
 }
 
 criaBackPlayer()
@@ -142,119 +144,119 @@ function new_frame() {
     save_frame(swapImg)
     //swapImg = []
     //blobb = []
-   // len = animacao.length
+    // len = animacao.length
 
     workingframe++
     changeFrame(workingframe)
-document.getElementById("contador").innerHTML = workingframe
+    document.getElementById("contador").innerHTML = workingframe
 
 }
 function save_frame(imagem) {
-	animacao[workingframe] = imagem
-	}
+    animacao[workingframe] = imagem
+}
 
 let playing = 0
 var inter
 
 function play() {
-	if (animacao.length > 0){
-    clearInterval(inter);
-    inter = setInterval(() => {
-		playerPlay(playing);
-		playing++;
-		if (playing >= animacao.length) {
-			playing = 0;
-			};
-		},
-	1000/fps)
+    if (animacao.length > 0) {
+        clearInterval(inter);
+        inter = setInterval(() => {
+            playerPlay(playing);
+            playing++;
+            if (playing >= animacao.length) {
+                playing = 0;
+            };
+        },
+            1000 / fps)
 
-	}	else{
-	Alert("Adicione ➕ quadros a sua animação antes dar o Play")
-	}
+    } else {
+        Alert("Adicione ➕ quadros a sua animação antes dar o Play")
+    }
 }
 function stop() {
     clearInterval(inter);
     document.getElementById("player").style.display = "none"
-    document.getElementById("play()").innerHTML =  "▶️"
+    document.getElementById("play()").innerHTML = "▶️"
 }
 
 function playerPlay(frame) {
-	document.getElementById("play()").innerHTML = ' <span onmousedown="stop()" >⏹️</span>'
+    document.getElementById("play()").innerHTML = ' <span onmousedown="stop()" >⏹️</span>'
     document.getElementById("player").style.backgroundImage = 'url("' + animacao[frame] + '")';
     document.getElementById("player").style.backgroundSize = "cover"
     document.getElementById("player").style.display = "block"
 }
 
 function changeFrame(frame) {
-	let old0 = frame
+    let old0 = frame
 
-	   document.getElementById("contador").innerHTML = workingframe;
+    document.getElementById("contador").innerHTML = workingframe;
 
-	if (frame > 0 ){
-		let old1 = frame-1;
-		document.getElementById("bplayer"+1).style.backgroundImage = 'url("' + animacao[old1] + '")'
-	}
-	if (frame > 1 ){
-		let old2 = frame-2
-		document.getElementById("bplayer"+2).style.backgroundImage = 'url("' + animacao[old2] + '")'
-	}
-	if (frame > 2 ){
-		let old3 = frame-3;
-		document.getElementById("bplayer"+3).style.backgroundImage = 'url("' + animacao[old3] + '")'
-	}
-		if (frame > 3 ){
-		let old4 = frame-4;
-		document.getElementById("bplayer"+4).style.backgroundImage = 'url("' + animacao[old4] + '")'
-	}
-	context.setTransform(1, 0, 0, 1, 0, 0);
-	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	comandos = []
-	      convertToImg()
-        comandosExec()
-	if (workingframe < animacao.length){
+    if (frame > 0) {
+        let old1 = frame - 1;
+        document.getElementById("bplayer" + 1).style.backgroundImage = 'url("' + animacao[old1] + '")'
+    }
+    if (frame > 1) {
+        let old2 = frame - 2
+        document.getElementById("bplayer" + 2).style.backgroundImage = 'url("' + animacao[old2] + '")'
+    }
+    if (frame > 2) {
+        let old3 = frame - 3;
+        document.getElementById("bplayer" + 3).style.backgroundImage = 'url("' + animacao[old3] + '")'
+    }
+    if (frame > 3) {
+        let old4 = frame - 4;
+        document.getElementById("bplayer" + 4).style.backgroundImage = 'url("' + animacao[old4] + '")'
+    }
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    comandos = []
+    convertToImg()
+    comandosExec()
+    if (workingframe < animacao.length) {
 
-	    blob = dataURItoBlob(animacao[workingframe]);
+        blob = dataURItoBlob(animacao[workingframe]);
         let imagem = new Image();
         imagem.src = URL.createObjectURL(blob);
         imagem.onload = function () {
-			comando = ["i", "source-over", imagem, 0, 0, imagem.width, imagem.height]
+            comando = ["i", "source-over", imagem, 0, 0, imagem.width, imagem.height]
             context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
             comandos.push(comando)
-	//desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
-	}
-    //comandosExec()
-}
+            //desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
+        }
+        //comandosExec()
+    }
 
 }
 
 function next_frame() {
     workingframe++
     if (workingframe > animacao.length) {
-        workingframe=0
+        workingframe = 0
     }
     changeFrame(workingframe)
-document.getElementById("contador").innerHTML = workingframe
+    document.getElementById("contador").innerHTML = workingframe
 
 }
 function prev_frame() {
     workingframe--
     if (workingframe < 0) {
-        workingframe=animacao.length-1
-        if (workingframe < 0) { workingframe=0}
+        workingframe = animacao.length - 1
+        if (workingframe < 0) { workingframe = 0 }
     }
     changeFrame(workingframe)
     /* let imagem = animacao[playing]
      context.drawImage(imagem, 0, 0, imagem.width, imagem.height);*/
-document.getElementById("contador").innerHTML = workingframe
+    document.getElementById("contador").innerHTML = workingframe
 }
 var cont
 
 function export_anim() {
     let len = animacao.length
-    if (len==0){
-	Alert("Adicione ➕ quadros a sua animação antes de exportar.")
-		return
-		}
+    if (len == 0) {
+        Alert("Adicione ➕ quadros a sua animação antes de exportar.")
+        return
+    }
     Alert("Sprite-frame sendo baixado.")
 
     let exp = document.createElement("canvas")
@@ -289,21 +291,21 @@ function export_anim() {
 }
 
 function anime_ajustes() {
-mostraMenu("anime")
+    mostraMenu("anime")
 }
-function changeFPS(valor){
-	fps = valor
-	}
-function removeFrame(){
-	prev_frame()
-	animacao.splice(workingframe+1,1)
-	}
-function cloneFrame(){
-	animacao.splice(workingframe+1, 0, animacao[workingframe]);
-	next_frame()
-	}
-var checkSave = setInterval (()=>{
-	if (comandos.length >2){
-		document.getElementById("new_frame()").classList.toggle("blink")
-	}
-},1500)
+function changeFPS(valor) {
+    fps = valor
+}
+function removeFrame() {
+    prev_frame()
+    animacao.splice(workingframe + 1, 1)
+}
+function cloneFrame() {
+    animacao.splice(workingframe + 1, 0, animacao[workingframe]);
+    next_frame()
+}
+var checkSave = setInterval(() => {
+    if (comandos.length > 2) {
+        document.getElementById("new_frame()").classList.toggle("blink")
+    }
+}, 1500)

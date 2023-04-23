@@ -707,8 +707,8 @@ async function modeTo(qual) {
             mode = "pintar"
             oldMode = "pintar"
             mostraMenu("pintar");
-            Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  Modo ${qual} <br> Ativado"`)
-
+            Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  Modo ${qual} <br> Ativado"`, 1)
+            changeGCO("destination-out")
             cursorColor()
         }
     } else {
@@ -860,58 +860,6 @@ function mudaCorBG(cor) {
     }
 }
 
-
-function Fundo2(qual) {
-    let bgcor = "hsla(0, 100%, 10%, 0.6)"
-    if (qual === "black") {
-        bgcor = "hsla(0, 0%, 10%, 0.6)";
-    } else if (qual === "white") {
-        bgcor = "hsla(0, 0%, 90%, 0.6)";
-    }
-    win.style.backgroundColor = bgcor;
-    for (i = 0; i < 5; i++) {
-        document.getElementById("bplayer" + i).style.backgroundColor = bgcor
-    }
-}
-function Fundo(qual) {
-    if (qual === "img") {
-        var item = prompt(
-            "endereço da imagem de fundo",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
-        );
-        if (item == null || item == "") {
-            //alert("fundo do app removido");
-            canvasDiv.style.backgroundImage = `none`;
-        } else {
-            canvasDiv.style.backgroundImage = `url(${item})`;
-        }
-    } else if (qual === "cam") {
-        var item = prompt(
-            "endereço da imagem de fundo",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
-        );
-        if (item == null || item == "") {
-            Alert("fundo do app removido");
-            canvasDiv.style.backgroundImage = `none`;
-        } else {
-            canvasDiv.style.backgroundImage = `url(${item})`;
-        }
-    } else if (qual === "black") {
-        canvasDiv.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
-    } else if (qual === "white") {
-        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
-    } else if (qual === "none") {
-        canvasDiv.style.backgroundImage = `none`;
-        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
-    } else {
-        canvasDiv.style.backgroundImage = `url(${qual})`;
-    }
-}
-function pixel() {
-    canvas.classList.toggle("pixel");
-    canvasDiv.classList.toggle("pixel");
-    pixelGood = !pixelGood
-}
 
 convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
 

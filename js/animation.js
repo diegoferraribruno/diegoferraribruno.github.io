@@ -18,33 +18,46 @@ var anime_menu = {
 function criaAnime() {
 
     anime.classList.add("anime")
-    anime.innerHTML = "<div  id='ui' class=' bot shadow ' title='Anime player' onclick='limpaAnime()'> 🎞️</div>"
     //<!--🚀-->
-
+    anime.innerHTML = "<div id='lixo' class='bot shadow' onmousedown='lixeira()'>🗑</div><div class='bot shadow' id='clone' onmousedown='cloneFrame()'>🧬 </div>"
     Object.keys(anime_menu).forEach((key, index) => {
-        setTimeout(() => {
-            let item = document.createElement("div")
-            item.setAttribute("onClick", key)
-            item.id = key
-            item.innerText = anime_menu[key]
-            item.classList.add("shadow")
-            item.classList.add("bot")
-            anime.appendChild(item)
-        }, 80 * index)
+        // setTimeout(() => {
+        let item = document.createElement("div")
+        item.setAttribute("onClick", key)
+        item.id = key
+        item.innerText = anime_menu[key]
+        item.classList.add("shadow")
+        item.classList.add("bot")
+        anime.appendChild(item)
+        //}, 80 * index)
     })
+
     let contador = document.createElement("div")
     contador.innerHTML = workingframe
     contador.id = "contador"
-    document.getElementById("ui").appendChild(contador)
+    var ui = document.createElement('div')
+    ui.classList.add("bot", "shadow")
+    ui.title = 'Anime player'
+    ui.setAttribute("onclick", "limpaAnime()")
+    ui.innerHTML = "🎞️"
+    var uiFilme = document.createElement('div')
+    // uiFilme.innerHTML = "<div  id='ui' class=' bot shadow ' title= onclick='limpaAnime()'> </div>"
     var filme = document.createElement('div')
     filme.id = "filme"
-    filme.innerHTML = "oi"
-    anime.innerHTML += "<span id='lixo' class='bot' onmousedown='lixeira()'>🗑</span><span class='bot' id='clone' onmousedown='cloneFrame()'>🧬 </span></div>"
-    document.getElementById("anime").appendChild(filme)
+    filme.innerHTML = ""
+    ui.appendChild(contador)
+    uiFilme.appendChild(ui)
+    uiFilme.appendChild(filme)
+    document.getElementById("anime").appendChild(uiFilme)
 
 }
 
-setTimeout(() => { criaAnime() }, 200)
+setTimeout(() => {
+    criaAnime();
+    setTimeout(() => save_frame(), 350)
+    //   setTimeout(() => changeFrame(0), 1200)
+
+}, 200)
 //setTimeout(() => { limpaAnime() }, 1200)
 
 function limpaAnime() {
@@ -55,7 +68,7 @@ function criaPlayer() {
 
     var player = document.createElement('div')
     player.id = "player"
-    player.classList.add("light")
+    player.classList.add("fundo2")
     player.style.width = canvas.width + "px"
     player.style.height = canvas.height + "px"
     player.style.position = "absolute"
@@ -104,7 +117,7 @@ function criaBackPlayer() {
         player.style.position = "absolute"
         player.style.marginTop = - canvas.height - 4 + "px"
         // player.style.border = "2px solid green"
-        player.classList.add("filter")
+        player.classList.add("fundo2")
         player.style.zIndex = -1 * i - 1
         player.style.opacity = 0.4
         document.getElementById("canvas_div").appendChild(player)
@@ -117,23 +130,20 @@ let workingframe = 0
 
 function new_frame() {
     let len = comandos.length
-    if (len > 1 && comandos[len - 1][0] != "i") {
 
-        swapImg = canvas.toDataURL('image/png');
-        save_frame(swapImg)
-        workingframe++
-        changeFrame(workingframe)
-        document.getElementById("contador").innerHTML = workingframe
+    swapImg = canvas.toDataURL('image/png');
+    save_frame(swapImg)
+    document.getElementById("contador").innerHTML = workingframe
 
-    } else {
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        swapImg = canvas.toDataURL('image/png');
-        blobb = dataURItoBlob(swapImg)
-        animacao.splice(workingframe + 1, 0, swapImg);
-        next_frame()
-        adicionaQuadro()
-    }
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    swapImg = canvas.toDataURL('image/png');
+    blobb = dataURItoBlob(swapImg)
+    animacao.splice(workingframe + 1, 0, swapImg);
+    workingframe++
+    changeFrame(workingframe)
+    adicionaQuadro()
+
 
 }
 function save_frame(imagem) {
@@ -237,6 +247,7 @@ function next_frame() {
     if (len > 1 && comandos[len - 1][0] != "i") {
         new_frame()
         console.log("quadro salvo")
+        setTimeout(() => next_frame(), 10)
     } else {
         workingframe++
         if (workingframe >= animacao.length) {
@@ -348,7 +359,14 @@ function adicionaQuadro() {
             thumb.id = i + "thumb"
             thumb.classList.add("thumb")
             thumb.draggable = true
-            thumb.addEventListener("click", function (event) { changeFrame(parseInt(event.target.id, 10)) });
+            thumb.addEventListener("click", function (event) {
+                if (comandos.length > 1) {
+                    swapImg = canvas.toDataURL('image/png');
+                    animacao[workingframe] = swapImg
+                    adicionaQuadro()
+                };
+                changeFrame(parseInt(event.target.id, 10))
+            });
             thumb.addEventListener("dragstart", dragStart);
             thumb.addEventListener("dragend", dragEnd);
             //filme.innerHTML += '<div class="numero naotoque" style="z-index:-1">' + i + '</div>'
