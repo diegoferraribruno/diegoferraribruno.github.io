@@ -55,8 +55,6 @@ function criaAnime() {
 setTimeout(() => {
     criaAnime();
     setTimeout(() => save_frame(), 350)
-    //   setTimeout(() => changeFrame(0), 1200)
-
 }, 200)
 //setTimeout(() => { limpaAnime() }, 1200)
 
@@ -130,24 +128,21 @@ let workingframe = 0
 
 function new_frame() {
     let len = comandos.length
-
-    swapImg = canvas.toDataURL('image/png');
-    save_frame(swapImg)
-    document.getElementById("contador").innerHTML = workingframe
-
+    save_frame()
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    swapImg = canvas.toDataURL('image/png');
-    blobb = dataURItoBlob(swapImg)
-    animacao.splice(workingframe + 1, 0, swapImg);
     workingframe++
+    swapImg = canvas.toDataURL('image/png');
+    animacao.splice(workingframe, 0, swapImg);
     changeFrame(workingframe)
-
+    document.getElementById("contador").innerHTML = workingframe
 
 }
-function save_frame(imagem) {
+function save_frame(imagem = canvas.toDataURL('image/png')) {
     animacao[workingframe] = imagem
-    setTimeout(() => { adicionaQuadro() }, 30)
+    comandos = []
+    setTimeout(() => { adicionaQuadro() }, 50)
+
 }
 
 let playing = 0
@@ -244,7 +239,7 @@ function changeFrame(frame) {
 function next_frame() {
     let len = comandos.length
     if (len > 1 && comandos[len - 1][0] != "i") {
-        new_frame()
+        save_frame()
         console.log("quadro salvo")
         setTimeout(() => next_frame(), 10)
     } else {
@@ -253,7 +248,6 @@ function next_frame() {
             workingframe = 0
         }
         changeFrame(workingframe)
-        document.getElementById("contador").innerHTML = workingframe
     }
 
 }
@@ -261,15 +255,12 @@ function prev_frame() {
 
     let len = comandos.length
     if (len > 1 && comandos[len - 1][0] != "i") {
-        new_frame()
+        save_frame()
         setTimeout(() => {
-            context.setTransform(1, 0, 0, 1, 0, 0);
-            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
             workingframe--
-            prev_frame()
+            changeFrame(workingframe)
 
         }, 30)
-        console.log("quadro salvo")
     } else {
 
         workingframe--
@@ -358,14 +349,14 @@ function adicionaQuadro() {
             thumb.id = i + "thumb"
             thumb.classList.add("thumb")
             thumb.draggable = true
-            /* thumb.addEventListener("click", function (event) {
-                 if (comandos.length > 1) {
-                     swapImg = canvas.toDataURL('image/png');
-                     animacao[workingframe] = swapImg
-                     adicionaQuadro()
-                 };
-                 changeFrame(parseInt(event.target.id, 10))
-             });*/
+            thumb.addEventListener("click", function (event) {
+                if (comandos.length > 1) {
+                    swapImg = canvas.toDataURL('image/png');
+                    animacao[workingframe] = swapImg
+                    adicionaQuadro()
+                };
+                changeFrame(parseInt(event.target.id, 10))
+            });
             thumb.addEventListener("dragstart", dragStart);
             thumb.addEventListener("dragend", dragEnd);
             //filme.innerHTML += '<div class="numero naotoque" style="z-index:-1">' + i + '</div>'
