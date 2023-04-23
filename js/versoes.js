@@ -3,10 +3,10 @@ let vers = [
         versao: "1.9.6",
         notas: [
             "Brush desenhando no canvas no modo pixel alinhado! agora sim da pra fazr pixelart",
-            "Timeline da animação com arrasta e solta para mudar os quadros de lugar. tb podese soltar os quadros sobre a lixeira ou sobre o clone :)",
-            "📷 controle total das configuraçoes da camera com zoom e tudo mais. ",
-            "🪄 Efeitos no quadro (precisa aprimorar) mas funciona",
-            "😆 A página principal do site também está ficando divertida! cuidado com o monstro!"
+            "cria 4 quadros automaticamente.",
+            "menu animação nao some automagicamente",
+            "menu zoom,",
+            "recortar funcionando"
         ]
 
     }, {
