@@ -218,8 +218,12 @@ function changeFrame(frame) {
         imagem.src = URL.createObjectURL(blob);
         imagem.onload = function () {
             comando = ["i", "source-over", imagem, 0, 0, imagem.width, imagem.height]
+            let oldGCO = context.globalCompositeOperation
+            changeGCO('destination-over')
             context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
+            changeGCO(oldGCO)
             comandos.push(comando)
+            updateCanvasBack()
             //desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
         }
         scrollFilme()

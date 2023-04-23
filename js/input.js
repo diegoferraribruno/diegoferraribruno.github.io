@@ -50,7 +50,7 @@ function handleKeys(evt) {
     }
 }
 
-
+var tempImg = document.createElement("img");
 function handleStart(evt) {
     removeClass();
     cursor.style.opacity = 0.4
@@ -125,6 +125,14 @@ function handleStart(evt) {
 }
 
 
+var canvasBack = document.createElement("canvas")
+canvasBack.width = canvas.width
+canvasBack.height = canvas.height
+canvasBack.ctx = canvasBack.getContext('2d')
+canvasBack.ctx.drawImage(canvas, 0, 0)
+let cursorShow = true
+
+
 function handleMove(evt) {
     evt.preventDefault();
     offsetX = canvas.getBoundingClientRect().left;
@@ -135,10 +143,6 @@ function handleMove(evt) {
         x = redondo(x)
         y = redondo(y)
     }
-
-
-    let over = checkOverCanvas(x, y)
-
     if (isSelecting === true) {
         cropEnd.x = x
         cropEnd.y = y
@@ -146,7 +150,6 @@ function handleMove(evt) {
         desenhaRetangulo();
     }
     if (isDrawing === true) {
-        //  evt.preventDefault();
         mouseOver = true;
         if (brushMode == 0) {
             desenha(
@@ -195,11 +198,31 @@ function handleMove(evt) {
     if (!isGrabing && mode != "recortar") {
         origin.x = x
         origin.y = y
-    }
-    cursor.style.left = evt.pageX + "px";
-    cursor.style.top = evt.pageY + "px";
-    cursor.style.opacity = 0.6
 
+        cursor.style.left = evt.pageX + "px";
+        cursor.style.top = evt.pageY + "px";
+        cursor.style.opacity = 0.6
+        if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
+
+            if (cursorShow == true) {
+                restoreCanvas()
+                drawBrush(
+                    context.globalCompositeOperation,
+                    x,
+                    y,
+                    origin.x,
+                    origin.y,
+                    strokeColor,
+                    strokeWidth,
+                    brushName)
+
+            } else {
+                restoreCanvas()
+            }
+        }
+
+
+    }
 }
 function handleUp(evt) {
     cursor.style.opacity = 0
@@ -283,10 +306,11 @@ function prevent(evt) {
     evt.preventDefault();
 }
 
-function checkOverCanvas(x, y) {
-    if (x > canvas.offsetLeft && x < canvas.offsetWidth + canvas.offsetLeft && y > canvas.offsetTop && y < canvas.offsetHeight + canvas.offsetTop) {
+function checkOverCanvas(x, y, offset = 0) {
+    if (x > canvas.offsetLeft + offset && x < canvas.offsetWidth + canvas.offsetLeft - offset && y > canvas.offsetTop + offset && y < canvas.offsetHeight + canvas.offsetTop - offset) {
         return true;
     } else {
         return false;
     }
 }
+

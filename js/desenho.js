@@ -292,6 +292,7 @@ function exec(coma = 0) {
                 break;
         }
     } else {
+        updateCanvasBack()
         executing = false
     }
 
@@ -618,14 +619,26 @@ function desenha(
         undoLevel = 0
         console.log("daqui pra frente..")
     }
-
+    updateCanvasBack()
 }
 
 function changeGCO(GCO = globalComposite) {
     context.globalCompositeOperation = GCO
 }
+function updateCanvasBack() {
 
-
+    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvasBack.ctx.drawImage(canvas, 0, 0)
+}
+function restoreCanvas() {
+    let oldGCO = context.globalCompositeOperation
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.globalCompositeOperation = changeGCO("destination-over")
+    context.drawImage(canvasBack, 0, 0)
+    changeGCO(oldGCO)
+}
 
 function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     changeGCO(GCO);
@@ -686,17 +699,20 @@ async function modeTo(qual) {
         removeClass();
         toggleSelect(qual);
         if (qual != "apagar") {
-            oldMode = mode;
-            mode = qual;
+            //  oldMode = mode;
             mostraMenu(qual);
 
         } else {
+
             mode = "pintar"
             oldMode = "pintar"
             mostraMenu("pintar");
             Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  Modo ${qual} <br> Ativado"`)
+
+            cursorColor()
         }
     } else {
+        removeClass();
         if (qual != "apagar") { mostraMenu(qual); }
         if (qual == "cam") {
             removeVideo()
@@ -704,7 +720,7 @@ async function modeTo(qual) {
     }
     switch (qual) {
         case "salvar":
-            mode = qual;
+            // mode = qual;
             break;
         case "recortar":
             /*  let len = comandos.length
@@ -720,27 +736,18 @@ async function modeTo(qual) {
             break;
         case "zoom":
             //removeClass();
-            zoomIndex++;
-            if (zoomIndex > 6) {
-                zoomIndex = 0;
-            }
-            ZOOMf(zoomIndex);
-            setTimeout(function () {
-                document.getElementById("x1").innerHTML = zoomFactor + "x";
-                scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
-            }, 10);
-            cursorColor();
-            toggleSelect(qual);
-            resizeScreen()
+            /*  */
             mode = "zoom"
             break;
         case "cam":
-
+            mode = qual
             camera();
             changeGCO();
             memorySwap(globalComposite);
             break;
         case "apagar":
+
+            cursorColor()
             /*brushMode = 0;
             setStrokeSize(estrokeWidth);
             cursorColor();
@@ -750,6 +757,7 @@ async function modeTo(qual) {
 
             break;
         case "pintar":
+            mode = qual
             setStrokeSize(strokeWidth);
             setStrokeColor();
             changeGCO();
@@ -762,6 +770,7 @@ async function modeTo(qual) {
             memorySwap(globalComposite);
             break;
         case "fundo":
+
             //  setStrokeSize(strokeWidth);
             changeGCO();
             memorySwap(globalComposite);
@@ -773,6 +782,7 @@ async function modeTo(qual) {
             changeGCO();
             break;
         case "picker":
+            mode = qual
             cursorColor()
             break;
         case "info":
@@ -781,8 +791,10 @@ async function modeTo(qual) {
             undo();
             break;
         case "imagem":
+            modeTo(oldMode)
             break;
         case "emoji":
+            mode = qual
             // setStrokeSize(strokeWidth);
             // setStrokeColor();
             setTimeout(() => {
@@ -793,7 +805,6 @@ async function modeTo(qual) {
 
             break;
         case "FX":
-
             break;
         case _:
             break;

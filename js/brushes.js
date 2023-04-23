@@ -235,12 +235,13 @@ function strokeSizeRange(value) {
 }
 
 function setStrokeSize(value = strokeWidth) {
+    strokeWidth = value;
+
     let brushes = ["cursor"];
     for (i in brushes) {
         let tamanho = document.getElementById(brushes[i]);
         if (mode == "pintar" || mode == "cores" || mode == "cores" || mode == "picker" || mode == "recortar") {
-            strokeWidth = value;
-            tamanho.style.width = value * zoomFactor + "px";
+            tamanho.style.width = value * zoomFactor - zoomFactor / 10 + "px";
             tamanho.style.height = value * zoomFactor + "px";
             tamanho.style.lineHeight = value * zoomFactor + "px";
             tamanho.style.marginTop =
@@ -251,21 +252,32 @@ function setStrokeSize(value = strokeWidth) {
                 //tamanho.style.backgroundColor = strokeColor;
             }
 
-            stroke = strokeWidth;
-            document.getElementById("tpx").value = value;
-        } else if (mode == "apagar") {
-            estrokeWidth = value;
-            tamanho.style.width = estrokeWidth * zoomFactor + "px";
-            tamanho.style.height = estrokeWidth * zoomFactor + "px"; selectBrush
-            tamanho.style.lineHeight = estrokeWidth * zoomFactor + "px";
-
-            tamanho.style.marginTop =
-                (estrokeWidth / 2) * zoomFactor * -1 + "px";
-            tamanho.style.marginLeft =
-                (estrokeWidth * zoomFactor * -1) / 2 + "px";
-            stroke = estrokeWidth;
-            document.getElementById("tpx2").value = value;
+            tamanho.style.backgroundImage = "none"
         }
+        stroke = strokeWidth;
+        document.getElementById("tpx").value = value;
+    }
+
+
+
+    /*else if (mode == "apagar") {
+        estrokeWidth = value;
+        tamanho.style.width = estrokeWidth * zoomFactor + "px";
+        tamanho.style.height = estrokeWidth * zoomFactor + "px";
+        tamanho.style.lineHeight = estrokeWidth * zoomFactor + "px";
+        tamanho.style.backgroundImage = 'none'
+    
+        tamanho.style.marginTop =
+            (estrokeWidth / 2) * zoomFactor * -1 + "px";
+        tamanho.style.marginLeft =
+            (estrokeWidth * zoomFactor * -1) / 2 + "px";
+        stroke = estrokeWidth;
+        document.getElementById("tpx2").value = value;
+    }*/
+
+    if (mode == "picker" || mode == "recortar") {
+        cursor.style.width = 1 + "px";
+        cursor.style.height = 1 + "px";
     }
     changeBrush()
 }
@@ -282,7 +294,7 @@ function selectBrush(numero) {
     changeBrush(numero)
 }
 var changedBrush = false
-var brushName = ""
+var brushName = "16hsla(0,0%,0%,1)"
 
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     brushName = "" + numero + tam + cor
@@ -304,8 +316,15 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
         // newBrush.crossOrigin = "anonymous"
         newNewBrush.src = brushCanva.toDataURL("image/png");
         newBrush.src = newNewBrush.src
-        cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
-        cursor.style.opacity = 0.8
+
+        if (context.globalCompositeOperation == "destination-out") {
+            setTimeout(() => cursor.style.backgroundImage = 'none', 800)
+            cursor.style.opacity = 0.1
+        } else {
+            cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
+            cursor.style.opacity = 0.8
+
+        }
         if (changedBrush == false) {
 
 

@@ -11,17 +11,22 @@ function cursorMove(e) {
     cursor.style.visibility = "visible";
 }
 function mostra() {
+
+    comandosExec()
     document.body.style.cursor = "pointer";
     cursor.style.visibility = "hidden";
 }
 
 function cursorColor() {
+
     switch (mode) {
         case "apagar":
-            cursor.style.borderColor = "#555555cc";
-            cursor.innerHTML = "<div style='font-size:16px; margin-top:4px;'>🧽</div>";
             break;
         case "pintar":
+            if (context.globalCompositeOperation == "destination-out") {
+
+                setTimeout(() => { cursor.style.backgroundImage = "none"; }, 65)
+            }
             cursor.innerHTML = "";
             cursor.style.borderColor = strokeColor;
             break;

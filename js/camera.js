@@ -175,6 +175,7 @@ async function tirafoto() {
             if (blob != undefined) {
 
                 desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+                setTimeout(() => updateCanvasBack(), 20)
             }
         }
     }
