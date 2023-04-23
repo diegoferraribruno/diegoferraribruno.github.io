@@ -395,7 +395,7 @@ function dragStart(event) {
         if (element.id != event.target.id)
             element.classList.toggle("hidden")
     });
-    setTimeout(() => event.target.classList.toggle("hidden"));
+    // setTimeout(() => event.target.classList.toggle("hidden"));
 }
 
 function dragEnd(event) {
