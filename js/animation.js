@@ -285,9 +285,14 @@ function removeFrame() {
     adicionaQuadro()
 }
 function cloneFrame(frame = workingframe) {
+    let oldGCO = canvas.globalCompositeOperation
+    canvas.globalCompositeOperation = "destination-over"
+
     animacao.splice(frame + 1, 0, animacao[frame]);
     next_frame()
     adicionaQuadro()
+    setTimeout(() => oldGCO = canvas.globalCompositeOperation, 100)
+
 }
 var checkSave = setInterval(() => {
     if (comandos.length < 3) {
