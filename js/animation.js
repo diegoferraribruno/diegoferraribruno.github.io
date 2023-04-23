@@ -142,7 +142,6 @@ function new_frame() {
     animacao.splice(workingframe + 1, 0, swapImg);
     workingframe++
     changeFrame(workingframe)
-    adicionaQuadro()
 
 
 }
