@@ -79,3 +79,17 @@ function resetCanva() {
         document.getElementById(objects[i]).style.height = "320px";
     }
 }
+function zoom2x() {
+    zoomIndex++;
+    if (zoomIndex > 6) {
+        zoomIndex = 0;
+    }
+    ZOOMf(zoomIndex);
+    setTimeout(function () {
+        document.getElementById("x1").innerHTML = zoomFactor + "x";
+        scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
+    }, 10);
+    cursorColor();
+    toggleSelect(qual);
+    resizeScreen()
+}
