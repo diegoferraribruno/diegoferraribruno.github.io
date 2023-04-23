@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #div1,
+        #div2 {
+            float: left;
+            width: 100px;
+            height: 35px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+        function allowDrop(img) {
+            img.preventDefault();
+        }
+        function drag(img) {
+            img.dataTransfer.setData("text", img.target.id);
+        }
+        function drop(img) {
+            img.preventDefault();
+            var data = img.dataTransfer.getData("text");
+            img.target.appendChild(document.getElementById(data));
+        }
+    </script>
+</head>
+
+<body>
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img src="https://www.tutorialspoint.com/javascript/images/javascript-mini-logo.jpg" draggable="true"
+            ondragstart="drag(event)" id="drag1" width="88" height="31">
+    </div>
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div><br><br><br><br><br>
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <br><br><br><br><br><br>
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+</body>
+
+</html>
