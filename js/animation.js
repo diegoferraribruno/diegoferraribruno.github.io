@@ -349,14 +349,14 @@ function adicionaQuadro() {
             thumb.id = i + "thumb"
             thumb.classList.add("thumb")
             thumb.draggable = true
-            thumb.addEventListener("click", function (event) {
-                if (comandos.length > 1) {
-                    swapImg = canvas.toDataURL('image/png');
-                    animacao[workingframe] = swapImg
-                    adicionaQuadro()
-                };
-                changeFrame(parseInt(event.target.id, 10))
-            });
+            /* thumb.addEventListener("click", function (event) {
+                 if (comandos.length > 1) {
+                     swapImg = canvas.toDataURL('image/png');
+                     animacao[workingframe] = swapImg
+                     adicionaQuadro()
+                 };
+                 changeFrame(parseInt(event.target.id, 10))
+             });*/
             thumb.addEventListener("dragstart", dragStart);
             thumb.addEventListener("dragend", dragEnd);
             //filme.innerHTML += '<div class="numero naotoque" style="z-index:-1">' + i + '</div>'
