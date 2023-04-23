@@ -388,8 +388,9 @@ function scrollFilme(onde = workingframe) {
 function lixeira() {
     mostraMenu("lixeira")
 }
+var dataTransfer = 0
 function dragStart(event) {
-    event.dataTransfer.setData("draggedImageId", event.target.id);
+    dataTransfer = event.target.id;
     let tomba = document.querySelectorAll(".thumb")
     tomba.forEach(element => {
         if (element.id != event.target.id)
@@ -414,7 +415,7 @@ function drop(event) {
     event.preventDefault()
 
     console.log(event)
-    const draggedImageId = event.dataTransfer.getData("draggedImageId");
+    const draggedImageId = dataTransfer
     const draggedImage = document.getElementById(draggedImageId);
     const fromContainer = draggedImage.parentNode;
     const toContainer = event.currentTarget;
@@ -451,4 +452,5 @@ function swapItems(a = Number, b = Number) {
             //document.getElementById(i + "thumb").style.backgroundImage = 'url("' + animacao[i] + '")';
         };
     }, 200)
+    adicionaQuadro()
 }
