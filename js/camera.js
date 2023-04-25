@@ -175,7 +175,11 @@ async function tirafoto() {
             if (blob != undefined) {
 
                 desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
-                setTimeout(() => updateCanvasBack(), 20)
+                setTimeout(() => {
+                    updateCanvasBack();
+                    swapImg = canvas.toDataURL('image/png');
+                    save_frame(swapImg);
+                }, 20)
             }
         }
     }
@@ -351,14 +355,14 @@ async function initializeCamera() {
                         console.log(valor)
                     }
                     track.applyConstraints(constr)
-                    console.log(`${key}: ${value}`);
+                    //  console.log(`${key}: ${value}`);
                 }
             }
             const comumConstraints = ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom']
             for (const ptz of comumConstraints) {
                 // Check whether pan/tilt/zoom is available or not.
                 const inputdiv = document.getElementById(ptz + "Div")
-                console.log(inputdiv)
+                //console.log(inputdiv)
                 if (ptz in settings) {
 
                     inputdiv.style.display = "inline-block"
