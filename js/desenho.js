@@ -699,6 +699,7 @@ async function modeTo(qual) {
         removeClass();
         toggleSelect(qual);
         if (qual != "apagar") {
+            mode = qual
             //  oldMode = mode;
             mostraMenu(qual);
 

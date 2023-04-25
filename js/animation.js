@@ -286,13 +286,18 @@ function removeFrame() {
     adicionaQuadro()
 }
 function cloneFrame(frame = workingframe) {
-    let oldGCO = canvas.globalCompositeOperation
-    canvas.globalCompositeOperation = "destination-over"
+    if (animacao.length != 0) {
 
-    animacao.splice(frame + 1, 0, animacao[frame]);
-    next_frame()
-    adicionaQuadro()
-    setTimeout(() => oldGCO = canvas.globalCompositeOperation, 100)
+        let oldGCO = canvas.globalCompositeOperation
+        canvas.globalCompositeOperation = "destination-over"
+
+        animacao.splice(frame + 1, 0, animacao[frame]);
+        next_frame()
+        adicionaQuadro()
+        setTimeout(() => oldGCO = canvas.globalCompositeOperation, 100)
+    } else {
+        Alert("não há quadro a ser clonado.")
+    }
 
 }
 var checkSave = setInterval(() => {
@@ -338,25 +343,24 @@ function adicionaQuadro() {
             let cont = document.createElement("div")
             cont.id = i
             cont.classList.add("quadrofilme")
-            cont.style.backgroundImage = 'url("' + animacao[i] + '")';
+            //           cont.style.backgroundImage = 'url("' + animacao[i] + '")';
             cont.addEventListener("dragover", dragOver);
             cont.addEventListener("drop", drop);
             let thumb = document.createElement("div")
             thumb.innerHTML = i
             thumb.style.backgroundImage = 'url("' + animacao[i] + '")';
-            //thumb.src = animacao[i];
 
             thumb.id = i + "thumb"
             thumb.classList.add("thumb")
             thumb.draggable = true
-            /* thumb.addEventListener("click", function (event) {
-                 if (comandos.length > 1) {
-                     swapImg = canvas.toDataURL('image/png');
-                     animacao[workingframe] = swapImg
-                     adicionaQuadro()
-                 };
-                 changeFrame(parseInt(event.target.id, 10))
-             });*/
+            thumb.addEventListener("click", function (event) {
+                if (comandos.length > 1) {
+                    swapImg = canvas.toDataURL('image/png');
+                    animacao[workingframe] = swapImg
+                    //  adicionaQuadro()
+                };
+                changeFrame(parseInt(event.target.id, 10))
+            });
             thumb.addEventListener("dragstart", dragStart);
             thumb.addEventListener("dragend", dragEnd);
             //filme.innerHTML += '<div class="numero naotoque" style="z-index:-1">' + i + '</div>'
@@ -390,21 +394,21 @@ function lixeira() {
 }
 var dataTransfer = 0
 function dragStart(event) {
-    dataTransfer = event.target.id;
-    let tomba = document.querySelectorAll(".thumb")
+    dataTransfer = parseInt(event.target.id, 10);
+    /*let tomba = document.querySelectorAll(".thumb")
     tomba.forEach(element => {
         if (element.id != event.target.id)
             element.classList.toggle("hidden")
-    });
+    });*/
     // setTimeout(() => event.target.classList.toggle("hidden"));
 }
 
 function dragEnd(event) {
-    event.target.classList.toggle("hidden");
-    let tomba = document.querySelectorAll(".thumb")
+    /*event.target.classList.toggle("hidden");
+  let tomba = document.querySelectorAll(".thumb")
     tomba.forEach(element => {
         element.classList.remove("hidden")
-    });
+    });*/
 }
 
 function dragOver(event) {
@@ -413,44 +417,24 @@ function dragOver(event) {
 
 function drop(event) {
     event.preventDefault()
-
-    console.log(event)
-    const draggedImageId = dataTransfer
-    const draggedImage = document.getElementById(draggedImageId);
-    const fromContainer = draggedImage.parentNode;
     const toContainer = event.currentTarget;
     if (toContainer.id == "lixo") {
 
-        animacao.splice(fromContainer.id, 1);
+        animacao.splice(dataTransfer, 1);
         animSize = animacao.length
         adicionaQuadro()
         setTimeout(() => prev_frame(), 10)
 
     } else if (toContainer.id == "clone") {
-        cloneFrame(fromContainer.id)
+        cloneFrame(dataTransfer)
     }
-    else if (toContainer !== fromContainer) {
-        console.log(toContainer.id, fromContainer.id)
-        swapItems(toContainer.id, fromContainer.id)
-        //* fromContainer.appendChild(toContainer.firstElementChild);
-        //* toContainer.appendChild(draggedImage);
-        adicionaQuadro()
+    else if (toContainer !== dataTransfer) {
+        console.log(toContainer.id, dataTransfer)
+        swapItems(toContainer.id, dataTransfer)
+
     }
-    //}
 }
 function swapItems(a = Number, b = Number) {
-
     animacao[a] = animacao.splice(b, 1, animacao[a])[0];
-
-    //let tomba = document.querySelectorAll(".quadrofilme")
-    setTimeout(() => {
-
-        let animSize = animacao.length
-        for (i = 0; i < animSize; i++) {
-
-            document.getElementById(i).style.backgroundImage = 'url("' + animacao[i] + '")';
-            //document.getElementById(i + "thumb").style.backgroundImage = 'url("' + animacao[i] + '")';
-        };
-    }, 200)
     adicionaQuadro()
 }

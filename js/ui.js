@@ -23,6 +23,8 @@ function toggleSelect(id) {
 }
 
 function mostraMenu(id) {
+
+    if (mode != "pintar" && mode != "cam") { removeClass() }
     let quem = document.getElementById("menu" + id);
     quem.classList.toggle("aparece");
 }

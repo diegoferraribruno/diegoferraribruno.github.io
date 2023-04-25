@@ -135,7 +135,7 @@
                     <span id="tilemapbot" class="bot" onclick="tilePaint()"><span title="infinity"
                             class="emoji ">♾️</span></span>
                     <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
-                    <span title="Preencher" id="preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
+                    <span title="Preencher" id="preencher" onmousedown="mostraMenu('preencher')" class=" bot">🪣</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
                     </span>
 
@@ -190,7 +190,7 @@
                     <span id="tilemapbot" class="bot" onclick="tilePaint()"><span title="infinity"
                             class="emoji ">♾️</span></span>
                     <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>
-                    <span title="Preencher" onmousedown="modeTo('preencher')" class=" bot">🪣</span>
+                    <span title="Preencher" onmousedown="mostraMenu('preencher')" class=" bot">🪣</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
                     </span>
                 </span><br>
@@ -231,14 +231,14 @@
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
 
                 <span class="botao">
-                    <span id="FX" title="filtros" class="bot" onclick="modeTo('FX')">🪄 </span>
-                    <span id="salvar" title="salvar imagem" class="bot" onclick="modeTo('salvar')">📥</span>
+                    <span id="FX" title="filtros" class="bot" onclick="mostraMenu('FX')">🪄 </span>
+                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">📥</span>
 
-                    <span id="imagem" title="adicionar imagem" class="bot" onmousedown="modeTo('imagem')"> 📤</span>
+                    <span id="imagem" title="adicionar imagem" class="bot" onmousedown="mostraMenu('imagem')"> 📤</span>
 
-                    <span class="bot" title="Limpar tela" onmousedown="clearArea()">🗑</span>
+                    <span class="bot" title="menu limpar" onmousedown="lixeira()">🗑</span>
 
-                    <span id="info" title="Informações" class="bot" onmousedown="modeTo('info')">ℹ️</span>
+                    <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                 </span>
                 <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Tamanho do quadro 🖼️</span>
@@ -289,7 +289,7 @@
                     </span>
                     <span onmousedown="mudaCorBG('strokeColor')" id="preenchercor" class="bloquinho"
                         style="background-color: rgba(158, 239, 129, 0.28);">
-                    </span> <span title="cores" class="bot" onmousedown="modeTo('cores')"
+                    </span> <span title="cores" class="bot" onmousedown="mostraMenu('cores')"
                         style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
                 </span>
             </div>
@@ -366,7 +366,7 @@
                         class="close">❎</span></span>
 
                 <span class="botao">Recomendavel salvar antes <span id="salvar" title="salvar imagem" class="bot"
-                        onclick="modeTo('salvar')">📥</span></span>
+                        onclick="mostraMenu('salvar')">📥</span></span>
                 <span id="autorecortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)">✂️
                     Recortar
                     automaticamente</span>
@@ -376,7 +376,7 @@
             </div>
             <div id="menulixeira" class="fundobranco submenu">
                 <div class="botao">⚠️ impossivel desfazer ⚠️
-                    <span class="close">❎</span>
+                    <span class="close" onmousedown="removeClass()">❎</span>
                 </div>
 
                 <div class="botao" onclick="limpar('quadro'), removeClass()">🖼️ 🗑 limpar quadro</div>
@@ -455,7 +455,7 @@
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
             <div id="ferramentas" class="ferramentas">
-                <span id="fundo" title="Configurações" class="mais" onmousedown="modeTo('fundo')">🧰</span>
+                <span id="fundo" title="Configurações" class="mais" onmousedown="mostraMenu('fundo')">🧰</span>
                 <span id="night" class="mais" onmousedown="night()">💡</span>
                 <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
                 <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
@@ -473,7 +473,7 @@
             <div id="ferramentas2" class="ferramentas">
 
                 <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">🖌️</span>
-                <span id="cores" title="cores" class="mais" onmousedown="modeTo('cores')">🎨</span>
+                <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')">🎨</span>
 
                 <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
 

@@ -1,46 +1,90 @@
-<!DOCTYPE HTML>
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
     <style>
-        #div1,
-        #div2 {
-            float: left;
-            width: 100px;
-            height: 35px;
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid black;
+        * {
+            box-sizing: border-box;
+        }
+
+        #container {
+            display: flex;
+        }
+
+        #container>div {
+            border: 1px solid gray;
+            padding: 1em;
+
+            height: 10em;
+            width: 50%;
+        }
+
+        #movable-element {
+            border: 1px solid green;
+            background-color: #00ff0033;
+            height: 100%;
+            width: 100%;
         }
     </style>
+
+<body onmouseup="drop(event)" ontouchend="drop(event)" onmousemove="move(event)" ontouchmove="move(event)">
+    <div id="container">
+        <div id="left-parent" onmouseup="drop(event)" ontouchend="drop(event)">
+            <div id="movable-element" onmousedown="pickup(event)" ontouchstart="pickup(event)"></div>
+        </div>
+
+        <div id="right-parent" onmouseup="drop(event)" ontouchend="drop(event)"></div>
+    </div>
     <script>
-        function allowDrop(img) {
-            img.preventDefault();
+        let moving = null;
+
+
+        function pickup(event) {
+            moving = event.target;
+
+            moving.style.height = moving.clientHeight;
+            moving.style.width = moving.clientWidth;
+            moving.style.position = 'fixed';
+            moving.style.zIndex = '-10';
         }
-        function drag(img) {
-            img.dataTransfer.setData("text", img.target.id);
+
+        function move(event) {
+            if (moving) {
+                if (event.clientX) {
+                    // mousemove
+                    moving.style.left = event.clientX - moving.clientWidth / 2;
+                    moving.style.top = event.clientY - moving.clientHeight / 2;
+                } else {
+                    // touchmove - assuming a single touchpoint
+                    moving.style.left = event.changedTouches[0].clientX - moving.clientWidth / 2;
+                    moving.style.top = event.changedTouches[0].clientY - moving.clientHeight / 2;
+                }
+            }
         }
-        function drop(img) {
-            img.preventDefault();
-            var data = img.dataTransfer.getData("text");
-            img.target.appendChild(document.getElementById(data));
+
+        function drop(event) {
+            if (moving) {
+                if (event.currentTarget.tagName !== 'HTML') {
+                    let target = null;
+                    if (event.clientX) {
+                        target = document.elementFromPoint(event.clientX, event.clientY);
+                    } else {
+                        target = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+                    }
+
+                    target.appendChild(moving);
+                }
+
+                // reset our element
+                moving.style.left = '';
+                moving.style.top = '';
+                moving.style.height = '';
+                moving.style.width = '';
+                moving.style.position = '';
+                moving.style.zIndex = '';
+
+                moving = null;
+            }
         }
     </script>
-</head>
-
-<body>
-    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="https://www.tutorialspoint.com/javascript/images/javascript-mini-logo.jpg" draggable="true"
-            ondragstart="drag(event)" id="drag1" width="88" height="31">
-    </div>
-    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div><br><br><br><br><br>
-    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-    <br><br><br><br><br><br>
-    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 </body>
-
-</html>
