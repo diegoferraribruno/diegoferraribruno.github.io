@@ -108,23 +108,24 @@
             </div>
 
             <div id="menutamanho" class="fundobranco submenu">
-                <span class="botao" title="fechar menu tamanho da tela" onmousedown="removeClass()"> ↔️ 🖼️ Tamanho
-                    do
-                    quadro <span class="close">❎</span></span><br>
 
-                <span class="botao">
-                    <div onmousedown="tamanho()" class="bot"
-                        style="float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: 60px; margin-left: 20px; text-align: center;">
-                        ok
-                    </div>
-                    Tamanho Atual:<br>
+                <span class="botao">🖼️ ↔️ ✂️<span class="close" title="fechar menu tamanho da tela"
+                        onmousedown="removeClass()">❎</span>
+
+                    Tamanho atual:<br>
                     Largura: <input id="largura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px; padding: 4px;" /> pixels<br>
                     Altura: <input id="altura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px;padding: 4px;" /> pixels<br>
-                    <span title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela?
-                        ↔️</span>
+                    <div onmousedown="tamanho()" class="bot"
+                        style="position: absolute; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -40px; right: 20px; text-align: center;">
+                        ok
+                    </div>
                 </span>
+                <span class="botao" title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela?
+                    ↔️</span>
+                <span id="recortar2" class="botao" onclick="modeTo('recortar')">✂️ recorte manual</span>
+
                 <span class="botao" style="font-size: 0.9em;" title="formatos">
                     <span onmousedown="tamanho(32,32)">32x32
                         <span style="border: 1px solid gray; width: 4px; height: 4px; display: inline-block;"></span>
@@ -267,27 +268,25 @@
             <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
 
                 <span class="botao">
-                    <span id="FX" title="filtros" class="bot" onclick="mostraMenu('FX')">🪄 </span>
                     <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">📥</span>
 
                     <span id="imagem" title="adicionar imagem" class="bot" onmousedown="mostraMenu('imagem')"> 📤</span>
-
-                    <span class="bot" title="menu limpar" onmousedown="lixeira()">🗑</span>
+                    <span id="recortar" class="bot" onclick="modeTo('recortar')">✂️</span>
+                    <span id="FX" title="filtros" class="bot" onclick="mostraMenu('FX')">🪄 </span>
 
                     <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                 </span>
-                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">↔️ Tamanho do quadro 🖼️</span>
+                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ ✂️ Tamanho do quadro </span>
 
                 <!--
                 <span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span-->
 
-                <span id="recortar" class="botao" onclick="modeTo('recortar')">✂️ recortar (impossível
-                    desfazer)</span>
 
-                <span id="oculos" class="botao">👓 Pixels alinhados + nitidez <input type="checkbox" value="false"
-                        onchange="pixel()"> </span>
 
+                <span class="botao">
+                    Transparencia do quadro <input type="range" id="canvasOpacity" name="transparencia" min="0.01"
+                        max="1" oninput="canvasOpacity(this.value)" step="0.01" value="1"></span>
                 <span id=" fundo falso" class="botao"> Adicionar Fundo falso:<br>
                     <span onmousedown="Fundo2('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">&nbsp;
@@ -329,12 +328,34 @@
                         style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
                 </span>
             </div>
+            <div id="menuanime" class="fundobranco submenu">
+                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">
+                    🎚 Ajustes de animação ❎</span>
+                <span class="botao">⏱️ FPS <input type="number" id="fpsnumber" min="1" max="60" step="1" value="6"
+                        onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px"> <span
+                        onmousedown="play()">▶️</span></span>
+                <span class="botao" onmousedown="removeFrame()">🗑 Remover quadro atual <span
+                        class="bot">➖</span></span>
+                <span class="botao" onmousedown="cloneFrame()">🧬 clonar o quadro atual</span>
+                <span class="botao"> Quadros visiveis 🧅 <input type="number" id="fpsnumber" min="0" max="5" step="1"
+                        value="5" onchange="quadrosVisiveis(this.value)" style="width: 50px; margin-left: 8px"></span>
+
+                <span class="botao" onmousedown="removeFrame()">
+                    mudar a ordem do quadro
+                    <span class="bot" onmousedown="swapItemsL()">⬅️</span>
+                    🎞️
+                    <span class="bot" onmousedown="swapItemsR()">➡️</span>
+
+                </span>
+            </div>
 
             <div id="menuzoom" class="fundobranco submenu">
                 <span id="zoom" title="Ampliar" class="bot" onmousedown="zoom2x()">🔎</span>
                 <input id="zoombar" type="range" min="0" max="6" value="1" step="1" onchange="ZOOMf(this.value)">
                 <input id="tzoom" type="number" min="0.50" max="32" step="1" value="1" onchange="ZOOM(this.value)"
                     style="width: 44px">
+                <span id="oculos" class="botao">👓 Pixels alinhados + nitidez <input type="checkbox" value="false"
+                        onchange="pixel()"> </span>
                 <!--span onmousedown="scrollCanva(-80,0)">⬅️</span>
                 <span onmousedown="scrollCanva(0,-80)">⬆️</span>
                 <span onmousedown="scrollCanva(0,80)">⬇️</span>

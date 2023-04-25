@@ -1,7 +1,9 @@
 let vers = [
     {
-        versao: "1.9.6",
+        versao: "1.9.7",
         notas: [
+            "menu Recortar junto do menu Tamanho da imagem",
+            "lixeira removida do menu",
             "Brush desenhando no canvas no modo pixel alinhado! agora sim da pra fazr pixelart",
             "cria 4 quadros automaticamente.",
             "menu animação nao some automagicamente",

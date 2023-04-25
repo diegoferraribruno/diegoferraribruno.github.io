@@ -11,10 +11,9 @@ function cursorMove(e) {
     cursor.style.visibility = "visible";
 }
 function mostra() {
-    if (mode != "recortar") {
-
-        comandosExec()
-    }
+    /*    if (mode != "recortar") {
+            comandosExec()
+        }*/
     document.body.style.cursor = "pointer";
     cursor.style.visibility = "hidden";
 }

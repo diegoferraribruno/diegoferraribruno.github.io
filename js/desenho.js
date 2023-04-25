@@ -625,10 +625,12 @@ function changeGCO(GCO = globalComposite) {
     context.globalCompositeOperation = GCO
 }
 function updateCanvasBack() {
+    if (mode != "recortar") {
 
-    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    canvasBack.ctx.drawImage(canvas, 0, 0)
+        canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        canvasBack.ctx.drawImage(canvas, 0, 0)
+    }
 }
 function restoreCanvas() {
     let oldGCO = context.globalCompositeOperation

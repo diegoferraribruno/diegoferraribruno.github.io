@@ -239,7 +239,12 @@ function handleUp(evt) {
         cropEnd.x = x
         cropEnd.y = y
         desenhaRetangulo();
+    } else if (isSelecting === true && over === false) {
+        cropEnd.x = 0
+        cropEnd.y = 0
+        limpaRetangulo()
     }
+
     if (mode === "emoji" && isEmoji) {
         let size = document.getElementById("emosize").value
         desenha(
@@ -257,6 +262,7 @@ function handleUp(evt) {
     if (mode === "recortar") {
         mostraMenu("recortar")
         isSelecting = false
+        desenhaRetangulo()
     }
 
     if (isPicking) {
