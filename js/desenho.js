@@ -195,7 +195,6 @@ function exec(coma = 0) {
                     changeGCO(globaltemp)
                     coma++;
                     exec(coma)
-                    myImg = []
                 }
                 break;
             case "s":

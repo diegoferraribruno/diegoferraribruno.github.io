@@ -11,7 +11,7 @@ function cursorMove(e) {
     cursor.style.visibility = "visible";
 }
 function mostra() {
-    if (mode != recortar) {
+    if (mode != "recortar") {
 
         comandosExec()
     }

@@ -83,6 +83,7 @@ var checkOrientation = function () {
 function night() {
     let testarray = document.getElementsByClassName("fundobranco");
     let testarray2 = document.getElementsByClassName("fundo2");
+    let filters = document.getElementsByClassName("filter");
     console.log("1111111", testarray, " 222222222222 ", testarray2)
     for (let i = 0; i < testarray.length; i++) {
         testarray[i].classList.toggle("dark")
@@ -90,11 +91,17 @@ function night() {
 
 
     } for (let i = 0; i < testarray2.length; i++) {
-        testarray[i].classList.toggle("fundo2night")
+        testarray2[i].classList.toggle("fundo2night")
+
+    }
+    for (let i = 0; i < filters.length; i++) {
+        filters[i].classList.toggle("filterlight")
+        filters[i].classList.toggle("filterdark")
+
 
     }
     nightmode = !nightmode
-
+    document.body.classList.toggle("dark")
     win.classList.toggle("fundo2night");
     for (i = 0; i < 5; i++) {
         document.getElementById("bplayer" + i).classList.toggle("fundo2night")

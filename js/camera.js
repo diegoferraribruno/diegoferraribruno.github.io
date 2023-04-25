@@ -194,13 +194,15 @@ async function tirafoto() {
             workingframe++
             swapImg = canvas.toDataURL('image/png');
 
-            save_frame(swapImg)
-
-            changeFrame(workingframe)
             document.getElementById("contador").innerHTML = workingframe
         }, 30)
     }
-    setTimeout(() => fotografando = true, 100)
+
+    setTimeout(() => {
+        fotografando = true
+        save_frame(swapImg)
+        changeFrame(workingframe)
+    }, 100)
 }
 
 
