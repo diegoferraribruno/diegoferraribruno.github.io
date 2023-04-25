@@ -10,8 +10,67 @@
     <title>Desenho HD 1.3 </title>
 </head>
 
-<body class="naotoque fundobranco style=" cursor: pointer;">
+<body class="naotoque" style="cursor: pointer;">
     <div id="tela" style="overflow-y: hidden;" class="naotoque">
+        <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
+
+            <div id="ferramentas" class="ferramentas">
+                <span id="fundo" title="Configurações" class="mais" onmousedown="mostraMenu('fundo')">🧰</span>
+                <span id="night" class="mais" onmousedown="night()">💡</span>
+                <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
+                <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
+                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
+                <span id="hand" class="mais" title="Mover a tela" onclick="toggleHand()">🖐</span>
+
+                <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
+                    onmouseleave="undoTEnd()">↩️</span>
+                <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
+                    onmouseleave="redoTEnd()">↪️</span>
+
+
+            </div>
+
+            <div id="ferramentas2" class="ferramentas">
+
+                <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">🖌️</span>
+                <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')">🎨</span>
+
+                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
+
+
+                <!--span id="apagar" title="Apagar" class="mais" onmousedown='changeGCO("destination-out")'>🧽</span-->
+
+                <span onmousedown="backPaint()" class="mais" id="globalComposite"
+                    style="width: 36px; height: 36px; padding-top: 2px; margin-right: 6px; display:flex;"><span
+                        style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
+                    <span
+                        style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
+                        title="Pintando por baixo">🔲</span>
+                </span>
+                <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
+                <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
+
+            </div>
+
+            <div id="canvas_window" style="background-color: hsla(0, 100%, 100%, 0.4)">
+                <span id="cursor"
+                    style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
+                    class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
+                <div id="canvas_div2">
+
+                    <div id="canvas_div">
+                        <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)"
+                            onmouseout="mostra()">
+                            Sinto muito, talvez haja uma incompatibilidade com seu navegador ou está offline e algo
+                            não carregou como deveria...<br>
+                        </canvas>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
         <div id="menus">
             <div id="menupicker" class="submenu fundobranco">
                 Toque numa área pintada<br>
@@ -88,30 +147,7 @@
                 </span>
             </div>
 
-            <div id="menuimagem" class="fundobranco submenu aparece menu">
-                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()"> 📤 Carregar
-                    imagem /
-                    upload
-                    <span class="close">❎</span></span><br>
-                <span class="botao"> 📤 🖼️ Enviar imagem <br> Ajustar tela ao tamanho da imagem <input type="checkbox"
-                        id="ajustar" checked="true">
-                    <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
-                        title="Enviar Arquivo de imagem" /></span>
-                <span class="botao"> 📤 🎞️ Enviar uma animação<br>
-                    Auto detectar quadros <input type="checkbox" id="autodetectar" onchange="hidecustom()"
-                        checked="true">
-                    <br>carregar como plano de fundo?
-                    <input type="checkbox" id="loadBackgroundAnimation">
-                    <br>sobrepor plano de fundo
-                    <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
-                    <span id="custom" class="esconde"> Frames/quadros<input type="number" id="fnumber" min="1" max="60"
-                            step="1" value="2" style="width: 40px; margin-left: 8px"><br> largura: <input id="larguraS"
-                            type="number" maxlength="4" max="1920" value="320" style="width:60px; padding: 4px;" />
-                        pixels<br>
-                        altura: <input id="alturaS" type="number" maxlength="4" max="1920" value="320"
-                            style="width:60px;padding: 4px;" /> pixels<br></span>
-                    <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" title="📤" /></span>
-            </div>
+
 
             <div id="menuemoji" class="fundobranco submenu menu">
                 <span class="botao"> <span class="bot" onclick="emojipicker()" title="selecione seu emoji">😍</span>
@@ -304,7 +340,30 @@
                 <span onmousedown="scrollCanva(0,80)">⬇️</span>
                 <span onmousedown="scrollCanva(80,0)">➡️</span -->
             </div>
-
+            <div id="menuimagem" class="fundobranco submenu aparece menu">
+                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()"> 📤 Carregar
+                    imagem /
+                    upload
+                    <span class="close">❎</span></span><br>
+                <span class="botao"> 📤 🖼️ Enviar imagem <br> Ajustar tela ao tamanho da imagem <input type="checkbox"
+                        id="ajustar" checked="true">
+                    <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
+                        title="Enviar Arquivo de imagem" /></span>
+                <span class="botao"> 📤 🎞️ Enviar uma animação<br>
+                    Auto detectar quadros <input type="checkbox" id="autodetectar" onchange="hidecustom()"
+                        checked="true">
+                    <br>carregar como plano de fundo?
+                    <input type="checkbox" id="loadBackgroundAnimation">
+                    <br>sobrepor plano de fundo
+                    <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
+                    <span id="custom" class="esconde"> Frames/quadros<input type="number" id="fnumber" min="1" max="60"
+                            step="1" value="2" style="width: 40px; margin-left: 8px"><br> largura: <input id="larguraS"
+                            type="number" maxlength="4" max="1920" value="320" style="width:60px; padding: 4px;" />
+                        pixels<br>
+                        altura: <input id="alturaS" type="number" maxlength="4" max="1920" value="320"
+                            style="width:60px;padding: 4px;" /> pixels<br></span>
+                    <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" title="📤" /></span>
+            </div>
             <div id="menucam" class="submenu fundobranco">
                 <span title="espelhar a camera" class="bot" onmousedown="flipCamera()">🤳</span>
                 <span id="btnChangeCam" title="Trocar camera" class="bot" onmousedown="changeCamera()">
@@ -452,65 +511,7 @@
             </div>
 
         </div>
-        <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
-            <div id="ferramentas" class="ferramentas">
-                <span id="fundo" title="Configurações" class="mais" onmousedown="mostraMenu('fundo')">🧰</span>
-                <span id="night" class="mais" onmousedown="night()">💡</span>
-                <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
-                <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
-                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
-                <span id="hand" class="mais" title="Mover a tela" onclick="toggleHand()">🖐</span>
-
-                <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
-                    onmouseleave="undoTEnd()">↩️</span>
-                <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
-                    onmouseleave="redoTEnd()">↪️</span>
-
-
-            </div>
-
-            <div id="ferramentas2" class="ferramentas">
-
-                <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">🖌️</span>
-                <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')">🎨</span>
-
-                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
-
-
-                <!--span id="apagar" title="Apagar" class="mais" onmousedown='changeGCO("destination-out")'>🧽</span-->
-
-                <span onmousedown="backPaint()" class="mais" id="globalComposite"
-                    style="width: 36px; height: 36px; padding-top: 2px; margin-right: 6px; display:flex;"><span
-                        style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
-                    <span
-                        style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
-                        title="Pintando por baixo">🔲</span>
-                </span>
-                <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
-                <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
-
-            </div>
-
-            <div id="canvas_window" style="background-color: hsla(0, 100%, 100%, 0.4)">
-                <span id="cursor"
-                    style="left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
-                    class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
-                <div id="canvas_div2">
-
-                    <div id="canvas_div">
-                        <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)"
-                            onmouseout="mostra()">
-                            Sinto muito, talvez haja uma incompatibilidade com seu navegador ou está offline e algo
-                            não carregou como deveria...<br>
-                        </canvas>
-                    </div>
-                </div>
-
-            </div>
-
-
-        </div>
     </div>
 
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"

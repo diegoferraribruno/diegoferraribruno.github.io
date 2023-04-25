@@ -68,7 +68,7 @@ body {
 #canvas_window {
     display: flex;
     overflow: scroll;
-    width: 320px;
+    /* width: 320px;*/
     height: 342px;
     margin: auto;
     margin-top: auto;
@@ -389,7 +389,7 @@ input[type="range"] {
 .dark {
     background-color: #222222dd;
     color: #eeeeee;
-    animation: animatenight 2s;
+    animation: animatenight 1s;
 }
 
 
@@ -496,6 +496,20 @@ input[type="range"] {
     margin-top: 100px;
     font-size: 1.5em;
     z-index: 5000;
+}
+
+.filter {
+    pointer-events: none;
+}
+
+.filterdark {
+
+    background-color: rgba(51, 51, 51, 1);
+}
+
+.filterlight {
+
+    background-color: hsla(0, 100%, 100%, 1);
 }
 
 .anime {

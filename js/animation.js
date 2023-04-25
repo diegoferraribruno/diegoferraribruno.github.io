@@ -115,6 +115,8 @@ function criaBackPlayer() {
         player.style.position = "absolute"
         player.style.marginTop = - canvas.height - 4 + "px"
         // player.style.border = "2px solid green"
+        player.classList.add("filter")
+        player.classList.add("filterlight")
         player.classList.add("fundo2")
         player.style.zIndex = -1 * i - 1
         player.style.opacity = 0.4
