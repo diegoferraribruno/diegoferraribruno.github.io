@@ -27,7 +27,7 @@
             var canvas = document.querySelector("#canvas");
             canvas.height = video.videoHeight;
             canvas.width = video.videoWidth;
-            var context = canvas.getContext('2d');
+            canvas.getContext('2d'[{ willReadFrequently: false }])
             context.drawImage(video, 0, 0)
         })
         document.querySelector('#upload').addEventListener('click', function (e) {
