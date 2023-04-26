@@ -193,7 +193,8 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
     canvasDiv.style.height = H + "px"; //add 30px for scroll
     canvas.width = W;
     canvas.height = H;
-
+    canvasBack.width = W;
+    canvasBack.height = H;
     for (i = 0; i < 6; i++) {
         document.getElementById("bplayer" + i).style.width = W + "px"
         document.getElementById("bplayer" + i).style.height = H + "px"

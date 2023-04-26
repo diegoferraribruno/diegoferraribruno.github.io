@@ -153,12 +153,17 @@ function play() {
     }
     if (animacao.length > 0) {
         clearInterval(inter);
+        document.getElementById("player").style.backgroundSize = "cover"
+        document.getElementById("player").style.display = "block"
         inter = setInterval(() => {
-            playerPlay(playing);
+
             playing++;
-            if (playing >= animacao.length) {
-                playing = 0;
-            };
+            if (playing == animacao.length) {
+                playing = 0
+            }
+            playerPlay(playing);
+
+
         },
             1000 / fps)
 
@@ -175,8 +180,7 @@ function stop() {
 function playerPlay(frame) {
     document.getElementById("play()").innerHTML = ' <span onmousedown="stop()" >⏹️</span>'
     document.getElementById("player").style.backgroundImage = 'url("' + animacao[frame] + '")';
-    document.getElementById("player").style.backgroundSize = "cover"
-    document.getElementById("player").style.display = "block"
+
 }
 
 function changeFrame(frame) {
@@ -302,13 +306,13 @@ var checkSave = setInterval(() => {
         document.getElementById("new_frame()").classList.toggle("blink")
 
     }
-    if (undoLevel == 0) {
+    /*if (undoLevel == 0) {
         document.getElementById("redo").classList.add("esconde")
 
     } else {
         document.getElementById("redo").classList.remove("esconde")
 
-    }
+    }*/
 }, 1400)
 let swapImg = new Image()
 

@@ -3,6 +3,14 @@ let keyY = false
 let keyCtrl = false
 var shiftHeld = false;
 
+var canvasBack = document.createElement("canvas")
+canvasBack.width = canvas.width
+canvasBack.height = canvas.height
+canvasBack.ctx = canvasBack.getContext('2d')
+canvasBack.ctx.drawImage(canvas, 0, 0)
+let cursorShow = true
+
+
 function handleKeyUp(evt) {
     if (evt.keyCode === 16) {
         shiftHeld = false
@@ -127,13 +135,6 @@ function handleStart(evt) {
 }
 
 
-var canvasBack = document.createElement("canvas")
-canvasBack.width = canvas.width
-canvasBack.height = canvas.height
-canvasBack.ctx = canvasBack.getContext('2d')
-canvasBack.ctx.drawImage(canvas, 0, 0)
-let cursorShow = true
-
 function handleMove(evt) {
     evt.preventDefault();
     offsetX = canvas.getBoundingClientRect().left;
@@ -195,6 +196,7 @@ function handleMove(evt) {
         cursor.style.left = evt.pageX + "px";
         cursor.style.top = evt.pageY + "px";
         cursor.style.opacity = 0.9
+
     }
     if (isGrabing) {
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
