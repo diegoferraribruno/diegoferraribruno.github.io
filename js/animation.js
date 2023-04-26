@@ -15,6 +15,47 @@ var anime_menu = {
     "anime_ajustes()": "🎚️",
 }
 
+
+function swapItems(a = Number, b = Number) {
+    animacao[a] = animacao.splice(b, 1, animacao[a])[0];
+    //adicionaQuadro()
+}
+
+function swapL() {
+    let a = workingframe
+    let b = workingframe - 1
+    if (a > 0) {
+
+        moveObjectAtIndex(animacao, a, b)
+    } else {
+        moveObjectAtIndex(animacao, a, animacao.length - 1)
+
+    }
+}
+
+
+function swapR() {
+    let a = workingframe
+    let b = workingframe + 1
+    if (b < animacao.length) {
+
+        moveObjectAtIndex(animacao, a, b)
+    } else {
+        moveObjectAtIndex(animacao, a, 0)
+
+    }
+    //    adicionaQuadro()
+}
+
+function moveObjectAtIndex(arr, indexA, indexB) {
+    var temp = arr[indexA];
+    arr[indexA] = arr[indexB];
+    arr[indexB] = temp;
+    adicionaQuadro()
+    changeFrame(indexB)
+};
+
+
 function criaAnime() {
 
     anime.classList.add("anime")
@@ -420,38 +461,6 @@ function drop(event) {
     }
 }
 
-
-function swapItems(a = Number, b = Number) {
-    animacao[a] = animacao.splice(b, 1, animacao[a])[0];
-    //adicionaQuadro()
-}
-
-function swapItemsL() {
-    let a = "" + workingframe
-    let b = workingframe - 1
-    if (b < 0) { b = animacao.length - 1 }
-    swapItems(b, a)
-}
-
-
-function swapItemsR() {
-    let a = workingframe
-    let b = workingframe + 1
-    moveObjectAtIndex(animacao, a, b)
-    //    adicionaQuadro()
-}
-
-function moveObjectAtIndex(array, sourceIndex, destIndex) {
-    var placeholder = "";
-    // remove the object from its initial position and
-    // plant the placeholder object in its place to
-    // keep the array length constant
-    var objectToMove = array.splice(sourceIndex, 1, placeholder)[0];
-    // place the object in the desired position
-    array.splice(destIndex, 0, objectToMove);
-    // take out the temporary object
-    array.splice(array.indexOf(placeholder), 1);
-}
 
 function quadrosVisiveis(numero) {
     for (i = 0; i < 6; i++) {

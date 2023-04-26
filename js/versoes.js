@@ -1,6 +1,6 @@
 let vers = [
     {
-        versao: "1.9.7",
+        versao: "1.9.8",
         notas: [
             "menu Recortar junto do menu Tamanho da imagem",
             "lixeira removida do menu",
