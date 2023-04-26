@@ -16,46 +16,6 @@ var anime_menu = {
 }
 
 
-function swapItems(a = Number, b = Number) {
-    animacao[a] = animacao.splice(b, 1, animacao[a])[0];
-    //adicionaQuadro()
-}
-
-function swapL() {
-    let a = workingframe
-    let b = workingframe - 1
-    if (a > 0) {
-
-        moveObjectAtIndex(animacao, a, b)
-    } else {
-        moveObjectAtIndex(animacao, a, animacao.length - 1)
-
-    }
-}
-
-
-function swapR() {
-    let a = workingframe
-    let b = workingframe + 1
-    if (b < animacao.length) {
-
-        moveObjectAtIndex(animacao, a, b)
-    } else {
-        moveObjectAtIndex(animacao, a, 0)
-
-    }
-    //    adicionaQuadro()
-}
-
-function moveObjectAtIndex(arr, indexA, indexB) {
-    var temp = arr[indexA];
-    arr[indexA] = arr[indexB];
-    arr[indexB] = temp;
-    adicionaQuadro()
-    changeFrame(indexB)
-};
-
-
 function criaAnime() {
 
     anime.classList.add("anime")
@@ -473,4 +433,44 @@ function quadrosVisiveis(numero) {
         }
 
     }
+}
+
+
+function swapL() {
+    let a = workingframe
+    let b = workingframe - 1
+    if (a > 0) {
+
+        moveObjectAtIndex(animacao, a, b)
+    } else {
+        moveObjectAtIndex(animacao, a, animacao.length - 1)
+
+    }
+}
+
+
+function swapR() {
+    let a = workingframe
+    let b = workingframe + 1
+    if (b < animacao.length) {
+
+        moveObjectAtIndex(animacao, a, b)
+    } else {
+        moveObjectAtIndex(animacao, a, 0)
+
+    }
+}
+
+function moveObjectAtIndex(arr, indexA, indexB) {
+    var temp = arr[indexA];
+    arr[indexA] = arr[indexB];
+    arr[indexB] = temp;
+    adicionaQuadro()
+    changeFrame(indexB)
+};
+
+
+function swapItems(a = Number, b = Number) {
+    animacao[a] = animacao.splice(b, 1, animacao[a])[0];
+    adicionaQuadro()
 }
