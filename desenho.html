@@ -60,7 +60,7 @@
 
                     <div id="canvas_div">
                         <canvas id="canvas" width="320px" height="320px" onmousemove="cursorMove(event)"
-                            onmouseout="mostra()">
+                            onmouseout="mostra()" onmouseenter="desmostra()">
                             Sinto muito, talvez haja uma incompatibilidade com seu navegador ou está offline e algo
                             não carregou como deveria...<br>
                         </canvas>
@@ -265,7 +265,8 @@
                 <div id="paleta3" class="fundobranco"></div>
             </div>
             <div id="menucustombrush" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-                <div class="botao "> <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
+                <div class="botao "> <span title="fechar" onmousedown="mostraSubMenu('custombrush')"
+                        class="close">❎</span>
                     pinceis personalizados</div>
                 <div class="botao " id="criaCustom" onmousedown="criaCustom()">
                     <span class="bot">🖼️ </span> ➡️ 🖌️ quadro como pincel
@@ -408,7 +409,7 @@
                     🔴
                 </span> ⏱️<input id="times" type="number" value="2" min="0.5" step="0.5" max="3" size="2"
                     style="width: 42px;">s <span title="Ajustes da camera" class="bot"
-                    onmousedown="mostraMenu('camconfig')">🎚️</span>
+                    onmousedown="mostraSubMenu('camconfig')">🎚️</span>
 
                 <span class="close" title="fechar camera" onmousedown="modeTo('cam')">❎</span><br>
                 <select id="select" class="esconde" onchange="trocaCamera()">
@@ -482,7 +483,7 @@
 
             </div>
             <div id="menucamconfig" class="fundobranco submenu" style="opacity:0.8; background-color: #ffffff00;">
-                <span class="close" title="fechar cam config" onmousedown="mostraMenu('camconfig')">❎</span>
+                <span class="close" title="fechar cam config" onmousedown="mostraSubMenu('camconfig')">❎</span>
                 <div id="camoptions">
 
 

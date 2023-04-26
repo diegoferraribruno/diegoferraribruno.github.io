@@ -43,14 +43,14 @@ function createBasicBrushes() {
     let customBrush = document.createElement("span")
     customBrush.id = "custombrush"
     //customBrush.classList.add("bot")
-    customBrush.setAttribute("onmousedown", "customBrush()")
+    customBrush.setAttribute("onmousedown", 'mostraSubMenu("custombrush")')
     customBrush.innerHTML = "<span class='bot' style='display:inline-block; margin-top:-10px; font-size:18px; width:30px; height:30px;'>➕</div>"
     document.getElementById("pinceis").appendChild(customBrush)
 }
 createBasicBrushes()
 
 function customBrush() {
-    mostraMenu("custombrush")
+    mostraSubMenu("custombrush")
 }
 
 function criaCustom() {

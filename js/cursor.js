@@ -14,9 +14,17 @@ function mostra() {
 
     document.body.style.cursor = "pointer";
     cursor.style.visibility = "hidden";
-    setTimeout(() => { if (mode != "recortar") restoreCanvas() }, 20)
-}
+    if (mode != "recortar" && mode != "camera" && mode != "cores") {
 
+        setTimeout(() => { restoreCanvas() }, 20)
+    }
+}
+function desmostra() {
+    if (mode != "recortar" && mode != "camera") {
+
+        setTimeout(() => restoreCanvas(), 200)
+    }
+}
 function cursorColor() {
 
     switch (mode) {

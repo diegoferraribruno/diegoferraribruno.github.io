@@ -12,7 +12,7 @@ var anime_menu = {
     "prev_frame()": "⏮️",
     "play()": "▶️",
     "next_frame()": "⏭️",
-    "anime_ajustes()": "🎚️",
+    'mostraMenu("anime")': "🎚️",
 }
 
 
@@ -277,10 +277,7 @@ function prev_frame() {
     }
 }
 
-function anime_ajustes() {
-    removeClass()
-    mostraMenu("anime")
-}
+
 function changeFPS(valor) {
     fps = valor
 }

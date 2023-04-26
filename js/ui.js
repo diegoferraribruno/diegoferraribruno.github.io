@@ -23,6 +23,11 @@ function toggleSelect(id) {
 }
 
 function mostraMenu(id) {
+    removeClass()
+    let quem = document.getElementById("menu" + id);
+    quem.classList.toggle("aparece");
+}
+function mostraSubMenu(id) {
     let quem = document.getElementById("menu" + id);
     quem.classList.toggle("aparece");
 }
