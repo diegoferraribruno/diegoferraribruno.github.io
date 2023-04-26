@@ -603,6 +603,9 @@ input[type="range"] {
     height: 160px;
     overflow-y: scroll;
     display: block;
+    font-weight: 700;
+    text-shadow: -1px 0 #ffffff, 0 1px #ffffff, 1px 0 #ffffff, 0 -1px #ffffff;
+
 }
 
 

@@ -490,23 +490,24 @@
                         <label for="brightness">Brightness / brilho</label>
                         <input id="brightness" title="brightness" type="range" min="0" max="255" step="1">
 
-                        <div id="isoDiv" class="botao3">
-                            <label for="iso">ISO</label>
-                            <input id="iso" title="iso" type="range" min="100" max="1200" step="100">
+                    </div>
 
-                        </div>
-
-                        <div id="exposureTimeDiv" class="botao3">
-                            <input id="exposureMode" type="checkbox"> Manual exposureMode<br>
-                            <label for="exposureTime">exposureTime</label>
-                            <input id="exposureTime" title="exposureTime" type="range" min="3" max="2047" step="1">
-                        </div>
+                    <div id="isoDiv" class="botao3">
+                        <label for="iso">ISO</label>
+                        <input id="iso" title="iso" type="range" min="100" max="1200" step="100">
 
                     </div>
-                    <div id="exposureCompensationDiv" class="botao3">
-                        <label for="exposureCompensation">Exposure compensation</label>
-                        <input id="exposureCompensation" title="exposureCompensation" type="range" min="0" max="255"
-                            step="1">
+
+                    <div id="exposureTimeDiv" class="botao3">
+                        <input id="exposureMode" type="checkbox"> Manual exposureMode<br>
+                        <label for="exposureTime">exposureTime</label>
+                        <input id="exposureTime" title="exposureTime" type="range" min="3" max="2047" step="1">
+                        <div id="exposureCompensationDiv">
+                            <label for="exposureCompensation">Exposure compensation</label>
+                            <input id="exposureCompensation" title="exposureCompensation" type="range" min="0" max="255"
+                                step="1">
+
+                        </div>
                     </div>
 
                     <div id="saturationDiv" class="botao3">
@@ -522,14 +523,14 @@
                         <input id="sharpness" title="sharpness" type="range" min="0" max="255" step="1">
                     </div>
                     <div id="whiteBalanceDiv" class="botao3">
-                        <input id="whiteBalanceMode" type="checkbox"> Manual white Balance Mode<br>
-                        <label for="whiteBalace">white balace / color</label>
-                        <input id="whiteBalace" title="whiteBalace" type="range">
+                        <input id="whiteBalanceMode" type="checkbox"> Manual white Balance / color<br>
                         <div id="colorTemperatureDiv">
                             <label for="colorTemperature">colorTemperature</label>
                             <input id="colorTemperature" title="colorTemperature" type="range" min="2000" max="6500"
                                 step="1">
                         </div>
+                        <label for="whiteBalace">white balace </label>
+                        <input id="whiteBalace" title="whiteBalace" type="range">
                     </div>
                     <div id="focusDistanceDiv" class="botao3">
                         <input id="focusMode" type="checkbox"> Manual focusMode<br>
