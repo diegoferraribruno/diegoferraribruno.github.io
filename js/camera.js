@@ -361,7 +361,7 @@ async function initializeCamera() {
                     //  console.log(`${key}: ${value}`);
                 }
             }
-            const comumConstraints = ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom']
+            const comumConstraints = ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom', "exposureCompensation", "iso"]
             for (const ptz of comumConstraints) {
                 // Check whether pan/tilt/zoom is available or not.
                 const inputdiv = document.getElementById(ptz + "Div")
