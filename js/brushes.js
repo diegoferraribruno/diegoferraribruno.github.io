@@ -330,7 +330,7 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
 
             changedBrush = true;
             let existe = document.getElementById(brushName)
-            if (!existe) {
+            if (!existe && mode != "picker") {
 
                 setTimeout(() => {
 
@@ -339,7 +339,7 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
 
                     let favBrushButton = document.createElement("div")
                     favBrushButton.id = brushName
-                    favBrushButton.style.Height = "30px";
+                    favBrushButton.style.height = "30px";
                     favBrushButton.style.width = "30px";
                     favBrushButton.style.lineHeight = "30px";
                     favBrushButton.style.marginRight = "4px";

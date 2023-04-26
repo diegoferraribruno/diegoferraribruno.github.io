@@ -154,3 +154,4 @@ function pixel() {
     context.imageSmoothingEnabled = !context.imageSmoothingEnabled;
 
 }
+pixel()

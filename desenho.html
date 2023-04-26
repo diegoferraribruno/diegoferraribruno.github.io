@@ -359,7 +359,7 @@
                 <input id="zoombar" type="range" min="0" max="6" value="1" step="1" onchange="ZOOMf(this.value)">
                 <input id="tzoom" type="number" min="0.50" max="32" step="1" value="1" onchange="ZOOM(this.value)"
                     style="width: 44px">
-                <span id="oculos" class="botao">👓 Pixels alinhados + nitidez <input type="checkbox" value="false"
+                <span id="oculos" class="botao">👓 -+ nitidez <input type="checkbox" value="true" checked
                         onchange="pixel()"> </span>
                 <!--span onmousedown="scrollCanva(-80,0)">⬅️</span>
                 <span onmousedown="scrollCanva(0,-80)">⬆️</span>
@@ -382,7 +382,7 @@
                     <input type="checkbox" id="loadBackgroundAnimation">
                     <br>sobrepor plano de fundo
                     <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
-                    <span id="custom" class="esconde"> Frames/quadros<input type="number" id="fnumber" min="1" max="60"
+                    <span id="custom" class="esconde"> Frames/quadros<input type="number" id="fnumber" min="1" max="30"
                             step="1" value="2" style="width: 40px; margin-left: 8px"><br> largura: <input id="larguraS"
                             type="number" maxlength="4" max="1920" value="320" style="width:60px; padding: 4px;" />
                         pixels<br>

@@ -50,6 +50,7 @@ function handleKeys(evt) {
     }
 }
 
+let tempStrokeSize
 var tempImg = document.createElement("img");
 function handleStart(evt) {
     removeClass();
@@ -119,6 +120,7 @@ function handleStart(evt) {
 
     }
     if (mode == "picker") {
+        restoreCanvas()
         isPicking = true
     }
 
@@ -131,7 +133,6 @@ canvasBack.height = canvas.height
 canvasBack.ctx = canvasBack.getContext('2d')
 canvasBack.ctx.drawImage(canvas, 0, 0)
 let cursorShow = true
-
 
 function handleMove(evt) {
     evt.preventDefault();
@@ -149,7 +150,7 @@ function handleMove(evt) {
         context.strokeStyle = "#ffccccdd";
         desenhaRetangulo();
     }
-    if (isDrawing === true) {
+    if (isDrawing === true && isPicking == false) {
         mouseOver = true;
         if (brushMode == 0) {
             desenha(
@@ -191,11 +192,14 @@ function handleMove(evt) {
             );
             setStrokeColor();
         }
+        cursor.style.left = evt.pageX + "px";
+        cursor.style.top = evt.pageY + "px";
+        cursor.style.opacity = 0.9
     }
     if (isGrabing) {
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
     }
-    if (!isGrabing && mode != "recortar") {
+    if (!isGrabing && mode != "recortar" && !isPicking) {
         origin.x = x
         origin.y = y
 
@@ -277,6 +281,7 @@ function handleUp(evt) {
             );
             setStrokeColor();
         }
+        modeTo("pintar")
         isPicking = false
     }
     if (isDrawing) {

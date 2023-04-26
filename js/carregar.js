@@ -26,6 +26,7 @@ function handleFiles(e) {
             desenha("img", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
             swapImg = canvas.toDataURL('image/png');
             animacao[workingframe] = swapImg
+            adicionaQuadro()
         }
     }
 }
@@ -84,6 +85,7 @@ function importSprite(e) {
 
             }
             setTimeout(() => {
+                adicionaQuadro()
                 changeFrame(workingframe - 1);
                 removeClass()
                 document.getElementById("contador").innerHTML = workingframe;

@@ -788,7 +788,7 @@ async function modeTo(qual) {
             break;
         case "picker":
             mode = qual
-            cursorColor()
+            // cursorColor()
             break;
         case "info":
             break;

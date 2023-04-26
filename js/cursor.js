@@ -36,14 +36,16 @@ function cursorColor() {
             setTimeout(() => { cursor.style.backgroundImage = "none"; }, 20)
             break;
         case "picker":
-            setStrokeSize(2)
-            cursor.innerHTML = '<div style="-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1);width:32px; margin-top:12px; margin-left:-3px;">💉</div>'
+
+            cursor.innerHTML = '<div style="-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); -ms-transform: scale(-1, 1); transform: scale(-1, 1);width:32px; margin-top:12px; margin-left:' + ((strokeWidth / 2) - 3) + 'px;">💉</div>'
             cursor.style.borderColor = "#000000ee";
-            cursor.style.width = 2 + "px";
+            cursor.style.width = 1 + "px";
             cursor.style.height = 1 + "px";
             cursor.style.margingLeft = 24 + "px";
             cursor.style.margingTop = 52 + "px";
             cursor.style.opacity = 1
+            cursor.style.textAlign = "center"
+            cursor.style.padding = "auto"
             break;
         case "recortar":
 

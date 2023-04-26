@@ -20,7 +20,7 @@ function criaAnime() {
 
     anime.classList.add("anime")
     //<!--🚀-->
-    anime.innerHTML = "<div id='lixo' class='bot shadow' onmousedown='lixeira()'>🗑</div><div class='bot shadow' id='clone' onmousedown='cloneFrame()'>🧬 </div>"
+    anime.innerHTML = "<div id='lixo' class='bot shadow' onmousedown='lixeira()'>🗑</div>"
     Object.keys(anime_menu).forEach((key, index) => {
         // setTimeout(() => {
         let item = document.createElement("div")
@@ -136,7 +136,10 @@ function new_frame() {
 function save_frame(imagem = canvas.toDataURL('image/png')) {
     animacao[workingframe] = imagem
     comandos = []
-    setTimeout(() => { adicionaQuadro() }, 50)
+    setTimeout(() => {
+        adicionaQuadro();
+        console.log("save frame de novo")
+    }, 50)
 
 }
 
@@ -283,18 +286,14 @@ function removeFrame() {
     adicionaQuadro()
 }
 function cloneFrame(frame = workingframe) {
-    if (animacao.length != 0) {
+    let oldGCO = canvas.globalCompositeOperation
+    canvas.globalCompositeOperation = "destination-over"
+    animacao.splice(frame + 1, 0, animacao[frame]);
 
-        let oldGCO = canvas.globalCompositeOperation
-        canvas.globalCompositeOperation = "destination-over"
-
-        animacao.splice(frame + 1, 0, animacao[frame]);
-        next_frame()
-        adicionaQuadro()
-        setTimeout(() => oldGCO = canvas.globalCompositeOperation, 100)
-    } else {
-        Alert("não há quadro a ser clonado.")
-    }
+    next_frame()
+    adicionaQuadro()
+    setTimeout(() => oldGCO = canvas.globalCompositeOperation, 100)
+    Alert("🎞️ Quadro " + frame + " duplicado.")
 
 }
 var checkSave = setInterval(() => {
@@ -367,8 +366,8 @@ function adicionaQuadro() {
             setTimeout(() => {
                 document.getElementById("lixo").addEventListener("drop", drop);
                 document.getElementById("lixo").addEventListener("dragover", dragOver);
-                document.getElementById("clone").addEventListener("drop", drop);
-                document.getElementById("clone").addEventListener("dragover", dragOver);
+                document.getElementById("new_frame()").addEventListener("drop", drop);
+                document.getElementById("new_frame()").addEventListener("dragover", dragOver);
             }, 10)
             /*   document.getElementById("clone").addEventListener("drop", drop);
                document.getElementById("clone").addEventListener("dragover", dragOver);*/
@@ -391,6 +390,9 @@ function lixeira() {
 }
 var dataTransfer = 0
 function dragStart(event) {
+    if (comandos.length > 1) {
+        save_frame()
+    }
     dataTransfer = parseInt(event.target.id, 10);
 }
 
@@ -411,11 +413,12 @@ function drop(event) {
         adicionaQuadro()
         setTimeout(() => prev_frame(), 10)
 
-    } else if (toContainer.id == "clone") {
+    } else if (toContainer.id == "new_frame()") {
         cloneFrame(dataTransfer)
     }
     else if (toContainer !== dataTransfer) {
-        console.log(toContainer.id, dataTransfer)
+
+        Alert("🎞️  " + dataTransfer + " 🔄 " + toContainer.id, 1.5)
         swapItems(toContainer.id, dataTransfer)
 
     }
@@ -462,6 +465,8 @@ function swapR() {
 }
 
 function moveObjectAtIndex(arr, indexA, indexB) {
+    Alert("🎞️  " + indexA + " 🔄 " + indexB, 1.5)
+
     var temp = arr[indexA];
     arr[indexA] = arr[indexB];
     arr[indexB] = temp;
