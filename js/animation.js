@@ -3,7 +3,7 @@ anime.id = "anime"
 document.body.appendChild(anime)
 
 
-var fps = 6
+var fps = 12
 var animacao = []
 
 

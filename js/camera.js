@@ -145,12 +145,13 @@ function recMotion() {
                 if (blob != undefined) {
 
                     desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
-                } setTimeout(() => {
-
-                    new_frame()
-                }, 40)
+                    setTimeout(() => {
+                        save_frame(blob)
+                        new_frame()
+                    }, 10)
+                }
             }
-        }, 500 * i)
+        }, 1000 / fps * i)
     }
 }
 async function tirafoto() {
@@ -188,7 +189,8 @@ async function tirafoto() {
             workingframe++
             swapImg = canvas.toDataURL('image/png');
             save_frame(swapImg)
-        }, 30)
+
+        }, 5)
     }
 
     setTimeout(() => {

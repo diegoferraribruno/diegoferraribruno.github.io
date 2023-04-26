@@ -11,11 +11,10 @@ function cursorMove(e) {
     cursor.style.visibility = "visible";
 }
 function mostra() {
-    /*    if (mode != "recortar") {
-            comandosExec()
-        }*/
+
     document.body.style.cursor = "pointer";
     cursor.style.visibility = "hidden";
+    setTimeout(() => { if (mode != "recortar") restoreCanvas() }, 20)
 }
 
 function cursorColor() {
@@ -66,12 +65,5 @@ function cursorColor() {
             cursor.innerHTML = "";
             cursor.style.borderColor = strokeColor;
             break;
-    }
-}
-let out = true
-function handleMoveOut(evt) {
-    out = checkOverCanvas(evt.pageX, evt.pageY)
-    if (!out) {
-        restoreCanvas()
     }
 }
