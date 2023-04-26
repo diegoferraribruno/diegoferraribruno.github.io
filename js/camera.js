@@ -188,7 +188,6 @@ async function tirafoto() {
             workingframe++
             swapImg = canvas.toDataURL('image/png');
             save_frame(swapImg)
-            changeFrame(workingframe)
         }, 30)
     }
 
