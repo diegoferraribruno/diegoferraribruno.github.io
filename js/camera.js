@@ -147,13 +147,7 @@ function recMotion() {
                     desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
                 } setTimeout(() => {
 
-                    swapImg = canvas.toDataURL('image/png');
-
-                    save_frame(swapImg)
-
-                    workingframe++
-                    changeFrame(workingframe)
-                    document.getElementById("contador").innerHTML = workingframe
+                    new_frame()
                 }, 40)
             }
         }, 500 * i)
@@ -193,15 +187,14 @@ async function tirafoto() {
 
             workingframe++
             swapImg = canvas.toDataURL('image/png');
-
-            document.getElementById("contador").innerHTML = workingframe
+            save_frame(swapImg)
+            changeFrame(workingframe)
         }, 30)
     }
 
     setTimeout(() => {
         fotografando = true
-        save_frame(swapImg)
-        changeFrame(workingframe)
+
     }, 100)
 }
 
