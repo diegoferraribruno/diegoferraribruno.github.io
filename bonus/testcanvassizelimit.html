@@ -1,0 +1,58 @@
+<DOCTYPE HTML>
+    <html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type='text/javascript'>
+
+            function test() {
+                var cvs = document.getElementById('myCanvas');
+                cvs.height = parseInt(document.getElementById("canvasHeight").value);
+
+                var ctx = cvs.getContext("2d");
+                ctx.font = "50pt bold colibri";
+                ctx.fillText("It works", 0, 50);
+
+                var inMemoryCanvas = document.createElement("canvas");
+                try {
+                    inMemoryCanvas.height = cvs.height
+                    var tctx = inMemoryCanvas.getContext("2d");
+                    ctx.fillText("In memory canvas works", 0, 100);
+                } catch (e) {
+                    ctx = inMemoryCanvas.getContext("2d");
+                    ctx.fillText("In memory canvas failed:", 0, 100);
+                }
+            }
+
+        </script>
+    </head>
+
+    <body>
+        <table border=1>
+            <tr>
+                <th>Browser</th>
+                <th>Max Height</th>
+                <th>Max In Memory Height</th>
+            </tr>
+            <tr>
+                <td>Chrome 22.0.1229.94</td>
+                <td>32767</td>
+                <td>32767</td>
+            </tr>
+            <tr>
+                <td>Firefox 16.0.2</td>
+                <td>32767</td>
+                <td>32767</td>
+            </tr>
+            <tr>
+                <td>IE 9</td>
+                <td>Inifinity</td>
+                <td>Inifinity</td>
+            </tr>
+        </table><br>
+        <input type="number" id="canvasHeight"></input>
+        <button onclick="test()">Test</button><br>
+        <canvas id="myCanvas" width="800" height="300"></canvas>
+    </body>
+
+    </html>

@@ -3,11 +3,11 @@ var zoomScale = [0.5, 1, 2, 4, 8, 16, 32];
 var zoomIndex = 1;
 
 function toggleHand() {
-    if (mode != "zoom") {
+    if (mode != "zoomx") {
         oldMode = mode;
-        mode = "zoom";
+        mode = "zoomx";
         toggleSelect("hand");
-        cursorColor("zoom");
+        cursorColor("zoomx");
     } else {
         modeTo(oldMode);
         cursorColor(oldMode);

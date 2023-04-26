@@ -684,6 +684,9 @@ function limpar(what) {
 let oldMode = mode;
 
 async function modeTo(qual) {
+    if (mode == "recortar") {
+        comandosExec()
+    }
     if (mode != qual) {
         if (qual != "recortar") {
             removeClass("flip")
@@ -736,10 +739,10 @@ async function modeTo(qual) {
             break;
         case "rotacionar":
             break;
-        case "zoom":
+        case "zoomx":
             //removeClass();
             /*  */
-            mode = "zoom"
+            mode = "zoomx"
             break;
         case "cam":
             mode = qual

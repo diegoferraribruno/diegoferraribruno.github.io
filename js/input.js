@@ -75,7 +75,7 @@ function handleStart(evt) {
         isEmoji = true
         isDrawing = false
     }
-    if (mode == "zoom") {
+    if (mode == "zoomx") {
         isGrabing = true;
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {

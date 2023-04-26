@@ -247,8 +247,8 @@ function trocaCamera() {
 
 }
 
-
 function isCanvasBlank(canvas) {
+    const context = canvas.getContext('2d', [{ willReadFrequently: true }]);
 
     const pixelBuffer = new Uint32Array(context.getImageData(0, 0, canvas.width, canvas.height).data.buffer);
     return !pixelBuffer.some(color => color !== 0);
@@ -277,7 +277,7 @@ function removeVideo() {
         stopVideoStream()
         removeElement("video")
         removeElement("videoC")
-        if (oldMode == "cam" || oldMode == "zoom") {
+        if (oldMode == "cam" || oldMode == "zoomx") {
             modeTo("apagar")
         } else {
             modeTo(oldMode)

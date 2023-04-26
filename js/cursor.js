@@ -31,7 +31,7 @@ function cursorColor() {
             cursor.innerHTML = "";
             cursor.style.borderColor = strokeColor;
             break;
-        case "zoom":
+        case "zoomx":
             cursor.innerHTML = "🖐";
             setTimeout(() => { cursor.style.backgroundImage = "none"; }, 20)
             break;

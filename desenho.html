@@ -18,7 +18,7 @@
                 <span id="fundo" title="Configurações" class="mais" onmousedown="mostraMenu('fundo')">🧰</span>
                 <span id="night" class="mais" onmousedown="night()">💡</span>
                 <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
-                <span id="zoom" title="Ampliar" class="mais" onmousedown="modeTo('zoom')">🔎<span id="x1"
+                <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎<span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
                 <span id="hand" class="mais" title="Mover a tela" onclick="toggleHand()">🖐</span>
 
@@ -114,16 +114,21 @@
 
                     Tamanho atual:<br>
                     Largura: <input id="largura" type="number" maxlength="4" max="1920" value="320"
-                        style="width:60px; padding: 4px;" /> pixels<br>
+                        style="width:60px; padding: 4px;" /> px <span title="margem a esquerda">➡️<input id="offsetx"
+                            type="number" maxlength="4" max="1910" value="0" style="width:60px; padding: 4px;" />
+                    </span><br>
                     Altura: <input id="altura" type="number" maxlength="4" max="1920" value="320"
-                        style="width:60px;padding: 4px;" /> pixels<br>
+                        style="width:60px;padding: 4px;" /> px <span title="margem acima">⬇️<input id="offsety"
+                            type="number" maxlength="4" max="1910" value="0" style="width:60px; padding: 4px;" />
+                    </span><br>
                     <div onmousedown="tamanho()" class="bot"
-                        style="position: absolute; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -40px; right: 20px; text-align: center;">
+                        style="position: absolute; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -36px; right: 10px; text-align: center;">
                         ok
                     </div>
+                    <span class="bot" title="Duplicar tamanho da tela"
+                        style="position: absolute; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -70px; right: 10px; text-align: center;"
+                        onclick="x2()">x2</span>
                 </span>
-                <span class="botao" title="Duplicar tamanho da tela" onclick="x2()">Duplicar o tamanho da tela?
-                    ↔️</span>
                 <span id="recortar2" class="botao" onclick="modeTo('recortar')">✂️ recorte manual</span>
 
                 <span class="botao" style="font-size: 0.9em;" title="formatos">
@@ -349,8 +354,8 @@
                 </span>
             </div>
 
-            <div id="menuzoom" class="fundobranco submenu">
-                <span id="zoom" title="Ampliar" class="bot" onmousedown="zoom2x()">🔎</span>
+            <div id="menuzoomx" class="fundobranco submenu">
+                <span id="zoomx" title="Ampliar" class="bot" onmousedown="zoom2x()">🔎</span>
                 <input id="zoombar" type="range" min="0" max="6" value="1" step="1" onchange="ZOOMf(this.value)">
                 <input id="tzoom" type="number" min="0.50" max="32" step="1" value="1" onchange="ZOOM(this.value)"
                     style="width: 44px">
@@ -397,7 +402,7 @@
                 <span id="stopMotion" title="Gravar automaticamente" class="bot" style="font-size: medium;"
                     onmousedown="recMotion()">
                     🔴
-                </span> ⏱️<input id="times" type="number" value="2" min="1" step="1" max="48" size="2"
+                </span> ⏱️<input id="times" type="number" value="2" min="0.5" step="0.5" max="3" size="2"
                     style="width: 42px;">s <span title="Ajustes da camera" class="bot"
                     onmousedown="mostraMenu('camconfig')">🎚️</span>
 
@@ -407,7 +412,7 @@
                 <div id="zoomDiv" class="botao3">
                     <label for="zoom">Zoom</label>
                     <!-- input id="zoom" title="Zoom" type="range"-->
-                    <input type="range" id="zoom" title="Zoom" name="zoom" min="0.1" max="1" step="0.1" value="1">
+                    <input type="range" id="camzoom" title="Zoom" name="zoom" min="0.1" max="1" step="0.1" value="1">
                 </div>
 
 

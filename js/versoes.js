@@ -7,7 +7,7 @@ let vers = [
             "Brush desenhando no canvas no modo pixel alinhado! agora sim da pra fazr pixelart",
             "cria 4 quadros automaticamente.",
             "menu animação nao some automagicamente",
-            "menu zoom,",
+            "menu zoomx",
             "recortar funcionando"
         ]
 

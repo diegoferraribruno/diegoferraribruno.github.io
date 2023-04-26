@@ -168,7 +168,7 @@ function x2(w = document.getElementById("largura").value, h = document.getElemen
     if (resultado === true) {
         //dobra o tamanho do canva
         zoomIndex = 0;
-        modeTo("zoom");
+        modeTo("zoomx");
         canvasDiv.style.width = w + "px"; //add 30px for scroll
         canvasDiv.style.height = h + "px"; //add 30px for scroll
         canvas.width = w;
@@ -215,10 +215,10 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
     }
     if (W < screen.width || H < screen.height) {
         zoomIndex = 0;
-        modeTo("zoom");
+        modeTo("zoomx");
     } else {
         zoomIndex = 6;
-        modeTo("zoom");
+        modeTo("zoomx");
     }
     document.getElementById("largura").value = W
     document.getElementById("altura").value = H
