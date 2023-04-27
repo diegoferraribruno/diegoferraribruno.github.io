@@ -6,13 +6,13 @@ function stopMotion() {
     stop_motion = !stop_motion
     document.getElementById("video").classList.toggle("destination-over")
     if (stop_motion == false) {
-        document.getElementById("stopMotion").innerHTML = "📷"
+        document.getElementById("stopMotion").innerHTML = ' <span class="bot">📷<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">🎥</span></span>'
 
         canvas.style.opacity = 1
-        Alert("Modo foto 📷.");
+        Alert("Modo foto única 📷.");
     } else {
-        Alert("Modo sequencia de quadros 🎞️.");
-        document.getElementById("stopMotion").innerHTML = "🎞️"
+        Alert("Modo sequencia de quadros 🎥 🎞️.");
+        document.getElementById("stopMotion").innerHTML = ' <span class="bot">🎥<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span></span>'
         canvas.style.opacity = 0.3
     }
 }
@@ -51,7 +51,7 @@ function camera() {
 
             canvas.style.opacity = 0.3
         } else {
-            botao2.innerHTML = "📷"
+            botao2.innerHTML = ' <span class="bot">📷<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">🎥</span></span>'
             Alert("Modo foto 📷.");
             videoC.style.opacity = 1
             canvas.style.opacity = 1
@@ -129,7 +129,7 @@ function camera() {
     }
 }
 function recMotion() {
-    let vezes = document.getElementById("times").value * fps
+    let vezes = document.getElementById("times").value
     for (i = 0; i < vezes; i++) {
         setTimeout(() => {
             let W = canvasV.width;
@@ -146,12 +146,12 @@ function recMotion() {
 
                     desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
                     setTimeout(() => {
-                        save_frame(blob)
+                        // save_frame(blob)
                         new_frame()
                     }, 10)
                 }
             }
-        }, 1000 / fps * i)
+        }, 800 * i)
     }
 }
 async function tirafoto() {

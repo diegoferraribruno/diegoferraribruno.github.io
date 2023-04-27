@@ -455,7 +455,7 @@ window.onload = function () {
     setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 1000)
     setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 2000)
     setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 3000)
-    setTimeout(() => limpaCabeca(), 400)
+    setTimeout(() => limpaCabeca(), 5000)
     setTimeout(() => { document.getElementById("carregando").style.display = "none"; gamestate = "play"; }, 4000)
     setTimeout(() => { keys.ArrowUp = true; setTimeout(() => keys.ArrowUp = false, 1500) }, 3980)
 

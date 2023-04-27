@@ -124,13 +124,14 @@ body {
 
 .submenu {
     position: absolute;
-    display: flex;
-    width: 340px;
+    display: block;
+    width: 330px;
     min-height: 60px;
     padding: 6px;
     z-index: 3;
     visibility: hidden;
-    max-height: 490px;
+    max-height: 320px;
+    overflow-y: scroll;
 
 }
 
@@ -334,7 +335,7 @@ input[type="range"] {
 
 .ferramentas {
     height: 50px;
-    width: 332px;
+    width: 320px;
     margin: auto;
     margin-top: -2px;
     margin-bottom: -2px;
@@ -372,6 +373,7 @@ input[type="range"] {
 .light {
     background-color: #eeeeeedd;
     color: #000000;
+    animation: animatelight 0.3s;
 }
 
 @keyframes animatelight {
@@ -389,7 +391,7 @@ input[type="range"] {
 .dark {
     background-color: #222222dd;
     color: #eeeeee;
-    animation: animatenight 1s;
+    animation: animatenight 0.3s;
 }
 
 
@@ -520,21 +522,9 @@ input[type="range"] {
     float: right;
     position: fixed;
     right: 2px;
-    bottom: 0px;
-    animation: animateright 0.4s
+    bottom: 7px;
 }
 
-@keyframes animateright {
-    from {
-        right: -300px;
-        opacity: 0
-    }
-
-    to {
-        right: 0;
-        opacity: 1
-    }
-}
 
 #contador {
     text-shadow: -2px 0 rgb(199, 199, 199), 0 2px #d2d2d2, 2px 0 #e2e2e2, 0 -2px #a9a9a9;
@@ -551,9 +541,9 @@ input[type="range"] {
     display: block;
     float: right;
     position: fixed;
-    right: -240px;
-
+    right: -274px;
 }
+
 
 .favbrush {
     height: 46px;

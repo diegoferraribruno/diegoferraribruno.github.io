@@ -76,7 +76,7 @@ body {
 
 .bot {
     border-radius: 20px;
-    margin-left: 3px;
+    margin-left: 2px;
     margin-right: 3px;
     margin-bottom: 4px;
     height: 34px;
@@ -84,7 +84,7 @@ body {
     font-size: 32px;
     display: inline-block;
     position: relative;
-    background-color: #222222cc;
+    background-color: #4f45108e;
     line-height: 34px;
     vertical-align: middle;
     text-align: center;
@@ -135,7 +135,7 @@ a:visited {
 
 #cabeca {
     margin-top: 0px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     display: block;
     float: right;
     position: fixed;

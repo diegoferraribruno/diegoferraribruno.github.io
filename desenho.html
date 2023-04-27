@@ -15,7 +15,7 @@
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
             <div id="ferramentas" class="ferramentas">
-                <span id="fundo" title="Configurações" class="mais" onmousedown="mostraMenu('fundo')">🧰</span>
+                <span id="fundo" title="Configurações" class="mais" onmousedown="mostraMenu('configuracoes')">🎚️</span>
                 <span id="night" class="mais" onmousedown="night()">💡</span>
                 <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎<span id="x1"
@@ -275,16 +275,29 @@
                 <div class="botao " id="pinceis3">
                 </div>
             </div>
-            <div id="menufundo" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-
+            <div id="menuconfiguracoes" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
                 <span class="botao">
-                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">📥</span>
 
+                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">📥</span>
                     <span id="imagem" title="adicionar imagem" class="bot" onmousedown="mostraMenu('imagem')"> 📤</span>
                     <span id="recortar" class="bot" onclick="modeTo('recortar')">✂️</span>
+                    <span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')">🎞️
+                    </span>
                     <span id="FX" title="filtros" class="bot" onclick="mostraMenu('FX')">🪄 </span>
 
+                    <span id="FX" title="filtros" class="bot" onclick="mostraMenu('quadro')">🖼️ </span>
                     <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span>
+                    <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
+
+                </span>
+
+            </div>
+
+
+            <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
+
+                <span class="botao">
+                    🖼️ Configurações do quadro
                     <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                 </span>
                 <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ ✂️ Tamanho do quadro </span>
@@ -340,18 +353,19 @@
             </div>
             <div id="menuanime" class="fundobranco submenu">
                 <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">
-                    🎚 Ajustes de animação ❎</span>
-                <span class="botao">⏱️ FPS <input type="number" id="fpsnumber" min="1" max="60" step="1" value="12"
-                        onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px"> <span
-                        onmousedown="play()">▶️</span></span>
+                    🎚⏱️🎞️ Ajustes de animação ❎</span>
+                <span class="botao">⏱️ FPS Quadros por segundo <input type="number" id="fpsnumber" min="1" max="60"
+                        step="1" value="12" onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px">
+                    <span onmousedown="play()" class="bot">▶️</span></span>
                 <span class="botao" onmousedown="removeFrame()">🗑 Remover quadro atual <span
                         class="bot">➖</span></span>
                 <span class="botao" onmousedown="cloneFrame()">🧬 clonar o quadro atual</span>
-                <span class="botao"> Quadros visiveis 🧅 <input type="number" id="fpsnumber" min="0" max="5" step="1"
-                        value="5" onchange="quadrosVisiveis(this.value)" style="width: 50px; margin-left: 8px"></span>
+                <span class="botao"> 🎞️ 🧅 ⌛️ Quadros visiveis <input type="number" id="fpsnumber" min="0" max="5"
+                        step="1" value="5" onchange="quadrosVisiveis(this.value)"
+                        style="width: 50px; margin-left: 8px"></span>
 
                 <span class="botao">
-                    mudar a ordem do quadro
+                    Mudar ordem do quadro
                     <span class="bot" onmousedown="swapL()">⬅️</span>
                     🎞️
                     <span class="bot" onmousedown="swapR()">➡️</span>
@@ -402,14 +416,13 @@
                 </span>
 
                 <span id="stopMotion" title="Modo de captura" class="bot" onmousedown="stopMotion()">
-                    🎞️
+                    🎥
                 </span>
-                <span id="stopMotion" title="Gravar automaticamente" class="bot" style="font-size: medium;"
+                <span id="recMotion" title="Gravar automaticamente" class="bot" style="font-size: medium;"
                     onmousedown="recMotion()">
-                    🔴
-                </span> ⏱️<input id="times" type="number" value="2" min="0.5" step="0.5" max="3" size="2"
-                    style="width: 42px;">s <span title="Ajustes da camera" class="bot"
-                    onmousedown="mostraSubMenu('camconfig')">🎚️</span>
+                    🔴</span>
+                <span title="Ajustes da camera" class="bot" onmousedown="mostraSubMenu('camconfig')">🎚️</span>
+                🎞️<input id="times" type="number" value="12" min="1" step="1" max="24" size="2" style="width: 42px;">
 
                 <span class="close" title="fechar camera" onmousedown="modeTo('cam')">❎</span><br>
                 <select id="select" class="esconde" onchange="trocaCamera()">
@@ -424,17 +437,22 @@
             </div>
             <div id="menuFX" class="fundobranco submenu">
                 <span title="fechar efeitos" onmousedown="removeClass()" class="close">❎</span>
-                <span class="botao" onclick="FX(1)">
-
-                    <span class="bot">🌈<span style="display:inline-block; margin-left: -30px;"></span>🚫</span>
-                    Escala de cinza
-                </span>
-                <span class="botao" onclick="FX(2)">🌈 Sepia </span>
-                <span class="botao" onclick="FX(3)"> ◒ Contraste 150% </span>
-                <span class="botao" onclick="FX(4)"> ◒ Alto Contraste 300% </span>
-                <span class="botao" onclick="FX(5)"> 👓 desfoque </span>
-                <span class="botao" onclick="FX(6)"> ☯️ invertido </span>
                 <span class="botao" onclick="FX(0)">🚫 Remover Filtros</span>
+                <span class="botao" onclick="FX(1)"> ☯️ invertido </span>
+                <span class="botao"><input id="blurBar" type="range" min="0" max="10" step="0.1" onchange="FX(2)">
+                    👓 desfoque
+                </span>
+                <span class="botao" onclick="FX(3)">
+
+                    <span class="bot">🏳️‍🌈<span style="display:inline-block; margin-left: -30px;"></span>🚫</span>
+                    <input id="grayscaleBar" title="escala de cinza" type="range" min="0" max="1" step="0.1">
+                </span>
+                <span class="botao"><input id="sepiaBar" type="range" min="0" max="100" step="10" onchange="FX(4)">⌛️
+                    Sepia
+                </span>
+
+                <span class="botao"><input id="contrastBar" type="range" min="0" max="300" step="10" onchange="FX(5)"> ◒
+                    Contraste</span>
             </div>
             <div id="menusalvar" class="fundobranco submenu">
                 <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">📥 Baixar / Salvar<span

@@ -8,11 +8,13 @@ var animacao = []
 
 
 var anime_menu = {
-    "new_frame()": "➕",
-    "prev_frame()": "⏮️",
-    "play()": "▶️",
-    "next_frame()": "⏭️",
-    'mostraMenu("anime")': "🎚️",
+    "new_frame()": ["➕", "Adiciona Quadro"],
+    "prev_frame()": ["⏮️", "Quadro anterior"],
+    "play()": ["▶️", "Tocar Animação"],
+    "next_frame()": ["⏭️", "Próximo quadro"],
+    "swapL()": ["⬅️", "Mover quadro á esquerda"],
+    "swapR()": ["➡️", "Mover quadro á direita"],
+    "mostraMenu('anime')": ["⏱️", "Ajustes da Animação"]
 }
 
 
@@ -26,7 +28,8 @@ function criaAnime() {
         let item = document.createElement("div")
         item.setAttribute("onClick", key)
         item.id = key
-        item.innerText = anime_menu[key]
+        item.innerText = anime_menu[key][0]
+        item.title = anime_menu[key][1]
         item.classList.add("shadow")
         item.classList.add("bot")
         anime.appendChild(item)
@@ -147,11 +150,12 @@ let playing = 0
 var inter
 
 function play() {
+
     let len = comandos.length
     if (len > 1 && comandos[len - 1][0] != "i") {
         save_frame()
     }
-    if (animacao.length > 0) {
+    if (animacao.length > 1) {
         clearInterval(inter);
         document.getElementById("player").style.backgroundSize = "cover"
         document.getElementById("player").style.display = "block"
@@ -241,39 +245,49 @@ function changeFrame(frame) {
 }
 
 function next_frame() {
-    let len = comandos.length
-    if (len > 1 && comandos[len - 1][0] != "i") {
-        save_frame()
-        console.log("quadro salvo")
-        setTimeout(() => next_frame(), 10)
-    } else {
-        workingframe++
-        if (workingframe >= animacao.length) {
-            workingframe = 0
+    if (animacao.length > 1) {
+        let len = comandos.length
+        if (len > 1 && comandos[len - 1][0] != "i") {
+            save_frame()
+            console.log("quadro salvo")
+            setTimeout(() => next_frame(), 10)
+        } else {
+            workingframe++
+            if (workingframe >= animacao.length) {
+                workingframe = 0
+            }
+            changeFrame(workingframe)
         }
-        changeFrame(workingframe)
+    } else {
+        Alert("Por favor,<br> adicione ➕ quadros a sua animação")
+
     }
 
 }
 function prev_frame() {
+    if (animacao.length > 1) {
 
-    let len = comandos.length
-    if (len > 1 && comandos[len - 1][0] != "i") {
-        save_frame()
-        setTimeout(() => {
+        let len = comandos.length
+        if (len > 1 && comandos[len - 1][0] != "i") {
+            save_frame()
+            setTimeout(() => {
+                workingframe--
+                changeFrame(workingframe)
+
+            }, 30)
+        } else {
+
             workingframe--
+            if (workingframe < 0) {
+                workingframe = animacao.length - 1
+                if (workingframe < 0) { workingframe = 0 }
+            }
             changeFrame(workingframe)
-
-        }, 30)
-    } else {
-
-        workingframe--
-        if (workingframe < 0) {
-            workingframe = animacao.length - 1
-            if (workingframe < 0) { workingframe = 0 }
+            document.getElementById("contador").innerHTML = workingframe
         }
-        changeFrame(workingframe)
-        document.getElementById("contador").innerHTML = workingframe
+    } else {
+        Alert("Por favor,<br> adicione ➕ quadros a sua animação")
+
     }
 }
 
