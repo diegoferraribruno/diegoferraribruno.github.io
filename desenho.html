@@ -54,7 +54,7 @@
 
             <div id="canvas_window" style="background-color: hsla(0, 100%, 100%, 0.4)">
                 <span id="cursor"
-                    style="display:none; left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
+                    style=" left: 677px; top: 342px; width: 35px; height: 35px; margin-top: -17.5px; margin-left: -17.5px; border-color: rgba(247, 161, 165, 0.15);"
                     class="naotoque cursorIndex" onselectstart="return false;" ondragstart="return false;"></span>
                 <div id="canvas_div2">
 
@@ -281,7 +281,9 @@
                     <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">📥</span>
                     <span id="imagem" title="adicionar imagem" class="bot" onmousedown="mostraMenu('imagem')"> 📤</span>
                     <span id="recortar" class="bot" onclick="modeTo('recortar')">✂️</span>
-                    <span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot">🎞️<span style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
+                    <span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span
+                            class="bot">🎞️<span
+                                style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
                     </span>
                     <span id="FX" title="filtros" class="bot" onclick="mostraMenu('FX')">🪄 </span>
 
@@ -310,10 +312,10 @@
                 <span class="botao">
                     Transparencia do quadro <input type="range" id="canvasOpacity" name="transparencia" min="0.01"
                         max="1" oninput="canvasOpacity(this.value)" step="0.01" value="1"></span>
-               <span class="botao"> 🎞️ 🧅 ⌛️ Quadros visiveis <input type="number" id="camadasnumber" min="0" max="5"
-                            step="1" value="5" onchange="quadrosVisiveis(this.value)"
-                            style="width: 50px; margin-left: 8px"></span>
-    
+                <span class="botao"> 🎞️ 🧅 ⌛️ Quadros visiveis <input type="number" id="camadasnumber" min="0" max="5"
+                        step="1" value="5" onchange="quadrosVisiveis(this.value)"
+                        style="width: 50px; margin-left: 8px"></span>
+
                 <span id=" fundo falso" class="botao"> Adicionar Fundo falso:<br>
                     <span onmousedown="Fundo2('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">&nbsp;
@@ -356,17 +358,19 @@
                 </span>
             </div>
             <div id="menuanime" class="fundobranco submenu">
-                
+
                 <span class="botao"><span class="close" title="fechar menu enviar imagem" onmousedown="removeClass()">
-                    ❎</span>
-                    ⏱️ Velocidade da Animação🎞️ <br><small>FPS / Quadros Por Segundo</small><br> <input type="number" id="fpsnumber" min="1" max="60"
-                        step="1" value="8" onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px">
-                     <span onmousedown="changeFPSup()" class="bot">⬆️</span> <span onmousedown="changeFPSdown()" class="bot"> ⬇️</span>
-                     <span onmousedown="play()" class="bot">▶️</span> </span>
-                <span class="botao" onmousedown="removeFrame()">🗑  🖼️ Remover quadro atual <span
+                        ❎</span>
+                    ⏱️ Velocidade da Animação🎞️ <br><small>FPS / Quadros Por Segundo</small><br> <input type="number"
+                        id="fpsnumber" min="1" max="60" step="1" value="8" onchange="changeFPS(this.value)"
+                        style="width: 50px; margin-left: 8px">
+                    <span onmousedown="changeFPSup()" class="bot">⬆️</span> <span onmousedown="changeFPSdown()"
+                        class="bot"> ⬇️</span>
+                    <span onmousedown="play()" class="bot">▶️</span> </span>
+                <span class="botao" onmousedown="removeFrame()">🗑 🖼️ Remover quadro atual <span
                         class="bot">➖</span></span>
                 <span class="botao" onmousedown="cloneFrame()"> 🖼️ + 🖼️ clonar o quadro atual</span>
-                
+
                 <span class="botao">
                     Mudar ordem do quadro
                     <span class="bot" onmousedown="swapL()">⬅️</span>

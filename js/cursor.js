@@ -14,16 +14,17 @@ function mostra() {
 
     document.body.style.cursor = "pointer";
     cursor.style.visibility = "hidden";
-    if (mode != "recortar" && mode != "camera" && mode != "cores") {
-
-        setTimeout(() => { restoreCanvas() }, 20)
-    }
+    canvasBack.classList.add("esconde")
+    /*  if (mode != "recortar" && mode != "camera" && mode != "cores") {
+  
+          setTimeout(() => { restoreCanvas() }, 20)
+      }*/
 }
 function desmostra() {
-    if (mode != "recortar" && mode != "camera") {
-
-        setTimeout(() => restoreCanvas(), 200)
-    }
+    /*  if (mode != "recortar" && mode != "camera") {
+  
+          setTimeout(() => restoreCanvas(), 200)
+      }*/
 }
 function cursorColor() {
 
@@ -31,11 +32,11 @@ function cursorColor() {
         case "apagar":
             break;
         case "pintar":
+            cursor.innerHTML = ""
             if (context.globalCompositeOperation == "destination-out") {
-
+                cursor.innerHTML = "🧽";
                 setTimeout(() => { cursor.style.backgroundImage = "none"; }, 65)
             }
-            cursor.innerHTML = "";
             cursor.style.borderColor = strokeColor;
             break;
         case "zoomx":
