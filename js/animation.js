@@ -111,17 +111,17 @@ function criaBackPlayer() {
         player.style.position = "absolute"
         player.style.marginTop = - canvas.height - 4 + "px"
         // player.style.border = "2px solid green"
-        if (i<6){
+        if (i < 6) {
             player.classList.add("filter")
             player.classList.add("filterlight")
             player.classList.add("fundo2")
             player.style.zIndex = -1 * i - 1
             player.style.opacity = 0.4
-        }  else{
-           player.style.zIndex = 330
-           player.classList.add("cursor")
+        } else {
+            player.style.zIndex = 330
+            player.classList.add("cursor")
         }
-            document.getElementById("canvas_div").appendChild(player)
+        document.getElementById("canvas_div").appendChild(player)
     }
 
 }
@@ -240,7 +240,7 @@ function changeFrame(frame) {
             context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
             changeGCO(oldGCO)
             comandos.push(comando)
-            updateCanvasBack()
+            //updateCanvasBack()
             //desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
         }
         scrollFilme()
@@ -304,13 +304,13 @@ function changeFPS(valor) {
 }
 function changeFPSup() {
     fps++
-   document.getElementById("fpsnumber").value = fps
-   stop()
-   play()
+    document.getElementById("fpsnumber").value = fps
+    stop()
+    play()
 }
 function changeFPSdown() {
     fps--
-   document.getElementById("fpsnumber").value = fps
+    document.getElementById("fpsnumber").value = fps
     stop()
     play()
 }
