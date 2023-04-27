@@ -171,7 +171,7 @@ async function tirafoto() {
 
                 desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
                 setTimeout(() => {
-                    updateCanvasBack();
+                    // updateCanvasBack();
                     swapImg = canvas.toDataURL('image/png');
                     save_frame(swapImg);
                 }, 20)

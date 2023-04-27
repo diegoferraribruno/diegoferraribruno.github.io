@@ -4,10 +4,17 @@ let keyCtrl = false
 var shiftHeld = false;
 
 var canvasBack = document.createElement("canvas")
+canvasBack.id = "canvasBack"
 canvasBack.width = canvas.width
 canvasBack.height = canvas.height
-canvasBack.ctx = canvasBack.getContext('2d',[{ willReadFrequently: false }])
+canvasBack.ctx = canvasBack.getContext('2d', [{ willReadFrequently: false }])
 canvasBack.ctx.drawImage(canvas, 0, 0)
+canvasBack.style.position = "absolute"
+canvasBack.style.marginTop = "0px"
+canvasBack.style.marginLeft = -canvas.width + "px"
+canvasBack.classList.add("cursor")
+canvasBack.ctx.imageSmoothingEnabled = false
+document.getElementById("canvas_div").appendChild(canvasBack)
 let cursorShow = true
 
 
@@ -128,7 +135,7 @@ function handleStart(evt) {
 
     }
     if (mode == "picker") {
-       // restoreCanvas()
+        // restoreCanvas()
         isPicking = true
     }
 
@@ -215,25 +222,25 @@ function handleMove(evt) {
                 //restoreCanvas()
                 canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvasBack.ctx.drawImage(newBrushes[brushName][0], x-(strokeWidth/2), y-(strokeWidth/2), stroke, stroke);
+                canvasBack.ctx.drawImage(newBrushes[brushName][0], x - (strokeWidth / 2), y - (strokeWidth / 2), stroke, stroke);
 
-                cursinho.src = canvasBack.toDataURL("image/png");
-                document.getElementById("bplayer6").style.backgroundImage = "url('"+cursinho.src+"')"
-                document.getElementById("bplayer6").style.zIndex = 330
+                /*                cursinho.src = canvasBack.toDataURL("image/png");
+                                document.getElementById("bplayer6").style.backgroundImage = "url('"+cursinho.src+"')"
+                                document.getElementById("bplayer6").style.zIndex = 330*/
 
-                
-              /*  drawBrush(
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-                    strokeColor,
-                    strokeWidth,
-                    brushName)*/
+
+                /*  drawBrush(
+                      context.globalCompositeOperation,
+                      x,
+                      y,
+                      origin.x,
+                      origin.y,
+                      strokeColor,
+                      strokeWidth,
+                      brushName)*/
 
             } else {
-               // restoreCanvas()
+                // restoreCanvas()
             }
         }
 

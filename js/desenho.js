@@ -291,7 +291,7 @@ function exec(coma = 0) {
                 break;
         }
     } else {
-        updateCanvasBack()
+        // updateCanvasBack()
         executing = false
     }
 
@@ -618,27 +618,27 @@ function desenha(
         undoLevel = 0
         console.log("daqui pra frente..")
     }
-    updateCanvasBack()
+    //updateCanvasBack()
 }
 
 function changeGCO(GCO = globalComposite) {
     context.globalCompositeOperation = GCO
 }
-function updateCanvasBack() {
+/*function updateCanvasBack() {
     if (mode != "recortar") {
 
         canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
         canvasBack.ctx.drawImage(canvas, 0, 0)
     }
-}
+}*/
 function restoreCanvas() {
-  /*  let oldGCO = context.globalCompositeOperation
-    context.setTransform(1, 0, 0, 1, 0, 0);
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.globalCompositeOperation = changeGCO("destination-over")
-    context.drawImage(canvasBack, 0, 0)
-    changeGCO(oldGCO)*/
+    /*  let oldGCO = context.globalCompositeOperation
+      context.setTransform(1, 0, 0, 1, 0, 0);
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      context.globalCompositeOperation = changeGCO("destination-over")
+      context.drawImage(canvasBack, 0, 0)
+      changeGCO(oldGCO)*/
 }
 
 function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {

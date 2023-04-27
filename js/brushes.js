@@ -317,14 +317,14 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
         newNewBrush.src = brushCanva.toDataURL("image/png");
         newBrush.src = newNewBrush.src
 
-        if (context.globalCompositeOperation == "destination-out") {
-            setTimeout(() => cursor.style.backgroundImage = 'none', 800)
-            cursor.style.opacity = 0.1
-        } else {
-            cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
-            cursor.style.opacity = 0.8
-
-        }
+        /* if (context.globalCompositeOperation == "destination-out") {
+             setTimeout(() => cursor.style.backgroundImage = 'none', 800)
+             cursor.style.opacity = 0.1
+         } else {
+             cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
+             cursor.style.opacity = 0.8
+ 
+         }*/
         if (changedBrush == false) {
 
 
@@ -387,7 +387,7 @@ function clearBrushes() {
     })
 }
 
-function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin, cont=context) {
+function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin, cont = context) {
     let start
     let end
     if (pixelGood) {
