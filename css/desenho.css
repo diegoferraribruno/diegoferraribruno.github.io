@@ -125,7 +125,7 @@ body {
 .submenu {
     position: absolute;
     display: block;
-    width: 330px;
+    width: 340px;
     min-height: 60px;
     padding: 6px;
     z-index: 3;

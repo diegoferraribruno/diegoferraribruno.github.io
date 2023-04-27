@@ -3,7 +3,7 @@ anime.id = "anime"
 document.body.appendChild(anime)
 
 
-var fps = 12
+var fps = 8
 var animacao = []
 
 
@@ -156,6 +156,7 @@ function play() {
         save_frame()
     }
     if (animacao.length > 1) {
+        document.getElementById("play()").innerHTML = ' <span onmousedown="stop()" >⏹️</span>'
         clearInterval(inter);
         document.getElementById("player").style.backgroundSize = "cover"
         document.getElementById("player").style.display = "block"
@@ -182,9 +183,7 @@ function stop() {
 }
 
 function playerPlay(frame) {
-    document.getElementById("play()").innerHTML = ' <span onmousedown="stop()" >⏹️</span>'
     document.getElementById("player").style.backgroundImage = 'url("' + animacao[frame] + '")';
-
 }
 
 function changeFrame(frame) {
@@ -294,6 +293,20 @@ function prev_frame() {
 
 function changeFPS(valor) {
     fps = valor
+    stop()
+    play()
+}
+function changeFPSup() {
+    fps++
+   document.getElementById("fpsnumber").value = fps
+   stop()
+   play()
+}
+function changeFPSdown() {
+    fps--
+   document.getElementById("fpsnumber").value = fps
+    stop()
+    play()
 }
 function removeFrame() {
     animacao.splice(workingframe, 1)
