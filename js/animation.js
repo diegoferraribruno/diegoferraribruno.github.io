@@ -102,7 +102,7 @@ criaPlayer()
 
 
 function criaBackPlayer() {
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < 7; i++) {
         var player = document.createElement('div')
         player.id = "bplayer" + i
         player.style.display = "block"
@@ -111,13 +111,19 @@ function criaBackPlayer() {
         player.style.position = "absolute"
         player.style.marginTop = - canvas.height - 4 + "px"
         // player.style.border = "2px solid green"
-        player.classList.add("filter")
-        player.classList.add("filterlight")
-        player.classList.add("fundo2")
-        player.style.zIndex = -1 * i - 1
-        player.style.opacity = 0.4
-        document.getElementById("canvas_div").appendChild(player)
+        if (i<6){
+            player.classList.add("filter")
+            player.classList.add("filterlight")
+            player.classList.add("fundo2")
+            player.style.zIndex = -1 * i - 1
+            player.style.opacity = 0.4
+        }  else{
+           player.style.zIndex = 330
+           player.classList.add("cursor")
+        }
+            document.getElementById("canvas_div").appendChild(player)
     }
+
 }
 
 criaBackPlayer()

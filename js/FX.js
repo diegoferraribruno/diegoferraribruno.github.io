@@ -41,6 +41,6 @@ function FX(qual) {
         comando = ["FX", fx]
         comandos.push(comando)
     }
-    setTimeout(() => { restoreCanvas() }
+    setTimeout(() => { comandosExec() }
         , 30)
 }

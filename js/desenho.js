@@ -633,12 +633,12 @@ function updateCanvasBack() {
     }
 }
 function restoreCanvas() {
-    let oldGCO = context.globalCompositeOperation
+  /*  let oldGCO = context.globalCompositeOperation
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.globalCompositeOperation = changeGCO("destination-over")
     context.drawImage(canvasBack, 0, 0)
-    changeGCO(oldGCO)
+    changeGCO(oldGCO)*/
 }
 
 function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {

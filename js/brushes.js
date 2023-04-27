@@ -387,7 +387,7 @@ function clearBrushes() {
     })
 }
 
-function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
+function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin, cont=context) {
     let start
     let end
     if (pixelGood) {
@@ -403,7 +403,7 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     var angle = Trig.angleBetween2Points(start, end);
     var x, y;
     changeGCO(GCO);
-    context.lineWidth = stroke;
+    cont.lineWidth = stroke;
     /*var strokeImg = new Image();
     strokeImg.src = linejoin
     strokeImg.onload = function () {*/
@@ -415,7 +415,7 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
             y = redondo(y) + 1
         }
         //console.log( x, y, angle, z );
-        context.drawImage(newBrushes[linejoin][0], x, y, stroke, stroke);
+        cont.drawImage(newBrushes[linejoin][0], x, y, stroke, stroke);
     }
     //  }
 }

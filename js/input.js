@@ -6,7 +6,7 @@ var shiftHeld = false;
 var canvasBack = document.createElement("canvas")
 canvasBack.width = canvas.width
 canvasBack.height = canvas.height
-canvasBack.ctx = canvasBack.getContext('2d')
+canvasBack.ctx = canvasBack.getContext('2d',[{ willReadFrequently: false }])
 canvasBack.ctx.drawImage(canvas, 0, 0)
 let cursorShow = true
 
@@ -128,11 +128,12 @@ function handleStart(evt) {
 
     }
     if (mode == "picker") {
-        restoreCanvas()
+       // restoreCanvas()
         isPicking = true
     }
 
 }
+let cursinho = new Image
 
 
 function handleMove(evt) {
@@ -210,9 +211,18 @@ function handleMove(evt) {
         cursor.style.opacity = 0.6
         if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
 
-            if (cursorShow == true) {
-                restoreCanvas()
-                drawBrush(
+            if (cursorShow == true && !isDrawing) {
+                //restoreCanvas()
+                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvasBack.ctx.drawImage(newBrushes[brushName][0], x-(strokeWidth/2), y-(strokeWidth/2), stroke, stroke);
+
+                cursinho.src = canvasBack.toDataURL("image/png");
+                document.getElementById("bplayer6").style.backgroundImage = "url('"+cursinho.src+"')"
+                document.getElementById("bplayer6").style.zIndex = 330
+
+                
+              /*  drawBrush(
                     context.globalCompositeOperation,
                     x,
                     y,
@@ -220,10 +230,10 @@ function handleMove(evt) {
                     origin.y,
                     strokeColor,
                     strokeWidth,
-                    brushName)
+                    brushName)*/
 
             } else {
-                restoreCanvas()
+               // restoreCanvas()
             }
         }
 

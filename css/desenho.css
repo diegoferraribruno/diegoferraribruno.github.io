@@ -503,6 +503,10 @@ input[type="range"] {
 .filter {
     pointer-events: none;
 }
+.cursor{
+  
+        pointer-events: none;
+    }
 
 .filterdark {
 
