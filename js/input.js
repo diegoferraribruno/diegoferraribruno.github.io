@@ -95,6 +95,7 @@ function handleStart(evt) {
         isGrabing = true;
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
+        canvasBack.classList.add("esconde")
         isDrawing = true
         mouseOver = true;
 
@@ -220,6 +221,7 @@ function handleMove(evt) {
 
             if (cursorShow == true && !isDrawing) {
                 //restoreCanvas()
+                canvasBack.classList.remove("esconde")
                 canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 canvasBack.ctx.drawImage(newBrushes[brushName][0], x - (strokeWidth / 2), y - (strokeWidth / 2), stroke, stroke);
@@ -314,6 +316,8 @@ function handleUp(evt) {
         isGrabing = false;
 
     }
+
+
 }
 
 function handleEnd(evt) {
