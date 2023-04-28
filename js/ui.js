@@ -61,6 +61,8 @@ var checkOrientation = function () {
 
             document.getElementById("ferramentas").classList.add("horizontal");
             document.getElementById("ferramentas2").classList.add("horizontal2");
+            document.getElementById("anime").classList.add("horizontal3");
+
             document.getElementById("menus").style.top = "100px";
 
             // alert(`virou, ${screen.width} , ${screen.height}`)
@@ -68,6 +70,8 @@ var checkOrientation = function () {
         } else {
             document.getElementById("ferramentas").classList.remove("horizontal");
             document.getElementById("ferramentas2").classList.remove("horizontal2");
+            document.getElementById("anime").classList.remove("horizontal3");
+
             document.getElementById("menus").style.top = "0px";
 
         }
@@ -169,6 +173,8 @@ function resizeScreen() {
 
         document.getElementById("ferramentas").classList.add("horizontal");
         document.getElementById("ferramentas2").classList.add("horizontal2");
+        document.getElementById("anime").classList.add("horizontal3");
+
         // alert(`virou, ${screen.width} , ${screen.height}`)
         win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
         win.style.height = parseInt(window.innerHeight, 10) + "px";
@@ -176,8 +182,10 @@ function resizeScreen() {
     } else {
         document.getElementById("ferramentas").classList.remove("horizontal");
         document.getElementById("ferramentas2").classList.remove("horizontal2");
+        document.getElementById("anime").classList.remove("horizontal3");
+
         win.style.width = parseInt(window.innerWidth, 10) + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 132 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 188 + "px";
         document.getElementById("menus").style.top = "90px";
     }
     canvasDiv.style.width = canvas.width + "px";

@@ -29,6 +29,8 @@
 
 
             </div>
+            <div id="anime" class="ferramentas"></div>
+
 
             <div id="ferramentas2" class="ferramentas">
 
@@ -51,6 +53,8 @@
                 <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
 
             </div>
+            <div id="ui_filme" class="ferramentas"></div>
+
 
             <div id="canvas_window" style="background-color: hsla(0, 100%, 100%, 0.4)">
                 <span id="cursor"
@@ -278,7 +282,8 @@
                 <span class="botao">
 
                     <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">📥</span>
-                    <span id="imagem" title="adicionar imagem" class="bot" onmousedown="mostraMenu('imagem')"> 📤</span>
+                    <span id="imagem" title="adicionar imagem" class="bot" onmousedown="mostraMenu('imagem')">
+                        📤</span>
                     <span id="recortar" class="bot" onclick="modeTo('recortar')">✂️</span>
                     <span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span
                             class="bot">🎞️<span
@@ -301,7 +306,8 @@
                     🖼️ Configurações do quadro
                     <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                 </span>
-                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ ✂️ Tamanho do quadro </span>
+                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ ✂️ Tamanho do quadro
+                </span>
 
                 <!--
                 <span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span-->
@@ -483,7 +489,8 @@
                     automaticamente <span
                         style="display:inline-block; width: 12px; height: 12px; border: green dashed 2px;"></span></span>
 
-                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar para
+                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar
+                    para
                     seleção <span
                         style="display:inline-block; width: 20px; height: 12px; border: red dashed 2px;"></span></span>
 
@@ -596,7 +603,7 @@
     <script type="text/javascript" src="js/ui.js"></script>
     <script type="text/javascript" src="js/recortar.js"></script>
     <script type="text/javascript" src="js/brushes.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    <!--script type="text/javascript" src="js/index.js"></script-->
     <script type="text/javascript" src="js/versoes.js"></script>
     <script type="text/javascript" src="js/start.js"></script>
     <script type="text/javascript" src="js/animation.js"></script>

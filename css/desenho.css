@@ -169,13 +169,13 @@ body {
 
 .mais {
     border-radius: 36px;
-    display: block;
+    display: inline-block;
     position: relative;
     padding: 0px;
     width: 36px;
     height: 36px;
     font-size: 1.55em;
-    margin: 7px auto 7px auto;
+    margin: 4px auto 4px auto;
     touch-action: manipulation;
     box-shadow: 2px 2px 3px #51505477,
         -2px -2px 3px #9d9ca277;
@@ -352,7 +352,7 @@ input[type="range"] {
 
 .horizontal {
     display: block;
-    float: right;
+    position: absolute;
     right: 0px;
     top: 6px;
     width: 40px;
@@ -360,10 +360,20 @@ input[type="range"] {
 
 .horizontal2 {
     display: block;
-    float: left;
     top: 6px;
     width: 40px;
     margin-left: 0px;
+    position: absolute;
+}
+
+
+.horizontal3 {
+    display: block;
+    top: 6px;
+    width: 40px;
+    margin-right: 38px;
+
+    position: absolute;
 }
 
 #menuinfo {
@@ -522,13 +532,11 @@ input[type="range"] {
 
 .anime {
     text-align: left;
-    margin-top: 0px;
-    margin-bottom: 4px;
     display: block;
-    float: right;
-    position: fixed;
+    position: absolute;
     right: 2px;
-    bottom: 7px;
+    bottom: 46px;
+
 }
 
 
@@ -633,10 +641,10 @@ input[type="range"] {
 }
 
 .wf {
-    border-right: 2px solid rgb(146, 20, 20);
-    border-left: 2px solid rgb(146, 20, 20);
-    border-top: 3px solid rgb(146, 20, 20);
-    border-bottom: 22px solid rgb(146, 20, 20);
+    border-right: 2px solid #6c1313;
+    border-left: 2px solid #6c1313;
+    border-top: 3px solid#6c1313;
+    border-bottom: 22px solid #6c1313;
     width: 32px;
     height: 28px;
     margin-top: -4px;
@@ -660,9 +668,17 @@ input[type="range"] {
     display: inline-flex;
     overflow-x: scroll;
     column-gap: 0px;
-    padding: 0.2rem 0.2rem 0.6rem 0.3rem;
-    background: rgba(0, 0, 0, 0.2);
-    height: 72px;
+    padding: 0.1rem 0.1rem 0.6rem 0.1rem;
+    background: rgba(0, 0, 0, 0.7);
+    height: 56px;
     line-height: 22px;
     vertical-align: top;
+}
+
+#ui_filme {
+    display: block;
+    position: absolute;
+    bottom: 4px;
+    left: 0px;
+    text-align: left;
 }

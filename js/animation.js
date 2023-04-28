@@ -1,8 +1,4 @@
-var anime = document.createElement("div")
-anime.id = "anime"
-document.body.appendChild(anime)
-
-
+var anime = document.getElementById("anime")
 var fps = 8
 var animacao = []
 
@@ -20,9 +16,13 @@ var anime_menu = {
 
 function criaAnime() {
 
+    var uiFilme = document.getElementById('ui_filme')
+    let contador = document.createElement("div")
+    var ui = document.createElement('div')
+
     anime.classList.add("anime")
     //<!--🚀-->
-    anime.innerHTML = "<div id='lixo' class='bot shadow' onmousedown='lixeira()'>🗑</div>"
+    anime.innerHTML = "<div id='lixo' class='mais' onmousedown='lixeira()'>🗑</div>"
     Object.keys(anime_menu).forEach((key, index) => {
         // setTimeout(() => {
         let item = document.createElement("div")
@@ -30,29 +30,25 @@ function criaAnime() {
         item.id = key
         item.innerText = anime_menu[key][0]
         item.title = anime_menu[key][1]
-        item.classList.add("shadow")
-        item.classList.add("bot")
+        item.classList.add("mais")
         anime.appendChild(item)
         //}, 80 * index)
     })
 
-    let contador = document.createElement("div")
     contador.innerHTML = workingframe
     contador.id = "contador"
-    var ui = document.createElement('div')
     ui.classList.add("bot", "shadow")
     ui.title = 'Anime player'
     ui.setAttribute("onclick", "limpaAnime()")
     ui.innerHTML = "🎞️"
-    var uiFilme = document.createElement('div')
+    ui.appendChild(contador)
     // uiFilme.innerHTML = "<div  id='ui' class=' bot shadow ' title= onclick='limpaAnime()'> </div>"
     var filme = document.createElement('div')
     filme.id = "filme"
     filme.innerHTML = ""
-    ui.appendChild(contador)
+    //filme.style.display = "block"
     uiFilme.appendChild(ui)
     uiFilme.appendChild(filme)
-    document.getElementById("anime").appendChild(uiFilme)
 
 }
 
@@ -63,7 +59,7 @@ setTimeout(() => {
 //setTimeout(() => { limpaAnime() }, 1200)
 
 function limpaAnime() {
-    anime.classList.toggle("hideanime")
+    filme.classList.toggle("hideanime")
 }
 //limpaanime()
 function criaPlayer() {
