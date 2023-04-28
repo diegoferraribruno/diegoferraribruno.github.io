@@ -4,13 +4,13 @@ var animacao = []
 
 
 var anime_menu = {
-    "new_frame()": ["➕", "Adiciona Quadro"],
     "prev_frame()": ["⏮️", "Quadro anterior"],
     "play()": ["▶️", "Tocar Animação"],
     "next_frame()": ["⏭️", "Próximo quadro"],
     "swapL()": ["⬅️", "Mover quadro á esquerda"],
     "swapR()": ["➡️", "Mover quadro á direita"],
-    "mostraMenu('anime')": ["⏱️", "Ajustes da Animação"]
+    "mostraMenu('anime')": ["⏱️", "Ajustes da Animação"],
+    "new_frame()": ["➕", "Adiciona Quadro"]
 }
 
 
