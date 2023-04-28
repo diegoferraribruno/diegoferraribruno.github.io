@@ -692,3 +692,10 @@ input[type="range"] {
     position: relative;
     margin-left: 2px;
 }
+
+#emojipicker {
+    display: block;
+    margin-left: -12px;
+    margin-top: -10px;
+    height: 280px;
+}
