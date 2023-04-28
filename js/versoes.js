@@ -1,6 +1,7 @@
 let vers = [{
-    versao: "2.0.3",
+    versao: "2.0.4",
     notas: [
+        "camera flip somente quando camera frontal :)",
         "desenho da caixa de recorte automatico",
         "cursor e e desenho de recorte acontecem em outra camada evitando muitos problemas",
         "mudança do modo de auto captura da camera por numero de quadros",

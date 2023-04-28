@@ -42,7 +42,8 @@ function camera() {
         videoC.setAttribute("id", "videoC")
         videoC.appendChild(videoE);
         canvasDiv.appendChild(videoC)
-        setTimeout(() => win.classList.add("flip"), 900)
+
+
         fotografando = true
         if (stop_motion == true) {
             botao2.innerHTML = "🎞️"
@@ -290,13 +291,13 @@ const constraints = {
     video: {
         width: {
             min: 480,
-            ideal: 960,
+            ideal: 1920,
             max: 1920,
         },
         height: {
             min: 320,
-            ideal: 640,
-            max: 1920,
+            ideal: 1080,
+            max: 1080,
         },
     },
     advanced: [{
@@ -324,8 +325,10 @@ function stopVideoStream() {
 async function initializeCamera() {
     stopVideoStream();
     constraints.video.facingMode = useFrontCamera ? "user" : "environment";
+    if (constraints.video.facingMode == "user") { win.classList.add("flip"); } else {
+        win.classList.remove("flip");
+    }
     var capabilities = navigator.mediaDevices.getSupportedConstraints()
-
     try {
         videoStream = await navigator.mediaDevices.getUserMedia(constraints);
         video.srcObject = videoStream;
@@ -338,8 +341,8 @@ async function initializeCamera() {
             const settings = track.getSettings();
             for (const [key, value] of Object.entries(capabilities)) {
 
+
                 if (value[0] == "manual") {
-                    //console.log("criar checkbox:" + [key])
                     let constr = { "advanced": [{ [key]: "continuous" }] }
                     let checkbo = document.getElementById([key])
                     checkbo.oninput = async function () {
@@ -352,7 +355,7 @@ async function initializeCamera() {
                         console.log(valor)
                     }
                     track.applyConstraints(constr)
-                    //  console.log(`${key}: ${value}`);
+                    console.log(`${key}: ${value}`);
                 }
             }
             const comumConstraints = ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom', "exposureCompensation", "iso"]

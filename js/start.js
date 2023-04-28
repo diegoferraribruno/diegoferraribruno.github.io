@@ -90,7 +90,7 @@ function startup() {
     canvas.addEventListener("pointermove", handleMove);
     canvas.addEventListener("pointerleave", handleEnd);
     canvas.addEventListener("pointerover", desmostra);
-    limpaCabeca();
+    // limpaCabeca();
     apresenta()
 
   }, 1600);
