@@ -1,7 +1,8 @@
 let vers = [{
-    versao: "2.0.2",
+    versao: "2.0.3",
     notas: [
-        "cursor impresso numa camada acima sendo atualizada freneticamente",
+        "desenho da caixa de recorte automatico",
+        "cursor e e desenho de recorte acontecem em outra camada evitando muitos problemas",
         "mudança do modo de auto captura da camera por numero de quadros",
         "Arraste o quadro da timeline para o botao + para duplica-lo",
         "ajustes na interface",

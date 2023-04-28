@@ -62,10 +62,6 @@ function cortar(autoCortar = false) {
             let y1 = redondo(noy[1])
             let W = x0 - x1;
             let H = y0 - y1;
-            canvas.width = W
-            canvas.height = H
-            canvasDiv.style.width = W + "px"
-            canvasDiv.style.height = H + "px"
             let oldGCO = context.globalCompositeOperation;
             changeGCO("source-over");
             context.imageSmoothingEnabled = false;
@@ -81,6 +77,8 @@ function cortar(autoCortar = false) {
 }
 
 function cut() {
+    canvasBack.classList.add("aparece")
+    desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y)
 
     swapImg = canvas.toDataURL("image/png");
     blob = dataURItoBlob(swapImg);
@@ -96,40 +94,48 @@ function cortarAnima(x1, y1, x2, y2) {
     }
         , 10)
 
-    let canvass = document.createElement("canvas")
-    let contexts = canvass.getContext("2d");
-    canvass.id = "canvass"
+
 
     let frame = 0
     let len = animacao.length
 
-    for (i = 0; i < len; i++) {
-        framesToCanvas(x1, y1, x2, y2, i)
-        console.log(i);
+    for (i = 0; i <= len; i++) {
+        if (i < len) {
+
+            framesToCanvas(x1, y1, x2, y2, i)
+        } else {
+            setTimeout(() => {
+                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasBack.ctx.clearRect(0, 0, canvasBack.width, canvasBack.height);
+                setTimeout(() => { for (i = 0; i < len; i++) { changeFrame(i) } }, 200)
+
+            }, 100)
+        }
+
     }
 
     function framesToCanvas(x2, y2, x1, y1, frame = 0) {
         let imagem = new Image()
         let W = x2 - x1
         let H = y2 - y1
-        canvass.width = W
-        canvass.height = H
+        canvasBack.width = W
+        canvasBack.height = H
         imagem.width = W
         imagem.height = H
         blob = dataURItoBlob(animacao[frame]);
         imagem.src = URL.createObjectURL(blob);
         imagem.onload =
             function () {
-                contexts.setTransform(1, 0, 0, 1, 0, 0);
-                contexts.clearRect(0, 0, contexts.canvas.width, contexts.canvas.height);
-                contexts.drawImage(imagem, x1, y1, x2, y2, 0, 0, x2, y2);
+                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasBack.ctx.clearRect(0, 0, canvasBack.width, canvasBack.height);
+                canvasBack.ctx.drawImage(imagem, x1, y1, x2, y2, 0, 0, x2, y2);
                 canvasToFrame(frame)
             }
     }
 
     function canvasToFrame(frame = 0) {
 
-        swapImg = canvass.toDataURL('image/png');
+        swapImg = canvasBack.toDataURL('image/png');
         newAnima[frame] = swapImg
 
     }
@@ -195,6 +201,7 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
     canvas.height = H;
     canvasBack.width = W;
     canvasBack.height = H;
+    canvasBack.style.marginLeft = -W + "px"
     for (i = 0; i < 6; i++) {
         document.getElementById("bplayer" + i).style.width = W + "px"
         document.getElementById("bplayer" + i).style.height = H + "px"
@@ -225,69 +232,28 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
     document.getElementById("altura").value = H
 }
 
-function resizeScreen() {
-    desenhoDiv.style.width = window.innerWidth + "px";
-    desenhoDiv.style.height = window.innerHeight + "px";
-    if (screen.width > screen.height) {
 
-        document.getElementById("ferramentas").classList.add("horizontal");
-        document.getElementById("ferramentas2").classList.add("horizontal2");
-        // alert(`virou, ${screen.width} , ${screen.height}`)
-        win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) + "px";
-        document.getElementById("menus").style.top = "0px";
-    } else {
-        document.getElementById("ferramentas").classList.remove("horizontal");
-        document.getElementById("ferramentas2").classList.remove("horizontal2");
-        win.style.width = parseInt(window.innerWidth, 10) + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 132 + "px";
-        document.getElementById("menus").style.top = "90px";
-    }
-    canvasDiv.style.width = canvas.width + "px";
-    canvasDiv.style.height = canvas.height + "px";
-    if (document.getElementById("player").style.height > window.innerWidth) {
-        let escala = (window.innerWidth - 8) / canvas.width
+function desenhaRetangulo(x0 = origin.x, y0 = origin.y, x1 = cropEnd.x, y1 = cropEnd.y) {
 
-        document.getElementById("player").style.height = canvas.height * escala + "px"
-        document.getElementById("player").style.width = canvas.width * escala + "px"
-        document.getElementById("player").style.left = "4px"
-        document.getElementById("player").style.top = "4px"
-    }
-    setTimeout(() => comandosExec(), 40)
-}
+    canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvasBack.ctx.globalCompositeOperation = "source-over"
+    canvasBack.ctx.lineWidth = 0.5
+    canvasBack.ctx.strokeStyle = "#ff2200";
 
-function desenhaRetangulo() {
-
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.globalCompositeOperation = "destination-over";
-    context.drawImage(
-        tempImg,
-        0,
-        0,
-        tempImg.width,
-        tempImg.height);
-    context.globalCompositeOperation = "source-over"
-    context.lineWidth = 0.5
-    context.strokeStyle = "#ff2200";
-    context.stroke();
-    context.setLineDash([1, 1]);
-    context.beginPath();
-    context.rect(
-        origin.x,
-        origin.y,
-        (cropEnd.x - origin.x),
-        (cropEnd.y - origin.y)
+    canvasBack.ctx.stroke();
+    canvasBack.ctx.setLineDash([1, 1]);
+    canvasBack.ctx.beginPath();
+    canvasBack.ctx.rect(
+        x0,
+        y0,
+        (x1 - x0),
+        (y1 - y0)
     );
-    context.stroke();
+    canvasBack.ctx.stroke();
+
 
 }
 function limpaRetangulo() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.globalCompositeOperation = "source-over"
-    context.drawImage(
-        tempImg,
-        0,
-        0,
-        tempImg.width,
-        tempImg.height);
+    canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvasBack.ctx.globalCompositeOperation = "source-over"
 }

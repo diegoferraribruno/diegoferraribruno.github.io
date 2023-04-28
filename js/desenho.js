@@ -63,96 +63,6 @@ function dataURItoBlob(dataURI) {
     return new Blob([ia], { type: mimeString });
 }
 
-
-
-// drawing app
-
-document.addEventListener("DOMContentLoaded", startup);
-
-function startup() {
-    window.addEventListener("resize", checkOrientation, false);
-    window.addEventListener("orientationchange", checkOrientation, false);
-
-    // (optional) Android doesn't always fire orientationChange on 180 degree turns
-    setInterval(checkOrientation, 2000);
-
-    document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(detail) {
-        trocaEmoji(event.detail.unicode);
-        emojipicker();
-    });
-    Fundo("none")
-    counter = setInterval(() => undoing(), 70)
-    document.onkeydown = function (event) {
-        //on enter key
-        console.log(event.key)
-        if (event.key === "Enter" && mode == "recortar") {
-            cortar();
-        }
-    };
-    modeTo("pintar")
-    removeClass();
-
-    document.getElementById(
-        "globalComposite"
-    ).innerHTML =
-        `<span style="position:absolute; float:right; width:32px; display:block; ` +
-        `padding-top: 0px;">🔲</span> <span style="color:white;` +
-        `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
-    window.addEventListener("resize", function (event) {
-        resizeScreen();
-    });
-    resizeScreen();
-    document.getElementById("undo").addEventListener(
-        "touchstart",
-        (event) => {
-            event.preventDefault();
-            undoT();
-        },
-        false
-    );
-    document.getElementById("undo").addEventListener(
-        "touchend",
-        (event) => {
-            event.preventDefault();
-            undoTEnd();
-        },
-        false
-    );
-    document.getElementById("redo").addEventListener(
-        "touchstart",
-        (event) => {
-            event.preventDefault();
-            redoT();
-        },
-        false
-    );
-    document.getElementById("redo").addEventListener(
-        "touchend",
-        (event) => {
-            event.preventDefault();
-            redoTEnd();
-        },
-        false
-    );
-    window.addEventListener("keyup", handleKeyUp);
-    window.addEventListener("keydown", handleKeys);
-
-    document.getElementById("zoombar").value =
-        zoomScale.indexOf(zoomFactor);
-
-    desenhoDiv.addEventListener("gesturestart", prevent);
-    win.addEventListener("touchmove", prevent);
-    canvas.addEventListener("pointerdown", handleStart);
-    canvas.addEventListener("pointerup", handleUp);
-    canvas.addEventListener("pointercancel", handleCancel);
-    canvas.addEventListener("pointermove", handleMove);
-    canvas.addEventListener("pointerleave", handleEnd);
-
-    initStrokeRange()
-    setTimeout(() => resizeScreen(), 10)
-}
-
-
 function comandosExec() {
     if (executing == false) {
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -684,9 +594,7 @@ function limpar(what) {
 let oldMode = mode;
 
 async function modeTo(qual) {
-    if (mode == "recortar") {
-        comandosExec()
-    }
+
     if (mode != qual) {
         if (qual != "recortar") {
             removeClass("flip")
@@ -695,16 +603,10 @@ async function modeTo(qual) {
                 origin.y = 0
             }, 40)
         }
-        /*				if (oldMode == "rotacionar" && rotationDeg != 0){
-                    comandoR()
-                    comandosExec()
-                }*/
-
         removeClass();
         toggleSelect(qual);
         if (qual != "apagar") {
             mode = qual
-            //  oldMode = mode;
             mostraMenu(qual);
 
         } else {
@@ -728,12 +630,14 @@ async function modeTo(qual) {
             // mode = qual;
             break;
         case "recortar":
+            de
             /*  let len = comandos.length
               if (len > 1 && comandos[len - 1][0] != "i") {
                   new_frame()
                   console.log("quadro salvo")
               }*/
             cut()
+
             mode = qual;
             //removeClass();
             break;

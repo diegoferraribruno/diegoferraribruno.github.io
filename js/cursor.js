@@ -14,11 +14,9 @@ function mostra() {
 
     document.body.style.cursor = "pointer";
     cursor.style.visibility = "hidden";
-    canvasBack.classList.add("esconde")
-    /*  if (mode != "recortar" && mode != "camera" && mode != "cores") {
-  
-          setTimeout(() => { restoreCanvas() }, 20)
-      }*/
+    if (mode != "recortar") {
+        canvasBack.classList.add("esconde")
+    }
 }
 function desmostra() {
     /*  if (mode != "recortar" && mode != "camera") {
@@ -34,14 +32,19 @@ function cursorColor() {
         case "pintar":
             cursor.innerHTML = ""
             if (context.globalCompositeOperation == "destination-out") {
-                cursor.innerHTML = "🧽";
-                setTimeout(() => { cursor.style.backgroundImage = "none"; }, 65)
+                setTimeout(() => {
+                    cursor.innerHTML = "🧽";
+                    cursor.style.width = "1px"
+                    cursor.style.height = "1px"
+                }, 65)
             }
             cursor.style.borderColor = strokeColor;
             break;
         case "zoomx":
-            cursor.innerHTML = "🖐";
-            setTimeout(() => { cursor.style.backgroundImage = "none"; }, 20)
+            setTimeout(() => {
+                cursor.innerHTML = "🖐"; cursor.style.width = "1px"
+                cursor.style.height = "1px"
+            }, 20)
             break;
         case "picker":
 
@@ -54,16 +57,10 @@ function cursorColor() {
             cursor.style.opacity = 0.7
             cursor.style.textAlign = "center"
             cursor.style.padding = "auto"
-            cursor.style.backgroundImage = "none"
             break;
         case "recortar":
-
-            cursor.innerHTML = '<div style="width:32px; margin-top:0px; margin-left:-12px;">✂️</div>'
-            cursor.style.width = 2 + "px";
-            cursor.style.height = 1 + "px";
-            cursor.style.margingLeft = 24 + "px";
-            cursor.style.margingTop = 52 + "px";
-            cursor.style.opacity = 1
+            cursor.innerHTML = "";
+            cursor.style.borderColor = "none";
             break;
         case "cam":
             cursor.innerHTML = "📷";

@@ -248,11 +248,12 @@ function setStrokeSize(value = strokeWidth) {
                 (value / 2) * zoomFactor * -1 + "px";
             tamanho.style.marginLeft =
                 (value * zoomFactor * -1) / 2 + "px";
+            tamanho.style.paddingRight =
+                (value * zoomFactor * -1) / 2 + "px";
             if (i == 0) {
                 //tamanho.style.backgroundColor = strokeColor;
             }
 
-            tamanho.style.backgroundImage = "none"
         }
         stroke = strokeWidth;
         document.getElementById("tpx").value = value;
@@ -275,11 +276,11 @@ function setStrokeSize(value = strokeWidth) {
         document.getElementById("tpx2").value = value;
     }*/
 
+    changeBrush()
     if (mode == "picker" || mode == "recortar") {
         cursor.style.width = 1 + "px";
         cursor.style.height = 1 + "px";
     }
-    changeBrush()
 }
 
 function createColorBrush() {

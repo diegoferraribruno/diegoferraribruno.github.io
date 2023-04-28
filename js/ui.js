@@ -160,3 +160,35 @@ function pixel() {
 
 }
 pixel()
+
+
+function resizeScreen() {
+    desenhoDiv.style.width = window.innerWidth + "px";
+    desenhoDiv.style.height = window.innerHeight + "px";
+    if (screen.width > screen.height) {
+
+        document.getElementById("ferramentas").classList.add("horizontal");
+        document.getElementById("ferramentas2").classList.add("horizontal2");
+        // alert(`virou, ${screen.width} , ${screen.height}`)
+        win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) + "px";
+        document.getElementById("menus").style.top = "0px";
+    } else {
+        document.getElementById("ferramentas").classList.remove("horizontal");
+        document.getElementById("ferramentas2").classList.remove("horizontal2");
+        win.style.width = parseInt(window.innerWidth, 10) + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 132 + "px";
+        document.getElementById("menus").style.top = "90px";
+    }
+    canvasDiv.style.width = canvas.width + "px";
+    canvasDiv.style.height = canvas.height + "px";
+    if (document.getElementById("player").style.height > window.innerWidth) {
+        let escala = (window.innerWidth - 8) / canvas.width
+
+        document.getElementById("player").style.height = canvas.height * escala + "px"
+        document.getElementById("player").style.width = canvas.width * escala + "px"
+        document.getElementById("player").style.left = "4px"
+        document.getElementById("player").style.top = "4px"
+    }
+    setTimeout(() => comandosExec(), 40)
+}

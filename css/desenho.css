@@ -245,6 +245,7 @@ body {
         -1px -1px 1px #9d9ca288;
     vertical-align: middle;
     background-size: cover;
+    text-align: center;
 }
 
 #salvaCor {
@@ -503,10 +504,11 @@ input[type="range"] {
 .filter {
     pointer-events: none;
 }
-.cursor{
-  
-        pointer-events: none;
-    }
+
+.cursor {
+
+    pointer-events: none;
+}
 
 .filterdark {
 

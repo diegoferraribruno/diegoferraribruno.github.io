@@ -5,6 +5,10 @@ var shiftHeld = false;
 
 var canvasBack = document.createElement("canvas")
 canvasBack.id = "canvasBack"
+/*canvasBack.clear = function () {
+    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasBack.ctx.clearRect(0, 0, canvasBack.ctx.width, canvasBack.ctx.height);
+}*/
 canvasBack.width = canvas.width
 canvasBack.height = canvas.height
 canvasBack.ctx = canvasBack.getContext('2d', [{ willReadFrequently: false }])
@@ -81,10 +85,11 @@ function handleStart(evt) {
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     if (mode === "recortar") {
-        swapImg = canvas.toDataURL("image/png");
-        blob = dataURItoBlob(swapImg);
-        tempImg = document.createElement("img");
-        tempImg.src = URL.createObjectURL(blob);
+        canvasBack.classList.remove("esconde")
+        /*  swapImg = canvas.toDataURL("image/png");
+          blob = dataURItoBlob(swapImg);
+          tempImg = document.createElement("img");
+          tempImg.src = URL.createObjectURL(blob);*/
         isSelecting = true;
     }
     if (mode == "emoji") {
@@ -145,6 +150,7 @@ let cursinho = new Image
 
 
 function handleMove(evt) {
+    cursorMove(evt)
     evt.preventDefault();
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
@@ -157,8 +163,21 @@ function handleMove(evt) {
     if (isSelecting === true) {
         cropEnd.x = x
         cropEnd.y = y
-        context.strokeStyle = "#ffccccdd";
         desenhaRetangulo();
+        canvasBack.ctx.fillText("✂️", x, y)
+
+    } else if (mode == "recortar") {
+        canvasBack.classList.remove("esconde")
+        canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (cropEnd.x == 0) {
+
+            desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y)
+        } else {
+
+            desenhaRetangulo();
+        }
+        canvasBack.ctx.fillText("✂️", x, y)
     }
     if (isDrawing === true && isPicking == false) {
         mouseOver = true;
@@ -269,6 +288,9 @@ function handleUp(evt) {
         cropEnd.y = 0
         limpaRetangulo()
     }
+    if (mode == "recortar") {
+        desenhaRetangulo();
+    }
 
     if (mode === "emoji" && isEmoji) {
         let size = document.getElementById("emosize").value
@@ -321,7 +343,11 @@ function handleUp(evt) {
 }
 
 function handleEnd(evt) {
+    if (mode == recortar) {
+        desenhaRetangulo()
+    }
     mouseOver = false;
+    mostra()
     setTimeout(() => {
         if (mouseOver == false) {
             isDrawing = false;
