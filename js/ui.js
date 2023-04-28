@@ -176,7 +176,7 @@ function resizeScreen() {
         document.getElementById("anime").classList.add("horizontal3");
 
         // alert(`virou, ${screen.width} , ${screen.height}`)
-        win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
+        win.style.width = parseInt(window.innerWidth, 10) - 160 + "px";
         win.style.height = parseInt(window.innerHeight, 10) + "px";
         document.getElementById("menus").style.top = "0px";
     } else {
