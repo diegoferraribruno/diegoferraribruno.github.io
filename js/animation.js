@@ -22,7 +22,7 @@ function criaAnime() {
 
     anime.classList.add("anime")
     //<!--🚀-->
-    anime.innerHTML = "<div id='lixo' class='mais' onmousedown='lixeira()'>🗑</div>"
+    anime.innerHTML = ""
     Object.keys(anime_menu).forEach((key, index) => {
         // setTimeout(() => {
         let item = document.createElement("div")
@@ -30,7 +30,7 @@ function criaAnime() {
         item.id = key
         item.innerText = anime_menu[key][0]
         item.title = anime_menu[key][1]
-        item.classList.add("mais")
+        item.classList.add("shadow", "bot")
         anime.appendChild(item)
         //}, 80 * index)
     })

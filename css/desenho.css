@@ -91,7 +91,7 @@ body {
     width: 320px;
     height: 30px;
     display: flex;
-    padding: 8px;
+    padding: 6px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 4px;
@@ -101,9 +101,8 @@ body {
 #paleta3 {
     position: relative;
     width: 320px;
-    height: 34px;
+    height: 32px;
     display: flex;
-    top: 4px;
     margin-bottom: 4px;
 }
 
@@ -116,7 +115,7 @@ body {
 #menu {
     font-kerning: 2em;
     width: 200px;
-    height: 170px;
+    height: 166px;
     display: inline-block;
     text-align: center;
     line-height: 1.9em;
@@ -676,9 +675,11 @@ input[type="range"] {
 }
 
 #ui_filme {
+    max-width: 100%;
+    min-width: 36px;
     display: block;
     position: absolute;
-    bottom: 4px;
+    bottom: -2px;
     left: 0px;
     text-align: left;
 }
