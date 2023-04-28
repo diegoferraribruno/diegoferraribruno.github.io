@@ -684,3 +684,11 @@ input[type="range"] {
     text-align: left;
     z-index: 100;
 }
+
+#custombrush {
+    line-height: 36px;
+    vertical-align: middle;
+    top: -8px;
+    position: relative;
+    margin-left: 2px;
+}

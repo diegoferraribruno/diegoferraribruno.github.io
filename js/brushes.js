@@ -44,7 +44,7 @@ function createBasicBrushes() {
     customBrush.id = "custombrush"
     //customBrush.classList.add("bot")
     customBrush.setAttribute("onmousedown", 'mostraSubMenu("custombrush")')
-    customBrush.innerHTML = "<span class='bot' style='display:inline-block; margin-top:-10px; font-size:18px; width:30px; height:30px;'>➕</div>"
+    customBrush.innerHTML = '<span class="shadow" style="display:inline-block; margin-top:-20px; font-size:18px; width:30px; height:30px;">🖌️<span style="display:inline-block;position:relative; margin-left: -30px; top:-5px">➕</span></span>'
     document.getElementById("pinceis").appendChild(customBrush)
 }
 createBasicBrushes()
