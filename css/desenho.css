@@ -682,4 +682,5 @@ input[type="range"] {
     bottom: -2px;
     left: 0px;
     text-align: left;
+    z-index: 100;
 }
