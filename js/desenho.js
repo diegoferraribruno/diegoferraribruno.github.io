@@ -630,7 +630,6 @@ async function modeTo(qual) {
             // mode = qual;
             break;
         case "recortar":
-            de
             /*  let len = comandos.length
               if (len > 1 && comandos[len - 1][0] != "i") {
                   new_frame()

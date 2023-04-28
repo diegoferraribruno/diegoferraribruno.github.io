@@ -141,7 +141,7 @@ function handleStart(evt) {
 
     }
     if (mode == "picker") {
-        // restoreCanvas()
+        canvasBack.classList.add("esconde")
         isPicking = true
     }
 
@@ -172,7 +172,7 @@ function handleMove(evt) {
         canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (cropEnd.x == 0) {
 
-            desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y)
+            desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22ff00")
         } else {
 
             desenhaRetangulo();
@@ -279,14 +279,10 @@ function handleUp(evt) {
         x = redondo(x)
         y = redondo(y)
     }
-    if (isSelecting === true && over === true) {
+    if (isSelecting === true) {
         cropEnd.x = x
         cropEnd.y = y
         desenhaRetangulo();
-    } else if (isSelecting === true && over === false) {
-        cropEnd.x = 0
-        cropEnd.y = 0
-        limpaRetangulo()
     }
     if (mode == "recortar") {
         desenhaRetangulo();

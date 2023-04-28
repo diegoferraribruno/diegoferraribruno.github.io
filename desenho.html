@@ -476,16 +476,16 @@
 
 
             <div id="menurecortar" class="fundobranco submenu">
-                <span class="botao" onmousedown="comandosExec(), removeClass()">✂️ Cancela <span
-                        class="close">❎</span></span>
-
-                <span class="botao">Recomendavel salvar antes <span id="salvar" title="salvar imagem" class="bot"
-                        onclick="mostraMenu('salvar')">📥</span></span>
+                <span class="botao">✂️<span class="close" onmousedown="removeClass()">❎</span>salvar antes ?
+                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">📥</span></span>
                 <span id="autorecortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)">✂️
                     Recortar
-                    automaticamente</span>
+                    automaticamente <span
+                        style="display:inline-block; width: 12px; height: 12px; border: green dashed 2px;"></span></span>
+
                 <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar para
-                    seleção</span>
+                    seleção <span
+                        style="display:inline-block; width: 20px; height: 12px; border: red dashed 2px;"></span></span>
 
             </div>
             <div id="menulixeira" class="fundobranco submenu">

@@ -77,8 +77,14 @@ function cortar(autoCortar = false) {
 }
 
 function cut() {
-    canvasBack.classList.add("aparece")
-    desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y)
+    var cropEnd = { x: 0, y: 0 };
+    setTimeout(() => {
+        canvasBack.classList.remove("esconde")
+        if (cropEnd.x == 0) {
+
+            desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22b000")
+        }
+    }, 30)
 
     swapImg = canvas.toDataURL("image/png");
     blob = dataURItoBlob(swapImg);
@@ -147,7 +153,8 @@ function cortarAnima(x1, y1, x2, y2) {
         }
         setTimeout(function () {
             setTimeout(() => { adicionaQuadro() }, 30)
-
+            autoCropMax = { x: 0, y: 0 }
+            autoCropMin = { x: canvas.width, y: canvas.height };
         }, 10)
 
     }, 100 * len)
@@ -233,12 +240,12 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
 }
 
 
-function desenhaRetangulo(x0 = origin.x, y0 = origin.y, x1 = cropEnd.x, y1 = cropEnd.y) {
+function desenhaRetangulo(x0 = origin.x, y0 = origin.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff2200") {
 
     canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvasBack.ctx.globalCompositeOperation = "source-over"
     canvasBack.ctx.lineWidth = 0.5
-    canvasBack.ctx.strokeStyle = "#ff2200";
+    canvasBack.ctx.strokeStyle = cor;
 
     canvasBack.ctx.stroke();
     canvasBack.ctx.setLineDash([1, 1]);
