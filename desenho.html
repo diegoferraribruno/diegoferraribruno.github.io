@@ -20,12 +20,12 @@
                 <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎<span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
-                <span id="hand" class="mais" title="Mover a tela" onclick="toggleHand()">🖐</span>
-
                 <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
                     onmouseleave="undoTEnd()">↩️</span>
                 <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
                     onmouseleave="redoTEnd()">↪️</span>
+                <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">🛟</span>
+
                 <span id='lixo' class='mais' onmousedown='lixeira()'>🗑</span>
 
 
@@ -37,7 +37,7 @@
 
                 <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">🖌️</span>
                 <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')">🎨</span>
-
+                <span title="Pega cor" id="picker" class="bot" onmousedown="modeTo('picker')">💉</span>
                 <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
                 <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
 
@@ -49,7 +49,6 @@
                 </span>
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
 
-                <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">🛟</span>
                 <span id="imagem" title="adicionar imagem" class="mais" onmousedown="mostraMenu('imagem')">
                     <span style="display:inline-block; font-size:18px; width:30px; height:30px;">🖼️<span
                             style="display:inline-block;position:relative; margin-left: -30px; top:-7px">➕</span></span>
@@ -182,7 +181,7 @@
 
                 <span class="botao"><span title="pintar" class="bot" onmousedown="modeTo('pintar')">🖌️</span>
                     <span id="mostraCor2" title="cores" class="bot" onmousedown="modeTo('cores')">🎨</span>
-                    <span title="Pega cor" id="picker" class="bot" onmousedown="modeTo('picker')">💉</span>
+                    <span title="Pega cor" id="picker2" class="bot" onmousedown="modeTo('picker')">💉</span>
                     <span id="tilemapbot" class="bot" onclick="tilePaint()"><span title="infinity"
                             class="emoji ">♾️</span></span>
                     <span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>

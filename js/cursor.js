@@ -36,7 +36,8 @@ function cursorColor() {
             break;
         case "zoomx":
             setTimeout(() => {
-                cursor.innerHTML = "🖐"; cursor.style.width = "1px"
+                cursor.innerHTML = "";
+                cursor.style.width = "1px"
                 cursor.style.height = "1px"
             }, 20)
             break;

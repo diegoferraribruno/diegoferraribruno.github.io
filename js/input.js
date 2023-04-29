@@ -160,8 +160,8 @@ function handleMove(evt) {
         cropEnd.x = x
         cropEnd.y = y
         desenhaRetangulo();
+        canvasBack.ctx.font = 24 + 'px serif';
         canvasBack.ctx.fillText("✂️", x, y)
-
     } else if (mode == "recortar") {
         canvasBack.classList.remove("esconde")
         canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -225,7 +225,7 @@ function handleMove(evt) {
     if (isGrabing) {
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
     }
-    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX") {
+    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoom") {
         origin.x = x
         origin.y = y
 
@@ -243,6 +243,17 @@ function handleMove(evt) {
             }
         }
 
+
+    }
+    if (mode == "zoomx") {// canvasBack
+        canvasBack.classList.remove("esconde")
+        canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasBack.ctx.font = 18 + 'px serif';
+        canvasBack.ctx.textAlign = "center";
+        canvasBack.ctx.textBaseline = "middle";
+        canvasBack.ctx.globalAlpha = 0.5;
+        canvasBack.ctx.fillText("🔎", x, y)
 
     }
 }

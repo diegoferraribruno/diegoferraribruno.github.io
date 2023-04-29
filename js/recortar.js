@@ -176,9 +176,7 @@ function x2(w = document.getElementById("largura").value, h = document.getElemen
         "\t\t\t\t↔️ Deseja mudar o tamanho da tela de \n" +
         `\t\t\t\t\t\t${w}px x ${h}px\n` +
         `\t\t\t\t\t\t\tpara\n` +
-        `\t\t\t\t\t\t${w}px x ${h}px\n\n` +
-        `\t\t\t\t\t utilize a lupa 🔎 para zoom \n` +
-        `\t\t\t\t e a mão 🖐 para navegar pela tela\n\n`
+        `\t\t\t\t\t\t${w}px x ${h}px\n\n`
     );
     if (resultado === true) {
         //dobra o tamanho do canva

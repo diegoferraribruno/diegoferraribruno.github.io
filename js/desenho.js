@@ -579,7 +579,7 @@ let oldMode = mode;
 
 async function modeTo(qual) {
     canvasBack.style.backgroundColor = "transparent"
-    canvasBack.ctx.filter = "none"
+    canvasBack.filter = "none"
     if (mode != qual) {
         if (qual != "recortar") {
             removeClass("flip")
