@@ -11,9 +11,9 @@ function cursorMove(e) {
     cursor.style.visibility = "visible";
 }
 function mostra() {
+    document.body.style.cursor = "pointer";
+    cursor.style.visibility = "hidden";
     if (mode != "recortar" && mode != "FX") {
-        document.body.style.cursor = "pointer";
-        cursor.style.visibility = "hidden";
         canvasBack.classList.add("esconde")
     }
 }
