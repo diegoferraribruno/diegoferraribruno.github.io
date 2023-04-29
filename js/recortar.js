@@ -155,6 +155,8 @@ function cortarAnima(x1, y1, x2, y2) {
             setTimeout(() => { adicionaQuadro() }, 30)
             autoCropMax = { x: 0, y: 0 }
             autoCropMin = { x: canvas.width, y: canvas.height };
+            cropEnd.x = 0;
+            cropEnd.y = 0;
         }, 10)
 
     }, 100 * len)
