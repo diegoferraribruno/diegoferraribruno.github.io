@@ -5,10 +5,6 @@ var shiftHeld = false;
 
 var canvasBack = document.createElement("canvas")
 canvasBack.id = "canvasBack"
-/*canvasBack.clear = function () {
-    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasBack.ctx.clearRect(0, 0, canvasBack.ctx.width, canvasBack.ctx.height);
-}*/
 canvasBack.width = canvas.width
 canvasBack.height = canvas.height
 canvasBack.ctx = canvasBack.getContext('2d', [{ willReadFrequently: false }])
@@ -229,7 +225,7 @@ function handleMove(evt) {
     if (isGrabing) {
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
     }
-    if (!isGrabing && mode != "recortar" && !isPicking) {
+    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX") {
         origin.x = x
         origin.y = y
 
@@ -239,29 +235,11 @@ function handleMove(evt) {
         if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
 
             if (cursorShow == true && !isDrawing) {
-                //restoreCanvas()
                 canvasBack.classList.remove("esconde")
                 canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 canvasBack.ctx.drawImage(newBrushes[brushName][0], x - (strokeWidth / 2), y - (strokeWidth / 2), stroke, stroke);
 
-                /*                cursinho.src = canvasBack.toDataURL("image/png");
-                                document.getElementById("bplayer6").style.backgroundImage = "url('"+cursinho.src+"')"
-                                document.getElementById("bplayer6").style.zIndex = 330*/
-
-
-                /*  drawBrush(
-                      context.globalCompositeOperation,
-                      x,
-                      y,
-                      origin.x,
-                      origin.y,
-                      strokeColor,
-                      strokeWidth,
-                      brushName)*/
-
-            } else {
-                // restoreCanvas()
             }
         }
 

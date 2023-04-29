@@ -1,6 +1,9 @@
 let vers = [{
-    versao: "2.0.4",
+    versao: "2.0.5",
     notas: [
+        "troquei o botao do salvar por 🛟",
+        "troquei o botao de adicionar imagem por ➕ 🖼️",
+        "aplicar e remover o filtro agora funcionando",
         "camera flip somente quando camera frontal :)",
         "desenho da caixa de recorte automatico",
         "cursor e e desenho de recorte acontecem em outra camada evitando muitos problemas",

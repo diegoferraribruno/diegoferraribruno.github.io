@@ -534,22 +534,6 @@ function desenha(
 function changeGCO(GCO = globalComposite) {
     context.globalCompositeOperation = GCO
 }
-/*function updateCanvasBack() {
-    if (mode != "recortar") {
-
-        canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        canvasBack.ctx.drawImage(canvas, 0, 0)
-    }
-}*/
-function restoreCanvas() {
-    /*  let oldGCO = context.globalCompositeOperation
-      context.setTransform(1, 0, 0, 1, 0, 0);
-      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-      context.globalCompositeOperation = changeGCO("destination-over")
-      context.drawImage(canvasBack, 0, 0)
-      changeGCO(oldGCO)*/
-}
 
 function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
     changeGCO(GCO);
@@ -594,7 +578,8 @@ function limpar(what) {
 let oldMode = mode;
 
 async function modeTo(qual) {
-
+    canvasBack.style.backgroundColor = "transparent"
+    canvasBack.ctx.filter = "none"
     if (mode != qual) {
         if (qual != "recortar") {
             removeClass("flip")
@@ -626,6 +611,12 @@ async function modeTo(qual) {
         }
     }
     switch (qual) {
+        case "FX":
+
+            canvasBack.classList.remove("esconde")
+            updateCanvasBack()
+            mode = "FX";
+            break;
         case "salvar":
             // mode = qual;
             break;
@@ -727,10 +718,9 @@ function backPaint() {
         document.getElementById(
             "globalComposite"
         ).innerHTML =
-            `<span style = "position:absolute; width:30px; ` +
-            `display:block; color:white; margin-left:-4px; margin-top:-5px;">⭕</span> ` +
-            `<span style="position:relative; float:left; width:30px; display:block;  ` +
-            `color:black; left:1px; margin-top:0px;" title="Pintando por baixo">🔲</span>`;
+            `<span style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;` +
+            `padding-top: 0px;">⭕</span> <span style="color:white;` +
+            `position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left:3px; " title="Pintando por baixo">🔲</span> `;
         Alert("⚠️ Pintando por <b>baixo</b>")
 
         if (document.getElementById("video")) {
@@ -743,9 +733,9 @@ function backPaint() {
         document.getElementById(
             "globalComposite"
         ).innerHTML =
-            `<span style="position:absolute; float:right; width:32px; display:block; ` +
+            `<span style="position:relative; width:32px; display:inline-block; left:4px; ` +
             `padding-top: 0px;">🔲</span> <span style="color:white;` +
-            `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
+            `position:absolute;  display:block; width:20px; left: 3px; top:-5px;" title="Pintando por cima">⭕</span> `;
         Alert("⚠️ Pintando por <b>cima</b>")
         removeClass("destination-over")
     }

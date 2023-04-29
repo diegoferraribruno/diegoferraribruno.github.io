@@ -39,20 +39,21 @@
                 <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')">🎨</span>
 
                 <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
+                <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
 
-
-                <!--span id="apagar" title="Apagar" class="mais" onmousedown='changeGCO("destination-out")'>🧽</span-->
-
-                <span onmousedown="backPaint()" class="mais" id="globalComposite"
-                    style="width: 36px; height: 36px; padding-top: 2px; margin-right: 6px; display:flex;"><span
-                        style="position:absolute; width:30px; display:block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
+                <span onmousedown="backPaint()" class="mais" id="globalComposite"><span
+                        style="position:absolute; width:30px; display:inline-block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
                     <span
-                        style="position:relative; float:left; width:30px; display:block;  color:black; left:2px; margin-top:0px;"
+                        style="position:relative;  width:30px; display:inline-block;  color:black; left:-32px; margin-top:0px;"
                         title="Pintando por baixo">🔲</span>
                 </span>
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
-                <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
 
+                <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">🛟</span>
+                <span id="imagem" title="adicionar imagem" class="mais" onmousedown="mostraMenu('imagem')">
+                    <span style="display:inline-block; font-size:18px; width:30px; height:30px;">🖼️<span
+                            style="display:inline-block;position:relative; margin-left: -30px; top:-7px">➕</span></span>
+                </span>
             </div>
             <div id="ui_filme"></div>
 
@@ -286,15 +287,13 @@
             <div id="menuconfiguracoes" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
                 <span class="botao">
 
-                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">📥</span>
-                    <span id="imagem" title="adicionar imagem" class="bot" onmousedown="mostraMenu('imagem')">
-                        📤</span>
+
                     <span id="recortar" class="bot" onclick="modeTo('recortar')">✂️</span>
                     <span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span
                             class="bot">🎞️<span
                                 style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
                     </span>
-                    <span id="FX" title="filtros" class="bot" onclick="mostraMenu('FX')">🪄 </span>
+                    <span id="FX" title="filtros" class="bot" onclick="modeTo('FX')">🪄 </span>
 
                     <span id="FX" title="filtros" class="bot" onclick="mostraMenu('quadro')">🖼️ </span>
                     <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span>
@@ -403,15 +402,20 @@
                 <span onmousedown="scrollCanva(80,0)">➡️</span -->
             </div>
             <div id="menuimagem" class="fundobranco submenu aparece menu">
-                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()"> 📤 Carregar
+                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">
+                    <span
+                        style="display:inline-block; margin-top:-20px; font-size:22px; width:30px; height:30px;">🖼️<span
+                            style="display:inline-block;position:relative; margin-left: -30px; top:-5px">➕
+                        </span></span>
+                    Carregar
                     imagem /
                     upload
                     <span class="close">❎</span></span><br>
-                <span class="botao"> 📤 🖼️ Enviar imagem <br> Ajustar tela ao tamanho da imagem <input type="checkbox"
-                        id="ajustar" checked="true">
-                    <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
-                        title="Enviar Arquivo de imagem" /></span>
-                <span class="botao"> 📤 🎞️ Enviar uma animação<br>
+                <span class="botao"> 📂 🖼️ <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
+                        title="Enviar Arquivo de imagem" /> <br> Ajustar tela ao tamanho da imagem <input
+                        type="checkbox" id="ajustar" checked="true">
+                </span>
+                <span class="botao"> 📂 🎞️ Enviar uma animação<br>
                     Auto detectar quadros <input type="checkbox" id="autodetectar" onchange="hidecustom()"
                         checked="true">
                     <br>carregar como plano de fundo?
@@ -472,23 +476,25 @@
                     Contraste</span>
             </div>
             <div id="menusalvar" class="fundobranco submenu">
-                <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">📥 Baixar / Salvar<span
+                <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🛟 Salvar / save<span
                         class="close">❎</span></span>
-                <span class="botao">📥 🖼️ Salvar quadro atual <br>
+                <span class="botao">🛟 🖼️ Salvar quadro atual <br>
                     Título: <input id="filename" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
-                        value="desenho" onfocus="this.value=''"> <span onclick="salvaImagem()" class="bot">📥</span>
+                        value="desenho" onfocus="this.value=''"> <span onclick="salvaImagem()" class="bot">🛟</span>
                 </span>
-                <span class="botao">📥 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq">
-                    <br> Exportar Gif animado: <input type="checkbox" id="gif" checked="true">
+                <span class="botao">🛟 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq"
+                        checked="true">
+                    <br> 🖼️🎞️ Exportar Gif animado: <input type="checkbox" id="gif" checked="true">
                     <br> Unir quadro com fundo <input type="checkbox" id="unir"><br>
                     Título: <input id="filenameS" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
-                        value="anima" onfocus="this.value=''"> <span onclick="export_anim()" class="bot">📥</span>
+                        value="anima" onfocus="this.value=''"> <span onclick="export_anim()" class="bot"> 🛟 </span>
             </div>
 
 
             <div id="menurecortar" class="fundobranco submenu">
                 <span class="botao">✂️<span class="close" onmousedown="removeClass()">❎</span>salvar antes ?
-                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">📥</span></span>
+                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')"> 🛟
+                    </span></span>
                 <span id="autorecortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)">✂️
                     Recortar
                     automaticamente <span

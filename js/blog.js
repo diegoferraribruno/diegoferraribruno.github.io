@@ -63,6 +63,18 @@ var posts = [
 			"e já estou no processo de separar grupos de funções em arquivos .js separados<br><br>" +
 			"Vamo que vamo!"
 
+	},
+	{
+		id: 8,
+		titulo: "Desenho 2.0.4",
+		data: "29/04/2023 16:20",
+		conteudo: " Ta ficando bom mas algumas partes precisam realmete de uma reforma para resolver problemas como o" +
+			" desfazer que por vezes nao funciona e salvar quadros brancos quando  🔴 a gravaçao automática ta rolando.<br><br>" +
+			"No mais, gostei das mudanças dos menus e layouts e novas funções como o recorte automatico com quadro verde,<br>" +
+			'o novo icone de adicionar pincel personalizado ficou bonitinho 🖌️➕.<br><br>"' +
+			"Gostaria de refazer todo seu código para a versão 3.0 rs rs..<br>" +
+			"mas Vamo que vamo!"
+
 	}
 
 ]

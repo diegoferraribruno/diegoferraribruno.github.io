@@ -33,9 +33,9 @@ function startup() {
   document.getElementById(
     "globalComposite"
   ).innerHTML =
-    `<span style="position:absolute; float:right; width:32px; display:block; ` +
+    `<span style="position:relative; width:32px; display:inline-block; left:4px; ` +
     `padding-top: 0px;">🔲</span> <span style="color:white;` +
-    `position:relative;  display:block; float:left; width:20px; margin-top:-5px;" title="Pintando por cima">⭕</span> `;
+    `position:absolute;  display:block; width:20px; left: 3px; top:-5px;" title="Pintando por cima">⭕</span> `;
   window.addEventListener("resize", function (event) {
     resizeScreen();
   });
@@ -89,7 +89,6 @@ function startup() {
     canvas.addEventListener("pointercancel", handleCancel);
     canvas.addEventListener("pointermove", handleMove);
     canvas.addEventListener("pointerleave", handleEnd);
-    canvas.addEventListener("pointerover", desmostra);
     // limpaCabeca();
     apresenta()
 

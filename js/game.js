@@ -471,17 +471,20 @@ var checkO = function () {
 };
 var blocosX = [];
 let blocos = document.getElementsByClassName("bloco")
-
+var linha = 0
+var coluna = 0
 function alignBlocos() {
     for (i in blocos) {
+        if (i == 4 || i == 8) { linha++; coluna = 0 }
         if (blocos[i].id) {
             let sobra = 30
-            let esq = (i * 440) + sobra
-            let topo = -280
+            let esq = (coluna * 440) + sobra
+            let topo = -280 + (linha * 380)
             let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 340 }
             blocosX.push(bloco)
             blocos[i].setAttribute("style", "left:" + esq + "px; top:" + topo + "px")
         }
+        coluna++
     }
 }
 alignBlocos();
