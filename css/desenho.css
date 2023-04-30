@@ -614,12 +614,12 @@ input[type="range"] {
 
 .quadrofilme {
     display: inline-block;
-    height: 32px;
+    height: 30px;
     border-right: 1px solid black;
     border-left: 1px solid black;
     border-top: 3px solid black;
     border-bottom: 3px solid black;
-    background: white;
+    background: #8888;
     width: 32px;
     min-width: 32px;
     background-size: cover;
@@ -640,10 +640,10 @@ input[type="range"] {
 }
 
 .wf {
-    border-right: 2px solid #6c1313;
-    border-left: 2px solid #6c1313;
-    border-top: 3px solid#6c1313;
-    border-bottom: 22px solid #6c1313;
+    border-right: 2px solid #ebebeb4f;
+    border-left: 2px solid #ebebeb4f;
+    border-top: 3px solid #ebebeb4f;
+    border-bottom: 22px solid #ebebeb4f;
     width: 32px;
     height: 24px;
     margin-top: -4px;
@@ -692,4 +692,7 @@ input[type="range"] {
     margin-left: -12px;
     margin-top: -10px;
     height: 280px;
+}
+#globalComposite{
+    font-size: 24px;
 }

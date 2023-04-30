@@ -10,9 +10,9 @@ var anime_menu = {
     "swapL()": ["⬅️", "Mover quadro á esquerda"],
     "swapR()": ["➡️", "Mover quadro á direita"],
     "mostraMenu('anime')": ["⏱️", "Ajustes da Animação"],
-    "new_frame()": ["➕", "Adiciona Quadro"]
+    "new_frame()": ["➕", "Adiciona Quadro"],
+   'lixeira()':["🗑","Arraste um quadro para apaga-lo"]
 }
-
 
 function criaAnime() {
 
@@ -386,10 +386,9 @@ function adicionaQuadro() {
             //filme.innerHTML += '<div class="numero naotoque" style="z-index:-1">' + i + '</div>'
             cont.appendChild(thumb)
             filme.appendChild(cont)
-            //document.getElementById("lixo").addEventListener("onmousedown", lixeira)
             setTimeout(() => {
-                document.getElementById("lixo").addEventListener("drop", drop);
-                document.getElementById("lixo").addEventListener("dragover", dragOver);
+                document.getElementById("lixeira()").addEventListener("drop", drop);
+                document.getElementById("lixeira()").addEventListener("dragover", dragOver);
                 document.getElementById("new_frame()").addEventListener("drop", drop);
                 document.getElementById("new_frame()").addEventListener("dragover", dragOver);
             }, 10)
@@ -430,7 +429,7 @@ function dragOver(event) {
 function drop(event) {
     event.preventDefault()
     const toContainer = event.currentTarget;
-    if (toContainer.id == "lixo") {
+    if (toContainer.id == "lixeira()") {
 
         animacao.splice(dataTransfer, 1);
         animSize = animacao.length
