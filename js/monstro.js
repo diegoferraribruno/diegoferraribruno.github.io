@@ -184,7 +184,7 @@ let doMonsterCollide = function (rect1, rectb) {
     }
 };
 //anima
-setInterval(animaMonstro, 110)
+setInterval(animaMonstro, 160)
 function animaMonstro() {
     let position = 320 * monstro.frame
     let monstr = document.getElementById("monstro")
@@ -194,7 +194,7 @@ function animaMonstro() {
     if (monstro.frame > 2) { monstro.frame = 0 }
 }
 
-setInterval(moveMonstro, 10)
+setInterval(moveMonstro, 30)
 function moveMonstro() {
     let move = { x: 0, y: 0 }
     if (monstro.keys.ArrowUp == true && monstro.keys.ArrowDown == false) {

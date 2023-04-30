@@ -66,8 +66,8 @@ src.addEventListener('touchmove', (e) => {
     // list is the touch point that was just removed from the surface.
     deltaX = e.changedTouches[0].clientX - clientX;
     deltaY = e.changedTouches[0].clientY - clientY;
-    document.getElementById("manche").style.left = 45 + deltaX + "px";
-    document.getElementById("manche").style.top = 45 + deltaY + "px";
+    src.style.left = 45 + deltaX + "px";
+    src.style.top = 45 + deltaY + "px";
     if (deltaY < -6) { keys.ArrowUp = true; send = true; } else { keys.ArrowUp = false; };
     if (deltaY > 6) { keys.ArrowDown = true; send = true; } else { keys.ArrowDown = false };
     if (deltaX > 6) { keys.ArrowRight = true; send = true; } else { keys.ArrowRight = false };
@@ -94,8 +94,8 @@ function mouse_down(e) {
 function mouse_up(event) {
     for (i in keys) { keys[i] = false }
     drag = false;
-    document.getElementById("manche").style.left = "30px";
-    document.getElementById("manche").style.top = "0px";
+    src.style.left = "30px";
+    src.style.top = "0px";
     clientX = 0;
     clientY = 0;
     send = true;
@@ -118,8 +118,8 @@ function mouse_position(e) {
         let deltaY;
         deltaX = e.clientX - clientX;
         deltaY = e.clientY - clientY;
-        document.getElementById("manche").style.left = 30 + deltaX + "px";
-        document.getElementById("manche").style.top = deltaY + "px";
+        src.style.left = 30 + deltaX + "px";
+        src.style.top = deltaY + "px";
         if (deltaY < -4) { keys.ArrowUp = true; send = true; } else { keys.ArrowUp = false };
         if (deltaY > 4) { keys.ArrowDown = true; send = true; } else { keys.ArrowDown = false };
         if (deltaX > 4) { keys.ArrowRight = true; send = true; } else { keys.ArrowRight = false };
@@ -130,8 +130,8 @@ function mouse_position(e) {
 document.addEventListener('touchend', function (e) {
     for (i in keys) { keys[i] = false }
     send = true;
-    document.getElementById("manche").style.left = "30px";
-    document.getElementById("manche").style.top = "0px";
+    src.style.left = "30px";
+    src.style.top = "0px";
     document.documentElement.style.overflow = 'auto';
 
 }
@@ -182,7 +182,7 @@ function keyUp(e) {
 //CAMERA
 
 var segue = 1
-var windowx = window.innerWidth
+var windowx = 100
 var windowy = window.innerHeight
 /*setTimeout(() => {
 
@@ -218,8 +218,8 @@ setInterval(function () {
         frame = 0
     }
 },
-    150);
-setInterval(movePlayer, 10)
+    200);
+setInterval(movePlayer, 20)
 //let flip = 1;
 
 let automove = false
@@ -433,7 +433,7 @@ function playershake() {
         }, 200)
     }, 600)
 }
-const nuvens = setInterval(moveBG, 40)
+const nuvens = setInterval(moveBG, 80)
 var map = {
     x: parseInt(
 
@@ -465,9 +465,26 @@ let orient = setInterval(() => checkO(), 2000);
 
 var previousOrientation = window.orientation;
 var checkO = function () {
+    if (windowx != window.innerWidth) {
+        windowx = window.innerWidth
+        windowy = window.innerHeight
+        container.style.width = windowx + "px";
+        container.style.height = windowy + "px";
+        if (windowx > windowy) {
 
-    container.style.width = screen.width + "px";
-    container.style.height = screen.height + "px";
+            document.getElementById("desenha-container").classList.add("desenha-horizontal")
+            document.getElementById("desenha-iframe").classList.add("desenha-horizontal")
+            document.getElementById('joypad').style.left = (windowx - 180) + "px";
+            document.getElementById('joypad').style.top = (windowy - 140) + "px";
+        } else {
+            document.getElementById('joypad').style.top = (windowy - 160) + "px";
+            document.getElementById('joypad').style.left = (windowx / 2 - 100) + "px";
+            document.getElementById("desenha-container").classList.remove("desenha-horizontal")
+            document.getElementById("desenha-iframe").classList.remove("desenha-horizontal")
+
+        }
+    }
+
 };
 var blocosX = [];
 let blocos = document.getElementsByClassName("bloco")

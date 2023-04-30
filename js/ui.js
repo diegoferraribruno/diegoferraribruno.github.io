@@ -185,7 +185,7 @@ function resizeScreen() {
         document.getElementById("anime").classList.remove("horizontal3");
 
         win.style.width = parseInt(window.innerWidth, 10) + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 188 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 170 + "px";
         document.getElementById("menus").style.top = "90px";
     }
     canvasDiv.style.width = canvas.width + "px";

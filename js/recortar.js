@@ -187,7 +187,7 @@ function x2(w = document.getElementById("largura").value, h = document.getElemen
         canvas.width = w;
         canvas.height = h;
         win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 60 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 42 + "px";
         document.getElementById("largura").value = w
         document.getElementById("altura").value = h
     }
