@@ -62,7 +62,7 @@ function limpaAnime() {
     filme.classList.toggle("hideanime")
 }
 //limpaanime()
-function criaPlayer() {
+/*function criaPlayer() {
 
     var player = document.createElement('div')
     player.id = "player"
@@ -94,7 +94,7 @@ function criaPlayer() {
 
 }
 
-criaPlayer()
+criaPlayer()*/
 
 
 function criaBackPlayer() {
@@ -121,6 +121,7 @@ criaBackPlayer()
 let workingframe = 0
 
 function new_frame() {
+    undoLevel = 0
     let len = comandos.length
     save_frame()
     context.setTransform(1, 0, 0, 1, 0, 0);
@@ -135,6 +136,7 @@ function new_frame() {
 function save_frame(imagem = canvas.toDataURL('image/png')) {
     animacao[workingframe] = imagem
     comandos = []
+    convertToImg()
     setTimeout(() => {
         adicionaQuadro();
         console.log("save frame de novo")
@@ -146,6 +148,8 @@ let playing = 0
 var inter
 
 function play() {
+    oldMode = mode;
+    mode = "play";
 
     let len = comandos.length
     if (len > 1 && comandos[len - 1][0] != "i") {
@@ -154,9 +158,9 @@ function play() {
     if (animacao.length > 1) {
         document.getElementById("play()").innerHTML = ' <span onmousedown="stop()" >⏹️</span>'
         clearInterval(inter);
-        document.getElementById("player").style.backgroundSize = "cover"
-        document.getElementById("player").style.display = "block"
-        inter = setInterval(() => {
+        canvasBack.classList.remove("esconde")
+        canvasBack.style.backgroundColor = "#ffffff"
+         inter = setInterval(() => {
 
             playing++;
             if (playing == animacao.length) {
@@ -167,19 +171,28 @@ function play() {
 
         },
             1000 / fps)
-
     } else {
         Alert("Por favor,<br> adicione ➕ quadros a sua animação")
     }
 }
 function stop() {
+    if (mode == "play"){
+        mode = oldMode
+    }
     clearInterval(inter);
-    document.getElementById("player").style.display = "none"
+    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvasBack.style.backgroundColor = "transparent"
     document.getElementById("play()").innerHTML = "▶️"
 }
 
 function playerPlay(frame) {
-    document.getElementById("player").style.backgroundImage = 'url("' + animacao[frame] + '")';
+    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    let blabla = new Image()
+    blabla.src = animacao[frame]
+    canvasBack.ctx.drawImage(blabla, 0, 0)
+    // document.getElementById("player").style.backgroundImage = 'url("' + animacao[frame] + '")';
 }
 
 function changeFrame(frame) {
@@ -362,7 +375,7 @@ function adicionaQuadro() {
         for (i = 0; i < animSize; i++) {
             let cont = document.createElement("div")
             cont.id = i
-            cont.classList.add("quadrofilme")
+            cont.classList.add("quadrofilme", "light")
             //           cont.style.backgroundImage = 'url("' + animacao[i] + '")';
             cont.addEventListener("dragover", dragOver);
             cont.addEventListener("drop", drop);

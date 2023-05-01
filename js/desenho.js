@@ -578,6 +578,7 @@ function limpar(what) {
 let oldMode = mode;
 
 async function modeTo(qual) {
+    stop()
     canvasBack.style.backgroundColor = "transparent"
     canvasBack.filter = "none"
     if (mode != qual) {
@@ -762,6 +763,7 @@ function mudaCorBG(cor) {
 convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
 
 function convertToImg() {
+    undoLevel = 0
     img_b64 = canvas.toDataURL("image/png");
     blob = dataURItoBlob(img_b64)
     comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]

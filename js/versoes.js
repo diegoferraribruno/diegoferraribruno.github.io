@@ -1,4 +1,11 @@
 let vers = [{
+    versao: "2.1.0",
+    notas: [
+        "Desfazer e reafazer funcionando para cada quadro mas nao mude de quadro q so comandos se perdem.",
+        "Player agora utiliza o canvas do cursor para mostar a animação"
+    ]
+
+},{
     versao: "2.0.5",
     notas: [
         "troquei o botao do salvar por 🛟",

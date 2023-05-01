@@ -198,7 +198,7 @@ body {
     background-color: #00000044;
     border-color: #ffffff55;
     border-width: 3px;
-    font-size: 2.25em;
+    font-size: 2em;
 }
 
 .selectedBr {
@@ -619,11 +619,9 @@ input[type="range"] {
     border-left: 1px solid black;
     border-top: 3px solid black;
     border-bottom: 3px solid black;
-    background: #8888;
     width: 32px;
     min-width: 32px;
     background-size: cover;
-
 }
 
 .thumb {

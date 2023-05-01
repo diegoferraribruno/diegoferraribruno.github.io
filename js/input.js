@@ -12,7 +12,7 @@ canvasBack.ctx.drawImage(canvas, 0, 0)
 canvasBack.style.position = "absolute"
 canvasBack.style.marginTop = "0px"
 canvasBack.style.marginLeft = -canvas.width + "px"
-canvasBack.classList.add("cursor")
+canvasBack.classList.add("cursor") // importante!
 canvasBack.ctx.imageSmoothingEnabled = false
 document.getElementById("canvas_div").appendChild(canvasBack)
 let cursorShow = true
@@ -95,7 +95,7 @@ function handleStart(evt) {
     if (mode == "zoomx") {
         isGrabing = true;
     }
-    if (mode == "pintar" || mode == "apagar" || mode == "cores") {
+    if (mode == "pintar" || mode == "apagar" || mode == "cores" ) {
         canvasBack.classList.add("esconde")
         isDrawing = true
         mouseOver = true;
@@ -140,7 +140,9 @@ function handleStart(evt) {
         canvasBack.classList.add("esconde")
         isPicking = true
     }
-
+    if (mode == "play") {
+        stop();
+    }
 }
 let cursinho = new Image
 
@@ -225,7 +227,7 @@ function handleMove(evt) {
     if (isGrabing) {
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
     }
-    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoom") {
+    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play") {
         origin.x = x
         origin.y = y
 
@@ -256,6 +258,10 @@ function handleMove(evt) {
         canvasBack.ctx.fillText("🔎", x, y)
 
     }
+    if (mode == "play"){
+        canvasBack.classList.remove("esconde")
+    }
+
 }
 function handleUp(evt) {
     cursor.style.opacity = 0
@@ -331,16 +337,21 @@ function handleEnd(evt) {
     if (mode == recortar) {
         desenhaRetangulo()
     }
-    mouseOver = false;
     mostra()
-    setTimeout(() => {
-        if (mouseOver == false) {
-            isDrawing = false;
-            isGrabing = false;
-            isPicking = false;
-            isSelecting = false;
-        }
-    }, 500);
+    if (mode != "play"){
+
+        mouseOver = false;
+        setTimeout(() => {
+            if (mouseOver == false) {
+                isDrawing = false;
+                isGrabing = false;
+                isPicking = false;
+                isSelecting = false;
+            }
+        }, 500);
+    }   else{
+        canvasBack.classList.remove("esconde")
+    }
 }
 
 function handleCancel(evt) {
