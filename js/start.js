@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", startup);
 function startup() {
   window.addEventListener("resize", checkOrientation, false);
   window.addEventListener("orientationchange", checkOrientation, false);
+  document.getElementById('inputSprite').addEventListener('change', importSprite);
 
   // (optional) Android doesn't always fire orientationChange on 180 degree turns
   setInterval(checkOrientation, 2000);
