@@ -578,7 +578,7 @@ function limpar(what) {
 let oldMode = mode;
 
 async function modeTo(qual) {
-    stop()
+    setTimeout(()=>stop(),300)
     canvasBack.style.backgroundColor = "transparent"
     canvasBack.filter = "none"
     if (mode != qual) {

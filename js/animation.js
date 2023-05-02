@@ -61,40 +61,6 @@ setTimeout(() => {
 function limpaAnime() {
     filme.classList.toggle("hideanime")
 }
-//limpaanime()
-/*function criaPlayer() {
-
-    var player = document.createElement('div')
-    player.id = "player"
-    // player.classList.add("fundo2")
-    player.classList.add("fundobranco")
-
-    player.style.width = canvas.width + "px"
-    player.style.height = canvas.height + "px"
-    player.style.position = "absolute"
-    player.style.display = "block"
-    player.style.marginLeft = "auto"
-    player.style.marginRight = "auto"
-    player.style.marginTop = "auto"
-    player.style.marginBottom = "auto"
-    player.style.borderRadius = "0px"
-
-    // player.style.top = "10px"
-    player.backgroundSize = "cover"
-    //player.style.left = "10px"
-    player.style.border = "1px solid #88ccee"
-    player.style.display = "none"
-    player.style.zIndex = 1000
-    player.setAttribute("onmousedown", "stop()")
-    document.getElementById("canvas_div2").appendChild(player)
-    setTimeout(() => {
-        var inputSprite = document.getElementById('inputSprite');
-        inputSprite.addEventListener('change', importSprite);
-    }, 10)
-
-}
-
-criaPlayer()*/
 
 
 function criaBackPlayer() {
@@ -156,10 +122,18 @@ function play() {
         save_frame()
     }
     if (animacao.length > 1) {
-        document.getElementById("play()").innerHTML = ' <span onmousedown="stop()" >⏹️</span>'
+        document.getElementById("play()").innerHTML = ' <span onmousedown="stop()">⏹️</span>'
         clearInterval(inter);
         canvasBack.classList.remove("esconde")
-        canvasBack.style.backgroundColor = "#ffffff"
+        canvasBack.ctx.globalAlpha = 1;
+        canvasBack.ctx.globalCompositeOperation = 'destination-over'
+        if (nightmode){
+        canvasBack.style.backgroundColor = "#333333"
+
+        }else{
+
+            canvasBack.style.backgroundColor = "#eeeeee"
+        }
          inter = setInterval(() => {
 
             playing++;
@@ -187,6 +161,7 @@ function stop() {
 }
 
 function playerPlay(frame) {
+    
     canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
     let blabla = new Image()
