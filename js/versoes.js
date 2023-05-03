@@ -1,8 +1,10 @@
 let vers = [{
-    versao: "2.1.0",
+    versao: "2.2",
     notas: [
-        "Desfazer e reafazer funcionando para cada quadro mas nao mude de quadro q so comandos se perdem.",
-        "Player agora utiliza o canvas do cursor para mostar a animação"
+        "!Desfazer e reafazer funcionando para cada quadro!",
+        "Player agora utiliza o canvas do cursor para mostar a animação",
+        "atalhos no teclado: Delete (quadro), + Novo quadro, Espaço (play7stop), setas para os lados trocam o quadro da animação",
+        "todos os comandos tiveram que ser reorganizados para funcionar com o historico e nao somente com imagens. provavelmente vai dar muito problema ainda."
     ]
 
 },{

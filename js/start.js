@@ -21,13 +21,35 @@ function startup() {
   });
   Fundo("none")
   counter = setInterval(() => undoing(), 70)
-  document.onkeydown = function (event) {
+  window.onkeydown = function (event) {
     //on enter key
     console.log(event.key)
     if (event.key === "Enter" && mode == "recortar") {
       cortar();
-    }
-  };
+    }else  if (event.key === "+") {
+    console.log("mais um")
+
+     new_frame()
+    }else  if (event.key === "Delete") {
+      removeFrame()
+    }else  if (event.key === "Enter" && mode == "cam") {
+      tirafoto()
+    }   else  if (event.key === "ArrowRight") {
+      event.preventDefault()
+      next_frame()
+    }else    if (event.key === "ArrowLeft") {
+      event.preventDefault()
+
+        prev_frame()
+  } else    if (event.code === "Space") {
+    if (mode == "play"){stop();}else{play();}
+} else    if (event.key === "Escape" && mode == "cam") {
+  removeVideo();}
+  else    if (event.key === "Escape") {
+    removeClass()
+  window.parent.focus()
+} ;
+}
   modeTo("pintar")
   removeClass();
 

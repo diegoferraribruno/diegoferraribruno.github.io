@@ -9,8 +9,8 @@ var anime_menu = {
     "next_frame()": ["⏭️", "Próximo quadro"],
     "swapL()": ["⬅️", "Mover quadro á esquerda"],
     "swapR()": ["➡️", "Mover quadro á direita"],
-    "mostraMenu('anime')": ["⏱️", "Ajustes da Animação"],
-    "new_frame()": ["➕", "Adiciona Quadro"],
+   // "mostraMenu('anime')": ["⏱️", "Ajustes da Animação"],
+    //"new_frame()": ["➕", "Adiciona Quadro"],
    'lixeira()':["🗑","Arraste um quadro para apaga-lo"]
 }
 
@@ -34,11 +34,15 @@ function criaAnime() {
         anime.appendChild(item)
         //}, 80 * index)
     })
+    anime.innerHTML +=`<span id="new_frame()" title="Adiconar quadro á animação" class="bot" onclick="new_frame()"> <span class="bot">🎞️<span style="display: block; position: absolute; margin-top: -26px; font-size:20px;">➕</span></span>
+    </span>
+    <span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot">🎞️<span style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
+    </span>`
 
     contador.innerHTML = workingframe
     contador.id = "contador"
     ui.classList.add("bot", "shadow")
-    ui.title = 'Anime player'
+    ui.title = 'Quadros da animação toque para mostrar/esconder'
     ui.setAttribute("onclick", "limpaAnime()")
     ui.innerHTML = "🎞️"
     ui.appendChild(contador)
@@ -88,21 +92,30 @@ let workingframe = 0
 
 function new_frame() {
     undoLevel = 0
-    let len = comandos.length
+   // let len = comandos.length
+   
     save_frame()
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     workingframe++
     swapImg = canvas.toDataURL('image/png');
     animacao.splice(workingframe, 0, swapImg);
+    
+    let work = []
+    comandosb.splice(workingframe, 0, work);
+    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    comandos = []
+    convertToImg()
     changeFrame(workingframe)
     document.getElementById("contador").innerHTML = workingframe
 
 }
 function save_frame(imagem = canvas.toDataURL('image/png')) {
     animacao[workingframe] = imagem
-    comandos = []
-    convertToImg()
+    comandosParaComandosb()
     setTimeout(() => {
         adicionaQuadro();
         console.log("save frame de novo")
@@ -114,13 +127,13 @@ let playing = 0
 var inter
 
 function play() {
+    save_frame()
     oldMode = mode;
     mode = "play";
-
-    let len = comandos.length
-    if (len > 1 && comandos[len - 1][0] != "i") {
+ /*   let len = comandos.length
+    if (len > 1) {
         save_frame()
-    }
+    }*/
     if (animacao.length > 1) {
         document.getElementById("play()").innerHTML = ' <span onmousedown="stop()">⏹️</span>'
         clearInterval(inter);
@@ -167,7 +180,6 @@ function playerPlay(frame) {
     let blabla = new Image()
     blabla.src = animacao[frame]
     canvasBack.ctx.drawImage(blabla, 0, 0)
-    // document.getElementById("player").style.backgroundImage = 'url("' + animacao[frame] + '")';
 }
 
 function changeFrame(frame) {
@@ -203,44 +215,27 @@ function changeFrame(frame) {
 
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    comandos = []
-    convertToImg()
-    comandosExec()
-    if (workingframe < animacao.length) {
 
-        blob = dataURItoBlob(animacao[workingframe]);
-        let imagem = new Image();
-        imagem.src = URL.createObjectURL(blob);
-        imagem.onload = function () {
-            comando = ["i", "source-over", imagem, 0, 0, imagem.width, imagem.height]
-            let oldGCO = context.globalCompositeOperation
-            changeGCO('destination-over')
-            context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
-            changeGCO(oldGCO)
-            comandos.push(comando)
-            //updateCanvasBack()
-            //desenha("i", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
-        }
+    if (workingframe < animacao.length && workingframe >= 0) {
+        undoLevel = 0
+        comandosExec()
+
         scrollFilme()
-        //comandosExec()
     }
 
 }
 
 function next_frame() {
+    save_frame()
     if (animacao.length > 1) {
         let len = comandos.length
-        if (len > 1 && comandos[len - 1][0] != "i") {
-            save_frame()
-            console.log("quadro salvo")
-            setTimeout(() => next_frame(), 10)
-        } else {
+            comandosParaComandosb()
             workingframe++
             if (workingframe >= animacao.length) {
                 workingframe = 0
             }
+            comandosbParaComandos()
             changeFrame(workingframe)
-        }
     } else {
         Alert("Por favor,<br> adicione ➕ quadros a sua animação")
 
@@ -248,32 +243,24 @@ function next_frame() {
 
 }
 function prev_frame() {
+    save_frame()
     if (animacao.length > 1) {
 
-        let len = comandos.length
-        if (len > 1 && comandos[len - 1][0] != "i") {
-            save_frame()
-            setTimeout(() => {
-                workingframe--
-                changeFrame(workingframe)
-
-            }, 30)
-        } else {
-
+      
+            comandosParaComandosb()
             workingframe--
             if (workingframe < 0) {
                 workingframe = animacao.length - 1
                 if (workingframe < 0) { workingframe = 0 }
             }
+            comandosbParaComandos()
             changeFrame(workingframe)
             document.getElementById("contador").innerHTML = workingframe
-        }
     } else {
         Alert("Por favor,<br> adicione ➕ quadros a sua animação")
 
     }
 }
-
 
 function changeFPS(valor) {
     fps = valor
@@ -293,35 +280,61 @@ function changeFPSdown() {
     play()
 }
 function removeFrame() {
-    animacao.splice(workingframe, 1)
-    prev_frame()
-    adicionaQuadro()
-}
+    
+        animacao.splice(workingframe, 1)
+        comandosb.splice(workingframe, 1)
+    
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+   
+        if (animacao.length > 0) {
+                workingframe--
+                if (workingframe < 0) {
+                    workingframe = animacao.length - 1
+                    if (workingframe < 0) { workingframe = 0 }
+                }
+                changeFrame(workingframe)
+                comandosbParaComandos()
+                document.getElementById("contador").innerHTML = workingframe
+            //}
+        } else {
+            comandos = []
+            convertToImg()
+            comandosb = []
+            comandosParaComandosb()
+            save_frame()
+            changeFrame(0)
+          //  Alert("Por favor,<br> adicione ➕ quadros a sua animação")
+    
+        }
+        adicionaQuadro()
+       
+        
+    }
 function cloneFrame(frame = workingframe) {
-    let oldGCO = canvas.globalCompositeOperation
-    canvas.globalCompositeOperation = "destination-over"
-    animacao.splice(frame + 1, 0, animacao[frame]);
-
-    next_frame()
+    workingframe = frame +1
+    animacao.splice(workingframe, 0, animacao[frame]);
+    comandosb.splice(workingframe, 0, comandosb[frame]);
+    comandos=[]
+    comandosbParaComandos()
+    changeFrame(workingframe)
     adicionaQuadro()
-    setTimeout(() => oldGCO = canvas.globalCompositeOperation, 100)
     Alert("🎞️ Quadro " + frame + " duplicado.")
 
 }
-var checkSave = setInterval(() => {
-    if (comandos.length < 3) {
-    } else {
+function checksave (){
+
+    let compa = compara(comandos,comandosb[workingframe])
+    console.log(comandos.length, comandosb[workingframe].length)
+    if (compa == false){
         document.getElementById("new_frame()").classList.toggle("blink")
+       comandosParaComandosb()
+       save_frame()
+    }else{
+        document.getElementById("new_frame()").classList.remove("blink")
 
     }
-    /*if (undoLevel == 0) {
-        document.getElementById("redo").classList.add("esconde")
-
-    } else {
-        document.getElementById("redo").classList.remove("esconde")
-
-    }*/
-}, 1400)
+}
 let swapImg = new Image()
 
 var background_anim = false
@@ -342,11 +355,12 @@ function sobreporFundo() {
 
 
 var animSize = 0
+
 function adicionaQuadro() {
     let filme = document.getElementById("filme")
     filme.innerHTML = ""
     setTimeout(() => {
-        let animSize = animacao.length
+         animSize = animacao.length
         for (i = 0; i < animSize; i++) {
             let cont = document.createElement("div")
             cont.id = i
@@ -362,12 +376,11 @@ function adicionaQuadro() {
             thumb.classList.add("thumb")
             thumb.draggable = true
             thumb.addEventListener("click", function (event) {
-                if (comandos.length > 1) {
-                    swapImg = canvas.toDataURL('image/png');
-                    animacao[workingframe] = swapImg
-                    //  adicionaQuadro()
-                };
-                changeFrame(parseInt(event.target.id, 10))
+            workingframe = parseInt(event.target.id, 10)
+            comandos = [] 
+            comandosbParaComandos()
+            changeFrame(workingframe)
+
             });
             thumb.addEventListener("dragstart", dragStart);
             thumb.addEventListener("dragend", dragEnd);
@@ -402,7 +415,7 @@ function lixeira() {
 var dataTransfer = 0
 function dragStart(event) {
     if (comandos.length > 1) {
-        save_frame()
+      //  save_frame()
     }
     dataTransfer = parseInt(event.target.id, 10);
 }
@@ -418,11 +431,27 @@ function drop(event) {
     event.preventDefault()
     const toContainer = event.currentTarget;
     if (toContainer.id == "lixeira()") {
-
+        comandosb.splice(dataTransfer, 1);
         animacao.splice(dataTransfer, 1);
-        animSize = animacao.length
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        workingframe = 0
+        if (animacao.length == 0)  {
+            comandos = []
+            convertToImg()
+            comandosExec()
+            comandosb = []
+            comandosParaComandosb()
+            save_frame()
+            //  Alert("Por favor,<br> adicione ➕ quadros a sua animação")
+            
+        }
+        comandos = [] 
+        comandosbParaComandos()
+        changeFrame(0)
         adicionaQuadro()
-        setTimeout(() => prev_frame(), 10)
+
+
 
     } else if (toContainer.id == "new_frame()") {
         cloneFrame(dataTransfer)
@@ -431,6 +460,10 @@ function drop(event) {
 
         Alert("🎞️  " + dataTransfer + " 🔄 " + toContainer.id, 1.5)
         swapItems(toContainer.id, dataTransfer)
+        workingframe = dataTransfer
+        comandos = [] 
+        comandosbParaComandos()
+        changeFrame(workingframe)
 
     }
 }
@@ -453,40 +486,50 @@ function quadrosVisiveis(numero) {
 function swapL() {
     let a = workingframe
     let b = workingframe - 1
-    if (a > 0) {
-
+    if (b < 0) {
+    b = comandosb.length -1
+}
         moveObjectAtIndex(animacao, a, b)
-    } else {
-        moveObjectAtIndex(animacao, a, animacao.length - 1)
-
-    }
+        moveObjectAtIndex(comandosb, a, b)
+    
+    changeFrame(b)
+    adicionaQuadro()
 }
 
 
 function swapR() {
     let a = workingframe
     let b = workingframe + 1
-    if (b < animacao.length) {
-
-        moveObjectAtIndex(animacao, a, b)
-    } else {
-        moveObjectAtIndex(animacao, a, 0)
-
+    if (b >= animacao.length) {
+        b= 0
     }
+    
+            moveObjectAtIndex(animacao, a, b)
+            moveObjectAtIndex(comandosb, a, b)
+    changeFrame(b)
+    adicionaQuadro()
 }
 
 function moveObjectAtIndex(arr, indexA, indexB) {
     Alert("🎞️  " + indexA + " 🔄 " + indexB, 1.5)
-
     var temp = arr[indexA];
     arr[indexA] = arr[indexB];
     arr[indexB] = temp;
-    adicionaQuadro()
-    changeFrame(indexB)
+    
 };
 
 
 function swapItems(a = Number, b = Number) {
+    comandosb[a] = comandosb.splice(b, 1, comandosb[a])[0];
     animacao[a] = animacao.splice(b, 1, animacao[a])[0];
-    adicionaQuadro()
+    changeFrame(b)
+       adicionaQuadro()
+    }
+
+function compara(a,b){
+    if (a.length-undoLevel == b.length){
+        return true
+    }else{
+        return false
+    }
 }

@@ -548,11 +548,12 @@ function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
 }
 
 function limpar(what) {
-    if (what == "quadro") {
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        comandos = []
-    }
+    
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    comandos = []
+    convertToImg()
+   
     if (what == "animacao")
         if (animacao.length > 0) {
             let confirma2 = confirm(
@@ -560,16 +561,18 @@ function limpar(what) {
             );
             if (confirma2 === true) {
                 animacao = []
+                comandosb = []
+                comandosb.push(comandos)
                 workingframe = 0
                 for (i = 0; i < 5; i++) {
                     document.getElementById("bplayer" + i).style.backgroundImage = 'none'
                 }
+                 save_frame()
                 changeFrame(workingframe)
+                adicionaQuadro()
 
             }
         }
-
-    convertToImg()
     comandosExec()
 
     // modeTo(oldMode)
@@ -643,7 +646,7 @@ async function modeTo(qual) {
             mode = qual
             camera();
             changeGCO();
-            memorySwap(globalComposite);
+            memorySwap();
             break;
         case "apagar":
 
@@ -653,27 +656,22 @@ async function modeTo(qual) {
             cursorColor();
             mudaCorAlpha();*/
             changeGCO("destination-out");
-            //memorySwap("destination-out");
-
             break;
         case "pintar":
             mode = qual
             setStrokeSize(strokeWidth);
             setStrokeColor();
             changeGCO();
-            memorySwap(globalComposite);
+            memorySwap();
             break;
         case "cores":
-            //  setStrokeSize(strokeWidth);
-            //  setStrokeColor();
             changeGCO();
-            memorySwap(globalComposite);
+            memorySwap();
             break;
         case "fundo":
 
-            //  setStrokeSize(strokeWidth);
             changeGCO();
-            memorySwap(globalComposite);
+            memorySwap();
             break;
 
         case "preencher":

@@ -94,3 +94,20 @@ function memorySwap(GCO) {
         }, 40)
     }
 }
+
+
+function comandosParaComandosb(){
+    let len = comandos.length - undoLevel
+    comandosb[workingframe] = []
+    for (i=0; i<len; i++){
+        comandosb[workingframe].push(comandos[i])
+    }
+}
+function comandosbParaComandos(){
+    let  len = comandosb[workingframe].length
+    comandos = []
+    for (i=0; i<len; i++){
+    comandos.push(comandosb[workingframe][i])
+    }
+    
+}

@@ -215,7 +215,7 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
         document.getElementById("bplayer" + i).style.marginTop = - H - 4 + "px"
     }
 
-    document.getElementById("player").style.height = H + "px"
+   /* document.getElementById("player").style.height = H + "px"
     document.getElementById("player").style.width = W + "px"
     document.getElementById("player").style.backgroundSize = "cover";
 
@@ -227,7 +227,7 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
         document.getElementById("player").style.left = "4px"
         document.getElementById("player").style.top = "4px"
 
-    }
+    }*/
     if (W < screen.width || H < screen.height) {
         zoomIndex = 0;
         modeTo("zoomx");

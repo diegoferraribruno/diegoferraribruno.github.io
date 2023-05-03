@@ -175,24 +175,19 @@ async function tirafoto() {
                     // updateCanvasBack();
                     swapImg = canvas.toDataURL('image/png');
                     save_frame(swapImg);
+                    comandosParaComandosb()
+                    if (stop_motion == false) {
+                        removeVideo();
+                    } else {
+                        
+                        setTimeout(() => {                           new_frame()
+                        }, 200)
+                    }
                 }, 20)
             }
         }
     }
-    if (stop_motion == false) {
-        removeVideo();
-    } else {
-        if (
-            isCanvasBlank(canvas)
-        ) { workingframe-- }
-        setTimeout(() => {
-
-            workingframe++
-            swapImg = canvas.toDataURL('image/png');
-            save_frame(swapImg)
-
-        }, 5)
-    }
+   
 
     setTimeout(() => {
         fotografando = true
