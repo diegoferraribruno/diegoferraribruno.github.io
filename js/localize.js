@@ -45,7 +45,7 @@ var alerts = {
         23: "imagem de fundo removida"
     },
     "en": {
-        0: "Please,<br> ada ➕ frames to your animation",
+        0: "Please,<br> add ➕ frames to your animation",
         1: "Frame",
         2: "Single shot mode 📷.",
         3: "Sequence of frames mode 🎥 🎞️.",
