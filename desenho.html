@@ -251,7 +251,8 @@
 
             <div id="menucores" class="submenu fundobranco">
 
-                <span class="botao"><span title="pintar" class="bot selected" onmousedown="modeTo('pintar')">🖌️</span>
+                <span class="botao glow"><span title="pintar" class="bot selected"
+                        onmousedown="modeTo('pintar')">🖌️</span>
                     <span id="mostraCor" title="cores" class="bot" onmousedown="modeTo('cores')">🎨</span>
                     <span title="Pega cor" class="bot" onmousedown="modeTo('picker')">💉</span>
                     <span id="tilemapbot" class="bot" onclick="tilePaint()"><span title="infinity"
@@ -261,14 +262,14 @@
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
                     </span>
                 </span><br>
-                <div id="paleta2" class="fundobranco">
+                <div id="paleta2" class="fundobranco glow">
                     <txt name="15">Use o 📌 para guardar sua cor.</txt>
                 </div>
-                <div id="paleta" class="fundobranco"></div>
-                <div id="menu" class="fundobranco" onmouseover="mostra()">
-                    <span id="pickerc" title="Pega cor" class="bloquinho" onmousedown="modeTo(`picker`)"
-                        style="margin: -10px 10px 0px 0px; width: 24px; font-size:24px;">💉</span>
-                    <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="bloquinho">
+                <div id="paleta" class="fundobranco glow"></div>
+                <div id="menu" class="fundobranco glow" onmouseover="mostra()">
+                    <!--span id="pickerc" title="Pega cor" class="bloquinho" onmousedown="modeTo(`picker`)"
+                        style="margin: -10px 10px 0px 0px; width: 24px; font-size:24px;">💉</span-->
+                    <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais">
                         <span
                             style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span>
 
@@ -283,7 +284,7 @@
                         step="0.01" value="1"><br>
                 </div>
 
-                <div id="paleta3" class="fundobranco"></div>
+                <div id="paleta3" class="fundobranco glow"></div>
             </div>
             <div id="menucustombrush" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
                 <div class="botao "> <span title="fechar" onmousedown="mostraSubMenu('custombrush')"
@@ -320,29 +321,37 @@
             </div>
 
 
-            <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-
-                <span class="botao">
+            <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;"> <!--span class="botao">
                     🖼️ <txt name="18">Configurações do quadro</txt>
-                    <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
-                </span>
+                </span-->
+                <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                 <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ ✂️
                     <txt name="19">Tamanho do quadro</txt>
                 </span>
-
                 <!--
                 <span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span-->
-
-
-
                 <span class="botao">
+                    <span class="mais"><span
+                            style="position:relative; width:32px; display:inline-block; opacity:0.5;  left: 2px; top:0px ;padding-top: 0px; font-size: 20px;">🖼️</span>
+                        <span
+                            style="color:white;position:absolute; opacity:0.5;  display:block; width:20px; top:-5px;left:3px; font-size: 20px; ">🖼️</span>
+                    </span>
                     <txt name="20">Transparencia do quadro</txt> <input type="range" id="canvasOpacity"
                         name="transparencia" min="0.01" max="1" oninput="canvasOpacity(this.value)" step="0.01"
                         value="1">
                 </span>
-                <span class="botao"> 🎞️ 🧅 ⌛️ <txt name="21">Quadros visiveis</txt> <input type="number"
-                        id="camadasnumber" min="0" max="5" step="1" value="5" onchange="quadrosVisiveis(this.value)"
-                        style="width: 50px; margin-left: 8px"></span>
+                <span class="botao"> <span class="mais"><span
+                            style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;padding-top: 0px; font-size: 12px;">🖼️</span>
+                        <span
+                            style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left: 5px;font-size: 12px; ">🖼️</span>
+                        <span
+                            style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:0px; left: 7px;font-size: 12px; ">🖼️</span>
+
+
+                    </span>
+                    <txt name="21">Quadros visiveis</txt> <input type="number" id="camadasnumber" min="0" max="5"
+                        step="1" value="5" onchange="quadrosVisiveis(this.value)" style="width: 50px; margin-left: 8px">
+                </span>
 
                 <span id=" fundo falso" class="botao">
                     <txt name="22">Adicionar Fundo falso:</txt><br>
