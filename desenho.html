@@ -78,15 +78,17 @@
         </div>
         <div id="menus">
             <div id="menupicker" class="submenu fundobranco">
-                Toque numa área pintada<br>
-                para capturar uma cor
+                <txt name="1">Toque numa área pintada<br>
+                    para capturar uma cor</txt>
             </div>
             <div id="menualerta" class="submenu fundobranco">
                 <span class="botao" onmousedown="closeAlert()">
                     <span class="close"> ❎</span>
                     <span id="alertconteudo">
-                        Toque numa área pintada<br>
-                        para capturar uma cor
+                        <txt name="2">
+                            Toque numa área pintada<br>
+                            para capturar uma cor
+                        </txt>
                     </span>
                 </span>
             </div>
@@ -94,20 +96,26 @@
                 <span class="fundobranco" onmousedown="removeClass()">
                     <span class="close"> ❎</span><span
                         style="display: block; position: relative; float: left; font-size: 32px; margin-right: 4px;">😅</span>
-                    <b>⚠️Atenção!⚠️<br>
-                        Este é um App de diversão!</b><br>
-                    durante o processo de criação e exportação,
-                    a imagem perderá qualidade!<br>
-                    Dito isto, espero que você se divirta!<br></span>
-                <span class="fundobranco">Feito por:
-                    <a href="https://diegoferraribruno.github.io/">Diego Ferrari Bruno</a><br> com códigos de:
+                    <txt name="3"><b>⚠️Atenção!⚠️</b></txt><br>
+                    <txt name="4"> Este é um App de diversão!</b><br>
+                        durante o processo de criação e exportação,
+                        a imagem perderá qualidade!<br>
+                        Dito isto, espero que você se divirta!<br></txt>
+                </span>
+                <span class="fundobranco">
+                    <txt name="5">Feito por:</txt>
+                    <a href="https://diegoferraribruno.github.io/">Diego Ferrari Bruno</a><br>
+                    <txt name="6"> com códigos de:</txt>
                     <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
                         Lei Mao</a>, <a href="https://github.com/doug2k1/javascript-camera"> Douglas Matoso</a>, <a
                         href="http://tricedesigns.com/sketching-with-html5-canvas-and-brush-images/"
                         target="blank">Andrew
-                        Trice</a> e uma turma aí. <br>
-                    (gratidão <a href="http://stackoverflow.com" target="_blank">comunidade stackOverflow!</a>)<br>
-                    <h3>Mudanças nas versões:</h3>
+                        Trice</a>
+                    <txt name="7">e uma turma aí do</txt> <a href="http://stackoverflow.com" target="_blank">
+                        stackOverflow!</a>🥰<br>
+                    <h3>
+                        <txt name="8">Mudanças nas versões:</txt>
+                    </h3>
                     <div id="versoes"></div>
                 </span>
             </div>
@@ -117,12 +125,12 @@
                 <span class="botao">🖼️ ↔️ ✂️<span class="close" title="fechar menu tamanho da tela"
                         onmousedown="removeClass()">❎</span>
 
-                    Tamanho atual:<br>
-                    Largura: <input id="largura" type="number" maxlength="4" max="1920" value="320"
+                    <txt name="9">Tamanho atual:</txt><br>
+                    <txt name="10">Largura: </txt><input id="largura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px; padding: 4px;" /> px <span title="margem a esquerda">➡️<input id="offsetx"
                             type="number" maxlength="4" max="1910" value="0" style="width:60px; padding: 4px;" />
                     </span><br>
-                    Altura: <input id="altura" type="number" maxlength="4" max="1920" value="320"
+                    <txt name="11">Altura:</txt> <input id="altura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px;padding: 4px;" /> px <span title="margem acima">⬇️<input id="offsety"
                             type="number" maxlength="4" max="1910" value="0" style="width:60px; padding: 4px;" />
                     </span><br>
@@ -134,7 +142,8 @@
                         style="position: absolute; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -70px; right: 10px; text-align: center;"
                         onclick="x2()">x2</span>
                 </span>
-                <span id="recortar2" class="botao" onclick="modeTo('recortar')">✂️ recorte manual</span>
+                <span id="recortar2" class="botao" onclick="modeTo('recortar')">✂️ <txt name="12">recorte manual</txt>
+                </span>
 
                 <span class="botao" style="font-size: 0.8em;" title="formatos">
                     <span onmousedown="tamanho(32,32)">32x32
@@ -158,7 +167,7 @@
                     <span onmousedown="tamanho(1080,1080)">Ig:1080x1080*
                         <span style="border: 1px solid gray; width: 25px; height: 25px; display: inline-block;"></span>
                     </span>
-                    <br>* limite 30 quadros<br>
+                    <br>* <txt name="13">limite 30 quadros</txt><br>
                 </span>
             </div>
 
@@ -215,8 +224,10 @@
             </div>
 
             <div id="menuapagar" class="fundobranco submenu">
-                <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🧽 Apagador <span
-                        class="close">❎</span></span><br>
+                <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🧽
+                    <txt name="14">Apagador</txt>
+                    <span class="close">❎</span>
+                </span><br>
                 <span style="float: center; position: relative; width: 16px" onmousedown="changeLine()"><span
                         id="line2">
                         ➕</span></span>
@@ -246,7 +257,7 @@
                     </span>
                 </span><br>
                 <div id="paleta2" class="fundobranco">
-                    Use o 📌 para guardar sua cor.
+                    <txt name="15">Use o 📌 para guardar sua cor.</txt>
                 </div>
                 <div id="paleta" class="fundobranco"></div>
                 <div id="menu" class="fundobranco" onmouseover="mostra()">
@@ -275,10 +286,10 @@
                     <span class="shadow"
                         style="display:inline-block; margin-top:-20px; font-size:18px; width:30px; height:30px;">🖌️<span
                             style="display:inline-block;position:relative; margin-left: -30px; top:-5px">➕</span></span>
-                    pinceis personalizados
+                    <txt name="16"> pinceis personalizados</txt>
                 </div>
                 <div class="botao " id="criaCustom" onmousedown="criaCustom()">
-                    <span class="bot">🖼️ </span> ➡️ 🖌️ quadro como pincel
+                    <span class="bot">🖼️ </span> ➡️ 🖌️ <txt name="17">quadro como pincel</txt>
                 </div>
 
                 <div class="botao " id="pinceis3">
@@ -307,10 +318,11 @@
             <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
 
                 <span class="botao">
-                    🖼️ Configurações do quadro
+                    🖼️ <txt name="18">Configurações do quadro</txt>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                 </span>
-                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ ✂️ Tamanho do quadro
+                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ ✂️
+                    <txt name="19">Tamanho do quadro</txt>
                 </span>
 
                 <!--
@@ -319,13 +331,16 @@
 
 
                 <span class="botao">
-                    Transparencia do quadro <input type="range" id="canvasOpacity" name="transparencia" min="0.01"
-                        max="1" oninput="canvasOpacity(this.value)" step="0.01" value="1"></span>
-                <span class="botao"> 🎞️ 🧅 ⌛️ Quadros visiveis <input type="number" id="camadasnumber" min="0" max="5"
-                        step="1" value="5" onchange="quadrosVisiveis(this.value)"
+                    <txt name="20">Transparencia do quadro</txt> <input type="range" id="canvasOpacity"
+                        name="transparencia" min="0.01" max="1" oninput="canvasOpacity(this.value)" step="0.01"
+                        value="1">
+                </span>
+                <span class="botao"> 🎞️ 🧅 ⌛️ <txt name="21">Quadros visiveis</txt> <input type="number"
+                        id="camadasnumber" min="0" max="5" step="1" value="5" onchange="quadrosVisiveis(this.value)"
                         style="width: 50px; margin-left: 8px"></span>
 
-                <span id=" fundo falso" class="botao"> Adicionar Fundo falso:<br>
+                <span id=" fundo falso" class="botao">
+                    <txt name="22">Adicionar Fundo falso:</txt><br>
                     <span onmousedown="Fundo2('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">&nbsp;
                     </span>
@@ -347,12 +362,14 @@
                     <span>
                         <input type="file" id="input2" class="custom-file-input"
                             accept=".png, .jpg, .jpeg, .gif .bmp" />
-                    </span></span>
+                    </span>
+                </span>
 
             </div>
 
             <div id="menupreencher" class="fundobranco submenu">
-                <span class="botao" onmousedown="removeClass()">🪣 Preencher tudo <span class="close">❎</span></span>
+                <span class="botao" onmousedown="removeClass()">🪣 <txt name="23">Preencher tudo </txt><span
+                        class="close">❎</span></span>
                 <span width="140px" style="margin: 8px 80px; display: block">
                     <span onmousedown="mudaCorBG('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">
@@ -370,18 +387,20 @@
 
                 <span class="botao"><span class="close" title="fechar menu enviar imagem" onmousedown="removeClass()">
                         ❎</span>
-                    ⏱️ Velocidade da Animação🎞️ <br><small>FPS / Quadros Por Segundo</small><br> <input type="number"
-                        id="fpsnumber" min="1" max="60" step="1" value="8" onchange="changeFPS(this.value)"
-                        style="width: 50px; margin-left: 8px">
+                    ⏱️ <txt name="24">Velocidade da Animação🎞️</txt> <br><small>
+                        <txt name="25">Quadros Por Segundo</txt>
+                    </small><br> <input type="number" id="fpsnumber" min="1" max="60" step="1" value="8"
+                        onchange="changeFPS(this.value)" style="width: 50px; margin-left: 8px">
                     <span onmousedown="changeFPSup()" class="bot">⬆️</span> <span onmousedown="changeFPSdown()"
                         class="bot"> ⬇️</span>
                     <span onmousedown="play()" class="bot">▶️</span> </span>
-                <span class="botao" onmousedown="removeFrame()">🗑 🖼️ Remover quadro atual <span
+                <span class="botao" onmousedown="removeFrame()">🗑 🖼️ <txt name="26">Remover quadro atual</txt> <span
                         class="bot">➖</span></span>
-                <span class="botao" onmousedown="cloneFrame()"> 🖼️ + 🖼️ clonar o quadro atual</span>
+                <span class="botao" onmousedown="cloneFrame()"> 🖼️ + 🖼️ <txt name="27">clonar o quadro</txt>
+                    atual</span>
 
                 <span class="botao">
-                    Mudar ordem do quadro
+                    <txt name="28">Mudar ordem do quadro</txt>
                     <span class="bot" onmousedown="swapL()">⬅️</span>
                     🎞️
                     <span class="bot" onmousedown="swapR()">➡️</span>
@@ -402,34 +421,42 @@
                 <span onmousedown="scrollCanva(80,0)">➡️</span -->
             </div>
             <div id="menuimagem" class="fundobranco submenu aparece menu">
-                <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">
-                    <span
+                <span class="close" title="fechar menu enviar imagem" onmousedown="removeClass()">❎</span>
+                <span class="botao">
+                    <txt name="50"> Importar projeto</txt>
+                    <input type='file' accept='text/plain' onchange='openFile(event)'>
+                </span>
+
+                <span class="botao"> <span
                         style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
                             style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
                             📂</span></span>
-
-                    Carregar
-                    imagem /
-                    upload
-                    <span class="close">❎</span></span><br>
-                <span class="botao"> 📂 🖼️ <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
-                        title="Enviar Arquivo de imagem" /> <br> Ajustar tela ao tamanho da imagem <input
-                        type="checkbox" id="ajustar" checked="true">
-                </span>
-                <span class="botao"> 📂 🎞️ Enviar uma animação<br>
-                    Auto detectar quadros <input type="checkbox" id="autodetectar" onchange="hidecustom()"
+                    <txt name="29">Carregar imagem</txt>
+                    <br> <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
+                        title="Enviar Arquivo de imagem" /> <br>
+                    <txt name="30">Ajustar tela ao tamanho da imagem </txt><input type="checkbox" id="ajustar"
                         checked="true">
-                    <br>carregar como plano de fundo?
+                </span>
+                <span class="botao"> 📂 🎞️ <txt name="31">Enviar uma animação</txt><br>
+                    <txt name="32">Auto detectar quadros </txt><input type="checkbox" id="autodetectar"
+                        onchange="hidecustom()" checked="true">
+                    <br>
+                    <txt name="33">carregar como plano de fundo?</txt>
                     <input type="checkbox" id="loadBackgroundAnimation">
-                    <br>sobrepor plano de fundo
+                    <br>
+                    <txt name="34">sobrepor plano de fundo</txt>
                     <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
-                    <span id="custom" class="esconde"> Frames/quadros<input type="number" id="fnumber" min="1" max="30"
-                            step="1" value="2" style="width: 40px; margin-left: 8px"><br> largura: <input id="larguraS"
-                            type="number" maxlength="4" max="1920" value="320" style="width:60px; padding: 4px;" />
+                    <span id="custom" class="esconde">
+                        <txt name="35">quantidade de quadros</txt><input type="number" id="fnumber" min="1" max="30"
+                            step="1" value="2" style="width: 40px; margin-left: 8px"><br>
+                        <txt name="36"> largura:</txt> <input id="larguraS" type="number" maxlength="4" max="1920"
+                            value="320" style="width:60px; padding: 4px;" />
                         pixels<br>
-                        altura: <input id="alturaS" type="number" maxlength="4" max="1920" value="320"
-                            style="width:60px;padding: 4px;" /> pixels<br></span>
-                    <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" title="📤" /></span>
+                        <txt name="37">altura:</txt> <input id="alturaS" type="number" maxlength="4" max="1920"
+                            value="320" style="width:60px;padding: 4px;" /> pixels<br>
+                    </span>
+                    <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" title="📤" />
+                </span>
             </div>
             <div id="menucam" class="submenu fundobranco">
                 <span title="espelhar a camera" class="bot" onmousedown="flipCamera()">🤳</span>
@@ -459,10 +486,10 @@
             </div>
             <div id="menuFX" class="fundobranco submenu">
                 <span title="fechar efeitos" onmousedown="removeClass()" class="close">❎</span>
-                <span class="botao" onclick="FX(0)">🚫 Remover Filtros</span>
-                <span class="botao" onclick="FX(1)"> ☯️ invertido </span>
+                <span class="botao" onclick="FX(0)">🚫 <txt name="38">Remover Filtros</txt></span>
+                <span class="botao" onclick="FX(1)"> ☯️ <txt name="39">Invertido</txt> </span>
                 <span class="botao"><input id="blurBar" type="range" min="0" max="10" step="0.1" onchange="FX(2)">
-                    👓 desfoque
+                    👓 <txt name="40">Desfoque</txt>
                 </span>
                 <span class="botao" onclick="FX(3)">
 
@@ -470,61 +497,78 @@
                     <input id="grayscaleBar" title="escala de cinza" type="range" min="0" max="1" step="0.1">
                 </span>
                 <span class="botao"><input id="sepiaBar" type="range" min="0" max="100" step="10" onchange="FX(4)">⌛️
-                    Sepia
+                    <txt name="41">Sepia</txt>
                 </span>
 
                 <span class="botao"><input id="contrastBar" type="range" min="0" max="300" step="10" onchange="FX(5)"> ◒
-                    Contraste</span>
+                    <txt name="42">Contraste</txt>
+                </span>
             </div>
             <div id="menusalvar" class="fundobranco submenu">
                 <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🛟 Salvar / save<span
                         class="close">❎</span></span>
-                <span class="botao">🛟 🖼️ Salvar quadro atual <br>
-                    Título: <input id="filename" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
-                        value="desenho" onfocus="this.value=''"> <span onclick="salvaImagem()" class="bot">🛟</span>
+                <span class="botao">🛟 🖼️ <txt name="43">Salvar quadro atual</txt> <br>
+                    <txt name="44">Título:</txt> <input id="filename" type="text" alt="Nome do arquivo"
+                        placeholder="Nome do arquivo" value="desenho" onfocus="this.value=''"> <span
+                        onclick="salvaImagem()" class="bot">🛟</span>
                 </span>
-                <span class="botao">🛟 🎞️ <br> Exportar sequencia de quadros<input type="checkbox" id="seq"
+                <span class="botao">🛟 🎞️ <br>
+                    <txt name="45">Exportar sequencia de quadros</txt><input type="checkbox" id="seq" checked="true">
+                    <br> 🖼️🎞️ <txt name="46">Exportar Gif animado:</txt> <input type="checkbox" id="gif"
                         checked="true">
-                    <br> 🖼️🎞️ Exportar Gif animado: <input type="checkbox" id="gif" checked="true">
-                    <br> Unir quadro com fundo <input type="checkbox" id="unir"><br>
-                    Título: <input id="filenameS" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
-                        value="anima" onfocus="this.value=''"> <span onclick="export_anim()" class="bot"> 🛟 </span>
-                    <span class="botao"><button onclick="export2txt()">Exportar projeto</button><br>
-                        importar projeto<input type='file' accept='text/plain' onchange='openFile(event)'></span>
+                    <br>
+                    <txt name="47">Unir quadro com fundo</txt> <input type="checkbox" id="unir"><br>
+                    <txt name="48">Título:</txt> <input id="filenameS" type="text" alt="Nome do arquivo"
+                        placeholder="Nome do arquivo" value="anima" onfocus="this.value=''"> <span
+                        onclick="export_anim()" class="bot"> 🛟 </span>
+                    <span class="botao"><button onclick="export2txt()">
+                            <txt name="49">Exportar projeto</txt>
+                        </button>
+
+                    </span>
             </div>
 
 
             <div id="menurecortar" class="fundobranco submenu">
-                <span class="botao">✂️<span class="close" onmousedown="removeClass()">❎</span>salvar antes ?
+                <span class="botao">✂️<span class="close" onmousedown="removeClass()">❎</span>
+                    <txt name="50">salvar antes?</txt>
                     <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')"> 🛟
-                    </span></span>
+                    </span>
+                </span>
                 <span id="autorecortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)">✂️
-                    Recortar
-                    automaticamente <span
-                        style="display:inline-block; width: 12px; height: 12px; border: green dashed 2px;"></span></span>
+                    <txt name="51"> Recortar automaticamente </txt><span
+                        style="display:inline-block; width: 12px; height: 12px; border: green dashed 2px;"></span>
+                </span>
 
-                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️ Recortar
-                    para
-                    seleção <span
-                        style="display:inline-block; width: 20px; height: 12px; border: red dashed 2px;"></span></span>
+                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️
+                    <txt name="52">
+                        Recortar para seleção</txt> <span
+                        style="display:inline-block; width: 20px; height: 12px; border: red dashed 2px;"></span>
+                </span>
 
             </div>
             <div id="menulixeira" class="fundobranco submenu">
-                <div class="botao">⚠️ impossivel desfazer ⚠️
+                <div class="botao">
+                    <txt name="53">⚠️ impossivel desfazer</txt> ⚠️
                     <span class="close" onmousedown="removeClass()">❎</span>
                 </div>
 
-                <div class="botao" onclick="limpar('quadro'), removeClass()">🖼️ 🗑 limpar quadro</div>
-                <div class="botao" onclick="limpar('animacao'), removeClass()"> 🎞️ 🗑 Apagar toda a animação</div>
-                <span class="botao" onmousedown="removeFrame()"> 🎞️ ➖ 🖼️ Remover quadro atual <span
-                        class="bot">➖</span></span>
+                <div class="botao" onclick="limpar('quadro'), removeClass()">🖼️ 🗑 <txt name="54">limpar quadro</txt>
+                </div>
+                <div class="botao" onclick="limpar('animacao'), removeClass()"> 🎞️ 🗑
+                    <txt name="55">Apagar toda a animação</txt>
+                </div>
+                <span class="botao" onmousedown="removeFrame()"> 🎞️ ➖ 🖼️ <txt name="56">Remover quadro atual</txt>
+                    <span class="bot">➖</span></span>
 
 
             </div>
 
             <div id="menurotacionar" class="fundobranco submenu">
-                <span id="rotacionar" class="botao" onclick="rotacionar()">🔃 Rotacionar a tela </span>
-                <span id="rotaciona" class="botao" onclick="comandoR()">✔️ confirmar rotação </span>
+                <span id="rotacionar" class="botao" onclick="rotacionar()">🔃 <txt name="57">Rotacionar a tela</txt>
+                </span>
+                <span id="rotaciona" class="botao" onclick="comandoR()">✔️ <txt name="58">confirmar rotação</txt>
+                </span>
 
             </div>
             <div id="menucamconfig" class="fundobranco submenu" style="opacity:0.8; background-color: #ffffff00;">
@@ -535,7 +579,9 @@
                         < input id="zoom" title="Zoom" type="range">
                     </div-->
                     <div id="brightnessDiv" class="botao3">
-                        <label for="brightness">Brightness / brilho</label>
+                        <label for="brightness">
+                            <txt name="59">Brightness / brilho</txt>
+                        </label>
                         <input id="brightness" title="brightness" type="range" min="0" max="255" step="1">
 
                     </div>
@@ -547,11 +593,16 @@
                     </div>
 
                     <div id="exposureTimeDiv" class="botao3">
-                        <input id="exposureMode" type="checkbox"> Manual exposureMode<br>
-                        <label for="exposureTime">exposureTime</label>
+                        <input id="exposureMode" type="checkbox">
+                        <txt name="60">Manual exposureMode</txt><br>
+                        <label for="exposureTime">
+                            <txt name="61">exposureTime</txt>
+                        </label>
                         <input id="exposureTime" title="exposureTime" type="range" min="3" max="2047" step="1">
                         <div id="exposureCompensationDiv">
-                            <label for="exposureCompensation">Exposure compensation</label>
+                            <label for="exposureCompensation">
+                                <txt name="62">Exposure compensation</txt>
+                            </label>
                             <input id="exposureCompensation" title="exposureCompensation" type="range" min="0" max="255"
                                 step="1">
 
@@ -559,38 +610,56 @@
                     </div>
 
                     <div id="saturationDiv" class="botao3">
-                        <label for="saturation">saturation</label>
+                        <label for="saturation">
+                            <txt name="63">saturation</txt>
+                        </label>
                         <input id="saturation" title="saturation" type="range" min="0" max="255" step="1">
                     </div>
                     <div id="contrastDiv" class="botao3">
-                        <label for="contrast">contrast</label>
+                        <label for="contrast">
+                            <txt name="64">contrast</txt>
+                        </label>
                         <input id="contrast" title="contrast" type="range" min="0" max="255" step="1">
                     </div>
                     <div id="sharpnessDiv" class="botao3" style="display: inline-block;">
-                        <label for="sharpness">sharpness</label>
+                        <label for="sharpness">
+                            <txt name="65">sharpness</txt>
+                        </label>
                         <input id="sharpness" title="sharpness" type="range" min="0" max="255" step="1">
                     </div>
                     <div id="whiteBalanceDiv" class="botao3">
-                        <input id="whiteBalanceMode" type="checkbox"> Manual white Balance / color<br>
+                        <input id="whiteBalanceMode" type="checkbox">
+                        <txt name="70"> Manual white Balance / color</txt><br>
                         <div id="colorTemperatureDiv">
-                            <label for="colorTemperature">colorTemperature</label>
+                            <label for="colorTemperature">
+                                <txt name="71">colorTemperature</txt>
+                            </label>
                             <input id="colorTemperature" title="colorTemperature" type="range" min="2000" max="6500"
                                 step="1">
                         </div>
-                        <label for="whiteBalace">white balace </label>
+                        <label for="whiteBalace">
+                            <txt name="72">white balace </txt>
+                        </label>
                         <input id="whiteBalace" title="whiteBalace" type="range">
                     </div>
                     <div id="focusDistanceDiv" class="botao3">
-                        <input id="focusMode" type="checkbox"> Manual focusMode<br>
-                        <label for="focusDistance">focusDistance</label>
+                        <input id="focusMode" type="checkbox">
+                        <txt name="73">Manual focusMode</txt><br>
+                        <label for="focusDistance">
+                            <txt name="66">focusDistance</txt>
+                        </label>
                         <input id="focusDistance" title="focusDistance" type="range" min="0" max="250" step="0.1">
                     </div>
                     <div id="panDiv" class="botao3">
-                        <label for="pan">Pan</label>
+                        <label for="pan">
+                            <txt name="68">Pan</txt>
+                        </label>
                         <input id="pan" title="Pan" type="range">
                         <div id="tiltDiv" class="botao3">
                         </div>
-                        <label for="tilt">Tilt</label>
+                        <label for="tilt">
+                            <txt name="69">Tilt</txt>
+                        </label>
                         <input id="tilt" title="Tilt" type="range">
                     </div>
                     <div id="comumConstraints" class="botao3"></div>
