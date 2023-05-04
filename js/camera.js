@@ -180,7 +180,8 @@ async function tirafoto() {
                         removeVideo();
                     } else {
                         
-                        setTimeout(() => {                           new_frame()
+                        setTimeout(() => {                          
+                             new_frame()
                         }, 200)
                     }
                 }, 20)
@@ -192,7 +193,7 @@ async function tirafoto() {
     setTimeout(() => {
         fotografando = true
 
-    }, 100)
+    }, 800)
 }
 
 
