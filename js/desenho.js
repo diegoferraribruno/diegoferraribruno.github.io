@@ -36,9 +36,9 @@ audio2.volume = 0.4;
 function tilePaint() {
     tilepaint = !tilepaint
     if (tilepaint == true) {
-        Alert('<span title="infinity" class="emoji " id="emo -♾️">♾️</span> Modo infinito <br>Ativado ')
+        Alert('<span title="infinity" class="emoji " id="emo -♾️">♾️</span> ' + alerts[language][6] + "<br>" + alerts[language][7])
     } else {
-        Alert(' <span title="infinity" class="emoji " id="emo -♾️">♾️</span> Modo infinito <br>Desativado')
+        Alert(' <span title="infinity" class="emoji " id="emo -♾️">♾️</span> ' + alerts[language][6] + "<br>" + alerts[language][8])
     }
 }
 
@@ -76,6 +76,11 @@ function exec(coma = 0) {
     let scope = lenc - undoLevel
     if (scope > coma) {
         switch (comandos[coma][0]) {
+            case "new_frame()":
+                new_frame()
+                coma++
+                exec(coma)
+                break;
             case "FX":
                 context.filter = filters[comandos[coma][1]]
                 coma++
@@ -92,7 +97,8 @@ function exec(coma = 0) {
                 break;
             case "f":
                 let myImg = document.createElement("img");
-                myImg.src = URL.createObjectURL(comandos[coma][2])
+                blob = dataURItoBlob(comandos[coma][2])
+                myImg.src = URL.createObjectURL(blob)
                 myImg.onload = function () {
                     let globaltemp = context.globalCompositeOperation
                     context.globalCompositeOperation = comandos[coma][1];
@@ -548,12 +554,12 @@ function drawLine(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin) {
 }
 
 function limpar(what) {
-    
+
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     comandos = []
     convertToImg()
-   
+
     if (what == "animacao")
         if (animacao.length > 0) {
             let confirma2 = confirm(
@@ -567,7 +573,7 @@ function limpar(what) {
                 for (i = 0; i < 5; i++) {
                     document.getElementById("bplayer" + i).style.backgroundImage = 'none'
                 }
-                 save_frame()
+                save_frame()
                 changeFrame(workingframe)
                 adicionaQuadro()
 
@@ -581,7 +587,7 @@ function limpar(what) {
 let oldMode = mode;
 
 async function modeTo(qual) {
-    setTimeout(()=>stop(),300)
+    setTimeout(() => stop(), 300)
     canvasBack.style.backgroundColor = "transparent"
     canvasBack.filter = "none"
     if (mode != qual) {
@@ -603,7 +609,7 @@ async function modeTo(qual) {
             mode = "pintar"
             oldMode = "pintar"
             mostraMenu("pintar");
-            Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  Modo ${qual} <br> Ativado"`, 1)
+            Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  ${alerts[language][9]} ${alerts[language][9]} <br> ${alerts[language][7]}`, 1)
             changeGCO("destination-out")
             cursorColor()
         }
@@ -720,7 +726,7 @@ function backPaint() {
             `<span style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;` +
             `padding-top: 0px;">⭕</span> <span style="color:white;` +
             `position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left:3px; " title="Pintando por baixo">🔲</span> `;
-        Alert("⚠️ Pintando por <b>baixo</b>")
+        Alert(example = alerts[language][12])
 
         if (document.getElementById("video")) {
             document.getElementById("video").setAttribute("class", "destination-over")
@@ -735,7 +741,7 @@ function backPaint() {
             `<span style="position:relative; width:32px; display:inline-block; left:4px; ` +
             `padding-top: 0px;">🔲</span> <span style="color:white;` +
             `position:absolute;  display:block; width:20px; left: 3px; top:-5px;" title="Pintando por cima">⭕</span> `;
-        Alert("⚠️ Pintando por <b>cima</b>")
+        Alert(example = alerts[language][13])
         removeClass("destination-over")
     }
     cursor.classList.toggle("cursorIndex");
@@ -763,7 +769,6 @@ convertToImg() // importate para q haja pelo menos um comando na lista de comand
 function convertToImg() {
     undoLevel = 0
     img_b64 = canvas.toDataURL("image/png");
-    blob = dataURItoBlob(img_b64)
-    comando = ["f", "source-over", blob, 0, 0, canvas.width, canvas.height]
+    comando = ["f", "source-over", img_b64, 0, 0, canvas.width, canvas.height]
     comandos.unshift(comando)
 }

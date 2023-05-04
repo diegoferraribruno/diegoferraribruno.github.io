@@ -10,7 +10,7 @@ function salvaImagem() {
             .replace("image/png", "image/octet-stream");
         //downloadImage(dataURL, 'my-canvas.jpeg');
         downloadImage(dataURL, `${nome}.png`);
-    } else { Alert("Favor Preencher o nome do arquivo") }
+    } else { Alert(alerts[language][18]) }
 }
 
 //function downloadImage(data, filename = 'untitled.jpeg') {
@@ -31,14 +31,14 @@ async function export_anim() {
 
     let len = animacao.length
     if (len == 0) {
-        Alert("Adicione ➕ quadros a sua animação antes de exportar.")
+        Alert(alerts[language][0] + " " + alerts[language][19])
         return
     }
     if (document.getElementById("filenameS").value == "") {
-        Alert("escreva um titulo para seu arquivo de imagem .png")
+        Alert(alerts[language][20])
         return
     }
-    Alert("Seu arquivo esta sendo preparado.<br> Por favor, aguarde...")
+    Alert(alerts[language][21] + "<br>" + alerts[language][17])
 
     let exp = document.createElement("canvas")
     exp.width = canvas.width * len
@@ -178,14 +178,11 @@ Ajude também a divulguar:</b><br>
 
 function copyPix() {
     var copyText = document.getElementById("myInput");
-    // Select the text field
     copyText.select();
     copyText.setSelectionRange(0, 99999); // For mobile devices
 
     navigator.clipboard.writeText(copyText.value);
-
-    // Alert the copied text
-    Alert("Chave PIX copiada: " + copyText.value);
+    Alert(alerts[language][15] + " " + copyText.value);
 }
 function createAvatar(id = 0, onde = "bio2") {
 
@@ -206,3 +203,61 @@ var usuarios = [{
     link: "https://diegoferraribruno.github.io",
     bio: "Pai, artista, designer, programador",
 }]
+
+function export2txt() {
+    const originalData = {
+        members: [{
+            name: "cliff",
+            age: "34"
+        },
+        {
+            name: "ted",
+            age: "42"
+        },
+        {
+            name: "bob",
+            age: "12"
+        }
+        ]
+    };
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(comandosb, null, 2)], {
+        type: "text/plain"
+    }));
+    a.setAttribute("download", "data.txt");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+var text
+var openFile = function (event) {
+    Alert(alerts[language][22] + "<br>" + alerts[language][17])
+    var input = event.target;
+
+    var reader = new FileReader();
+    reader.onload = function () {
+        text = JSON.parse(reader.result)
+        comandosb = []
+        let len = text.length
+        console.log(len)
+        for (i = 0; i < len; i++) {
+            workingframe = i
+            comandos = []
+            comandos = text[i]
+            comandosb[i] = comandos
+            comandosExec()
+            animacao[workingframe] = canvas.toDataURL('image/png')
+            //save_frame()
+            // adicionaQuadro()
+
+        }
+        for (i = 0; i <= len; i++) {
+            setTimeout(() => {
+                next_frame()
+            }, 200 * i)
+        }
+        setTimeout(() => text = "", len * 300)
+    }
+    reader.readAsText(input.files[0]);
+};

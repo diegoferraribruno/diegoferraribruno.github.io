@@ -9,9 +9,9 @@ function stopMotion() {
         document.getElementById("stopMotion").innerHTML = ' <span class="bot">📷<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">🎥</span></span>'
 
         canvas.style.opacity = 1
-        Alert("Modo foto única 📷.");
+        Alert(alerts[language][2]);
     } else {
-        Alert("Modo sequencia de quadros 🎥 🎞️.");
+        Alert(alerts[language][3]);
         document.getElementById("stopMotion").innerHTML = ' <span class="bot">🎥<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span></span>'
         canvas.style.opacity = 0.3
     }
@@ -48,12 +48,12 @@ function camera() {
         if (stop_motion == true) {
             botao2.innerHTML = "🎞️"
             videoC.style.opacity = 0.6
-            Alert("Modo sequencia de quadros 🎞️.");
+            Alert(alerts[language][3]);
 
             canvas.style.opacity = 0.3
         } else {
             botao2.innerHTML = ' <span class="bot">📷<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">🎥</span></span>'
-            Alert("Modo foto 📷.");
+            Alert(alerts[language][2]);
             videoC.style.opacity = 1
             canvas.style.opacity = 1
         }
@@ -66,7 +66,7 @@ function camera() {
             !"mediaDevices" in navigator ||
             !"getUserMedia" in navigator.mediaDevices
         ) {
-            Alert("Camera API is not available in your browser");
+            Alert(alerts[language][4]);
             return;
         }
 
@@ -179,16 +179,16 @@ async function tirafoto() {
                     if (stop_motion == false) {
                         removeVideo();
                     } else {
-                        
-                        setTimeout(() => {                          
-                             new_frame()
+
+                        setTimeout(() => {
+                            new_frame()
                         }, 200)
                     }
                 }, 20)
             }
         }
     }
-   
+
 
     setTimeout(() => {
         fotografando = true
@@ -434,6 +434,6 @@ async function initializeCamera() {
 
     } catch (err) {
         console.log(err)
-        Alert("Could not access the camera");
+        Alert(alerts[language][5]);
     }
 }

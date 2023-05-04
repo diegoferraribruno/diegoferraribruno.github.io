@@ -96,7 +96,7 @@ function cut() {
 function cortarAnima(x1, y1, x2, y2) {
     setTimeout(() => {
         removeClass()
-        Alert("recortando o quadro, aguarde.")
+        Alert(alerts[language][16] + "<br>" + alerts[language][17])
     }
         , 10)
 
@@ -220,19 +220,19 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
         document.getElementById("bplayer" + i).style.marginTop = - H - 4 + "px"
     }
 
-   /* document.getElementById("player").style.height = H + "px"
-    document.getElementById("player").style.width = W + "px"
-    document.getElementById("player").style.backgroundSize = "cover";
-
-    if (W > window.innerWidth) {
-        let escala = (window.innerWidth - 8) / W
-
-        document.getElementById("player").style.height = H * escala + "px"
-        document.getElementById("player").style.width = W * escala + "px"
-        document.getElementById("player").style.left = "4px"
-        document.getElementById("player").style.top = "4px"
-
-    }*/
+    /* document.getElementById("player").style.height = H + "px"
+     document.getElementById("player").style.width = W + "px"
+     document.getElementById("player").style.backgroundSize = "cover";
+ 
+     if (W > window.innerWidth) {
+         let escala = (window.innerWidth - 8) / W
+ 
+         document.getElementById("player").style.height = H * escala + "px"
+         document.getElementById("player").style.width = W * escala + "px"
+         document.getElementById("player").style.left = "4px"
+         document.getElementById("player").style.top = "4px"
+ 
+     }*/
     if (W < screen.width || H < screen.height) {
         zoomIndex = 0;
         modeTo("zoomx");

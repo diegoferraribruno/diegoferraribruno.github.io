@@ -68,7 +68,7 @@ function applyFX(fx) {
     removeClass()
     setTimeout(() => {
         save_frame()
-        Alert('Efeito Salvo')
+        Alert(alerts[language][14])
         removeClass()
 
     }, 300)

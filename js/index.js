@@ -143,5 +143,5 @@ function copyPix() {
     navigator.clipboard.writeText(copyText.value);
 
     // Alert the copied text
-    Alert("Chave PIX copiada: " + copyText.value);
+    Alert(alerts[language][15] + copyText.value);
 }

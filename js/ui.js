@@ -80,11 +80,11 @@ var checkOrientation = function () {
 
         let escala = (window.innerWidth - 8) / canvas.width
 
-     /*   document.getElementById("player").style.height = H * escala + "px"
-        document.getElementById("player").style.width = W * escala + "px"
-        document.getElementById("player").style.left = "4px"
-        document.getElementById("player").style.top = "4px"
-*/
+        /*   document.getElementById("player").style.height = H * escala + "px"
+           document.getElementById("player").style.width = W * escala + "px"
+           document.getElementById("player").style.left = "4px"
+           document.getElementById("player").style.top = "4px"
+   */
         // orientation changed, do your magic here
     }
 };
@@ -139,7 +139,7 @@ function Fundo(qual) {
             "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
         );
         if (item == null || item == "") {
-            Alert("fundo do app removido");
+            Alert(alerts[language][23]);
             canvasDiv.style.backgroundImage = `none`;
         } else {
             canvasDiv.style.backgroundImage = `url(${item})`;
@@ -191,13 +191,13 @@ function resizeScreen() {
     }
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";
-   /* if (document.getElementById("player").style.height > window.innerWidth) {
-        let escala = (window.innerWidth - 8) / canvas.width
-
-        document.getElementById("player").style.height = canvas.height * escala + "px"
-        document.getElementById("player").style.width = canvas.width * escala + "px"
-        document.getElementById("player").style.left = "4px"
-        document.getElementById("player").style.top = "4px"
-    }*/
+    /* if (document.getElementById("player").style.height > window.innerWidth) {
+         let escala = (window.innerWidth - 8) / canvas.width
+ 
+         document.getElementById("player").style.height = canvas.height * escala + "px"
+         document.getElementById("player").style.width = canvas.width * escala + "px"
+         document.getElementById("player").style.left = "4px"
+         document.getElementById("player").style.top = "4px"
+     }*/
     setTimeout(() => comandosExec(), 40)
 }

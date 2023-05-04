@@ -25,6 +25,7 @@
                 <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
                     onmouseleave="redoTEnd()">↪️</span>
                 <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">🛟</span>
+                <span id="localize" title="change language" class="mais" onclick="localize()">🇧🇷</span>
 
 
             </div>
@@ -48,8 +49,10 @@
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
 
                 <span id="imagem" title="adicionar imagem" class="mais" onmousedown="mostraMenu('imagem')">
-                    <span style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
-                            style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;"> 📂</span></span>
+                    <span
+                        style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
+                            style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
+                            📂</span></span>
                 </span>
             </div>
             <div id="ui_filme"></div>
@@ -400,9 +403,11 @@
             </div>
             <div id="menuimagem" class="fundobranco submenu aparece menu">
                 <span class="botao" title="fechar menu enviar imagem" onmousedown="removeClass()">
-                    <span style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
-                        style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;"> 📂</span></span>
-            
+                    <span
+                        style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
+                            style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
+                            📂</span></span>
+
                     Carregar
                     imagem /
                     upload
@@ -484,6 +489,8 @@
                     <br> Unir quadro com fundo <input type="checkbox" id="unir"><br>
                     Título: <input id="filenameS" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo"
                         value="anima" onfocus="this.value=''"> <span onclick="export_anim()" class="bot"> 🛟 </span>
+                    <span class="botao"><button onclick="export2txt()">Exportar projeto</button><br>
+                        importar projeto<input type='file' accept='text/plain' onchange='openFile(event)'></span>
             </div>
 
 
@@ -597,6 +604,7 @@
 
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
+    <script type="text/javascript" src="js/localize.js"></script>
     <script type="text/javascript" src="js/zoom.js"></script>
     <script type="text/javascript" src="js/input.js"></script>
     <script type="text/javascript" src="js/camera.js"></script>
