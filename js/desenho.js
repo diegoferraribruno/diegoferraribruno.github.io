@@ -82,7 +82,9 @@ function exec(coma = 0) {
                 exec(coma)
                 break;
             case "FX":
-                context.filter = filters[comandos[coma][1]]
+                // alert("filtro" + filters[comandos[coma][1]])
+                context.filter = "none"
+                context.filter = console.log(filters[comandos[coma][1]])
                 coma++
                 exec(coma)
                 break;

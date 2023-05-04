@@ -26,30 +26,31 @@ function startup() {
     console.log(event.key)
     if (event.key === "Enter" && mode == "recortar") {
       cortar();
-    }else  if (event.key === "+") {
-    console.log("mais um")
+    } else if (event.key === "+") {
+      console.log("mais um")
 
-     new_frame()
-    }else  if (event.key === "Delete") {
+      new_frame()
+    } else if (event.key === "Delete") {
       removeFrame()
-    }else  if (event.key === "Enter" && mode == "cam") {
+    } else if (event.key === "Enter" && mode == "cam") {
       tirafoto()
-    }   else  if (event.key === "ArrowRight") {
+    } else if (event.key === "ArrowRight") {
       event.preventDefault()
       next_frame()
-    }else    if (event.key === "ArrowLeft") {
+    } else if (event.key === "ArrowLeft") {
       event.preventDefault()
 
-        prev_frame()
-  } else    if (event.code === "Space") {
-    if (mode == "play"){stop();}else{play();}
-} else    if (event.key === "Escape" && mode == "cam") {
-  removeVideo();}
-  else    if (event.key === "Escape") {
-    removeClass()
-  window.parent.focus()
-} ;
-}
+      prev_frame()
+    } else if (event.code === "Space") {
+      if (mode == "play") { stop(); } else { play(); }
+    } else if (event.key === "Escape" && mode == "cam") {
+      removeVideo();
+    }
+    else if (event.key === "Escape") {
+      removeClass()
+      window.parent.focus()
+    };
+  }
   modeTo("pintar")
   removeClass();
 
@@ -116,6 +117,7 @@ function startup() {
     apresenta()
 
   }, 1600);
+  setTimeout(() => localize(), 160)
 }
 
 

@@ -1,13 +1,16 @@
 let vers = [{
-    versao: "2.2",
+    versao: "2.2.1",
     notas: [
+        'Localization!<span style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">' +
+        '🇬🇧<span style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 18px;">' +
+        '🇧🇷</span></span> (Not this text yet...)',
         "!Desfazer e reafazer funcionando para cada quadro!",
         "Player agora utiliza o canvas do cursor para mostar a animação",
         "atalhos no teclado: Delete (quadro), + Novo quadro, Espaço (play7stop), setas para os lados trocam o quadro da animação",
         "todos os comandos tiveram que ser reorganizados para funcionar com o historico e nao somente com imagens. provavelmente vai dar muito problema ainda."
     ]
 
-},{
+}, {
     versao: "2.0.5",
     notas: [
         "troquei o botao do salvar por 🛟",

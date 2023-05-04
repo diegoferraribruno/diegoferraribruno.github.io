@@ -26,8 +26,6 @@ function FX(fx, onde) {
 
         }
         updateCanvasBack()
-        /* comando = ["FX", fx]
-         comandos.push(comando)*/
 
     } else {
         onde.filter = filters[fx]
@@ -66,7 +64,12 @@ function applyFX(fx) {
     let confirm = document.getElementById("confirm")
     confirm.parentElement.removeChild(confirm)
     removeClass()
+
+
+    // comandosParaComandosb()
     setTimeout(() => {
+        comando = ["FX", fx]
+        comandos.unshift(comando)
         save_frame()
         Alert(alerts[language][14])
         removeClass()
