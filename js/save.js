@@ -205,59 +205,12 @@ var usuarios = [{
 }]
 
 function export2txt() {
-    const originalData = {
-        members: [{
-            name: "cliff",
-            age: "34"
-        },
-        {
-            name: "ted",
-            age: "42"
-        },
-        {
-            name: "bob",
-            age: "12"
-        }
-        ]
-    };
-
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([JSON.stringify(comandosb, null, 2)], {
         type: "text/plain"
     }));
-    a.setAttribute("download", "data.txt");
+    a.setAttribute("download", "data.art");
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
 }
-var text
-var openFile = function (event) {
-    Alert(alerts[language][22] + "<br>" + alerts[language][17])
-    var input = event.target;
-
-    var reader = new FileReader();
-    reader.onload = function () {
-        text = JSON.parse(reader.result)
-        comandosb = []
-        let len = text.length
-        console.log(len)
-        for (i = 0; i < len; i++) {
-            workingframe = i
-            comandos = []
-            comandos = text[i]
-            comandosb[i] = comandos
-            comandosExec()
-            animacao[workingframe] = canvas.toDataURL('image/png')
-            //save_frame()
-            // adicionaQuadro()
-
-        }
-        for (i = 0; i <= len; i++) {
-            setTimeout(() => {
-                next_frame()
-            }, 200 * i)
-        }
-        setTimeout(() => text = "", len * 300)
-    }
-    reader.readAsText(input.files[0]);
-};

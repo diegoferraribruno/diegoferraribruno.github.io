@@ -436,9 +436,9 @@
             </div>
             <div id="menuimagem" class="fundobranco submenu aparece menu">
                 <span class="close" title="fechar menu enviar imagem" onmousedown="removeClass()">❎</span>
-                <span class="botao">
-                    <txt name="50"> Importar projeto</txt>
-                    <input type='file' accept='text/plain' onchange='openFile(event)'>
+                <span class="botao">📂
+                    <txt name="50" class="wip"> Importar projeto</txt>
+                    <input type='file' accept='.art' onchange='openFile(event)'>
                 </span>
 
                 <span class="botao"> <span
@@ -519,8 +519,10 @@
                 </span>
             </div>
             <div id="menusalvar" class="fundobranco submenu">
-                <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🛟 Salvar / save<span
-                        class="close">❎</span></span>
+                <span class="close" title="fechar menu apagar" onmousedown="removeClass()">❎</span>
+                <span class="botao" onclick="export2txt()">
+                    🛟<txt name="49" class="wip">Exportar projeto .art</txt>
+                </span>
                 <span class="botao">🛟 🖼️ <txt name="43">Salvar quadro atual</txt> <br>
                     <txt name="44">Título:</txt> <input id="filename" type="text" alt="Nome do arquivo"
                         placeholder="Nome do arquivo" value="desenho" onfocus="this.value=''"> <span
@@ -535,17 +537,12 @@
                     <txt name="48">Título:</txt> <input id="filenameS" type="text" alt="Nome do arquivo"
                         placeholder="Nome do arquivo" value="anima" onfocus="this.value=''"> <span
                         onclick="export_anim()" class="bot"> 🛟 </span>
-                    <span class="botao"><button onclick="export2txt()">
-                            <txt name="49">Exportar projeto</txt>
-                        </button>
-
-                    </span>
             </div>
 
 
             <div id="menurecortar" class="fundobranco submenu">
                 <span class="botao">✂️<span class="close" onmousedown="removeClass()">❎</span>
-                    <txt name="50">salvar antes?</txt>
+                    <txt name="50">Salvar antes?</txt>
                     <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')"> 🛟
                     </span>
                 </span>

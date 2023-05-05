@@ -287,8 +287,6 @@ function createColorBrush() {
     brushCount++
 }
 
-createColorBrush()
-
 function selectBrush(numero) {
     removeClass('selectedBr')
     document.getElementById("br" + numero).classList.add("selectedBr")

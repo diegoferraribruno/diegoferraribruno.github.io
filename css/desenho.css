@@ -714,3 +714,7 @@ input[type="range"] {
 #globalComposite {
     font-size: 24px;
 }
+
+.wip {
+    text-decoration: line-through;
+}

@@ -93,3 +93,36 @@ function importSprite(e) {
         }
     }
 }
+
+
+var projeto
+var openFile = function (event) {
+    Alert(alerts[language][22] + "<br>" + alerts[language][17])
+    var input = event.target;
+
+    var reader = new FileReader();
+    reader.onload = function () {
+        projeto = JSON.parse(reader.result)
+        comandosb = []
+        let len = projeto.length
+        console.log(len)
+        for (i = 0; i < len; i++) {
+            workingframe = i
+            comandos = []
+            comandos = projeto[i]
+            comandosb[i] = comandos
+            comandosExec()
+            animacao[workingframe] = canvas.toDataURL('image/png')
+            //save_frame()
+            // adicionaQuadro()
+
+        }
+        for (i = 0; i <= len; i++) {
+            setTimeout(() => {
+                next_frame()
+            }, 200 * i)
+        }
+        setTimeout(() => projeto = "", len * 300)
+    }
+    reader.readAsText(input.files[0]);
+};
