@@ -253,8 +253,9 @@ function desenha(
             break;
         case "f":
             comando = ["f", GCO, X, Y, eoX, eoY, strokeColor]
+            blob = dataURItoBlob(X)
             let myImg = document.createElement("img");
-            myImg.src = URL.createObjectURL(X)
+            myImg.src = URL.createObjectURL(blob)
             myImg.onload = function () {
                 let oldGCO = context.globalCompositeOperation
                 changeGCO(globalComposite)

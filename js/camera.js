@@ -166,11 +166,11 @@ async function tirafoto() {
         if (
             !isCanvasBlank(canvasV)
         ) {
-            img_b64 = canvasV.toDataURL("image/png");
+            let img_b64 = canvasV.toDataURL("image/png");
             blob = dataURItoBlob(img_b64)
             if (blob != undefined) {
 
-                desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+                desenha("f", globalComposite, img_b64, offsetW, offsetH, canvas.height, canvas.width)
                 setTimeout(() => {
                     // updateCanvasBack();
                     swapImg = canvas.toDataURL('image/png');
