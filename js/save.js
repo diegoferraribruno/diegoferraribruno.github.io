@@ -205,8 +205,15 @@ var usuarios = [{
 }]
 
 function export2txt() {
+
+    let pacote = {
+        "newBrushes": newBrushes,
+        "customBrushes": customBrushes,
+        "comandosb": comandosb
+    }
+
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(comandosb, null, 2)], {
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(pacote, null, 2)], {
         type: "text/plain"
     }));
     a.setAttribute("download", "data.art");
