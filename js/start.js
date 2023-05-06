@@ -11,12 +11,9 @@ function startup() {
   window.addEventListener("resize", checkOrientation, false);
   window.addEventListener("orientationchange", checkOrientation, false);
   document.getElementById('inputSprite').addEventListener('change', importSprite);
-  setTimeout(() => createColorBrush(), 0)
-
-  // (optional) Android doesn't always fire orientationChange on 180 degree turns
   setInterval(checkOrientation, 2000);
 
-  document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(detail) {
+  document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(event) {
     trocaEmoji(event.detail.unicode);
     emojipicker();
   });
