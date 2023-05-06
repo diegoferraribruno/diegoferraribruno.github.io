@@ -272,7 +272,7 @@ function selectBrush(numero) {
     changeBrush(numero)
 }
 var changedBrush = false
-var brushName = "16hsla(0,0%,0%,1)"
+var brushName = "1-6-hsla(0,0%,0%,1)"
 
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     brushName = "" + numero + "-" + tam + "-" + cor

@@ -102,27 +102,46 @@ var openFile = function (event) {
 
     var reader = new FileReader();
     reader.onload = function () {
+        newBrushes = {}
         projeto = JSON.parse(reader.result)
-        comandosb = []
-        let len = projeto.length
-        console.log(len)
-        for (i = 0; i < len; i++) {
-            workingframe = i
-            comandos = []
-            comandos = projeto[i]
-            comandosb[i] = comandos
-            comandosExec()
-            animacao[workingframe] = canvas.toDataURL('image/png')
-            //save_frame()
-            // adicionaQuadro()
 
+        //brushes
+        console.log(projeto["newBrushes"])
+        let brushes = Object.keys(projeto["newBrushes"])
+        let lenb = brushes.length
+        Alert("🖌️ x " + lenb)
+        for (i = 0; i < lenb; i++) {
+            let brush = projeto["newBrushes"][brushes[i]]
+            changedBrush = false;
+            console.log("brush:" + brush[1])
+            changeBrush(brush[1], brush[2], brush[3])
+            setTimeout(() => setStrokeColor(brush[3]), 120)
+            setTimeout(() => setStrokeSize(brush[2]), 80)
         }
-        for (i = 0; i <= len; i++) {
-            setTimeout(() => {
-                next_frame()
-            }, 200 * i)
-        }
-        setTimeout(() => projeto = "", len * 300)
+        setTimeout(() => {
+            //comandosb
+            let len = projeto["comandosb"].length
+            comandosb = []
+            for (i = 0; i < len; i++) {
+                workingframe = i
+                comandos = []
+                comandos = projeto["comandosb"][i]
+                comandosb[i] = comandos
+                animacao[workingframe] = canvas.toDataURL('image/png')
+                //save_frame()
+                // adicionaQuadro()
+                comandosExec()
+
+            }
+            for (i = 0; i <= len; i++) {
+                setTimeout(() => {
+                    next_frame()
+                }, 400 * i)
+            }
+            changeBrush()
+        }, 100 * lenb)
+        console.log(projeto)
+        //setTimeout(() => projeto = "", len * 300)
     }
     reader.readAsText(input.files[0]);
 };

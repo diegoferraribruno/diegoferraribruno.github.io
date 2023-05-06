@@ -71,6 +71,7 @@ function handleStart(evt) {
     removeClass();
     cursor.style.opacity = 0.4
     changedBrush = false;
+
     evt.preventDefault();
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
@@ -95,7 +96,7 @@ function handleStart(evt) {
     if (mode == "zoomx") {
         isGrabing = true;
     }
-    if (mode == "pintar" || mode == "apagar" || mode == "cores" ) {
+    if (mode == "pintar" || mode == "apagar" || mode == "cores") {
         canvasBack.classList.add("esconde")
         isDrawing = true
         mouseOver = true;
@@ -258,7 +259,7 @@ function handleMove(evt) {
         canvasBack.ctx.fillText("🔎", x, y)
 
     }
-    if (mode == "play"){
+    if (mode == "play") {
         canvasBack.classList.remove("esconde")
     }
 
@@ -338,7 +339,7 @@ function handleEnd(evt) {
         desenhaRetangulo()
     }
     mostra()
-    if (mode != "play"){
+    if (mode != "play") {
 
         mouseOver = false;
         setTimeout(() => {
@@ -349,7 +350,7 @@ function handleEnd(evt) {
                 isSelecting = false;
             }
         }, 500);
-    }   else{
+    } else {
         canvasBack.classList.remove("esconde")
     }
 }
