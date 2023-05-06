@@ -24,33 +24,44 @@ function startup() {
   counter = setInterval(() => undoing(), 70)
   window.onkeydown = function (event) {
     //on enter key
-    console.log(event.key)
-    if (event.key === "Enter" && mode == "recortar") {
-      cortar();
-    } else if (event.key === "+") {
-      console.log("mais um")
+    let activeEl = document.activeElement
+    console.log(activeEl.tagName, activeEl.type)
+    if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
+      if (event.key === "Enter" && mode == "recortar") {
+        cortar();
+      } else if (event.key === "Enter" && mode == "cam") {
+        tirafoto()
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault()
+        next_frame()
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault()
+        prev_frame()
 
-      new_frame()
-    } else if (event.key === "Delete") {
-      removeFrame()
-    } else if (event.key === "Enter" && mode == "cam") {
-      tirafoto()
-    } else if (event.key === "ArrowRight") {
-      event.preventDefault()
-      next_frame()
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault()
+      } else if (event.key === "Escape" && mode == "cam") {
+        removeVideo();
+      }
+      else if (event.key === "Escape") {
+        removeClass()
+        window.parent.focus()
+      } else if (event.key === "z") {
+        modeTo("zoomx")
+      } else if (event.key === "p" || event.key === "b") {
+        modeTo("pintar")
+        removeClass()
+      } else if (event.key === "e") {
+        modeTo("apagar")
+        removeClass()
+      } else if (event.code === "Space") {
+        if (mode == "play") { stop(); } else { play(); }
+      } else if (event.key === "+") {
+        console.log("mais um")
+        new_frame()
+      } else if (event.key === "Delete") {
+        removeFrame()
+      }
 
-      prev_frame()
-    } else if (event.code === "Space") {
-      if (mode == "play") { stop(); } else { play(); }
-    } else if (event.key === "Escape" && mode == "cam") {
-      removeVideo();
     }
-    else if (event.key === "Escape") {
-      removeClass()
-      window.parent.focus()
-    };
   }
   modeTo("pintar")
   removeClass();

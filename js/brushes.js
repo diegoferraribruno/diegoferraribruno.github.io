@@ -10,7 +10,6 @@ var linejoin = "round";
 var lineJoinsCount = 0;
 const lineJoins = ["miter", "round"];
 var newBrushes = {}
-var brushCount = 0
 var lastbrush = 1
 var brushMode = 1
 let brushesImg = {}
@@ -54,7 +53,7 @@ function customBrush() {
 }
 
 function criaCustom() {
-    i = basicBrushes.length
+    let i = basicBrushes.length
 
     let newNewBrush2 = new Image();
     //newNewBrush2.crossOrigin = "anonymous"
@@ -170,7 +169,7 @@ function mudaCor(valor) {
     criaPaleta();
     desenha("CB", lastbrush,
         strokeWidth, strokeColor,
-        "" + lastbrush + strokeWidth + strokeColor)
+        "" + lastbrush + "-" + strokeWidth + "-" + strokeColor)
 
 }
 
@@ -259,23 +258,6 @@ function setStrokeSize(value = strokeWidth) {
         document.getElementById("tpx").value = value;
     }
 
-
-
-    /*else if (mode == "apagar") {
-        estrokeWidth = value;
-        tamanho.style.width = estrokeWidth * zoomFactor + "px";
-        tamanho.style.height = estrokeWidth * zoomFactor + "px";
-        tamanho.style.lineHeight = estrokeWidth * zoomFactor + "px";
-        tamanho.style.backgroundImage = 'none'
-    
-        tamanho.style.marginTop =
-            (estrokeWidth / 2) * zoomFactor * -1 + "px";
-        tamanho.style.marginLeft =
-            (estrokeWidth * zoomFactor * -1) / 2 + "px";
-        stroke = estrokeWidth;
-        document.getElementById("tpx2").value = value;
-    }*/
-
     changeBrush()
     if (mode == "picker" || mode == "recortar") {
         cursor.style.width = 1 + "px";
@@ -283,9 +265,6 @@ function setStrokeSize(value = strokeWidth) {
     }
 }
 
-function createColorBrush() {
-    brushCount++
-}
 
 function selectBrush(numero) {
     removeClass('selectedBr')
@@ -296,7 +275,7 @@ var changedBrush = false
 var brushName = "16hsla(0,0%,0%,1)"
 
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
-    brushName = "" + numero + tam + cor
+    brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
     brushMode = 1
     var brushCanva = document.getElementById("brushCanva")
@@ -305,34 +284,19 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     brushCanva.height = tam
     brushCanva.width = tam
     brushCtx.fillStyle = cor;
-
     brushCtx.fillRect(0, 0, tam, tam)
     brushCtx.globalCompositeOperation = 'destination-in'
     brushCtx.drawImage(basicBrushes[numero], 0, 0, tam, tam)
     brushCtx.globalCompositeOperation = 'destination-over'
     setTimeout(() => {
         let newNewBrush = new Image();
-        // newBrush.crossOrigin = "anonymous"
         newNewBrush.src = brushCanva.toDataURL("image/png");
         newBrush.src = newNewBrush.src
-
-        /* if (context.globalCompositeOperation == "destination-out") {
-             setTimeout(() => cursor.style.backgroundImage = 'none', 800)
-             cursor.style.opacity = 0.1
-         } else {
-             cursor.style.backgroundImage = 'url("' + newNewBrush.src + '")';
-             cursor.style.opacity = 0.8
- 
-         }*/
         if (changedBrush == false) {
-
-
             changedBrush = true;
             let existe = document.getElementById(brushName)
             if (!existe && mode != "picker") {
-
                 setTimeout(() => {
-
                     let favbrush = newBrushes[brushName][0]
                     favbrush.style.maxHeight = "32px";
 
@@ -360,7 +324,6 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
 
 
         }
-        brushCount++
         newBrushes[brushName] = [newNewBrush, numero, strokeWidth, strokeColor]
     }, 20)
 }
@@ -386,7 +349,7 @@ function clearBrushes() {
     })
 }
 
-function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin, cont = context) {
+function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, brushName, cont = context) {
     let start
     let end
     if (pixelGood) {
@@ -414,7 +377,7 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, linejoin, cont = co
             y = redondo(y) + 1
         }
         //console.log( x, y, angle, z );
-        cont.drawImage(newBrushes[linejoin][0], x, y, stroke, stroke);
+        cont.drawImage(newBrushes[brushName][0], x, y, stroke, stroke);
     }
     //  }
 }
