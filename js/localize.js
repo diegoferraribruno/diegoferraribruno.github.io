@@ -151,7 +151,8 @@ let textos = {
         "70": "balancço do branco e cor Manual",
         "71": "Temperatura da cor",
         "72": "Balanço do branco ",
-        "73": "Modo de Foco Manual"
+        "73": "Modo de Foco Manual",
+        "74": "Novo projeto"
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -225,6 +226,7 @@ let textos = {
         "70": "Manual white Balance / color",
         "71": "ColorTemperature",
         "72": "White balace ",
-        "73": "Manual Focus Mode"
+        "73": "Manual Focus Mode",
+        "74": "New Project"
     }
 }

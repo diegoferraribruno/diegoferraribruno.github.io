@@ -131,12 +131,12 @@ function startup() {
 }
 
 function loading() {
-  setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 200)
-  setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 600)
-  setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 1000)
-  setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>Art!</span>", 1400)
-  setTimeout(() => { document.getElementById("carregando").classList.add("desaparece"); }, 1500)
-  setTimeout(() => { removeElement("carregando") }, 1800)
+  /* setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 200)
+   setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 600)
+   setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 1000)
+   setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>Art!</span>", 1400)*/
+  //setTimeout(() => { document.getElementById("carregando").classList.add("desaparece"); }, 3000)
+  setTimeout(() => { removeElement("carregandoa") }, 10000)
 }
 
 function apresenta() {

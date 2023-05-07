@@ -18,7 +18,6 @@ var globalComposite = "source-over";
 var mode = "cores";
 var ultimoToque = { x: canvas.width / 2, y: canvas.height / 2 };
 var mouseOver = false;
-var layer1 = [];
 const win = document.getElementById("canvas_window");
 const desenhoDiv = document.getElementById("desenho_div");
 const images = []

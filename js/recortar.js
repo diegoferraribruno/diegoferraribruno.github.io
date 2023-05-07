@@ -207,6 +207,7 @@ function tamanhom() {
 }
 
 function tamanho(W = document.getElementById("largura").value, H = document.getElementById("altura").value) {
+    removeElement("carregando")
     canvasDiv.style.width = W + "px"; //add 30px for scroll
     canvasDiv.style.height = H + "px"; //add 30px for scroll
     canvas.width = W;

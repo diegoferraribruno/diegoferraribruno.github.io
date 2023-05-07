@@ -678,15 +678,61 @@
 
             </div>
         </div>
-        <div id="carregando" class="carregando">
-            <img src="favicon.ico"
-                style="display: block; position: relative; margin-top: auto; margin-bottom: auto; margin-left: auto;margin-right: auto;">
-            <div id="carregandoc" style="font-size: 160px; color: #ffffffcc;">
-            </div>
-        </div>
-
     </div>
+    <div id="carregando" class="carregandoa">
+        <div id="carregandob">
 
+            <span class="botao" style="font-size: 0.8em;" title="formatos">
+                <a href="index.html" class="mais"><img src="favicon.ico" style="width: 36px; height: 36px;"></a>
+                <span id="cam" title="foto" class="mais"
+                    onmousedown="modeTo('cam'), removeElement('carregando')">📷</span>
+                <span id="imagem" title="adicionar imagem" class="mais" onmousedown="mostraMenu('imagem')">
+                    <span
+                        style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
+                            style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
+                            📂</span></span>
+                </span>
+                <span id="localizeA" title="change language" class="mais" onclick="localize()">
+                    <span
+                        style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">🇬🇧<span
+                            style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">🇧🇷</span></span>
+
+                </span>
+                <span class="mais" title="fechar menu tamanho da tela"
+                    onmousedown="removeElement('carregando')">❎</span>
+
+            </span><br>
+            <span class="botao" style="font-size: 0.6em;" title="formatos">
+                <span class="mais">🎨</span>
+                <txt name="74">Novo Projeto</txt><br>
+                <span onmousedown="tamanho(32,32)">32x32
+                    <span style="border: 2px solid gray; width: 4px; height: 4px; display: inline-block;"></span>
+                </span>
+                <span onmousedown="tamanho(64,64)">64x64
+                    <span style="border: 2px solid gray; width: 7px; height: 7px; display: inline-block;"></span>
+                </span>
+                <span onmousedown="tamanho(128,128)">128x128
+                    <span style="border: 2px solid gray; width: 12px; height: 12px; display: inline-block;"></span>
+                </span><br>
+                <span onmousedown="tamanho(320,320)">320x320
+                    <span style="border: 2px solid gray; width: 16px; height: 16px; display: inline-block;"></span>
+                </span>
+                <span onmousedown="tamanho(640,360)">SD: 640x360
+                    <span style="border: 2px solid gray; width: 16px; height: 9px; display: inline-block;"></span>
+                </span><br>
+                <span onmousedown="tamanho(1280,720)">HD: 1280x720*
+                    <span style="border: 2px solid gray; width: 32px; height: 18px; display: inline-block;"></span>
+                </span><br>
+                <span onmousedown="tamanho(1920,1080)">FullHD: 1920x1080*
+                    <span style="border: 2px solid gray; width: 44px; height: 25px; display: inline-block;"></span>
+                </span>
+                <span onmousedown="tamanho(1080,1080)">Ig:1080x1080*
+                    <span style="border: 2px solid gray; width: 25px; height: 25px; display: inline-block;"></span>
+                </span>
+                <br>* <txt name="13">limite 30 quadros</txt><br>
+            </span>
+        </div>
+    </div>
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/localize.js"></script>

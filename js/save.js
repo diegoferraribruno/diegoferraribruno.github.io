@@ -217,8 +217,13 @@ function export2txt() {
            expBrush[brushes[i]] = bob
           }
         */
+        let canvasInfo = {
+            "width": canvas.width,
+            "height": canvas.height
+        }
         let pacote = {
             // "expBrush": expBrush,
+            "canvasInfo": canvasInfo,
             "newBrushes": newBrushes,
             "customBrushes": customBrushes,
             "comandosb": comandosb

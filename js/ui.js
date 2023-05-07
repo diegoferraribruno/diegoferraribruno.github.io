@@ -14,7 +14,9 @@ function closeAlert() {
 
 function removeElement(id) {
     var elem = document.getElementById(id);
-    return elem.parentNode.removeChild(elem);
+    if (elem) {
+        return elem.parentNode.removeChild(elem);
+    }
 }
 
 function toggleSelect(id) {

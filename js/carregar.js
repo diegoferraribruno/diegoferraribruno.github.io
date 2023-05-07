@@ -97,20 +97,24 @@ function importSprite(e) {
 
 var projeto
 var openFile = function (event) {
-    Alert(alerts[language][22] + "<br>" + alerts[language][17])
     var input = event.target;
 
     var reader = new FileReader();
     reader.onload = function () {
+        removeClass()
         newBrushes = {}
         projeto = JSON.parse(reader.result)
+
+        tamanho(projeto["canvasInfo"]["width"], projeto["canvasInfo"]["height"])
 
         //brushes
         let brushNames = Object.keys(projeto["newBrushes"])
         let lenb = brushNames.length
         console.log(brushNames)
+        removeElement("carregando")
+        let len = projeto["comandosb"].length
 
-        Alert("🖌️ x " + lenb)
+        Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>🖌️ x " + lenb + " <br> 🖼️  x " + len, len * 2)
         for (i = 0; i < lenb; i++) {
             let brushs = projeto["newBrushes"][brushNames[i]]
             //let blob = dataURItoBlob(projeto["expBrush"][brushNames[i]])
@@ -176,7 +180,10 @@ var openFile = function (event) {
             }
             //changeBrush()
         }, 400 * (lenb + 2))
-        setTimeout(() => favBrush('1-6-hsla(0,0%,0%,1)'), 1000 * (lenb + 3))
+        setTimeout(() => {
+            favBrush('1-6-hsla(0,0%,0%,1)');
+        }
+            , 1000 * (lenb + 3))
     }
     reader.readAsText(input.files[0]);
 };
