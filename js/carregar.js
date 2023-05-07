@@ -96,6 +96,7 @@ function importSprite(e) {
 
 
 var projeto
+let construct = {}
 var openFile = function (event) {
     Alert(alerts[language][22] + "<br>" + alerts[language][17])
     var input = event.target;
@@ -106,17 +107,44 @@ var openFile = function (event) {
         projeto = JSON.parse(reader.result)
 
         //brushes
-        console.log(projeto["newBrushes"])
-        let brushes = Object.keys(projeto["newBrushes"])
-        let lenb = brushes.length
+        let brushNames = Object.keys(projeto["newBrushes"])
+        let lenb = brushNames.length
+        console.log(brushNames)
+
         Alert("🖌️ x " + lenb)
         for (i = 0; i < lenb; i++) {
-            let brush = projeto["newBrushes"][brushes[i]]
-            changedBrush = false;
-            console.log("brush:" + brush[1])
-            changeBrush(brush[1], brush[2], brush[3])
-            setTimeout(() => setStrokeColor(brush[3]), 120)
-            setTimeout(() => setStrokeSize(brush[2]), 80)
+            let brushs = projeto["newBrushes"][brushNames[i]]
+            //let blob = dataURItoBlob(projeto["expBrush"][brushNames[i]])
+            /*
+                        let newNewBrush = document.createElement("img");
+                        console.log("img", projeto["expBrush"][brushNames[i]])
+                        newNewBrush.src = projeto["expBrush"][brushNames[i]]
+                        //   console.log("brush:" + brush[1])
+                        let propert = [
+                            newNewBrush,
+                            brushs[1],
+                            brushs[2],
+                            brushs[3],
+                        ]
+                        lastbrush = brush[1]
+                        strokeWidth = brush[2]
+                        strokeColor = brush[3]
+                        newBrushes[brushNames[i]] = propert
+                        */
+
+            setTimeout(() => {
+                changedBrush = false;
+                selectedBasicBrush = brushs[1]
+                strokeWidth = brushs[2]
+                strokeColor = brushs[3]
+
+                changeBrush(brushs[1],
+                    brushs[2],
+                    brushs[3],)
+            }
+                , i * 60 + 10)
+            // setTimeout(() => setStrokeColor(brush[3]), 120)
+            //setTimeout(() => setStrokeSize(brush[2]), 80)
         }
         setTimeout(() => {
             //comandosb
@@ -130,18 +158,17 @@ var openFile = function (event) {
                 animacao[workingframe] = canvas.toDataURL('image/png')
                 //save_frame()
                 // adicionaQuadro()
-                comandosExec()
 
             }
+            comandosExec()
             for (i = 0; i <= len; i++) {
                 setTimeout(() => {
                     next_frame()
-                }, 400 * i)
+                }, 400 * (i + 2))
             }
-            changeBrush()
-        }, 100 * lenb)
-        console.log(projeto)
-        //setTimeout(() => projeto = "", len * 300)
+            //changeBrush()
+        }, 400 * (lenb + 2))
+        setTimeout(() => modeTo("pintar"), lenb * 500)
     }
     reader.readAsText(input.files[0]);
 };

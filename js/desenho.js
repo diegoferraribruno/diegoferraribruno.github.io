@@ -93,9 +93,9 @@ function exec(coma = 0) {
                 exec(coma)
                 break;
             case "CB":
-                strokeWidth = comandos[coma][2]
-                strokeColor = comandos[coma][3]
-                changeBrush(comandos[coma][1], comandos[coma][2], comandos[coma][3])
+                // strokeWidth = comandos[coma][2]
+                // strokeColor = comandos[coma][3]
+                //  changeBrush(comandos[coma][1], comandos[coma][2], comandos[coma][3])
                 coma++;
                 exec(coma)
                 break;

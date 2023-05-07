@@ -205,19 +205,31 @@ var usuarios = [{
 }]
 
 function export2txt() {
-
-    let pacote = {
-        "newBrushes": newBrushes,
-        "customBrushes": customBrushes,
-        "comandosb": comandosb
-    }
-
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(pacote, null, 2)], {
-        type: "text/plain"
-    }));
-    a.setAttribute("download", "data.art");
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    setStrokeColor(strokeColor)
+    //changeBrush()
+    setTimeout(() => {
+        let brushes = Object.keys(newBrushes)
+        let lenb = brushes.length
+        Alert("salvando 🖌️ x " + lenb)
+        //let expBrush = {}
+        /*   for (i = 0; i < lenb; i++) {
+            let bob = newBrushes[brushes[i]][0].src
+           expBrush[brushes[i]] = bob
+          }
+        */
+        let pacote = {
+            // "expBrush": expBrush,
+            "newBrushes": newBrushes,
+            "customBrushes": customBrushes,
+            "comandosb": comandosb
+        }
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(pacote, null, 2)], {
+            type: "text/plain"
+        }));
+        a.setAttribute("download", "data.art");
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }, 400)
 }

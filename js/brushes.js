@@ -274,7 +274,7 @@ function selectBrush(numero) {
 var changedBrush = false
 var brushName = "1-6-hsla(0,0%,0%,1)"
 
-function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
+function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
     brushMode = 1
@@ -288,6 +288,10 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     brushCtx.globalCompositeOperation = 'destination-in'
     brushCtx.drawImage(basicBrushes[numero], 0, 0, tam, tam)
     brushCtx.globalCompositeOperation = 'destination-over'
+}
+
+function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
+    createNewBrush(numero, tam, cor)
     setTimeout(() => {
         let newNewBrush = new Image();
         newNewBrush.src = brushCanva.toDataURL("image/png");
