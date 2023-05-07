@@ -616,7 +616,7 @@ input[type="range"] {
 
     display: inline-block;
     vertical-align: top;
-    height: 48px;
+    max-height: 66px;
     width: 320px;
 }
 
