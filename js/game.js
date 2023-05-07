@@ -2,9 +2,9 @@ let id = "player"
 var user = {
     id: "player",
     name: "",
-    serverPlayerPos: { x: 120, y: 400 },
-    left: 140,
-    top: 400,
+    serverPlayerPos: { x: 180, y: 660 },
+    left: 172,
+    top: 710,
     width: 32,
     height: 100,
     face: 0,
@@ -35,8 +35,8 @@ document.addEventListener('keyup', keyUp);
 let mode = "move"
 let oldpos = { x: 0, y: 0 }
 let player = {
-    top: 400,
-    left: 140,
+    top: 710,
+    left: 172,
     width: 32,
     height: 100,
     hidden: true

@@ -278,6 +278,21 @@ body {
     display: none;
 }
 
+.desaparece {
+
+    animation: animateDesaparece 0.4s;
+}
+
+@keyframes animateDesaparece {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
 .aparece {
     visibility: visible;
     box-shadow: 2px 2px 3px #9d9ca2ee,

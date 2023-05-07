@@ -116,6 +116,7 @@ function startup() {
 
   initStrokeRange()
   setTimeout(() => resizeScreen(), 10)
+  night()
   setTimeout(() => {
     canvas.addEventListener("pointerdown", handleStart);
     canvas.addEventListener("pointerup", handleUp);
@@ -124,11 +125,19 @@ function startup() {
     canvas.addEventListener("pointerleave", handleEnd);
     // limpaCabeca();
     apresenta()
-
-  }, 1600);
+  }, 1000);
   setTimeout(() => localize(), 160)
+  loading()
 }
 
+function loading() {
+  setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 200)
+  setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 600)
+  setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 1000)
+  setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>Art!</span>", 1400)
+  setTimeout(() => { document.getElementById("carregando").classList.add("desaparece"); }, 1500)
+  setTimeout(() => { removeElement("carregando") }, 1800)
+}
 
 function apresenta() {
   if (comandos.length == 0 && mode == "pintar") {
