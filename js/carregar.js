@@ -135,6 +135,7 @@ var openFile = function (event) {
             setTimeout(() => {
                 changedBrush = false;
                 selectedBasicBrush = brushs[1]
+                lastbrush = brushs[1]
                 strokeWidth = brushs[2]
                 strokeColor = brushs[3]
 
@@ -160,15 +161,23 @@ var openFile = function (event) {
                 // adicionaQuadro()
 
             }
-            comandosExec()
-            for (i = 0; i <= len; i++) {
+            if (i > 1) {
+
+                for (i = 0; i <= len; i++) {
+                    setTimeout(() => {
+                        //   favBrush(newBrushes[0].key)
+                        next_frame()
+                    }, 400 * (i + 2))
+                }
+            } else {
                 setTimeout(() => {
-                    next_frame()
-                }, 400 * (i + 2))
+                    comandosExec()
+                    setTimeout(() => { save_frame() }, 200)
+                }, 600)
             }
             //changeBrush()
         }, 400 * (lenb + 2))
-        setTimeout(() => modeTo("pintar"), lenb * 500)
+        setTimeout(() => favBrush('1-6-hsla(0,0%,0%,1)'), lenb * 1000)
     }
     reader.readAsText(input.files[0]);
 };

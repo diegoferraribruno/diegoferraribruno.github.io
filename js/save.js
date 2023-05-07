@@ -205,8 +205,8 @@ var usuarios = [{
 }]
 
 function export2txt() {
-    setStrokeColor(strokeColor)
-    //changeBrush()
+    changedBrush = false
+    changeBrush()
     setTimeout(() => {
         let brushes = Object.keys(newBrushes)
         let lenb = brushes.length

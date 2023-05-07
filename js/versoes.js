@@ -1,4 +1,12 @@
 let vers = [{
+    versao: "2.2.4",
+    notas: [
+        'Localization fixes. Arrumei algumas traduções...' +
+        'salvar e carregar projeto quase funcionando corretamente.' +
+        'tela de loading e start no modo noturno'
+    ]
+
+}, {
     versao: "2.2.1",
     notas: [
         'Localization!<span style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">' +
