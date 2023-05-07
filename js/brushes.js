@@ -1,6 +1,5 @@
 // Pinceis Cor e Tamanho
 var favoritas = [];
-var stroke = 1;
 var hsla = [0, 0, 0, 1];
 var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
 var strokeWidth = 6;
@@ -254,7 +253,6 @@ function setStrokeSize(value = strokeWidth) {
             }
 
         }
-        stroke = strokeWidth;
         document.getElementById("tpx").value = value;
     }
 
@@ -353,7 +351,7 @@ function clearBrushes() {
     })
 }
 
-function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, brushName, cont = context) {
+function drawBrush(GCO, x1, y1, x2, y2, strokeColor, strokeWidth, brushName, cont = context) {
     let start
     let end
     if (pixelGood) {
@@ -363,25 +361,25 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, stroke, brushName, cont = c
         start = { x: x1, y: y1 }
         end = { x: x2, y: y2 }
     }
-    var halfBrushW = stroke / 2;
-    var halfBrushH = stroke / 2;
+    var halfBrushW = strokeWidth / 2;
+    var halfBrushH = strokeWidth / 2;
     var distance = parseInt(Trig.distanceBetween2Points(start, end));
     var angle = Trig.angleBetween2Points(start, end);
     var x, y;
     changeGCO(GCO);
-    cont.lineWidth = stroke;
+    cont.lineWidth = strokeWidth;
     /*var strokeImg = new Image();
     strokeImg.src = linejoin
     strokeImg.onload = function () {*/
     for (var z = 0; (z <= distance || z == 0); z++) {
         x = start.x + (Math.sin(angle) * z) - halfBrushW;
         y = start.y + (Math.cos(angle) * z) - halfBrushH;
-        if (stroke == 1) {
+        if (strokeWidth == 1) {
             x = redondo(x) + 1
             y = redondo(y) + 1
         }
         //console.log( x, y, angle, z );
-        cont.drawImage(newBrushes[brushName][0], x, y, stroke, stroke);
+        cont.drawImage(newBrushes[brushName][0], x, y, strokeWidth, strokeWidth);
     }
     //  }
 }

@@ -96,7 +96,6 @@ function importSprite(e) {
 
 
 var projeto
-let construct = {}
 var openFile = function (event) {
     Alert(alerts[language][22] + "<br>" + alerts[language][17])
     var input = event.target;
@@ -177,7 +176,7 @@ var openFile = function (event) {
             }
             //changeBrush()
         }, 400 * (lenb + 2))
-        setTimeout(() => favBrush('1-6-hsla(0,0%,0%,1)'), lenb * 1000)
+        setTimeout(() => favBrush('1-6-hsla(0,0%,0%,1)'), 1000 * (lenb + 3))
     }
     reader.readAsText(input.files[0]);
 };

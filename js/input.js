@@ -118,7 +118,7 @@ function handleStart(evt) {
                 origin.x,
                 origin.y + 0.1,
                 strokeColor,
-                stroke,
+                strokeWidth,
                 linejoin
             );
         }
@@ -189,7 +189,7 @@ function handleMove(evt) {
                 origin.x,
                 origin.y,
                 strokeColor,
-                stroke,
+                strokeWidth,
                 linejoin
             );
 
@@ -241,7 +241,7 @@ function handleMove(evt) {
                 canvasBack.classList.remove("esconde")
                 canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvasBack.ctx.drawImage(newBrushes[brushName][0], x - (strokeWidth / 2), y - (strokeWidth / 2), stroke, stroke);
+                canvasBack.ctx.drawImage(newBrushes[brushName][0], x - (strokeWidth / 2), y - (strokeWidth / 2), strokeWidth, strokeWidth);
 
             }
         }
