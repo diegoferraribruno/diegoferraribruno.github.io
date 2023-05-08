@@ -20,7 +20,6 @@ function startup() {
   Fundo("none")
   counter = setInterval(() => undoing(), 70)
   window.onkeydown = function (event) {
-    //on enter key
     let activeEl = document.activeElement
     console.log(activeEl.tagName, activeEl.type)
     if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
@@ -133,18 +132,11 @@ function startup() {
 }
 
 function loading() {
-  /* setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 200)
-   setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 600)
-   setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 1000)
-   setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>Art!</span>", 1400)*/
-  //setTimeout(() => { document.getElementById("carregando").classList.add("desaparece"); }, 3000)
   setTimeout(() => { removeElement("carregandoa") }, 10000)
 }
 
 function apresenta() {
   if (comandos.length == 0 && mode == "pintar") {
-
-    // alert("desenha no xadrez")
     canvasFront.ctx.font = 24 + 'px serif';
     canvasFront.ctx.textAlign = "center";
     canvasFront.ctx.textBaseline = "middle";

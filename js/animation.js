@@ -2,15 +2,12 @@ var anime = document.getElementById("anime")
 var fps = 8
 var animacao = []
 
-
 var anime_menu = {
     "prev_frame()": ["⏮️", "Quadro anterior"],
     "play()": ["▶️", "Tocar Animação"],
     "next_frame()": ["⏭️", "Próximo quadro"],
     "swapL()": ["⬅️", "Mover quadro á esquerda"],
     "swapR()": ["➡️", "Mover quadro á direita"],
-    // "mostraMenu('anime')": ["⏱️", "Ajustes da Animação"],
-    //"new_frame()": ["➕", "Adiciona Quadro"],
     'lixeira()': ["🗑", "Arraste um quadro para apaga-lo"]
 }
 
@@ -19,12 +16,11 @@ function criaAnime() {
     var uiFilme = document.getElementById('ui_filme')
     let contador = document.createElement("div")
     var ui = document.createElement('div')
-
     anime.classList.add("anime")
-    //<!--🚀-->
     anime.innerHTML = ""
+
     Object.keys(anime_menu).forEach((key, index) => {
-        // setTimeout(() => {
+
         let item = document.createElement("div")
         item.setAttribute("onClick", key)
         item.id = key
@@ -32,7 +28,7 @@ function criaAnime() {
         item.title = anime_menu[key][1]
         item.classList.add("shadow", "bot")
         anime.appendChild(item)
-        //}, 80 * index)
+
     })
     anime.innerHTML += `<span id="new_frame()" title="Adiconar quadro á animação" class="bot" onclick="new_frame()"> <span class="bot">🎞️<span style="display: block; position: absolute; margin-top: -20px;
     font-size: 20px; line-height: 20px; background-color: ghostwhite; border-radius: 10px;">➕</span></span>
@@ -47,11 +43,9 @@ function criaAnime() {
     ui.setAttribute("onclick", "limpaAnime()")
     ui.innerHTML = "🎞️"
     ui.appendChild(contador)
-    // uiFilme.innerHTML = "<div  id='ui' class=' bot shadow ' title= onclick='limpaAnime()'> </div>"
     var filme = document.createElement('div')
     filme.id = "filme"
     filme.innerHTML = ""
-    //filme.style.display = "block"
     uiFilme.appendChild(ui)
     uiFilme.appendChild(filme)
 
@@ -61,7 +55,6 @@ setTimeout(() => {
     criaAnime();
     setTimeout(() => save_frame(), 350)
 }, 200)
-//setTimeout(() => { limpaAnime() }, 1200)
 
 function limpaAnime() {
     filme.classList.toggle("hideanime")
@@ -92,8 +85,6 @@ let workingframe = 0
 
 function new_frame() {
     undoLevel = 0
-    // let len = comandos.length
-
     save_frame()
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -130,10 +121,6 @@ function play() {
     save_frame()
     oldMode = mode;
     mode = "play";
-    /*   let len = comandos.length
-       if (len > 1) {
-           save_frame()
-       }*/
     if (animacao.length > 1) {
         document.getElementById("play()").innerHTML = ' <span onmousedown="stop()">⏹️</span>'
         clearInterval(inter);
@@ -142,20 +129,15 @@ function play() {
         canvasFront.ctx.globalCompositeOperation = 'destination-over'
         if (nightmode) {
             canvasFront.style.backgroundColor = "#333333"
-
         } else {
-
             canvasFront.style.backgroundColor = "#eeeeee"
         }
         inter = setInterval(() => {
-
             playing++;
             if (playing == animacao.length) {
                 playing = 0
             }
             playerPlay(playing);
-
-
         },
             1000 / fps)
     } else {
@@ -193,7 +175,6 @@ function changeFrame(frame) {
 
     if (frame > 2) {
         let old3 = frame - 3;
-        // document.getElementById("bplayer" + 4).style.backgroundImage = 'url("' + animacao[old3] + '")'
         var image3 = new Image;
         image3.src = animacao[old3]
         canvasBack.ctx.globalAlpha = 0.1
@@ -201,7 +182,6 @@ function changeFrame(frame) {
     }
     if (frame > 1) {
         let old2 = frame - 2
-        //document.getElementById("bplayer" + 2).style.backgroundImage = 'url("' + animacao[old2] + '")'
         var image2 = new Image;
         image2.src = animacao[old2]
         canvasBack.ctx.globalAlpha = 0.15
@@ -211,14 +191,12 @@ function changeFrame(frame) {
         let old1 = frame - 1;
         var image1 = new Image;
         image1.src = animacao[old1]
-        // document.getElementById("bplayer" + 1).style.backgroundImage = 'url("' + animacao[old1] + '")'
         canvasBack.ctx.globalAlpha = 0.2
         canvasBack.ctx.drawImage(image1, 0, 0, canvasBack.width, canvasBack.height)
     }
     if (background_anim == true) {
         document.getElementById("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
         document.getElementById("bplayer0").style.backgroundPositionX = - canvas.width * workingframe + "px"
-        //document.getElementById("bplayer0").style.backgroundSize = "initial"
     }
     if (frame < animacao.length - 1) {
         let old4 = frame + 1;
@@ -226,7 +204,6 @@ function changeFrame(frame) {
         image4.src = animacao[old4]
         canvasBack.ctx.globalAlpha = 0.05
         canvasBack.ctx.drawImage(image4, 0, 0, canvasBack.width, canvasBack.height)
-        //   document.getElementById("bplayer" + 3).style.backgroundImage = 'url("' + animacao[old4] + '")'
     }
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -311,7 +288,7 @@ function removeFrame() {
         changeFrame(workingframe)
         comandosbParaComandos()
         document.getElementById("contador").innerHTML = workingframe
-        //}
+
     } else {
         comandos = []
         convertToImg()
@@ -319,7 +296,6 @@ function removeFrame() {
         comandosParaComandosb()
         save_frame()
         changeFrame(0)
-        //  Alert(alerts[language][0])
 
     }
     adicionaQuadro()
@@ -380,7 +356,6 @@ function adicionaQuadro() {
             let cont = document.createElement("div")
             cont.id = i
             cont.classList.add("quadrofilme", "light")
-            //           cont.style.backgroundImage = 'url("' + animacao[i] + '")';
             cont.addEventListener("dragover", dragOver);
             cont.addEventListener("drop", drop);
             let thumb = document.createElement("div")
@@ -399,7 +374,6 @@ function adicionaQuadro() {
             });
             thumb.addEventListener("dragstart", dragStart);
             thumb.addEventListener("dragend", dragEnd);
-            //filme.innerHTML += '<div class="numero naotoque" style="z-index:-1">' + i + '</div>'
             cont.appendChild(thumb)
             filme.appendChild(cont)
             setTimeout(() => {
@@ -408,11 +382,8 @@ function adicionaQuadro() {
                 document.getElementById("new_frame()").addEventListener("drop", drop);
                 document.getElementById("new_frame()").addEventListener("dragover", dragOver);
             }, 10)
-            /*   document.getElementById("clone").addEventListener("drop", drop);
-               document.getElementById("clone").addEventListener("dragover", dragOver);*/
         }
         scrollFilme()
-        //  filme.innerHTML += '<span class="bot" id="clone">🧬 </span>'
     }
         , 10)
 }
@@ -429,9 +400,6 @@ function lixeira() {
 }
 var dataTransfer = 0
 function dragStart(event) {
-    if (comandos.length > 1) {
-        //  save_frame()
-    }
     dataTransfer = parseInt(event.target.id, 10);
 }
 
@@ -458,7 +426,6 @@ function drop(event) {
             comandosb = []
             comandosParaComandosb()
             save_frame()
-            //  Alert(alerts[language][0])
 
         }
         comandos = []
@@ -486,16 +453,6 @@ function drop(event) {
 
 function quadrosVisiveis(numero) {
     canvasBack.classList.toggle("esconde")
-    /*    for (i = 0; i < 6; i++) {
-            if (i < numero) {
-    
-              //  document.getElementById("bplayer" + i).style.visibility = "visible"
-            } else {
-               // document.getElementById("bplayer" + i).style.visibility = "hidden"
-    
-            }
-    
-        }*/
     Alert("working on<br>trabalhando nisso")
 }
 

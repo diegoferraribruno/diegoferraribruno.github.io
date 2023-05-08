@@ -81,7 +81,6 @@ function exec(coma = 0) {
                 exec(coma)
                 break;
             case "FX":
-                // alert("filtro" + filters[comandos[coma][1]])
                 context.filter = "none"
                 context.filter = console.log(filters[comandos[coma][1]])
                 coma++
@@ -92,9 +91,6 @@ function exec(coma = 0) {
                 exec(coma)
                 break;
             case "CB":
-                // strokeWidth = comandos[coma][2]
-                // strokeColor = comandos[coma][3]
-                //  changeBrush(comandos[coma][1], comandos[coma][2], comandos[coma][3])
                 coma++;
                 exec(coma)
                 break;
@@ -527,7 +523,7 @@ function desenha(
 
             }
 
-            //context.drawImage(brush, X, Y, 8, 8);
+
             break;
 
 
@@ -538,7 +534,7 @@ function desenha(
         undoLevel = 0
         console.log("daqui pra frente..")
     }
-    //updatecanvasFront()
+
 }
 
 function changeGCO(GCO = globalComposite) {
@@ -574,10 +570,7 @@ function limpar(what) {
                 comandosb = []
                 comandosb.push(comandos)
                 workingframe = 0
-                /*     for (i = 0; i < 5; i++) {
-                       //  document.getElementById("bplayer" + i).style.backgroundImage = 'none'
-                     }
-                 */
+                document.getElementById("bplayer0").style.backgroundImage = 'none'
                 canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 save_frame()
@@ -588,7 +581,6 @@ function limpar(what) {
         }
     comandosExec()
 
-    // modeTo(oldMode)
 }
 
 let oldMode = mode;

@@ -189,27 +189,7 @@ function x2(w = document.getElementById("largura").value, h = document.getElemen
         `\t\t\t\t\t\t${w}px x ${h}px\n\n`
     );
     if (resultado === true) {
-        //dobra o tamanho do canva
         tamanho(w, h)
-        /*    zoomIndex = 0;
-            modeTo("zoomx");
-            canvasDiv.style.width = w + "px"; //add 30px for scroll
-            canvasDiv.style.height = h + "px"; //add 30px for scroll
-            canvas.width = w;
-            canvas.height = h;
-            console.log(canvasBack.width)
-            canvasBack.width = w;
-            console.log(canvasBack.width)
-    
-            canvasBack.height = h;
-            canvasFron.width = w;
-            canvasFront.height = h;
-            win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
-            win.style.height = parseInt(window.innerHeight, 10) - 42 + "px";
-            document.getElementById("largura").value = w
-            document.getElementById("altura").value = h
-        }
-        setTimeout(() => comandosExec(), 40)*/
     }
 
 }
@@ -235,25 +215,7 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
     canvasFront.width = W;
     canvasFront.height = H;
     canvasFront.style.marginLeft = -W + "px"
-    /*   for (i = 0; i < 6; i++) {
-         //  document.getElementById("bplayer" + i).style.width = W + "px"
-         //  document.getElementById("bplayer" + i).style.height = H + "px"
-         //  document.getElementById("bplayer" + i).style.marginTop = - H - 4 + "px"
-       }*/
 
-    /* document.getElementById("player").style.height = H + "px"
-     document.getElementById("player").style.width = W + "px"
-     document.getElementById("player").style.backgroundSize = "cover";
- 
-     if (W > window.innerWidth) {
-         let escala = (window.innerWidth - 8) / W
- 
-         document.getElementById("player").style.height = H * escala + "px"
-         document.getElementById("player").style.width = W * escala + "px"
-         document.getElementById("player").style.left = "4px"
-         document.getElementById("player").style.top = "4px"
- 
-     }*/
     if (W < screen.width || H < screen.height) {
         zoomIndex = 0;
         modeTo("zoomx");
