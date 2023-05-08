@@ -114,10 +114,10 @@ function night() {
     nightmode = !nightmode
     document.body.classList.toggle("dark")
     win.classList.toggle("fundo2night");
-    for (i = 0; i < 5; i++) {
-        document.getElementById("bplayer" + i).classList.toggle("fundo2night")
-        document.getElementById("bplayer" + i).classList.toggle("fundo2")
-    }
+    //for (i = 0; i < 5; i++) {
+    // document.getElementById("bplayer" + i).classList.toggle("fundo2night")
+    // document.getElementById("bplayer" + i).classList.toggle("fundo2")
+    //}
 
 
 }

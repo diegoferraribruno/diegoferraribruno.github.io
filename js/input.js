@@ -17,6 +17,18 @@ canvasFront.ctx.imageSmoothingEnabled = false
 document.getElementById("canvas_div").appendChild(canvasFront)
 let cursorShow = true
 
+var canvasBack = document.createElement("canvas")
+canvasBack.id = "canvasBack"
+canvasBack.width = canvas.width
+canvasBack.height = canvas.height
+canvasBack.ctx = canvasBack.getContext('2d', [{ willReadFrequently: false }])
+canvasBack.ctx.drawImage(canvas, 0, 0)
+canvasBack.style.position = "absolute"
+canvasBack.style.marginTop = "0px"
+canvasBack.style.marginLeft = -canvas.width + "px"
+canvasBack.classList.add("cursor") // importante!
+canvasBack.ctx.imageSmoothingEnabled = false
+document.getElementById("canvas_div").appendChild(canvasBack)
 
 function handleKeyUp(evt) {
     if (evt.keyCode === 16) {

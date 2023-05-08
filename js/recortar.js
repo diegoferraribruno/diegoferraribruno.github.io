@@ -113,6 +113,9 @@ function cortarAnima(x1, y1, x2, y2) {
             setTimeout(() => {
                 canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasBack.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+
                 setTimeout(() => { for (i = 0; i < len; i++) { changeFrame(i) } }, 200)
 
             }, 100)
@@ -126,6 +129,8 @@ function cortarAnima(x1, y1, x2, y2) {
         let H = y2 - y1
         canvasFront.width = W
         canvasFront.height = H
+        canvasBack.width = W
+        canvasBack.height = H
         imagem.width = W
         imagem.height = H
         blob = dataURItoBlob(animacao[frame]);
@@ -185,21 +190,29 @@ function x2(w = document.getElementById("largura").value, h = document.getElemen
     );
     if (resultado === true) {
         //dobra o tamanho do canva
-        zoomIndex = 0;
-        modeTo("zoomx");
-        canvasDiv.style.width = w + "px"; //add 30px for scroll
-        canvasDiv.style.height = h + "px"; //add 30px for scroll
-        canvas.width = w;
-        canvas.height = h;
-        win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 42 + "px";
-        document.getElementById("largura").value = w
-        document.getElementById("altura").value = h
+        tamanho(w, h)
+        /*    zoomIndex = 0;
+            modeTo("zoomx");
+            canvasDiv.style.width = w + "px"; //add 30px for scroll
+            canvasDiv.style.height = h + "px"; //add 30px for scroll
+            canvas.width = w;
+            canvas.height = h;
+            console.log(canvasBack.width)
+            canvasBack.width = w;
+            console.log(canvasBack.width)
+    
+            canvasBack.height = h;
+            canvasFron.width = w;
+            canvasFront.height = h;
+            win.style.width = parseInt(window.innerWidth, 10) - 60 + "px";
+            win.style.height = parseInt(window.innerHeight, 10) - 42 + "px";
+            document.getElementById("largura").value = w
+            document.getElementById("altura").value = h
+        }
+        setTimeout(() => comandosExec(), 40)*/
     }
-    setTimeout(() => comandosExec(), 40)
+
 }
-
-
 
 function tamanhom() {
     removeClass();
@@ -208,18 +221,25 @@ function tamanhom() {
 
 function tamanho(W = document.getElementById("largura").value, H = document.getElementById("altura").value) {
     removeElement("carregando")
+    canvasBack = document.getElementById("canvasBack")
     canvasDiv.style.width = W + "px"; //add 30px for scroll
     canvasDiv.style.height = H + "px"; //add 30px for scroll
     canvas.width = W;
     canvas.height = H;
+    canvasBack.width = W;
+    canvasBack.height = H;
+    canvasBack.style.marginLeft = -W + "px"
+    document.getElementById("bplayer0").style.width = W + "px"
+    document.getElementById("bplayer0").style.height = H + "px"
+    document.getElementById("bplayer0").style.marginTop = - H - 4 + "px"
     canvasFront.width = W;
     canvasFront.height = H;
     canvasFront.style.marginLeft = -W + "px"
-    for (i = 0; i < 6; i++) {
-        document.getElementById("bplayer" + i).style.width = W + "px"
-        document.getElementById("bplayer" + i).style.height = H + "px"
-        document.getElementById("bplayer" + i).style.marginTop = - H - 4 + "px"
-    }
+    /*   for (i = 0; i < 6; i++) {
+         //  document.getElementById("bplayer" + i).style.width = W + "px"
+         //  document.getElementById("bplayer" + i).style.height = H + "px"
+         //  document.getElementById("bplayer" + i).style.marginTop = - H - 4 + "px"
+       }*/
 
     /* document.getElementById("player").style.height = H + "px"
      document.getElementById("player").style.width = W + "px"

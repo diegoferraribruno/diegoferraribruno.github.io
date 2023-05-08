@@ -69,23 +69,22 @@ function limpaAnime() {
 
 
 function criaBackPlayer() {
-    for (i = 0; i < 6; i++) {
-        var player = document.createElement('div')
-        player.id = "bplayer" + i
-        player.style.display = "block"
-        player.style.width = canvas.width + "px"
-        player.style.height = canvas.height + "px"
-        player.style.position = "absolute"
-        player.style.marginTop = - canvas.height - 4 + "px"
-        player.classList.add("filter")
-        player.classList.add("filterlight")
-        player.classList.add("fundo2")
-        player.style.zIndex = -1 * i - 1
-        player.style.opacity = 0.4
-        document.getElementById("canvas_div").appendChild(player)
-    }
 
+    var player = document.createElement('div')
+    player.id = "bplayer0"
+    player.style.display = "block"
+    player.style.width = canvas.width + "px"
+    player.style.height = canvas.height + "px"
+    player.style.position = "absolute"
+    player.style.marginTop = - canvas.height - 4 + "px"
+    player.classList.add("filter")
+    player.classList.add("filterlight")
+    player.classList.add("fundo2")
+    player.style.zIndex = -1 * i - 1
+    player.style.opacity = 0.4
+    document.getElementById("canvas_div").appendChild(player)
 }
+
 
 criaBackPlayer()
 
@@ -178,6 +177,8 @@ function playerPlay(frame) {
 
     canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
     let blabla = new Image()
     blabla.src = animacao[frame]
     canvasFront.ctx.drawImage(blabla, 0, 0)
@@ -186,34 +187,47 @@ function playerPlay(frame) {
 function changeFrame(frame) {
     let old0 = frame
     workingframe = frame
-
+    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
     document.getElementById("contador").innerHTML = workingframe;
-    if (frame > 0) {
-        let old1 = frame - 1;
-        document.getElementById("bplayer" + 1).style.backgroundImage = 'url("' + animacao[old1] + '")'
+
+    if (frame > 2) {
+        let old3 = frame - 3;
+        // document.getElementById("bplayer" + 4).style.backgroundImage = 'url("' + animacao[old3] + '")'
+        var image3 = new Image;
+        image3.src = animacao[old3]
+        canvasBack.ctx.globalAlpha = 0.1
+        canvasBack.ctx.drawImage(image3, 0, 0, canvasBack.width, canvasBack.height)
     }
     if (frame > 1) {
         let old2 = frame - 2
-        document.getElementById("bplayer" + 2).style.backgroundImage = 'url("' + animacao[old2] + '")'
+        //document.getElementById("bplayer" + 2).style.backgroundImage = 'url("' + animacao[old2] + '")'
+        var image2 = new Image;
+        image2.src = animacao[old2]
+        canvasBack.ctx.globalAlpha = 0.15
+        canvasBack.ctx.drawImage(image2, 0, 0, canvasBack.width, canvasBack.height)
     }
-    if (frame > 2) {
-        let old3 = frame - 3;
-        document.getElementById("bplayer" + 4).style.backgroundImage = 'url("' + animacao[old3] + '")'
-    }
-    if (frame < animacao.length - 1) {
-        let old4 = frame + 1;
-        document.getElementById("bplayer" + 3).style.backgroundImage = 'url("' + animacao[old4] + '")'
-    }
-    if (frame < animacao.length - 2) {
-        let old5 = frame + 2;
-        document.getElementById("bplayer" + 5).style.backgroundImage = 'url("' + animacao[old5] + '")'
+    if (frame > 0) {
+        let old1 = frame - 1;
+        var image1 = new Image;
+        image1.src = animacao[old1]
+        // document.getElementById("bplayer" + 1).style.backgroundImage = 'url("' + animacao[old1] + '")'
+        canvasBack.ctx.globalAlpha = 0.2
+        canvasBack.ctx.drawImage(image1, 0, 0, canvasBack.width, canvasBack.height)
     }
     if (background_anim == true) {
         document.getElementById("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
         document.getElementById("bplayer0").style.backgroundPositionX = - canvas.width * workingframe + "px"
         //document.getElementById("bplayer0").style.backgroundSize = "initial"
     }
-
+    if (frame < animacao.length - 1) {
+        let old4 = frame + 1;
+        var image4 = new Image;
+        image4.src = animacao[old4]
+        canvasBack.ctx.globalAlpha = 0.05
+        canvasBack.ctx.drawImage(image4, 0, 0, canvasBack.width, canvasBack.height)
+        //   document.getElementById("bplayer" + 3).style.backgroundImage = 'url("' + animacao[old4] + '")'
+    }
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
@@ -471,16 +485,18 @@ function drop(event) {
 
 
 function quadrosVisiveis(numero) {
-    for (i = 0; i < 6; i++) {
-        if (i < numero) {
-
-            document.getElementById("bplayer" + i).style.visibility = "visible"
-        } else {
-            document.getElementById("bplayer" + i).style.visibility = "hidden"
-
-        }
-
-    }
+    canvasBack.classList.toggle("esconde")
+    /*    for (i = 0; i < 6; i++) {
+            if (i < numero) {
+    
+              //  document.getElementById("bplayer" + i).style.visibility = "visible"
+            } else {
+               // document.getElementById("bplayer" + i).style.visibility = "hidden"
+    
+            }
+    
+        }*/
+    Alert("working on<br>trabalhando nisso")
 }
 
 

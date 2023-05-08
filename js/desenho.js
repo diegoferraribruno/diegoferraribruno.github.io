@@ -574,9 +574,12 @@ function limpar(what) {
                 comandosb = []
                 comandosb.push(comandos)
                 workingframe = 0
-                for (i = 0; i < 5; i++) {
-                    document.getElementById("bplayer" + i).style.backgroundImage = 'none'
-                }
+                /*     for (i = 0; i < 5; i++) {
+                       //  document.getElementById("bplayer" + i).style.backgroundImage = 'none'
+                     }
+                 */
+                canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 save_frame()
                 changeFrame(workingframe)
                 adicionaQuadro()
