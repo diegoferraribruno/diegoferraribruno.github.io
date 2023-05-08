@@ -48,7 +48,6 @@ function hidecustom() {
 }
 
 
-//function handleOrientation() {
 var previousOrientation = window.orientation;
 var checkOrientation = function () {
     if (window.orientation !== previousOrientation) {
@@ -67,8 +66,6 @@ var checkOrientation = function () {
 
             document.getElementById("menus").style.top = "100px";
 
-            // alert(`virou, ${screen.width} , ${screen.height}`)
-
         } else {
             document.getElementById("ferramentas").classList.remove("horizontal");
             document.getElementById("ferramentas2").classList.remove("horizontal2");
@@ -81,13 +78,6 @@ var checkOrientation = function () {
         win.style.height = parseInt(window.innerHeight, 10) - 20 + "px";
 
         let escala = (window.innerWidth - 8) / canvas.width
-
-        /*   document.getElementById("player").style.height = H * escala + "px"
-           document.getElementById("player").style.width = W * escala + "px"
-           document.getElementById("player").style.left = "4px"
-           document.getElementById("player").style.top = "4px"
-   */
-        // orientation changed, do your magic here
     }
 };
 
@@ -114,12 +104,6 @@ function night() {
     nightmode = !nightmode
     document.body.classList.toggle("dark")
     win.classList.toggle("fundo2night");
-    //for (i = 0; i < 5; i++) {
-    // document.getElementById("bplayer" + i).classList.toggle("fundo2night")
-    // document.getElementById("bplayer" + i).classList.toggle("fundo2")
-    //}
-
-
 }
 
 
@@ -164,10 +148,9 @@ function pixel() {
     pixelGood = !pixelGood
     context.imageSmoothingEnabled = !context.imageSmoothingEnabled;
     canvasFront.ctx.imageSmoothingEnabled = !canvasFront.ctx.imageSmoothingEnabled
+    canvasBack.ctx.imageSmoothingEnabled = !canvasBack.ctx.imageSmoothingEnabled
 
 }
-pixel()
-
 
 function resizeScreen() {
     desenhoDiv.style.width = window.innerWidth + "px";
@@ -193,13 +176,5 @@ function resizeScreen() {
     }
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";
-    /* if (document.getElementById("player").style.height > window.innerWidth) {
-         let escala = (window.innerWidth - 8) / canvas.width
- 
-         document.getElementById("player").style.height = canvas.height * escala + "px"
-         document.getElementById("player").style.width = canvas.width * escala + "px"
-         document.getElementById("player").style.left = "4px"
-         document.getElementById("player").style.top = "4px"
-     }*/
     setTimeout(() => comandosExec(), 40)
 }
