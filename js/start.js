@@ -117,6 +117,8 @@ function startup() {
   initStrokeRange()
   setTimeout(() => resizeScreen(), 10)
   night()
+  pixel()
+
   setTimeout(() => {
     canvas.addEventListener("pointerdown", handleStart);
     canvas.addEventListener("pointerup", handleUp);
