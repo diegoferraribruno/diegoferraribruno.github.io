@@ -210,7 +210,7 @@ function exec(coma = 0) {
                 break;
         }
     } else {
-        // updateCanvasBack()
+        // updatecanvasFront()
         executing = false
     }
 
@@ -538,7 +538,7 @@ function desenha(
         undoLevel = 0
         console.log("daqui pra frente..")
     }
-    //updateCanvasBack()
+    //updatecanvasFront()
 }
 
 function changeGCO(GCO = globalComposite) {
@@ -592,8 +592,8 @@ let oldMode = mode;
 
 async function modeTo(qual) {
     setTimeout(() => stop(), 300)
-    canvasBack.style.backgroundColor = "transparent"
-    canvasBack.filter = "none"
+    canvasFront.style.backgroundColor = "transparent"
+    canvasFront.filter = "none"
     if (mode != qual) {
         if (qual != "recortar") {
             removeClass("flip")
@@ -627,8 +627,8 @@ async function modeTo(qual) {
     switch (qual) {
         case "FX":
 
-            canvasBack.classList.remove("esconde")
-            updateCanvasBack()
+            canvasFront.classList.remove("esconde")
+            updatecanvasFront()
             mode = "FX";
             break;
         case "salvar":

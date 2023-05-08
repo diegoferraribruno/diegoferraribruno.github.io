@@ -104,8 +104,8 @@ function new_frame() {
 
     let work = []
     comandosb.splice(workingframe, 0, work);
-    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     comandos = []
@@ -138,15 +138,15 @@ function play() {
     if (animacao.length > 1) {
         document.getElementById("play()").innerHTML = ' <span onmousedown="stop()">⏹️</span>'
         clearInterval(inter);
-        canvasBack.classList.remove("esconde")
-        canvasBack.ctx.globalAlpha = 1;
-        canvasBack.ctx.globalCompositeOperation = 'destination-over'
+        canvasFront.classList.remove("esconde")
+        canvasFront.ctx.globalAlpha = 1;
+        canvasFront.ctx.globalCompositeOperation = 'destination-over'
         if (nightmode) {
-            canvasBack.style.backgroundColor = "#333333"
+            canvasFront.style.backgroundColor = "#333333"
 
         } else {
 
-            canvasBack.style.backgroundColor = "#eeeeee"
+            canvasFront.style.backgroundColor = "#eeeeee"
         }
         inter = setInterval(() => {
 
@@ -168,19 +168,19 @@ function stop() {
         mode = oldMode
     }
     clearInterval(inter);
-    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    canvasBack.style.backgroundColor = "transparent"
+    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvasFront.style.backgroundColor = "transparent"
     document.getElementById("play()").innerHTML = "▶️"
 }
 
 function playerPlay(frame) {
 
-    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
     let blabla = new Image()
     blabla.src = animacao[frame]
-    canvasBack.ctx.drawImage(blabla, 0, 0)
+    canvasFront.ctx.drawImage(blabla, 0, 0)
 }
 
 function changeFrame(frame) {

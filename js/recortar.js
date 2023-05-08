@@ -79,7 +79,7 @@ function cortar(autoCortar = false) {
 function cut() {
     var cropEnd = { x: 0, y: 0 };
     setTimeout(() => {
-        canvasBack.classList.remove("esconde")
+        canvasFront.classList.remove("esconde")
         if (cropEnd.x == 0) {
 
             desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22b000")
@@ -111,8 +111,8 @@ function cortarAnima(x1, y1, x2, y2) {
             framesToCanvas(x1, y1, x2, y2, i)
         } else {
             setTimeout(() => {
-                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasBack.ctx.clearRect(0, 0, canvasBack.width, canvasBack.height);
+                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
                 setTimeout(() => { for (i = 0; i < len; i++) { changeFrame(i) } }, 200)
 
             }, 100)
@@ -124,23 +124,23 @@ function cortarAnima(x1, y1, x2, y2) {
         let imagem = new Image()
         let W = x2 - x1
         let H = y2 - y1
-        canvasBack.width = W
-        canvasBack.height = H
+        canvasFront.width = W
+        canvasFront.height = H
         imagem.width = W
         imagem.height = H
         blob = dataURItoBlob(animacao[frame]);
         imagem.src = URL.createObjectURL(blob);
         imagem.onload =
             function () {
-                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasBack.ctx.clearRect(0, 0, canvasBack.width, canvasBack.height);
-                canvasBack.ctx.drawImage(imagem, x1, y1, x2, y2, 0, 0, x2, y2);
+                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                canvasFront.ctx.drawImage(imagem, x1, y1, x2, y2, 0, 0, x2, y2);
                 canvasToFrame(frame)
             }
     }
 
     function canvasToFrame(frame = 0) {
-        swapImg = canvasBack.toDataURL('image/png');
+        swapImg = canvasFront.toDataURL('image/png');
         newAnima[frame] = swapImg
         blobb = dataURItoBlob(swapImg)
         comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
@@ -212,9 +212,9 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
     canvasDiv.style.height = H + "px"; //add 30px for scroll
     canvas.width = W;
     canvas.height = H;
-    canvasBack.width = W;
-    canvasBack.height = H;
-    canvasBack.style.marginLeft = -W + "px"
+    canvasFront.width = W;
+    canvasFront.height = H;
+    canvasFront.style.marginLeft = -W + "px"
     for (i = 0; i < 6; i++) {
         document.getElementById("bplayer" + i).style.width = W + "px"
         document.getElementById("bplayer" + i).style.height = H + "px"
@@ -248,25 +248,25 @@ function tamanho(W = document.getElementById("largura").value, H = document.getE
 
 function desenhaRetangulo(x0 = origin.x, y0 = origin.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff2200") {
 
-    canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvasBack.ctx.globalCompositeOperation = "source-over"
-    canvasBack.ctx.lineWidth = 0.5
-    canvasBack.ctx.strokeStyle = cor;
+    canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvasFront.ctx.globalCompositeOperation = "source-over"
+    canvasFront.ctx.lineWidth = 0.5
+    canvasFront.ctx.strokeStyle = cor;
 
-    canvasBack.ctx.stroke();
-    canvasBack.ctx.setLineDash([1, 1]);
-    canvasBack.ctx.beginPath();
-    canvasBack.ctx.rect(
+    canvasFront.ctx.stroke();
+    canvasFront.ctx.setLineDash([1, 1]);
+    canvasFront.ctx.beginPath();
+    canvasFront.ctx.rect(
         x0,
         y0,
         (x1 - x0),
         (y1 - y0)
     );
-    canvasBack.ctx.stroke();
+    canvasFront.ctx.stroke();
 
 
 }
 function limpaRetangulo() {
-    canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvasBack.ctx.globalCompositeOperation = "source-over"
+    canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvasFront.ctx.globalCompositeOperation = "source-over"
 }

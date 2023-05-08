@@ -3,18 +3,18 @@ let keyY = false
 let keyCtrl = false
 var shiftHeld = false;
 
-var canvasBack = document.createElement("canvas")
-canvasBack.id = "canvasBack"
-canvasBack.width = canvas.width
-canvasBack.height = canvas.height
-canvasBack.ctx = canvasBack.getContext('2d', [{ willReadFrequently: false }])
-canvasBack.ctx.drawImage(canvas, 0, 0)
-canvasBack.style.position = "absolute"
-canvasBack.style.marginTop = "0px"
-canvasBack.style.marginLeft = -canvas.width + "px"
-canvasBack.classList.add("cursor") // importante!
-canvasBack.ctx.imageSmoothingEnabled = false
-document.getElementById("canvas_div").appendChild(canvasBack)
+var canvasFront = document.createElement("canvas")
+canvasFront.id = "canvasFront"
+canvasFront.width = canvas.width
+canvasFront.height = canvas.height
+canvasFront.ctx = canvasFront.getContext('2d', [{ willReadFrequently: false }])
+canvasFront.ctx.drawImage(canvas, 0, 0)
+canvasFront.style.position = "absolute"
+canvasFront.style.marginTop = "0px"
+canvasFront.style.marginLeft = -canvas.width + "px"
+canvasFront.classList.add("cursor") // importante!
+canvasFront.ctx.imageSmoothingEnabled = false
+document.getElementById("canvas_div").appendChild(canvasFront)
 let cursorShow = true
 
 
@@ -82,7 +82,7 @@ function handleStart(evt) {
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     if (mode === "recortar") {
-        canvasBack.classList.remove("esconde")
+        canvasFront.classList.remove("esconde")
         /*  swapImg = canvas.toDataURL("image/png");
           blob = dataURItoBlob(swapImg);
           tempImg = document.createElement("img");
@@ -97,7 +97,7 @@ function handleStart(evt) {
         isGrabing = true;
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
-        canvasBack.classList.add("esconde")
+        canvasFront.classList.add("esconde")
         isDrawing = true
         mouseOver = true;
 
@@ -138,7 +138,7 @@ function handleStart(evt) {
 
     }
     if (mode == "picker") {
-        canvasBack.classList.add("esconde")
+        canvasFront.classList.add("esconde")
         isPicking = true
     }
     if (mode == "play") {
@@ -163,12 +163,12 @@ function handleMove(evt) {
         cropEnd.x = x
         cropEnd.y = y
         desenhaRetangulo();
-        canvasBack.ctx.font = 24 + 'px serif';
-        canvasBack.ctx.fillText("✂️", x, y)
+        canvasFront.ctx.font = 24 + 'px serif';
+        canvasFront.ctx.fillText("✂️", x, y)
     } else if (mode == "recortar") {
-        canvasBack.classList.remove("esconde")
-        canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasFront.classList.remove("esconde")
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (cropEnd.x == 0) {
 
             desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22ff00")
@@ -176,7 +176,7 @@ function handleMove(evt) {
 
             desenhaRetangulo();
         }
-        canvasBack.ctx.fillText("✂️", x, y)
+        canvasFront.ctx.fillText("✂️", x, y)
     }
     if (isDrawing === true && isPicking == false) {
         mouseOver = true;
@@ -238,29 +238,29 @@ function handleMove(evt) {
         if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
 
             if (cursorShow == true && !isDrawing) {
-                canvasBack.classList.remove("esconde")
-                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvasBack.ctx.drawImage(newBrushes[brushName][0], x - (strokeWidth / 2), y - (strokeWidth / 2), strokeWidth, strokeWidth);
+                canvasFront.classList.remove("esconde")
+                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvasFront.ctx.drawImage(newBrushes[brushName][0], x - (strokeWidth / 2), y - (strokeWidth / 2), strokeWidth, strokeWidth);
 
             }
         }
 
 
     }
-    if (mode == "zoomx") {// canvasBack
-        canvasBack.classList.remove("esconde")
-        canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasBack.ctx.font = 18 + 'px serif';
-        canvasBack.ctx.textAlign = "center";
-        canvasBack.ctx.textBaseline = "middle";
-        canvasBack.ctx.globalAlpha = 0.5;
-        canvasBack.ctx.fillText("🔎", x, y)
+    if (mode == "zoomx") {// canvasFront
+        canvasFront.classList.remove("esconde")
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasFront.ctx.font = 18 + 'px serif';
+        canvasFront.ctx.textAlign = "center";
+        canvasFront.ctx.textBaseline = "middle";
+        canvasFront.ctx.globalAlpha = 0.5;
+        canvasFront.ctx.fillText("🔎", x, y)
 
     }
     if (mode == "play") {
-        canvasBack.classList.remove("esconde")
+        canvasFront.classList.remove("esconde")
     }
 
 }
@@ -351,7 +351,7 @@ function handleEnd(evt) {
             }
         }, 500);
     } else {
-        canvasBack.classList.remove("esconde")
+        canvasFront.classList.remove("esconde")
     }
 }
 

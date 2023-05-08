@@ -3,7 +3,7 @@ let fx = 0
 
 function FX(fx, onde) {
     if (onde == undefined) {
-        onde = canvasBack.ctx
+        onde = canvasFront.ctx
         confirmFX(fx, filters[fx])
     }
     if (fx != 0) {
@@ -25,18 +25,18 @@ function FX(fx, onde) {
             onde.filter = filters[fx] + "(" + quanto + ")"
 
         }
-        updateCanvasBack()
+        updatecanvasFront()
 
     } else {
         onde.filter = filters[fx]
     }
 
 }
-function updateCanvasBack() {
-    canvasBack.style.backgroundColor = "#ffffff"
-    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasBack.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    canvasBack.ctx.drawImage(canvas, 0, 0)
+function updatecanvasFront() {
+    canvasFront.style.backgroundColor = "#ffffff"
+    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvasFront.ctx.drawImage(canvas, 0, 0)
 }
 
 function confirmFX(fx, fxname) {
@@ -60,7 +60,7 @@ function applyFX(fx) {
 
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.drawImage(canvasBack, 0, 0)
+    context.drawImage(canvasFront, 0, 0)
     let confirm = document.getElementById("confirm")
     confirm.parentElement.removeChild(confirm)
     removeClass()
@@ -80,5 +80,5 @@ function cancelaFX() {
     let confirm = document.getElementById("confirm")
     confirm.parentElement.removeChild(confirm)
     mostraMenu("FX")
-    canvasBack.filter = filters[0]
+    canvasFront.filter = filters[0]
 }

@@ -15,7 +15,7 @@ function mostra() {
     document.body.style.cursor = "pointer";
     cursor.style.visibility = "hidden";
     if (mode != "recortar" && mode != "FX") {
-        canvasBack.classList.add("esconde")
+        canvasFront.classList.add("esconde")
     }
 }
 

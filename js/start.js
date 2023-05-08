@@ -143,16 +143,16 @@ function apresenta() {
   if (comandos.length == 0 && mode == "pintar") {
 
     // alert("desenha no xadrez")
-    canvasBack.ctx.font = 24 + 'px serif';
-    canvasBack.ctx.textAlign = "center";
-    canvasBack.ctx.textBaseline = "middle";
+    canvasFront.ctx.font = 24 + 'px serif';
+    canvasFront.ctx.textAlign = "center";
+    canvasFront.ctx.textBaseline = "middle";
     let len = texts[startText].length
     for (i = 0; i < len; i++) {
-      canvasBack.ctx.fillText(texts[startText][i], 160, 40 * i + 40)
+      canvasFront.ctx.fillText(texts[startText][i], 160, 40 * i + 40)
     }
     setTimeout(() => {
-      canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-      canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+      canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
       setTimeout(() => { apresenta() }
         , 600);
     }, 1800);
