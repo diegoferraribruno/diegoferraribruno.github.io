@@ -1,8 +1,16 @@
 let vers = [{
+    versao: "2.3.0",
+    notas: [
+        'Localization dos titulos.',
+        'salvar e carregar projeto quase funcionando corretamente.',
+        'modo noturno diurno na tela de carregamento '
+    ]
+
+}, {
     versao: "2.2.4",
     notas: [
-        'Localization fixes. Arrumei algumas traduções...' +
-        'salvar e carregar projeto quase funcionando corretamente.' +
+        'Localization fixes. Arrumei algumas traduções...',
+        'salvar e carregar projeto quase funcionando corretamente.',
         'tela de loading e start no modo noturno'
     ]
 
@@ -301,4 +309,4 @@ function textao() {
 }
 textao()
 document.getElementById("versoes").innerHTML = lavem
-document.title = "Desenha " + vers[0].versao
+document.title = "Desenho " + vers[0].versao

@@ -18,11 +18,35 @@ function localize() {
         .forEach(function (el) {
             let name = el.getAttribute("name")
             el.innerHTML = textos[language][name]
+        });
+    localizeTitles()
+}
 
-            //            textos[name] = inn
-            // console.log(name)
+function localizeTitles() {
+    Array.from(getAllElementsWithAttribute("title"))
+        .forEach(function (el) {
+            if (el.getAttribute("id")) {
+                let KEY = "" + el.id
+                el.setAttribute("title", titles[language][KEY])
+            } else if (el.classList.contains("close")) {
+                el.setAttribute("title", "Close Menu")
+            }
         });
 }
+
+
+function getAllElementsWithAttribute(attribute) {
+    var matchingElements = [];
+    var allElements = document.getElementsByTagName('*');
+    for (var i = 0, n = allElements.length; i < n; i++) {
+        if (allElements[i].getAttribute(attribute) !== null) {
+            // Element exists with attribute. Add to array.
+            matchingElements.push(allElements[i]);
+        }
+    }
+    return matchingElements;
+}
+
 var alerts = {
     "pt_BR": {
         0: "Por favor,<br> adicione ➕ quadros a sua animação",
@@ -152,7 +176,8 @@ let textos = {
         "71": "Temperatura da cor",
         "72": "Balanço do branco ",
         "73": "Modo de Foco Manual",
-        "74": "Novo projeto"
+        "74": "Novo projeto",
+        "75": "apresenta"
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -227,6 +252,129 @@ let textos = {
         "71": "ColorTemperature",
         "72": "White balace ",
         "73": "Manual Focus Mode",
-        "74": "New Project"
+        "74": "New Project",
+        "75": "presents"
+    }
+}
+var titles = {
+    "pt_BR": {
+        "fundo": "Configurações",
+        "zoomx": "Ampliar",
+        "undo": "desfazer",
+        "redo": "refazer",
+        "salvar": "salvar imagem",
+        "localize": "change language",
+        "prev_frame()": "Quadro anterior",
+        "play()": "Tocar Animação",
+        "next_frame()": "Próximo quadro",
+        "swapL()": "Mover quadro á esquerda",
+        "swapR()": "Mover quadro á direita",
+        "lixeira()": "Arraste um quadro para apaga-lo",
+        "new_frame()": "Adiconar quadro á animação",
+        "animebot": "configurar animação",
+        "pintar": "pintar",
+        "cores": "cores",
+        "picker": "Pega cor",
+        "apagar": "Apagar",
+        "emoji": "pintar emoji",
+        "formatos": "formato do quadro",
+        "formatos2": "formatos do quadro",
+        "cam": "foto",
+        "imagem": "Carregar imagem / projeto",
+        "mostraCor2": "cores",
+        "picker2": "Pega cor",
+        "preencher": "Preencher",
+        "mostraCor": "cores",
+        "salvaCor": "Favoritar",
+        "canvasmenu": "Propriedades do quadro",
+        "info": "Informações",
+        "zoom2xbot": "Ampliar",
+        "input": "Enviar Arquivo de imagem",
+        "inputSprite": "📤",
+        "btnChangeCam": "Trocar camera",
+        "stopMotion": "Modo de captura",
+        "recMotion": "Gravar automaticamente",
+        "zoom": "Zoom",
+        "grayscaleBar": "escala de cinza",
+        "autorecortarbot": "Recotar automaticamente",
+        "recortarbot": "Recotar para seleção",
+        "brightness": "brightness",
+        "iso": "iso",
+        "exposureTime": "exposureTime",
+        "exposureCompensation": "exposureCompensation",
+        "saturation": "saturation",
+        "contrast": "contrast",
+        "sharpness": "sharpness",
+        "colorTemperature": "colorTemperature",
+        "whiteBalace": "whiteBalace",
+        "focusDistance": "focusDistance",
+        "pan": "Pan",
+        "tilt": "Tilt",
+        "localizeA": "change language",
+        "apresenta": "apresenta",
+        "night": "modo escuro / claro",
+        "nigth2": "modo escuro / claro",
+        "desenho": "Desenho"
+    },
+    "en": {
+
+        "fundo": "Settings",
+        "zoomx": "Zoom",
+        "undo": "Undo",
+        "redo": "Redo",
+        "salvar": "Save image",
+        "localize": "Trocar para Português?",
+        "prev_frame()": "Previous Frame",
+        "play()": "Play Animation",
+        "next_frame()": "Next frame",
+        "swapL()": "Move frame to the left",
+        "swapR()": "Move frame to the right",
+        "lixeira()": "Drag a frame here to erease it",
+        "new_frame()": "Add a new frame to the animation",
+        "animebot": "Animation Settings",
+        "pintar": "Paint",
+        "cores": "Colors",
+        "picker": "Color Picker",
+        "apagar": "Ereaser",
+        "emoji": "Emoji paint",
+        "formatos": "Canvas size",
+        "formatos2": "Canvas size",
+        "cam": "Camera",
+        "imagem": "Load image / project",
+        "mostraCor2": "Colors",
+        "picker2": "Color Picker",
+        "Preencher": "Fill",
+        "mostraCor": "Colors",
+        "salvaCor": "Keep Color",
+        "canvasmenu": "Canvas Settings",
+        "info": "Information",
+        "zoom2xbot": "Zoom in",
+        "input": "Open image file",
+        "inputSprite": "Sprite-sheet file",
+        "btnChangeCam": "Switch camera",
+        "stopMotion": "Capture mode",
+        "recMotion": "Auto-Record",
+        "zoom": "Zoom",
+        "grayscaleBar": "shades of gray",
+        "autorecortarbot": "auto crop canvas",
+        "recortarbot": "crop to selection",
+        "brightness": "brightness",
+        "iso": "iso",
+        "exposureTime": "Exposure Time",
+        "exposureCompensation": "Exposure Compensation",
+        "saturation": "saturation",
+        "contrast": "contrast",
+        "sharpness": "sharpness",
+        "colorTemperature": "Color Temperature",
+        "whiteBalace": "White Balace",
+        "focusDistance": "Focus Distance",
+        "pan": "Pan",
+        "tilt": "Tilt",
+        "localizeA": "Portugues?",
+        "night": "switch light or dark",
+        "night2": "switch light or dark",
+        "apresenta": "presents",
+        "desenho": "Drawing"
+
     }
 }

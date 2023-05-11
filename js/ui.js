@@ -85,7 +85,7 @@ function night() {
     let testarray = document.getElementsByClassName("fundobranco");
     let testarray2 = document.getElementsByClassName("fundo2");
     let filters = document.getElementsByClassName("filter");
-    console.log("1111111", testarray, " 222222222222 ", testarray2)
+    ///console.log("1111111", testarray, " 222222222222 ", testarray2)
     for (let i = 0; i < testarray.length; i++) {
         testarray[i].classList.toggle("dark")
         testarray[i].classList.toggle("light")
