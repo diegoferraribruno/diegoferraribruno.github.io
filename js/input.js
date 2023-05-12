@@ -14,7 +14,7 @@ canvasFront.style.marginTop = "0px"
 canvasFront.style.marginLeft = -canvas.width + "px"
 canvasFront.classList.add("cursor") // importante!
 canvasFront.ctx.imageSmoothingEnabled = false
-document.getElementById("canvas_div").appendChild(canvasFront)
+iD("canvas_div").appendChild(canvasFront)
 let cursorShow = true
 
 var canvasBack = document.createElement("canvas")
@@ -28,7 +28,7 @@ canvasBack.style.marginTop = "0px"
 canvasBack.style.marginLeft = -canvas.width + "px"
 canvasBack.classList.add("cursor") // importante!
 canvasBack.ctx.imageSmoothingEnabled = false
-document.getElementById("canvas_div").appendChild(canvasBack)
+iD("canvas_div").appendChild(canvasBack)
 
 function handleKeyUp(evt) {
     if (evt.keyCode === 16) {
@@ -297,7 +297,7 @@ function handleUp(evt) {
     }
 
     if (mode === "emoji" && isEmoji) {
-        let size = document.getElementById("emosize").value
+        let size = iD("emosize").value
         desenha(
             "e",
             context.globalCompositeOperation,

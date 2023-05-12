@@ -2,14 +2,14 @@ var language = "pt_BR"
 function localize() {
     if (language == "pt_BR") {
         language = "en"
-        document.getElementById("localize").innerHTML =
+        iD("localize").innerHTML =
             '<span style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">' +
             '🇧🇷<span style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">' +
             '🇬🇧</span></span>'
 
     } else {
         language = "pt_BR"
-        document.getElementById("localize").innerHTML =
+        iD("localize").innerHTML =
             '<span style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">' +
             '🇬🇧<span style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">' +
             '🇧🇷</span></span>'

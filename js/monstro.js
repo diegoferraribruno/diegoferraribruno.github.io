@@ -25,10 +25,10 @@ function newMonster() {
     monstro.style.position = "absolute"
     monstro.style.scale = 0.5
     // monstro.style.filter = "drop-shadow(0px 0px 4px red) hue-rotate(180deg)"
-    document.getElementById("game").appendChild(monstro)
+    iD("game").appendChild(monstro)
 
     monstroimg.onload = function () {
-        let monstr = document.getElementById("monstro")
+        let monstr = iD("monstro")
         monstr.style.width = monstroimg.height + "px"
         monstr.style.height = monstroimg.height + "px"
         monstro.width = monstroimg.width
@@ -105,7 +105,7 @@ var audio2 = new Audio('./game/jumpscare1.ogg');
 let pegou = false
 function frontMoveMonstro(move) {
 
-    let avatar = document.getElementById("monstro")
+    let avatar = iD("monstro")
     if (avatar != null) {
         let newmonstro = {
             left: monstro.left + (move.x * monstro.speed),
@@ -138,15 +138,15 @@ function frontMoveMonstro(move) {
             playershake()
             pegou = true
 
-            document.getElementById("monstro").classList.add("jumpscare")
-            //document.getElementById("monstro").style.zIndex = 5
+            iD("monstro").classList.add("jumpscare")
+            //iD("monstro").style.zIndex = 5
             monstro.keys.ArrowDown = true
             monstro.keys.ArrowRight = true
 
             setTimeout(() => {
-                document.getElementById("monstro").classList.remove("jumpscare")
-                document.getElementById("monstro").style.scale = 0.5
-                // document.getElementById("monstro").style.zIndex = 0
+                iD("monstro").classList.remove("jumpscare")
+                iD("monstro").style.scale = 0.5
+                // iD("monstro").style.zIndex = 0
                 monstro.keys.ArrowDown = true
                 monstro.keys.ArrowRight = true
                 monstro.keys.ArrowUp = false
@@ -187,7 +187,7 @@ let doMonsterCollide = function (rect1, rectb) {
 setInterval(animaMonstro, 160)
 function animaMonstro() {
     let position = 320 * monstro.frame
-    let monstr = document.getElementById("monstro")
+    let monstr = iD("monstro")
     monstr.style.backgroundPosition = `-${position}px 0px`;
     monstr.style.rotate = -20 * monstro.frame + "deg"
     monstro.frame++

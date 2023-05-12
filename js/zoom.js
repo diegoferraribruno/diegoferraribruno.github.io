@@ -28,8 +28,8 @@ function setZoom(zoom, el) {
         el.style[p[i] + "Transform"] = s;
         el.style[p[i] + "TransformOrigin"] = oString;
 
-        document.getElementById("canvas_div2").style.width = canvas.width + "px";
-        document.getElementById("canvas_div2").style.height = canvas.height + "px";
+        iD("canvas_div2").style.width = canvas.width + "px";
+        iD("canvas_div2").style.height = canvas.height + "px";
     }
 
     el.style["transform"] = s;
@@ -61,10 +61,10 @@ function ZOOM(a) {
     setTimeout(() => setZoom(zoomFactor, canvasDiv), 10);
 
     setStrokeSize(strokeWidth);
-    document.getElementById("tzoom").value = zoomFactor;
-    document.getElementById("zoombar").value =
+    iD("tzoom").value = zoomFactor;
+    iD("zoombar").value =
         zoomScale.indexOf(zoomFactor);
-    document.getElementById("x1").innerHTML = zoomFactor + "x";
+    iD("x1").innerHTML = zoomFactor + "x";
 
 }
 
@@ -75,8 +75,8 @@ function scrollCanva(a, b) {
 function resetCanva() {
     let objects = ["canvas_window", "canvas_div"];
     for (i in objects.length) {
-        document.getElementById(objects[i]).style.width = "320px";
-        document.getElementById(objects[i]).style.height = "320px";
+        iD(objects[i]).style.width = "320px";
+        iD(objects[i]).style.height = "320px";
     }
 }
 function zoom2x() {
@@ -86,7 +86,7 @@ function zoom2x() {
     }
     ZOOMf(zoomIndex);
     setTimeout(function () {
-        document.getElementById("x1").innerHTML = zoomFactor + "x";
+        iD("x1").innerHTML = zoomFactor + "x";
         scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
     }, 10);
     cursorColor();

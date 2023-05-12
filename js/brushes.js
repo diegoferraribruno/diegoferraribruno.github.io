@@ -35,7 +35,7 @@ function createBasicBrushes() {
         prush.id = "br" + i
         prush.setAttribute("onmousedown", "selectBrush(" + i + ")")
         prush.setAttribute("style", "width:30px; height:30px; margin-top:2px;")
-        document.getElementById("pinceis").appendChild(prush)
+        iD("pinceis").appendChild(prush)
 
     }
     let customBrush = document.createElement("span")
@@ -43,7 +43,7 @@ function createBasicBrushes() {
     //customBrush.classList.add("bot")
     customBrush.setAttribute("onmousedown", 'mostraSubMenu("custombrush")')
     customBrush.innerHTML = '<span class="shadow" style="display:inline-block; margin-top:-20px; font-size:18px; width:30px; height:30px;">🖌️<span style="display:inline-block;position:relative; margin-left: -30px; top:-5px">➕</span></span>'
-    document.getElementById("pinceis").appendChild(customBrush)
+    iD("pinceis").appendChild(customBrush)
 }
 createBasicBrushes()
 
@@ -64,7 +64,7 @@ function criaCustom() {
     prush.id = "br" + i
     prush.setAttribute("onmousedown", "selectBrush(" + i + ")")
     prush.setAttribute("style", "width:30px; height:32px; margin-top:2px;")
-    document.getElementById("pinceis3").appendChild(prush)
+    iD("pinceis3").appendChild(prush)
     setTimeout(() => selectBrush(basicBrushes.length - 1), 350)
 }
 
@@ -76,11 +76,11 @@ function changeLine() {
     }
     linejoin = lineJoins[lineJoinsCount];
     if (lineJoinsCount != 1) {
-        document.getElementById("line").innerHTML = " ➕";
-        document.getElementById("line2").innerHTML = " ➕";
+        iD("line").innerHTML = " ➕";
+        iD("line2").innerHTML = " ➕";
     } else {
-        document.getElementById("line").innerHTML = " ⚫";
-        document.getElementById("line2").innerHTML = " ⚫";
+        iD("line").innerHTML = " ⚫";
+        iD("line2").innerHTML = " ⚫";
     }
 }
 
@@ -92,7 +92,7 @@ function mudaCorQ(q = 0, valor) {
 
 }
 function mudaCorAlpha() {
-    let valor = document.getElementById("transparenciaE").value
+    let valor = iD("transparenciaE").value
     strokeColor = `hsla(0, 100%, 0%, ${valor})`
 }
 function salvaCor() {
@@ -120,8 +120,8 @@ function setStrokeColor() {
 
     let quantos = objs.length;
     for (i = 0; i < quantos; i++) {
-        document.getElementById(objs[i]).style.backgroundColor = strokeColor;
-        document.getElementById(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
+        iD(objs[i]).style.backgroundColor = strokeColor;
+        iD(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
     }
     changeBrush()
 
@@ -132,32 +132,32 @@ function mudaCor(valor) {
 
     if (valor == "P") {
         strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
-        document.getElementById("mostraCor").style.color = strokeColor;
+        iD("mostraCor").style.color = strokeColor;
 
-        //     document.getElementById("menu").style.visibility = "hidden";
+        //     iD("menu").style.visibility = "hidden";
     } else if (valor == "B") {
         strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
-        document.getElementById("mostraCor").style.color = strokeColor;
-        //     document.getElementById("menu").style.visibility = "hidden";
+        iD("mostraCor").style.color = strokeColor;
+        //     iD("menu").style.visibility = "hidden";
     } else {
         strokeColor = valor;
-        //     document.getElementById("menu").style.visibility = "hidden";
+        //     iD("menu").style.visibility = "hidden";
         cursorColor();
     }
-    document.getElementById("mostraCor").style.backgroundColor =
+    iD("mostraCor").style.backgroundColor =
         strokeColor;
-    document.getElementById("mostraCor2").style.backgroundColor =
+    iD("mostraCor2").style.backgroundColor =
         strokeColor;
-    document.getElementById("pintar").style.backgroundColor = strokeColor;
+    iD("pintar").style.backgroundColor = strokeColor;
 
     const toHslaObject = (hslaStr) => {
         const [hue, saturation, lightness, alpha] = hslaStr
             .match(/[\d\.]+/g)
             .map(Number);
-        document.getElementById("H").value = hue;
-        document.getElementById("S").value = saturation;
-        document.getElementById("L").value = lightness;
-        document.getElementById("A").value = alpha;
+        iD("H").value = hue;
+        iD("S").value = saturation;
+        iD("L").value = lightness;
+        iD("A").value = alpha;
         hsla[0] = hue;
         hsla[1] = saturation;
         hsla[2] = lightness;
@@ -178,7 +178,7 @@ function criaPaleta() {
     let hue100 = 100;
     for (i = 1; i < 15; i++) {
         hue100 -= Math.floor(100 / 14)
-        let cor = document.getElementById("H").value
+        let cor = iD("H").value
         paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]}%,${hue100
             }%,${hsla[3]
             })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]
@@ -186,7 +186,7 @@ function criaPaleta() {
 
     }
 
-    document.getElementById("paleta").innerHTML = paleta;
+    iD("paleta").innerHTML = paleta;
 
 }
 
@@ -196,7 +196,7 @@ function criaPaleta2() {
     for (i = 0; i < quantas; i++) {
         paleta += `<span onmousedown='mudaCor("` + favoritas[i] + `")' class='bloquinho' style="background-color:` + favoritas[i] + `"> </span>`
     }
-    document.getElementById("paleta2").innerHTML = paleta;
+    iD("paleta2").innerHTML = paleta;
 }
 function criapaleta3() {
     let paleta3 = '';
@@ -206,11 +206,11 @@ function criapaleta3() {
         c++;
         paleta3 += `<span onmousedown='mudaCor("hsla(${cor},100%,50%,${hsla[3]
             })")' class='bloquinho' style='background-color:hsla(${cor},100%,50%,${hsla[3] * 4 + 0.2});'> </span>`;
-        document.getElementById("paleta3").innerHTML = paleta3;
-        document.getElementById("paleta3").innerHTML +=
+        iD("paleta3").innerHTML = paleta3;
+        iD("paleta3").innerHTML +=
             `<span onmousedown='mudaCor("hsla(0, 0%, 50%, ` + hsla[3] * 4 + `)")' class='bloquinho' ` +
             "style='background-color:hsla(0, 0%, 50%, " + hsla[3] * 4 + ")'> </span>";
-        document.getElementById("paleta3").innerHTML +=
+        iD("paleta3").innerHTML +=
             `<span onmousedown='mudaCor("P")' class='bloquinho' ` +
             "style='background-color:hsla(0, 0%, 0%, " + hsla[3] * 4 + ")'> </span>";
     }
@@ -237,7 +237,7 @@ function setStrokeSize(value = strokeWidth) {
 
     let brushes = ["cursor"];
     for (i in brushes) {
-        let tamanho = document.getElementById(brushes[i]);
+        let tamanho = iD(brushes[i]);
         if (mode == "pintar" || mode == "cores" || mode == "cores" || mode == "picker" || mode == "recortar") {
             tamanho.style.width = value * zoomFactor - zoomFactor / 10 + "px";
             tamanho.style.height = value * zoomFactor + "px";
@@ -253,7 +253,7 @@ function setStrokeSize(value = strokeWidth) {
             }
 
         }
-        document.getElementById("tpx").value = value;
+        iD("tpx").value = value;
     }
 
     changeBrush()
@@ -266,7 +266,7 @@ function setStrokeSize(value = strokeWidth) {
 
 function selectBrush(numero) {
     removeClass('selectedBr')
-    document.getElementById("br" + numero).classList.add("selectedBr")
+    iD("br" + numero).classList.add("selectedBr")
     changeBrush(numero)
 }
 var changedBrush = false
@@ -276,7 +276,7 @@ function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor
     brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
     brushMode = 1
-    var brushCanva = document.getElementById("brushCanva")
+    var brushCanva = iD("brushCanva")
     var brushCtx = brushCanva.getContext("2d");
     // brushCanva.crossOrigin = "anonymous"
     brushCanva.height = tam
@@ -296,7 +296,7 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
         newBrush.src = newNewBrush.src
         if (changedBrush == false) {
             changedBrush = true;
-            let existe = document.getElementById(brushName)
+            let existe = iD(brushName)
             if (!existe && mode != "picker") {
                 setTimeout(() => {
                     let favbrush = newBrushes[brushName][0]
@@ -318,7 +318,7 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
                     } else {
                         favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeWidth + "</span>"
                     }
-                    document.getElementById("pinceis2").prepend(favBrushButton)
+                    iD("pinceis2").prepend(favBrushButton)
                     clearBrushes()
 
                 }, 25)
@@ -340,7 +340,7 @@ function favBrush(qual) {
 
 function clearBrushes() {
     Object.keys(newBrushes).forEach((key) => {
-        let existe = document.getElementById(key)
+        let existe = iD(key)
         if (existe != null) {
             novoBrushes[key] = newBrushes[key]
         }

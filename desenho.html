@@ -446,9 +446,9 @@
                         style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
                             style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
                             📂</span></span>
-                    <txt name="29">Carregar imagem</txt>
+                    <txt name="29">Carregar imagens</txt>
                     <br> <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
-                        title="Enviar Arquivo de imagem" /> <br>
+                        title="Enviar Arquivo de imagem" /><!-- name='files[]' multiple futurEiMPLEMENT--> <br>
                     <txt name="30">Ajustar tela ao tamanho da imagem </txt><input type="checkbox" id="ajustar"
                         checked="true">
                 </span>
@@ -743,6 +743,7 @@
     </div>
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
+    <script type="text/javascript" src="js/iD.js"></script>
     <script type="text/javascript" src="js/localize.js"></script>
     <script type="text/javascript" src="js/zoom.js"></script>
     <script type="text/javascript" src="js/input.js"></script>

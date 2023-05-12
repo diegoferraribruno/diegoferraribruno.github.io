@@ -9,18 +9,18 @@ function FX(fx, onde) {
     if (fx != 0) {
 
         if (fx > 3) {
-            let quanto = document.getElementById(filters[fx] + "Bar").value
+            let quanto = iD(filters[fx] + "Bar").value
             onde.filter = filters[fx] + "(" + quanto + "%)"
 
         } else if (fx == 1) {
 
             onde.filter = filters[fx] + "()"
         } else if (fx == 2) {
-            let quanto = document.getElementById(filters[fx] + "Bar").value
+            let quanto = iD(filters[fx] + "Bar").value
 
             onde.filter = filters[fx] + "(" + quanto + "px)"
         } else if (fx == 3) {
-            let quanto = document.getElementById(filters[fx] + "Bar").value
+            let quanto = iD(filters[fx] + "Bar").value
 
             onde.filter = filters[fx] + "(" + quanto + ")"
 
@@ -41,7 +41,7 @@ function updatecanvasFront() {
 
 function confirmFX(fx, fxname) {
     removeClass()
-    let confirm = document.getElementById("confirm")
+    let confirm = iD("confirm")
     if (!confirm) {
         let item = document.createElement("div")
         item.id = "confirm"
@@ -61,7 +61,7 @@ function applyFX(fx) {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.drawImage(canvasFront, 0, 0)
-    let confirm = document.getElementById("confirm")
+    let confirm = iD("confirm")
     confirm.parentElement.removeChild(confirm)
     removeClass()
 
@@ -77,7 +77,7 @@ function applyFX(fx) {
     }, 300)
 }
 function cancelaFX() {
-    let confirm = document.getElementById("confirm")
+    let confirm = iD("confirm")
     confirm.parentElement.removeChild(confirm)
     mostraMenu("FX")
     canvasFront.filter = filters[0]

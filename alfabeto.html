@@ -135,7 +135,7 @@
     <ul id="ultima" class="absolute"></ul>
     <div class="child absolute" onmousedown="jogar()" ontouchstart="jogar()">A + 🔫 = 💥</div>
   </div>
-
+  <script type="text/javascript" src="js/iD.js"></script>
   <script>
 
     //const windowSize = {x:window.innerWidth, y:window.innerHeight}
@@ -170,13 +170,13 @@
         personagem.innerHTML = quais[i] + olho + boca
         setTimeout(
           function () {
-            document.getElementById("alfabeto").appendChild(personagem)
+            iD("alfabeto").appendChild(personagem)
           },
           600 * i)
       }
     }
     function clicou(quem) {
-      let element = document.getElementById(quem)
+      let element = iD(quem)
       element.removeAttribute("onmousedown");
       element.removeAttribute("ontouchstart");
       element.innerHTML = "💥"
@@ -184,7 +184,7 @@
       count++
       setTimeout(
         function () {
-          let element = document.getElementById(quem);
+          let element = iD(quem);
           element.remove()
         }
         , 300
@@ -198,15 +198,15 @@
         alfabeto(itens)
         alfabeto(numeros)
       } else if (count == 105) {
-        let tempofinal = document.getElementById('hr').innerHTML + ":" +
-          document.getElementById('min').innerHTML + ":" +
-          document.getElementById('sec').innerHTML + ":" +
-          document.getElementById('count').innerHTML;
+        let tempofinal = iD('hr').innerHTML + ":" +
+          iD('min').innerHTML + ":" +
+          iD('sec').innerHTML + ":" +
+          iD('count').innerHTML;
         let result = document.createElement("li")
         result.innerHTML =
           `Partida ${partida} - ${tempofinal}`
-        document.getElementById("container").style.visibility = "visible";
-        document.getElementById("ultima").appendChild(result)
+        iD("container").style.visibility = "visible";
+        iD("ultima").appendChild(result)
         reset()
         count = 0;
         gameSpeed = 100;
@@ -219,7 +219,7 @@
       childern.forEach(div => {
         impar *= -1
 
-        let divID = document.getElementById(div.id)
+        let divID = iD(div.id)
         let divTop = parseInt(divID.style.top, 10)
         let divLeft = parseInt(divID.style.left, 10)
         if (divLeft >= windowSize.x + 40) { divID.style.left = 20 + "px" }
@@ -264,10 +264,10 @@
       minute = 0;
       second = 0;
       countt = 0;
-      document.getElementById('hr').innerHTML = "00";
-      document.getElementById('min').innerHTML = "00";
-      document.getElementById('sec').innerHTML = "00";
-      document.getElementById('count').innerHTML = "00";
+      iD('hr').innerHTML = "00";
+      iD('min').innerHTML = "00";
+      iD('sec').innerHTML = "00";
+      iD('count').innerHTML = "00";
     }
     function tempo() {
       if (timer) {
@@ -313,17 +313,17 @@
           countString = "0" + countString;
         }
 
-        document.getElementById('hr').innerHTML = hrString;
-        document.getElementById('min').innerHTML = minString;
-        document.getElementById('sec').innerHTML = secString;
-        document.getElementById('count').innerHTML = countString;
+        iD('hr').innerHTML = hrString;
+        iD('min').innerHTML = minString;
+        iD('sec').innerHTML = secString;
+        iD('count').innerHTML = countString;
         setTimeout(tempo, 100);
       }
     }
     function jogar() {
-      document.getElementById("container").style.visibility = "hidden"
+      iD("container").style.visibility = "hidden"
       timer = true;
-      document.getElementById("alfabeto").innerHTML = ""
+      iD("alfabeto").innerHTML = ""
       count = 0;
       alfabeto(personagens);
       start()

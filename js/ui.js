@@ -1,19 +1,19 @@
 let nightmode = false
 
 function Alert(text, time = 2) {
-    let alert = document.getElementById("menualerta")
+    let alert = iD("menualerta")
     alert.classList.add("aparece2")
-    let aconteudo = document.getElementById("alertconteudo")
+    let aconteudo = iD("alertconteudo")
     aconteudo.innerHTML = text;
     setTimeout(() => { closeAlert() }, time * 1000)
 
 }
 function closeAlert() {
-    document.getElementById("menualerta").classList.remove("aparece2")
+    iD("menualerta").classList.remove("aparece2")
 }
 
 function removeElement(id) {
-    var elem = document.getElementById(id);
+    var elem = iD(id);
     if (elem) {
         return elem.parentNode.removeChild(elem);
     }
@@ -21,16 +21,16 @@ function removeElement(id) {
 
 function toggleSelect(id) {
     removeClass("selected");
-    document.getElementById(id).classList.toggle("selected");
+    iD(id).classList.toggle("selected");
 }
 
 function mostraMenu(id) {
     removeClass()
-    let quem = document.getElementById("menu" + id);
+    let quem = iD("menu" + id);
     quem.classList.toggle("aparece");
 }
 function mostraSubMenu(id) {
-    let quem = document.getElementById("menu" + id);
+    let quem = iD("menu" + id);
     quem.classList.toggle("aparece");
 }
 
@@ -44,7 +44,7 @@ function removeClass(qual = "aparece") {
 }
 
 function hidecustom() {
-    document.getElementById("custom").classList.toggle("esconde")
+    iD("custom").classList.toggle("esconde")
 }
 
 
@@ -60,18 +60,18 @@ var checkOrientation = function () {
 
         if (screen.width > screen.height) {
 
-            document.getElementById("ferramentas").classList.add("horizontal");
-            document.getElementById("ferramentas2").classList.add("horizontal2");
-            document.getElementById("anime").classList.add("horizontal3");
+            iD("ferramentas").classList.add("horizontal");
+            iD("ferramentas2").classList.add("horizontal2");
+            iD("anime").classList.add("horizontal3");
 
-            document.getElementById("menus").style.top = "100px";
+            iD("menus").style.top = "100px";
 
         } else {
-            document.getElementById("ferramentas").classList.remove("horizontal");
-            document.getElementById("ferramentas2").classList.remove("horizontal2");
-            document.getElementById("anime").classList.remove("horizontal3");
+            iD("ferramentas").classList.remove("horizontal");
+            iD("ferramentas2").classList.remove("horizontal2");
+            iD("anime").classList.remove("horizontal3");
 
-            document.getElementById("menus").style.top = "0px";
+            iD("menus").style.top = "0px";
 
         }
         win.style.width = parseInt(window.innerWidth, 10) - 80 + "px";
@@ -157,22 +157,22 @@ function resizeScreen() {
     desenhoDiv.style.height = window.innerHeight + "px";
     if (screen.width > screen.height) {
 
-        document.getElementById("ferramentas").classList.add("horizontal");
-        document.getElementById("ferramentas2").classList.add("horizontal2");
-        document.getElementById("anime").classList.add("horizontal3");
+        iD("ferramentas").classList.add("horizontal");
+        iD("ferramentas2").classList.add("horizontal2");
+        iD("anime").classList.add("horizontal3");
 
         // alert(`virou, ${screen.width} , ${screen.height}`)
         win.style.width = parseInt(window.innerWidth, 10) - 160 + "px";
         win.style.height = parseInt(window.innerHeight, 10) + "px";
-        document.getElementById("menus").style.top = "0px";
+        iD("menus").style.top = "0px";
     } else {
-        document.getElementById("ferramentas").classList.remove("horizontal");
-        document.getElementById("ferramentas2").classList.remove("horizontal2");
-        document.getElementById("anime").classList.remove("horizontal3");
+        iD("ferramentas").classList.remove("horizontal");
+        iD("ferramentas2").classList.remove("horizontal2");
+        iD("anime").classList.remove("horizontal3");
 
         win.style.width = parseInt(window.innerWidth, 10) + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 170 + "px";
-        document.getElementById("menus").style.top = "90px";
+        iD("menus").style.top = "90px";
     }
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";

@@ -20,8 +20,8 @@ function createAvatar(id = 0, onde = "bio2") {
     avatar.src = "./avatar/" + usuarios[id].id + ".png"
     avatar.classList.add('mini')
     avatar.setAttribute("style", "float:right; margin-left:6px; margin-right:6px;")
-    document.getElementById(onde).appendChild(avatar)
-    document.getElementById(onde).innerHTML +=
+    iD(onde).appendChild(avatar)
+    iD(onde).innerHTML +=
         "<b>" + usuarios[id].nome + "</b><br>" + usuarios[id].bio +
         "<br><a href='" + usuarios[id].link + "' target='blank'>link</a>";
 }
@@ -75,9 +75,9 @@ function confirmLink(url) {
         criaConteudo()
         apoio()
     } else {
-        let canvasD = document.getElementById("canvas_div")
+        let canvasD = iD("canvas_div")
         if (canvasD) {
-            let confirm = document.getElementById("confirm")
+            let confirm = iD("confirm")
             if (!confirm) {
                 let item = document.createElement("div")
                 item.id = "confirm"
@@ -95,11 +95,11 @@ function confirmLink(url) {
     }
 }
 function cancela(oque = "confirm") {
-    let confirm = document.getElementById(oque)
+    let confirm = iD(oque)
     confirm.parentElement.removeChild(confirm)
 }
 function criaConteudo() {
-    let ap = document.getElementById("conteudo")
+    let ap = iD("conteudo")
     if (!ap) {
         var conteudo = document.createElement("div")
         conteudo.id = "conteudo"
@@ -111,7 +111,7 @@ function criaConteudo() {
     }
 }
 function apoio() {
-    let ap = document.getElementById("conteudo")
+    let ap = iD("conteudo")
     if (ap) {
         let apoioHTML = `
 			    <div onClick='cancela("conteudo")' style=' float:right'class='bot'>❎</div>
@@ -127,7 +127,7 @@ Ajude também a divulguar:</b><br>
 				Grato pela sua atenção<br><br>
 				</div>
             <div id="bio2"></div>`
-        document.getElementById("conteudo").innerHTML = apoioHTML
+        iD("conteudo").innerHTML = apoioHTML
 
         createAvatar(0, "bio2")
     }
@@ -135,7 +135,7 @@ Ajude também a divulguar:</b><br>
 }
 
 function copyPix() {
-    var copyText = document.getElementById("myInput");
+    var copyText = iD("myInput");
     // Select the text field
     copyText.select();
     copyText.setSelectionRange(0, 99999); // For mobile devices

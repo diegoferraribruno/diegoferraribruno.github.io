@@ -1,4 +1,4 @@
-var foto = document.getElementById("foto")
+var foto = iD("foto")
 var userId = "01"
 var fotoN = 0
 
@@ -31,7 +31,7 @@ var fotos = [
 
 function trocaFoto(qual = 0) { //define o valor padrao para a variavel 'qual' = 0
     foto.setAttribute("src", "./galeria/" + userId + "/" + fotos[qual].imagem);
-    document.getElementById("legenda").innerHTML = "<b>" + fotos[qual].legenda + "</b>";
+    iD("legenda").innerHTML = "<b>" + fotos[qual].legenda + "</b>";
 }
 
 // para a Galeria criamos uma função que cria elemento img,
@@ -44,7 +44,7 @@ function criaImagem(x) {
     img.classList.add("mini")
     img.classList.add("shadow")
     //largura maxima da img
-    document.getElementById("galeria").appendChild(img)
+    iD("galeria").appendChild(img)
 }
 
 // como fazer um loop para cada foto com a palavra for:
@@ -70,6 +70,6 @@ function scrollg(x) {
     }
     if (fotoN < quantasfotos && fotoN >= 0) {
         trocaFoto(fotoN)
-        document.getElementById("galeria").scrollLeft += x
+        iD("galeria").scrollLeft += x
     }
 }

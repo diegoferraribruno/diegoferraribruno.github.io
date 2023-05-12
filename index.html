@@ -110,6 +110,7 @@
         <div id="carregandoc" style="font-size: 160px; color: #ffffffcc; margin-top: -140px;">
         </div>
     </div>
+    <script type="text/javascript" src="js/iD.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
     <script type="text/javascript" src="js/blog.js"></script>
@@ -128,8 +129,8 @@
               gavatar.style.maxWidth = "220px"
               let para = document.createElement("p")
               para.innerText = json.bio
-              document.getElementById("gitbio").appendChild(gavatar)
-              document.getElementById("gitbio").appendChild(para)
+              iD("gitbio").appendChild(gavatar)
+              iD("gitbio").appendChild(para)
   
           }
           githubBio()

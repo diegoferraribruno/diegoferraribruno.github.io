@@ -12,9 +12,9 @@ var user = {
 }
 var gamestate = "pause"
 var users = { "player": user }
-var game = document.getElementById("game")
-const src = document.getElementById("manche");
-var container = document.getElementById("container")
+var game = iD("game")
+const src = iD("manche");
+var container = iD("container")
 var send = false
 var seguemouse = false
 let clientX;
@@ -74,7 +74,7 @@ src.addEventListener('touchmove', (e) => {
     if (deltaX < -6) { keys.ArrowLeft = true; send = true; } else { keys.ArrowLeft = false };
 
     e.preventDefault();// < testar iphone.
-    //document.getElementById('manche').innerHTML = "X: "+Math.floor(clientX)+" Y:"+Math.floor(clientY)+"<br />dX: "+Math.floor(deltaX)+" dY: "+Math.floor(deltaY)
+    //iD('manche').innerHTML = "X: "+Math.floor(clientX)+" Y:"+Math.floor(clientY)+"<br />dX: "+Math.floor(deltaX)+" dY: "+Math.floor(deltaY)
     // Process the data…
 }, false);
 
@@ -189,9 +189,9 @@ var windowy = window.innerHeight
     container.style.width = windowx + "px";
     container.style.height = windowy + "px";
 })*/
-document.getElementById('joypad').style.top = (windowy - 160) + "px";
-document.getElementById('joypad').style.left = (windowx / 2 - 100) + "px";
-//document.getElementById('chat').style.width = windowx + "px";
+iD('joypad').style.top = (windowy - 160) + "px";
+iD('joypad').style.left = (windowx / 2 - 100) + "px";
+//iD('chat').style.width = windowx + "px";
 
 /*
 window.addEventListener('resize', function (event) {
@@ -199,16 +199,16 @@ window.addEventListener('resize', function (event) {
     windowy = window.innerHeight
     container.style.width = screen.width + "px";
     container.style.height = screen.height + "px";
-    document.getElementById('joypad').style.top = (windowy - 160) + "px";
+    iD('joypad').style.top = (windowy - 160) + "px";
 });*/
 
 //ANIMATION
 var frame = 0
-var corpo = document.getElementById("corpo-" + id);
+var corpo = iD("corpo-" + id);
 
 setInterval(function () {
     for (i in users) {
-        let corpo = document.getElementById("corpo-" + users[i].id);
+        let corpo = iD("corpo-" + users[i].id);
         let position = frame * 32;
         //corpo.style.background: 'url("standing-32.png") '${position}'px 0px';
         corpo.style.backgroundPosition = `-${position}px 0px`;
@@ -285,7 +285,7 @@ function movePlayer() {
 
     autoMove()
     let move = { x: 0, y: 0 }
-    corpo = document.getElementById("corpo-" + id);
+    corpo = iD("corpo-" + id);
     if (keys.ArrowUp == true && keys.ArrowDown == false || keys.w == true && keys.s == false) {
         move.y = -1
     }
@@ -302,12 +302,12 @@ function movePlayer() {
         corpo.style.backgroundImage = "url('" + playerImg["andar"].src + "')";;
     }
     if (move.x < 0) {
-        document.getElementById("head-" + id).className = "headl";
-        document.getElementById("corpo-" + id).className = "corpol";
+        iD("head-" + id).className = "headl";
+        iD("corpo-" + id).className = "corpol";
     }
     else if (move.x > 0) {
-        document.getElementById("head-" + id).className = "head";
-        document.getElementById("corpo-" + id).className = "corpo";
+        iD("head-" + id).className = "head";
+        iD("corpo-" + id).className = "corpo";
     }
     frontEnd(move)
 
@@ -366,7 +366,7 @@ function frontEnd(move) {
         users[id].top = Math.floor(users[id].top + (move.y * speed) + (users[id].serverPlayerPos.y - users[id].top) * 0.1);
 
         for (i in users) {
-            let avatar = document.getElementById(users[i].id)
+            let avatar = iD(users[i].id)
             if (avatar != null) {
                 users[i].left = users[i].left + (users[i].serverPlayerPos.x - users[i].left) * speed
                 users[i].top = users[i].top + (users[i].serverPlayerPos.y - users[i].top) * speed
@@ -376,7 +376,7 @@ function frontEnd(move) {
         }
     }
     else {
-        let avatar = document.getElementById(id)
+        let avatar = iD(id)
         if (avatar != null) {
             let newUser = {
                 left: user.left + (move.x * speed),
@@ -404,15 +404,15 @@ function frontEnd(move) {
         if (doElsCollide(player, blocosX[i])) { player.hidden = true }
     }
 }
-document.getElementById("bg1").style.backgroundPosition = "10px 0px"
+iD("bg1").style.backgroundPosition = "10px 0px"
 async function moveBG() {
-    let bgx = document.getElementById("bg1").style.backgroundPositionX
-    document.getElementById("bg1").style.backgroundPosition = (keys.ArrowLeft + keys.ArrowRight) / 8 + parseFloat(bgx, 10) + 0.1 + "px 0px"
-    //document.getElementById("bg2").style.backgroundPosition = `-${user.left / 2}px 0px`;
+    let bgx = iD("bg1").style.backgroundPositionX
+    iD("bg1").style.backgroundPosition = (keys.ArrowLeft + keys.ArrowRight) / 8 + parseFloat(bgx, 10) + 0.1 + "px 0px"
+    //iD("bg2").style.backgroundPosition = `-${user.left / 2}px 0px`;
 
 }
 let deg = 0
-var avatar = document.getElementById("player")
+var avatar = iD("player")
 function playershake() {
     avatar.style.opacity = 0.8
     avatar.style.rotate = "0 deg"
@@ -437,9 +437,9 @@ const nuvens = setInterval(moveBG, 80)
 var map = {
     x: parseInt(
 
-        document.getElementById("map").style.width
+        iD("map").style.width
         , 10)
-    , y: parseInt(document.getElementById("map").style.height, 10)
+    , y: parseInt(iD("map").style.height, 10)
 }
 
 function insideX(quem = user) {
@@ -452,11 +452,11 @@ function insideY(quem = user) {
 }
 
 window.onload = function () {
-    setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 1000)
-    setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 2000)
-    setTimeout(() => document.getElementById("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 3000)
+    setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 1000)
+    setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 2000)
+    setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 3000)
     setTimeout(() => limpaCabeca(), 5000)
-    setTimeout(() => { document.getElementById("carregando").style.display = "none"; gamestate = "play"; }, 4000)
+    setTimeout(() => { iD("carregando").style.display = "none"; gamestate = "play"; }, 4000)
     setTimeout(() => { keys.ArrowUp = true; setTimeout(() => keys.ArrowUp = false, 1500) }, 3980)
 
     // window.addEventListener("orientationchange", checkOrientation, false);
@@ -472,15 +472,15 @@ var checkO = function () {
         container.style.height = windowy + "px";
         if (windowx > windowy) {
 
-            document.getElementById("desenha-container").classList.add("desenha-horizontal")
-            document.getElementById("desenha-iframe").classList.add("desenha-horizontal")
-            document.getElementById('joypad').style.left = (windowx - 180) + "px";
-            document.getElementById('joypad').style.top = (windowy - 140) + "px";
+            iD("desenha-container").classList.add("desenha-horizontal")
+            iD("desenha-iframe").classList.add("desenha-horizontal")
+            iD('joypad').style.left = (windowx - 180) + "px";
+            iD('joypad').style.top = (windowy - 140) + "px";
         } else {
-            document.getElementById('joypad').style.top = (windowy - 160) + "px";
-            document.getElementById('joypad').style.left = (windowx / 2 - 100) + "px";
-            document.getElementById("desenha-container").classList.remove("desenha-horizontal")
-            document.getElementById("desenha-iframe").classList.remove("desenha-horizontal")
+            iD('joypad').style.top = (windowy - 160) + "px";
+            iD('joypad').style.left = (windowx / 2 - 100) + "px";
+            iD("desenha-container").classList.remove("desenha-horizontal")
+            iD("desenha-iframe").classList.remove("desenha-horizontal")
 
         }
     }

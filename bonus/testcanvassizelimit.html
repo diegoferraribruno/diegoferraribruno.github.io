@@ -6,8 +6,8 @@
         <script type='text/javascript'>
 
             function test() {
-                var cvs = document.getElementById('myCanvas');
-                cvs.height = parseInt(document.getElementById("canvasHeight").value);
+                var cvs = iD('myCanvas');
+                cvs.height = parseInt(iD("canvasHeight").value);
 
                 var ctx = cvs.getContext("2d");
                 ctx.font = "50pt bold colibri";

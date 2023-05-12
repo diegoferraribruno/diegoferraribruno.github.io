@@ -1,4 +1,4 @@
-var anime = document.getElementById("anime")
+var anime = iD("anime")
 var fps = 8
 var animacao = []
 
@@ -13,7 +13,7 @@ var anime_menu = {
 
 function criaAnime() {
 
-    var uiFilme = document.getElementById('ui_filme')
+    var uiFilme = iD('ui_filme')
     let contador = document.createElement("div")
     var ui = document.createElement('div')
     anime.classList.add("anime")
@@ -75,7 +75,7 @@ function criaBackPlayer() {
     player.classList.add("fundo2")
     player.style.zIndex = -1 * i - 1
     player.style.opacity = 0.4
-    document.getElementById("canvas_div").appendChild(player)
+    iD("canvas_div").appendChild(player)
 }
 
 
@@ -101,7 +101,7 @@ function new_frame() {
     comandos = []
     convertToImg()
     changeFrame(workingframe)
-    document.getElementById("contador").innerHTML = workingframe
+    iD("contador").innerHTML = workingframe
 
 }
 function save_frame(imagem = canvas.toDataURL('image/png')) {
@@ -122,7 +122,7 @@ function play() {
     oldMode = mode;
     mode = "play";
     if (animacao.length > 1) {
-        document.getElementById("play()").innerHTML = ' <span onmousedown="stop()">⏹️</span>'
+        iD("play()").innerHTML = ' <span onmousedown="stop()">⏹️</span>'
         clearInterval(inter);
         canvasFront.classList.remove("esconde")
         canvasFront.ctx.globalAlpha = 1;
@@ -152,7 +152,7 @@ function stop() {
     canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasFront.style.backgroundColor = "transparent"
-    document.getElementById("play()").innerHTML = "▶️"
+    iD("play()").innerHTML = "▶️"
 }
 
 function playerPlay(frame) {
@@ -171,7 +171,7 @@ function changeFrame(frame) {
     workingframe = frame
     canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    document.getElementById("contador").innerHTML = workingframe;
+    iD("contador").innerHTML = workingframe;
 
     if (frame > 2) {
         let old3 = frame - 3;
@@ -195,8 +195,8 @@ function changeFrame(frame) {
         canvasBack.ctx.drawImage(image1, 0, 0, canvasBack.width, canvasBack.height)
     }
     if (background_anim == true) {
-        document.getElementById("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
-        document.getElementById("bplayer0").style.backgroundPositionX = - canvas.width * workingframe + "px"
+        iD("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
+        iD("bplayer0").style.backgroundPositionX = - canvas.width * workingframe + "px"
     }
     if (frame < animacao.length - 1) {
         let old4 = frame + 1;
@@ -247,7 +247,7 @@ function prev_frame() {
         }
         comandosbParaComandos()
         changeFrame(workingframe)
-        document.getElementById("contador").innerHTML = workingframe
+        iD("contador").innerHTML = workingframe
     } else {
         Alert(alerts[language][0])
 
@@ -261,13 +261,13 @@ function changeFPS(valor) {
 }
 function changeFPSup() {
     fps++
-    document.getElementById("fpsnumber").value = fps
+    iD("fpsnumber").value = fps
     stop()
     play()
 }
 function changeFPSdown() {
     fps--
-    document.getElementById("fpsnumber").value = fps
+    iD("fpsnumber").value = fps
     stop()
     play()
 }
@@ -287,7 +287,7 @@ function removeFrame() {
         }
         changeFrame(workingframe)
         comandosbParaComandos()
-        document.getElementById("contador").innerHTML = workingframe
+        iD("contador").innerHTML = workingframe
 
     } else {
         comandos = []
@@ -318,11 +318,11 @@ function checksave() {
     let compa = compara(comandos, comandosb[workingframe])
     console.log(comandos.length, comandosb[workingframe].length)
     if (compa == false) {
-        document.getElementById("new_frame()").classList.toggle("blink")
+        iD("new_frame()").classList.toggle("blink")
         comandosParaComandosb()
         save_frame()
     } else {
-        document.getElementById("new_frame()").classList.remove("blink")
+        iD("new_frame()").classList.remove("blink")
 
     }
 }
@@ -333,22 +333,22 @@ var background_anim = false
 function changeBackGroundAnimation(frame) {
 
     if (background_anim == true) {
-        document.getElementById("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
-        document.getElementById("bplayer0").style.backgroundPositionX = - canvas.width * frame + "px"
-        document.getElementById("bplayer0").style.backgroundSize = "initial"
+        iD("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
+        iD("bplayer0").style.backgroundPositionX = - canvas.width * frame + "px"
+        iD("bplayer0").style.backgroundSize = "initial"
 
     }
 }
 
 function sobreporFundo() {
-    document.getElementById("bplayer0").style.zIndex = document.getElementById("bplayer0").style.zIndex * -1
+    iD("bplayer0").style.zIndex = iD("bplayer0").style.zIndex * -1
 }
 
 
 var animSize = 0
 
 function adicionaQuadro() {
-    let filme = document.getElementById("filme")
+    let filme = iD("filme")
     filme.innerHTML = ""
     setTimeout(() => {
         animSize = animacao.length
@@ -377,10 +377,10 @@ function adicionaQuadro() {
             cont.appendChild(thumb)
             filme.appendChild(cont)
             setTimeout(() => {
-                document.getElementById("lixeira()").addEventListener("drop", drop);
-                document.getElementById("lixeira()").addEventListener("dragover", dragOver);
-                document.getElementById("new_frame()").addEventListener("drop", drop);
-                document.getElementById("new_frame()").addEventListener("dragover", dragOver);
+                iD("lixeira()").addEventListener("drop", drop);
+                iD("lixeira()").addEventListener("dragover", dragOver);
+                iD("new_frame()").addEventListener("drop", drop);
+                iD("new_frame()").addEventListener("dragover", dragOver);
             }, 10)
         }
         scrollFilme()
@@ -391,7 +391,7 @@ function scrollFilme(onde = workingframe) {
     filme.scrollLeft = onde * 32
 
     removeClass("wf")
-    let thum = document.getElementById(workingframe + "thumb")
+    let thum = iD(workingframe + "thumb")
     if (thum) { thum.classList.add("wf") }
 
 }

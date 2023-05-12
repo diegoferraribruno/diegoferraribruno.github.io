@@ -4,15 +4,15 @@ var stop_motion = false;
 
 function stopMotion() {
     stop_motion = !stop_motion
-    document.getElementById("video").classList.toggle("destination-over")
+    iD("video").classList.toggle("destination-over")
     if (stop_motion == false) {
-        document.getElementById("stopMotion").innerHTML = ' <span class="bot">📷<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">🎥</span></span>'
+        iD("stopMotion").innerHTML = ' <span class="bot">📷<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">🎥</span></span>'
 
         canvas.style.opacity = 1
         Alert(alerts[language][2]);
     } else {
         Alert(alerts[language][3]);
-        document.getElementById("stopMotion").innerHTML = ' <span class="bot">🎥<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span></span>'
+        iD("stopMotion").innerHTML = ' <span class="bot">🎥<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span></span>'
         canvas.style.opacity = 0.3
     }
 }
@@ -22,9 +22,9 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices);
 let fotografando = false
 function camera() {
 
-    if (!document.getElementById("videoC")) {
-        const botao2 = document.getElementById("stopMotion")
-        const botao = document.getElementById("btnChangeCam")
+    if (!iD("videoC")) {
+        const botao2 = iD("stopMotion")
+        const botao = iD("btnChangeCam")
 
         const videoE = document.createElement("video");
         const escala = canvas.height / 320
@@ -96,8 +96,8 @@ function camera() {
                 video.onplaying = undefined; //Remove event handler.
                 let proporcao = videoWidth / videoHeight
 
-                let canvas = document.getElementById("canvas")
-                let videoC = document.getElementById("videoC")
+                let canvas = iD("canvas")
+                let videoC = iD("videoC")
 
                 let escala = canvas.width / 320
                 let vcW = 430 * escala;
@@ -130,7 +130,7 @@ function camera() {
     }
 }
 function recMotion() {
-    let vezes = document.getElementById("times").value
+    let vezes = iD("times").value
     for (i = 0; i < vezes; i++) {
         setTimeout(() => {
             let W = canvasV.width;
@@ -198,8 +198,8 @@ async function tirafoto() {
 
 
 
-const select = document.getElementById('select');
-const button = document.getElementById('sbutton');
+const select = iD('select');
+const button = iD('sbutton');
 const cameras = []
 var selectedCam = 0
 function gotDevices(mediaDevices) {
@@ -246,7 +246,7 @@ function isCanvasBlank(canvas) {
 }
 function canvasOpacity(value) {
     canvas.style.opacity = value
-    let vid = document.getElementById("video")
+    let vid = iD("video")
     if (vid) { vid.style.opacity = value }
 }
 
@@ -340,7 +340,7 @@ async function initializeCamera() {
 
                 if (value[0] == "manual") {
                     let constr = { "advanced": [{ [key]: "continuous" }] }
-                    let checkbo = document.getElementById([key])
+                    let checkbo = iD([key])
                     checkbo.oninput = async function () {
                         if (checkbo.checked == true) {
                             valor = 'manual'
@@ -357,13 +357,13 @@ async function initializeCamera() {
             const comumConstraints = ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom', "exposureCompensation", "iso"]
             for (const ptz of comumConstraints) {
                 // Check whether pan/tilt/zoom is available or not.
-                const inputdiv = document.getElementById(ptz + "Div")
+                const inputdiv = iD(ptz + "Div")
                 //console.log(inputdiv)
                 if (ptz in settings) {
 
                     inputdiv.style.display = "inline-block"
                     // Map it to a slider element.
-                    const input = document.getElementById(ptz);
+                    const input = iD(ptz);
                     input.min = capabilities[ptz].min;
                     input.max = capabilities[ptz].max;
                     input.step = capabilities[ptz].step;
@@ -374,12 +374,12 @@ async function initializeCamera() {
                     }
                 } else {
                     inputdiv.style.display = "none"
-                    const input = document.getElementById(ptz).style.visibility = "hidden"
+                    const input = iD(ptz).style.visibility = "hidden"
                 }
             }
             // automenu
             const jatem = ["whiteBalanceMode", "focusMode", "exposureMode"]
-            const comum = document.getElementById("comumConstraints")
+            const comum = iD("comumConstraints")
             comum.innerHTML = "⚠️ configurações extras ⚠️<br>"
             for (const [pts, value] of Object.entries(capabilities)) {
                 if (!(comumConstraints.includes(pts) || jatem.includes(pts))) {
@@ -428,7 +428,7 @@ async function initializeCamera() {
             }
             //end automenu
         } catch {
-            document.getElementById("camoptions").innerHTML = "Sinto muito.<br>Seu navegador não possui a função de acesso aos recursos avançados.<br>Use o Google Chrome para usar este menu e mudar as configurações da camera"
+            iD("camoptions").innerHTML = "Sinto muito.<br>Seu navegador não possui a função de acesso aos recursos avançados.<br>Use o Google Chrome para usar este menu e mudar as configurações da camera"
 
         }
 

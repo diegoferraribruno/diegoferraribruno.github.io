@@ -43,7 +43,7 @@
     <script type="text/javascript" src="123blob.js"></script>
     <script>
         let animSize = animacao.length
-        const filme = document.getElementById("filme")
+        const filme = iD("filme")
         function adicionaQuadro() {
             filme.innerHTML = " <div id='lixo' class='quadrofilme'>lixo<br>lixo</div>"
             setTimeout(() => {
@@ -64,8 +64,8 @@
                     thumb.addEventListener("dragend", dragEnd);
                     cont.appendChild(thumb)
                     filme.appendChild(cont)
-                    document.getElementById("lixo").addEventListener("drop", drop);
-                    document.getElementById("lixo").addEventListener("dragover", dragOver);
+                    iD("lixo").addEventListener("drop", drop);
+                    iD("lixo").addEventListener("dragover", dragOver);
                 }
 
             }
@@ -99,7 +99,7 @@
 
             console.log(event)
             const draggedImageId = event.dataTransfer.getData("draggedImageId");
-            const draggedImage = document.getElementById(draggedImageId);
+            const draggedImage = iD(draggedImageId);
             const fromContainer = draggedImage.parentNode;
             const toContainer = event.currentTarget;
             if (toContainer.id == "lixo") {
@@ -119,7 +119,7 @@
 
             let tomba = document.querySelectorAll(".quadrofilme")
             for (i = 0; i < animSize; i++) {
-                document.getElementById(i).style.backgroundImage = 'url("' + animacao[i] + '")';
+                iD(i).style.backgroundImage = 'url("' + animacao[i] + '")';
             };
         }
 

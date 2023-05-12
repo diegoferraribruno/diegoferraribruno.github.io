@@ -1,6 +1,6 @@
-const canvas = document.getElementById("canvas");
+const canvas = iD("canvas");
 const context = canvas.getContext('2d', { willReadFrequently: true });
-const canvasV = document.getElementById("canvasV");
+const canvasV = iD("canvasV");
 const contextV = canvasV.getContext("2d", { willReadFrequently: true });
 let isDrawing = false;
 let isGrabing = false;
@@ -12,14 +12,14 @@ let y = 0;
 var offsetX;
 var offsetY;
 
-const canvasDiv = document.getElementById("canvas_div");
+const canvasDiv = iD("canvas_div");
 var globalComposite = "source-over";
 
 var mode = "cores";
 var ultimoToque = { x: canvas.width / 2, y: canvas.height / 2 };
 var mouseOver = false;
-const win = document.getElementById("canvas_window");
-const desenhoDiv = document.getElementById("desenho_div");
+const win = iD("canvas_window");
+const desenhoDiv = iD("desenho_div");
 const images = []
 
 var videoStream;
@@ -570,7 +570,7 @@ function limpar(what) {
                 comandosb = []
                 comandosb.push(comandos)
                 workingframe = 0
-                document.getElementById("bplayer0").style.backgroundImage = 'none'
+                iD("bplayer0").style.backgroundImage = 'none'
                 canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 save_frame()
@@ -680,7 +680,7 @@ async function modeTo(qual) {
             break;
 
         case "preencher":
-            document.getElementById("preenchercor").style.backgroundColor =
+            iD("preenchercor").style.backgroundColor =
                 strokeColor;
             changeGCO();
             break;
@@ -719,7 +719,7 @@ async function modeTo(qual) {
 function backPaint() {
     if (globalComposite != "destination-over") {
         globalComposite = "destination-over";
-        document.getElementById(
+        iD(
             "globalComposite"
         ).innerHTML =
             `<span style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;` +
@@ -727,14 +727,14 @@ function backPaint() {
             `position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left:3px; " title="Pintando por baixo">🔲</span> `;
         Alert(example = alerts[language][12])
 
-        if (document.getElementById("video")) {
-            document.getElementById("video").setAttribute("class", "destination-over")
+        if (iD("video")) {
+            iD("video").setAttribute("class", "destination-over")
         }
 
 
     } else {
         globalComposite = "source-over";
-        document.getElementById(
+        iD(
             "globalComposite"
         ).innerHTML =
             `<span style="position:relative; width:32px; display:inline-block; left:4px; ` +

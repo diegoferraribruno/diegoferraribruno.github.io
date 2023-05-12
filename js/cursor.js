@@ -1,5 +1,5 @@
 
-const cursor = document.getElementById("cursor");
+const cursor = iD("cursor");
 
 function cursorMove(e) {
     var x = e.clientX

@@ -1,7 +1,7 @@
 
-var input = document.getElementById('input');
+var input = iD('input');
 input.addEventListener('change', handleFiles);
-var input2 = document.getElementById('input2');
+var input2 = iD('input2');
 input2.addEventListener('change', readURL, true);
 var imagem = new Image;
 var backgroundSprite = new Image;
@@ -12,7 +12,7 @@ function handleFiles(e) {
     imagem.src = URL.createObjectURL(e.target.files[0]);
     imagem.onload = function () {
         {
-            let ajustar = document.getElementById("ajustar").checked
+            let ajustar = iD("ajustar").checked
             if (ajustar === true) {
                 tamanho(imagem.width, imagem.height)
             } else if (imagem.width > canvas.width) {
@@ -31,7 +31,7 @@ function handleFiles(e) {
     }
 }
 function readURL() {
-    var file = document.getElementById("input2").files[0];
+    var file = iD("input2").files[0];
     var reader = new FileReader();
     reader.onloadend = function () {
         var image = new Image();
@@ -54,12 +54,11 @@ function readURL() {
     }
 }
 
-
 function importSprite(e) {
     imagem = new Image;
     imagem.src = URL.createObjectURL(e.target.files[0]);
     imagem.onload = function () {
-        if (document.getElementById("loadBackgroundAnimation").checked) {
+        if (iD("loadBackgroundAnimation").checked) {
             background_anim = true
             backgroundSprite.src = URL.createObjectURL(e.target.files[0]);
             backgroundSprite.onload = function () {
@@ -67,11 +66,11 @@ function importSprite(e) {
             }
         } else {
             let quadros = imagem.width / canvas.width
-            let largura = document.getElementById("larguraS").value
-            let altura = document.getElementById("alturaS").value
-            let auto = document.getElementById("autodetectar").checked
+            let largura = iD("larguraS").value
+            let altura = iD("alturaS").value
+            let auto = iD("autodetectar").checked
             if (auto === false) {
-                quadros = document.getElementById("fnumber").value
+                quadros = iD("fnumber").value
                 tamanho(largura, altura)
             }
             for (i = 0; i < quadros; i++) {
@@ -88,7 +87,7 @@ function importSprite(e) {
                 adicionaQuadro()
                 changeFrame(workingframe - 1);
                 removeClass()
-                document.getElementById("contador").innerHTML = workingframe;
+                iD("contador").innerHTML = workingframe;
             }, 200)
         }
     }
@@ -187,3 +186,57 @@ var openFile = function (event) {
     }
     reader.readAsText(input.files[0]);
 };
+
+/* GEAVE UP FOR NOW WITH MULIFILE. NEED TO REMAKE EVERYTHING FROM SCRATCH.
+
+document.getElementById('input').addEventListener('change', function () {
+    _readFileDataUrl(this, function (err, files) {
+        if (err) { return }
+        console.log(files)//contains base64 encoded string array holding the image data 
+        let len = files.length
+        for (i = 0; i < len; i++) {
+
+            var imagem = new Image()
+            imagem.src = files[i]
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+            desenha("f", globalComposite, files[i], 0, 0, imagem.width, imagem.height)
+            context.drawImage(imagem, canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
+            swapImg = canvas.toDataURL('image/png');
+            blobb = dataURItoBlob(swapImg)
+            animacao[workingframe] = swapImg
+            workingframe++
+            //                new_frame()
+
+            //document.body.appendChild(imagem)
+
+            setTimeout(() => {
+                adicionaQuadro()
+                changeFrame(workingframe - 1);
+                removeClass()
+                iD("contador").innerHTML = workingframe;
+            }, 200 * i)
+        }
+    });
+    removeElement("carregando")
+});
+var _readFileDataUrl = function (input, callback) {
+    var len = input.files.length, _files = [], res = [];
+    var readFile = function (filePos) {
+        if (!filePos) {
+            callback(false, res);
+        } else {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                res.push(e.target.result);
+                readFile(_files.shift());
+            };
+            reader.readAsDataURL(filePos);
+        }
+    };
+    for (var x = 0; x < len; x++) {
+        _files.push(input.files[x]);
+    }
+    readFile(_files.shift());
+}
+*/

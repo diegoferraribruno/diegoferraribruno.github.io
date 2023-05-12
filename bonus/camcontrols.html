@@ -91,7 +91,7 @@
           if (!(ptz in settings)) continue;
 
           // Map it to a slider element.
-          const input = document.getElementById(ptz);
+          const input = iD(ptz);
           console.log(ptz, capabilities[ptz])
           input.min = capabilities[ptz].min;
           input.max = capabilities[ptz].max;

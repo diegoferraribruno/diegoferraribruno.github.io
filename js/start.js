@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", startup);
 function startup() {
   window.addEventListener("resize", checkOrientation, false);
   window.addEventListener("orientationchange", checkOrientation, false);
-  document.getElementById('inputSprite').addEventListener('change', importSprite);
+  iD('inputSprite').addEventListener('change', importSprite);
   setInterval(checkOrientation, 2000);
 
   document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(event) {
@@ -62,7 +62,7 @@ function startup() {
   modeTo("pintar")
   removeClass();
 
-  document.getElementById(
+  iD(
     "globalComposite"
   ).innerHTML =
     `<span style="position:relative; width:32px; display:inline-block; left:4px; ` +
@@ -72,7 +72,7 @@ function startup() {
     resizeScreen();
   });
   resizeScreen();
-  document.getElementById("undo").addEventListener(
+  iD("undo").addEventListener(
     "touchstart",
     (event) => {
       event.preventDefault();
@@ -80,7 +80,7 @@ function startup() {
     },
     false
   );
-  document.getElementById("undo").addEventListener(
+  iD("undo").addEventListener(
     "touchend",
     (event) => {
       event.preventDefault();
@@ -88,7 +88,7 @@ function startup() {
     },
     false
   );
-  document.getElementById("redo").addEventListener(
+  iD("redo").addEventListener(
     "touchstart",
     (event) => {
       event.preventDefault();
@@ -96,7 +96,7 @@ function startup() {
     },
     false
   );
-  document.getElementById("redo").addEventListener(
+  iD("redo").addEventListener(
     "touchend",
     (event) => {
       event.preventDefault();
@@ -107,7 +107,7 @@ function startup() {
   window.addEventListener("keyup", handleKeyUp);
   window.addEventListener("keydown", handleKeys);
 
-  document.getElementById("zoombar").value =
+  iD("zoombar").value =
     zoomScale.indexOf(zoomFactor);
 
   desenhoDiv.addEventListener("gesturestart", prevent);

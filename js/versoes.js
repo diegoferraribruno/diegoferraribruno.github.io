@@ -308,5 +308,5 @@ function textao() {
     }
 }
 textao()
-document.getElementById("versoes").innerHTML = lavem
+iD("versoes").innerHTML = lavem
 document.title = "Desenho " + vers[0].versao

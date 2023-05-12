@@ -138,31 +138,31 @@ var usuarios = [{
 }]
 
 function createAvatar(id = 0) {
-    if (!document.getElementById("avatar")) {
+    if (!iD("avatar")) {
 
         var avatar = document.createElement("img")
         avatar.src = "./avatar/" + usuarios[id].id + ".png"
         avatar.id = "avatar"
         avatar.classList.add('mini')
         avatar.setAttribute("style", "float:left; margin-left:6px; margin-right:6px;")
-        document.getElementById("bio").appendChild(avatar)
-        document.getElementById("bio").innerHTML +=
+        iD("bio").appendChild(avatar)
+        iD("bio").innerHTML +=
             "<b>" + usuarios[id].nome + "</b><br>" + usuarios[id].bio +
             "<br><a href='" + usuarios[id].link + "' target='blank'>link</a><br>"
-        if (document.getElementById("blog")) {
-            document.getElementById("bio").innerHTML +=
+        if (iD("blog")) {
+            iD("bio").innerHTML +=
                 "<span style='height:230px; width:300px; display:block; overflow-y:scroll; padding:0px;'>" + usuarios[id].curriculo + "</span>"
         }
         ;
-    } else if (!document.getElementById("avatar2")) {
+    } else if (!iD("avatar2")) {
 
         var avatar = document.createElement("img")
         avatar.src = "./avatar/" + usuarios[id].id + ".png"
         avatar.id = "avatar2"
         avatar.classList.add('mini')
         avatar.setAttribute("style", "float:left; margin-left:6px; margin-right:6px;")
-        document.getElementById("bio2").appendChild(avatar)
-        document.getElementById("bio2").innerHTML +=
+        iD("bio2").appendChild(avatar)
+        iD("bio2").innerHTML +=
             "<b>" + usuarios[id].nome + "</b><br>" + usuarios[id].bio +
             "<br><a href='" + usuarios[id].link + "' target='blank'>link</a><br>"
             ;

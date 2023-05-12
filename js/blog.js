@@ -81,7 +81,7 @@ var posts = [
 
 function createBlog() {
 	let quantos = posts.length
-	let blog = document.getElementById("blog")
+	let blog = iD("blog")
 	for (i = quantos - 1; i >= 0; i--) {
 		let post = document.createElement("div")
 		let titulo = document.createElement("div")

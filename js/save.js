@@ -3,7 +3,7 @@
 
 function salvaImagem() {
     save_frame()
-    let nome = document.getElementById("filename").value
+    let nome = iD("filename").value
     if (nome != null && nome != "") {
         var dataURL = canvas
             .toDataURL("image/png")
@@ -34,7 +34,7 @@ async function export_anim() {
         Alert(alerts[language][0] + " " + alerts[language][19])
         return
     }
-    if (document.getElementById("filenameS").value == "") {
+    if (iD("filenameS").value == "") {
         Alert(alerts[language][20])
         return
     }
@@ -46,8 +46,8 @@ async function export_anim() {
     exp.id = "exp";
     exp.style.visibility = "hidden"
     exp.style.position = "absolute"
-    document.getElementById("tela").appendChild(exp);
-    cont = document.getElementById("exp").getContext("2d");
+    iD("tela").appendChild(exp);
+    cont = iD("exp").getContext("2d");
 
     for (i = 0; i < len; i++) {
         blob = dataURItoBlob(animacao[i]);
@@ -57,8 +57,8 @@ async function export_anim() {
         imagem.onload = function () {
             cont.globalCompositeOperation = "source-over"
             cont.drawImage(imagem, 0, 0, imagem.width, imagem.height, pos, 0, imagem.width, imagem.height);
-            if (document.getElementById("unir").checked && background_anim == true) {
-                if (!document.getElementById("sobrepor").checked) {
+            if (iD("unir").checked && background_anim == true) {
+                if (!iD("sobrepor").checked) {
                     cont.globalCompositeOperation = "destination-over"
                     cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
 
@@ -74,17 +74,17 @@ async function export_anim() {
 
 
     setTimeout(() => {
-        let fname = document.getElementById("filenameS").value
-        var dataURL = document.getElementById("exp")
+        let fname = iD("filenameS").value
+        var dataURL = iD("exp")
             .toDataURL("image/png")
             .replace("image/png", "image/octet-stream");
-        if (document.getElementById("seq").checked) {
+        if (iD("seq").checked) {
             downloadImage(dataURL, `${fname}.png`);
         }
         spritao.src = dataURL
         spritao.onload = function () {
 
-            if (document.getElementById("gif").checked) {
+            if (iD("gif").checked) {
                 exp.width = canvas.width
                 exp.height = canvas.height
                 let myanima = new Image()
@@ -117,9 +117,9 @@ function confirmLink(url) {
         criaConteudo()
         apoio()
     } else {
-        let canvasD = document.getElementById("canvas_div")
+        let canvasD = iD("canvas_div")
         if (canvasD) {
-            let confirm = document.getElementById("confirm")
+            let confirm = iD("confirm")
             if (!confirm) {
                 let item = document.createElement("div")
                 item.id = "confirm"
@@ -137,11 +137,11 @@ function confirmLink(url) {
     }
 }
 function cancela(oque = "confirm") {
-    let confirm = document.getElementById(oque)
+    let confirm = iD(oque)
     confirm.parentElement.removeChild(confirm)
 }
 function criaConteudo() {
-    let ap = document.getElementById("conteudo")
+    let ap = iD("conteudo")
     if (!ap) {
         var conteudo = document.createElement("div")
         conteudo.id = "conteudo"
@@ -153,7 +153,7 @@ function criaConteudo() {
     }
 }
 function apoio() {
-    let ap = document.getElementById("conteudo")
+    let ap = iD("conteudo")
     if (ap) {
         let apoioHTML = `
 			    <div onClick='cancela("conteudo")' style=' float:right'class='bot'>❎</div>
@@ -169,7 +169,7 @@ Ajude também a divulguar:</b><br>
 				Grato pela sua atenção<br><br>
 				</div>
             <div id="bio2"></div>`
-        document.getElementById("conteudo").innerHTML = apoioHTML
+        iD("conteudo").innerHTML = apoioHTML
 
         createAvatar(0, "bio2")
     }
@@ -177,7 +177,7 @@ Ajude também a divulguar:</b><br>
 }
 
 function copyPix() {
-    var copyText = document.getElementById("myInput");
+    var copyText = iD("myInput");
     copyText.select();
     copyText.setSelectionRange(0, 99999); // For mobile devices
 
@@ -190,8 +190,8 @@ function createAvatar(id = 0, onde = "bio2") {
     avatar.src = "./avatar/" + usuarios[id].id + ".png"
     avatar.classList.add('mini')
     avatar.setAttribute("style", "float:right; margin-left:6px; margin-right:6px;")
-    document.getElementById(onde).appendChild(avatar)
-    document.getElementById(onde).innerHTML +=
+    iD(onde).appendChild(avatar)
+    iD(onde).innerHTML +=
         "<b>" + usuarios[id].nome + "</b><br>" + usuarios[id].bio +
         "<br><a href='" + usuarios[id].link + "' target='blank'>link</a>";
 }
