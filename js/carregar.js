@@ -1,4 +1,3 @@
-
 var input = iD('input');
 input.addEventListener('change', handleFiles);
 var input2 = iD('input2');
@@ -80,13 +79,17 @@ function importSprite(e) {
                 swapImg = canvas.toDataURL('image/png');
                 blobb = dataURItoBlob(swapImg)
                 animacao[workingframe] = swapImg
+
+                comandos.push(["img", "source-over", blobb, i * canvas.width, 0, imagem.width, imagem.height])
+                comandosParaComandosb()
                 workingframe++
 
             }
             setTimeout(() => {
                 adicionaQuadro()
-                changeFrame(workingframe - 1);
+                // changeFrame(workingframe - 1);
                 removeClass()
+                removeElement("carregando")
                 iD("contador").innerHTML = workingframe;
             }, 200)
         }
