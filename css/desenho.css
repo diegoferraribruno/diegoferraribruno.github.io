@@ -412,25 +412,25 @@ input[type="range"] {
 }
 
 .light {
-    background-color: #eeeeeedd;
+    background-color: #eeeeee;
     color: #000000;
     /*  animation: animatelight 0.3s;*/
 }
 
 @keyframes animatelight {
     from {
-        background-color: #222222dd;
+        background-color: #222222;
         color: #eeeeee;
     }
 
     to {
-        background-color: #eeeeeedd;
+        background-color: #eeeeee;
         color: #000000;
     }
 }
 
 .dark {
-    background-color: #222222dd;
+    background-color: #222222;
     color: #eeeeee;
     animation: animatenight 0.3s;
 }
@@ -438,12 +438,12 @@ input[type="range"] {
 
 @keyframes animatenight {
     from {
-        background-color: #eeeeeedd;
+        background-color: #eeeeee;
         color: #000000;
     }
 
     to {
-        background-color: #222222dd;
+        background-color: #222222;
         color: #eeeeee;
     }
 }
@@ -604,10 +604,9 @@ input[type="range"] {
 }
 
 .close {
-    display: block;
-    position: absolute;
-    right: 4px;
-    top: 0px;
+    float: right;
+    margin-right: 6px;
+    margin-top: 6spx;
     font-size: x-large;
 }
 
@@ -739,8 +738,7 @@ input[type="range"] {
     width: 100%;
     height: 100%;
     text-align: center;
-    background-color: #303030;
-    display: inline-block;
+    display: grid;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -749,11 +747,16 @@ input[type="range"] {
     line-height: 100%;
     align-content: center;
     font-weight: bold;
-    vertical-align: top;
+    vertical-align: middle;
 
 }
 
 #carregandob {
+    display: block;
+    max-width: 330px;
     max-height: 320px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     overflow-y: scroll;
 }
