@@ -194,7 +194,7 @@ function animaMonstro() {
     if (monstro.frame > 2) { monstro.frame = 0 }
 }
 
-setInterval(moveMonstro, 30)
+setInterval(moveMonstro, 15)
 function moveMonstro() {
     let move = { x: 0, y: 0 }
     if (monstro.keys.ArrowUp == true && monstro.keys.ArrowDown == false) {

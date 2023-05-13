@@ -325,9 +325,9 @@
             <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;"> <!--span class="botao">
                     🖼️ <txt name="18">Configurações do quadro</txt>
                 </span-->
-                <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                 <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ ✂️
                     <txt name="19">Tamanho do quadro</txt>
+                    <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                 </span>
                 <!--
                 <span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span-->
@@ -500,8 +500,8 @@
 
             </div>
             <div id="menuFX" class="fundobranco submenu">
-                <span title="fechar efeitos" onmousedown="removeClass()" class="close">❎</span>
-                <span class="botao" onclick="FX(0)">🚫 <txt name="38">Remover Filtros</txt></span>
+                <span class="botao" onclick="FX(0)">🚫 <txt name="38">Remover Filtros</txt> <span title="fechar efeitos"
+                        onmousedown="removeClass()" class="close">❎</span></span>
                 <span class="botao" onclick="FX(1)"> ☯️ <txt name="39">Invertido</txt> </span>
                 <span class="botao"><input id="blurBar" type="range" min="0" max="10" step="0.1" onchange="FX(2)">
                     👓 <txt name="40">Desfoque</txt>
@@ -520,9 +520,9 @@
                 </span>
             </div>
             <div id="menusalvar" class="fundobranco submenu">
-                <span class="close" title="fechar menu apagar" onmousedown="removeClass()">❎</span>
                 <span class="botao" onclick="export2txt()">
                     🛟<txt name="49" class="wip">Exportar projeto .art</txt>
+                    <span class="close" title="fechar menu apagar" onmousedown="removeClass()">❎</span>
                 </span>
                 <span class="botao">🛟 🖼️ <txt name="43">Salvar quadro atual</txt> <br>
                     <txt name="44">Título:</txt> <input id="filename" type="text" alt="Nome do arquivo"
@@ -680,7 +680,7 @@
             </div>
         </div>
     </div>
-    <div id="carregando" class="carregandoa" class="fundobranco">
+    <div id="carregando" class="carregandoa fundobranco">
         <div id="carregandob" class="fundobranco">
 
             <span class="botao" style="text-shadow: 1px 1px #000;">
@@ -689,7 +689,8 @@
                         style="width: 36px; height: 36px; margin-bottom: 2px; float: left; margin-left: 60px; margin-top: 8px;"></a>
                 <a href="index.html"><span
                         style="display: inline-block; height: 48px; font-size: medium; color: #ebc908; margin-right: 40px; line-height: 16px; margin-top: 12px;">
-                        Diego Ferrari Bruno<br><span style=" font-size: smaller;" id="apresenta" title="apresenta">
+                        Diego Ferrari Bruno<br><span style=" font-size: smaller; font-weight: 400;" id="apresenta"
+                            title="apresenta">
                             <txt name="75">apresenta</txt></a></span></span></span><br>
             <span class=" botao" style="font-size: 0.8em;" title="Modos de arte">
                 <span id="night2" class="mais" onmousedown="night()" title="modo escuro / claro">💡</span>
@@ -708,6 +709,7 @@
                             style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">🇧🇷</span></span>
 
                 </span>
+                <span id="info2" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span>
 
             </span><br>
             <span class="botao" style="font-size: 0.6em;" title="formatos" id="formatos2">
