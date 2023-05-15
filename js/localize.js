@@ -177,7 +177,8 @@ let textos = {
         "72": "Balanço do branco ",
         "73": "Modo de Foco Manual",
         "74": "Novo projeto",
-        "75": "apresenta"
+        "75": "apresenta",
+        "76": "usar como fundo do app"
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -253,7 +254,8 @@ let textos = {
         "72": "White balace ",
         "73": "Manual Focus Mode",
         "74": "New Project",
-        "75": "presents"
+        "75": "presents",
+        "76": "use as page background"
     }
 }
 var titles = {

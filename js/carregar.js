@@ -38,13 +38,18 @@ function readURL() {
         image.src = reader.result;
 
         image.onload = function () {
-            if (image.width > canvas.width) {
-                let proporcao = canvas.width / image.width
-                image.height = image.height * proporcao
-                image.width = image.width * proporcao
+            if (iD("pagebg").checked) {
+                iD("tela").style.backgroundImage = "url(" + reader.result + ")";
+            } else {
+
+                if (image.width > canvas.width) {
+                    let proporcao = canvas.width / image.width
+                    image.height = image.height * proporcao
+                    image.width = image.width * proporcao
+                }
+                canvasDiv.style.backgroundImage = "url(" + reader.result + ")";
+                canvasDiv.style.backgroundSize = `${image.width}px ${image.height}px`
             }
-            canvasDiv.style.backgroundImage = "url(" + reader.result + ")";
-            canvasDiv.style.backgroundSize = `${image.width}px ${image.height}px`
         };
     }
     if (file) {
