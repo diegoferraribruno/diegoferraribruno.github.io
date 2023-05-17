@@ -111,3 +111,11 @@
     width: 480px;
     height: 340px;
 }
+
+.tree {
+    position: absolute;
+    display: block;
+    width: 64px;
+    height: 96px;
+    font-size: 96px;
+}

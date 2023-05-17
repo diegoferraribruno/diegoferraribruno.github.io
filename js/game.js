@@ -6,13 +6,14 @@ var user = {
     left: 172,
     top: 710,
     width: 32,
-    height: 100,
+    height: 60,
     face: 0,
     hue: 0
 }
 var gamestate = "pause"
 var users = { "player": user }
 var game = iD("game")
+const gameSize = { width: 1920, height: 1080 }
 const src = iD("manche");
 var container = iD("container")
 var send = false
@@ -38,7 +39,7 @@ let player = {
     top: 710,
     left: 172,
     width: 32,
-    height: 100,
+    height: 60,
     hidden: true
 }
 var speed = 4
@@ -77,7 +78,6 @@ src.addEventListener('touchmove', (e) => {
     //iD('manche').innerHTML = "X: "+Math.floor(clientX)+" Y:"+Math.floor(clientY)+"<br />dX: "+Math.floor(deltaX)+" dY: "+Math.floor(deltaY)
     // Process the data…
 }, false);
-
 
 function mouse_down(e) {
 
@@ -359,42 +359,52 @@ async function loadPlayer() {
 loadPlayer()
 
 function frontEnd(move) {
+    let avatar = iD(id)
+    if (avatar != null) {
+        let newUser = {
+            left: user.left + (move.x * speed),
+            top: user.top + (move.y * speed),
+            width: user.width,
+            height: user.height
 
-
-    if (id != "player") {
-        users[id].left = Math.floor(users[id].left + (move.x * speed) + (users[id].serverPlayerPos.x - users[id].left) * 0.1);
-        users[id].top = Math.floor(users[id].top + (move.y * speed) + (users[id].serverPlayerPos.y - users[id].top) * 0.1);
-
-        for (i in users) {
-            let avatar = iD(users[i].id)
-            if (avatar != null) {
-                users[i].left = users[i].left + (users[i].serverPlayerPos.x - users[i].left) * speed
-                users[i].top = users[i].top + (users[i].serverPlayerPos.y - users[i].top) * speed
-                avatar.style.left = users[i].left + "px";
-                avatar.style.top = users[i].top + "px";
+        }
+        let colliders = coliders.length
+        let colidiu = false;
+        for (i = 0; i < colliders; i++) {
+            if (doElsCollide(newUser, coliders[i]) != null) {
+                newUser.left = user.left + move.x * speed;
+                newUser.top = user.top;
+                if (
+                    doElsCollide(newUser, coliders[i]) != null
+                ) {
+                    newUser.left = user.left;
+                    newUser.top = user.top + move.y * speed;
+                    if (
+                        doElsCollide(newUser, coliders[i]) != null
+                    ) {
+                        move.x = move.x * -1;
+                        move.y = move.y * -1;
+                        newUser.left =
+                            user.left + move.x * speed;
+                        newUser.top = user.top + move.y * speed;
+                        console.log(true)
+                        colidiu = true;
+                    }
+                }
             }
         }
-    }
-    else {
-        let avatar = iD(id)
-        if (avatar != null) {
-            let newUser = {
-                left: user.left + (move.x * speed),
-                top: user.top + (move.y * speed),
-                width: user.width,
-                height: user.height
 
-            }
-            if (insideX(newUser)) {
-                user.left = newUser.left
-                avatar.style.left = user.left + "px";
-                moveBG()
-            }
-            if (insideY(newUser)) {
-                user.top = newUser.top
-                avatar.style.top = user.top + "px";
-            }
+        if (!insideX(newUser)) {
+            newUser.left = user.left
         }
+        if (!insideY(newUser)) {
+            newUser.top = user.top
+        }
+        moveBG()
+        user.left = newUser.left;
+        user.top = newUser.top;
+        avatar.style.left = user.left + "px";
+        avatar.style.top = user.top + "px";
     }
 
     let blocs = blocosX.length
@@ -403,8 +413,11 @@ function frontEnd(move) {
 
         if (doElsCollide(player, blocosX[i])) { player.hidden = true }
     }
+    zIndexTree()
 }
+
 iD("bg1").style.backgroundPosition = "10px 0px"
+
 async function moveBG() {
     let bgx = iD("bg1").style.backgroundPositionX
     iD("bg1").style.backgroundPosition = (keys.ArrowLeft + keys.ArrowRight) / 8 + parseFloat(bgx, 10) + 0.1 + "px 0px"
@@ -433,7 +446,7 @@ function playershake() {
         }, 200)
     }, 600)
 }
-const nuvens = setInterval(moveBG, 80)
+const nuvens = setInterval(moveBG, 200)
 var map = {
     x: parseInt(
 
@@ -490,6 +503,8 @@ var blocosX = [];
 let blocos = document.getElementsByClassName("bloco")
 var linha = 0
 var coluna = 0
+var coliders = []
+
 function alignBlocos() {
     for (i in blocos) {
         if (i == 4 || i == 8) { linha++; coluna = 0 }
@@ -499,15 +514,15 @@ function alignBlocos() {
             let topo = -280 + (linha * 380)
             let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 340 }
             blocosX.push(bloco)
+            // coliders.push(bloco)
             blocos[i].setAttribute("style", "left:" + esq + "px; top:" + topo + "px")
         }
         coluna++
     }
 }
 alignBlocos();
-let doElsCollide = function (rect1, rect2) {
-    //let rect1 ={}
 
+let doElsCollide = function (rect1, rect2) {
     if (
         rect1.left < rect2.left + rect2.width &&
         rect1.left + rect1.width > rect2.left &&
@@ -519,3 +534,33 @@ let doElsCollide = function (rect1, rect2) {
         return null;
     }
 };
+
+let trees = []
+function seedTrees() {
+    for (i = 0; i < 20; i++) {
+        let randomPos = { x: Math.random() * gameSize.width, y: Math.random() * gameSize.height }
+        let treeColide = { id: "tree" + i, left: randomPos.x + 40, top: randomPos.y + 100, width: 10, height: 4 }
+        coliders.push(treeColide)
+        let tree = document.createElement("div")
+        tree.classList.add("tree")
+        tree.id = "tree" + i
+        tree.innerHTML = "🌳"
+        tree.style.left = randomPos.x + "px"
+        tree.style.top = randomPos.y + "px"
+        iD("coliders").appendChild(tree)
+    }
+}
+
+seedTrees()
+
+function zIndexTree() {
+    let colliders = coliders.length
+    for (i = 0; i < colliders; i++) {
+        let obj = coliders[i]
+        if (obj.top + obj.height > player.top + (player.height / 2)) {
+            iD(obj.id).style.zIndex = 3
+        } else {
+            iD(obj.id).style.zIndex = 0
+        }
+    }
+}

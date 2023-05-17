@@ -121,8 +121,13 @@ function frontMoveMonstro(move) {
                 colidiu = true;
             }
         }
-
-        if (colidiu == false) {
+        let colliders = coliders.length
+        for (i = 0; i < colliders; i++) {
+            if (doMonsterCollide(coliders[i], newmonstro)) {
+                colidiu = true
+            }
+        }
+        if (colidiu === false) {
             if (insideXMonstro(newmonstro)) {
                 monstro.left = newmonstro.left
                 avatar.style.left = monstro.left + "px";
