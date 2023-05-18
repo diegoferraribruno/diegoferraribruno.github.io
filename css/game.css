@@ -71,7 +71,24 @@
 
 .player {
     width: 64px;
+    height: 100px;
+    margin-top: -96px;
+    margin-left: -10px;
+}
 
+#player {
+    z-index: 4;
+    border: red 1px dashed;
+
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgb(0, 0, 0);
+
+    position: absolute;
+    left: 120px;
+    top: 200px;
+    width: 48px;
+    height: 10px;
+    display: block;
 }
 
 .head {
