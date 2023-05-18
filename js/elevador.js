@@ -468,8 +468,8 @@ window.onload = function () {
     setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 1000)
     setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 2000)
     setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 3000)
-    setTimeout(() => limpaCabeca(), 5000)
-    setTimeout(() => { iD("carregando").style.display = "none"; gamestate = "play"; }, 4000)
+    //setTimeout(() => limpaCabeca(), 5000)
+    setTimeout(() => { iD("carregando").style.display = "none"; gamestate = "play"; }, 1000)
     setTimeout(() => { keys.ArrowUp = true; setTimeout(() => keys.ArrowUp = false, 1500) }, 3980)
 
     // window.addEventListener("orientationchange", checkOrientation, false);
@@ -485,15 +485,12 @@ var checkO = function () {
         container.style.height = windowy + "px";
         if (windowx > windowy) {
 
-            iD("desenha-container").classList.add("desenha-horizontal")
-            iD("desenha-iframe").classList.add("desenha-horizontal")
+
             iD('joypad').style.left = (windowx - 180) + "px";
             iD('joypad').style.top = (windowy - 140) + "px";
         } else {
             iD('joypad').style.top = (windowy - 160) + "px";
             iD('joypad').style.left = (windowx / 2 - 100) + "px";
-            iD("desenha-container").classList.remove("desenha-horizontal")
-            iD("desenha-iframe").classList.remove("desenha-horizontal")
 
         }
     }
@@ -556,30 +553,47 @@ function construct() {
     predio.style.top = 0 + "px"
     predio.style.width = 1920 * 2 + "px";
     predio.style.height = 1080 * 2 + "px";
-    predio.style.backgroundColor = "#110000"
-    for (i = 1; i < 5; i++) {
+    predio.style.backgroundColor = "#050000"
+    for (i = 1; i < 6; i++) {
         let floor = document.createElement("div")
         floor.style.display = "block"
         floor.style.position = "absolute"
         floor.style.left = "0px";
-        floor.style.top = 440 * i + "px"
+        floor.style.top = 400 * i + "px"
         floor.style.width = 1920 * 2 + "px";
-        floor.style.height = "180px";
-        floor.style.backgroundColor = "#220000"
+        floor.style.height = "200px";
+        floor.style.backgroundColor = "#100000"
+        for (b = 1; b < 5; b++) {
+            let light = document.createElement("div")
+            light.classList.add("glowing-light")
+            light.style.left = 720 * b + "px"
+            floor.appendChild(light)
+        }
+        for (c = 1; c < 10; c++) {
+            let door = document.createElement("div")
+            door.innerHTML = "🚪"
+            door.style.fontSize = "140px"
+            door.style.marginTop = -148 + "px"
+            door.style.display = "inline-block"
+            door.style.position = "absolute"
+            door.style.left = 340 * c + 100 + "px"
+            door.style.opacity = 0.2
+            floor.appendChild(door)
+        }
         predio.appendChild(floor)
     }
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 5; i++) {
         let floor = document.createElement("div")
         floor.id = "col" + i
         floor.style.display = "block"
         floor.style.position = "absolute"
         floor.style.left = "100px";
-        floor.style.top = 220 * i + 180 + "px"
+        floor.style.top = 400 * i + 200 + "px"
         floor.style.width = 1800 * 2 + "px";
-        floor.style.height = "40px";
-        floor.style.border = "1px red dashed"
+        floor.style.height = "200px";
+        //floor.style.border = "1px red dashed"
         predio.appendChild(floor)
-        let treeColide = { id: "col" + i, left: 100, top: 220 * i + 180, width: 1800 * 2, height: 40 }
+        let treeColide = { id: "col" + i, left: 100, top: 400 * i + 200, width: 1800 * 2, height: 200 }
         coliders.push(treeColide)
     }
     document.getElementById("game").appendChild(predio)

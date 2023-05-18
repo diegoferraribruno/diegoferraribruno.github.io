@@ -43,10 +43,11 @@
 }
 
 .glowing-light {
+    display: inline-block;
     background-color: var(--glow-color);
     z-index: 1;
     position: absolute;
-    top: 460px;
+    margin-top: 24px;
     left: 900px;
     color: var(--glow-color);
     cursor: pointer;
@@ -80,7 +81,7 @@
     opacity: 0.6;
     border-radius: 200px;
     filter: blur(1em);
-    transform: translateY(240px) rotateX(95deg) scale(2, 2);
+    transform: translateY(210px) rotateX(95deg) scale(1.5, 1.7);
     background: var(--glow-color);
     pointer-events: none;
 }
@@ -295,4 +296,10 @@
     .glowing-btn {
         font-size: 1em;
     }
+}
+
+.shadow {
+    filter: drop-shadow(0px 0px 4px hsl(0, 0%, 0%));
+
+
 }

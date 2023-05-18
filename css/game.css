@@ -78,11 +78,9 @@
 
 #player {
     z-index: 4;
-    border: red 1px dashed;
-
     border-radius: 50%;
-    box-shadow: 0 0 50px rgb(0, 0, 0);
-
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+    background-color: #00000055;
     position: absolute;
     left: 120px;
     top: 200px;

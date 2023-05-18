@@ -1,6 +1,6 @@
 var monstro = {
 
-    top: 520,
+    top: 700,
     left: 850,
     width: 160,
     height: 160,
