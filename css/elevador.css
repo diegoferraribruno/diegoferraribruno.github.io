@@ -1,8 +1,59 @@
+#game {
+    position: absolute;
+    display: block;
+    width: 3840px;
+    height: 2160px;
+    background-position-y: bottom;
+    background-image: url("./../game/grama.png");
+    top: 320px;
+
+}
+
+.bg {
+    width: 100%;
+    height: 160px;
+    background-repeat: repeat-x;
+    background-size: 320px 160px;
+    display: block;
+    position: fixed;
+}
+
+#bg1 {
+    background-image: url("./.././../game/clouds.png");
+    background-color: rgb(30, 24, 66);
+    background-attachment: fixed;
+}
+
+.mini2 {
+    width: 100px;
+    height: 100px;
+    filter: brightness(0.8);
+    -webkit-box-shadow:
+        0px 0px 0.8em 0px var(--glow-color);
+    -moz-box-shadow:
+        0px 0px 0.8em 0px var(--glow-color);
+    box-shadow:
+        0px 0px 0.8em 0px var(--glow-color);
+    animation: border-flicker 4s linear infinite;
+
+}
+
+.expand {
+    filter: brightness(1);
+    width: 320px;
+    height: 320px;
+    margin-left: -110px;
+    margin-top: -110px;
+    filter: brightness(1);
+
+}
+
 #predio {
     width: 1920px;
     height: 1080px;
     background-color: black;
 }
+
 
 @import url("https://fonts.googleapis.com/css?family=Raleway");
 
@@ -19,19 +70,21 @@
 .glowing-btn {
     z-index: 1;
     position: absolute;
-    top: 204px;
-    left: 120px;
+    top: -180px;
+    left: 180px;
+    height: 180px;
+    width: 100px;
     color: var(--glow-color);
     cursor: pointer;
-    padding: 0.35em 2em;
+    padding: 1em 1.4em;
     border: 0.1em solid var(--glow-color);
-
+    text-align: center;
     background: none;
     perspective: 10em;
     font-family: "Raleway", sans-serif;
-    font-size: 1em;
+    font-size: 0.8em;
     font-weight: 900;
-    letter-spacing: 1em;
+    letter-spacing: 0.8em;
 
     -webkit-box-shadow: inset 0px 0px 0.8em 0px var(--glow-color),
         0px 0px 0.8em 0px var(--glow-color);
@@ -47,7 +100,7 @@
     background-color: var(--glow-color);
     z-index: 1;
     position: absolute;
-    margin-top: 24px;
+    margin-top: -370px;
     left: 900px;
     color: var(--glow-color);
     cursor: pointer;
@@ -78,10 +131,10 @@
     bottom: 0;
     left: 0;
     right: 0;
-    opacity: 0.6;
+    opacity: 0.3;
     border-radius: 200px;
     filter: blur(1em);
-    transform: translateY(210px) rotateX(95deg) scale(1.5, 1.7);
+    transform: translateY(220px) rotateX(95deg) scale(1.2, 1.8);
     background: var(--glow-color);
     pointer-events: none;
 }
@@ -105,8 +158,7 @@
   pointer-events: none;
 }*/
 .glowing-txt {
-    float: left;
-    margin-right: -0.8em;
+
     -webkit-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
         0 0 0.45em var(--glow-color);
     -moz-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
@@ -153,7 +205,7 @@
     pointer-events: none;
 }
 
-.glowing-btn:hover {
+*/ .glowing-btn:hover {
     color: rgba(0, 0, 0, 0.8);
     text-shadow: none;
     animation: none;
@@ -302,4 +354,16 @@
     filter: drop-shadow(0px 0px 4px hsl(0, 0%, 0%));
 
 
+}
+
+#gitbio {
+    margin-left: 1400px;
+}
+
+.step {
+    color: aliceblue;
+}
+
+.floor {
+    color: red
 }

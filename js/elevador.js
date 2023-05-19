@@ -3,8 +3,8 @@ var user = {
     id: "player",
     name: "",
     serverPlayerPos: { x: 180, y: 660 },
-    left: 172,
-    top: 710,
+    left: 50,
+    top: 2120,
     width: 32,
     height: 10,
     face: 0,
@@ -36,13 +36,13 @@ document.addEventListener('keyup', keyUp);
 let mode = "move"
 let oldpos = { x: 0, y: 0 }
 let player = {
-    top: 710,
-    left: 172,
+    top: 2120,
+    left: 50,
     width: 32,
     height: 20,
     hidden: true
 }
-var speed = 4
+var speed = 7
 container.style.width = screen.width + "px";
 container.style.height = screen.height + "px";
 
@@ -100,13 +100,21 @@ function mouse_up(event) {
     clientY = 0;
     send = true;
     let t = event.target.id
-    if (t == 'game' && seguemouse == false) {
+    if (seguemouse == false && event.target.id != "manche") {
+        let extra = 0
+        let stepParent = hasClass(event.target, "step")
+        if (stepParent) {
+            extra = parseInt(document.getElementById(event.target.id).parentElement.style.top, 10)
+        }
+        clickmove(event.layerX + parseInt(event.target.style.left, 10) - player.width / 2, event.layerY - 14 + parseInt(event.target.style.top, 10) + extra)
 
-        clickmove(event.layerX - player.width / 2, event.layerY - 14)
     }
     if (seguemouse == true) { seguemouse = false }
 
 
+}
+function hasClass(element, className) {
+    return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
 }
 
 function mouse_position(e) {
@@ -363,7 +371,7 @@ function frontEnd(move) {
     if (avatar != null) {
         let newUser = {
             left: user.left + (move.x * speed),
-            top: user.top + (move.y * speed),
+            top: user.top + (move.y * speed / 1.4),
             width: user.width,
             height: user.height
 
@@ -378,7 +386,7 @@ function frontEnd(move) {
                     doElsCollide(newUser, coliders[i]) != null
                 ) {
                     newUser.left = user.left;
-                    newUser.top = user.top + move.y * speed;
+                    newUser.top = user.top + move.y * speed / 1.4;
                     if (
                         doElsCollide(newUser, coliders[i]) != null
                     ) {
@@ -386,7 +394,7 @@ function frontEnd(move) {
                         move.y = move.y * -1;
                         newUser.left =
                             user.left + move.x * speed;
-                        newUser.top = user.top + move.y * speed;
+                        newUser.top = user.top + move.y * speed / 1.4;
                         console.log(true)
                         colidiu = true;
                     }
@@ -465,12 +473,12 @@ function insideY(quem = user) {
 }
 
 window.onload = function () {
-    setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 1000)
-    setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 2000)
-    setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 3000)
+    setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>3</span>", 500)
+    setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>2</span>", 1000)
+    setTimeout(() => iD("carregandoc").innerHTML = "<span class='carregandoc'>1</span>", 1500)
     //setTimeout(() => limpaCabeca(), 5000)
-    setTimeout(() => { iD("carregando").style.display = "none"; gamestate = "play"; }, 1000)
-    setTimeout(() => { keys.ArrowUp = true; setTimeout(() => keys.ArrowUp = false, 1500) }, 3980)
+    setTimeout(() => { iD("carregando").style.display = "none"; gamestate = "play"; }, 2000)
+    // setTimeout(() => { keys.ArrowUp = true; setTimeout(() => keys.ArrowUp = false, 1500) }, 3980)
 
     // window.addEventListener("orientationchange", checkOrientation, false);
 }
@@ -532,7 +540,7 @@ let doElsCollide = function (rect1, rect2) {
     }
 };
 
-function zIndexTree() {
+async function zIndexTree() {
     let colliders = coliders.length
     for (i = 0; i < colliders; i++) {
         let obj = coliders[i]
@@ -553,50 +561,206 @@ function construct() {
     predio.style.top = 0 + "px"
     predio.style.width = 1920 * 2 + "px";
     predio.style.height = 1080 * 2 + "px";
-    predio.style.backgroundColor = "#050000"
-    for (i = 1; i < 6; i++) {
+    //predio.style.backgroundImage = url("./../game/grama.png");
+    predio.classList.add("floor")
+    let variant = 0
+    for (f = 0; f < 6; f++) {
+        //createWall
         let floor = document.createElement("div")
+        floor.classList.add("floor")
         floor.style.display = "block"
         floor.style.position = "absolute"
         floor.style.left = "0px";
-        floor.style.top = 400 * i + "px"
+        floor.style.top = 400 * f + "px"
         floor.style.width = 1920 * 2 + "px";
         floor.style.height = "200px";
         floor.style.backgroundColor = "#100000"
-        for (b = 1; b < 5; b++) {
-            let light = document.createElement("div")
-            light.classList.add("glowing-light")
-            light.style.left = 720 * b + "px"
-            floor.appendChild(light)
+        floor.style.border = "4px #211200 solid";
+        if (f == 0) {
+            floor.style.backgroundColor = "#110000"
+
         }
-        for (c = 1; c < 10; c++) {
-            let door = document.createElement("div")
-            door.innerHTML = "🚪"
-            door.style.fontSize = "140px"
-            door.style.marginTop = -148 + "px"
-            door.style.display = "inline-block"
-            door.style.position = "absolute"
-            door.style.left = 340 * c + 100 + "px"
-            door.style.opacity = 0.2
-            floor.appendChild(door)
+        if (f != 0) {
+
+            for (b = 1; b < 6; b++) {
+                let light = document.createElement("div")
+                light.classList.add("glowing-light")
+                light.style.left = 640 * b + "px"
+                floor.appendChild(light)
+            }
         }
         predio.appendChild(floor)
     }
     for (i = 0; i < 5; i++) {
-        let floor = document.createElement("div")
-        floor.id = "col" + i
-        floor.style.display = "block"
-        floor.style.position = "absolute"
-        floor.style.left = "100px";
-        floor.style.top = 400 * i + 200 + "px"
-        floor.style.width = 1800 * 2 + "px";
-        floor.style.height = "200px";
-        //floor.style.border = "1px red dashed"
-        predio.appendChild(floor)
-        let treeColide = { id: "col" + i, left: 100, top: 400 * i + 200, width: 1800 * 2, height: 200 }
-        coliders.push(treeColide)
+        // colliders / paredes
+        if (i % 2 == 0) { variant = 1920 * 2 - 400 }
+        else { variant = 0 }
+        let wall = document.createElement("div")
+        wall.id = "wall" + i
+        wall.style.display = "block"
+        wall.style.verticalAlign = "bottom"
+        wall.style.position = "absolute"
+        wall.style.left = "0px";
+        wall.style.top = 400 * i + 200 + "px"
+        wall.style.width = 1600 * 2 + "px";
+        wall.style.height = "200px";
+
+        //stairs
+        for (d = 0; d < 10; d++) {
+            let step = document.createElement("div")
+            step.id = "step" + i + d
+            step.classList.add("step")
+            step.style.display = "block"
+            step.style.position = "absolute"
+            step.style.left = 20 * d + variant + 20 + "px";
+            step.style.top = 20 * d + "px"
+            step.style.width = 140 + "px";
+            step.style.height = "20px";
+            step.style.backgroundColor = "rgb(40, 5, 5)"
+            if (d % 2 == 0) {
+                step.style.backgroundColor = "rgb(30, 6, 6)"
+
+            }
+            let stepWidth = 20
+            let stepCollide = { id: "step" + i + d, left: 20 * d + variant, top: 20 * d + 400 * i + 200, width: stepWidth, height: 20 }
+            if (d == 9) {
+
+                let stepWidth = 200;
+                //   step.style.left = 0 + variant + "px";
+                //  step.style.width = stepWidth + "px";
+                stepCollide.width = stepWidth
+                stepCollide.left = 0 + variant
+            }
+            wall.appendChild(step)
+
+            coliders.push(stepCollide)
+
+        }
+        for (d = 0; d < 10; d++) {
+            //steptwo
+            if (i % 2 == 0) { variant = 1920 * 2 - 380 }
+            else { variant = 0 }
+            let step = document.createElement("div")
+            step.style.display = "block"
+            step.style.position = "absolute"
+            step.id = "stepb" + i + d
+            step.style.left = 20 * d + variant + "px";
+            step.style.top = 20 * d + "px"
+            step.style.width = 20 + "px";
+            step.style.height = (200 - (d * 20)) + "px";
+            step.style.backgroundColor = "#110000"
+            let stepWidth = 20
+            if (d == 0) {
+                //step.style.width = 200 + "px";
+                stepWidth = 200
+            }
+
+            wall.appendChild(step)
+            let stepBcollider = { id: "stepb" + i + d, left: 20 * d + 160 + variant, top: 20 * d + 400 * i + 200, width: stepWidth, height: 20 }
+            coliders.push(stepBcollider)
+
+        }
+        //wall.style.border = "1px red dashed"
+        for (c = 1; c < 6; c++) {
+            let door = document.createElement("div")
+            door.innerHTML = `<span>🚪</span><span style='display:block; position:absolute; width:180px; margin-top:-150px; height:158px; font-size:20px; color:#222200; font-family:serif; text-align:center;'><br>${5 - i}${c}<span>`
+            door.style.fontSize = "140px"
+            door.classList.add("step")
+            door.style.bottom = "-2px"
+            //door.style.marginTop = -148 + "px"
+            door.style.display = "inline-block"
+            door.style.position = "absolute"
+            door.style.textAlign = "center"
+            door.style.width = "180px"
+            door.style.height = "160px"
+            door.style.left = 640 * c - 280 + "px"
+            door.style.filter = "brightness(0.2)"
+            wall.appendChild(door)
+        }
+        predio.appendChild(wall)
+        let stairSpace = 0
+        if (i % 2 != 0) { stairSpace = 380 }
+        let wallColide = { id: "wall" + i, left: stairSpace, top: 400 * i + 200, width: 1920 * 2 - 400, height: 200 }
+
+        coliders.push(wallColide)
     }
     document.getElementById("game").appendChild(predio)
 
 }
 construct()
+
+function showcolliders() {
+    let len = coliders.length
+    for (i = 0; i < len; i++) {
+
+        let step = document.createElement("div")
+        step.style.display = "block"
+        step.style.position = "absolute"
+        step.id = "collider" + i
+        step.style.left = coliders[i].left + "px";
+        step.style.top = coliders[i].top + "px"
+        step.style.width = coliders[i].width + "px";
+        step.style.height = coliders[i].height + "px";
+        step.style.backgroundColor = "#00ff0055"
+        step.style.zIndex = 5;
+        document.getElementById("game").appendChild(step)
+    }
+
+}
+//showcolliders()
+
+var fotos = [
+    {
+        legenda: "<a href='http://diegoferraribruno.github.io/desenho.html' target='new'>App do diego</a>",
+        imagem: "desenho0.png"
+    },
+    { legenda: "Ravi e Diego", imagem: "desenho2.png", stars: 0 },
+    { legenda: "Diego, Diego, Diego e...", imagem: "desenho3.png" },
+    { legenda: "android feito no androis", imagem: "desenho4.png" },
+    //{ legenda: "Arte feita com antigo pincel", imagem: "desenho5.png" },
+    //{ legenda: "Arte feita no app", imagem: "desenho6.png" },
+    //{ legenda: "Arte feita no app", imagem: "desenho7.png" },
+    { legenda: "Arte feita no app", imagem: "desenho8.png" },
+    { legenda: "montagem usando o app", imagem: "desenho9.png" },
+    { legenda: "Che o gato", imagem: "desenho10.png" },
+    { legenda: "macaco digital", imagem: "desenho11.png" },
+    { legenda: "paisagem?", imagem: "desenho12.png" },
+    { legenda: "O que diz minha avó:", imagem: "desenho13.png" },
+    { legenda: "projeto de pincel", imagem: "desenho14.png" },
+    { legenda: "projeto de pincel", imagem: "desenho15.png" },
+    { legenda: "projeto de pincel", imagem: "desenho16.png" },
+    { legenda: "ladrilho infinito final", imagem: "desenho17.png" },
+
+
+]
+
+function criaImagem(x) {
+    let floor = x % 5
+    console.log(floor)
+    let img = document.createElement("img")
+    img.id = "foto" + x
+    img.src = "./galeria/01/" + fotos[x].imagem
+    img.setAttribute("onclick", "trocaFoto(" + x + ")")
+    img.style.position = "absolute"
+    img.style.display = "block"
+    img.classList.add("mini2")
+    img.style.top = (x + 1) * 80 - (floor * 80) + 180 + "px"
+
+    img.style.left = 640 * floor + 700 + "px"
+    //largura maxima da img
+    iD("game").appendChild(img)
+}
+
+// como fazer um loop para cada foto com a palavra for:
+let quantasfotos = fotos.length
+function criaGaleria() {
+    for (i = 0; i < quantasfotos; i++) {
+        criaImagem(i)
+    }
+}
+
+criaGaleria() //executa a função
+function trocaFoto(x) {
+    let displayfoto = document.getElementById("foto" + x)
+    displayfoto.classList.toggle("expand")
+}
