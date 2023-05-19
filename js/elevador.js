@@ -561,7 +561,6 @@ function construct() {
     predio.style.top = 0 + "px"
     predio.style.width = 1920 * 2 + "px";
     predio.style.height = 1080 * 2 + "px";
-    //predio.style.backgroundImage = url("./../game/grama.png");
     predio.classList.add("floor")
     let variant = 0
     for (f = 0; f < 6; f++) {
@@ -663,18 +662,23 @@ function construct() {
         //wall.style.border = "1px red dashed"
         for (c = 1; c < 6; c++) {
             let door = document.createElement("div")
-            door.innerHTML = `<span>🚪</span><span style='display:block; position:absolute; width:180px; margin-top:-150px; height:158px; font-size:20px; color:#222200; font-family:serif; text-align:center;'><br>${5 - i}${c}<span>`
-            door.style.fontSize = "140px"
+            door.innerHTML = `<span style="display:block; position:relative; float:left">.</span><span style='display:block; position:relative; width:60px; height:45px; top:14px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #181111; margin-left:auto; margin-right:auto; padding-top: 6px; padding-right:2px'>${5 - i}${c}</span> <span style='display:block; position:relative; width:60px; height:45px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #181111; margin-left:auto; margin-right:auto; top:34px'></span>`
+            door.style.fontSize = "76px"
             door.classList.add("step")
-            door.style.bottom = "-2px"
+            door.style.bottom = "-4px"
             //door.style.marginTop = -148 + "px"
             door.style.display = "inline-block"
             door.style.position = "absolute"
             door.style.textAlign = "center"
-            door.style.width = "180px"
-            door.style.height = "160px"
+            door.style.width = "90px"
+            door.style.height = "140px"
+            door.style.backgroundColor = "#100505"
             door.style.left = 640 * c - 280 + "px"
-            door.style.filter = "brightness(0.2)"
+            door.style.borderRadius = "4px";
+            door.style.border = "3px  #181000 solid";
+            door.style.color = "#907000"
+
+            //        door.style.filter = "brightness(0.2)"
             wall.appendChild(door)
         }
         predio.appendChild(wall)
