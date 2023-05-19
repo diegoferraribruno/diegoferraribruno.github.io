@@ -662,7 +662,7 @@ function construct() {
         //wall.style.border = "1px red dashed"
         for (c = 1; c < 6; c++) {
             let door = document.createElement("div")
-            door.innerHTML = `<span style="display:block; position:relative; float:left">.</span><span style='display:block; position:relative; width:60px; height:45px; top:14px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #181111; margin-left:auto; margin-right:auto; padding-top: 6px; padding-right:2px'>${5 - i}${c}</span> <span style='display:block; position:relative; width:60px; height:45px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #181111; margin-left:auto; margin-right:auto; top:34px'></span>`
+            door.innerHTML = `<span style="pointer-events: none; display:block; position:relative; float:left">.</span><span style='pointer-events: none; display:block; position:relative; width:60px; height:45px; top:14px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #170d01; margin-left:auto; margin-right:auto; padding-top: 6px; padding-right:2px'>${5 - i}${c}</span> <span style='pointer-events: none; display:block; position:relative; width:60px; height:45px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #170d01; margin-left:auto; margin-right:auto; top:32px'></span>`
             door.style.fontSize = "76px"
             door.classList.add("step")
             door.style.bottom = "-4px"
@@ -671,12 +671,19 @@ function construct() {
             door.style.position = "absolute"
             door.style.textAlign = "center"
             door.style.width = "90px"
-            door.style.height = "140px"
+            door.style.height = "146px"
             door.style.backgroundColor = "#100505"
             door.style.left = 640 * c - 280 + "px"
-            door.style.borderRadius = "4px";
-            door.style.border = "3px  #181000 solid";
+            door.style.borderRadius = "2px";
+            door.style.border = "5px  #181000 solid";
+            //door.style.borderBottomColor = "black"
+            //door.style.borderTopColor = "#040200"
+            door.style.borderColor = " rgb(6, 10, 0) rgb(12, 18, 8) rgb(10, 3, 1)";
+            door.style.borderBottomWidth = "6px"
+            door.style.borderTopWidth = "6px"
+
             door.style.color = "#907000"
+            door.id = `porta${5 - i}${c}`
 
             //        door.style.filter = "brightness(0.2)"
             wall.appendChild(door)

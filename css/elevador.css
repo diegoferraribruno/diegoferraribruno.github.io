@@ -54,6 +54,20 @@
     background-color: black;
 }
 
+.door {
+    border-bottom-color: black;
+    border-bottom-width: 4px;
+    display: "inline-block";
+    position: "absolute";
+    text-align: "center";
+    width: "90px";
+    height: "140px";
+    background-color: "#100505";
+    border-radius: "4px";
+    border: "3px  #181000 solid";
+    color: "#907000";
+    bottom: "-4px";
+}
 
 @import url("https://fonts.googleapis.com/css?family=Raleway");
 
