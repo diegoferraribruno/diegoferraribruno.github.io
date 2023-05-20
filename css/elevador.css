@@ -4,8 +4,8 @@
     width: 3840px;
     height: 2160px;
     background-position-y: bottom;
-    background-image: url("./../game/grama.png");
-    top: 320px;
+    background-image: "none";
+    top: 0px;
 
 }
 
@@ -51,7 +51,7 @@
 #predio {
     width: 1920px;
     height: 1080px;
-    background-color: black;
+    background-image: url("./../game/grama.png");
 }
 
 .door {
@@ -67,6 +67,15 @@
     border: "3px  #181000 solid";
     color: "#907000";
     bottom: "-4px";
+}
+
+.room {
+    width: 320px;
+    height: 320px;
+    background-color: aqua;
+    border: 4px red solid;
+    position: absolute;
+    display: block;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Raleway");

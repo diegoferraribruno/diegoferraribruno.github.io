@@ -355,6 +355,7 @@ function movePlayer() {
 async function loadPlayer() {
     let imagename = ["anda", "andar", "danca"]
     for (i in imagename) {
+        [layer]
         let nome = imagename[i]
         let sprite = new Image()
         sprite.src = 'game/' + nome + '.png'
@@ -376,19 +377,41 @@ function frontEnd(move) {
             height: user.height
 
         }
-        let colliders = coliders.length
+
+        let dorstepcolliders = coliders[2].length
+        for (i = 0; i < dorstepcolliders; i++) {
+            if (doElsCollide(newUser, coliders[2][i]) != null) {
+                if (move.y == 1) {
+                    move.y = move.y * -1;
+
+                    layer = 0
+                    iD("predio").style.display = "block"
+                    iD("rooms").style.display = "none"
+
+                } else if (move.y == -1) {
+                    move.y = move.y * -1;
+                    layer = 1
+                    iD("rooms").style.display = "block"
+                    iD("predio").style.display = "none"
+
+                }
+                /* newUser.left = user.left + move.x * speed;
+                 newUser.top = user.top;*/
+            }
+        }
+        let colliders = coliders[layer].length
         let colidiu = false;
         for (i = 0; i < colliders; i++) {
-            if (doElsCollide(newUser, coliders[i]) != null) {
+            if (doElsCollide(newUser, coliders[layer][i]) != null) {
                 newUser.left = user.left + move.x * speed;
                 newUser.top = user.top;
                 if (
-                    doElsCollide(newUser, coliders[i]) != null
+                    doElsCollide(newUser, coliders[layer][i]) != null
                 ) {
                     newUser.left = user.left;
                     newUser.top = user.top + move.y * speed / 1.4;
                     if (
-                        doElsCollide(newUser, coliders[i]) != null
+                        doElsCollide(newUser, coliders[layer][i]) != null
                     ) {
                         move.x = move.x * -1;
                         move.y = move.y * -1;
@@ -401,7 +424,6 @@ function frontEnd(move) {
                 }
             }
         }
-
         if (!insideX(newUser)) {
             newUser.left = user.left
         }
@@ -421,7 +443,7 @@ function frontEnd(move) {
 
         if (doElsCollide(player, blocosX[i])) { player.hidden = true }
     }
-    zIndexTree()
+    // zIndexTree()
 }
 
 iD("bg1").style.backgroundPosition = "10px 0px"
@@ -508,7 +530,8 @@ var blocosX = [];
 let blocos = document.getElementsByClassName("bloco")
 var linha = 0
 var coluna = 0
-var coliders = []
+var coliders = [[], [], []]
+var layer = 0
 
 function alignBlocos() {
     for (i in blocos) {
@@ -541,9 +564,9 @@ let doElsCollide = function (rect1, rect2) {
 };
 
 async function zIndexTree() {
-    let colliders = coliders.length
+    let colliders = coliders[layer].length
     for (i = 0; i < colliders; i++) {
-        let obj = coliders[i]
+        let obj = coliders[layer][i]
         if (obj.top + obj.height > player.top + (player.height / 2)) {
             iD(obj.id).style.zIndex = 3
         } else {
@@ -554,7 +577,7 @@ async function zIndexTree() {
 
 function construct() {
     let predio = document.createElement("div")
-
+    predio.id = "predio"
     predio.style.display = "block"
     predio.style.position = "absolute"
     predio.style.left = "0px";
@@ -576,7 +599,7 @@ function construct() {
         floor.style.backgroundColor = "#100000"
         floor.style.border = "4px #211200 solid";
         if (f == 0) {
-            floor.style.backgroundColor = "#110000"
+            floor.style.backgroundColor = "#111111"
 
         }
         if (f != 0) {
@@ -632,7 +655,7 @@ function construct() {
             }
             wall.appendChild(step)
 
-            coliders.push(stepCollide)
+            coliders[layer].push(stepCollide)
 
         }
         for (d = 0; d < 10; d++) {
@@ -656,10 +679,29 @@ function construct() {
 
             wall.appendChild(step)
             let stepBcollider = { id: "stepb" + i + d, left: 20 * d + 160 + variant, top: 20 * d + 400 * i + 200, width: stepWidth, height: 20 }
-            coliders.push(stepBcollider)
+            coliders[layer].push(stepBcollider)
 
         }
         //wall.style.border = "1px red dashed"
+        for (c = 1; c < 6; c++) {
+            let doorstep = document.createElement("div")
+            doorstep.id = "doorstep" + i + c
+            doorstep.style.display = "inline-block"
+            doorstep.style.position = "absolute"
+            doorstep.style.width = "100px"
+            doorstep.style.height = "10px"
+            doorstep.style.left = 640 * c - 280 + "px"
+            doorstep.style.top = i * 400 + 400 + "px"
+            doorstep.style.zIndex = 6
+            doorstep.style.backgroundColor = "#55551122"
+            document.getElementById("game").appendChild(doorstep)
+            let stepBcollider = { id: "doorstep" + i + c, left: 640 * c - 280, top: i * 400 + 388, width: 100, height: 16 }
+            coliders[2].push(stepBcollider)
+
+
+        }
+        let stepBcollider = { id: "doorstep" + i + c, left: 180, top: 380, width: 100, height: 20 }
+        coliders[2].push(stepBcollider)
         for (c = 1; c < 6; c++) {
             let door = document.createElement("div")
             door.innerHTML = `<span style="pointer-events: none; display:block; position:relative; float:left">.</span><span style='pointer-events: none; display:block; position:relative; width:60px; height:45px; top:14px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #170d01; margin-left:auto; margin-right:auto; padding-top: 6px; padding-right:2px'>${5 - i}${c}</span> <span style='pointer-events: none; display:block; position:relative; width:60px; height:45px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #170d01; margin-left:auto; margin-right:auto; top:32px'></span>`
@@ -681,7 +723,7 @@ function construct() {
             door.style.borderColor = " rgb(6, 10, 0) rgb(12, 18, 8) rgb(10, 3, 1)";
             door.style.borderBottomWidth = "6px"
             door.style.borderTopWidth = "6px"
-
+            door.setAttribute("onclick", `enterRoom(${5 - i}${c})`)
             door.style.color = "#907000"
             door.id = `porta${5 - i}${c}`
 
@@ -693,32 +735,33 @@ function construct() {
         if (i % 2 != 0) { stairSpace = 380 }
         let wallColide = { id: "wall" + i, left: stairSpace, top: 400 * i + 200, width: 1920 * 2 - 400, height: 200 }
 
-        coliders.push(wallColide)
+        coliders[layer].push(wallColide)
     }
     document.getElementById("game").appendChild(predio)
 
 }
 construct()
-
 function showcolliders() {
-    let len = coliders.length
+    layer = 1
+    let len = coliders[layer].length
     for (i = 0; i < len; i++) {
 
         let step = document.createElement("div")
         step.style.display = "block"
         step.style.position = "absolute"
-        step.id = "collider" + i
-        step.style.left = coliders[i].left + "px";
-        step.style.top = coliders[i].top + "px"
-        step.style.width = coliders[i].width + "px";
-        step.style.height = coliders[i].height + "px";
+        step.id = "colliderx" + i
+        step.style.left = coliders[layer][i].left + "px";
+        step.style.top = coliders[layer][i].top + "px"
+        step.style.width = coliders[layer][i].width + "px";
+        step.style.height = coliders[layer][i].height + "px";
         step.style.backgroundColor = "#00ff0055"
+        step.style.border = "8px yellow dashed"
         step.style.zIndex = 5;
         document.getElementById("game").appendChild(step)
     }
 
 }
-//showcolliders()
+
 
 var fotos = [
     {
@@ -759,7 +802,7 @@ function criaImagem(x) {
 
     img.style.left = 640 * floor + 700 + "px"
     //largura maxima da img
-    iD("game").appendChild(img)
+    iD("predio").appendChild(img)
 }
 
 // como fazer um loop para cada foto com a palavra for:
@@ -775,3 +818,73 @@ function trocaFoto(x) {
     let displayfoto = document.getElementById("foto" + x)
     displayfoto.classList.toggle("expand")
 }
+
+var rooms = {
+    11: {}
+
+}
+
+function enterRoom(y) {
+    layer = 1
+    document.getElementById("predio").style.display = "none"
+    let pos = document.getElementById("porta" + y)
+    let newRoom = document.createElement("div")
+    newRoom.id = "new" + y
+    newRoom.classList.add("room")
+    newRoom.style.left = parseInt(pos.left, 10) - 70 + "px"
+    newRoom.style.top = parseInt(pos.top, 10) - 100 + "px"
+    document.getElementById("game").appendChild(newRoom)
+
+}
+function createRoom() {
+
+    let predio = document.createElement("div")
+    predio.id = "rooms"
+    predio.style.display = "block"
+    predio.style.position = "absolute"
+    predio.style.left = "0px";
+    predio.style.top = 0 + "px"
+    predio.style.width = 1920 * 2 + "px";
+    predio.style.height = 1080 * 2 + "px";
+    predio.classList.add("floor")
+    //document.getElementById("predio").style.display = "none"
+    for (f = 0; f < 6; f++) {
+        //createWall
+        let floor = document.createElement("div")
+        floor.classList.add("floor")
+        floor.style.display = "block"
+        floor.style.position = "absolute"
+        floor.style.left = "0px";
+        floor.style.top = 400 * f + 200 + "px"
+        floor.style.width = 1920 * 2 + "px";
+        floor.style.height = "200px";
+        floor.style.backgroundColor = "#221100"
+        floor.style.border = "4px #211200 solid";
+        floor.id = "floor" + f
+        predio.appendChild(floor)
+        let roomCollide = { id: "room" + i + d, left: 0, top: 400 * f - 400, width: 1920 * 2, height: 200 }
+        coliders[1].push(roomCollide)
+    }
+    for (f = 0; f < 6; f++) {
+        //createWall
+        let floor = document.createElement("div")
+        floor.classList.add("floor")
+        floor.style.display = "block"
+        floor.style.position = "absolute"
+        floor.style.left = 640 * f + "px";
+        floor.style.top = "0px"
+        floor.style.width = "20px";
+        floor.style.height = 1080 * 2 + "px";
+        floor.style.backgroundColor = "#005500"
+        floor.style.border = "4px #211200 solid";
+        floor.id = "floor" + f + "v"
+        predio.appendChild(floor)
+        let roomCollide = { id: "room" + i + d + "v", left: 640 * f, top: 0, width: 20, height: 1080 * 2 }
+        coliders[1].push(roomCollide)
+
+    }
+    document.getElementById("game").appendChild(predio)
+}
+createRoom()
+//showcolliders()
+

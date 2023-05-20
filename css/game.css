@@ -65,7 +65,7 @@
     width: 1920px;
     height: 1120px;
     background-position-y: bottom;
-    background-image: url("./../game/grama.png");
+    /*background-image: url("./../game/grama.png");*/
     top: 320px;
 }
 
