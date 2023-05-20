@@ -13,7 +13,7 @@ var user = {
 var gamestate = "pause"
 var users = { "player": user }
 var game = iD("game")
-const gameSize = { width: 1920 * 2, height: 1080 * 2 }
+const gameSize = { width: 1920 * 2, height: 1080 * 2 + 400 }
 const src = iD("manche");
 var container = iD("container")
 var send = false
@@ -583,10 +583,10 @@ function construct() {
     predio.style.left = "0px";
     predio.style.top = 0 + "px"
     predio.style.width = 1920 * 2 + "px";
-    predio.style.height = 1080 * 2 + "px";
+    predio.style.height = 1080 * 2 + 600 + "px";
     predio.classList.add("floor")
     let variant = 0
-    for (f = 0; f < 6; f++) {
+    for (f = 0; f < 7; f++) {
         //createWall
         let floor = document.createElement("div")
         floor.classList.add("floor")
@@ -613,7 +613,7 @@ function construct() {
         }
         predio.appendChild(floor)
     }
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 6; i++) {
         // colliders / paredes
         if (i % 2 == 0) { variant = 1920 * 2 - 400 }
         else { variant = 0 }
@@ -848,7 +848,7 @@ function createRoom() {
     predio.style.height = 1080 * 2 + "px";
     predio.classList.add("floor")
     //document.getElementById("predio").style.display = "none"
-    for (f = 0; f < 6; f++) {
+    for (f = 0; f < 7; f++) {
         //createWall
         let floor = document.createElement("div")
         floor.classList.add("floor")
@@ -858,9 +858,29 @@ function createRoom() {
         floor.style.top = 400 * f + 200 + "px"
         floor.style.width = 1920 * 2 + "px";
         floor.style.height = "200px";
-        floor.style.backgroundColor = "#221100"
+        floor.style.backgroundColor = "#220303"
         floor.style.border = "4px #211200 solid";
         floor.id = "floor" + f
+        for (g = 0; g < 7; g++) {
+            let furniture = document.createElement("span")
+            furniture.style.fontSize = "110px"
+            furniture.innerHTML = "🛏️     🛋️    <span style='font-size:80px'>🛁</span> "
+            let fur = document.createElement("span")
+            fur.style.fontSize = "50px"
+            // fur.style.float = "right"
+            // fur.style.width = "320px"
+            fur.innerHTML = " 🪴   🚽"
+            furniture.style.display = "inline-block"
+            furniture.style.position = "absolute"
+            furniture.style.display = "inline-block"
+            furniture.style.position = "absolute"
+            furniture.style.left = 640 * g + "px";
+            furniture.style.top = -120 + "px"
+            furniture.style.width = 640 + "px";
+            furniture.style.height = "200px";
+            furniture.appendChild(fur)
+            floor.appendChild(furniture)
+        }
         predio.appendChild(floor)
         let roomCollide = { id: "room" + i + d, left: 0, top: 400 * f - 400, width: 1920 * 2, height: 200 }
         coliders[1].push(roomCollide)
@@ -882,7 +902,9 @@ function createRoom() {
         let roomCollide = { id: "room" + i + d + "v", left: 640 * f, top: 0, width: 20, height: 1080 * 2 }
         coliders[1].push(roomCollide)
 
+
     }
+    predio.style.display = "none"
     document.getElementById("game").appendChild(predio)
 }
 createRoom()
