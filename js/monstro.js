@@ -18,15 +18,15 @@ var monstro = {
 
 function newMonster() {
     let monstroimg = document.createElement("img")
-    monstroimg.src = "/game/monstro.png"
+    monstroimg.src = "/game/monstro2.png"
     let monstro = document.createElement("div")
     monstro.id = "monstro"
     monstro.style.display = "block"
     monstro.style.position = "absolute"
     monstro.style.scale = 0.5
     monstro.style.zIndex = 4
-    monstro.style.filter = "brightness(0.6)"
-    // monstro.style.filter = "drop-shadow(0px 0px 4px red) hue-rotate(180deg)"
+    // monstro.style.filter = "brightness(0.6)"
+    monstro.style.filter = "drop-shadow(2px 2px 4px red) hue-rotate(0deg)"
     iD("game").appendChild(monstro)
 
     monstroimg.onload = function () {
@@ -35,6 +35,7 @@ function newMonster() {
         monstr.style.height = monstroimg.height + "px"
         monstro.width = monstroimg.width
         monstro.height = monstroimg.height
+        //monstr.appendChild(monstroimg)
         monstr.style.backgroundImage = "url('" + monstroimg.src + "')"
     }
 }

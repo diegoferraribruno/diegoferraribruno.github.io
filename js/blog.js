@@ -75,6 +75,22 @@ var posts = [
 			"Gostaria de refazer todo seu código para a versão 3.0 rs rs..<br>" +
 			"mas Vamo que vamo!"
 
+	},
+	{
+		id: 9,
+		titulo: "Diego 4.0",
+		data: "25/05/2023 16:20",
+		conteudo: "mudei de casa neste mês. tenho muita tralha de artesanato a qual devo alguma atenção" +
+			"penso se devo dar mais asas ao meu lado artístico no mundo fisico ou aqui no mundo do html do javascript," +
+			"desenvolvendo soluções para problemas que nem existem." +
+			"criando universos virtuais onde pessoas possam se conectar e fazer arte juntas?!" +
+			"neste período também estudei (em 2x) o curso basico de Javascript da Udemy e aprendi 3 ou 4 coisas uteis.<br>" +
+			"Agora estou estudando o curso complete Web Developer 2023 do ZTM passando por html do basico, formulários, CSS, Bootstrap, Javascript, e frameworks.." +
+			"preciso deixar este site aqui um pouco mais simples e funcional pois comecei a criar uma fábrica assombrada" +
+			"que antes só tinha um jardim e um monstro, mas ai fui adicionar colisoes, escadas, e quando adicionei quartos (praticamente uma 3- dimensao)" +
+			", Resumindo: está tudo meio quebrado e vou lá arrumar esse edifício (que era pra ter um elevador a principio rs...)" +
+			"<br>Bora trabalhar"
+
 	}
 
 ]
