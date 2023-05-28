@@ -145,13 +145,11 @@ function createAvatar(id = 0) {
         avatar.id = "avatar"
         avatar.classList.add('mini')
         avatar.setAttribute("style", "float:left; margin-left:6px; margin-right:6px;")
+
         iD("bio").appendChild(avatar)
-        iD("bio").innerHTML +=
-            "<b>" + usuarios[id].nome + "</b><br>" + usuarios[id].bio +
-            "<br><a href='" + usuarios[id].link + "' target='blank'>link</a><br>"
         if (iD("blog")) {
             iD("bio").innerHTML +=
-                "<span style='height:230px; width:300px; display:block; overflow-y:scroll; padding:0px;'>" + usuarios[id].curriculo + "</span>"
+                usuarios[id].curriculo
         }
         ;
     } else if (!iD("avatar2")) {

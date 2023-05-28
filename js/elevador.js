@@ -3,9 +3,9 @@ var user = {
     id: "player",
     name: "",
     serverPlayerPos: { x: 180, y: 660 },
-    left: 50,
-    top: 1320,
-    width: 32,
+    left: 920,
+    top: 1500,
+    width: 100,
     height: 10,
     face: 0,
     hue: 0
@@ -13,7 +13,7 @@ var user = {
 var gamestate = "pause"
 var users = { "player": user }
 var game = iD("game")
-const gameSize = { width: 1920 * 2, height: 1410 }
+const gameSize = { width: 410 * 7, height: 400 * 6 }
 const src = iD("manche");
 var container = iD("container")
 var send = false
@@ -36,13 +36,13 @@ document.addEventListener('keyup', keyUp);
 let mode = "move"
 let oldpos = { x: 0, y: 0 }
 let player = {
-    top: 1320,
-    left: 50,
-    width: 32,
+    top: 1500,
+    left: 920,
+    width: 100,
     height: 20,
     hidden: true
 }
-var speed = 7
+var speed = 8
 container.style.width = screen.width + "px";
 container.style.height = screen.height + "px";
 
@@ -85,7 +85,7 @@ function mouse_down(e) {
     clientY = e.clientY;
     drag = true;
     let t = e.target.id
-    if (t == "head-player") {
+    if (t == "player") {
         seguemouse = true
     }
     console.log(t)
@@ -148,7 +148,7 @@ document.addEventListener('touchend', function (e) {
 document.addEventListener('mousedown', function (e) {
     e.preventDefault()
     let t = e.target.id
-    if (t == "head-player") {
+    if (t == "player") {
         seguemouse = true
     }
     // console.log(t)
@@ -217,16 +217,16 @@ var corpo = iD("corpo-" + id);
 setInterval(function () {
     for (i in users) {
         let corpo = iD("corpo-" + users[i].id);
-        let position = frame * 32;
+        let position = frame * 128;
         //corpo.style.background: 'url("standing-32.png") '${position}'px 0px';
         corpo.style.backgroundPosition = `-${position}px 0px`;
     }
     frame++;
-    if (frame > 3) {
+    if (frame > 4) {
         frame = 0
     }
 },
-    200);
+    80);
 setInterval(movePlayer, 20)
 //let flip = 1;
 
@@ -310,12 +310,15 @@ function movePlayer() {
         corpo.style.backgroundImage = "url('" + playerImg["andar"].src + "')";;
     }
     if (move.x < 0) {
-        iD("head-" + id).className = "headl";
+        //  iD("head-" + id).className = "headl";
         iD("corpo-" + id).className = "corpol";
     }
     else if (move.x > 0) {
-        iD("head-" + id).className = "head";
+        // iD("head-" + id).className = "head";
         iD("corpo-" + id).className = "corpo";
+    }
+    else if (move.x == 0) {
+        corpo.style.backgroundImage = "url('" + playerImg["danca"].src + "')";;
     }
     frontEnd(move)
 
@@ -467,22 +470,22 @@ function playershake() {
         clearInterval(shaking); setTimeout(() => {
             avatar.style.rotate = "0deg";
             avatar.style.opacity = 1
-            user.left = 170
+            user.left = 920
             avatar.style.left = user.left + "px";
-            user.top = 10
+            user.top = 1500
             avatar.style.top = user.top + "px";
             avatar.classList.remove("some")
 
         }, 200)
     }, 600)
 }
-const nuvens = setInterval(moveBG, 200)
+//const nuvens = setInterval(moveBG, 200)
 var map = {
     x: parseInt(
 
         iD("map").style.width
         , 10)
-    , y: parseInt(iD("map").style.height, 10)
+    , y: 430 * 3
 }
 
 function insideX(quem = user) {
@@ -537,13 +540,13 @@ function alignBlocos() {
     for (i in blocos) {
         if (i == 4 || i == 8) { linha++; coluna = 0 }
         if (blocos[i].id) {
-            let sobra = 30
+            let sobra = 900
             let esq = (coluna * 440) + sobra
-            let topo = -280 + (linha * 380)
-            let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 340 }
+            let topo = 1800
+            let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 400 }
             blocosX.push(bloco)
             // coliders.push(bloco)
-            blocos[i].setAttribute("style", "left:" + esq + "px; top:" + topo + "px")
+            blocos[i].setAttribute("style", "left:" + esq + "px; top:5px; position:absolute; display:block")
         }
         coluna++
     }
@@ -582,163 +585,86 @@ function construct() {
     predio.style.position = "absolute"
     predio.style.left = "0px";
     predio.style.top = 0 + "px"
-    predio.style.width = 1920 * 2 + "px";
-    predio.style.height = 1080 * 2 + 600 + "px";
+    predio.style.width = 400 * 7 + 40 + "px";
+    predio.style.height = 400 * 4 + 280 + "px";
+    predio.style.backgroundImage = "url('game/brazil2.png')"
     predio.classList.add("floor")
-    let variant = 0
-    for (f = 0; f < 4; f++) {
-        //createWall
-        let floor = document.createElement("div")
-        floor.classList.add("floor")
-        floor.style.display = "block"
-        floor.style.position = "absolute"
-        floor.style.left = "0px";
-        floor.style.top = 400 * f + "px"
-        floor.style.width = 1920 * 2 + "px";
-        floor.style.height = "200px";
-        floor.style.backgroundColor = "#100000"
-        floor.style.border = "4px #211200 solid";
-        if (f == 0) {
-            floor.style.backgroundColor = "#111111"
+    for (let i = 0; i < 2; i++) {
+        let escada = document.createElement("div")
+        escada.style.marginTop = "400px"
+        escada.style.height = 400 * 2 + "px";
+        escada.style.width = "400px"
+        escada.style.position = "absolute"
+        escada.style.left = i * 400 * 6 + "px"
+        escada.style.backgroundImage = "url('game/escada.png')"
+        escada.style.pointerEvents = "none"
+        predio.appendChild(escada)
 
-        }
-        if (f != 0) {
-
-            for (b = 1; b < 6; b++) {
-                let light = document.createElement("div")
-                light.classList.add("glowing-light")
-                light.style.left = 640 * b - 340 + "px"
-                floor.appendChild(light)
-            }
-        }
-        predio.appendChild(floor)
     }
-    for (i = 0; i < 3; i++) {
-        // colliders / paredes
-        if (i % 2 == 0) { variant = 1920 * 2 - 400 }
-        else { variant = 0 }
-        let wall = document.createElement("div")
-        wall.id = "wall" + i
-        wall.style.display = "block"
-        wall.style.verticalAlign = "bottom"
-        wall.style.position = "absolute"
-        wall.style.left = "0px";
-        wall.style.top = 400 * i + 200 + "px"
-        wall.style.width = 1600 * 2 + "px";
-        wall.style.height = "200px";
 
-        //stairs
-        for (d = 0; d < 10; d++) {
-            let step = document.createElement("div")
-            step.id = "step" + i + d
-            step.classList.add("step")
-            step.style.display = "block"
-            step.style.position = "absolute"
-            step.style.left = 20 * d + variant + 20 + "px";
-            step.style.top = 20 * d + "px"
-            step.style.width = 140 + "px";
-            step.style.height = "20px";
-            step.style.backgroundColor = "rgb(40, 5, 5)"
-            if (d % 2 == 0) {
-                step.style.backgroundColor = "rgb(30, 6, 6)"
+    let variant = 0
+    for (let i = 0; i < 3; i++) {
 
-            }
-            let stepWidth = 20
-            let stepCollide = { id: "step" + i + d, left: 20 * d + variant, top: 20 * d + 400 * i + 200, width: stepWidth, height: 20 }
-            if (d == 9) {
-
-                let stepWidth = 200;
-                //   step.style.left = 0 + variant + "px";
-                //  step.style.width = stepWidth + "px";
-                stepCollide.width = stepWidth
-                stepCollide.left = 0 + variant
-            }
-            wall.appendChild(step)
-
-            coliders[layer].push(stepCollide)
-
-        }
-        for (d = 0; d < 10; d++) {
-            //steptwo
-            if (i % 2 == 0) { variant = 1920 * 2 - 380 }
-            else { variant = 0 }
-            let step = document.createElement("div")
-            step.style.display = "block"
-            step.style.position = "absolute"
-            step.id = "stepb" + i + d
-            step.style.left = 20 * d + variant + "px";
-            step.style.top = 20 * d + "px"
-            step.style.width = 20 + "px";
-            step.style.height = (200 - (d * 20)) + "px";
-            step.style.backgroundColor = "#110000"
-            let stepWidth = 20
-            if (d == 0) {
-                //step.style.width = 200 + "px";
-                stepWidth = 200
-            }
-
-            wall.appendChild(step)
-            let stepBcollider = { id: "stepb" + i + d, left: 20 * d + 160 + variant, top: 20 * d + 400 * i + 200, width: stepWidth, height: 20 }
-            coliders[layer].push(stepBcollider)
-
-        }
-        //wall.style.border = "1px red dashed"
-        for (c = 1; c < 3; c++) {
-            let doorstep = document.createElement("div")
-            doorstep.id = "doorstep" + i + c
-            doorstep.style.display = "inline-block"
-            doorstep.style.position = "absolute"
-            doorstep.style.width = "100px"
-            doorstep.style.height = "10px"
-            doorstep.style.left = 640 * c - 280 + "px"
-            doorstep.style.top = i * 400 + 400 + "px"
-            doorstep.style.zIndex = 6
-            doorstep.style.backgroundColor = "#55551122"
-            document.getElementById("game").appendChild(doorstep)
-            /*let stepBcollider = { id: "doorstep" + i + c, left: 640 * c - 280, top: i * 400 + 388, width: 100, height: 16 }
-            coliders[2].push(stepBcollider)*/
-
-
-        }
-        /* bacana isso aqui! mas ta bugado precisa melhorar!
-         let stepBcollider = { id: "doorstep" + i + c, left: 180, top: 380, width: 100, height: 20 }
-         coliders[2].push(stepBcollider)
-         */
-        for (c = 1; c < 6; c++) {
-            let door = document.createElement("div")
-            door.innerHTML = `<span style="pointer-events: none; display:block; position:relative; float:left">.</span><span style='pointer-events: none; display:block; position:relative; width:60px; height:45px; top:14px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #170d01; margin-left:auto; margin-right:auto; padding-top: 6px; padding-right:2px'>${3 - i}${c}</span> <span style='pointer-events: none; display:block; position:relative; width:60px; height:45px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #170d01; margin-left:auto; margin-right:auto; top:32px'></span>`
-            door.style.fontSize = "76px"
-            door.classList.add("step")
-            door.style.bottom = "-4px"
-            //door.style.marginTop = -148 + "px"
-            door.style.display = "inline-block"
-            door.style.position = "absolute"
-            door.style.textAlign = "center"
-            door.style.width = "90px"
-            door.style.height = "146px"
-            door.style.backgroundColor = "#100505"
-            door.style.left = 640 * c - 280 + "px"
-            door.style.borderRadius = "2px";
-            door.style.border = "5px  #181000 solid";
-            //door.style.borderBottomColor = "black"
-            //door.style.borderTopColor = "#040200"
-            door.style.borderColor = " rgb(6, 10, 0) rgb(12, 18, 8) rgb(10, 3, 1)";
-            door.style.borderBottomWidth = "6px"
-            door.style.borderTopWidth = "6px"
-            //  door.setAttribute("onclick", `enterRoom(${5 - i}${c})`)
-            door.style.color = "#907000"
-            door.id = `porta${3 - i}${c}`
-
-            //        door.style.filter = "brightness(0.2)"
-            wall.appendChild(door)
-        }
-        predio.appendChild(wall)
-        let stairSpace = 0
-        if (i % 2 != 0) { stairSpace = 380 }
-        let wallColide = { id: "wall" + i, left: stairSpace, top: 400 * i + 200, width: 1920 * 2 - 400, height: 200 }
-
+        let wallColide = { id: "wall" + i, left: 370, top: 400 * i + 420, width: 400 * 5 + 160, height: 200 }
         coliders[layer].push(wallColide)
     }
+    for (let i = 0; i < 2; i++) {
+
+        let wallColide = { id: "wall" + i, left: 0, top: 400 * i * 4 + 20, width: 400 * 7, height: 200 }
+        coliders[layer].push(wallColide)
+    }
+
+    //wall.style.border = "1px red dashed"
+    /* for (c = 1; c < 3; c++) {
+         let doorstep = document.createElement("div")
+         doorstep.id = "doorstep" + i + c
+         doorstep.style.display = "inline-block"
+         doorstep.style.position = "absolute"
+         doorstep.style.width = "100px"
+         doorstep.style.height = "10px"
+         doorstep.style.left = 640 * c - 280 + "px"
+         doorstep.style.top = i * 400 + 400 + "px"
+         doorstep.style.zIndex = 6
+         doorstep.style.backgroundColor = "#55551122"
+         document.getElementById("game").appendChild(doorstep)
+         /*let stepBcollider = { id: "doorstep" + i + c, left: 640 * c - 280, top: i * 400 + 388, width: 100, height: 16 }
+         coliders[2].push(stepBcollider)
+ 
+ 
+     }
+     /* bacana isso aqui! mas ta bugado precisa melhorar!
+      let stepBcollider = { id: "doorstep" + i + c, left: 180, top: 380, width: 100, height: 20 }
+      coliders[2].push(stepBcollider)
+      */
+    /*for (c = 1; c < 6; c++) {
+        let door = document.createElement("div")
+        door.innerHTML = `<span style="pointer-events: none; display:block; position:relative; float:left">.</span><span style='pointer-events: none; display:block; position:relative; width:60px; height:45px; top:14px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #170d01; margin-left:auto; margin-right:auto; padding-top: 6px; padding-right:2px'>${3 - i}${c}</span> <span style='pointer-events: none; display:block; position:relative; width:60px; height:45px; font-size:20px; color:#333333; font-family:serif; text-align:center; border:4px solid #170d01; margin-left:auto; margin-right:auto; top:32px'></span>`
+        door.style.fontSize = "76px"
+        door.classList.add("step")
+        door.style.bottom = "-4px"
+        //door.style.marginTop = -148 + "px"
+        door.style.display = "inline-block"
+        door.style.position = "absolute"
+        door.style.textAlign = "center"
+        door.style.width = "90px"
+        door.style.height = "146px"
+        door.style.backgroundColor = "#100505"
+        door.style.left = 640 * c - 280 + "px"
+        door.style.borderRadius = "2px";
+        door.style.border = "5px  #181000 solid";
+        //door.style.borderBottomColor = "black"
+        //door.style.borderTopColor = "#040200"
+        door.style.borderColor = " rgb(6, 10, 0) rgb(12, 18, 8) rgb(10, 3, 1)";
+        door.style.borderBottomWidth = "6px"
+        door.style.borderTopWidth = "6px"
+        //  door.setAttribute("onclick", `enterRoom(${5 - i}${c})`)
+        door.style.color = "#907000"
+        door.id = `porta${3 - i}${c}`
+    
+        //        door.style.filter = "brightness(0.2)"
+        wall.appendChild(door)
+    }
+          }*/
     document.getElementById("game").appendChild(predio)
 
 }
@@ -773,9 +699,9 @@ var fotos = [
     { legenda: "Ravi e Diego", imagem: "desenho2.png", stars: 0 },
     { legenda: "Diego, Diego, Diego e...", imagem: "desenho3.png" },
     { legenda: "android feito no androis", imagem: "desenho4.png" },
-    //{ legenda: "Arte feita com antigo pincel", imagem: "desenho5.png" },
-    //{ legenda: "Arte feita no app", imagem: "desenho6.png" },
-    //{ legenda: "Arte feita no app", imagem: "desenho7.png" },
+    { legenda: "Arte feita com antigo pincel", imagem: "desenho5.png" },
+    { legenda: "Arte feita no app", imagem: "desenho6.png" },
+    { legenda: "Arte feita no app", imagem: "desenho7.png" },
     { legenda: "Arte feita no app", imagem: "desenho8.png" },
     { legenda: "montagem usando o app", imagem: "desenho9.png" },
     { legenda: "Che o gato", imagem: "desenho10.png" },
@@ -791,8 +717,6 @@ var fotos = [
 ]
 
 function criaImagem(x) {
-    let floor = x % 5
-    console.log(floor)
     let img = document.createElement("img")
     img.id = "foto" + x
     img.src = "./galeria/01/" + fotos[x].imagem
@@ -801,9 +725,11 @@ function criaImagem(x) {
     img.style.display = "block"
     img.classList.add("mini2")
 
-    img.style.top = (x + 1) * 80 - (floor * 80) + 180 + "px"
+    let floor = parseInt(x / 6)
+    console.log(floor)
+    img.style.top = (floor * 400) + 56 + "px"
 
-    img.style.left = 640 * floor + 700 + "px"
+    img.style.left = 400 * x + 350 - (floor * 6 * 400) + "px"
     //largura maxima da img
     iD("predio").appendChild(img)
 }
@@ -839,7 +765,8 @@ function enterRoom(y) {
     document.getElementById("game").appendChild(newRoom)
 
 }
-function createRoom() {
+
+/*function createRoom() {
 
     let predio = document.createElement("div")
     predio.id = "rooms"
@@ -910,6 +837,6 @@ function createRoom() {
     predio.style.display = "none"
     document.getElementById("game").appendChild(predio)
 }
-createRoom()
+createRoom()*/
 //showcolliders()
 

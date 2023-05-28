@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/game.css">
     <link rel="stylesheet" type="text/css" href="css/elevador.css">
 
     <meta charset="UTF-8">
@@ -35,58 +34,70 @@
             </div>
         </div>
         <div id="game" class="floor">
-            <div id="gitbio" class="bloco shadow"><img src="avatar/03.png" style="max-width: 180px; margin: 10px;">
-                <p> Olá, sou pai, artista, brasileiro <br>e designer de multimidia.<br> Crio aplicativos e jogos com
-                    código livre para todos e este é o meu parquinho.
-                    <br>
-                    Por favor, divirta-se <br>
 
-                </p>
-                <p style="display: none;">Hello, i am a Brazilian artist, multimedia designer creating apps and games
-                    for the
-                    world.<br> This is my Playground.<br><br>
-                    Please, have some fun!
-                </p>
-            </div>
-            <div id="blog" class="bloco shadow">📔 Mini - Blog do Diego</div>
-            <div id="bio" class="bloco shadow"></div>
-
-            <button class='glowing-btn'><span class='glowing-txt'>E<span
-                        class='faulty-letter'>X</span>IT</span><br><span class='glowing-txt'
-                    style="width:80px; height:130px;"><br><img src="/favicon.ico"></span></button>
 
             <div id="players">
                 <div id="player">
                     <div class="player" id="playeravatar">
 
-                        <div id="pname-player" class="pname">Diego FB</div>
+                        <div id="pname-player" class="pname" style="position:absolute; margin-top:-56px;">Diego FB</div>
                         <a name="player1"></a>
-                        <p id="corpo-player" class="color" style="  height: 32px;
-        width: 32px;
-        background: url('game/danca.png') 0px 0px;
-        margin: 48px 24px 24px 18px;
+                        <p id="corpo-player" class="color" style="  height:128px;
+        width: 128px;
+        background: url('game/anda.png') 0px 0px;
+        margin-top: -30px;
+        margin-left: -30px;
         padding: 0px 0px 0px 0px;
         position: absolute;
-        filter: drop-shadow(0px 0px 4px red) hue-rotate(0deg);
+        filter: drop-shadow(0px 0px 4px rgb(255, 223, 136)) hue-rotate(0deg);
         ">
                         </p>
-                        <div id="head-player" class="head"
-                            style="border-radius: 32px; background: url('game/1f606.png'); display:block; background-size: 100% 100%; width:64px; height:64px; filter :drop-shadow(0px 0px 4px hsl(0, 100%, 50%));">
-                        </div>
-                        <div id="rhand"></div>
-                        <p id="lhand"></p>
+
                         <div
-                            style="width: 48px; height: 10px; border-radius: 50%; opacity: 0.5; margin-left: 10px; display: block; position: absolute; border-radius: 20px; margin-top: 12px; z-index: 4;">
+                            style="width: 100px; height: 10px; border-radius: 50%; opacity: 0.5; margin-left: 0px; display: block; position: absolute; border-radius: 20px; margin-top: 12px; z-index: 4;">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div id="lobby"
+            style="display:block; position:relative;  left:20px;  height: 600px; width: 2800px; top:460px;  background-color: #190d04; pointer-events: none;">
+            <div
+                style="display:block; position:relative;  left:300px;  height: 400px; width: 2180px; background-color: #190d04; background-image: url('/game/lobby.png');">
+                <img src="game/arcade.png" style="display:block; position:absolute;  top:70px; left:80px">
+                <img src="game/arcade.png" style="display:block; position:absolute;  top:70px; left:210px">
+                <span id="bruno"></span>
+                <span id="gitbio" class="bloco ">
+                    <p> Diego Ferrari Bruno<br> é um artista e designer de multimidia brasileiro.<br>
+                        Ravi Gamer <br> é seu filho e este é nosso espaço de criação e diversão.
+                        <br>
+                        <br>
+                        Bem-vindos <br>
+
+                    </p>
+                    <p style="display: none;">Hello, i am a Brazilian artist, multimedia designer creating apps and
+                        games
+                        for the
+                        world.<br> This is my Playground.<br><br>
+                        Please, have some fun!
+                    </p>
+                </span>
+
+                <span id="blog" class="bloco ">📔 Mini - Blog do Diego</span>
+                <span id="bio" class="bloco "></span>
+
+
+            </div>
+            <div
+                style="display:block; position:relative; margin-top: -70px; left:0px;  height: 220px; width: 2800px;  background-image: url('/game/cerca.png'); z-index: 10;">
+            </div>
+        </div>
+
+    </div>dw
     </div>
     <div id="carregando"
         style="width: 100%; height: 100%; text-align: center; background-color: rgb(0, 0, 0); color: bisque; display: fixed; position: absolute; top: 0px; left: 0px; z-index: 100; font-size: x-large; line-height: 100%; align-content: center; font-weight: bold; vertical-align: middle; padding-top: 20%;">
-        <img src="favicon.ico"><br><br>
+
         <h1>⚠️ 🔊</h1>
         <br>Cuidado com o Susto!<br><br>
         <div id="carregandoc" style="font-size: 160px; color: #ffffffcc; margin-top: -140px;">
