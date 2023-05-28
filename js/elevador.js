@@ -13,7 +13,7 @@ var user = {
 var gamestate = "pause"
 var users = { "player": user }
 var game = iD("game")
-const gameSize = { width: 410 * 7, height: 400 * 4 }
+const gameSize = { width: 410 * 7, height: 410 * 4 }
 const src = iD("manche");
 var container = iD("container")
 var send = false
@@ -222,7 +222,7 @@ setInterval(function () {
         corpo.style.backgroundPosition = `-${position}px 0px`;
     }
     frame++;
-    if (frame > 4) {
+    if (frame > 3) {
         frame = 0
     }
 },
@@ -285,7 +285,9 @@ function autoMove() {
 let playerImg = {
     "danca": "",
     "andar": "",
-    "anda": ""
+    "anda": "",
+    "sobe": "",
+    "desce": ""
 }
 
 function movePlayer() {
@@ -307,19 +309,28 @@ function movePlayer() {
     if (keys.ArrowRight == false && keys.ArrowLeft == true || keys.a == true && keys.d == false) {
         move.x = -1
 
-        corpo.style.backgroundImage = "url('" + playerImg["andar"].src + "')";;
+        corpo.style.backgroundImage = "url('" + playerImg["andar"].src + "')";
+    }
+    if (move.x == 0) {
+        corpo.style.backgroundImage = "url('" + playerImg["danca"].src + "')";
+    }
+    if (move.y > 0) {
+        corpo.style.backgroundImage = "url('" + playerImg["desce"].src + "')";
+
+    } else if (move.y < 0) {
+        corpo.style.backgroundImage = "url('" + playerImg["sobe"].src + "')";
     }
     if (move.x < 0) {
         //  iD("head-" + id).className = "headl";
+        corpo.style.backgroundImage = "url('" + playerImg["andar"].src + "')";
         iD("corpo-" + id).className = "corpol";
     }
     else if (move.x > 0) {
         // iD("head-" + id).className = "head";
+        corpo.style.backgroundImage = "url('" + playerImg["andar"].src + "')";
         iD("corpo-" + id).className = "corpo";
     }
-    else if (move.x == 0) {
-        corpo.style.backgroundImage = "url('" + playerImg["danca"].src + "')";;
-    }
+
     frontEnd(move)
 
     if (move.x == oldpos.x && move.y == oldpos.y) {
@@ -356,7 +367,7 @@ function movePlayer() {
 
 
 async function loadPlayer() {
-    let imagename = ["anda", "andar", "danca"]
+    let imagename = ["anda", "andar", "danca", "sobe", "desce"]
     for (i in imagename) {
         [layer]
         let nome = imagename[i]
