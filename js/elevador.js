@@ -226,7 +226,7 @@ setInterval(function () {
         frame = 0
     }
 },
-    80);
+    100);
 setInterval(movePlayer, 20)
 //let flip = 1;
 
