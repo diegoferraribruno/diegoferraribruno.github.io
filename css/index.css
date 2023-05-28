@@ -226,7 +226,6 @@ a:visited {
     padding: 4px;
     color: rgb(219, 206, 146);
     background-color: #1a1a1acc;
-    height: 180px;
     overflow-y: scroll;
 
 
@@ -297,8 +296,10 @@ h2 {
 }
 
 .bloco {
+    position: absolute;
+    top: 1600px;
     width: 320px;
-    height: 180px;
+    height: 170px;
     display: inline-block;
 }
 

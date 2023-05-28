@@ -13,7 +13,7 @@ var user = {
 var gamestate = "pause"
 var users = { "player": user }
 var game = iD("game")
-const gameSize = { width: 410 * 7, height: 400 * 6 }
+const gameSize = { width: 410 * 7, height: 400 * 4 }
 const src = iD("manche");
 var container = iD("container")
 var send = false
@@ -364,6 +364,7 @@ async function loadPlayer() {
         sprite.src = 'game/' + nome + '.png'
         sprite.onload = function () {
             playerImg[nome] = sprite
+            container.scrollTo(500, 1200)
         }
     }
 
@@ -540,13 +541,13 @@ function alignBlocos() {
     for (i in blocos) {
         if (i == 4 || i == 8) { linha++; coluna = 0 }
         if (blocos[i].id) {
-            let sobra = 900
-            let esq = (coluna * 440) + sobra
-            let topo = 1800
-            let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 400 }
-            blocosX.push(bloco)
+            let sobra = 1200
+            let esq = (coluna * 420) + sobra
+            let topo = 1550
+            /*  let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 400 }
+              blocosX.push(bloco)*/
             // coliders.push(bloco)
-            blocos[i].setAttribute("style", "left:" + esq + "px; top:5px; position:absolute; display:block")
+            blocos[i].setAttribute("style", "left:" + esq + "px; top:" + topo + "px; position:absolute; display:block")
         }
         coluna++
     }
@@ -591,8 +592,8 @@ function construct() {
     predio.classList.add("floor")
     for (let i = 0; i < 2; i++) {
         let escada = document.createElement("div")
-        escada.style.marginTop = "400px"
-        escada.style.height = 400 * 2 + "px";
+        escada.style.marginTop = "0px"
+        escada.style.height = 400 * 3 + "px";
         escada.style.width = "400px"
         escada.style.position = "absolute"
         escada.style.left = i * 400 * 6 + "px"
@@ -603,16 +604,16 @@ function construct() {
     }
 
     let variant = 0
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
 
-        let wallColide = { id: "wall" + i, left: 370, top: 400 * i + 420, width: 400 * 5 + 160, height: 200 }
+        let wallColide = { id: "wall" + i, left: 370, top: 400 * i + 20, width: 400 * 5 + 160, height: 200 }
         coliders[layer].push(wallColide)
     }
-    for (let i = 0; i < 2; i++) {
-
-        let wallColide = { id: "wall" + i, left: 0, top: 400 * i * 4 + 20, width: 400 * 7, height: 200 }
-        coliders[layer].push(wallColide)
-    }
+    /* for (let i = 0; i < 2; i++) {
+ 
+         let wallColide = { id: "wall" + i, left: 0, top: 400 * i * 4 + 20, width: 400 * 7, height: 200 }
+         coliders[layer].push(wallColide)
+     }*/
 
     //wall.style.border = "1px red dashed"
     /* for (c = 1; c < 3; c++) {
