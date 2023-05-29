@@ -3,8 +3,8 @@ var user = {
     id: "player",
     name: "",
     serverPlayerPos: { x: 180, y: 660 },
-    left: 920,
-    top: 1500,
+    left: 888,
+    top: 1465,
     width: 100,
     height: 10,
     face: 0,
@@ -36,8 +36,8 @@ document.addEventListener('keyup', keyUp);
 let mode = "move"
 let oldpos = { x: 0, y: 0 }
 let player = {
-    top: 1500,
-    left: 920,
+    top: 1465,
+    left: 888,
     width: 100,
     height: 20,
     hidden: true
@@ -351,7 +351,7 @@ function movePlayer() {
         if (player != null) {
 
             let x1 = player.left - windowx / 2 + 32;
-            let y1 = player.top + (player.height * 1.8) - windowy / 4 - 64;
+            let y1 = player.top + (player.height * 2);
             let wx = container.scrollLeft;
             let wy = container.scrollTop;
             let tx = wx + (x1 - wx) * 0.5;
@@ -376,7 +376,7 @@ async function loadPlayer() {
         sprite.src = 'game/' + nome + '.png'
         sprite.onload = function () {
             playerImg[nome] = sprite
-            container.scrollTo(500, 1200)
+            container.scrollTo(740, 1470)
             setTimeout(() => window.focus(), 3000)
         }
     }
@@ -484,9 +484,9 @@ function playershake() {
         clearInterval(shaking); setTimeout(() => {
             avatar.style.rotate = "0deg";
             avatar.style.opacity = 1
-            user.left = 920
+            user.left = 888
             avatar.style.left = user.left + "px";
-            user.top = 1500
+            user.top = 1465
             avatar.style.top = user.top + "px";
             avatar.classList.remove("some")
 

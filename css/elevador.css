@@ -208,3 +208,21 @@ body {
     color: #b9a455;
     font-family: Georgia, 'Times New Roman', Times, serif
 }
+
+.jumpscare {
+    animation: jumpscare 0.4s
+}
+
+@keyframes jumpscare {
+    from {
+        transform: scale(0.5)
+    }
+
+    to {
+        transform: scale(4)
+    }
+
+    ;
+
+
+}

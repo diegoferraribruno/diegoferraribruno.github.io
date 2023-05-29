@@ -18,7 +18,7 @@ var monstro = {
 
 function newMonster() {
     let monstroimg = document.createElement("img")
-    monstroimg.src = "/game/monstro2.png"
+    monstroimg.src = "/game/monstro.png"
     let monstro = document.createElement("div")
     monstro.id = "monstro"
     monstro.style.display = "block"
