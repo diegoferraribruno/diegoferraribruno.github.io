@@ -226,7 +226,7 @@ setInterval(function () {
         frame = 0
     }
 },
-    100);
+    110);
 setInterval(movePlayer, 20)
 //let flip = 1;
 
@@ -376,6 +376,7 @@ async function loadPlayer() {
         sprite.onload = function () {
             playerImg[nome] = sprite
             container.scrollTo(500, 1200)
+            setTimeout(() => window.focus(), 3000)
         }
     }
 

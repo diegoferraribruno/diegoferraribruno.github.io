@@ -5,7 +5,7 @@
     margin: 48px 24px 24px 18px;
     padding: 0px 0px 0px 0px;
     position: absolute;
-    filter: drop-shadow(0px 0px 4px red) hue-rotate(0deg);
+
     transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
 }
@@ -17,7 +17,7 @@
     margin: 48px 24px 24px 18px;
     padding: 0px 0px 0px 0px;
     position: absolute;
-    filter: drop-shadow(0px 0px 4px red) hue-rotate(0deg);
+
     transform: scaleX(1);
     -webkit-transform: scaleX(1);
 }
@@ -57,10 +57,7 @@
 
 }
 
-#bg2 {
-    background-image: url("./../game/cidadebg.png");
 
-}
 
 #game {
     position: absolute;
@@ -72,25 +69,6 @@
     top: 320px;
 }
 
-.player {
-    width: 64px;
-    height: 100px;
-    margin-top: -96px;
-    margin-left: -10px;
-}
-
-#player {
-    z-index: 4;
-    border-radius: 50%;
-    box-shadow: 0 0 5px rgb(0, 0, 0);
-    background-color: #00000055;
-    position: absolute;
-    left: 120px;
-    top: 200px;
-    width: 48px;
-    height: 10px;
-    display: block;
-}
 
 .head {
     transform: scaleX(1);
