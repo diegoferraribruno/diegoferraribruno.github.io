@@ -235,6 +235,7 @@ var TARGET = { x: 0, y: 0 }
 
 function clickmove(x, y) {
     window.focus()
+    gameover()
     TARGET.x = x
     TARGET.y = y
 }
@@ -854,3 +855,24 @@ function enterRoom(y) {
 createRoom()*/
 //showcolliders()
 
+function arcade() {
+
+    let arcade = document.createElement('div')
+    arcade.innerHTML = '<span style="display:block; position:absolute; margin-top:-30px; z-index:16" onClick="gameover()"> ❎</span>'
+    arcade.id = "arcadeFrame"
+    arcade.style.cssText = "display:block; position:absolute; top: 1200px; left:290px; z-index:15; width:320px; height:320px;"
+    let myframe = document.createElement('iframe')
+    myframe.setAttribute("src", "./alfabeto.html");
+    myframe.width = "320px"
+    myframe.height = "320px"
+    arcade.appendChild(myframe)
+    iD("predio").appendChild(arcade)
+}
+
+function gameover() {
+    var iframes = document.getElementById("arcadeFrame")
+    if (iframes) {
+
+        iframes.parentNode.removeChild(iframes);
+    }
+}
