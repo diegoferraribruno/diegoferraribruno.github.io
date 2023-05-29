@@ -234,6 +234,7 @@ let automove = false
 var TARGET = { x: 0, y: 0 }
 
 function clickmove(x, y) {
+    window.focus()
     TARGET.x = x
     TARGET.y = y
 }
