@@ -53,15 +53,14 @@ createBasicBrushes()
 function customBrush() {
     mostraSubMenu("custombrush")
 }
-let exportBrush = []
+
 function criaCustom() {
     let i = basicBrushes.length
 
     let newNewBrush2 = new Image();
     //newNewBrush2.crossOrigin = "anonymous"
-    let ne = canvas.toDataURL("image/png");
-    newNewBrush2.src = ne
-    expBrush.push(dataURItoBlob(ne))
+    newNewBrush2.src = canvas.toDataURL("image/png");
+
     basicBrushes.push(newNewBrush2)
 
     let prush = new Image();
