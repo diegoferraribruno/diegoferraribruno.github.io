@@ -7,10 +7,10 @@ function toggleHand() {
         oldMode = mode;
         mode = "zoomx";
         toggleSelect("hand");
-        cursorColor("zoomx");
+        //  cursorColor("zoomx");
     } else {
         modeTo(oldMode);
-        cursorColor(oldMode);
+        //  cursorColor(oldMode);
     }
 }
 
@@ -89,7 +89,7 @@ function zoom2x() {
         iD("x1").innerHTML = zoomFactor + "x";
         scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
     }, 10);
-    cursorColor();
+    // cursorColor();
     toggleSelect(qual);
     resizeScreen()
 }
