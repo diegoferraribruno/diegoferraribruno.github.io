@@ -1,4 +1,15 @@
 let vers = [{
+    versao: "3.0",
+    notas: [
+        'muita mudança!',
+        'Salvar e carregar projeto',
+        'cursor removido',
+        'modo diurno',
+        'carregamento de spritesheet',
+        'memoryswap desabilitado vamos ver quantos comandos o app aguenta.'
+    ]
+
+}, {
     versao: "2.3.0",
     notas: [
         'Localization dos titulos.',

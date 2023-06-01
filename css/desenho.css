@@ -676,9 +676,9 @@ input[type="range"] {
     height: 24px;
     margin-top: -4px;
     margin-left: -1px;
-    background-size: 40px 40px;
+    /*  background-size: 40px 40px;
     background-clip: padding-box;
-    background-position: center;
+    background-position: center;*/
 
 }
 

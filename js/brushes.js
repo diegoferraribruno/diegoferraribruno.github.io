@@ -1,4 +1,7 @@
 // Pinceis Cor e Tamanho
+
+const brushCanva = iD("brushCanva")
+const brushCtx = brushCanva.getContext("2d");
 var favoritas = [];
 var hsla = [0, 0, 0, 1];
 var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
@@ -50,13 +53,15 @@ createBasicBrushes()
 function customBrush() {
     mostraSubMenu("custombrush")
 }
-
+let exportBrush = []
 function criaCustom() {
     let i = basicBrushes.length
 
     let newNewBrush2 = new Image();
     //newNewBrush2.crossOrigin = "anonymous"
-    newNewBrush2.src = canvas.toDataURL("image/png");
+    let ne = canvas.toDataURL("image/png");
+    newNewBrush2.src = ne
+    expBrush.push(dataURItoBlob(ne))
     basicBrushes.push(newNewBrush2)
 
     let prush = new Image();
@@ -142,7 +147,7 @@ function mudaCor(valor) {
     } else {
         strokeColor = valor;
         //     iD("menu").style.visibility = "hidden";
-        cursorColor();
+        // cursorColor();
     }
     iD("mostraCor").style.backgroundColor =
         strokeColor;
@@ -166,9 +171,9 @@ function mudaCor(valor) {
     toHslaObject(strokeColor);
     setStrokeColor();
     criaPaleta();
-    desenha("CB", lastbrush,
+    /*desenha("CB", lastbrush,
         strokeWidth, strokeColor,
-        "" + lastbrush + "-" + strokeWidth + "-" + strokeColor)
+        "" + lastbrush + "-" + strokeWidth + "-" + strokeColor)*/
 
 }
 
@@ -234,33 +239,34 @@ function strokeSizeRange(value) {
 
 function setStrokeSize(value = strokeWidth) {
     strokeWidth = value;
+    iD("tpx").value = value;
 
-    let brushes = ["cursor"];
-    for (i in brushes) {
-        let tamanho = iD(brushes[i]);
-        if (mode == "pintar" || mode == "cores" || mode == "cores" || mode == "picker" || mode == "recortar") {
-            tamanho.style.width = value * zoomFactor - zoomFactor / 10 + "px";
-            tamanho.style.height = value * zoomFactor + "px";
-            tamanho.style.lineHeight = value * zoomFactor + "px";
-            tamanho.style.marginTop =
-                (value / 2) * zoomFactor * -1 + "px";
-            tamanho.style.marginLeft =
-                (value * zoomFactor * -1) / 2 + "px";
-            tamanho.style.paddingRight =
-                (value * zoomFactor * -1) / 2 + "px";
-            if (i == 0) {
-                //tamanho.style.backgroundColor = strokeColor;
-            }
-
-        }
-        iD("tpx").value = value;
-    }
-
+    /* let brushes = ["cursor"];
+     for (i in brushes) {
+         let tamanho = iD(brushes[i]);
+         if (mode == "pintar" || mode == "cores" || mode == "cores" || mode == "picker" || mode == "recortar") {
+             tamanho.style.width = value * zoomFactor - zoomFactor / 10 + "px";
+             tamanho.style.height = value * zoomFactor + "px";
+             tamanho.style.lineHeight = value * zoomFactor + "px";
+             tamanho.style.marginTop =
+                 (value / 2) * zoomFactor * -1 + "px";
+             tamanho.style.marginLeft =
+                 (value * zoomFactor * -1) / 2 + "px";
+             tamanho.style.paddingRight =
+                 (value * zoomFactor * -1) / 2 + "px";
+             if (i == 0) {
+                 //tamanho.style.backgroundColor = strokeColor;
+             }
+ 
+         }
+     }
+ 
+     if (mode == "picker" || mode == "recortar") {
+         cursor.style.width = 1 + "px";
+         cursor.style.height = 1 + "px";
+     }
+     */
     changeBrush()
-    if (mode == "picker" || mode == "recortar") {
-        cursor.style.width = 1 + "px";
-        cursor.style.height = 1 + "px";
-    }
 }
 
 
@@ -272,12 +278,12 @@ function selectBrush(numero) {
 var changedBrush = false
 var brushName = "1-6-hsla(0,0%,0%,1)"
 
+
 function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
+
     brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
     brushMode = 1
-    var brushCanva = iD("brushCanva")
-    var brushCtx = brushCanva.getContext("2d");
     // brushCanva.crossOrigin = "anonymous"
     brushCanva.height = tam
     brushCanva.width = tam
@@ -289,11 +295,12 @@ function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor
 }
 
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
-    createNewBrush(numero, tam, cor)
+    desenha("CB", numero, tam, cor)
     setTimeout(() => {
         let newNewBrush = new Image();
         newNewBrush.src = brushCanva.toDataURL("image/png");
         newBrush.src = newNewBrush.src
+        newBrushes[brushName] = [newNewBrush, numero, strokeWidth, strokeColor]
         if (changedBrush == false) {
             changedBrush = true;
             let existe = iD(brushName)
@@ -326,15 +333,15 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
 
 
         }
-        newBrushes[brushName] = [newNewBrush, numero, strokeWidth, strokeColor]
     }, 20)
 }
 
-function favBrush(qual) {
-    let brr = newBrushes[qual]
+function favBrush(brushName) {
+    let brr = newBrushes[brushName]
     lastbrush = brr[1]
+    strokeWidth = brr[2]
     strokeColor = brr[3]
-    setStrokeSize(brr[2])
+    changeBrush(brr[1], brr[2], brr[3])
 
 }
 
@@ -379,7 +386,7 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, strokeWidth, brushName, con
             y = redondo(y) + 1
         }
         //console.log( x, y, angle, z );
-        cont.drawImage(newBrushes[brushName][0], x, y, strokeWidth, strokeWidth);
+        cont.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
     }
     //  }
 }

@@ -211,7 +211,19 @@ function export2txt() {
         let brushes = Object.keys(newBrushes)
         let lenb = brushes.length
         Alert("salvando 🖌️ x " + lenb)
-        //let expBrush = {}
+        let expBrush = []
+        let lenc = basicBrushes.length
+        if (lenc > 9) {
+            console.log("maior q 9")
+            for (let i = 9; i < lenc; i++) {
+                let prush = new Image();
+                prush = basicBrushes[i]
+
+                console.log(basicBrushes[i])
+                expBrush.push(prush)
+            }
+        }
+
         /*   for (i = 0; i < lenb; i++) {
             let bob = newBrushes[brushes[i]][0].src
            expBrush[brushes[i]] = bob
@@ -222,9 +234,9 @@ function export2txt() {
             "height": canvas.height
         }
         let pacote = {
-            // "expBrush": expBrush,
+            "expBrush": expBrush,
             "canvasInfo": canvasInfo,
-            "newBrushes": newBrushes,
+            "newBrushes": brushes,
             "customBrushes": customBrushes,
             "comandosb": comandosb
         }

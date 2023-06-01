@@ -78,31 +78,36 @@ function importSprite(e) {
                 tamanho(largura, altura)
             }
             for (i = 0; i < quadros; i++) {
+                workingframe = i
                 context.setTransform(1, 0, 0, 1, 0, 0);
                 context.clearRect(0, 0, context.canvas.width, context.canvas.height);
                 context.drawImage(imagem, i * canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
-                swapImg = canvas.toDataURL('image/png');
+                let swapImg = canvas.toDataURL('image/png');
                 blobb = dataURItoBlob(swapImg)
-                animacao[workingframe] = swapImg
+                animacao[i] = swapImg
+                comandosb[i] = []
+                // changeBrush()
+                comandosb[i].push(["f", "source-over", swapImg, 0, 0, canvas.width, canvas.height])
+                comandos = [["f", "source-over", swapImg, 0, 0, canvas.width, canvas.height]]
 
-                comandos.push(["img", "source-over", blobb, i * canvas.width, 0, imagem.width, imagem.height])
-                comandosParaComandosb()
-                workingframe++
+
 
             }
             setTimeout(() => {
                 adicionaQuadro()
-                // changeFrame(workingframe - 1);
+                //changeFrame(workingframe - 1);
                 removeClass()
                 removeElement("carregando")
                 iD("contador").innerHTML = workingframe;
-            }, 200)
+            }, 500)
         }
     }
 }
 
 
 var projeto
+let prush = new Image();
+let basic = []
 var openFile = function (event) {
     var input = event.target;
 
@@ -115,7 +120,21 @@ var openFile = function (event) {
         tamanho(projeto["canvasInfo"]["width"], projeto["canvasInfo"]["height"])
 
         //brushes
-        let brushNames = Object.keys(projeto["newBrushes"])
+        basic = projeto["expBrush"]
+        let lend = basic.length
+        for (i = 0; i < lend; i++) {
+            console.log(basic[i])
+            //context.putImageData(basic[i], 0, 0)
+            prush.src = basic[i]
+            let numero = basicBrushes.length + i
+            prush.id = "br" + numero
+            prush.setAttribute("onmousedown", "selectBrush(" + numero + ")")
+            prush.setAttribute("style", "width:30px; height:32px; margin-top:2px;")
+            iD("pinceis3").appendChild(prush)
+            basicBrushes.push[prush]
+        }
+
+        let brushNames = projeto["newBrushes"]
         let lenb = brushNames.length
         console.log(brushNames)
         removeElement("carregando")
@@ -123,7 +142,9 @@ var openFile = function (event) {
 
         Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>🖌️ x " + lenb + " <br> 🖼️  x " + len, len * 2)
         for (i = 0; i < lenb; i++) {
-            let brushs = projeto["newBrushes"][brushNames[i]]
+            let brushs = brushNames[i].split("-")
+            console.log(brushs)
+            // let brushs = projeto["newBrushes"][brushNames[i]]
             //let blob = dataURItoBlob(projeto["expBrush"][brushNames[i]])
             /*
                         let newNewBrush = document.createElement("img");
@@ -142,18 +163,49 @@ var openFile = function (event) {
                         newBrushes[brushNames[i]] = propert
                         */
 
-            setTimeout(() => {
-                changedBrush = false;
-                selectedBasicBrush = brushs[1]
-                lastbrush = brushs[1]
-                strokeWidth = brushs[2]
-                strokeColor = brushs[3]
+            //selectedBasicBrush = brushs[1]
+            changedBrush = false;
+            let cor = brushs[2]
+            let tam = brushs[1]
+            lastbrush = brushs[0]
+            brushName = "" + lastbrush + "-" + tam + "-" + cor
+            brushMode = 1
+            // brushCanva.crossOrigin = "anonymous"
+            brushCanva.height = tam
+            brushCanva.width = tam
+            brushCtx.fillStyle = cor;
+            brushCtx.fillRect(0, 0, tam, tam)
+            brushCtx.globalCompositeOperation = 'destination-in'
+            brushCtx.drawImage(basicBrushes[lastbrush], 0, 0, tam, tam)
+            brushCtx.globalCompositeOperation = 'destination-over'
+            let newNewBrush = new Image();
+            newNewBrush.src = brushCanva.toDataURL("image/png");
+            newBrush.src = newNewBrush.src
+            newBrushes[brushName] = [newNewBrush, lastbrush, tam, cor]
+            let favbrush = newBrushes[brushName][0]
+            favbrush.style.maxHeight = "32px";
 
-                changeBrush(brushs[1],
-                    brushs[2],
-                    brushs[3],)
+            let favBrushButton = document.createElement("div")
+            favBrushButton.id = brushName
+            favBrushButton.style.height = "30px";
+            favBrushButton.style.width = "30px";
+            favBrushButton.style.lineHeight = "30px";
+            favBrushButton.style.marginRight = "4px";
+            favBrushButton.style.verticalAlign = "top"
+            favBrushButton.style.display = "inline-block"
+
+            favBrushButton.setAttribute("onmousedown", "favBrush('" + brushName + "')")
+            favBrushButton.appendChild(favbrush)
+            if (strokeWidth > 10) {
+                favBrushButton.innerHTML += "<span class='favbrush'>" + strokeWidth + "</span>"
+            } else {
+                favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeWidth + "</span>"
             }
-                , i * 60 + 10)
+            iD("pinceis2").prepend(favBrushButton)
+
+
+
+
             // setTimeout(() => setStrokeColor(brush[3]), 120)
             //setTimeout(() => setStrokeSize(brush[2]), 80)
         }
@@ -187,10 +239,10 @@ var openFile = function (event) {
             }
             //changeBrush()
         }, 400 * (lenb + 2))
-        setTimeout(() => {
-            favBrush('1-6-hsla(0,0%,0%,1)');
-        }
-            , 1000 * (lenb + 3))
+        /*   setTimeout(() => {
+               favBrush('1-6-hsla(0,0%,0%,1)');
+           }
+               , 1000 * (lenb + 3))*/
     }
     reader.readAsText(input.files[0]);
 };

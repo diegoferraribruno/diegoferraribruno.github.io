@@ -81,7 +81,7 @@ let tempStrokeSize
 var tempImg = document.createElement("img");
 function handleStart(evt) {
     removeClass();
-    cursor.style.opacity = 0.4
+    // cursor.style.opacity = 0.4
     changedBrush = false;
 
     evt.preventDefault();
@@ -161,7 +161,8 @@ let cursinho = new Image
 
 
 function handleMove(evt) {
-    cursorMove(evt)
+    document.body.style.cursor = "none";
+    // cursorMove(evt)
     evt.preventDefault();
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
@@ -232,9 +233,9 @@ function handleMove(evt) {
             );
             setStrokeColor();
         }
-        cursor.style.left = evt.pageX + "px";
-        cursor.style.top = evt.pageY + "px";
-        cursor.style.opacity = 0.9
+        /*    cursor.style.left = evt.pageX + "px";
+            cursor.style.top = evt.pageY + "px";
+            cursor.style.opacity = 0.9*/
 
     }
     if (isGrabing) {
@@ -244,16 +245,16 @@ function handleMove(evt) {
         origin.x = x
         origin.y = y
 
-        cursor.style.left = evt.pageX + "px";
-        cursor.style.top = evt.pageY + "px";
-        cursor.style.opacity = 0.6
+        /*   cursor.style.left = evt.pageX + "px";
+           cursor.style.top = evt.pageY + "px";
+           cursor.style.opacity = 0.6*/
         if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
 
             if (cursorShow == true && !isDrawing) {
                 canvasFront.classList.remove("esconde")
                 canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvasFront.ctx.drawImage(newBrushes[brushName][0], x - (strokeWidth / 2), y - (strokeWidth / 2), strokeWidth, strokeWidth);
+                canvasFront.ctx.drawImage(brushCanva, x - (strokeWidth / 2), y - (strokeWidth / 2));
 
             }
         }
@@ -274,10 +275,19 @@ function handleMove(evt) {
     if (mode == "play") {
         canvasFront.classList.remove("esconde")
     }
+    if (mode == "emoji") {
+        canvasFront.classList.remove("esconde")
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasFront.ctx.font = iD("emosize").value + 'px serif'
+        canvasFront.ctx.textAlign = "center";
+        canvasFront.ctx.textBaseline = "middle";
+        canvasFront.ctx.fillText(emoji, x, y)
+    }
 
 }
 function handleUp(evt) {
-    cursor.style.opacity = 0
+    // cursor.style.opacity = 0
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     let over = checkOverCanvas(evt.pageX, evt.pageY)
@@ -351,6 +361,7 @@ function handleEnd(evt) {
         desenhaRetangulo()
     }
     mostra()
+
     if (mode != "play") {
 
         mouseOver = false;
@@ -365,10 +376,12 @@ function handleEnd(evt) {
     } else {
         canvasFront.classList.remove("esconde")
     }
+    document.body.style.cursor = "pointer";
 }
 
 function handleCancel(evt) {
     evt.preventDefault();
+    document.body.style.cursor = "pointer";
 }
 
 function prevent(evt) {
@@ -379,6 +392,7 @@ function checkOverCanvas(x, y, offset = 0) {
     if (x > canvas.offsetLeft + offset && x < canvas.offsetWidth + canvas.offsetLeft - offset && y > canvas.offsetTop + offset && y < canvas.offsetHeight + canvas.offsetTop - offset) {
         return true;
     } else {
+        document.body.style.cursor = "pointer";
         return false;
     }
 }

@@ -115,7 +115,6 @@ function startup() {
 
   initStrokeRange()
   setTimeout(() => resizeScreen(), 10)
-  night()
   pixel()
 
   setTimeout(() => {
@@ -127,8 +126,9 @@ function startup() {
     // limpaCabeca();
     apresenta()
   }, 1000);
-  setTimeout(() => localize(), 160)
+  setTimeout(() => { localize(), createNewBrush() }, 160)
   loading()
+
 }
 
 function loading() {

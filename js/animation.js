@@ -91,7 +91,6 @@ function new_frame() {
     workingframe++
     swapImg = canvas.toDataURL('image/png');
     animacao.splice(workingframe, 0, swapImg);
-
     let work = []
     comandosb.splice(workingframe, 0, work);
     canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -99,6 +98,7 @@ function new_frame() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     comandos = []
+    changeBrush()
     convertToImg()
     changeFrame(workingframe)
     iD("contador").innerHTML = workingframe
@@ -211,7 +211,7 @@ function changeFrame(frame) {
     if (workingframe < animacao.length && workingframe >= 0) {
         undoLevel = 0
         comandosExec()
-
+        setTimeout(restauraPincel(), 60)
         scrollFilme()
     }
 
@@ -285,8 +285,8 @@ function removeFrame() {
             workingframe = animacao.length - 1
             if (workingframe < 0) { workingframe = 0 }
         }
-        changeFrame(workingframe)
         comandosbParaComandos()
+        changeFrame(workingframe)
         iD("contador").innerHTML = workingframe
 
     } else {
@@ -451,9 +451,9 @@ function drop(event) {
 }
 
 
-function quadrosVisiveis(numero) {
+function quadrosVisiveis() {
     canvasBack.classList.toggle("esconde")
-    Alert("working on<br>trabalhando nisso")
+    //Alert("working on<br>trabalhando nisso")
 }
 
 
