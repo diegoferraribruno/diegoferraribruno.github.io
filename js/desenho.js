@@ -700,8 +700,7 @@ async function modeTo(qual) {
             break;
 
         case "preencher":
-            iD("preenchercor").style.backgroundColor =
-                strokeColor;
+
             changeGCO();
             break;
         case "picker":

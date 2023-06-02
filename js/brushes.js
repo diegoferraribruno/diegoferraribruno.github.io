@@ -153,7 +153,7 @@ function mudaCor(valor) {
     iD("mostraCor2").style.backgroundColor =
         strokeColor;
     iD("pintar").style.backgroundColor = strokeColor;
-
+    iD("preenchercor").style.backgroundColor = strokeColor;
     const toHslaObject = (hslaStr) => {
         const [hue, saturation, lightness, alpha] = hslaStr
             .match(/[\d\.]+/g)
