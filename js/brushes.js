@@ -41,12 +41,12 @@ function createBasicBrushes() {
         iD("pinceis").appendChild(prush)
 
     }
-    let customBrush = document.createElement("span")
-    customBrush.id = "custombrush"
-    //customBrush.classList.add("bot")
-    customBrush.setAttribute("onmousedown", 'mostraSubMenu("custombrush")')
-    customBrush.innerHTML = '<span class="shadow" style="display:inline-block; margin-top:-20px; font-size:18px; width:30px; height:30px;">🖌️<span style="display:inline-block;position:relative; margin-left: -30px; top:-5px">➕</span></span>'
-    iD("pinceis").appendChild(customBrush)
+    /* let customBrush = document.createElement("span")
+     customBrush.id = "custombrush"
+     //customBrush.classList.add("bot")
+     customBrush.setAttribute("onmousedown", 'mostraSubMenu("custombrush")')
+     customBrush.innerHTML = '<span class="shadow" style="display:inline-block; margin-top:-20px; font-size:18px; width:30px; height:30px;">🖌️<span style="display:inline-block;position:relative; margin-left: -30px; top:-5px">➕</span></span>'
+     iD("pinceis").appendChild(customBrush)*/
 }
 createBasicBrushes()
 
@@ -91,6 +91,7 @@ function changeLine() {
 function mudaCorQ(q = 0, valor) {
     hsla[q] = Number(valor);
     //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
+    strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
     setStrokeColor();
     criaPaleta();
 
@@ -111,7 +112,7 @@ function salvaCor() {
 criaPaleta();
 
 function setStrokeColor() {
-    strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+
     let objs = [
         "mostraCor",
         "salvaCor",
@@ -119,7 +120,8 @@ function setStrokeColor() {
         "pintar",
         "cores",
         "picker",
-        "preencher"
+        "preencher",
+        "preenchercor"
     ];
 
     let quantos = objs.length;
@@ -130,6 +132,7 @@ function setStrokeColor() {
     changeBrush()
 
 }
+
 setStrokeColor();
 
 function mudaCor(valor) {
@@ -168,6 +171,7 @@ function mudaCor(valor) {
         hsla[3] = alpha;
     };
     toHslaObject(strokeColor);
+    strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
     setStrokeColor();
     criaPaleta();
     /*desenha("CB", lastbrush,
@@ -295,6 +299,7 @@ function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor
 
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     desenha("CB", numero, tam, cor)
+
     setTimeout(() => {
         let newNewBrush = new Image();
         newNewBrush.src = brushCanva.toDataURL("image/png");
