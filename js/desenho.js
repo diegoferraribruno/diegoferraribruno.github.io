@@ -73,6 +73,8 @@ function exec(coma = 0) {
         switch (comandos[coma][0]) {
             case "move":
                 let img_b64 = canvas.toDataURL("image/png");
+                let blob
+
                 blob = dataURItoBlob(img_b64)
                 myImg.src = URL.createObjectURL(blob)
                 myImg.onload = function () {
@@ -90,6 +92,33 @@ function exec(coma = 0) {
                     exec(coma)
                 }
                 break;
+            case "rotacionar":
+                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvasFront.ctx.save()
+                canvasFront.ctx.translate(160, 160)
+                canvasFront.ctx.rotate(comandos[coma][1]);
+                canvasFront.ctx.drawImage(canvas, -160, -160)
+                canvasFront.ctx.restore()
+
+                let img_b64c = canvasFront.toDataURL("image/png");
+                let blobn = dataURItoBlob(img_b64c)
+                myImg.src = URL.createObjectURL(blobn)
+                myImg.onload = function () {
+                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                    let globaltemp = context.globalCompositeOperation
+                    context.globalCompositeOperation = "source-over";
+                    context.drawImage(
+                        myImg,
+                        0,
+                        0);
+                    changeGCO(globaltemp)
+                    coma++;
+                    exec(coma)
+
+                }
+                break;
+
             case "new_frame()":
                 new_frame()
                 createNewBrush()
@@ -115,9 +144,8 @@ function exec(coma = 0) {
                 exec(coma)
                 break;
             case "f":
-
-                blob = dataURItoBlob(comandos[coma][2])
-                myImg.src = URL.createObjectURL(blob)
+                let blobv = dataURItoBlob(comandos[coma][2])
+                myImg.src = URL.createObjectURL(blobv)
                 myImg.onload = function () {
                     let globaltemp = context.globalCompositeOperation
                     context.globalCompositeOperation = comandos[coma][1];
@@ -248,6 +276,11 @@ function desenha(
 ) {
     let comando = []
     switch (CMD) {
+        case "rotacionar":
+            comando = ["rotacionar", GCO]
+            comandos.push(comando)
+            comandosExec()
+            break
         case "move":
             comando = ["move", GCO, X]
             comandos.push(comando)

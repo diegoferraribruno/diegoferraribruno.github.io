@@ -1,6 +1,7 @@
 let vers = [{
     versao: "3.3",
     notas: [
+        'rotate canvas',
         'move canvas tool',
         'pinceis customizados salvando e carregando!',
         'muita mudança!',

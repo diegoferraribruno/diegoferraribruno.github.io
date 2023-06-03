@@ -79,6 +79,8 @@ function handleKeys(evt) {
 let movendo = false
 let tempStrokeSize
 var tempImg = document.createElement("img");
+var rotacionar = false
+
 function handleStart(evt) {
     removeClass();
     // cursor.style.opacity = 0.4
@@ -107,6 +109,9 @@ function handleStart(evt) {
     }
     if (mode == "move") {
         movendo = true
+    }
+    if (mode == "rotacionar") {
+        rotacionar = true
     }
     if (mode == "zoomx") {
         isGrabing = true;
@@ -161,7 +166,6 @@ function handleStart(evt) {
 let cursinho = new Image
 const movecursor = new Image(); // Create new img element
 movecursor.src = "img/movearrow.png";
-
 
 function handleMove(evt) {
     document.body.style.cursor = "none";
@@ -242,7 +246,7 @@ function handleMove(evt) {
     if (isGrabing) {
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
     }
-    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move") {
+    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
         origin.y = y
 
@@ -296,12 +300,34 @@ function handleMove(evt) {
             canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
         }
     }
+    if (mode == "rotacionar") {
+        canvasFront.classList.remove("esconde")
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (rotacionar == true) {
+            canvasFront.ctx.save()
+            canvasFront.globalCompositeOperation = "source-out"
+            canvasFront.ctx.translate(160, 160)
+            canvasFront.ctx.rotate(((y - origin.y + x - origin.x) * Math.PI) / 180);
+            canvasFront.ctx.drawImage(canvas, -160, -160)
+            canvasFront.ctx.restore()
+            //canvasFront.ctx.translate(320, 320)
+
+            //canvasFront.ctx.restore()
+        }
+    }
 }
 function handleUp(evt) {
     // cursor.style.opacity = 0
     if (movendo == true) {
         desenha("move", x - origin.x, y - origin.y)
         movendo = false
+    }
+    if (rotacionar == true) {
+        rotacionar = false
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        desenha("rotacionar", ((y - origin.y + x - origin.x) * Math.PI) / 180)
     }
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
