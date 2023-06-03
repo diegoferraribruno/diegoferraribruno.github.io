@@ -362,7 +362,7 @@ function clearBrushes() {
     })
 }
 
-function drawBrush(GCO, x1, y1, x2, y2, strokeColor, strokeWidth, brushName, cont = context) {
+function drawBrush(GCO, x1, y1, x2, y2, cont = context) {
     let start
     let end
     if (pixelGood) {
@@ -436,3 +436,8 @@ const RGBAToHSLA = (r, g, b, a) => {
     hsla[3] = A;
     return `hsla(${H},${S}%,${L}%,${a})`;
 };
+
+function restauraPincel() {
+    console.log("olbrush", oldBrush)
+    desenha("CB", oldBrush[0], oldBrush[1], oldBrush[2], oldBrush[3])
+}

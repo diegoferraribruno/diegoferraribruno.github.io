@@ -1,6 +1,8 @@
 let vers = [{
-    versao: "3.0",
+    versao: "3.3",
     notas: [
+        'move canvas tool',
+        'pinceis customizados salvando e carregando!',
         'muita mudança!',
         'Salvar e carregar projeto',
         'cursor removido',

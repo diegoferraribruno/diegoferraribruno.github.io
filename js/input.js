@@ -76,7 +76,7 @@ function handleKeys(evt) {
 
     }
 }
-
+let movendo = false
 let tempStrokeSize
 var tempImg = document.createElement("img");
 function handleStart(evt) {
@@ -104,6 +104,9 @@ function handleStart(evt) {
     if (mode == "emoji") {
         isEmoji = true
         isDrawing = false
+    }
+    if (mode == "move") {
+        movendo = true
     }
     if (mode == "zoomx") {
         isGrabing = true;
@@ -141,10 +144,7 @@ function handleStart(evt) {
                 x,
                 y,
                 origin.x,
-                origin.y,
-                strokeColor,
-                strokeWidth,
-                brushName
+                origin.y
             );
         }
 
@@ -156,8 +156,11 @@ function handleStart(evt) {
     if (mode == "play") {
         stop();
     }
+    console.log(origin.x, origin.y)
 }
 let cursinho = new Image
+const movecursor = new Image(); // Create new img element
+movecursor.src = "img/movearrow.png";
 
 
 function handleMove(evt) {
@@ -172,6 +175,7 @@ function handleMove(evt) {
         x = redondo(x)
         y = redondo(y)
     }
+
     if (isSelecting === true) {
         cropEnd.x = x
         cropEnd.y = y
@@ -191,7 +195,7 @@ function handleMove(evt) {
         }
         canvasFront.ctx.fillText("✂️", x, y)
     }
-    if (isDrawing === true && isPicking == false) {
+    if (isDrawing === true && isPicking == false && mode != 'move') {
         mouseOver = true;
         if (brushMode == 0) {
             desenha(
@@ -213,10 +217,7 @@ function handleMove(evt) {
                 x,
                 y,
                 origin.x,
-                origin.y,
-                strokeColor,
-                strokeWidth,
-                brushName
+                origin.y
             );
 
         }
@@ -241,7 +242,7 @@ function handleMove(evt) {
     if (isGrabing) {
         scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
     }
-    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play") {
+    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move") {
         origin.x = x
         origin.y = y
 
@@ -284,10 +285,24 @@ function handleMove(evt) {
         canvasFront.ctx.textBaseline = "middle";
         canvasFront.ctx.fillText(emoji, x, y)
     }
+    if (mode == "move") {
+        canvasFront.classList.remove("esconde")
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasFront.ctx.drawImage(movecursor, x - 16, y - 16)
 
+        if (movendo == true) {
+            canvasFront.globalCompositeOperation = "source-out"
+            canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
+        }
+    }
 }
 function handleUp(evt) {
     // cursor.style.opacity = 0
+    if (movendo == true) {
+        desenha("move", x - origin.x, y - origin.y)
+        movendo = false
+    }
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     let over = checkOverCanvas(evt.pageX, evt.pageY)

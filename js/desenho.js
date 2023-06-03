@@ -64,12 +64,32 @@ function comandosExec() {
         executing = true;
     }
 }
+let myImg = document.createElement("img");
 
 function exec(coma = 0) {
     let lenc = comandos.length;
     let scope = lenc - undoLevel
     if (scope > coma) {
         switch (comandos[coma][0]) {
+            case "move":
+                let img_b64 = canvas.toDataURL("image/png");
+                blob = dataURItoBlob(img_b64)
+                myImg.src = URL.createObjectURL(blob)
+                myImg.onload = function () {
+                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                    let globaltemp = context.globalCompositeOperation
+                    context.globalCompositeOperation = "source-over";
+                    context.drawImage(
+                        myImg,
+                        comandos[coma][1],
+                        comandos[coma][2],
+                        myImg.width,
+                        myImg.height);
+                    changeGCO(globaltemp)
+                    coma++;
+                    exec(coma)
+                }
+                break;
             case "new_frame()":
                 new_frame()
                 createNewBrush()
@@ -95,7 +115,7 @@ function exec(coma = 0) {
                 exec(coma)
                 break;
             case "f":
-                let myImg = document.createElement("img");
+
                 blob = dataURItoBlob(comandos[coma][2])
                 myImg.src = URL.createObjectURL(blob)
                 myImg.onload = function () {
@@ -113,7 +133,7 @@ function exec(coma = 0) {
                 }
                 break;
             case "s":
-                changeGCO("destination-out");
+                //changeGCO("destination-out");
                 context.fillStyle = "#ffffffff";
                 context.fillRect(0, 0, canvas.width, canvas.height);
                 let myImg2 = document.createElement("img");
@@ -130,7 +150,6 @@ function exec(coma = 0) {
                     changeGCO(globaltemp)
                     coma++;
                     exec(coma)
-                    myImg2 = []
                 }
                 break;
             case "p":
@@ -197,10 +216,7 @@ function exec(coma = 0) {
                     comandos[coma][2],
                     comandos[coma][3],
                     comandos[coma][4],
-                    comandos[coma][5],
-                    comandos[coma][6],
-                    comandos[coma][7],
-                    comandos[coma][8]
+                    comandos[coma][5]
                 );
                 coma++;
                 exec(coma)
@@ -212,11 +228,6 @@ function exec(coma = 0) {
         executing = false
     }
 
-}
-
-function restauraPincel() {
-    console.log("olbrush", oldBrush)
-    desenha("CB", oldBrush[0], oldBrush[1], oldBrush[2], oldBrush[3])
 }
 
 function blobToDataURL(blob, callback) {
@@ -237,6 +248,130 @@ function desenha(
 ) {
     let comando = []
     switch (CMD) {
+        case "move":
+            comando = ["move", GCO, X]
+            comandos.push(comando)
+            comandosExec()
+            break
+        case "brush":
+
+            comando = ["brush", GCO, X, Y, eoX, eoY]
+            drawBrush(GCO, X, Y, eoX, eoY)
+            comandos.push(comando)
+            autoCrop(X, Y, strokeWidth, strokeWidth)
+
+            if (tilepaint == true) {
+                // console.log(X, Y, eoY, eoY)
+                if (X < strokeWidth / 2 && Y < strokeWidth) { //top left
+                    setTimeout(() => {
+                        //top right
+                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY]
+                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY)
+                        comandos.push(comando)
+
+                        //bottom left
+                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height]
+                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height)
+                        comandos.push(comando)
+
+                        //bottom right
+                        comando = ["brush", GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height]
+                        drawBrush(GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height)
+                        comandos.push(comando)
+
+
+                    }, 10)
+                } else if (X > canvas.width - strokeWidth / 2 && Y < strokeWidth) {//top right
+                    setTimeout(() => {
+                        //top left
+                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY]
+                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY)
+                        comandos.push(comando)
+                        //bottom left
+                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height]
+                        drawBrush(GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height)
+                        comandos.push(comando)
+
+                        //bottom right
+                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height]
+                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height)
+                        comandos.push(comando)
+
+
+                    }, 10)
+                } else if (X < strokeWidth / 2 && Y > canvas.height - strokeWidth / 2) { //bottom left
+                    setTimeout(() => {
+                        //bottom right
+                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY]
+                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY)
+                        comandos.push(comando)
+
+                        //top left
+                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height]
+                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height)
+                        comandos.push(comando)
+
+                        //top right
+                        comando = ["brush", GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height]
+                        drawBrush(GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height)
+                        comandos.push(comando)
+
+
+                    }, 10)
+                }
+                else if (X > canvas.width - strokeWidth / 2 / 2 && Y > canvas.height - strokeWidth / 2) { //bottom right
+                    setTimeout(() => {
+                        //bottom left
+                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY]
+                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY)
+                        comandos.push(comando)
+
+                        //top left
+                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height]
+                        drawBrush(GCO, X - canvas.width, Y - canvas.height, eoX - canvas.width, eoY - canvas.height)
+                        comandos.push(comando)
+
+                        //top right
+                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY - canvas.height]
+                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height)
+                        comandos.push(comando)
+
+
+                    }, 10)
+                }
+                else if (X < strokeWidth / 2) {
+                    setTimeout(() => {
+                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY]
+                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY)
+                        comandos.push(comando)
+                    }, 10)
+                } else if (X > canvas.width - strokeWidth / 2) {
+                    setTimeout(() => {
+                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY]
+                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY)
+                        comandos.push(comando)
+                    }, 10)
+
+
+                } else if (Y < strokeWidth) {
+                    setTimeout(() => {
+                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height]
+                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height)
+                        comandos.push(comando)
+                    }, 10)
+                } else if (Y > canvas.height - strokeWidth / 2) {
+                    setTimeout(() => {
+                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height]
+                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height)
+                        comandos.push(comando)
+                    }, 10)
+                }
+
+            }
+
+
+            break;
+
         case "FX":
             comando = ["FX", fx]
             comandos.push(comando)
@@ -247,7 +382,7 @@ function desenha(
             comandos.push(comando)
             break;
         case "p":
-            comando = ["p", GCO, X, Y, eoX, eoY, strokeColor, strokeWidth, linejoin];
+            comando = ["p", GCO, X, Y, eoX, eoY];
             comandos.push(comando)
             drawLine(
                 comando[1],
@@ -421,124 +556,6 @@ function desenha(
             }
             autoCrop(X, Y, eoY, eoY)
             break;
-        case "brush":
-
-            comando = ["brush", GCO, X, Y, eoX, eoY, strokeColor, strokeWidth, linejoin]
-            drawBrush(GCO, X, Y, eoX, eoY, strokeColor, strokeWidth, linejoin)
-            comandos.push(comando)
-            autoCrop(X, Y, strokeWidth, strokeWidth)
-
-            if (tilepaint == true) {
-                // console.log(X, Y, eoY, eoY)
-                if (X < strokeWidth / 2 && Y < strokeWidth) { //top left
-                    setTimeout(() => {
-                        //top right
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-                        //bottom left
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-                        //bottom right
-                        comando = ["brush", GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-
-                    }, 10)
-                } else if (X > canvas.width - strokeWidth / 2 && Y < strokeWidth) {//top right
-                    setTimeout(() => {
-                        //top left
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-                        //bottom left
-                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-                        //bottom right
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-
-                    }, 10)
-                } else if (X < strokeWidth / 2 && Y > canvas.height - strokeWidth / 2) { //bottom left
-                    setTimeout(() => {
-                        //bottom right
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-                        //top left
-                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-                        //top right
-                        comando = ["brush", GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-
-                    }, 10)
-                }
-                else if (X > canvas.width - strokeWidth / 2 / 2 && Y > canvas.height - strokeWidth / 2) { //bottom right
-                    setTimeout(() => {
-                        //bottom left
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-                        //top left
-                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y - canvas.height, eoX - canvas.width, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-                        //top right
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-
-
-                    }, 10)
-                }
-                else if (X < strokeWidth / 2) {
-                    setTimeout(() => {
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-                    }, 10)
-                } else if (X > canvas.width - strokeWidth / 2) {
-                    setTimeout(() => {
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-                    }, 10)
-
-
-                } else if (Y < strokeWidth) {
-                    setTimeout(() => {
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-                    }, 10)
-                } else if (Y > canvas.height - strokeWidth / 2) {
-                    setTimeout(() => {
-                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
-                        comandos.push(comando)
-                    }, 10)
-                }
-
-            }
-
-
-            break;
 
 
     }
@@ -555,7 +572,7 @@ function changeGCO(GCO = globalComposite) {
     context.globalCompositeOperation = GCO
 }
 
-function drawLine(GCO, x1, y1, x2, y2, strokeColor, strokeWidth, linejoin) {
+function drawLine(GCO, x1, y1, x2, y2) {
     changeGCO(GCO);
     context.beginPath();
     context.strokeStyle = strokeColor;
@@ -602,136 +619,6 @@ function mostra() {
         canvasFront.classList.add("esconde")
 
     }
-}
-let oldMode = mode;
-
-async function modeTo(qual) {
-    setTimeout(() => stop(), 300)
-    canvasFront.style.backgroundColor = "transparent"
-    canvasFront.filter = "none"
-    if (mode != qual) {
-        if (qual != "recortar") {
-            removeClass("flip")
-            setTimeout(() => {
-                origin.x = 0
-                origin.y = 0
-            }, 40)
-        }
-        removeClass();
-        toggleSelect(qual);
-        if (qual != "apagar") {
-            mode = qual
-            mostraMenu(qual);
-
-        } else {
-
-            mode = "pintar"
-            oldMode = "pintar"
-            mostraMenu("pintar");
-            Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  ${alerts[language][9]} ${alerts[language][11]} <br> ${alerts[language][7]}`, 1)
-            changeGCO("destination-out")
-            //cursorColor()
-        }
-    } else {
-        removeClass();
-        if (qual != "apagar") { mostraMenu(qual); }
-        if (qual == "cam") {
-            removeVideo()
-        }
-    }
-    switch (qual) {
-        case "FX":
-
-            canvasFront.classList.remove("esconde")
-            updatecanvasFront()
-            mode = "FX";
-            break;
-        case "salvar":
-            // mode = qual;
-            break;
-        case "recortar":
-            /*  let len = comandos.length
-              if (len > 1 && comandos[len - 1][0] != "i") {
-                  new_frame()
-                  console.log("quadro salvo")
-              }*/
-            cut()
-
-            mode = qual;
-            //removeClass();
-            break;
-        case "rotacionar":
-            break;
-        case "zoomx":
-            //removeClass();
-            /*  */
-            mode = "zoomx"
-            break;
-        case "cam":
-            mode = qual
-            camera();
-            changeGCO();
-            // memorySwap();
-            break;
-        case "apagar":
-
-            // cursorColor()
-            /*brushMode = 0;
-            setStrokeSize(estrokeWidth);
-            cursorColor();
-            mudaCorAlpha();*/
-            changeGCO("destination-out");
-            break;
-        case "pintar":
-            mode = qual
-            setStrokeSize(strokeWidth);
-            setStrokeColor();
-            changeGCO();
-            // memorySwap();
-            break;
-        case "cores":
-            changeGCO();
-            //  memorySwap();
-            break;
-        case "fundo":
-
-            changeGCO();
-            // memorySwap();
-            break;
-
-        case "preencher":
-
-            changeGCO();
-            break;
-        case "picker":
-            mode = qual
-            // cursorColor()
-            break;
-        case "info":
-            break;
-        case "undo":
-            undo();
-            break;
-        case "imagem":
-            modeTo(oldMode)
-            break;
-        case "emoji":
-            mode = qual
-            // setStrokeSize(strokeWidth);
-            // setStrokeColor();
-            setTimeout(() => {
-
-                emojiSizeRange();
-            }, 40)
-            changeGCO();
-
-            break;
-        case "FX":
-            break;
-        case _:
-            break;
-    }
-    //cursorColor();
 }
 
 
