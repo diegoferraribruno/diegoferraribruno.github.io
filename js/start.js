@@ -40,7 +40,7 @@ function startup() {
       else if (event.key === "Escape") {
         removeClass()
         window.parent.focus()
-      } else if (event.key === "z") {
+      } else if (event.key === "z" && keyCtrl == false) {
         modeTo("zoomx")
       } else if (event.key === "p" || event.key === "b") {
         modeTo("pintar")

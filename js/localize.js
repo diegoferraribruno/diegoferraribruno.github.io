@@ -161,7 +161,7 @@ let textos = {
         "55": "Apagar toda aanimação",
         "56": "Remover quadro atual",
         "57": "Rotacionar a tela",
-        "58": "Confirmar rotação",
+        "58": "A imagem irá perder definição. <br> Sugestão: duplique o quadro antes de rotacionar",
         "59": "Brightness / brilho",
         "60": "Modo de exposição Manual",
         "61": "exposureTime",
@@ -179,7 +179,7 @@ let textos = {
         "74": "Novo projeto",
         "75": "apresenta",
         "76": "usar como fundo do app",
-        "77": "mover o o quadro"
+        "77": "mover o quadro"
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -239,7 +239,7 @@ let textos = {
         "55": "Erease all animation",
         "56": "Remove current frame",
         "57": "Rotate canvas",
-        "58": "confirm rotation",
+        "58": "Image will loose definition. <br>Sugestion: duplicate frames before rotating",
         "59": "Brightness",
         "60": "Manual exposure Mode",
         "61": "exposureTime",
