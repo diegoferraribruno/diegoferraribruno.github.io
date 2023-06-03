@@ -208,38 +208,39 @@ function export2txt() {
     changedBrush = false
     changeBrush()
     setTimeout(() => {
-        let brushes = Object.keys(newBrushes)
-        let lenb = brushes.length
-        Alert("salvando 🖌️ x " + lenb)
-        let expBrush = []
-        let lenc = basicBrushes.length
-        if (lenc > 9) {
-            console.log("maior q 9")
-            for (let i = 9; i < lenc; i++) {
-                let prush = new Image();
-                prush = basicBrushes[i]
-
-                console.log(basicBrushes[i])
-                expBrush.push(prush)
-            }
-        }
-
-        /*   for (i = 0; i < lenb; i++) {
-            let bob = newBrushes[brushes[i]][0].src
-           expBrush[brushes[i]] = bob
-          }
-        */
         let canvasInfo = {
             "width": canvas.width,
             "height": canvas.height
         }
+        let brushes = Object.keys(newBrushes)
         let pacote = {
-            "expBrush": expBrush,
+            "expBrush": [],
             "canvasInfo": canvasInfo,
             "newBrushes": brushes,
             "customBrushes": customBrushes,
             "comandosb": comandosb
         }
+
+        let lenb = brushes.length
+        Alert("salvando 🖌️ x " + lenb)
+        let lenc = basicBrushes.length
+        if (lenc > 9) {
+            console.log("maior q 9")
+            for (let i = 9; i < lenc; i++) {
+                var prush = basicBrushes[i].src;
+                console.log(prush)
+                pacote["expBrush"].push(prush)
+            }
+        }
+        console.dir(pacote)
+        /*   for (i = 0; i < lenb; i++) {
+            let bob = newBrushes[brushes[i]][0].src
+           expBrush[brushes[i]] = bob
+          }
+        */
+
+
+
         const a = document.createElement("a");
         a.href = URL.createObjectURL(new Blob([JSON.stringify(pacote, null, 2)], {
             type: "text/plain"

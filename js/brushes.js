@@ -41,12 +41,12 @@ function createBasicBrushes() {
         iD("pinceis").appendChild(prush)
 
     }
-    /* let customBrush = document.createElement("span")
-     customBrush.id = "custombrush"
-     //customBrush.classList.add("bot")
-     customBrush.setAttribute("onmousedown", 'mostraSubMenu("custombrush")')
-     customBrush.innerHTML = '<span class="shadow" style="display:inline-block; margin-top:-20px; font-size:18px; width:30px; height:30px;">🖌️<span style="display:inline-block;position:relative; margin-left: -30px; top:-5px">➕</span></span>'
-     iD("pinceis").appendChild(customBrush)*/
+    let customBrush = document.createElement("span")
+    customBrush.id = "custombrush"
+    //customBrush.classList.add("bot")
+    customBrush.setAttribute("onmousedown", 'mostraSubMenu("custombrush")')
+    customBrush.innerHTML = '<span class="shadow" style="display:inline-block; margin-top:-20px; font-size:18px; width:30px; height:30px;">🖌️<span style="display:inline-block;position:relative; margin-left: -30px; top:-5px">➕</span></span>'
+    iD("pinceis").appendChild(customBrush)
 }
 createBasicBrushes()
 

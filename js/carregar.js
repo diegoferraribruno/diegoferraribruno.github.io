@@ -106,13 +106,45 @@ function importSprite(e) {
 
 
 var projeto
-let prush = new Image();
-let basic = []
+let customBr = []
+var numero
+async function recreateCustomBrush() {
+    customBr = projeto["expBrush"]
+    let lend = customBr.length
+    for (i = 0; i < lend; i++) {
+        numero = basicBrushes.length + i
+        console.log(customBr[i])
+        console.log(numero, "numero")
+        //context.putImageData(basic[i], 0, 0)
+        let prush = new Image();
+        prush.src = customBr[i]
+        prush.onload = function () {
+            brushCanva.width = prush.width
+            brushCanva.height = prush.height
+            brushCtx.drawImage(prush, 0, 0)
+
+
+            let newNewBrush2 = new Image();
+            //newNewBrush2.crossOrigin = "anonymous"
+            newNewBrush2.src = brushCanva.toDataURL("image/png");
+            newNewBrush2.onload = function () {
+
+
+                newNewBrush2.id = "br" + numero
+                newNewBrush2.setAttribute("onmousedown", "selectBrush(" + numero + ")")
+                newNewBrush2.setAttribute("style", "width:30px; height:32px; margin-top:2px;")
+                iD("pinceis3").appendChild(newNewBrush2)
+                basicBrushes.push(newNewBrush2)
+
+            }
+        }
+    }
+}
 var openFile = function (event) {
     var input = event.target;
 
     var reader = new FileReader();
-    reader.onload = function () {
+    reader.onload = async function () {
         removeClass()
         newBrushes = {}
         projeto = JSON.parse(reader.result)
@@ -120,95 +152,67 @@ var openFile = function (event) {
         tamanho(projeto["canvasInfo"]["width"], projeto["canvasInfo"]["height"])
 
         //brushes
-        basic = projeto["expBrush"]
-        let lend = basic.length
-        for (i = 0; i < lend; i++) {
-            console.log(basic[i])
-            //context.putImageData(basic[i], 0, 0)
-            prush.src = basic[i]
-            let numero = basicBrushes.length + i
-            prush.id = "br" + numero
-            prush.setAttribute("onmousedown", "selectBrush(" + numero + ")")
-            prush.setAttribute("style", "width:30px; height:32px; margin-top:2px;")
-            iD("pinceis3").appendChild(prush)
-            basicBrushes.push[prush]
-        }
+        await recreateCustomBrush()
+        let lenb = projeto["newBrushes"].length
+        setTimeout(() => {
+            console.log(projeto, "projeto okkkkk")
+            let brushNames = projeto["newBrushes"]
+            let lenb = brushNames.length
+            console.log(brushNames)
+            removeElement("carregando")
+            let len = projeto["comandosb"].length
+            iD("pinceis2").innerHTML = ""
+            Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>🖌️ x " + lenb + " <br> 🖼️  x " + len, len * 2)
+            for (i = 0; i < lenb; i++) {
+                let brushs = brushNames[i].split("-")
+                console.log(brushs)
 
-        let brushNames = projeto["newBrushes"]
-        let lenb = brushNames.length
-        console.log(brushNames)
-        removeElement("carregando")
-        let len = projeto["comandosb"].length
+                changedBrush = false;
+                strokeColor = brushs[2]
+                strokeWidth = brushs[1]
+                lastbrush = brushs[0]
+                brushName = brushNames[i]
+                brushMode = 1
+                brushCanva.crossOrigin = "anonymous"
+                brushCanva.height = strokeWidth
+                brushCanva.width = strokeWidth
+                brushCtx.fillStyle = strokeColor;
+                brushCtx.fillRect(0, 0, strokeWidth, strokeWidth)
+                brushCtx.globalCompositeOperation = 'destination-in'
+                brushCtx.drawImage(basicBrushes[lastbrush], 0, 0, strokeWidth, strokeWidth)
+                brushCtx.globalCompositeOperation = 'destination-over'
+                let newNewBrush = new Image();
+                newNewBrush.src = brushCanva.toDataURL("image/png");
+                newBrush.src = newNewBrush.src
+                newBrushes[brushName] = [newNewBrush, lastbrush, strokeWidth, strokeColor]
+                let favbrush = newBrushes[brushName][0]
+                favbrush.style.maxHeight = "32px";
 
-        Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>🖌️ x " + lenb + " <br> 🖼️  x " + len, len * 2)
-        for (i = 0; i < lenb; i++) {
-            let brushs = brushNames[i].split("-")
-            console.log(brushs)
-            // let brushs = projeto["newBrushes"][brushNames[i]]
-            //let blob = dataURItoBlob(projeto["expBrush"][brushNames[i]])
-            /*
-                        let newNewBrush = document.createElement("img");
-                        console.log("img", projeto["expBrush"][brushNames[i]])
-                        newNewBrush.src = projeto["expBrush"][brushNames[i]]
-                        //   console.log("brush:" + brush[1])
-                        let propert = [
-                            newNewBrush,
-                            brushs[1],
-                            brushs[2],
-                            brushs[3],
-                        ]
-                        lastbrush = brush[1]
-                        strokeWidth = brush[2]
-                        strokeColor = brush[3]
-                        newBrushes[brushNames[i]] = propert
-                        */
+                let favBrushButton = document.createElement("div")
+                favBrushButton.id = brushName
+                favBrushButton.style.height = "30px";
+                favBrushButton.style.width = "30px";
+                favBrushButton.style.lineHeight = "30px";
+                favBrushButton.style.marginRight = "4px";
+                favBrushButton.style.verticalAlign = "top"
+                favBrushButton.style.display = "inline-block"
 
-            //selectedBasicBrush = brushs[1]
-            changedBrush = false;
-            let cor = brushs[2]
-            let tam = brushs[1]
-            lastbrush = brushs[0]
-            brushName = "" + lastbrush + "-" + tam + "-" + cor
-            brushMode = 1
-            // brushCanva.crossOrigin = "anonymous"
-            brushCanva.height = tam
-            brushCanva.width = tam
-            brushCtx.fillStyle = cor;
-            brushCtx.fillRect(0, 0, tam, tam)
-            brushCtx.globalCompositeOperation = 'destination-in'
-            brushCtx.drawImage(basicBrushes[lastbrush], 0, 0, tam, tam)
-            brushCtx.globalCompositeOperation = 'destination-over'
-            let newNewBrush = new Image();
-            newNewBrush.src = brushCanva.toDataURL("image/png");
-            newBrush.src = newNewBrush.src
-            newBrushes[brushName] = [newNewBrush, lastbrush, tam, cor]
-            let favbrush = newBrushes[brushName][0]
-            favbrush.style.maxHeight = "32px";
+                favBrushButton.setAttribute("onmousedown", "favBrush('" + brushName + "')")
+                favBrushButton.appendChild(favbrush)
+                if (strokeWidth > 10) {
+                    favBrushButton.innerHTML += "<span class='favbrush'>" + strokeWidth + "</span>"
+                } else {
+                    favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeWidth + "</span>"
+                }
+                iD("pinceis2").prepend(favBrushButton)
 
-            let favBrushButton = document.createElement("div")
-            favBrushButton.id = brushName
-            favBrushButton.style.height = "30px";
-            favBrushButton.style.width = "30px";
-            favBrushButton.style.lineHeight = "30px";
-            favBrushButton.style.marginRight = "4px";
-            favBrushButton.style.verticalAlign = "top"
-            favBrushButton.style.display = "inline-block"
 
-            favBrushButton.setAttribute("onmousedown", "favBrush('" + brushName + "')")
-            favBrushButton.appendChild(favbrush)
-            if (strokeWidth > 10) {
-                favBrushButton.innerHTML += "<span class='favbrush'>" + strokeWidth + "</span>"
-            } else {
-                favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeWidth + "</span>"
+
+
+                // setTimeout(() => setStrokeColor(brush[3]), 120)
+                //setTimeout(() => setStrokeSize(brush[2]), 80)
             }
-            iD("pinceis2").prepend(favBrushButton)
-
-
-
-
-            // setTimeout(() => setStrokeColor(brush[3]), 120)
-            //setTimeout(() => setStrokeSize(brush[2]), 80)
-        }
+        }, 100)
         setTimeout(() => {
             //comandosb
             let len = projeto["comandosb"].length
