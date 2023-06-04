@@ -496,11 +496,8 @@ function playershake() {
 }
 //const nuvens = setInterval(moveBG, 200)
 var map = {
-    x: parseInt(
-
-        iD("map").style.width
-        , 10)
-    , y: 430 * 3
+    x: 400*9,
+    y: 430 * 3
 }
 
 function insideX(quem = user) {

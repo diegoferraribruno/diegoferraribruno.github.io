@@ -35,7 +35,7 @@ function newMonster(id) {
     monstro.style.scale = 0.5
     monstro.style.zIndex = 4
     // monstro.style.filter = "brightness(0.6)"
-    monstro.style.filter = "drop-shadow(2px 2px 4px red) hue-rotate(0deg)"
+    monstro.style.filter = "drop-shadow(2px 2px 4px red) hue-rotate("+Math.random()* 375+"deg)"
     iD("game").appendChild(monstro)
 
     monstroimg.onload = function () {
@@ -52,6 +52,7 @@ for (let i=0; i<4; i++){newMonster(i)}
 
 var bot = 0
 function movebot(inter) {
+    iD("monstro2").style.filter = "drop-shadow(2px 2px 4px red) hue-rotate("+Math.random()* 375+"deg)"
     bot++
     if(bot >= 4){bot = 0}
     console.log("!bot move", bot)
@@ -122,6 +123,7 @@ let pegou = false
 function frontMoveMonstro(id, move) {
     let monster = monstros[id]
     let avatar = iD("monstro"+id)
+   
     if (avatar != null) {
         let newmonstro = {
             left: monster.left + (move.x *monster.speed),
