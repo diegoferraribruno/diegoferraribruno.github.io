@@ -136,9 +136,7 @@ function handleStart(evt) {
                 y,
                 origin.x,
                 origin.y,
-                strokeColor,
-                strokeWidth,
-                brushName
+                strokeWidth
             );
         
 
@@ -197,9 +195,7 @@ function handleMove(evt) {
                 y,
                 origin.x,
                 origin.y,
-                strokeColor,
-                strokeWidth,
-                brushName
+                strokeWidth
             );
 
     }

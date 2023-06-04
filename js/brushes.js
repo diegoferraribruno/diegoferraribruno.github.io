@@ -8,9 +8,6 @@ var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
 var strokeWidth = 6;
 var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
 var estrokeWidth = 36;
-var linejoin = "round";
-var lineJoinsCount = 0;
-const lineJoins = ["miter", "round"];
 var newBrushes = {}
 var lastbrush = 1
 var brushMode = 1
@@ -72,21 +69,6 @@ function criaCustom() {
     setTimeout(() => selectBrush(basicBrushes.length - 1), 350)
 }
 
-function changeLine() {
-    brushMode = 0
-    lineJoinsCount++;
-    if (lineJoinsCount > 1) {
-        lineJoinsCount = 0;
-    }
-    linejoin = lineJoins[lineJoinsCount];
-    if (lineJoinsCount != 1) {
-        iD("line").innerHTML = " ➕";
-        iD("line2").innerHTML = " ➕";
-    } else {
-        iD("line").innerHTML = " ⚫";
-        iD("line2").innerHTML = " ⚫";
-    }
-}
 
 function mudaCorQ(q = 0, valor) {
     hsla[q] = Number(valor);
@@ -174,9 +156,6 @@ function mudaCor(valor) {
     strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
     setStrokeColor();
     criaPaleta();
-    /*desenha("CB", lastbrush,
-        strokeWidth, strokeColor,
-        "" + lastbrush + "-" + strokeWidth + "-" + strokeColor)*/
 
 }
 
@@ -243,32 +222,6 @@ function strokeSizeRange(value) {
 function setStrokeSize(value = strokeWidth) {
     strokeWidth = value;
     iD("tpx").value = value;
-
-    /* let brushes = ["cursor"];
-     for (i in brushes) {
-         let tamanho = iD(brushes[i]);
-         if (mode == "pintar" || mode == "cores" || mode == "cores" || mode == "picker" || mode == "recortar") {
-             tamanho.style.width = value * zoomFactor - zoomFactor / 10 + "px";
-             tamanho.style.height = value * zoomFactor + "px";
-             tamanho.style.lineHeight = value * zoomFactor + "px";
-             tamanho.style.marginTop =
-                 (value / 2) * zoomFactor * -1 + "px";
-             tamanho.style.marginLeft =
-                 (value * zoomFactor * -1) / 2 + "px";
-             tamanho.style.paddingRight =
-                 (value * zoomFactor * -1) / 2 + "px";
-             if (i == 0) {
-                 //tamanho.style.backgroundColor = strokeColor;
-             }
- 
-         }
-     }
- 
-     if (mode == "picker" || mode == "recortar") {
-         cursor.style.width = 1 + "px";
-         cursor.style.height = 1 + "px";
-     }
-     */
     changeBrush()
 }
 
@@ -362,7 +315,7 @@ function clearBrushes() {
     })
 }
 
-function drawBrush(GCO, x1, y1, x2, y2, strokeColor, strokeWidth, brushName, cont = context) {
+function drawBrush(GCO, x1, y1, x2, y2, strokeWidth, cont = context) {
     let start
     let end
     if (pixelGood) {
@@ -379,9 +332,7 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, strokeWidth, brushName, con
     var x, y;
     changeGCO(GCO);
     cont.lineWidth = strokeWidth;
-    /*var strokeImg = new Image();
-    strokeImg.src = linejoin
-    strokeImg.onload = function () {*/
+
     for (var z = 0; (z <= distance || z == 0); z++) {
         x = start.x + (Math.sin(angle) * z) - halfBrushW;
         y = start.y + (Math.cos(angle) * z) - halfBrushH;
@@ -389,10 +340,8 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeColor, strokeWidth, brushName, con
             x = redondo(x) + 1
             y = redondo(y) + 1
         }
-        //console.log( x, y, angle, z );
         cont.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
     }
-    //  }
 }
 var Trig = {
     distanceBetween2Points: function (point1, point2) {

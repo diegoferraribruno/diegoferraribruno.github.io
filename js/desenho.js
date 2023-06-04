@@ -137,6 +137,8 @@ function exec(coma = 0) {
                 exec(coma)
                 break;
             case "CB":
+                strokeWidth = comandos[coma][2]
+                strokeColor = comandos[coma][3]
                 createNewBrush(
                     comandos[coma][1],
                     comandos[coma][2],
@@ -232,9 +234,7 @@ function exec(coma = 0) {
                     comandos[coma][3],
                     comandos[coma][4],
                     comandos[coma][5],
-                    comandos[coma][6],
-                    comandos[coma][7],
-                    comandos[coma][8]        
+                    comandos[coma][6]
                            );
                 coma++;
                 exec(coma)
@@ -266,9 +266,7 @@ function desenha(
     Y = undefined,
     eoX = undefined,
     eoY = undefined,
-    strokeColor = undefined,
-    strokeWidth = undefined,
-    linejoin = undefined
+    strokeWidth = undefined
 ) {
     let comando = []
     switch (CMD) {
@@ -285,8 +283,8 @@ function desenha(
            
          case "brush":
 
-            comando = ["brush", GCO, X, Y, eoX, eoY, strokeColor, strokeWidth, linejoin]
-            drawBrush(GCO, X, Y, eoX, eoY, strokeColor, strokeWidth, linejoin)
+            comando = ["brush", GCO, X, Y, eoX, eoY, strokeWidth]
+            drawBrush(GCO, X, Y, eoX, eoY, strokeWidth)
             comandos.push(comando)
             autoCrop(X, Y, strokeWidth, strokeWidth)
 
@@ -295,18 +293,18 @@ function desenha(
                 if (X < strokeWidth / 2 && Y < strokeWidth) { //top left
                     setTimeout(() => {
                         //top right
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth]
+                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
                         comandos.push(comando)
 
                         //bottom left
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth]
+                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth)
                         comandos.push(comando)
 
                         //bottom right
-                        comando = ["brush", GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeWidth]
+                        drawBrush(GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeWidth)
                         comandos.push(comando)
 
 
@@ -314,17 +312,17 @@ function desenha(
                 } else if (X > canvas.width - strokeWidth / 2 && Y < strokeWidth) {//top right
                     setTimeout(() => {
                         //top left
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth]
+                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
                         comandos.push(comando)
                         //bottom left
-                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeWidth]
+                        drawBrush(GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeWidth)
                         comandos.push(comando)
 
                         //bottom right
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth]
+                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth)
                         comandos.push(comando)
 
 
@@ -332,18 +330,18 @@ function desenha(
                 } else if (X < strokeWidth / 2 && Y > canvas.height - strokeWidth / 2) { //bottom left
                     setTimeout(() => {
                         //bottom right
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth]
+                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
                         comandos.push(comando)
 
                         //top left
-                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth]
+                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
                         comandos.push(comando)
 
                         //top right
-                        comando = ["brush", GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeWidth]
+                        drawBrush(GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeWidth)
                         comandos.push(comando)
 
 
@@ -352,18 +350,18 @@ function desenha(
                 else if (X > canvas.width - strokeWidth / 2 / 2 && Y > canvas.height - strokeWidth / 2) { //bottom right
                     setTimeout(() => {
                         //bottom left
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth]
+                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
                         comandos.push(comando)
 
                         //top left
-                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y - canvas.height, eoX - canvas.width, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeWidth]
+                        drawBrush(GCO, X - canvas.width, Y - canvas.height, eoX - canvas.width, eoY - canvas.height, strokeWidth)
                         comandos.push(comando)
 
                         //top right
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY - canvas.height, strokeWidth]
+                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
                         comandos.push(comando)
 
 
@@ -371,28 +369,28 @@ function desenha(
                 }
                 else if (X < strokeWidth / 2) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth]
+                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
                         comandos.push(comando)
                     }, 10)
                 } else if (X > canvas.width - strokeWidth / 2) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth]
+                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
                         comandos.push(comando)
                     }, 10)
 
 
                 } else if (Y < strokeWidth) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth]
+                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth)
                         comandos.push(comando)
                     }, 10)
                 } else if (Y > canvas.height - strokeWidth / 2) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeColor, strokeWidth, linejoin)
+                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth]
+                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
                         comandos.push(comando)
                     }, 10)
                 }
@@ -407,14 +405,13 @@ function desenha(
             comandos.push(comando)
             break;
         case "CB":
-
             createNewBrush(GCO, X, Y)
             comando = ["CB", GCO, X, Y]
             comandos.push(comando)
             break;
 
         case "f":
-            comando = ["f", GCO, X, Y, eoX, eoY, strokeColor]
+            comando = ["f", GCO, X, Y, eoX, eoY,  strokeWidth]
             blob = dataURItoBlob(X)
             let myImg = document.createElement("img");
             myImg.src = URL.createObjectURL(blob)
