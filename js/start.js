@@ -21,7 +21,7 @@ function startup() {
   counter = setInterval(() => undoing(), 70)
   window.onkeydown = function (event) {
     let activeEl = document.activeElement
-    console.log(activeEl.tagName, activeEl.type)
+   // console.log(event.key)
     if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
       if (event.key === "Enter" && mode == "recortar") {
         cortar();
@@ -51,7 +51,7 @@ function startup() {
       } else if (event.code === "Space") {
         if (mode == "play") { stop(); } else { play(); }
       } else if (event.key === "+") {
-        console.log("mais um")
+      //  console.log("mais um")
         new_frame()
       } else if (event.key === "Delete") {
         removeFrame()

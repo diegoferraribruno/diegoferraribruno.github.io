@@ -1,26 +1,35 @@
-var monstro = {
-
-    top: 400,
-    left: 850,
-    width: 160,
-    height: 160,
-    scale: 0.25,
-    speed: 2.5,
-    estado: ["deboas", "persegue"],
-    frame: 0,
-    keys: {
-        ArrowUp: false,
-        ArrowRight: false,
-        ArrowDown: false,
-        ArrowLeft: false,
-    }
+var monstros = {
 }
 
-function newMonster() {
+function newMonster(id) {
+
+    let modelo = {
+        
+            top: 400,
+            left:  Math.random()*300,
+            width: 160,
+            height: 160,
+            scale: 0.25,
+            speed: 2.5,
+            estado: ["deboas", "persegue"],
+            frame: 0,
+            keys: {
+                ArrowUp: false,
+                ArrowRight: false,
+                ArrowDown: false,
+                ArrowLeft: false,
+            
+    }
+}
+    monstros[id] = modelo;
+    monstros[id].left =  Math.random()* 1920
+    monstros[id].speed =  Math.random()* 4
+    
+    monstros[id].top =  Math.random()* 600 + 320 
     let monstroimg = document.createElement("img")
-    monstroimg.src = "/game/monstro.png"
+    monstroimg.src = "/game/monstro"+ id +".png"
     let monstro = document.createElement("div")
-    monstro.id = "monstro"
+    monstro.id = "monstro"+ id
     monstro.style.display = "block"
     monstro.style.position = "absolute"
     monstro.style.scale = 0.5
@@ -30,7 +39,7 @@ function newMonster() {
     iD("game").appendChild(monstro)
 
     monstroimg.onload = function () {
-        let monstr = iD("monstro")
+        let monstr = iD("monstro"+ id)
         monstr.style.width = monstroimg.height + "px"
         monstr.style.height = monstroimg.height + "px"
         monstro.width = monstroimg.width
@@ -39,82 +48,86 @@ function newMonster() {
         monstr.style.backgroundImage = "url('" + monstroimg.src + "')"
     }
 }
-newMonster()
+for (let i=0; i<4; i++){newMonster(i)}
 
-function bot(inter) {
-
+var bot = 0
+function movebot(inter) {
+    bot++
+    if(bot >= 4){bot = 0}
+    console.log("!bot move", bot)
     setTimeout(() => {
-
         if (gamestate == "play") {
-            let parado = Math.random() < 0.5 ? false : true;
+            let parado = Math.random() < 0.3 ? false : true;
             if (!parado && player.hidden == false) {
-                autoMoveMonstro()
+                autoMoveMonstro(bot)
 
             } else {
-                let parado2 = Math.random() < 0.5 ? false : true;
+                let parado2 = Math.random() < 0.3 ? false : true;
                 if (!parado2) {
-                    for (i in monstro.keys) {
-                        monstro.keys[i] = false;
+                    for (i in monstros[bot].keys) {
+                        monstros[bot].keys[i] = false;
                     }
                 } else {
-                    for (i in monstro.keys) {
-                        monstro.keys[i] = Math.random() < 0.5 ? false : true;
+                    for (i in monstros[bot].keys) {
+                        monstros[bot].keys[i] = Math.random() < 0.5 ? false : true;
                     }
                 }
             }
         }
         inter = Math.random() * 1000
-        bot(inter)
+        movebot(inter)
         // send = true;
-
+    
     }, inter)
 }
-bot(1000)
 
-function autoMoveMonstro() {
+movebot(1000)
 
+function autoMoveMonstro(id) {
+ 
+    let monster = monstros[id]
+    if (monster.keys.ArrowDown == true && monster.top - monster.height / 2 >= player.top - player.height) {
 
-    if (monstro.keys.ArrowDown == true && monstro.top - monstro.height / 2 >= player.top - player.height) {
+        monster.keys.ArrowDown = false
+    }
+    if (monster.keys.ArrowUp == true && monster.top - monster.height / 2 <= player.top + player.height * 2) {
+        monster.keys.ArrowUp = false
+    }
+    if (monster.keys.ArrowLeft == true && monster.left - monster.width / 2 <= player.left - player.width) {
 
-        monstro.keys.ArrowDown = false
+        monster.keys.ArrowLeft = false
     }
-    if (monstro.keys.ArrowUp == true && monstro.top - monstro.height / 2 <= player.top + player.height * 2) {
-        monstro.keys.ArrowUp = false
+    if (monster.keys.ArrowRight == true && monster.left - monster.width / 2 >= player.left + player.width * 2) {
+        monster.keys.ArrowRight = false
     }
-    if (monstro.keys.ArrowLeft == true && monstro.left - monstro.width / 2 <= player.left - player.width) {
-
-        monstro.keys.ArrowLeft = false
+    if (monster.top < player.top - player.height) {
+        monster.keys.ArrowDown = true
     }
-    if (monstro.keys.ArrowRight == true && monstro.left - monstro.width / 2 >= player.left + player.width * 2) {
-        monstro.keys.ArrowRight = false
+    if (monster.top + monster.height / 2 > player.top - player.height) {
+        monster.keys.ArrowUp = true
     }
-    if (monstro.top < player.top - player.height) {
-        monstro.keys.ArrowDown = true
+    if (monster.left - monster.width / 2 < player.left) {
+        monster.keys.ArrowRight = true
     }
-    if (monstro.top + monstro.height / 2 > player.top - player.height) {
-        monstro.keys.ArrowUp = true
+    if (monster.left + monster.width / 2 > player.left - player.width) {
+        monster.keys.ArrowLeft = true
     }
-    if (monstro.left - monstro.width / 2 < player.left) {
-        monstro.keys.ArrowRight = true
-    }
-    if (monstro.left + monstro.width / 2 > player.left - player.width) {
-        monstro.keys.ArrowLeft = true
-    }
-
-
 }
-var audio2 = new Audio('./game/jumpscare1.ogg');
+var audio1 = new Audio('./game/jumpscare1.ogg');
+var audio2 = new Audio('./game/jumpscare2.ogg');
+var audio3 = new Audio('./game/jumpscare3.ogg');
+var audios = {0:audio1, 1:audio1, 2:audio2, 3:audio3}
 
 let pegou = false
-function frontMoveMonstro(move) {
-
-    let avatar = iD("monstro")
+function frontMoveMonstro(id, move) {
+    let monster = monstros[id]
+    let avatar = iD("monstro"+id)
     if (avatar != null) {
         let newmonstro = {
-            left: monstro.left + (move.x * monstro.speed),
-            top: monstro.top + (move.y * monstro.speed),
-            width: monstro.height,
-            height: monstro.height
+            left: monster.left + (move.x *monster.speed),
+            top: monster.top + (move.y * monster.speed),
+            width: monster.height,
+            height: monster.height
         }
         let blocs = blocosX.length
         var colidiu = false
@@ -132,38 +145,39 @@ function frontMoveMonstro(move) {
         }
         if (colidiu === false) {
             if (insideXMonstro(newmonstro)) {
-                monstro.left = newmonstro.left
-                avatar.style.left = monstro.left + "px";
+                monster.left = newmonstro.left
+                avatar.style.left = monster.left + "px";
             }
             if (insideYMonstro(newmonstro)) {
-                monstro.top = newmonstro.top
-                avatar.style.top = monstro.top + "px";
+                monster.top = newmonstro.top
+                avatar.style.top = monster.top + "px";
             }
         }
-        let col = doMonsterCollide(player, monstro)
+        let col = doMonsterCollide(player, monster)
         if (col != null && pegou == false) {
-            audio2.play()
+            audios[id].play()
             playershake()
             pegou = true
 
-            iD("monstro").classList.add("jumpscare")
+            avatar.classList.add("jumpscare")
             //iD("monstro").style.zIndex = 5
-            monstro.keys.ArrowDown = true
-            monstro.keys.ArrowRight = true
+            monster.keys.ArrowDown = true
+            monster.keys.ArrowRight = true
 
             setTimeout(() => {
-                iD("monstro").classList.remove("jumpscare")
-                iD("monstro").style.scale = 0.5
+                avatar.classList.remove("jumpscare")
+               avatar.style.scale = 0.5
                 // iD("monstro").style.zIndex = 0
-                monstro.keys.ArrowDown = true
-                monstro.keys.ArrowRight = true
-                monstro.keys.ArrowUp = false
-                monstro.keys.ArrowLeft = false
+                monster.keys.ArrowDown = true
+                monster.keys.ArrowRight = true
+                monster.keys.ArrowUp = false
+                monster.keys.ArrowLeft = false
                 pegou = false
             }, 1000)
 
         }
-    }
+}
+
 }
 function insideYMonstro(quem = user) {
     if (quem.top < map.y - quem.height * 2 && quem.top > 0 - quem.height) { return true }
@@ -194,29 +208,36 @@ let doMonsterCollide = function (rect1, rectb) {
 //anima
 setInterval(animaMonstro, 160)
 function animaMonstro() {
-    let position = 320 * monstro.frame
-    let monstr = iD("monstro")
+    for (i=0; i<4;i++){
+        let monster = monstros[i]
+    let position = 320 * monster.frame
+    let monstr = iD("monstro"+i)
     monstr.style.backgroundPosition = `-${position}px 0px`;
-    monstr.style.rotate = -20 * monstro.frame + "deg"
-    monstro.frame++
-    if (monstro.frame > 2) { monstro.frame = 0 }
+    monstr.style.rotate = -20 * monster.frame + "deg"
+    monster.frame++
+    if (monster.frame > 2) { monster.frame = 0 }
+    }
 }
 
 setInterval(moveMonstro, 15)
 function moveMonstro() {
+    for (let i=0; i<4; i++){
     let move = { x: 0, y: 0 }
-    if (monstro.keys.ArrowUp == true && monstro.keys.ArrowDown == false) {
+    let monster = monstros[i]
+
+    if (monster.keys.ArrowUp == true && monster.keys.ArrowDown == false) {
         move.y = -1
     }
-    if (monstro.keys.ArrowUp == false && monstro.keys.ArrowDown == true) {
+    if (monster.keys.ArrowUp == false && monster.keys.ArrowDown == true) {
         move.y = 1
     }
-    if (monstro.keys.ArrowRight == true && monstro.keys.ArrowLeft == false) {
+    if (monster.keys.ArrowRight == true && monster.keys.ArrowLeft == false) {
         move.x = 1
     }
-    if (monstro.keys.ArrowRight == false && monstro.keys.ArrowLeft == true) {
+    if (monster.keys.ArrowRight == false && monster.keys.ArrowLeft == true) {
         move.x = -1
     }
 
-    frontMoveMonstro(move)
+    frontMoveMonstro(i,move)
+}
 }

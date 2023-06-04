@@ -741,7 +741,7 @@ function criaImagem(x) {
     img.classList.add("mini2")
 
     let floor = parseInt(x / 6)
-    console.log(floor)
+  
     img.style.top = (floor * 400) + 56 + "px"
 
     img.style.left = 400 * x + 350 - (floor * 6 * 400) + "px"
