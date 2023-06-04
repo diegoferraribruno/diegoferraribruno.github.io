@@ -181,20 +181,6 @@ function exec(coma = 0) {
                     exec(coma)
                 }
                 break;
-            case "p":
-                drawLine(
-                    comandos[coma][1],
-                    comandos[coma][2],
-                    comandos[coma][3],
-                    comandos[coma][4],
-                    comandos[coma][5],
-                    comandos[coma][6],
-                    comandos[coma][7],
-                    comandos[coma][8]
-                );
-                coma++;
-                exec(coma)
-                break;
             case "i":
                 context.globalCompositeOperation = comandos[coma][1]
                 context.drawImage(
@@ -426,22 +412,7 @@ function desenha(
             comando = ["CB", GCO, X, Y]
             comandos.push(comando)
             break;
-        case "p":
-            comando = ["p", GCO, X, Y, eoX, eoY];
-            comandos.push(comando)
-            drawLine(
-                comando[1],
-                comando[2],
-                comando[3],
-                comando[4],
-                comando[5],
-                comando[6],
-                comando[7],
-                comando[8]
 
-            );
-            autoCrop(X, Y, strokeWidth, strokeWidth)
-            break;
         case "f":
             comando = ["f", GCO, X, Y, eoX, eoY, strokeColor]
             blob = dataURItoBlob(X)
@@ -617,17 +588,6 @@ function changeGCO(GCO = globalComposite) {
     context.globalCompositeOperation = GCO
 }
 
-function drawLine(GCO, x1, y1, x2, y2) {
-    changeGCO(GCO);
-    context.beginPath();
-    context.strokeStyle = strokeColor;
-    context.lineWidth = strokeWidth;
-    context.lineJoin = linejoin;
-    context.moveTo(x1, y1);
-    context.lineTo(x2, y2);
-    context.closePath();
-    context.stroke();
-}
 
 function limpar(what) {
 

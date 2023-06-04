@@ -129,20 +129,6 @@ function handleStart(evt) {
             x = redondo(x)
             y = redondo(y)
         }
-        if (brushMode == 0) {
-            desenha(
-                "p",
-                context.globalCompositeOperation,
-                x,
-                y,
-                origin.x,
-                origin.y + 0.1,
-                strokeColor,
-                strokeWidth,
-                linejoin
-            );
-        }
-        else {
             desenha(
                 "brush",
                 context.globalCompositeOperation,
@@ -154,7 +140,7 @@ function handleStart(evt) {
                 strokeWidth,
                 brushName
             );
-        }
+        
 
     }
     if (mode == "picker") {
@@ -204,20 +190,6 @@ function handleMove(evt) {
     }
     if (isDrawing === true && isPicking == false && mode != 'move') {
         mouseOver = true;
-        if (brushMode == 0) {
-            desenha(
-                "p",
-                context.globalCompositeOperation,
-                x,
-                y,
-                origin.x,
-                origin.y,
-                strokeColor,
-                strokeWidth,
-                linejoin
-            );
-
-        } else {
             desenha(
                 "brush",
                 context.globalCompositeOperation,
@@ -229,8 +201,6 @@ function handleMove(evt) {
                 strokeWidth,
                 brushName
             );
-
-        }
 
     }
     if (isPicking) {
