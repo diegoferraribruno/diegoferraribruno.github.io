@@ -155,7 +155,7 @@ const movecursor = new Image(); // Create new img element
 movecursor.src = "img/movearrow.png";
 
 function handleMove(evt) {
-    document.body.style.cursor = "none";
+    document.body.style.cursor = "default";
     // cursorMove(evt)
     evt.preventDefault();
     offsetX = canvas.getBoundingClientRect().left;
