@@ -283,9 +283,9 @@ function handleMove(evt) {
             canvasFront.ctx.globalAlpha = 1;
             canvasFront.ctx.save()
             canvasFront.globalCompositeOperation = "source-out"
-            canvasFront.ctx.translate(canvas.width / 2, canvas.height / 2)
+            canvasFront.ctx.translate(origin.x, origin.y)
             canvasFront.ctx.rotate(((y - origin.y + x - origin.x) * Math.PI) / 180);
-            canvasFront.ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2)
+            canvasFront.ctx.drawImage(canvas, -origin.x, -origin.y)
             canvasFront.ctx.restore()
             //canvasFront.ctx.translate(320, 320)
 
@@ -303,7 +303,7 @@ function handleUp(evt) {
         rotacionar = false
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        desenha("rotacionar", ((y - origin.y + x - origin.x) * Math.PI) / 180)
+        desenha("rotacionar", ((y - origin.y + x - origin.x) * Math.PI) / 180, origin.x, origin.y)
     }
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;

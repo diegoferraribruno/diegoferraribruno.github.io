@@ -100,9 +100,9 @@ function exec(coma = 0) {
                 canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 canvasFront.ctx.save()
-                canvasFront.ctx.translate(canvas.width / 2, canvas.height / 2)
+                canvasFront.ctx.translate(comandos[coma][2], comandos[coma][3])
                 canvasFront.ctx.rotate(comandos[coma][1]);
-                canvasFront.ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2)
+                canvasFront.ctx.drawImage(canvas, -comandos[coma][2], -comandos[coma][3])
                 canvasFront.ctx.restore()
 
                 let img_b64c = canvasFront.toDataURL("image/png");
@@ -275,7 +275,7 @@ function desenha(
     let comando = []
     switch (CMD) {
         case "rotacionar":
-            comando = ["rotacionar", GCO]
+            comando = ["rotacionar", GCO, X, Y]
             comandos.push(comando)
             comandosExec()
             break
