@@ -79,6 +79,7 @@ function exec(coma = 0) {
                 blob = dataURItoBlob(img_b64)
                 myImg.src = URL.createObjectURL(blob)
                 myImg.onload = function () {
+                    context.globalAlpha = 1;
                     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
                     let globaltemp = context.globalCompositeOperation
                     context.globalCompositeOperation = "destination-over";
@@ -94,19 +95,22 @@ function exec(coma = 0) {
                 }
                 break;
             case "rotacionar":
+                canvasFront.ctx.globalCompositeOperation = "destination-over"
+                canvasFront.ctx.globalAlpha = 1;
                 canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 canvasFront.ctx.save()
-                canvasFront.ctx.translate(160, 160)
+                canvasFront.ctx.translate(canvas.width / 2, canvas.height / 2)
                 canvasFront.ctx.rotate(comandos[coma][1]);
-                canvasFront.ctx.drawImage(canvas, -160, -160)
+                canvasFront.ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2)
                 canvasFront.ctx.restore()
 
                 let img_b64c = canvasFront.toDataURL("image/png");
                 let blobn = dataURItoBlob(img_b64c)
                 myImg.src = URL.createObjectURL(blobn)
                 myImg.onload = function () {
-                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                    context.globalAlpha = 1;
+                    context.clearRect(0, 0, canvas.width, canvas.height);
                     let globaltemp = context.globalCompositeOperation
                     context.globalCompositeOperation = "destination-over";
                     context.drawImage(

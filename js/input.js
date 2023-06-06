@@ -283,9 +283,9 @@ function handleMove(evt) {
             canvasFront.ctx.globalAlpha = 1;
             canvasFront.ctx.save()
             canvasFront.globalCompositeOperation = "source-out"
-            canvasFront.ctx.translate(160, 160)
+            canvasFront.ctx.translate(canvas.width / 2, canvas.height / 2)
             canvasFront.ctx.rotate(((y - origin.y + x - origin.x) * Math.PI) / 180);
-            canvasFront.ctx.drawImage(canvas, -160, -160)
+            canvasFront.ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2)
             canvasFront.ctx.restore()
             //canvasFront.ctx.translate(320, 320)
 
