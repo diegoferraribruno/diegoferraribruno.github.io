@@ -94,7 +94,7 @@ function salvaCor() {
 criaPaleta();
 
 function setStrokeColor() {
-
+    strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
     let objs = [
         "mostraCor",
         "salvaCor",

@@ -129,16 +129,16 @@ function handleStart(evt) {
             x = redondo(x)
             y = redondo(y)
         }
-            desenha(
-                "brush",
-                context.globalCompositeOperation,
-                x,
-                y,
-                origin.x,
-                origin.y,
-                strokeWidth
-            );
-        
+        desenha(
+            "brush",
+            context.globalCompositeOperation,
+            x,
+            y,
+            origin.x,
+            origin.y,
+            strokeWidth
+        );
+
 
     }
     if (mode == "picker") {
@@ -188,20 +188,20 @@ function handleMove(evt) {
     }
     if (isDrawing === true && isPicking == false && mode != 'move') {
         mouseOver = true;
-            desenha(
-                "brush",
-                context.globalCompositeOperation,
-                x,
-                y,
-                origin.x,
-                origin.y,
-                strokeWidth
-            );
+        desenha(
+            "brush",
+            context.globalCompositeOperation,
+            x,
+            y,
+            origin.x,
+            origin.y,
+            strokeWidth
+        );
 
     }
     if (isPicking) {
         var imageData = context.getImageData(x, y, 1, 1).data;
-        if (imageData[3] > 1) {
+        if (imageData[3] > 0) {
             RGBAToHSLA(
                 imageData[0],
                 imageData[1],
@@ -209,6 +209,8 @@ function handleMove(evt) {
                 imageData[3]
             );
             setStrokeColor();
+            changeBrush()
+            console.log(imageData)
         }
         /*    cursor.style.left = evt.pageX + "px";
             cursor.style.top = evt.pageY + "px";
@@ -350,8 +352,9 @@ function handleUp(evt) {
                 imageData[3]
             );
             setStrokeColor();
+            changeBrush()
         }
-        modeTo("pintar")
+        setTimeout(() => modeTo("pintar"), 60)
         isPicking = false
     }
     if (isDrawing) {
