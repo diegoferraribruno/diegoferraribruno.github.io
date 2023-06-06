@@ -265,6 +265,7 @@ function handleMove(evt) {
     }
     if (mode == "move") {
         canvasFront.classList.remove("esconde")
+        canvasFront.ctx.globalAlpha = 1;
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvasFront.ctx.drawImage(movecursor, x - 16, y - 16)
@@ -279,6 +280,7 @@ function handleMove(evt) {
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (rotacionar == true) {
+            canvasFront.ctx.globalAlpha = 1;
             canvasFront.ctx.save()
             canvasFront.globalCompositeOperation = "source-out"
             canvasFront.ctx.translate(160, 160)
