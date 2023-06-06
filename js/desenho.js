@@ -81,7 +81,7 @@ function exec(coma = 0) {
                 myImg.onload = function () {
                     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
                     let globaltemp = context.globalCompositeOperation
-                    context.globalCompositeOperation = "source-over";
+                    context.globalCompositeOperation = "destination-over";
                     context.drawImage(
                         myImg,
                         comandos[coma][1],
@@ -108,7 +108,7 @@ function exec(coma = 0) {
                 myImg.onload = function () {
                     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
                     let globaltemp = context.globalCompositeOperation
-                    context.globalCompositeOperation = "source-over";
+                    context.globalCompositeOperation = "destination-over";
                     context.drawImage(
                         myImg,
                         0,
@@ -235,7 +235,7 @@ function exec(coma = 0) {
                     comandos[coma][4],
                     comandos[coma][5],
                     comandos[coma][6]
-                           );
+                );
                 coma++;
                 exec(coma)
                 break;
@@ -280,8 +280,8 @@ function desenha(
             comandos.push(comando)
             comandosExec()
             break
-           
-         case "brush":
+
+        case "brush":
 
             comando = ["brush", GCO, X, Y, eoX, eoY, strokeWidth]
             drawBrush(GCO, X, Y, eoX, eoY, strokeWidth)
@@ -411,7 +411,7 @@ function desenha(
             break;
 
         case "f":
-            comando = ["f", GCO, X, Y, eoX, eoY,  strokeWidth]
+            comando = ["f", GCO, X, Y, eoX, eoY, strokeWidth]
             blob = dataURItoBlob(X)
             let myImg = document.createElement("img");
             myImg.src = URL.createObjectURL(blob)
