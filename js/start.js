@@ -21,7 +21,7 @@ function startup() {
   counter = setInterval(() => undoing(), 70)
   window.onkeydown = function (event) {
     let activeEl = document.activeElement
-   // console.log(event.key)
+    // console.log(event.key)
     if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
       if (event.key === "Enter" && mode == "recortar") {
         cortar();
@@ -41,7 +41,7 @@ function startup() {
         removeClass()
         window.parent.focus()
       } else if (event.key === "z" && keyCtrl == false) {
-        modeTo("zoomx")
+        zoom2x()
       } else if (event.key === "p" || event.key === "b") {
         modeTo("pintar")
         removeClass()
@@ -50,8 +50,8 @@ function startup() {
         removeClass()
       } else if (event.code === "Space") {
         if (mode == "play") { stop(); } else { play(); }
-      } else if (event.key === "+") {
-      //  console.log("mais um")
+      } else if (event.key === "+" && keyCtrl == false) {
+        //  console.log("mais um")
         new_frame()
       } else if (event.key === "Delete") {
         removeFrame()

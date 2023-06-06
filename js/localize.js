@@ -178,8 +178,9 @@ let textos = {
         "73": "Modo de Foco Manual",
         "74": "Novo projeto",
         "75": "apresenta",
-        "76": "usar como fundo do app",
-        "77": "mover o quadro"
+        "76": "Usar como fundo do app",
+        "77": "Mover o quadro",
+        "78": "Rotacionar pelo centro da tela"
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -257,7 +258,8 @@ let textos = {
         "74": "New Project",
         "75": "presents",
         "76": "use as page background",
-        "77": "move the canva"
+        "77": "Move the canva",
+        "78": "Rotate by canvas center"
     }
 }
 var titles = {

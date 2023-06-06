@@ -1,7 +1,10 @@
 let vers = [{
-    versao: "3.3",
+    versao: "3.4",
     notas: [
-        'rotate canvas',
+        "color picker (fix)",
+        "cursor do mouse sempre visivel",
+        "rotate e mover causava tranparencia (fix)",
+        'rotate canvas (pelo centro da tela ou pelo mouse)',
         'move canvas tool',
         'pinceis customizados salvando e carregando!',
         'muita mudança!',

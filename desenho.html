@@ -74,7 +74,7 @@
                 <div id="canvas_div2">
 
                     <div id="canvas_div">
-                        <canvas id="canvas" width="320px" height="320px">
+                        <canvas id="canvas" width="320px" height="320px" oncontextmenu="return false;">
                             Sinto muito, talvez haja uma incompatibilidade com seu navegador ou está offline e algo
                             não carregou como deveria...<br>
                         </canvas>
@@ -91,8 +91,8 @@
                     para capturar uma cor</txt>
             </div>
             <div id="menumove" class="submenu fundobranco">
-                <img src="img/movearrow.png"
-                        style="width: 28px; height: 28px; margin-top: 4px;"> <txt name="77"> mover o o quadro</txt>
+                <img src="img/movearrow.png" style="width: 28px; height: 28px; margin-top: 4px;">
+                <txt name="77"> mover o o quadro</txt>
             </div>
             <div id="menualerta" class="submenu fundobranco">
                 <span class="botao" onmousedown="closeAlert()">
@@ -587,9 +587,16 @@
             </div>
 
             <div id="menurotacionar" class="fundobranco submenu">
-                <span id="rotacionar" class="botao"><img src="img/rotatearrow.png"> <txt name="57">Rotacionar a tela</txt>
+                <span id="rotacionar" class="botao"><img src="img/rotatearrow.png">
+                    <txt name="57">Rotacionar a tela</txt>
                 </span>
-                <span id="rotaciona" class="botao" onclick=""> <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de rotacionar</txt>
+                <span id="rotaciona" class="botao" onclick="">
+                    <txt name="78">Rotacionar pelo centro da tela?</txt>
+                    <input type="checkbox" id="rotatecenter">
+                </span>
+                <span id="rotaciona" class="botao" onclick="">
+                    <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de rotacionar
+                    </txt>
                 </span>
 
             </div>
