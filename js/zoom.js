@@ -65,7 +65,10 @@ function ZOOM(a) {
     iD("x1").innerHTML = zoomFactor + "x";
 
 }
-
+function scrollMoveCanva(a, b) {
+    win.scrollLeft += a;
+    win.scrollTop += b;
+}
 function scrollCanva(a, b) {
     win.scrollLeft = a;
     win.scrollTop = b;

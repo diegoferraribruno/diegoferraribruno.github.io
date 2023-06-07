@@ -218,7 +218,7 @@ function handleMove(evt) {
 
     }
     if (isGrabing) {
-        scrollCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
+        scrollMoveCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
     }
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
