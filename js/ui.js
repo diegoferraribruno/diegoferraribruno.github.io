@@ -188,8 +188,8 @@ function autoScroll() {
         () => {
 
             scrollCanva(
-                ultimoToque.x * zoomFactor - 100,
-                ultimoToque.y * zoomFactor - 100
+                ultimoToque.x * zoomFactor - window.innerWidth / 2,
+                ultimoToque.y * zoomFactor - window.innerHeight / 2
             )
         }
         ,
