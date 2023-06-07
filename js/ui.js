@@ -193,6 +193,6 @@ function autoScroll() {
             )
         }
         ,
-        500
+        80
     );
 }
