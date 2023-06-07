@@ -174,7 +174,25 @@ function resizeScreen() {
         win.style.height = parseInt(window.innerHeight, 10) - 170 + "px";
         iD("menus").style.top = "90px";
     }
+
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";
     setTimeout(() => comandosExec(), 40)
+    autoScroll()
+}
+function autoScroll() {
+
+    win.scrollTop = 0;
+    win.scrollLeft = 0;
+    setTimeout(
+        () => {
+
+            scrollCanva(
+                ultimoToque.x * zoomFactor - 100,
+                ultimoToque.y * zoomFactor - 100
+            )
+        }
+        ,
+        500
+    );
 }

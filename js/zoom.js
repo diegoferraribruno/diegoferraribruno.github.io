@@ -45,20 +45,18 @@ function ZOOM(a) {
     setZoom(a, canvasDiv);
     //  setZoom(a, canvas_window);
     resetCanva();
-    setTimeout(function () {
-        win.scrollTop = 0;
-        win.scrollLeft = 0;
-    }, 10);
+
+    /* setTimeout(
+         () =>
+             scrollCanva(
+                 ultimoToque.x * zoomFactor - 160,
+                 ultimoToque.y * zoomFactor - 160
+             ),
+         400
+     );*/
     zoomFactor = Number(a);
-    setTimeout(
-        () =>
-            scrollCanva(
-                ultimoToque.x * zoomFactor - 160,
-                ultimoToque.y * zoomFactor - 160
-            ),
-        30
-    );
-    setTimeout(() => setZoom(zoomFactor, canvasDiv), 10);
+    setZoom(zoomFactor, canvasDiv)
+
 
     setStrokeSize(strokeWidth);
     iD("tzoom").value = zoomFactor;
@@ -69,8 +67,8 @@ function ZOOM(a) {
 }
 
 function scrollCanva(a, b) {
-    win.scrollLeft += a;
-    win.scrollTop += b;
+    win.scrollLeft = a;
+    win.scrollTop = b;
 }
 function resetCanva() {
     let objects = ["canvas_window", "canvas_div"];
@@ -78,6 +76,9 @@ function resetCanva() {
         iD(objects[i]).style.width = "320px";
         iD(objects[i]).style.height = "320px";
     }
+    win.scrollTop = 0;
+    win.scrollLeft = 0;
+
 }
 function zoom2x() {
     zoomIndex++;
@@ -85,11 +86,10 @@ function zoom2x() {
         zoomIndex = 0;
     }
     ZOOMf(zoomIndex);
-    setTimeout(function () {
-        iD("x1").innerHTML = zoomFactor + "x";
-        scrollCanva(-620 * zoomFactor, -620 * zoomFactor);
-    }, 10);
+    /*  setTimeout(function () {
+         ZOOM()
+      }, 10);*/
     // cursorColor();
-    toggleSelect(qual);
-    resizeScreen()
+    //toggleSelect(qual);
+    //resizeScreen()
 }

@@ -78,10 +78,6 @@ body {
     margin: auto;
     margin-top: auto;
     -webkit-touch-overflow: scroll;
-    -webkit-transition: -webkit-transform 0.4s;
-    -moz-transition: -moz-transform 0.4s;
-    -o-transition: -o-transform 0.4s;
-    transition: transform 0.4s;
     box-shadow: 2px 2px 3px #83818748,
         -2px -2px 3px #9d9ca25e;
 
