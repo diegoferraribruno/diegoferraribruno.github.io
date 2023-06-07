@@ -198,7 +198,9 @@ function tamanhom() {
     removeClass();
     iD("menutamanho").classList.toggle("aparece")
 }
-
+function tamanho2(W = iD("largura2").value, H = iD("altura2").value) {
+    tamanho(W, H)
+}
 function tamanho(W = iD("largura").value, H = iD("altura").value) {
     removeElement("carregando")
     canvasBack = iD("canvasBack")
@@ -217,11 +219,8 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
     canvasFront.style.marginLeft = -W + "px"
 
     if (W < screen.width || H < screen.height) {
-        zoomIndex = 0;
-        modeTo("zoomx");
     } else {
-        zoomIndex = 6;
-        modeTo("zoomx");
+        ZOOMf(0)
     }
     iD("largura").value = W
     iD("altura").value = H

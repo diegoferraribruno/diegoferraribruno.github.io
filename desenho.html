@@ -750,14 +750,23 @@
                 <span onmousedown="tamanho(1280,720)">HD: 1280x720*
                     <span style="border: 2px solid gray; width: 32px; height: 18px; display: inline-block;"></span>
                 </span><br>
-                <span onmousedown="tamanho(1920,1080)">FullHD: 1920x1080*
+                <span onmousedown="tamanho(1920,1080)">FHD: 1920x1080*
                     <span style="border: 2px solid gray; width: 44px; height: 25px; display: inline-block;"></span>
                 </span>
                 <span onmousedown="tamanho(1080,1080)">Ig:1080x1080*
                     <span style="border: 2px solid gray; width: 25px; height: 25px; display: inline-block;"></span>
                 </span>
-                <br>* <txt name="13">limite 30 quadros</txt><br>
-            </span>
+
+                <txt name="10">Largura: </txt><input id="largura2" type="number" maxlength="4" max="1920" value="320"
+                    style="width:60px; padding: 4px;" /> px <span title="margem a esquerda">
+                    <txt name="11">Altura:</txt> <input id="altura2" type="number" maxlength="4" max="1920" value="320"
+                        style="width:60px;padding: 4px;" /> px <span title="margem acima"><br>
+                        * <txt name="13">limite 30 quadros</txt><br>
+                        <div onmousedown="tamanho2()" class="bot"
+                            style="display: block; float: right; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -32px; margin-left: 4px; text-align: center;">
+                            ok
+                        </div>
+                    </span>
         </div>
     </div>
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
