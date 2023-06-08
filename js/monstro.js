@@ -35,7 +35,7 @@ function newMonster(id) {
     monstro.style.scale = 0.5
     monstro.style.zIndex = 4
     // monstro.style.filter = "brightness(0.6)"
-    monstro.style.filter = "drop-shadow(2px 2px 4px red) hue-rotate("+Math.random()* 375+"deg)"
+    monstro.style.filter = "drop-shadow(2px 2px 4px red) hue-rotate(0deg)"
     iD("game").appendChild(monstro)
 
     monstroimg.onload = function () {
