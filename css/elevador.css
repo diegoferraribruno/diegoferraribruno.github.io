@@ -19,6 +19,18 @@ body {
     margin-top: -96px;
     margin-left: -10px;
 }
+#zumbi {
+    width: 128px;
+    height: 200px;
+    margin-top: -96px;
+    margin-left: -10px;
+    position: absolute;
+    top: 1860px;
+    display: block;
+    background-image: url('./../game/Zumbi3.png');
+    z-index: 4;
+
+}
 
 .head {
     transform: scaleX(1);

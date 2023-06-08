@@ -91,6 +91,12 @@ var posts = [
 			", Resumindo: está tudo meio quebrado e vou lá arrumar esse edifício (que era pra ter um elevador a principio rs...)" +
 			"<br>Bora trabalhar"
 
+	},	{
+		id: 10,
+		titulo: "Smart Zumbis",
+		data: "25/05/2023 16:20",
+		conteudo: "Este Smart Zumbi andando por aí é obra derivada do personagem de <a href='http://bettodamasceno.art' target='blank'> Betto Damasceno </a><br>Quer saber mais? Aguarde!"
+
 	}
 
 ]
