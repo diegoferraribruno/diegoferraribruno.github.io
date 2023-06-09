@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sprite Sheet Animation</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="128" height="200"></canvas>
+  <script>
+    // Sprite sheet image URL
+    const spriteSheetURL = './game/Zumbi3.png';
+
+    // Number of frames and animation speed
+    const numFrames = 6;
+    const animationSpeed = 100; // Milliseconds between frames
+
+    // Initialize canvas and context
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Load sprite sheet image
+    const spriteSheet = new Image();
+    spriteSheet.src = spriteSheetURL;
+
+    // Current frame index and position
+    let frameIndex = 0;
+    let posX = 0;
+    let posY = 0;
+
+    // Function to update and draw the frame
+    function updateFrame() {
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the current frame from the sprite sheet
+      ctx.drawImage(
+        spriteSheet,
+        posX, posY, // Position in the sprite sheet
+        128, 200, // Frame dimensions
+        0, 0, // Draw position on the canvas
+        128, 200 // Draw dimensions on the canvas
+      );
+
+      // Update frame index for the next frame
+      frameIndex = (frameIndex + 1) % numFrames;
+
+      // Calculate the next position in the sprite sheet
+      posX = frameIndex * 128; // Assuming each frame has 128px width
+
+      // Call the updateFrame function recursively with the animation speed
+      setTimeout(updateFrame, animationSpeed);
+    }
+
+    // Start the animation
+    spriteSheet.onload = updateFrame;
+  </script>
+</body>
+</html>

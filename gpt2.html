@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sprite Animation Game</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="640" height="320"></canvas>
+
+  <script>
+    // Load sprite sheet image
+    var spriteSheet = new Image();
+    spriteSheet.src = "https://diegoferraribruno.github.io/game/Zumbi3.png";
+
+    // Initialize canvas
+    var canvas = document.getElementById("gameCanvas");
+    var ctx = canvas.getContext("2d");
+
+    // Player properties
+    var playerWidth = 128;
+    var playerHeight = 200;
+    var playerX = 0;
+    var playerY = 0;
+    var currentFrame = 0;
+    var totalFrames = 6;
+
+    // Arrow key codes
+    var LEFT_ARROW = 37;
+    var UP_ARROW = 38;
+    var RIGHT_ARROW = 39;
+    var DOWN_ARROW = 40;
+
+    // Listen for arrow key presses
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Handle keydown event
+    function handleKeyDown(event) {
+      var keyPressed = event.keyCode;
+
+      if (keyPressed === LEFT_ARROW) {
+        playerX -= 10; // Move player left by 10px
+      } else if (keyPressed === UP_ARROW) {
+        playerY -= 10; // Move player up by 10px
+      } else if (keyPressed === RIGHT_ARROW) {
+        playerX += 10; // Move player right by 10px
+      } else if (keyPressed === DOWN_ARROW) {
+        playerY += 10; // Move player down by 10px
+      }
+    }
+
+    // Update game state
+    function update() {
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw current frame of player animation
+      ctx.drawImage(
+        spriteSheet,
+        currentFrame * playerWidth,
+        0,
+        playerWidth,
+        playerHeight,
+        playerX,
+        playerY,
+        playerWidth,
+        playerHeight
+      );
+
+      // Increment frame count for next animation frame
+      currentFrame = (currentFrame + 1) % totalFrames;
+
+      // Request next frame update
+      requestAnimationFrame(update);
+    }
+
+    // Start game loop
+    update();
+  </script>
+</body>
+</html>
+
