@@ -79,8 +79,7 @@ function resetCanva() {
         iD(objects[i]).style.width = "320px";
         iD(objects[i]).style.height = "320px";
     }
-    win.scrollTop = 0;
-    win.scrollLeft = 0;
+
 
 }
 function zoom2x() {
