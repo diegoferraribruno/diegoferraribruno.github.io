@@ -111,7 +111,13 @@ function handleStart(evt) {
     }
     if (mode == "zoomx") {
         isGrabing = true;
-        //  scrollCanva(redondo(origin.x), redondo(origin.y));
+        setTimeout(() => {
+            if (scrollWindow.x == 0 && scrollWindow.y == 0) {
+
+                scrollCanva(evt.pageX - offsetX - canvas.width / 2, evt.pageY - offsetY - canvas.height / 2);
+            }
+        }, 200
+        )
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
         canvasFront.classList.add("esconde")

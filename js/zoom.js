@@ -46,14 +46,14 @@ function ZOOM(a) {
     //  setZoom(a, canvas_window);
     resetCanva();
 
-    /* setTimeout(
-         () =>
-             scrollCanva(
-                 ultimoToque.x * zoomFactor - 160,
-                 ultimoToque.y * zoomFactor - 160
-             ),
-         400
-     );*/
+    setTimeout(
+        () =>
+            scrollCanva(
+                ultimoToque.x * zoomFactor - canvas.width / 2,
+                ultimoToque.y * zoomFactor - canvas.width / 2
+            ),
+        200
+    );
     zoomFactor = Number(a);
     setZoom(zoomFactor, canvasDiv)
 
