@@ -83,7 +83,7 @@ var rotacionar = false
 
 function handleStart(evt) {
     removeClass();
-    // cursor.style.opacity = 0.4
+
     changedBrush = false;
 
     evt.preventDefault();
@@ -97,10 +97,6 @@ function handleStart(evt) {
     offsetY = canvas.getBoundingClientRect().top;
     if (mode === "recortar") {
         canvasFront.classList.remove("esconde")
-        /*  swapImg = canvas.toDataURL("image/png");
-          blob = dataURItoBlob(swapImg);
-          tempImg = document.createElement("img");
-          tempImg.src = URL.createObjectURL(blob);*/
         isSelecting = true;
     }
     if (mode == "emoji") {
@@ -156,7 +152,6 @@ movecursor.src = "img/movearrow.png";
 
 function handleMove(evt) {
     document.body.style.cursor = "default";
-    // cursorMove(evt)
     evt.preventDefault();
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
@@ -291,14 +286,11 @@ function handleMove(evt) {
             canvasFront.ctx.rotate(((y - origin.y + x - origin.x) * Math.PI) / 180);
             canvasFront.ctx.drawImage(canvas, -origin.x, -origin.y)
             canvasFront.ctx.restore()
-            //canvasFront.ctx.translate(320, 320)
-
-            //canvasFront.ctx.restore()
         }
     }
 }
 function handleUp(evt) {
-    // cursor.style.opacity = 0
+
     if (movendo == true) {
         desenha("move", x - origin.x, y - origin.y)
         movendo = false

@@ -59,8 +59,18 @@ function startup() {
 
     }
   }
-  modeTo("pintar")
-  removeClass();
+
+  ZOOMf(2)
+  setTimeout(() => {
+    ZOOMf(1)
+    setTimeout(() => {
+      modeTo("pintar")
+      removeClass();
+    }, 50)
+
+  }, 50)
+
+
 
   iD(
     "globalComposite"
@@ -106,6 +116,7 @@ function startup() {
   );
   window.addEventListener("keyup", handleKeyUp);
   window.addEventListener("keydown", handleKeys);
+
 
   iD("zoombar").value =
     zoomScale.indexOf(zoomFactor);
