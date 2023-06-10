@@ -73,25 +73,29 @@ function exec(coma = 0) {
     if (scope > coma) {
         switch (comandos[coma][0]) {
             case "move":
-                let img_b64 = canvas.toDataURL("image/png");
-                let blob
-
-                blob = dataURItoBlob(img_b64)
+                canvasFront.ctx.globalCompositeOperation = "destination-over"
+                canvasFront.ctx.globalAlpha = 1;
+                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvasFront.ctx.save()
+                canvasFront.ctx.drawImage(canvas, comandos[coma][1], comandos[coma][2])
+                canvasFront.ctx.restore()
+                let img_b64 = canvasFront.toDataURL("image/png");
+                let blob = dataURItoBlob(img_b64)
                 myImg.src = URL.createObjectURL(blob)
                 myImg.onload = function () {
                     context.globalAlpha = 1;
-                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                    context.clearRect(0, 0, canvas.width, canvas.height);
                     let globaltemp = context.globalCompositeOperation
                     context.globalCompositeOperation = "destination-over";
                     context.drawImage(
                         myImg,
-                        comandos[coma][1],
-                        comandos[coma][2],
-                        myImg.width,
-                        myImg.height);
+                        0,
+                        0);
                     changeGCO(globaltemp)
                     coma++;
                     exec(coma)
+
                 }
                 break;
             case "rotacionar":
