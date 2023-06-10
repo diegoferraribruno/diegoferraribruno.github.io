@@ -1,7 +1,7 @@
 var zoomFactor = 1;
 var zoomScale = [0.5, 1, 2, 4, 8, 16, 32];
 var zoomIndex = 1;
-
+var scrollWindow = { x: 0, y: 0 }
 function toggleHand() {
     if (mode != "zoomx") {
         oldMode = mode;
