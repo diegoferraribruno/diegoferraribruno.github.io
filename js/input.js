@@ -114,7 +114,13 @@ function handleStart(evt) {
         setTimeout(() => {
             if (scrollWindow.x == 0 && scrollWindow.y == 0) {
 
-                scrollCanva(evt.pageX - offsetX - window.innerWidth / 2, evt.pageY - offsetY - window.innerHeight / 2);
+                win.scrollTop = 0;
+                win.scrollLeft = 0;
+
+                scrollCanva(
+                    (evt.pageX - offsetX) - window.innerWidth / 2,
+                    (evt.pageY - offsetY) - window.innerHeight / 2
+                )
             }
         }, 200
         )
