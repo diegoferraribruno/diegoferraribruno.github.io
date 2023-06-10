@@ -16,7 +16,6 @@ canvasFront.classList.add("cursor") // importante!
 canvasFront.ctx.imageSmoothingEnabled = false
 iD("canvas_div").appendChild(canvasFront)
 let cursorShow = true
-
 var canvasBack = document.createElement("canvas")
 canvasBack.id = "canvasBack"
 canvasBack.width = canvas.width
@@ -28,6 +27,10 @@ canvasBack.style.marginTop = "0px"
 canvasBack.style.marginLeft = -canvas.width + "px"
 canvasBack.classList.add("cursor") // importante!
 canvasBack.ctx.imageSmoothingEnabled = false
+let movendo = false
+let tempStrokeSize
+var tempImg = document.createElement("img");
+var rotacionar = false
 iD("canvas_div").appendChild(canvasBack)
 
 function handleKeyUp(evt) {
@@ -76,10 +79,7 @@ function handleKeys(evt) {
 
     }
 }
-let movendo = false
-let tempStrokeSize
-var tempImg = document.createElement("img");
-var rotacionar = false
+
 
 function handleStart(evt) {
     removeClass();
@@ -195,15 +195,22 @@ function handleMove(evt) {
     }
     if (isDrawing === true && isPicking == false && mode != 'move') {
         mouseOver = true;
-        desenha(
-            "brush",
-            context.globalCompositeOperation,
-            x,
-            y,
-            origin.x,
-            origin.y,
-            strokeWidth
-        );
+        let dif = {
+            x: origin.x - x,
+            y: origin.y - y
+        }
+        let vari = 0.5
+        if (dif.x > vari || dif.y > 2 || dif.x < -vari || dif.y < -vari) {
+            desenha(
+                "brush",
+                context.globalCompositeOperation,
+                x,
+                y,
+                origin.x,
+                origin.y,
+                strokeWidth
+            );
+        }
 
     }
     if (isPicking) {
