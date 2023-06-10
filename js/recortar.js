@@ -201,6 +201,10 @@ function tamanhom() {
 function tamanho2(W = iD("largura2").value, H = iD("altura2").value) {
     tamanho(W, H)
 }
+function tamanho3(W = iD("largura2").value, H = iD("altura2").value) {
+    iD("largura2").value = W
+    iD("altura2").value = H
+}
 function tamanho(W = iD("largura").value, H = iD("altura").value) {
     removeElement("carregando")
     canvasBack = iD("canvasBack")
@@ -219,6 +223,7 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
     canvasFront.style.marginLeft = -W + "px"
 
     if (W < screen.width || H < screen.height) {
+        ZOOMf(1)
     } else {
         ZOOMf(0)
     }

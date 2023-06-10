@@ -207,9 +207,6 @@ function handleMove(evt) {
             changeBrush()
             console.log(imageData)
         }
-        /*    cursor.style.left = evt.pageX + "px";
-            cursor.style.top = evt.pageY + "px";
-            cursor.style.opacity = 0.9*/
 
     }
     if (isGrabing) {
@@ -218,10 +215,6 @@ function handleMove(evt) {
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
         origin.y = y
-
-        /*   cursor.style.left = evt.pageX + "px";
-           cursor.style.top = evt.pageY + "px";
-           cursor.style.opacity = 0.6*/
         if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
 
             if (cursorShow == true && !isDrawing) {
