@@ -82,11 +82,9 @@ var tempImg = document.createElement("img");
 var rotacionar = false
 
 function handleStart(evt) {
-    removeClass();
-
-    changedBrush = false;
-
     evt.preventDefault();
+    removeClass();
+    changedBrush = false;
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
     if (pixelGood) {
@@ -111,6 +109,7 @@ function handleStart(evt) {
     }
     if (mode == "zoomx") {
         isGrabing = true;
+
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
         canvasFront.classList.add("esconde")
@@ -151,8 +150,8 @@ const movecursor = new Image(); // Create new img element
 movecursor.src = "img/movearrow.png";
 
 function handleMove(evt) {
-    document.body.style.cursor = "default";
     evt.preventDefault();
+    document.body.style.cursor = "default";
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     x = (evt.pageX - offsetX) / zoomFactor
@@ -210,7 +209,11 @@ function handleMove(evt) {
 
     }
     if (isGrabing) {
-        scrollMoveCanva((origin.x - x) * zoomFactor, (origin.y - y) * zoomFactor);
+
+        scrollWindow.x += origin.x - x
+        scrollWindow.y += origin.y - y
+        console.log(scrollWindow)
+        scrollCanva(redondo(ultimoToque.x + scrollWindow.x), redondo(ultimoToque.y + scrollWindow.y));
     }
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
@@ -358,8 +361,6 @@ function handleUp(evt) {
         isDrawing = false;
     }
     if (isGrabing) {
-        origin.x = x
-        origin.y = y
         isGrabing = false;
 
     }

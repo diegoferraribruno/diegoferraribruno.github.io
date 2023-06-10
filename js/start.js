@@ -129,6 +129,7 @@ function startup() {
   pixel()
 
   setTimeout(() => {
+    canvasFront.addEventListener("pointerdown", handleStart2);
     canvas.addEventListener("pointerdown", handleStart);
     canvas.addEventListener("pointerup", handleUp);
     canvas.addEventListener("pointercancel", handleCancel);
@@ -141,7 +142,9 @@ function startup() {
   loading()
 
 }
-
+function handleStart2(evt) {
+  evt.preventDefault()
+}
 function loading() {
   setTimeout(() => { removeElement("carregandoa") }, 10000)
 }
