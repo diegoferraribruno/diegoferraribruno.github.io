@@ -82,9 +82,11 @@ var tempImg = document.createElement("img");
 var rotacionar = false
 
 function handleStart(evt) {
-    evt.preventDefault();
     removeClass();
+
     changedBrush = false;
+
+    evt.preventDefault();
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
     if (pixelGood) {
@@ -109,7 +111,7 @@ function handleStart(evt) {
     }
     if (mode == "zoomx") {
         isGrabing = true;
-
+        //  scrollCanva(redondo(origin.x), redondo(origin.y));
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
         canvasFront.classList.add("esconde")
@@ -143,7 +145,6 @@ function handleStart(evt) {
     if (mode == "play") {
         stop();
     }
-    console.log(origin.x, origin.y)
 }
 let cursinho = new Image
 const movecursor = new Image(); // Create new img element
@@ -204,16 +205,29 @@ function handleMove(evt) {
             );
             setStrokeColor();
             changeBrush()
-            console.log(imageData)
+
         }
+
+    }
+    if (mode == "zoomx") {// canvasFront
+        canvasFront.classList.remove("esconde")
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasFront.ctx.font = 18 + 'px serif';
+        canvasFront.ctx.textAlign = "center";
+        canvasFront.ctx.textBaseline = "middle";
+        canvasFront.ctx.globalAlpha = 0.5;
+        canvasFront.ctx.fillText("🔎", x, y)
 
     }
     if (isGrabing) {
 
         scrollWindow.x += origin.x - x
         scrollWindow.y += origin.y - y
-        console.log(scrollWindow)
-        scrollCanva(redondo(ultimoToque.x + scrollWindow.x), redondo(ultimoToque.y + scrollWindow.y));
+        scrollMoveCanva(redondo(scrollWindow.x), redondo(scrollWindow.y));
+        console.log(scrollWindow.x, scrollWindow.y)
+        origin.x = x
+        origin.y = y
     }
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
@@ -231,17 +245,7 @@ function handleMove(evt) {
 
 
     }
-    if (mode == "zoomx") {// canvasFront
-        canvasFront.classList.remove("esconde")
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasFront.ctx.font = 18 + 'px serif';
-        canvasFront.ctx.textAlign = "center";
-        canvasFront.ctx.textBaseline = "middle";
-        canvasFront.ctx.globalAlpha = 0.5;
-        canvasFront.ctx.fillText("🔎", x, y)
 
-    }
     if (mode == "play") {
         canvasFront.classList.remove("esconde")
     }
@@ -362,6 +366,8 @@ function handleUp(evt) {
     }
     if (isGrabing) {
         isGrabing = false;
+        scrollWindow.x = 0
+        scrollWindow.y = 0
 
     }
 
