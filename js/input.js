@@ -111,7 +111,7 @@ function handleStart(evt) {
     }
     if (mode == "zoomx") {
         isGrabing = true;
-        setTimeout(() => {
+/*        setTimeout(() => {
             if (scrollWindow.x == 0 && scrollWindow.y == 0) {
 
                 win.scrollTop = 0;
@@ -123,7 +123,7 @@ function handleStart(evt) {
                 )
             }
         }, 200
-        )
+        )*/
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
         canvasFront.classList.add("esconde")
@@ -200,7 +200,7 @@ function handleMove(evt) {
             y: origin.y - y
         }
         let vari = 0.5
-        if (dif.x > vari || dif.y > 2 || dif.x < -vari || dif.y < -vari) {
+        if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
             desenha(
                 "brush",
                 context.globalCompositeOperation,
@@ -239,15 +239,31 @@ function handleMove(evt) {
         canvasFront.ctx.fillText("🔎", x, y)
 
     }
+    
     if (isGrabing) {
+        let dif = {
+            x: origin.x - x,
+            y: origin.y - y
+        }
+        let vari = 0.5
+        if (scrollWindow.x == 0 && scrollWindow.y == 0 && ( dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari)) {
 
+         
+
+            scrollMoveCanva(
+                (dif.x),
+                (dif.y) 
+            )
+        }
+    }
+/*
         scrollWindow.x += origin.x - x
         scrollWindow.y += origin.y - y
         scrollMoveCanva(redondo(scrollWindow.x), redondo(scrollWindow.y));
         console.log(scrollWindow.x, scrollWindow.y)
         origin.x = x
         origin.y = y
-    }
+    }*/
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
         origin.y = y
@@ -384,9 +400,23 @@ function handleUp(evt) {
         isDrawing = false;
     }
     if (isGrabing) {
+       /* setTimeout(() => {
+            if (scrollWindow.x == 0 && scrollWindow.y == 0) {
+
+                win.scrollTop = 0;
+                win.scrollLeft = 0;
+
+                scrollCanva(
+                    (evt.pageX - offsetX) - window.innerWidth / 2,
+                    (evt.pageY - offsetY) - window.innerHeight / 2
+                )
+            }
+        }, 200)
+    
         isGrabing = false;
-        scrollWindow.x = 0
-        scrollWindow.y = 0
+     /*   scrollWindow.x = 0
+        scrollWindow.y = 0*/
+        
 
     }
 
