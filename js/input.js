@@ -240,8 +240,8 @@ function handleMove(evt) {
 
     }
     
-    if (isGrabing) {
-        let dif = {
+    if (isGrabing) {evt.preventDefault();}
+   /*     let dif = {
             x: origin.x - x,
             y: origin.y - y
         }
@@ -400,22 +400,21 @@ function handleUp(evt) {
         isDrawing = false;
     }
     if (isGrabing) {
-       /* setTimeout(() => {
+        
             if (scrollWindow.x == 0 && scrollWindow.y == 0) {
 
-                win.scrollTop = 0;
-                win.scrollLeft = 0;
+        
 
                 scrollCanva(
                     (evt.pageX - offsetX) - window.innerWidth / 2,
                     (evt.pageY - offsetY) - window.innerHeight / 2
                 )
             }
-        }, 200)
+       
     
         isGrabing = false;
-     /*   scrollWindow.x = 0
-        scrollWindow.y = 0*/
+        scrollWindow.x = 0
+        scrollWindow.y = 0
         
 
     }
