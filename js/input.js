@@ -406,8 +406,8 @@ function handleUp(evt) {
         
 
                 scrollCanva(
-                    (evt.pageX - offsetX) - window.innerWidth / 2,
-                    (evt.pageY - offsetY) - window.innerHeight / 2
+                    (evt.pageX - offsetX) - window.innerWidth / 4,
+                    (evt.pageY - offsetY) - window.innerHeight / 4
                 )
             }
        
