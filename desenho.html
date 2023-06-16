@@ -605,7 +605,8 @@
             </div>
 
             <div id="menurotacionar" class="fundobranco submenu">
-                <span id="rotacionar" class="botao"><img src="img/rotatearrow.png">
+                <span id="rotacionar" class="botao"><span class="close" onmousedown="removeClass()">❎</span>
+                    <img src="img/rotatearrow.png">
                     <txt name="57">Rotacionar a tela</txt>
                 </span>
                 <span id="rotaciona" class="botao" onclick="">
@@ -613,18 +614,16 @@
                     <input type="checkbox" id="rotatecenter">
                 </span>
                 <span id="rotaciona" class="botao" onclick="">
-                    <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de rotacionar
-                    </txt>
+                    ⚠️ <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de rotacionar
+                    </txt><span class="botao" onmousedown="cloneFrame()"> 🖼️ + 🖼️ <txt name="27">Clone frame</txt>
+                    </span>
                 </span>
 
             </div>
             <div id="menucamconfig" class="fundobranco submenu" style="opacity:0.8; background-color: #ffffff00;">
                 <span class="close" title="fechar cam config" onmousedown="mostraSubMenu('camconfig')">❎</span>
                 <div id="camoptions">
-                    <!--div id="zoomDiv" class="botao3">
-                        <label for="zoom">Zoom</label>
-                        < input id="zoom" title="Zoom" type="range">
-                    </div-->
+
                     <div id="brightnessDiv" class="botao3">
                         <label for="brightness">
                             <txt name="59">Brightness / brilho</txt>
@@ -708,6 +707,10 @@
                             <txt name="69">Tilt</txt>
                         </label>
                         <input id="tilt" title="Tilt" type="range">
+                    </div>
+                    <div id="zoomDiv" class="botao3">
+                        <label for="zoom">Zoom</label>
+                        <input id="zoom" title="Zoom" type="range">
                     </div>
                     <div id="comumConstraints" class="botao3"></div>
                 </div>
