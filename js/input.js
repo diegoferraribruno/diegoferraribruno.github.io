@@ -111,19 +111,20 @@ function handleStart(evt) {
     }
     if (mode == "zoomx") {
         isGrabing = true;
-/*        setTimeout(() => {
-            if (scrollWindow.x == 0 && scrollWindow.y == 0) {
 
-                win.scrollTop = 0;
-                win.scrollLeft = 0;
-
-                scrollCanva(
-                    (evt.pageX - offsetX) - window.innerWidth / 2,
-                    (evt.pageY - offsetY) - window.innerHeight / 2
-                )
-            }
-        }, 200
-        )*/
+        /*        setTimeout(() => {
+                    if (scrollWindow.x == 0 && scrollWindow.y == 0) {
+        
+                        win.scrollTop = 0;
+                        win.scrollLeft = 0;
+        
+                        scrollCanva(
+                            (evt.pageX - offsetX) - window.innerWidth / 2,
+                            (evt.pageY - offsetY) - window.innerHeight / 2
+                        )
+                    }
+                }, 200
+                )*/
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
         canvasFront.classList.add("esconde")
@@ -239,31 +240,33 @@ function handleMove(evt) {
         canvasFront.ctx.fillText("🔎", x, y)
 
     }
-    
-    if (isGrabing) {evt.preventDefault();}
-   /*     let dif = {
-            x: origin.x - x,
-            y: origin.y - y
-        }
-        let vari = 0.5
-        if (scrollWindow.x == 0 && scrollWindow.y == 0 && ( dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari)) {
 
-         
-
-            scrollMoveCanva(
-                (dif.x),
-                (dif.y) 
-            )
-        }
+    if (isGrabing) {
+        scrollMoveCanva(redondo(origin.x - x), redondo(origin.y - y))
     }
-/*
-        scrollWindow.x += origin.x - x
-        scrollWindow.y += origin.y - y
-        scrollMoveCanva(redondo(scrollWindow.x), redondo(scrollWindow.y));
-        console.log(scrollWindow.x, scrollWindow.y)
-        origin.x = x
-        origin.y = y
-    }*/
+    /*     let dif = {
+             x: origin.x - x,
+             y: origin.y - y
+         }
+         let vari = 0.5
+         if (scrollWindow.x == 0 && scrollWindow.y == 0 && ( dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari)) {
+ 
+          
+ 
+             scrollMoveCanva(
+                 (dif.x),
+                 (dif.y) 
+             )
+         }
+     }
+ /*
+         scrollWindow.x += origin.x - x
+         scrollWindow.y += origin.y - y
+         scrollMoveCanva(redondo(scrollWindow.x), redondo(scrollWindow.y));
+         console.log(scrollWindow.x, scrollWindow.y)
+         origin.x = x
+         origin.y = y
+     }*/
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
         origin.y = y
@@ -400,22 +403,22 @@ function handleUp(evt) {
         isDrawing = false;
     }
     if (isGrabing) {
+        /*
+                if (scrollWindow.x == 0 && scrollWindow.y == 0) {
         
-            if (scrollWindow.x == 0 && scrollWindow.y == 0) {
-
         
-
-                scrollCanva(
-                    (evt.pageX - offsetX) - window.innerWidth / 4,
-                    (evt.pageY - offsetY) - window.innerHeight / 4
-                )
-            }
-       
-    
+        
+                    scrollCanva(
+                        (evt.pageX - offsetX) - window.innerWidth / 4,
+                        (evt.pageY - offsetY) - window.innerHeight / 4
+                    )
+                }
+                scrollWindow.x = 0
+                scrollWindow.y = 0
+        
+        */
         isGrabing = false;
-        scrollWindow.x = 0
-        scrollWindow.y = 0
-        
+
 
     }
 
