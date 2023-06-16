@@ -110,6 +110,10 @@ function handleStart(evt) {
         rotacionar = true
     }
     if (mode == "zoomx") {
+        scrollCanva(
+            (evt.pageX - offsetX) - window.innerWidth / 4,
+            (evt.pageY - offsetY) - window.innerHeight / 4
+        )
         isGrabing = true;
 
         /*        setTimeout(() => {
@@ -244,29 +248,6 @@ function handleMove(evt) {
     if (isGrabing) {
         scrollMoveCanva(redondo(origin.x - x), redondo(origin.y - y))
     }
-    /*     let dif = {
-             x: origin.x - x,
-             y: origin.y - y
-         }
-         let vari = 0.5
-         if (scrollWindow.x == 0 && scrollWindow.y == 0 && ( dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari)) {
- 
-          
- 
-             scrollMoveCanva(
-                 (dif.x),
-                 (dif.y) 
-             )
-         }
-     }
- /*
-         scrollWindow.x += origin.x - x
-         scrollWindow.y += origin.y - y
-         scrollMoveCanva(redondo(scrollWindow.x), redondo(scrollWindow.y));
-         console.log(scrollWindow.x, scrollWindow.y)
-         origin.x = x
-         origin.y = y
-     }*/
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
         origin.y = y

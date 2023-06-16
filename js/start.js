@@ -8,6 +8,11 @@ let texts = [
 document.addEventListener("DOMContentLoaded", startup);
 
 function startup() {
+  document.body.addEventListener("touchmove", ev => {
+
+    ev.preventDefault();
+    //ev.stopImmediatePropagation();
+  });
   window.addEventListener("resize", checkOrientation, false);
   window.addEventListener("orientationchange", checkOrientation, false);
   iD('inputSprite').addEventListener('change', importSprite);
@@ -23,40 +28,42 @@ function startup() {
     let activeEl = document.activeElement
     // console.log(event.key)
     if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
-      if (event.key === "Enter" && mode == "recortar") {
-        cortar();
-      } else if (event.key === "Enter" && mode == "cam") {
-        tirafoto()
-      } else if (event.key === "ArrowRight") {
-        event.preventDefault()
-        next_frame()
-      } else if (event.key === "ArrowLeft") {
-        event.preventDefault()
-        prev_frame()
-
-      } else if (event.key === "Escape" && mode == "cam") {
-        removeVideo();
+      if (mode != "emoji") {
+        if (event.key === "Enter" && mode == "recortar") {
+          cortar();
+        } else if (event.key === "Enter" && mode == "cam") {
+          tirafoto()
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault()
+          next_frame()
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault()
+          prev_frame()
+        } else if (event.key === "Escape" && mode == "cam") {
+          removeVideo();
+        } else if (event.key === "Escape") {
+          removeClass();
+        }
+        else if (event.key === "Escape") {
+          removeClass()
+          window.parent.focus()
+        } else if (event.key === "z" && keyCtrl == false) {
+          zoom2x()
+        } else if (event.key === "p" || event.key === "b") {
+          modeTo("pintar")
+          removeClass()
+        } else if (event.key === "e") {
+          modeTo("apagar")
+          removeClass()
+        } else if (event.code === "Space") {
+          if (mode == "play") { stop(); } else { play(); }
+        } else if (event.key === "+" && keyCtrl == false) {
+          //  console.log("mais um")
+          new_frame()
+        } else if (event.key === "Delete") {
+          removeFrame()
+        }
       }
-      else if (event.key === "Escape") {
-        removeClass()
-        window.parent.focus()
-      } else if (event.key === "z" && keyCtrl == false) {
-        zoom2x()
-      } else if (event.key === "p" || event.key === "b") {
-        modeTo("pintar")
-        removeClass()
-      } else if (event.key === "e") {
-        modeTo("apagar")
-        removeClass()
-      } else if (event.code === "Space") {
-        if (mode == "play") { stop(); } else { play(); }
-      } else if (event.key === "+" && keyCtrl == false) {
-        //  console.log("mais um")
-        new_frame()
-      } else if (event.key === "Delete") {
-        removeFrame()
-      }
-
     }
   }
 
