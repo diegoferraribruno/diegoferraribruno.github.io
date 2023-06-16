@@ -9,8 +9,10 @@ document.addEventListener("DOMContentLoaded", startup);
 
 function startup() {
   document.body.addEventListener("touchmove", ev => {
-
-    ev.preventDefault();
+    if (isGrabing == true) {
+      ev.preventDefault();
+      handleMove(ev)
+    }
     //ev.stopImmediatePropagation();
   });
   window.addEventListener("resize", checkOrientation, false);

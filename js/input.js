@@ -110,10 +110,10 @@ function handleStart(evt) {
         rotacionar = true
     }
     if (mode == "zoomx") {
-        scrollCanva(
-            (evt.pageX - offsetX) - window.innerWidth / 4,
-            (evt.pageY - offsetY) - window.innerHeight / 4
-        )
+        /* scrollCanva(
+             (evt.pageX - offsetX) - window.innerWidth / 4,
+             (evt.pageY - offsetY) - window.innerHeight / 4
+         )*/
         isGrabing = true;
 
         /*        setTimeout(() => {
@@ -384,23 +384,7 @@ function handleUp(evt) {
         isDrawing = false;
     }
     if (isGrabing) {
-        /*
-                if (scrollWindow.x == 0 && scrollWindow.y == 0) {
-        
-        
-        
-                    scrollCanva(
-                        (evt.pageX - offsetX) - window.innerWidth / 4,
-                        (evt.pageY - offsetY) - window.innerHeight / 4
-                    )
-                }
-                scrollWindow.x = 0
-                scrollWindow.y = 0
-        
-        */
         isGrabing = false;
-
-
     }
 
 
@@ -427,6 +411,22 @@ function handleEnd(evt) {
         canvasFront.classList.remove("esconde")
     }
     document.body.style.cursor = "pointer";
+    if (isGrabing) {
+
+
+        scrollCanva(
+            (evt.pageX - offsetX) - window.innerWidth / 4,
+            (evt.pageY - offsetY) - window.innerHeight / 4
+        )
+
+        scrollWindow.x = 0
+        scrollWindow.y = 0
+
+
+        isGrabing = false;
+
+
+    }
 }
 
 function handleCancel(evt) {

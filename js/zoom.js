@@ -59,8 +59,8 @@ function ZOOM(a) {
 }
 
 function scrollMoveCanva(a, b) {
-    win.scrollLeft += a;
-    win.scrollTop += b;
+    win.scrollLeft += a * zoomFactor;
+    win.scrollTop += b * zoomFactor;
 }
 function scrollCanva(a, b) {
     win.scrollLeft = a;
