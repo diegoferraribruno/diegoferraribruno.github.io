@@ -358,8 +358,11 @@
 
 
                     </span>
-                    <txt name="21">Quadros visiveis</txt> <input type="checkbox" id="camadasnumber"
-                        onchange="quadrosVisiveis()" style="width: 50px; margin-left: 8px" checked>
+                    <txt name="21">Quadros visiveis</txt>
+                    <label class="toggle"> <input type="checkbox" id="camadasnumber" onchange="quadrosVisiveis()"
+                            style="width: 50px; margin-left: 8px" checked>
+                        <span class="knob"></span>
+                    </label>
                 </span>
 
                 <span id=" fundo falso" class="botao">
@@ -385,7 +388,9 @@
                     <span>
                         <input type="file" id="input2" class="custom-file-input"
                             accept=".png, .jpg, .jpeg, .gif .bmp" />
-                        <input id="pagebg" type="checkbox" checked>
+                        <label class="toggle">
+                            <input id="pagebg" type="checkbox" checked><span class="knob"></span>
+                        </label>
                         <txt name="76">como fundo do app?</txt>
                     </span>
                 </span>
@@ -438,17 +443,21 @@
                 <input id="zoombar" type="range" min="0" max="6" value="1" step="1" onchange="ZOOMf(this.value)">
                 <input id="tzoom" type="number" min="0.50" max="32" step="1" value="1" onchange="ZOOM(this.value)"
                     style="width: 44px">
-                <span id="oculos" class="botao">👓 -+ nitidez <input type="checkbox" value="true" checked
-                        onchange="pixel()"> </span>
-                <!--span onmousedown="scrollCanva(-80,0)">⬅️</span>
-                <span onmousedown="scrollCanva(0,-80)">⬆️</span>
-                <span onmousedown="scrollCanva(0,80)">⬇️</span>
-                <span onmousedown="scrollCanva(80,0)">➡️</span -->
+                <span id="oculos" class="botao">
+                    👓 nitidez
+                    <label class="toggle">
+                        <input type="checkbox" value="true" checked onchange="pixel()">
+                        <span class="knob"></span>
+                    </label></span>
+                <span onmousedown="scrollMoveCanva(-80,0)">⬅️</span>
+                <span onmousedown="scrollMoveCanva(0,-80)">⬆️</span>
+                <span onmousedown="scrollMoveCanva(0,80)">⬇️</span>
+                <span onmousedown="scrollMoveCanva(80,0)">➡️</span>
             </div>
             <div id="menuimagem" class="fundobranco submenu aparece menu">
                 <span class="botao">📂
                     <span class="close" title="fechar menu enviar imagem" onmousedown="removeClass()">❎</span>
-                    <txt name="50"> Importar projeto</txt>
+                    <txt name="50"> Caregar projeto</txt> .art
                     <input type='file' accept='.art' onchange='openFile(event)'>
                 </span>
 
@@ -459,18 +468,24 @@
                     <txt name="29">Carregar imagens</txt>
                     <br> <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
                         title="Enviar Arquivo de imagem" /><!-- name='files[]' multiple futurEiMPLEMENT--> <br>
-                    <txt name="30">Ajustar tela ao tamanho da imagem </txt><input type="checkbox" id="ajustar"
+                    <txt name="30">Ajustar tela ao tamanho da imagem</txt> <input type="checkbox" id="ajustar"
                         checked="true">
                 </span>
                 <span class="botao"> 📂 🎞️ <txt name="31">Enviar uma animação</txt><br>
-                    <txt name="32">Auto detectar quadros </txt><input type="checkbox" id="autodetectar"
-                        onchange="hidecustom()" checked="true">
+                    <txt name="32">Auto detectar quadros </txt>
+                    <input type="checkbox" id="autodetectar" onchange="hidecustom()" checked="true">
+                    <span class="knob"></span>
+                    </label>
                     <br>
                     <txt name="33">carregar como plano de fundo?</txt>
                     <input type="checkbox" id="loadBackgroundAnimation">
+                    <span class="knob"></span>
+                    </label>
                     <br>
                     <txt name="34">sobrepor plano de fundo</txt>
                     <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
+                    <span class="knob"></span>
+                    </label>
                     <span id="custom" class="esconde">
                         <txt name="35">quantidade de quadros</txt><input type="number" id="fnumber" min="1" max="30"
                             step="1" value="2" style="width: 40px; margin-left: 8px"><br>
@@ -531,7 +546,7 @@
             </div>
             <div id="menusalvar" class="fundobranco submenu">
                 <span class="botao" onclick="export2txt()">
-                    🛟<txt name="49">Exportar projeto .art</txt>
+                    🛟<txt name="49">Exportar projeto </txt> .art
                     <span class="close" title="fechar menu apagar" onmousedown="removeClass()">❎</span>
                 </span>
                 <span class="botao">🛟 🖼️ <txt name="43">Salvar quadro atual</txt> <br>
