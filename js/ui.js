@@ -182,6 +182,9 @@ function resizeScreen() {
 }
 function autoScroll() {
 
+    win.scrollTop = 0;
+    win.scrollLeft = 0;
+
     scrollCanva(
         ultimoToque.x * zoomFactor - window.innerWidth / 2,
         ultimoToque.y * zoomFactor - window.innerHeight / 2

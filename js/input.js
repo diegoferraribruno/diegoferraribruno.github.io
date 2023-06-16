@@ -86,11 +86,14 @@ function handleStart(evt) {
 
     changedBrush = false;
     console.log(supportsTouch)
-    if (mode != "zoomx" && supportsTouch == undefined) {
-        evt.preventDefault();
-    }
+
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
+    if (mode != "zoomx") {
+        if (supportsTouch == undefined) {
+            evt.preventDefault();
+        }
+    }
     if (pixelGood) {
         origin.x = redondo(origin.x)
         origin.y = redondo(origin.y)
@@ -112,6 +115,15 @@ function handleStart(evt) {
         rotacionar = true
     }
     if (mode == "zoomx") {
+        if (supportsTouch == true) {
+
+            ultimoToque.x = origin.x
+            ultimoToque.y = origin.y
+            autoScroll()
+        }
+
+
+
         /*  scrollCanva(
               (evt.pageX - offsetX) - window.innerWidth / 2,
               (evt.pageY - offsetY) - window.innerHeight / 2
@@ -248,16 +260,20 @@ function handleMove(evt) {
 
     }
 
-    if (isGrabing && supportsTouch == undefined) {
+    if (isGrabing) {
+        if (supportsTouch == undefined) {
+            offsetX = canvas.getBoundingClientRect().left;
+            offsetY = canvas.getBoundingClientRect().top;
+            setTimeout(() => {
+                x = (evt.pageX - offsetX) / zoomFactor
+                y = (evt.pageY - offsetY) / zoomFactor
+                scrollMoveCanva(redondo(origin.x - x), redondo(origin.y - y))
+            }, 0)
+        }
+        else {
 
-        offsetX = canvas.getBoundingClientRect().left;
-        offsetY = canvas.getBoundingClientRect().top;
-        setTimeout(() => {
-            x = (evt.pageX - offsetX) / zoomFactor
-            y = (evt.pageY - offsetY) / zoomFactor
-            scrollMoveCanva(redondo(origin.x - x), redondo(origin.y - y))
+        }
 
-        }, 0)
 
     }
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
@@ -397,6 +413,13 @@ function handleUp(evt) {
     }
     if (isGrabing) {
         isGrabing = false;
+        if (supportsTouch == true) {
+
+            ultimoToque.x = x
+            ultimoToque.y = y
+            autoScroll()
+        }
+
     }
 
 
