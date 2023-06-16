@@ -174,6 +174,7 @@ function handleMove(evt) {
     offsetY = canvas.getBoundingClientRect().top;
     x = (evt.pageX - offsetX) / zoomFactor
     y = (evt.pageY - offsetY) / zoomFactor
+
     if (pixelGood) {
         x = redondo(x)
         y = redondo(y)
@@ -245,9 +246,7 @@ function handleMove(evt) {
 
     }
 
-    if (isGrabing) {
-        scrollMoveCanva(redondo(origin.x - x), redondo(origin.y - y))
-    }
+
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
         origin.y = y
