@@ -542,8 +542,7 @@ input[type="range"] {
 }
 
 .cursor {
-
-    pointer-events: none;
+    pointer-events: none !important
 }
 
 .filterdark {

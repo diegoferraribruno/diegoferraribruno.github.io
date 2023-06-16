@@ -110,10 +110,10 @@ function handleStart(evt) {
         rotacionar = true
     }
     if (mode == "zoomx") {
-        /* scrollCanva(
-             (evt.pageX - offsetX) - window.innerWidth / 4,
-             (evt.pageY - offsetY) - window.innerHeight / 4
-         )*/
+        /*  scrollCanva(
+              (evt.pageX - offsetX) - window.innerWidth / 2,
+              (evt.pageY - offsetY) - window.innerHeight / 2
+          )*/
         isGrabing = true;
 
         /*        setTimeout(() => {
@@ -246,7 +246,18 @@ function handleMove(evt) {
 
     }
 
+    if (isGrabing) {
 
+        offsetX = canvas.getBoundingClientRect().left;
+        offsetY = canvas.getBoundingClientRect().top;
+        setTimeout(() => {
+            x = (evt.pageX - offsetX) / zoomFactor
+            y = (evt.pageY - offsetY) / zoomFactor
+            scrollMoveCanva(redondo(origin.x - x), redondo(origin.y - y))
+
+        }, 0)
+
+    }
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
         origin.y = y
@@ -412,15 +423,15 @@ function handleEnd(evt) {
     document.body.style.cursor = "pointer";
     if (isGrabing) {
 
-
-        scrollCanva(
-            (evt.pageX - offsetX) - window.innerWidth / 4,
-            (evt.pageY - offsetY) - window.innerHeight / 4
-        )
-
-        scrollWindow.x = 0
-        scrollWindow.y = 0
-
+        /*
+                scrollCanva(
+                    (evt.pageX - offsetX) - window.innerWidth / 4,
+                    (evt.pageY - offsetY) - window.innerHeight / 4
+                )
+        
+                scrollWindow.x = 0
+                scrollWindow.y = 0
+        */
 
         isGrabing = false;
 
