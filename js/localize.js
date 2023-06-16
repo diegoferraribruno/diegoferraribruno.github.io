@@ -245,7 +245,7 @@ let textos = {
         "60": "Manual exposure Mode",
         "61": "exposureTime",
         "62": "Exposure compensation",
-        "63": "Aaturation",
+        "63": "Saturation",
         "64": "Contrast",
         "65": "Sharpness",
         "66": "Focus Distance",
