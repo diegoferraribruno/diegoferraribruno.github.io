@@ -131,7 +131,7 @@ function startup() {
   pixel()
 
   setTimeout(() => {
-    canvasFront.addEventListener("pointerdown", handleStart2);
+    //canvasFront.addEventListener("pointerdown", handleStart2);
     canvas.addEventListener("pointerdown", handleStart);
     canvas.addEventListener("pointerup", handleUp);
     canvas.addEventListener("pointercancel", handleCancel);

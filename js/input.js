@@ -80,13 +80,15 @@ function handleKeys(evt) {
     }
 }
 
-
+var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 function handleStart(evt) {
     removeClass();
 
     changedBrush = false;
-
-    evt.preventDefault();
+    console.log(supportsTouch)
+    if (mode != "zoomx" && supportsTouch == undefined) {
+        evt.preventDefault();
+    }
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
     if (pixelGood) {
@@ -168,7 +170,7 @@ const movecursor = new Image(); // Create new img element
 movecursor.src = "img/movearrow.png";
 
 function handleMove(evt) {
-    evt.preventDefault();
+    if (mode != "zoomx" && supportsTouch == undefined) { evt.preventDefault(); }
     document.body.style.cursor = "default";
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
@@ -246,7 +248,7 @@ function handleMove(evt) {
 
     }
 
-    if (isGrabing) {
+    if (isGrabing && supportsTouch == undefined) {
 
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
