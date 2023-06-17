@@ -1,4 +1,13 @@
 let vers = [{
+    versao: "3.6.5",
+    notas: [
+        "Zoom + scroll on touch - toque para centralizar o zoom :)",
+        "melhoras na interface",
+        "botão de swhitch (nao ta muito bonito) ao invez do checkbox em alguns menus",
+        ""
+    ]
+
+}, {
     versao: "3.4",
     notas: [
         "color picker (fix)",

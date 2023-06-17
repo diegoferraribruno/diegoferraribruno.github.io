@@ -80,20 +80,15 @@ function handleKeys(evt) {
     }
 }
 
-var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+
 function handleStart(evt) {
     removeClass();
 
     changedBrush = false;
-    console.log(supportsTouch)
 
+    evt.preventDefault();
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
-    if (mode != "zoomx") {
-        if (supportsTouch == undefined) {
-            evt.preventDefault();
-        }
-    }
     if (pixelGood) {
         origin.x = redondo(origin.x)
         origin.y = redondo(origin.y)
@@ -115,34 +110,7 @@ function handleStart(evt) {
         rotacionar = true
     }
     if (mode == "zoomx") {
-        if (supportsTouch == true) {
-
-            ultimoToque.x = origin.x
-            ultimoToque.y = origin.y
-            autoScroll()
-        }
-
-
-
-        /*  scrollCanva(
-              (evt.pageX - offsetX) - window.innerWidth / 2,
-              (evt.pageY - offsetY) - window.innerHeight / 2
-          )*/
         isGrabing = true;
-
-        /*        setTimeout(() => {
-                    if (scrollWindow.x == 0 && scrollWindow.y == 0) {
-        
-                        win.scrollTop = 0;
-                        win.scrollLeft = 0;
-        
-                        scrollCanva(
-                            (evt.pageX - offsetX) - window.innerWidth / 2,
-                            (evt.pageY - offsetY) - window.innerHeight / 2
-                        )
-                    }
-                }, 200
-                )*/
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
         canvasFront.classList.add("esconde")
@@ -182,13 +150,12 @@ const movecursor = new Image(); // Create new img element
 movecursor.src = "img/movearrow.png";
 
 function handleMove(evt) {
-    if (mode != "zoomx" && supportsTouch == undefined) { evt.preventDefault(); }
+    evt.preventDefault();
     document.body.style.cursor = "default";
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
     x = (evt.pageX - offsetX) / zoomFactor
     y = (evt.pageY - offsetY) / zoomFactor
-
     if (pixelGood) {
         x = redondo(x)
         y = redondo(y)
@@ -261,20 +228,14 @@ function handleMove(evt) {
     }
 
     if (isGrabing) {
-        if (supportsTouch == undefined) {
-            offsetX = canvas.getBoundingClientRect().left;
-            offsetY = canvas.getBoundingClientRect().top;
-            setTimeout(() => {
-                x = (evt.pageX - offsetX) / zoomFactor
-                y = (evt.pageY - offsetY) / zoomFactor
-                scrollMoveCanva(redondo(origin.x - x), redondo(origin.y - y))
-            }, 0)
+        scrollWindow.x += origin.x - x
+        scrollWindow.y += origin.y - y
+        if (scrollWindow.x != 0 || scrollWindow.y != 0) {
+            scrollMoveCanva(scrollWindow.x, scrollWindow.y)
+            console.log(scrollWindow.x, scrollWindow.y)
         }
-        else {
-
-        }
-
-
+        origin.x = x
+        origin.y = y
     }
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
         origin.x = x
@@ -413,13 +374,10 @@ function handleUp(evt) {
     }
     if (isGrabing) {
         isGrabing = false;
-        if (supportsTouch == true) {
-
-            ultimoToque.x = x
-            ultimoToque.y = y
-            autoScroll()
-        }
-
+        scrollWindow.x = 0
+        scrollWindow.y = 0
+        ultimoToque.x = x
+        ultimoToque.y = y
     }
 
 
@@ -448,15 +406,15 @@ function handleEnd(evt) {
     document.body.style.cursor = "pointer";
     if (isGrabing) {
 
-        /*
-                scrollCanva(
-                    (evt.pageX - offsetX) - window.innerWidth / 4,
-                    (evt.pageY - offsetY) - window.innerHeight / 4
-                )
-        
-                scrollWindow.x = 0
-                scrollWindow.y = 0
-        */
+
+        scrollCanva(
+            (evt.pageX - offsetX) - window.innerWidth / 4,
+            (evt.pageY - offsetY) - window.innerHeight / 4
+        )
+
+        scrollWindow.x = 0
+        scrollWindow.y = 0
+
 
         isGrabing = false;
 
