@@ -74,6 +74,7 @@ function resetCanva() {
     }
     win.scrollTop = 0;
     win.scrollLeft = 0;
+    setTimeout(autoScroll(), 100)
 
 }
 function zoom2x() {

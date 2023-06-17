@@ -177,8 +177,10 @@ function resizeScreen() {
 
     canvasDiv.style.width = canvas.width + "px";
     canvasDiv.style.height = canvas.height + "px";
-    setTimeout(() => comandosExec(), 40)
-    autoScroll()
+    win.scrollTop = 0;
+    win.scrollLeft = 0;
+    setTimeout(() => { autoScroll(); comandosExec() }, 40)
+
 }
 function autoScroll() {
 

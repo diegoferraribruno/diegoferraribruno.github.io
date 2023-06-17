@@ -412,14 +412,15 @@ function handleEnd(evt) {
             (evt.pageY - offsetY) - window.innerHeight / 4
         )
 
-        scrollWindow.x = 0
-        scrollWindow.y = 0
+
 
 
         isGrabing = false;
 
 
     }
+    scrollWindow.x = 0
+    scrollWindow.y = 0
 }
 
 function handleCancel(evt) {
