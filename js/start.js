@@ -90,7 +90,7 @@ function startup() {
       event.preventDefault();
       undoT();
     },
-    false
+    { passive: false }
   );
   iD("undo").addEventListener(
     "touchend",
@@ -98,7 +98,7 @@ function startup() {
       event.preventDefault();
       undoTEnd();
     },
-    false
+    { passive: false }
   );
   iD("redo").addEventListener(
     "touchstart",
@@ -106,7 +106,7 @@ function startup() {
       event.preventDefault();
       redoT();
     },
-    false
+    { passive: false }
   );
   iD("redo").addEventListener(
     "touchend",
@@ -114,7 +114,7 @@ function startup() {
       event.preventDefault();
       redoTEnd();
     },
-    false
+    { passive: false }
   );
   window.addEventListener("keyup", handleKeyUp);
   window.addEventListener("keydown", handleKeys);
@@ -123,8 +123,8 @@ function startup() {
   iD("zoombar").value =
     zoomScale.indexOf(zoomFactor);
 
-  desenhoDiv.addEventListener("gesturestart", prevent);
-  win.addEventListener("touchmove", prevent);
+  desenhoDiv.addEventListener("gesturestart", prevent, { passive: false });
+  win.addEventListener("touchmove", prevent, { passive: false });
 
   initStrokeRange()
   setTimeout(() => resizeScreen(), 10)
