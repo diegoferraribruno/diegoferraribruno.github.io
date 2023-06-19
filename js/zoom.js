@@ -35,6 +35,7 @@ function setZoom(zoom, el) {
     el.style["transform"] = s;
     el.style["transformOrigin"] = oString;
     resizeScreen();
+    canvas.focus()
 }
 
 function ZOOMf(a) {
