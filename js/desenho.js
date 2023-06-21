@@ -66,7 +66,8 @@ function comandosExec() {
         executing = true;
     }
 }
-
+var blobs = {}
+let blobv
 function exec(coma = 0) {
     let lenc = comandos.length;
     let scope = lenc - undoLevel
@@ -82,7 +83,9 @@ function exec(coma = 0) {
                 canvasFront.ctx.restore()
                 let img_b64 = canvasFront.toDataURL("image/png");
                 let blob = dataURItoBlob(img_b64)
-                myImg.src = URL.createObjectURL(blob)
+                let url = URL.createObjectURL(blob)
+                blobs[coma] = url
+                myImg.src = blobs[coma]
                 myImg.onload = function () {
                     context.globalAlpha = 1;
                     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -155,8 +158,8 @@ function exec(coma = 0) {
                 exec(coma)
                 break;
             case "f":
-                let blobv = dataURItoBlob(comandos[coma][2])
-                myImg.src = URL.createObjectURL(blobv)
+                blobs[coma] = comandos[coma][2]
+                myImg.src = blobs[coma]
                 myImg.onload = function () {
                     let globaltemp = context.globalCompositeOperation
                     context.globalCompositeOperation = comandos[coma][1];
