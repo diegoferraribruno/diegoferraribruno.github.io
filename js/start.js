@@ -60,6 +60,7 @@ function startup() {
         }
       }
     }
+    yoga()
   }
 
   ZOOMf(2)
