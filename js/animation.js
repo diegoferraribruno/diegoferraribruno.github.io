@@ -99,7 +99,7 @@ function new_frame() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     comandos = []
     changeBrush()
-    convertToImg()
+    //convertToImg()
     changeFrame(workingframe)
     iD("contador").innerHTML = workingframe
 
@@ -291,7 +291,7 @@ function removeFrame() {
 
     } else {
         comandos = []
-        convertToImg()
+        // convertToImg()
         comandosb = []
         comandosParaComandosb()
         save_frame()
@@ -421,7 +421,7 @@ function drop(event) {
         workingframe = 0
         if (animacao.length == 0) {
             comandos = []
-            convertToImg()
+            // convertToImg()
             comandosExec()
             comandosb = []
             comandosParaComandosb()
