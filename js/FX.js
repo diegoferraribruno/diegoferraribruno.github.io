@@ -43,25 +43,15 @@ function updatecanvasFront() {
 
 function confirmFX(fx, fxname) {
     //removeClass()
-    let confirm = iD("confirm")
-    if (!confirm) {
-        let item = document.createElement("div")
-        item.id = "confirm"
-        item.classList.add("confirm")
-        item.innerHTML = `aplicar o efeito <br> <div  class="shadow" onClick="applyFX('` + fx + `')"> ` + fxname + ' ✅ </div >' +
-            `<div onClick="cancelaFX()"
+    let confirm = iD("confirmFX")
+    confirm.classList.remove("esconde")
+    // confirm.classList.add("confirm")
+    confirm.innerHTML = `aplicar o efeito <br> <div  class="shadow" onClick="applyFX('` + fx + `')"> ` + fxname + ' ✅ </div >' +
+        `<div onClick="cancelaFX()"
              class='shadow'">cancela ❌</div>`
-        document.body.appendChild(item)
-    } else {
-        cancelaFX()
-        confirmFX(fx)
-
-    }
 }
 function applyFX() {
 
-    let confirm = iD("confirm")
-    confirm.parentElement.removeChild(confirm)
     removeClass()
     img_b64 = canvasFront.toDataURL("image/png");
     desenha("s", "source-over", img_b64, 0, 0, canvas.width, canvas.height)
@@ -80,12 +70,16 @@ function applyFX() {
     }, 300)
 }
 function cancelaFX() {
-
-    let confirm = iD("confirm")
-    confirm.parentElement.removeChild(confirm)
     mostraMenu("FX")
+    iD("confirmFX").classList.add("esconde")
     canvasFront.filter = filters[0]
+    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }
 function menufx(qual) {
-    iD("fx" + qual).style.removeClass("esconde")
+    for (i = 1; i < 6; i++) {
+        document.getElementById("fx" + i).classList.add("esconde")
+
+    }
+    document.getElementById("fx" + qual).classList.remove("esconde")
 }
