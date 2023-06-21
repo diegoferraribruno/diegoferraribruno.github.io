@@ -139,7 +139,7 @@ function exec(coma = 0) {
                 break;
             case "FX":
                 context.filter = "none"
-                context.filter = console.log(filters[comandos[coma][1]])
+                context.filter = filters[comandos[coma][1]]
                 coma++
                 exec(coma)
                 break;
@@ -176,19 +176,19 @@ function exec(coma = 0) {
                 break;
             case "s":
                 //changeGCO("destination-out");
-                context.fillStyle = "#ffffffff";
-                context.fillRect(0, 0, canvas.width, canvas.height);
-                let myImg2 = document.createElement("img");
-                myImg2.src = URL.createObjectURL(comandos[coma][2])
-                myImg2.onload = function () {
+                context.setTransform(1, 0, 0, 1, 0, 0);
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                blobs[coma] = comandos[coma][2]
+                myImg.src = blobs[coma]
+                myImg.onload = function () {
                     let globaltemp = context.globalCompositeOperation
                     context.globalCompositeOperation = comandos[coma][1]
                     context.drawImage(
-                        myImg2,
+                        myImg,
                         comandos[coma][3],
                         comandos[coma][4],
-                        myImg2.width,
-                        myImg2.height);
+                        myImg.width,
+                        myImg.height);
                     changeGCO(globaltemp)
                     coma++;
                     exec(coma)
@@ -411,9 +411,11 @@ function desenha(
 
             break;
 
-        case "FX":
-            comando = ["FX", fx]
+        case "s":
+
+            comando = ["s", GCO, X, Y, eoX, eoY, strokeWidth]
             comandos.push(comando)
+            comandosExec(comandos.length - 1)
             break;
         case "CB":
             createNewBrush(GCO, X, Y)

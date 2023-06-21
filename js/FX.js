@@ -33,7 +33,7 @@ function FX(fx, onde) {
 
 }
 function updatecanvasFront() {
-    canvasFront.style.backgroundColor = "#ffffff"
+    // canvasFront.style.backgroundColor = "#ffffff"
     canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasFront.ctx.drawImage(canvas, 0, 0)
@@ -56,27 +56,27 @@ function confirmFX(fx, fxname) {
 
     }
 }
-function applyFX(fx) {
+function applyFX() {
 
-    context.setTransform(1, 0, 0, 1, 0, 0);
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.drawImage(canvasFront, 0, 0)
     let confirm = iD("confirm")
     confirm.parentElement.removeChild(confirm)
     removeClass()
+    img_b64 = canvasFront.toDataURL("image/png");
+    desenha("s", "source-over", img_b64, 0, 0, canvas.width, canvas.height)
 
 
     // comandosParaComandosb()
     setTimeout(() => {
-        comando = ["FX", fx]
-        comandos.unshift(comando)
+        //   comando = ["FX", fx]
+        //  comandos.unshift(comando)
         save_frame()
         Alert(alerts[language][14])
         removeClass()
-
+        canvasFront.filter = filters[0]
     }, 300)
 }
 function cancelaFX() {
+
     let confirm = iD("confirm")
     confirm.parentElement.removeChild(confirm)
     mostraMenu("FX")
