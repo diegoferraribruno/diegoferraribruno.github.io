@@ -2,6 +2,7 @@ let filters = ["none", "invert", "blur", "grayscale", "sepia", "contrast",]
 let fx = 0
 
 function FX(fx, onde) {
+    canvasFront.ctx.save()
     if (onde == undefined) {
         onde = canvasFront.ctx
         confirmFX(fx, filters[fx])
@@ -37,6 +38,7 @@ function updatecanvasFront() {
     canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasFront.ctx.drawImage(canvas, 0, 0)
+    canvasFront.ctx.restore()
 }
 
 function confirmFX(fx, fxname) {
@@ -63,7 +65,7 @@ function applyFX() {
     removeClass()
     img_b64 = canvasFront.toDataURL("image/png");
     desenha("s", "source-over", img_b64, 0, 0, canvas.width, canvas.height)
-
+    canvasFront.filter = filters[0]
 
     // comandosParaComandosb()
     setTimeout(() => {
