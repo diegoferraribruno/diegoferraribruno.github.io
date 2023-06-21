@@ -75,6 +75,8 @@ function applyFX() {
         Alert(alerts[language][14])
         removeClass()
         canvasFront.filter = filters[0]
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }, 300)
 }
 function cancelaFX() {
