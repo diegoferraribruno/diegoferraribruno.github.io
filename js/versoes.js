@@ -1,9 +1,10 @@
 let vers = [{
-    versao: "3.7",
-    notas: ["Yoga!",
+    versao: "3.7.1",
+    notas: ["corrigir criação excessiva de imagens (to do)",
+        "Yoga! update",
         "Zoom + scroll funcionando",
         "melhoras na interface",
-        "botão de swhitch (nao ta muito bonito) ao invez do checkbox em alguns menus"
+        "botão de switch (nao ta muito bonito) ao invez do checkbox em alguns menus"
     ]
 
 }, {
