@@ -42,7 +42,7 @@ function updatecanvasFront() {
 }
 
 function confirmFX(fx, fxname) {
-    removeClass()
+    //removeClass()
     let confirm = iD("confirm")
     if (!confirm) {
         let item = document.createElement("div")
@@ -85,4 +85,7 @@ function cancelaFX() {
     confirm.parentElement.removeChild(confirm)
     mostraMenu("FX")
     canvasFront.filter = filters[0]
+}
+function menufx(qual) {
+    iD("fx" + qual).style.removeClass("esconde")
 }

@@ -530,24 +530,35 @@
 
             </div>
             <div id="menuFX" class="fundobranco submenu">
-                <span class="botao" onclick="FX(0)">🚫 <txt name="38">Remover Filtros</txt> <span title="fechar efeitos"
-                        onmousedown="removeClass()" class="close">❎</span></span>
-                <span class="botao" onclick="FX(1)"> ☯️ <txt name="39">Invertido</txt> </span>
-                <span class="botao"><input id="blurBar" type="range" min="0" max="10" step="0.1" onchange="FX(2)">
-                    👓 <txt name="40">Desfoque</txt>
+                <span class="botao">
+                    <span class="bot" onclick="menufx(1)">0</span>
+                    <span class="bot" onclick="menufx(1)">1</span>
+                    <span class="bot" onclick="menufx(2)">2</span>
+                    <span class="bot" onclick="menufx(3)">3</span>
+                    <span class="bot" onclick="menufx(4)">4</span>
+                    <span class="bot" onclick="menufx(4)">5</span>
+                    <span title="fechar efeitos" onmousedown="removeClass()" class="close">❎</span></span>
                 </span>
-                <span class="botao" onclick="FX(3)">
+                <span class="botao esconde" onclick="FX(0)" id="fx0">🚫 <txt name="38">Remover Filtros</txt>
+                    <span class="botao" onclick="FX(1)"> ☯️ <txt name="39">Invertido</txt> </span>
+                    <span class="botao esconde"><input id="blurBar" type="range" min="0" max="10" step="0.1"
+                            onchange="FX(2)">
+                        👓 <txt name="40">Desfoque</txt>
+                    </span>
+                    <span class="botao esconde" onclick="FX(3)">
 
-                    <span class="bot">🏳️‍🌈<span style="display:inline-block; margin-left: -30px;"></span>🚫</span>
-                    <input id="grayscaleBar" title="escala de cinza" type="range" min="0" max="1" step="0.1">
-                </span>
-                <span class="botao"><input id="sepiaBar" type="range" min="0" max="100" step="10" onchange="FX(4)">⌛️
-                    <txt name="41">Sepia</txt>
-                </span>
+                        <span class="bot">🏳️‍🌈<span style="display:inline-block; margin-left: -30px;"></span>🚫</span>
+                        <input id="grayscaleBar" title="escala de cinza" type="range" min="0" max="1" step="0.1">
+                    </span>
+                    <span class="botao esconde"><input id="sepiaBar" type="range" min="0" max="100" step="10"
+                            onchange="FX(4)">⌛️
+                        <txt name="41">Sepia</txt>
+                    </span>
 
-                <span class="botao"><input id="contrastBar" type="range" min="0" max="300" step="10" onchange="FX(5)"> ◒
-                    <txt name="42">Contraste</txt>
-                </span>
+                    <span class="botao esconde"><input id="contrastBar" type="range" min="0" max="300" step="10"
+                            onchange="FX(5)"> ◒
+                        <txt name="42">Contraste</txt>
+                    </span>
             </div>
             <div id="menusalvar" class="fundobranco submenu">
                 <span class="botao" onclick="export2txt()">

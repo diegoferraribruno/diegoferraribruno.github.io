@@ -99,7 +99,7 @@ function new_frame() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     comandos = []
     changeBrush()
-    //convertToImg()
+    convertToImg()
     changeFrame(workingframe)
     iD("contador").innerHTML = workingframe
 
