@@ -48,7 +48,7 @@ function confirmFX(fx, fxname) {
     // confirm.classList.add("confirm")
     confirm.innerHTML = `aplicar o efeito <br> <div  class="shadow" onClick="applyFX('` + fx + `')"> ` + fxname + ' ✅ </div >' +
         `<div onClick="cancelaFX()"
-             class='shadow'">cancela ❌</div>`
+             class='shadow'">`+ textos[language]["80"] + ` ❌</div>`
 }
 function applyFX() {
 

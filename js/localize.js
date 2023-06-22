@@ -181,7 +181,8 @@ let textos = {
         "76": "Usar como fundo do app",
         "77": "Mover o quadro",
         "78": "Rotacionar pelo centro da tela",
-        "79": "Nitidez (pixel quadrado)"
+        "79": "Nitidez (pixel quadrado)",
+        "80": "cancela"
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -261,7 +262,8 @@ let textos = {
         "76": "use as page background",
         "77": "Move the canva",
         "78": "Rotate by canvas center",
-        "79": "Sharpness (square pixels)"
+        "79": "Sharpness (square pixels)",
+        "80": "Cancel"
     }
 }
 var titles = {
