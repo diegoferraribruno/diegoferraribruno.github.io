@@ -147,8 +147,7 @@ function cortarAnima(x1, y1, x2, y2) {
     function canvasToFrame(frame = 0) {
         swapImg = canvasFront.toDataURL('image/png');
         newAnima[frame] = swapImg
-        blobb = dataURItoBlob(swapImg)
-        comando = ["s", "source-over", blobb, 0, 0, canvas.width, canvas.height];
+        comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
         comandos = []
         comandos.push(comando)
         workingframe = frame
