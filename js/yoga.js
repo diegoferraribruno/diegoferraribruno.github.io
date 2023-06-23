@@ -1,6 +1,11 @@
+
 function yoga() {
-    let rand = Math.floor(Math.random() * 42) * 64
-    let yogat = 'Yoga!?<br><div style="background-Image:url(img/yoga.png); background-position:' + rand + 'px 0px; width:64px; height:77px; display:block; margin:auto" onClick="removeClass()"></div><br>'
-    Alert(yogat, 10)
+    mostraMenu("yoga")
+    yogaChange()
     setTimeout(() => { yoga() }, 1800000)
+    //setTimeout(() => { document.getElementById("menuyoga").classList.remove("aparece") }, 60000)
+}
+function yogaChange() {
+    let rand = Math.floor(Math.random() * 42) * 64
+    document.getElementById("yogapose").style.backgroundPosition = rand + 'px 0px';
 }
