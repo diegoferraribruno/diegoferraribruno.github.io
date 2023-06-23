@@ -148,7 +148,8 @@ function handleStart(evt) {
 let cursinho = new Image
 const movecursor = new Image(); // Create new img element
 movecursor.src = "img/movearrow.png";
-
+const cropcursor = new Image();
+cropcursor.src = "img/crop.png";
 function handleMove(evt) {
     evt.preventDefault();
     document.body.style.cursor = "default";
@@ -165,8 +166,8 @@ function handleMove(evt) {
         cropEnd.x = x
         cropEnd.y = y
         desenhaRetangulo();
-        canvasFront.ctx.font = 24 + 'px serif';
-        canvasFront.ctx.fillText("✂️", x, y)
+        // canvasFront.ctx.font = 24 + 'px serif';
+        canvasFront.ctx.drawImage(cropcursor, x, y)
     } else if (mode == "recortar") {
         canvasFront.classList.remove("esconde")
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -178,7 +179,7 @@ function handleMove(evt) {
 
             desenhaRetangulo();
         }
-        canvasFront.ctx.fillText("✂️", x, y)
+        canvasFront.ctx.drawImage(cropcursor, x, y)
     }
     if (isDrawing === true && isPicking == false && mode != 'move') {
         mouseOver = true;

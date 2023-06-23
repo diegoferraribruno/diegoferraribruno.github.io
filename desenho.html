@@ -24,7 +24,7 @@
                 </span>
                 <span id="fundo" title="Configurações" class="mais" onmousedown="mostraMenu('configuracoes')">🎚️</span>
                 <span id="night" class="mais" onmousedown="night()" title="modo escuro / claro">💡</span>
-                <!--span id="recortar" class="mais" onclick="modeTo('recortar')">✂️</span -->
+                <!--span id="recortar" class="mais" onclick="modeTo('recortar')"><img src="img/crop.png"></span -->
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎<span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
 
@@ -138,8 +138,8 @@
 
             <div id="menutamanho" class="fundobranco submenu">
 
-                <span class="botao">🖼️ ↔️ ✂️<span class="close" title="fechar menu tamanho da tela"
-                        onmousedown="removeClass()">❎</span>
+                <span class="botao">🖼️ ↔️ <img src="img/crop.png"><span class="close"
+                        title="fechar menu tamanho da tela" onmousedown="removeClass()">❎</span>
 
                     <txt name="9">Tamanho atual:</txt><br>
                     <txt name="10">Largura: </txt><input id="largura" type="number" maxlength="4" max="1920" value="320"
@@ -158,7 +158,8 @@
                         style="position: absolute; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -70px; right: 10px; text-align: center;"
                         onclick="x2()">x2</span>
                 </span>
-                <span id="recortar2" class="botao" onclick="modeTo('recortar')">✂️ <txt name="12">recorte manual</txt>
+                <span id="recortar2" class="botao" onclick="modeTo('recortar')"><img src="img/crop.png">
+                    <txt name="12">recorte manual</txt>
                 </span>
 
                 <span class="botao" style="font-size: 0.8em;" title="formatos" id=" formatos">
@@ -316,7 +317,7 @@
                 <span class="botao">
 
 
-                    <span id="recortar" class="bot" onclick="modeTo('recortar')">✂️</span>
+                    <span id="recortar" class="bot" onclick="modeTo('recortar')"><img src="img/crop.png"></span>
                     <span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span
                             class="bot">🎞️<span
                                 style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
@@ -337,7 +338,7 @@
             <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;"> <!--span class="botao">
                     🖼️ <txt name="18">Configurações do quadro</txt>
                 </span-->
-                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ ✂️
+                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ <img src="img/crop.png">
                     <txt name="19">Tamanho do quadro</txt>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
                 </span>
@@ -593,17 +594,19 @@
 
 
             <div id="menurecortar" class="fundobranco submenu">
-                <span class="botao">✂️<span class="close" onmousedown="removeClass()">❎</span>
+                <span class="botao"><img src="img/crop.png"><span class="close" onmousedown="removeClass()">❎</span>
                     <txt name="49">Salvar antes?</txt>
                     <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')"> 🛟
                     </span>
                 </span>
-                <span id="autorecortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)">✂️
+                <span id="autorecortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)"><img
+                        src="img/crop.png">
                     <txt name="51"> Recortar automaticamente </txt><span
                         style="display:inline-block; width: 12px; height: 12px; border: green dashed 2px;"></span>
                 </span>
 
-                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()">✂️
+                <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()"><img
+                        src="img/crop.png">
                     <txt name="52">
                         Recortar para seleção</txt> <span
                         style="display:inline-block; width: 20px; height: 12px; border: red dashed 2px;"></span>

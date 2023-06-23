@@ -105,7 +105,7 @@ let vers = [{
     versao: "1.7.4",
     notas: [
         "🔴⏱️ Botao de gravaçao automática de quadros por tempo",
-        "✂️ recortar automático perfeito.",
+        "<img src='img/crop.png'> recortar automático perfeito.",
         "codigos um pouco mais organizados."
     ]
 
@@ -117,7 +117,7 @@ let vers = [{
         "capturando quadros corretamente com maoir intervalo de tempo",
         "📷 testando troca de camera",
         "🎞️ unir fundo a animação ao exportar para colorir inclusive com opção de sobreposição para pintar por baixo",
-        " salve antes de ✂️ recortar ",
+        " salve antes de <img src='img/crop.png'> recortar ",
         " adeus mensagem de desenhe aqui."
     ]
 
@@ -130,7 +130,7 @@ let vers = [{
         "⚠️ mudança no sistema de alerta",
         "📷 + 🎞️ camera faz sequencia de quadros conforme o click",
         "(sem quadros brancos)",
-        "🎞️  Exporta Gif Animado (✂️recortado inclusive) ",
+        "🎞️  Exporta Gif Animado (<img src='img/crop.png'>recortado inclusive) ",
         "❎ icone fechar janela padronizado",
         "🖌️ pincel suave como primeira opção",
         "- remoção de quadros aprimorada"
@@ -140,7 +140,7 @@ let vers = [{
     versao: " 1.4.4",
     notas: [
         "🎞️carregar Animação como plano de fundo",
-        "✂️ tesoura funcionando para toda animacão! (3 dias nisso aff)",
+        "<img src='img/crop.png'> tesoura funcionando para toda animacão! (3 dias nisso aff)",
         "🪄 historico de pinceis usados",
         "🔲 pincel quadrado tamanho minimo 1 px",
         "🎞️ icone da animação mudou",
