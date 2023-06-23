@@ -227,6 +227,14 @@
 
                     <input type="range" id="strokeSize" name="strokeSize" min="0" max="26" step="1"
                         oninput="strokeSizeRange(this.value)" value="6" width="200px">
+                    <span
+                        style="display: block; float:left; margin: 2px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;"
+                        onclick="addFavBrushPin()">📌</span>
+                    <label>
+
+                        <input id="dinamicBrush" type="checkbox" checked onchange="toggleDinamicBrush()"><img
+                            src="img/dinamicbrush.png">
+                    </label>
                 </span>
                 <!--span class="botao">
                     💧 <input type="range" id="A2" name="transparencia" min="0.01" max="1"
@@ -235,9 +243,13 @@
                 <!--span style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
                         id="line">
                         ➕</span></span><br-->
+
                 <span class="botao light" onmousedown="removeClass()"
                     style="background-image: url('img/grid3.png'); max-height: 220px;"><canvas id="brushCanva"
-                        width="40px" height="40px"></canvas><span class="close">❎</span></span>
+                        width="40px" height="40px"></canvas><span class="close">❎</span>
+
+                </span>
+
             </div>
 
             <div id="menuapagar" class="fundobranco submenu">

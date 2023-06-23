@@ -218,7 +218,8 @@ function export2txt() {
             "canvasInfo": canvasInfo,
             "newBrushes": brushes,
             "customBrushes": customBrushes,
-            "comandosb": comandosb
+            "comandosb": comandosb,
+            "preferences": { "pixelGood": pixelGood, "dinamicBrush": dinamicBrush }
         }
 
         let lenb = brushes.length

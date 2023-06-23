@@ -270,7 +270,7 @@ function blobToDataURL(blob, callback) {
     a.onload = function (e) { callback(e.target.result); }
     a.readAsDataURL(blob);
 }
-function desenha(
+async function desenha(
     CMD,
     GCO,
     X = undefined,
@@ -281,6 +281,12 @@ function desenha(
 ) {
     let comando = []
     switch (CMD) {
+        case "CB":
+            createNewBrush(GCO, X, Y)
+            comando = ["CB", GCO, X, Y]
+            comandos.push(comando)
+            break;
+
         case "rotacionar":
             comando = ["rotacionar", GCO, X, Y]
             comandos.push(comando)
@@ -416,11 +422,6 @@ function desenha(
             comando = ["s", GCO, X, Y, eoX, eoY, strokeWidth]
             comandos.push(comando)
             comandosExec(comandos.length - 1)
-            break;
-        case "CB":
-            createNewBrush(GCO, X, Y)
-            comando = ["CB", GCO, X, Y]
-            comandos.push(comando)
             break;
 
         case "f":

@@ -125,15 +125,34 @@ function handleStart(evt) {
             x = redondo(x)
             y = redondo(y)
         }
-        desenha(
-            "brush",
-            context.globalCompositeOperation,
-            x,
-            y,
-            origin.x,
-            origin.y,
-            strokeWidth
-        );
+        if (dinamicBrush === true && evt.pressure != 0.5) {
+            let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100)
+            if (pressure >= 1) {
+
+                desenha("CB", lastbrush, pressure, strokeColor).then(
+
+                    desenha(
+                        "brush",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        origin.x,
+                        origin.y,
+                        pressure
+                    )
+                )
+            };
+        } else {
+            desenha(
+                "brush",
+                context.globalCompositeOperation,
+                x,
+                y,
+                origin.x,
+                origin.y,
+                strokeWidth
+            )
+        }
 
 
     }
@@ -150,6 +169,9 @@ const movecursor = new Image(); // Create new img element
 movecursor.src = "img/movearrow.png";
 const cropcursor = new Image();
 cropcursor.src = "img/crop.png";
+
+let lastPressure
+
 function handleMove(evt) {
     evt.preventDefault();
     document.body.style.cursor = "default";
@@ -189,15 +211,33 @@ function handleMove(evt) {
         }
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
-            desenha(
-                "brush",
-                context.globalCompositeOperation,
-                x,
-                y,
-                origin.x,
-                origin.y,
-                strokeWidth
-            );
+            if (dinamicBrush === true && evt.pressure != 0.5) {
+                let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100)
+                lastPressure = pressure
+                if (pressure >= 1) {
+                    desenha("CB", lastbrush, pressure, strokeColor).then(
+                        desenha(
+                            "brush",
+                            context.globalCompositeOperation,
+                            x,
+                            y,
+                            origin.x,
+                            origin.y,
+                            pressure
+                        )
+                    )
+                };
+            } else {
+                desenha(
+                    "brush",
+                    context.globalCompositeOperation,
+                    x,
+                    y,
+                    origin.x,
+                    origin.y,
+                    strokeWidth
+                )
+            }
         }
 
     }
@@ -369,6 +409,9 @@ function handleUp(evt) {
         isPicking = false
     }
     if (isDrawing) {
+        if (dinamicBrush === true) {
+            memorySwap()
+        }
         ultimoToque.x = x
         ultimoToque.y = y
         isDrawing = false;

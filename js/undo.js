@@ -71,7 +71,7 @@ function redo() {
 
 
 
-/*function memorySwap() {
+function memorySwap() {
     let len = comandos.length;
     if (len > 500) {
         for (let c = 0; c < len; c++) {
@@ -101,10 +101,10 @@ function redo() {
         // clearBrushes()
     }
 }
-*/
+
 
 function comandosParaComandosb() {
-    //memorySwap()
+
     let len = comandos.length - undoLevel
     comandosb[workingframe] = []
     for (i = 0; i < len; i++) {

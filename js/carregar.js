@@ -242,6 +242,24 @@ var openFile = function (event) {
                 }, 600)
             }
             //changeBrush()
+
+            if (
+
+                projeto["preferences"]["pixelGood"] == false
+            ) {
+                pixelGood = false
+            } else {
+                pixelGood = true
+            }
+
+            if (
+                projeto["preferences"]["dinamicBrush"] == true) {
+                dinamicBrush = true
+            } else {
+                dinamicBrush = false
+                iD("dinamicBrush").checked = false
+            }
+
         }, 400 * (lenb + 2))
         /*   setTimeout(() => {
                favBrush('1-6-hsla(0,0%,0%,1)');
@@ -250,57 +268,3 @@ var openFile = function (event) {
     }
     reader.readAsText(input.files[0]);
 };
-
-/* GEAVE UP FOR NOW WITH MULIFILE. NEED TO REMAKE EVERYTHING FROM SCRATCH.
-
-document.getElementById('input').addEventListener('change', function () {
-    _readFileDataUrl(this, function (err, files) {
-        if (err) { return }
-        console.log(files)//contains base64 encoded string array holding the image data 
-        let len = files.length
-        for (i = 0; i < len; i++) {
-
-            var imagem = new Image()
-            imagem.src = files[i]
-            context.setTransform(1, 0, 0, 1, 0, 0);
-            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-            desenha("f", globalComposite, files[i], 0, 0, imagem.width, imagem.height)
-            context.drawImage(imagem, canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
-            swapImg = canvas.toDataURL('image/png');
-            blobb = dataURItoBlob(swapImg)
-            animacao[workingframe] = swapImg
-            workingframe++
-            //                new_frame()
-
-            //document.body.appendChild(imagem)
-
-            setTimeout(() => {
-                adicionaQuadro()
-                changeFrame(workingframe - 1);
-                removeClass()
-                iD("contador").innerHTML = workingframe;
-            }, 200 * i)
-        }
-    });
-    removeElement("carregando")
-});
-var _readFileDataUrl = function (input, callback) {
-    var len = input.files.length, _files = [], res = [];
-    var readFile = function (filePos) {
-        if (!filePos) {
-            callback(false, res);
-        } else {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                res.push(e.target.result);
-                readFile(_files.shift());
-            };
-            reader.readAsDataURL(filePos);
-        }
-    };
-    for (var x = 0; x < len; x++) {
-        _files.push(input.files[x]);
-    }
-    readFile(_files.shift());
-}
-*/

@@ -24,6 +24,11 @@ brush.onload = function () {
     changeBrush()
 }
 newBrush.src = brush.src
+var dinamicBrush = true
+
+function toggleDinamicBrush() {
+    dinamicBrush = !dinamicBrush
+}
 
 
 function createBasicBrushes() {
@@ -251,13 +256,23 @@ function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor
 }
 
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
+    lastbrush = numero
     desenha("CB", numero, tam, cor)
+    if (dinamicBrush === false) {
+        addFavBrush()
 
+    }
+}
+function addFavBrushPin() {
+    changedBrush = false
+    addFavBrush()
+}
+function addFavBrush() {
     setTimeout(() => {
         let newNewBrush = new Image();
         newNewBrush.src = brushCanva.toDataURL("image/png");
         newBrush.src = newNewBrush.src
-        newBrushes[brushName] = [newNewBrush, numero, strokeWidth, strokeColor]
+        newBrushes[brushName] = [newNewBrush, lastbrush, strokeWidth, strokeColor]
         if (changedBrush == false) {
             changedBrush = true;
             let existe = iD(brushName)
