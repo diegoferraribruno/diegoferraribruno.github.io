@@ -127,8 +127,8 @@ function handleStart(evt) {
             y = redondo(y)
         }
         console.dir(evt)
-        if (evt.pointerType == "touch") {
-            let pressure = ((evt.width + evt.height) / 20 + 1) * strokeWidth;
+        if (evt.pointerType == "touch" && dinamicBrush === true) {
+            let pressure = redondo((evt.width + evt.height) * strokeWidth / 1.5);
             desenha("CB", lastbrush, pressure, strokeColor).then(
 
                 desenha(
@@ -233,8 +233,8 @@ function handleMove(evt) {
         }
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
-            if (evt.pointerType == "touch") {
-                let pressure = ((evt.width + evt.height) / 20 + 1) * strokeWidth;
+            if (evt.pointerType == "touch" && dinamicBrush === true) {
+                let pressure = redondo((evt.width + evt.height) * strokeWidth / 1.5);
                 desenha("CB", lastbrush, pressure, strokeColor).then(
 
                     desenha(
