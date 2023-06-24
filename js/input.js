@@ -82,11 +82,11 @@ function handleKeys(evt) {
 
 
 function handleStart(evt) {
+    evt.preventDefault();
     removeClass();
-
+    console.dir(evt)
     changedBrush = false;
 
-    evt.preventDefault();
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
     if (pixelGood) {
@@ -126,7 +126,7 @@ function handleStart(evt) {
             y = redondo(y)
         }
         if (dinamicBrush === true && evt.pressure != 0.5) {
-            let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100)
+            let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 0.5)
             if (pressure >= 1) {
 
                 desenha("CB", lastbrush, pressure, strokeColor).then(
@@ -212,21 +212,19 @@ function handleMove(evt) {
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
             if (dinamicBrush === true && evt.pressure != 0.5) {
-                let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100)
+                let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
                 lastPressure = pressure
-                if (pressure >= 1) {
-                    desenha("CB", lastbrush, pressure, strokeColor).then(
-                        desenha(
-                            "brush",
-                            context.globalCompositeOperation,
-                            x,
-                            y,
-                            origin.x,
-                            origin.y,
-                            pressure
-                        )
+                desenha("CB", lastbrush, pressure, strokeColor).then(
+                    desenha(
+                        "brush",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        origin.x,
+                        origin.y,
+                        pressure
                     )
-                };
+                )
             } else {
                 desenha(
                     "brush",
