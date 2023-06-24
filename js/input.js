@@ -128,7 +128,7 @@ function handleStart(evt) {
         }
         console.dir(evt)
         if (evt.pointerType == "touch") {
-            let pressure = evt.width * strokeWidth;
+            let pressure = (evt.width + evt.height) / 2 * strokeWidth;
             desenha("CB", lastbrush, pressure, strokeColor).then(
 
                 desenha(
@@ -231,7 +231,7 @@ function handleMove(evt) {
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
             if (evt.pointerType == "touch") {
-                let pressure = evt.width * strokeWidth;
+                let pressure = (evt.width + evt.height) / 2 * strokeWidth;
                 desenha("CB", lastbrush, pressure, strokeColor).then(
 
                     desenha(
