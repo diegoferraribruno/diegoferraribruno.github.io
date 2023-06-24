@@ -128,7 +128,7 @@ function handleStart(evt) {
         }
         console.dir(evt)
         if (evt.pointerType == "touch") {
-            let pressure = (evt.width + evt.height) / 2 * strokeWidth;
+            let pressure = ((evt.width + evt.height) / 20 + 1) * strokeWidth;
             desenha("CB", lastbrush, pressure, strokeColor).then(
 
                 desenha(
@@ -143,36 +143,39 @@ function handleStart(evt) {
             )
 
 
-        } else if (dinamicBrush === true && evt.pressure != 0.5) {
-            let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 0.5)
-            if (pressure >= 1) {
+        } else {
 
-                desenha("CB", lastbrush, pressure, strokeColor).then(
+            if (dinamicBrush === true && evt.pressure != 0.5) {
+                let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 0.5)
+                if (pressure >= 1) {
 
-                    desenha(
-                        "brush",
-                        context.globalCompositeOperation,
-                        x,
-                        y,
-                        origin.x,
-                        origin.y,
-                        pressure
+                    desenha("CB", lastbrush, pressure, strokeColor).then(
+
+                        desenha(
+                            "brush",
+                            context.globalCompositeOperation,
+                            x,
+                            y,
+                            origin.x,
+                            origin.y,
+                            pressure
+                        )
                     )
+                };
+            }
+            else {
+                desenha(
+                    "brush",
+                    context.globalCompositeOperation,
+                    x,
+                    y,
+                    origin.x,
+                    origin.y,
+                    strokeWidth
                 )
-            };
-        }
-        else {
-            desenha(
-                "brush",
-                context.globalCompositeOperation,
-                x,
-                y,
-                origin.x,
-                origin.y,
-                strokeWidth
-            )
-        }
+            }
 
+        }
 
     }
     if (mode == "picker") {
@@ -231,7 +234,7 @@ function handleMove(evt) {
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
             if (evt.pointerType == "touch") {
-                let pressure = (evt.width + evt.height) / 2 * strokeWidth;
+                let pressure = ((evt.width + evt.height) / 20 + 1) * strokeWidth;
                 desenha("CB", lastbrush, pressure, strokeColor).then(
 
                     desenha(
@@ -246,30 +249,32 @@ function handleMove(evt) {
                 )
 
 
-            } else if (dinamicBrush === true && evt.pressure != 0.5) {
-                let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
-                lastPressure = pressure
-                desenha("CB", lastbrush, pressure, strokeColor).then(
-                    desenha(
-                        "brush",
-                        context.globalCompositeOperation,
-                        x,
-                        y,
-                        origin.x,
-                        origin.y,
-                        pressure
-                    )
-                )
             } else {
-                desenha(
-                    "brush",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-                    strokeWidth
-                )
+                if (dinamicBrush === true && evt.pressure != 0.5) {
+                    let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
+                    lastPressure = pressure
+                    desenha("CB", lastbrush, pressure, strokeColor).then(
+                        desenha(
+                            "brush",
+                            context.globalCompositeOperation,
+                            x,
+                            y,
+                            origin.x,
+                            origin.y,
+                            pressure
+                        )
+                    )
+                } else {
+                    desenha(
+                        "brush",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        origin.x,
+                        origin.y,
+                        strokeWidth
+                    )
+                }
             }
         }
 
