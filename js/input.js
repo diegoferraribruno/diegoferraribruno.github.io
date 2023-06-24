@@ -121,11 +121,29 @@ function handleStart(evt) {
         offsetY = canvas.getBoundingClientRect().top;
         x = (evt.pageX - offsetX) / zoomFactor
         y = (evt.pageY - offsetY) / zoomFactor
+
         if (pixelGood) {
             x = redondo(x)
             y = redondo(y)
         }
-        if (dinamicBrush === true && evt.pressure != 0.5) {
+        console.dir(evt)
+        if (evt.pointerType == "touch" && dinamicBrush === true) {
+            const pressure = evt.height * strokeWidth / 20;
+            desenha("CB", lastbrush, pressure, strokeColor).then(
+
+                desenha(
+                    "brush",
+                    context.globalCompositeOperation,
+                    x,
+                    y,
+                    origin.x,
+                    origin.y,
+                    pressure
+                )
+            )
+
+
+        } else if (dinamicBrush === true && evt.pressure != 0.5) {
             let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 0.5)
             if (pressure >= 1) {
 
@@ -142,7 +160,8 @@ function handleStart(evt) {
                     )
                 )
             };
-        } else {
+        }
+        else {
             desenha(
                 "brush",
                 context.globalCompositeOperation,
@@ -211,7 +230,23 @@ function handleMove(evt) {
         }
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
-            if (dinamicBrush === true && evt.pressure != 0.5) {
+            if (evt.pointerType == "touch" && dinamicBrush === true) {
+                const pressure = evt.height * strokeWidth / 20;
+                desenha("CB", lastbrush, pressure, strokeColor).then(
+
+                    desenha(
+                        "brush",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        origin.x,
+                        origin.y,
+                        pressure
+                    )
+                )
+
+
+            } else if (dinamicBrush === true && evt.pressure != 0.5) {
                 let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
                 lastPressure = pressure
                 desenha("CB", lastbrush, pressure, strokeColor).then(
