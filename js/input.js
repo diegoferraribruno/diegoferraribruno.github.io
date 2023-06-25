@@ -393,7 +393,11 @@ function handleMove(evt) {
 function handleMove2(evt) {
     evt.preventDefault();
     canvas.focus()
-    isDrawing = true
+    if (mode == "pintar") {
+        isDrawing = true
+    } else {
+        isDrawing = false
+    }
     let touch = evt.touches[0];
 
     offsetX = canvas.getBoundingClientRect().left;
@@ -406,27 +410,28 @@ function handleMove2(evt) {
         origin.y = redondo(origin.y)
     }
     if (isDrawing === true && isPicking == false && mode != 'move') {
+        let radius = 1
         if (dinamicBrush === true) {
-
-            const radius = touch.radiusX / 60 + 1 || 1;
-            // console.log("radius", radius)
-            let pressure = redondo(radius * strokeWidth)
-
-            desenha("CB", lastbrush, pressure, strokeColor).then(
-
-                desenha(
-                    "brush",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-                    pressure
-                )
-            )
-
+            radius = touch.radiusX / 20 + 1 || 1;
         }
+        // console.log("radius", radius)
+        let pressure = redondo(radius * strokeWidth)
+
+        desenha("CB", lastbrush, pressure, strokeColor).then(
+
+            desenha(
+                "brush",
+                context.globalCompositeOperation,
+                x,
+                y,
+                origin.x,
+                origin.y,
+                pressure
+            )
+        )
+
     }
+
 
     origin.x = x
     origin.y = y
