@@ -80,13 +80,45 @@ function handleKeys(evt) {
     }
 }
 
+function handleStart2(evt) {
+    let touch = evt.touches[0];
+    offsetX = canvas.getBoundingClientRect().left;
+    offsetY = canvas.getBoundingClientRect().top;
+    origin.x = (touch.pageX - offsetX) / zoomFactor
+    origin.y = (touch.pageY - offsetY) / zoomFactor
+    x = origin.x
+    y = origin.y
+    if (pixelGood) {
+        origin.x = redondo(origin.x)
+        origin.y = redondo(origin.y)
+    }
+    let radius = touch.force || touch.radiusX || 1;
+    let pressure = redondo(radius * strokeWidth)
+    if (mode == "pintar" || mode == "apagar" || mode == "cores") {
+        canvasFront.classList.add("esconde")
+        isDrawing = true
+        desenha("CB", lastbrush, pressure, strokeColor).then(
+
+            desenha(
+                "brush",
+                context.globalCompositeOperation,
+                x,
+                y,
+                origin.x,
+                origin.y,
+                pressure
+            )
+        )
+    }
+
+}
 
 function handleStart(evt) {
     evt.preventDefault();
     removeClass();
-    console.dir(evt)
+    // console.dir(evt)
     changedBrush = false;
-
+    if (evt.pointerType == "touch") return
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
     if (pixelGood) {
@@ -126,22 +158,9 @@ function handleStart(evt) {
             x = redondo(x)
             y = redondo(y)
         }
-        console.dir(evt)
-        if (evt.pointerType == "touch" && dinamicBrush === true) {
-            let pressure = redondo((evt.width + evt.height) * strokeWidth);
-            desenha("CB", lastbrush, pressure, strokeColor).then(
-
-                desenha(
-                    "brush",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-                    pressure
-                )
-            )
-
+        // console.dir(evt)
+        if (evt.pointerType == "touch") {
+            return
 
         } else {
 
@@ -194,8 +213,48 @@ cropcursor.src = "img/crop.png";
 
 let lastPressure
 
+function handleMove2(evt) {
+    evt.preventDefault();
+    let touch = evt.touches[0];
+    offsetX = canvas.getBoundingClientRect().left;
+    offsetY = canvas.getBoundingClientRect().top;
+    origin.x = (touch.pageX - offsetX) / zoomFactor
+    origin.y = (touch.pageY - offsetY) / zoomFactor
+    x = origin.x
+    y = origin.y
+    if (pixelGood) {
+        origin.x = redondo(origin.x)
+        origin.y = redondo(origin.y)
+    }
+    if (isDrawing === true && isPicking == false && mode != 'move') {
+        if (dinamicBrush === true) {
+
+            const radius = touch.force || touch.radiusX || 1;
+            let pressure = redondo(radius * strokeWidth)
+
+            desenha("CB", lastbrush, pressure, strokeColor).then(
+
+                desenha(
+                    "brush",
+                    context.globalCompositeOperation,
+                    x,
+                    y,
+                    origin.x,
+                    origin.y,
+                    pressure
+                )
+            )
+
+        }
+    }
+
+    origin.x = (touch.pageX - offsetX) / zoomFactor
+    origin.y = (touch.pageY - offsetY) / zoomFactor
+}
+
 function handleMove(evt) {
     evt.preventDefault();
+    if (evt.pointerType == "touch") return
     document.body.style.cursor = "default";
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
@@ -234,20 +293,7 @@ function handleMove(evt) {
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
             if (evt.pointerType == "touch" && dinamicBrush === true) {
-                let pressure = redondo((evt.width + evt.height) * strokeWidth);
-                desenha("CB", lastbrush, pressure, strokeColor).then(
-
-                    desenha(
-                        "brush",
-                        context.globalCompositeOperation,
-                        x,
-                        y,
-                        origin.x,
-                        origin.y,
-                        pressure
-                    )
-                )
-
+                return
 
             } else {
                 if (dinamicBrush === true && evt.pressure != 0.5) {
@@ -311,7 +357,7 @@ function handleMove(evt) {
         scrollWindow.y += origin.y - y
         if (scrollWindow.x != 0 || scrollWindow.y != 0) {
             scrollMoveCanva(scrollWindow.x, scrollWindow.y)
-            console.log(scrollWindow.x, scrollWindow.y)
+            // console.log(scrollWindow.x, scrollWindow.y)
         }
         origin.x = x
         origin.y = y

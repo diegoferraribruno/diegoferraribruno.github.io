@@ -54,7 +54,6 @@ function startup() {
         } else if (event.code === "Space") {
           if (mode == "play") { stop(); } else { play(); }
         } else if (event.key === "+" && keyCtrl == false) {
-          //  console.log("mais um")
           new_frame()
         } else if (event.key === "Delete") {
           removeFrame()
@@ -133,11 +132,12 @@ function startup() {
   pixel()
 
   setTimeout(() => {
-    //canvasFront.addEventListener("pointerdown", handleStart2);
     canvas.addEventListener("pointerdown", handleStart);
     canvas.addEventListener("pointerup", handleUp);
     canvas.addEventListener("pointercancel", handleCancel);
     canvas.addEventListener("pointermove", handleMove);
+    canvas.addEventListener("touchstart", handleStart2);
+    canvas.addEventListener("touchmove", handleMove2);
     canvas.addEventListener("pointerleave", handleEnd);
     // limpaCabeca();
     apresenta()
@@ -146,9 +146,7 @@ function startup() {
   loading()
 
 }
-function handleStart2(evt) {
-  evt.preventDefault()
-}
+
 function loading() {
   setTimeout(() => { removeElement("carregandoa") }, 10000)
 }
