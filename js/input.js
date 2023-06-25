@@ -93,7 +93,10 @@ function handleStart2(evt) {
         origin.x = redondo(origin.x)
         origin.y = redondo(origin.y)
     }
-    let radius = touch.force || touch.radiusX || 1;
+    let radius = 1
+    if (dinamicBrush === true) {
+        radius = touch.force + 1;
+    }
     let pressure = redondo(radius * strokeWidth)
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
         canvasFront.classList.add("esconde")
@@ -412,7 +415,7 @@ function handleMove2(evt) {
     if (isDrawing === true && isPicking == false && mode != 'move') {
         let radius = 1
         if (dinamicBrush === true) {
-            radius = touch.radiusX / 10 + 1 || 1;
+            radius = touch.force + 1;
         }
         // console.log("radius", radius)
         let pressure = redondo(radius * strokeWidth)
