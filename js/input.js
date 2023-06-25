@@ -213,44 +213,6 @@ cropcursor.src = "img/crop.png";
 
 let lastPressure
 
-function handleMove2(evt) {
-    evt.preventDefault();
-    let touch = evt.touches[0];
-    offsetX = canvas.getBoundingClientRect().left;
-    offsetY = canvas.getBoundingClientRect().top;
-    origin.x = (touch.pageX - offsetX) / zoomFactor
-    origin.y = (touch.pageY - offsetY) / zoomFactor
-    x = origin.x
-    y = origin.y
-    if (pixelGood) {
-        origin.x = redondo(origin.x)
-        origin.y = redondo(origin.y)
-    }
-    if (isDrawing === true && isPicking == false && mode != 'move') {
-        if (dinamicBrush === true) {
-
-            const radius = touch.force || touch.radiusX || 1;
-            let pressure = redondo(radius * strokeWidth)
-
-            desenha("CB", lastbrush, pressure, strokeColor).then(
-
-                desenha(
-                    "brush",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-                    pressure
-                )
-            )
-
-        }
-    }
-
-    origin.x = (touch.pageX - offsetX) / zoomFactor
-    origin.y = (touch.pageY - offsetY) / zoomFactor
-}
 
 function handleMove(evt) {
     evt.preventDefault();
@@ -422,6 +384,47 @@ function handleMove(evt) {
         }
     }
 }
+
+
+function handleMove2(evt) {
+    evt.preventDefault();
+    let touch = evt.touches[0];
+    offsetX = canvas.getBoundingClientRect().left;
+    offsetY = canvas.getBoundingClientRect().top;
+    origin.x = (touch.pageX - offsetX) / zoomFactor
+    origin.y = (touch.pageY - offsetY) / zoomFactor
+    x = origin.x
+    y = origin.y
+    if (pixelGood) {
+        origin.x = redondo(origin.x)
+        origin.y = redondo(origin.y)
+    }
+    if (isDrawing === true && isPicking == false && mode != 'move') {
+        if (dinamicBrush === true) {
+
+            const radius = touch.force || touch.radiusX * 2 || 1;
+            let pressure = redondo(radius * strokeWidth)
+
+            desenha("CB", lastbrush, pressure, strokeColor).then(
+
+                desenha(
+                    "brush",
+                    context.globalCompositeOperation,
+                    x,
+                    y,
+                    origin.x,
+                    origin.y,
+                    pressure
+                )
+            )
+
+        }
+    }
+
+    origin.x = (touch.pageX - offsetX) / zoomFactor
+    origin.y = (touch.pageY - offsetY) / zoomFactor
+}
+
 function handleUp(evt) {
 
     if (movendo == true) {
