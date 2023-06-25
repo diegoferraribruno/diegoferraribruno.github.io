@@ -412,7 +412,7 @@ function handleMove2(evt) {
     if (isDrawing === true && isPicking == false && mode != 'move') {
         let radius = 1
         if (dinamicBrush === true) {
-            radius = touch.radiusX / 20 + 1 || 1;
+            radius = touch.radiusX / 10 + 1 || 1;
         }
         // console.log("radius", radius)
         let pressure = redondo(radius * strokeWidth)
