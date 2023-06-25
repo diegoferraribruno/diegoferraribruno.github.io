@@ -81,6 +81,7 @@ function handleKeys(evt) {
 }
 
 function handleStart2(evt) {
+    canvas.focus()
     let touch = evt.touches[0];
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
@@ -118,91 +119,94 @@ function handleStart(evt) {
     removeClass();
     // console.dir(evt)
     changedBrush = false;
-    if (evt.pointerType == "touch") return
-    origin.x = (evt.pageX - offsetX) / zoomFactor
-    origin.y = (evt.pageY - offsetY) / zoomFactor
-    if (pixelGood) {
-        origin.x = redondo(origin.x)
-        origin.y = redondo(origin.y)
-    }
-    offsetX = canvas.getBoundingClientRect().left;
-    offsetY = canvas.getBoundingClientRect().top;
-    if (mode === "recortar") {
-        canvasFront.classList.remove("esconde")
-        isSelecting = true;
-    }
-    if (mode == "emoji") {
-        isEmoji = true
-        isDrawing = false
-    }
-    if (mode == "move") {
-        movendo = true
-    }
-    if (mode == "rotacionar") {
-        rotacionar = true
-    }
-    if (mode == "zoomx") {
-        isGrabing = true;
-    }
-    if (mode == "pintar" || mode == "apagar" || mode == "cores") {
-        canvasFront.classList.add("esconde")
-        isDrawing = true
-        mouseOver = true;
+    if (evt.pointerType != "touch") {
 
+
+        origin.x = (evt.pageX - offsetX) / zoomFactor
+        origin.y = (evt.pageY - offsetY) / zoomFactor
+        if (pixelGood) {
+            origin.x = redondo(origin.x)
+            origin.y = redondo(origin.y)
+        }
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
-        x = (evt.pageX - offsetX) / zoomFactor
-        y = (evt.pageY - offsetY) / zoomFactor
-
-        if (pixelGood) {
-            x = redondo(x)
-            y = redondo(y)
+        if (mode === "recortar") {
+            canvasFront.classList.remove("esconde")
+            isSelecting = true;
         }
-        // console.dir(evt)
-        if (evt.pointerType == "touch") {
-            return
+        if (mode == "emoji") {
+            isEmoji = true
+            isDrawing = false
+        }
+        if (mode == "move") {
+            movendo = true
+        }
+        if (mode == "rotacionar") {
+            rotacionar = true
+        }
+        if (mode == "zoomx") {
+            isGrabing = true;
+        }
+        if (mode == "pintar" || mode == "apagar" || mode == "cores") {
+            canvasFront.classList.add("esconde")
+            isDrawing = true
+            mouseOver = true;
 
-        } else {
+            offsetX = canvas.getBoundingClientRect().left;
+            offsetY = canvas.getBoundingClientRect().top;
+            x = (evt.pageX - offsetX) / zoomFactor
+            y = (evt.pageY - offsetY) / zoomFactor
 
-            if (dinamicBrush === true && evt.pressure != 0.5) {
-                let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 0.5)
-                if (pressure >= 1) {
+            if (pixelGood) {
+                x = redondo(x)
+                y = redondo(y)
+            }
+            // console.dir(evt)
+            if (evt.pointerType == "touch") {
+                return
 
-                    desenha("CB", lastbrush, pressure, strokeColor).then(
+            } else {
 
-                        desenha(
-                            "brush",
-                            context.globalCompositeOperation,
-                            x,
-                            y,
-                            origin.x,
-                            origin.y,
-                            pressure
+                if (dinamicBrush === true && evt.pressure != 0.5) {
+                    let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 0.5)
+                    if (pressure >= 1) {
+
+                        desenha("CB", lastbrush, pressure, strokeColor).then(
+
+                            desenha(
+                                "brush",
+                                context.globalCompositeOperation,
+                                x,
+                                y,
+                                origin.x,
+                                origin.y,
+                                pressure
+                            )
                         )
+                    };
+                }
+                else {
+                    desenha(
+                        "brush",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        origin.x,
+                        origin.y,
+                        strokeWidth
                     )
-                };
-            }
-            else {
-                desenha(
-                    "brush",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-                    strokeWidth
-                )
+                }
+
             }
 
         }
-
-    }
-    if (mode == "picker") {
-        canvasFront.classList.add("esconde")
-        isPicking = true
-    }
-    if (mode == "play") {
-        stop();
+        if (mode == "picker") {
+            canvasFront.classList.add("esconde")
+            isPicking = true
+        }
+        if (mode == "play") {
+            stop();
+        }
     }
 }
 let cursinho = new Image
@@ -388,13 +392,15 @@ function handleMove(evt) {
 
 function handleMove2(evt) {
     evt.preventDefault();
+    canvas.focus()
+    isDrawing = true
     let touch = evt.touches[0];
+
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
-    origin.x = (touch.pageX - offsetX) / zoomFactor
-    origin.y = (touch.pageY - offsetY) / zoomFactor
-    x = origin.x
-    y = origin.y
+    x = (touch.pageX - offsetX) / zoomFactor
+    y = (touch.pageY - offsetY) / zoomFactor
+
     if (pixelGood) {
         origin.x = redondo(origin.x)
         origin.y = redondo(origin.y)
@@ -402,7 +408,8 @@ function handleMove2(evt) {
     if (isDrawing === true && isPicking == false && mode != 'move') {
         if (dinamicBrush === true) {
 
-            const radius = touch.force || touch.radiusX * 2 || 1;
+            const radius = touch.radiusX / 60 + 1 || 1;
+            // console.log("radius", radius)
             let pressure = redondo(radius * strokeWidth)
 
             desenha("CB", lastbrush, pressure, strokeColor).then(
@@ -421,8 +428,9 @@ function handleMove2(evt) {
         }
     }
 
-    origin.x = (touch.pageX - offsetX) / zoomFactor
-    origin.y = (touch.pageY - offsetY) / zoomFactor
+    origin.x = x
+    origin.y = y
+
 }
 
 function handleUp(evt) {

@@ -132,12 +132,12 @@ function startup() {
   pixel()
 
   setTimeout(() => {
+    canvas.addEventListener("touchstart", handleStart2);
+    canvas.addEventListener("touchmove", handleMove2);
     canvas.addEventListener("pointerdown", handleStart);
     canvas.addEventListener("pointerup", handleUp);
     canvas.addEventListener("pointercancel", handleCancel);
     canvas.addEventListener("pointermove", handleMove);
-    canvas.addEventListener("touchstart", handleStart2);
-    canvas.addEventListener("touchmove", handleMove2);
     canvas.addEventListener("pointerleave", handleEnd);
     // limpaCabeca();
     apresenta()
