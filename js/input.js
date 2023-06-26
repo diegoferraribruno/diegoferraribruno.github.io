@@ -81,6 +81,7 @@ function handleKeys(evt) {
 }
 
 
+let lastPressure = 0.5
 function handleStart(evt) {
     evt.preventDefault();
     removeClass();
@@ -129,8 +130,8 @@ function handleStart(evt) {
             y = redondo(y)
         }
         if (evt.pointerType == "touch" && dinamicBrush === true) {
-            let pressure = strokeWidth;
-            desenha("CB", lastbrush, pressure, strokeColor).then(
+            if (lastPressure < strokeWidth || lastPressure > strokeWidth) { lastPressure = strokeWidth }
+            desenha("CB", lastbrush, lastPressure, strokeColor).then(
 
                 desenha(
                     "brush",
@@ -139,7 +140,7 @@ function handleStart(evt) {
                     y,
                     origin.x,
                     origin.y,
-                    pressure
+                    lastPressure
                 )
             )
 
@@ -193,7 +194,6 @@ movecursor.src = "img/movearrow.png";
 const cropcursor = new Image();
 cropcursor.src = "img/crop.png";
 
-let lastPressure
 function positivo(value) {
     if (value < 0) {
         return value * -1
@@ -241,9 +241,15 @@ function handleMove(evt) {
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
             if (evt.pointerType == "touch" && dinamicBrush === true) {
-                let pressure = redondo(((positivo(origin.x - x) + positivo(origin.y - y)) / 8 + 1) * strokeWidth);
+                let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 4) * strokeWidth;
+                console.log(pressure)
+                if (pressure > lastPressure) { lastPressure += 1 } else {
+                    lastPressure -= 1
+                }
+                lastPressure = redondo(lastPressure)
+                if (lastPressure < strokeWidth) { lastPressure = strokeWidth }
                 iD("console2").innerHTML = " pressure/speed: " + pressure
-                desenha("CB", lastbrush, pressure, strokeColor).then(
+                desenha("CB", lastbrush, lastPressure, strokeColor).then(
 
                     desenha(
                         "brush",
@@ -252,7 +258,7 @@ function handleMove(evt) {
                         y,
                         origin.x,
                         origin.y,
-                        pressure
+                        lastPressure
                     )
                 )
 
