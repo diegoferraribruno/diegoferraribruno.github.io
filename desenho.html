@@ -15,7 +15,7 @@
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
             <div id="ferramentas" class="ferramentas">
-                <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">🛟</span>
+                <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">💾</span>
                 <span id="localize" title="change language" class="mais" onclick="localize()">
                     <span
                         style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">🇬🇧<span
@@ -291,21 +291,24 @@
                 </div>
                 <div id="paleta" class="fundobranco glow"></div>
                 <div id="menu" class="fundobranco glow" onmouseover="mostra()">
-                    <!--span id="pickerc" title="Pega cor" class="bloquinho" onmousedown="modeTo(`picker`)"
-                        style="margin: -10px 10px 0px 0px; width: 24px; font-size:24px;">💉</span-->
                     <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais">
                         <span
                             style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span>
 
-                    </span><br>
+                    </span>
+                    <label> <input type="checkbox" id="dinamicInk" onchange="toggleDinamicInk()"
+                            style="width: 50px; margin-left: 8px">
+                        <img src="img/dinamicInk.png"> </label>
+                    <br>
+                    💧<input type="range" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+                        step="0.01" value="1"><br>
                     🌈<input type="range" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
                         value="0"> <br>
                     ◒ <input type="range" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)"
                         value="100"> <br>
                     🔆 <input type="range" id="L" name="cor" min="0" max="100" oninput="mudaCorQ(2,this.value)"
                         value="50"> <br>
-                    💧<input type="range" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
-                        step="0.01" value="1"><br>
+
                 </div>
 
                 <div id="paleta3" class="fundobranco glow"></div>
@@ -585,15 +588,15 @@
             <div class="fundobranco submenu" id="menusalvar">
 
                 <span class="botao" onclick="export2txt()">
-                    🛟<txt name="49">Exportar projeto </txt> .art
+                    💾<txt name="49">Exportar projeto </txt> .art
                     <span class="close" title="fechar menu apagar" onmousedown="removeClass()">❎</span>
                 </span>
-                <span class="botao">🛟 🖼️ <txt name="43">Salvar quadro atual</txt> <br>
+                <span class="botao">💾 🖼️ <txt name="43">Salvar quadro atual</txt> <br>
                     <txt name="44">Título:</txt> <input id="filename" type="text" alt="Nome do arquivo"
                         placeholder="Nome do arquivo" value="desenho" onfocus="this.value=''"> <span
-                        onclick="salvaImagem()" class="bot">🛟</span>
+                        onclick="salvaImagem()" class="bot">💾</span>
                 </span>
-                <span class="botao">🛟 🎞️ <br>
+                <span class="botao">💾 🎞️ <br>
                     <txt name="45">Exportar sequencia de quadros</txt><input type="checkbox" id="seq" checked="true">
                     <br> 🖼️🎞️ <txt name="46">Exportar Gif animado:</txt> <input type="checkbox" id="gif"
                         checked="true">
@@ -601,14 +604,14 @@
                     <txt name="47">Unir quadro com fundo</txt> <input type="checkbox" id="unir"><br>
                     <txt name="48">Título:</txt> <input id="filenameS" type="text" alt="Nome do arquivo"
                         placeholder="Nome do arquivo" value="anima" onfocus="this.value=''"> <span
-                        onclick="export_anim()" class="bot"> 🛟 </span>
+                        onclick="export_anim()" class="bot"> 💾 </span>
             </div>
 
 
             <div id="menurecortar" class="fundobranco submenu">
                 <span class="botao"><img src="img/crop.png"><span class="close" onmousedown="removeClass()">❎</span>
                     <txt name="49">Salvar antes?</txt>
-                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')"> 🛟
+                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')"> 💾
                     </span>
                 </span>
                 <span id="autorecortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)"><img

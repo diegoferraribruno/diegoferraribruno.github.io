@@ -29,6 +29,9 @@ var dinamicBrush = true
 function toggleDinamicBrush() {
     dinamicBrush = !dinamicBrush
 }
+function toggleDinamicInk() {
+    dinamicInk = !dinamicInk
+}
 
 
 function createBasicBrushes() {

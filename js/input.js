@@ -82,6 +82,8 @@ function handleKeys(evt) {
 
 
 let lastPressure = 0.5
+let dinamicInk = false
+let lastInk = 1
 function handleStart(evt) {
     evt.preventDefault();
     removeClass();
@@ -116,6 +118,11 @@ function handleStart(evt) {
         isGrabing = true;
     }
     if (mode == "pintar" || mode == "apagar" || mode == "cores") {
+        if (dinamicInk == true) {
+            mudaCorQ(3, iD("A").value)
+            lastInk = hsla[3]
+
+        }
         canvasFront.classList.add("esconde")
         isDrawing = true
         mouseOver = true;
@@ -131,6 +138,7 @@ function handleStart(evt) {
         }
         if (evt.pointerType == "touch" && dinamicBrush === true) {
             if (lastPressure < strokeWidth || lastPressure > strokeWidth) { lastPressure = strokeWidth }
+
             desenha("CB", lastbrush, lastPressure, strokeColor).then(
 
                 desenha(
@@ -240,34 +248,26 @@ function handleMove(evt) {
         }
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
-            if (evt.pointerType == "touch" && dinamicBrush === true) {
-                let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 4) * strokeWidth;
-                console.log(pressure)
-                if (pressure > lastPressure) { lastPressure += 1 } else {
-                    lastPressure -= 1
-                }
-                lastPressure = redondo(lastPressure)
-                if (lastPressure < strokeWidth) { lastPressure = strokeWidth }
-                iD("console2").innerHTML = " pressure/speed: " + pressure
-                desenha("CB", lastbrush, lastPressure, strokeColor).then(
+            if (dinamicInk == true) {
+                lastInk -= 0.008
+                mudaCorQ(3, lastInk)
+                // strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${lastInk})`;
 
-                    desenha(
-                        "brush",
-                        context.globalCompositeOperation,
-                        x,
-                        y,
-                        origin.x,
-                        origin.y,
-                        lastPressure
-                    )
-                )
+            }
+            if (lastInk > 0.1) {
+                // console.log("stroke color: " + strokeColor)
 
+                if (evt.pointerType == "touch" && dinamicBrush === true) {
+                    let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2) * strokeWidth;
+                    console.log(pressure)
+                    if (pressure > lastPressure) { lastPressure += 1.5 } else {
+                        lastPressure -= 1.5
+                    }
+                    lastPressure = redondo(lastPressure)
+                    if (lastPressure < strokeWidth) { lastPressure = strokeWidth }
+                    iD("console2").innerHTML = " pressure/speed: " + pressure
+                    desenha("CB", lastbrush, lastPressure, strokeColor).then(
 
-            } else {
-                if (dinamicBrush === true && evt.pressure != 0.5) {
-                    let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
-                    lastPressure = pressure
-                    desenha("CB", lastbrush, pressure, strokeColor).then(
                         desenha(
                             "brush",
                             context.globalCompositeOperation,
@@ -275,19 +275,37 @@ function handleMove(evt) {
                             y,
                             origin.x,
                             origin.y,
-                            pressure
+                            lastPressure
                         )
                     )
+
+
                 } else {
-                    desenha(
-                        "brush",
-                        context.globalCompositeOperation,
-                        x,
-                        y,
-                        origin.x,
-                        origin.y,
-                        strokeWidth
-                    )
+                    if (dinamicBrush === true && evt.pressure != 0.5) {
+                        let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
+                        lastPressure = pressure
+                        desenha("CB", lastbrush, pressure, strokeColor).then(
+                            desenha(
+                                "brush",
+                                context.globalCompositeOperation,
+                                x,
+                                y,
+                                origin.x,
+                                origin.y,
+                                pressure
+                            )
+                        )
+                    } else {
+                        desenha(
+                            "brush",
+                            context.globalCompositeOperation,
+                            x,
+                            y,
+                            origin.x,
+                            origin.y,
+                            strokeWidth
+                        )
+                    }
                 }
             }
         }
@@ -480,6 +498,7 @@ function handleUp(evt) {
 }
 
 function handleEnd(evt) {
+    mudaCorQ(3, iD("A").value)
     if (mode == recortar) {
         desenhaRetangulo()
     }
