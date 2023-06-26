@@ -249,7 +249,7 @@ function handleMove(evt) {
         let vari = 0.5
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
             if (dinamicInk == true) {
-                lastInk -= 0.008
+                lastInk -= 0.002
                 mudaCorQ(3, lastInk)
                 // strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${lastInk})`;
 
