@@ -357,7 +357,13 @@ function handleMove(evt) {
                 canvasFront.classList.remove("esconde")
                 canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvasFront.ctx.drawImage(brushCanva, x - (lastPressure / 2), y - (lastPressure / 2));
+                if (dinamicBrush) {
+                    canvasFront.ctx.drawImage(brushCanva, x - (lastPressure / 2), y - (lastPressure / 2));
+
+                } else {
+                    canvasFront.ctx.drawImage(brushCanva, x - (strokeWidth / 2), y - (strokeWidth / 2));
+
+                }
 
             }
         }
