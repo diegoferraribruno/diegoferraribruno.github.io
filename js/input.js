@@ -222,8 +222,13 @@ let lastPressure
 
 
 function handleMove(evt) {
+    console.dir(evt)
     evt.preventDefault();
-    if (evt.pointerType == "touch") return
+    if (evt.pointerType == "touch") {
+        iD("console2").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + evt.pressure
+        return
+    }
+
     document.body.style.cursor = "default";
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
@@ -395,6 +400,7 @@ function handleMove(evt) {
 
 function handleMove2(evt) {
     evt.preventDefault();
+    //console.dir(evt)
     canvas.focus()
     if (mode == "pintar") {
         isDrawing = true
@@ -407,7 +413,7 @@ function handleMove2(evt) {
     offsetY = canvas.getBoundingClientRect().top;
     x = (touch.pageX - offsetX) / zoomFactor
     y = (touch.pageY - offsetY) / zoomFactor
-
+    iD("console").innerHTML = "radiusx: " + touch.radiusX + " force: " + touch.force + " deg: " + touch.rotationAngle
     if (pixelGood) {
         origin.x = redondo(origin.x)
         origin.y = redondo(origin.y)
