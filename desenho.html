@@ -296,9 +296,11 @@
                             style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span>
 
                     </span>
-                    <label> <input type="checkbox" id="dinamicInk" onchange="toggleDinamicInk()"
+                    <img src="img/dinamicInk.png" style="margin-left: 4px;"><label class="toggle"> <input
+                            type="checkbox" id="dinamicInk" onchange="toggleDinamicInk()"
                             style="width: 50px; margin-left: 8px">
-                        <img src="img/dinamicInk.png"> </label>
+                        <span class="knob"></span>
+                    </label>
                     <br>
                     💧<input type="range" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
                         step="0.01" value="1"><br>

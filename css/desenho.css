@@ -759,8 +759,9 @@ input[type="range"] {
 .toggle {
     position: relative;
     display: inline-block;
-    width: 60px;
+    width: 40px;
     height: 22px;
+    padding-top: 0px;
 }
 
 .toggle input {
@@ -772,25 +773,25 @@ input[type="range"] {
 .toggle .knob {
     position: absolute;
     cursor: pointer;
-    top: -8px;
+    top: 0px;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: #b3b3b3;
     transition: .2s;
-    border-radius: 30px;
+    border-radius: 13px;
 }
 
 .toggle .knob:before {
     background-color: #ffffff;
     position: absolute;
     content: '';
-    height: 24px;
-    width: 24px;
-    left: 4px;
-    bottom: 4px;
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: 2px;
     transition: .2s;
-    border-radius: 30px;
+    border-radius: 13px;
 }
 
 .toggle input:checked+.knob {
@@ -803,7 +804,7 @@ input[type="range"] {
 
 .toggle input:checked+.knob:before {
     background-color: #ffffff;
-    -webkit-transform: translateX(28px);
-    -ms-transform: translateX(28px);
-    transform: translateX(28px);
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
 }
