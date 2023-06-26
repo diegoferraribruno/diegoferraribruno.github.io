@@ -136,7 +136,7 @@ function handleStart(evt) {
             x = redondo(x)
             y = redondo(y)
         }
-        if (evt.pointerType == "touch" && dinamicBrush === true) {
+        if ((evt.pointerType == "touch" || "mouse") && dinamicBrush === true) {
             if (lastPressure < strokeWidth || lastPressure > strokeWidth) { lastPressure = strokeWidth }
 
             desenha("CB", lastbrush, lastPressure, strokeColor).then(
@@ -257,7 +257,7 @@ function handleMove(evt) {
             if (lastInk > 0.1) {
                 // console.log("stroke color: " + strokeColor)
 
-                if (evt.pointerType == "touch" && dinamicBrush === true) {
+                if ((evt.pointerType == "touch" || "mouse") && dinamicBrush === true) {
                     let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2) * strokeWidth;
                     console.log(pressure)
                     if (pressure > lastPressure) { lastPressure += 1.5 } else {
