@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drawing App</title>
+     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <style>
+        #canvas {
+            border: 1px solid black;
+            touch-action: none;
+        }
+.bot {
+    border-radius: 20px;
+    margin-left: 2px;
+    margin-right: 3px;
+    margin-bottom: 4px;
+    height: 34px;
+    width: 34px;
+    font-size: 28px;
+    display: inline-block;
+    position: relative;
+    background-color: #4f45108e;
+    line-height: 34px;
+    vertical-align: middle;
+    text-align: center;
+    text-shadow: -1px 0 #eeeeee66, 0 1px #eeeeee66, 1px 0 #eeeeee66, 0 -1px #eeeeee66;
+    animation: animatezoom 0.6s
+}
+
+.shadow {
+    border-radius: 8px;
+    margin: 4px;
+    box-shadow: 2px 2px 3px #51505488,
+        -1px -2px 3px #9d9ca288;
+}
+
+#cabeca {
+    margin-top: 0px;
+    margin-bottom: 2px;
+    display: block;
+    float: right;
+    position: fixed;
+    left: 2px;
+    bottom: 20px;
+    z-index: 300;
+}
+
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <canvas id="canvasFront"></canvas>
+    <script src="app.js"></script>
+    <script src="mainmenu.js"></script>
+    
+</body>
+</html>
+
