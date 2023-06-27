@@ -1,5 +1,11 @@
 let vers = [
     {
+        versao: "4.0",
+        notas: ["Piceis dinamicos para dispositivos com sensibilidade à pressão, mouse e touch com aumento do pincel de acordo com a velo",
+            "troca de comandos por imagens para economizar memoria."
+        ]
+
+    }, {
         versao: "3.9",
         notas: ["Piceis dinamicos para dispositivos com sensibilidade à pressão",
             "troca de comandos por imagens para economizar memoria."
