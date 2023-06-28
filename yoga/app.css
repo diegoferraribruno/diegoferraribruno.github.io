@@ -1,3 +1,12 @@
+body {
+    background-color: darkslategray;
+}
+
+#canvas {
+    border: 1px solid black;
+    touch-action: none;
+}
+
 .bot {
     border-radius: 20px;
     margin-left: 2px;

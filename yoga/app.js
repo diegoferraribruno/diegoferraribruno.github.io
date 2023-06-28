@@ -1,7 +1,18 @@
 let project = {
-    with: 3508,
-    height: 2480,
-    //frameRate:6 future
+    size: {
+        with: 3508,
+        height: 2480
+    },
+    offset: { x: 0, y: 0 },
+    background: {
+        image: undefined,
+        transparent: false,
+        color: "#ffffff"
+    },
+    animation: {
+        fps: 6,
+        frames: 1
+    }
 }
 
 let canvas = document.getElementById("canvas")
@@ -34,9 +45,16 @@ function draw() {
     ctx.scale(cameraZoom, cameraZoom)
     ctx.translate(-window.innerWidth / 2 + cameraOffset.x, -window.innerHeight / 2 + cameraOffset.y)
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
-    ctx.fillStyle = "#eeeecc"
-    drawRect(0, 0, project.with, project.height)
+
+    /*  ctx.fillStyle = "#cccccc"
+      drawRect(0, 0, project.size.with, project.size.height)
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = "black";
+      ctx.stroke();*/
+    drawCanvasSize()
+
     ctx.translate(window.innerWidth / 2, window.innerHeight / 2)
+
     ctx.fillStyle = "#eecc77"
     drawRect(-35, -35, 20, 20)
     drawRect(15, -35, 20, 20)
@@ -58,7 +76,27 @@ function draw() {
 
     // requestAnimationFrame(draw)
 }
+function drawCanvasSize() {
+    var x = 0
+    var y = 0;
+    var width = project.size.with;
+    var height = project.size.height;
 
+    var borderWidth = 2;
+    var offset = borderWidth * 2;
+
+    ctx.beginPath();
+    ctx.fillStyle = 'black';
+    ctx.fillRect(x - borderWidth, y - borderWidth, width + offset, height + offset);
+    ctx.fillStyle = project.background.color;
+    if (project.background.transparent) {
+        ctx.globalCompositeOperation = 'destination-out'
+    }
+    ctx.fillRect(x, y, width, height);
+    if (project.background.transparent) {
+        ctx.globalCompositeOperation = 'destination-over'
+    }
+}
 // Gets the relevant location from a mouse or single touch event
 function getEventLocation(e) {
     if (e.touches && e.touches.length == 1) {
@@ -109,7 +147,7 @@ function onPointerUp(e) {
 
 function onPointerMove(e) {
     if (isDrawing) {
-        let comando = [brush, getEventLocation(e).x / cameraZoom - cameraOffset.x - 32, getEventLocation(e).y / cameraZoom - cameraOffset.y - 32, 32, 32]
+        let comando = [brush, getEventLocation(e).x / cameraZoom - cameraOffset.x, getEventLocation(e).y / cameraZoom - cameraOffset.y, 32, 32]
         comandos.push(comando)
         draw()
     }
@@ -118,6 +156,7 @@ function onPointerMove(e) {
         cameraOffset.y = getEventLocation(e).y / cameraZoom - dragStart.y
         draw()
     }
+
 }
 
 function handleTouch(e, singleTouchHandler) {
@@ -142,29 +181,30 @@ function handlePinch(e) {
     // This is distance squared, but no need for an expensive sqrt as it's only used in ratio
     let currentDistance = (touch1.x - touch2.x) ** 2 + (touch1.y - touch2.y) ** 2
 
+    //this is new
+    let centerpos = { x: (touch1.x + touch2.x) / 2, y: (touch1.y - touch2.y) / 2 }
     if (initialPinchDistance == null) {
         initialPinchDistance = currentDistance
     }
     else {
-        adjustZoom(null, currentDistance / initialPinchDistance)
+        adjustZoom(null, currentDistance / initialPinchDistance, centerpos.x, centerpos.y)
 
     }
 }
 
-function adjustZoom(zoomAmount, zoomFactor) {
+function adjustZoom(zoomAmount, zoomFactor, x, y) {
     if (!isDragging) {
         if (zoomAmount) {
             cameraZoom += zoomAmount
         }
         else if (zoomFactor) {
-            console.log(zoomFactor)
             cameraZoom = zoomFactor * lastZoom
         }
-
+        cameraOffset.x = -dragStart.x + window.innerWidth / 2 / cameraZoom  // 2 cameraOffset.x - Math.abs(cameraOffset.x - x - window.innerWidth / 2) / 4
+        cameraOffset.y = -dragStart.y + window.innerHeight / 2 / cameraZoom// 2 cameraOffset.x - Math.abs(cameraOffset.y - y - window.innerHeight / 2) / 4
+        console.log(cameraOffset.x, x, cameraOffset.y, y)
         cameraZoom = Math.min(cameraZoom, MAX_ZOOM)
         cameraZoom = Math.max(cameraZoom, MIN_ZOOM)
-
-        console.log(zoomAmount)
         draw()
     }
 }
@@ -172,7 +212,7 @@ function adjustZoom(zoomAmount, zoomFactor) {
 function zoom() {
     //temporary
     mode = "zoom"
-    resetZoom()
+    // resetZoom()
 }
 
 function resetZoom() {
@@ -192,7 +232,7 @@ canvas.addEventListener('mouseup', onPointerUp)
 canvas.addEventListener('touchend', (e) => handleTouch(e, onPointerUp))
 canvas.addEventListener('mousemove', onPointerMove)
 canvas.addEventListener('touchmove', (e) => handleTouch(e, onPointerMove))
-canvas.addEventListener('wheel', (e) => { e.preventDefault(); adjustZoom(e.deltaY * SCROLL_SENSITIVITY) })
+canvas.addEventListener('wheel', (e) => { e.preventDefault(); adjustZoom(e.deltaY * SCROLL_SENSITIVITY, null, e.clientX, e.clientY) })
 
 // Ready, set, go
 draw()
