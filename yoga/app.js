@@ -201,9 +201,9 @@ function adjustZoom(zoomAmount, zoomFactor, x, y) {
             cameraZoom /= 2
         }
         else if (zoomFactor) {
-            if (zoomFactor > 0) {
+            if (zoomFactor > 1) {
                 cameraZoom *= 2
-            } else if (zoomFactor < 0) {
+            } else if (zoomFactor < 1) {
                 cameraZoom /= 2
             }
             //  cameraZoom = zoomFactor * lastZoom
