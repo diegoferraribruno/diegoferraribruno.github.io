@@ -6,7 +6,7 @@ let project = {
     offset: { x: 0, y: 0 },
     background: {
         image: undefined,
-        transparent: false,
+        transparent: true,
         color: "#ffffff"
     },
     animation: {
@@ -20,9 +20,9 @@ let ctx = canvas.getContext('2d')
 
 let cameraOffset = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
 let cameraZoom = 1
-let MAX_ZOOM = 5
-let MIN_ZOOM = 0.1
-let SCROLL_SENSITIVITY = 0.0005
+let MAX_ZOOM = 32
+let MIN_ZOOM = 0.27
+let SCROLL_SENSITIVITY = 0.005
 
 let mode = "drawing";
 var brush = new Image()
@@ -194,17 +194,34 @@ function handlePinch(e) {
 
 function adjustZoom(zoomAmount, zoomFactor, x, y) {
     if (!isDragging) {
-        if (zoomAmount) {
-            cameraZoom += zoomAmount
+
+        if (zoomAmount > 0) {
+            cameraZoom *= 2
+        } else if (zoomAmount < 0) {
+            cameraZoom /= 2
         }
         else if (zoomFactor) {
-            cameraZoom = zoomFactor * lastZoom
+            if (zoomFactor > 0) {
+                cameraZoom *= 2
+            } else if (zoomFactor < 0) {
+                cameraZoom /= 2
+            }
+            //  cameraZoom = zoomFactor * lastZoom
         }
-        cameraOffset.x = -dragStart.x + window.innerWidth / 2 / cameraZoom  // 2 cameraOffset.x - Math.abs(cameraOffset.x - x - window.innerWidth / 2) / 4
-        cameraOffset.y = -dragStart.y + window.innerHeight / 2 / cameraZoom// 2 cameraOffset.x - Math.abs(cameraOffset.y - y - window.innerHeight / 2) / 4
-        console.log(cameraOffset.x, x, cameraOffset.y, y)
         cameraZoom = Math.min(cameraZoom, MAX_ZOOM)
         cameraZoom = Math.max(cameraZoom, MIN_ZOOM)
+        if (cameraZoom == MIN_ZOOM) {
+            cameraOffset.x = window.innerWidth / 2
+            cameraOffset.y = window.innerHeight / 2
+        } else if (cameraZoom > 1 && cameraZoom < 2) {
+            cameraZoom = 1
+            cameraOffset.x = Math.floor(-dragStart.x + window.innerWidth / 2 / cameraZoom) // 2 cameraOffset.x - Math.abs(cameraOffset.x - x - window.innerWidth / 2) / 4
+            cameraOffset.y = Math.floor(-dragStart.y + window.innerHeight / 2 / cameraZoom)// 2 cameraOffset.x - Math.abs(cameraOffset.y - y - window.innerHeight / 2) / 4
+        } else {
+            cameraOffset.x = Math.floor(-dragStart.x + window.innerWidth / 2 / cameraZoom) // 2 cameraOffset.x - Math.abs(cameraOffset.x - x - window.innerWidth / 2) / 4
+            cameraOffset.y = Math.floor(-dragStart.y + window.innerHeight / 2 / cameraZoom)// 2 cameraOffset.x - Math.abs(cameraOffset.y - y - window.innerHeight / 2) / 4
+        }
+        console.log(cameraZoom)
         draw()
     }
 }
@@ -232,7 +249,7 @@ canvas.addEventListener('mouseup', onPointerUp)
 canvas.addEventListener('touchend', (e) => handleTouch(e, onPointerUp))
 canvas.addEventListener('mousemove', onPointerMove)
 canvas.addEventListener('touchmove', (e) => handleTouch(e, onPointerMove))
-canvas.addEventListener('wheel', (e) => { e.preventDefault(); adjustZoom(e.deltaY * SCROLL_SENSITIVITY, null, e.clientX, e.clientY) })
+canvas.addEventListener('wheel', (e) => { e.preventDefault(); adjustZoom(e.deltaY, null, e.clientX, e.clientY) })
 
 // Ready, set, go
 draw()
