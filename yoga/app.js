@@ -125,8 +125,8 @@ function comandosExec() {
 }
 
 function onPointerDown(e) {
-    dragStart.x = getEventLocation(e).x / cameraZoom - cameraOffset.x
-    dragStart.y = getEventLocation(e).y / cameraZoom - cameraOffset.y
+    dragStart.x = Math.floor(getEventLocation(e).x / cameraZoom - cameraOffset.x)
+    dragStart.y = Math.floor(getEventLocation(e).y / cameraZoom - cameraOffset.y)
     if (mode === "drawing") {
         let comando = [brush, dragStart.x, dragStart.y, 32, 32]
         comandos.push(comando)
