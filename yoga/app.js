@@ -35,6 +35,11 @@ let isDrawing = false
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
+
+let initialPinchDistance = null
+let lastZoom = cameraZoom
+
+
 function draw() {
     ctx.save()
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -169,9 +174,7 @@ function handleTouch(e, singleTouchHandler) {
     }
 }
 
-let initialPinchDistance = null
-let lastZoom = cameraZoom
-
+let touchesDistance = { x: 0, y: 0 }
 function handlePinch(e) {
     e.preventDefault()
 
@@ -182,17 +185,22 @@ function handlePinch(e) {
     let currentDistance = (touch1.x - touch2.x) ** 2 + (touch1.y - touch2.y) ** 2
 
     //this is new
+    let distX = Math.floor((touch1.x - touch2.x) + (touch1.y - touch2.y) / 2)
+    // gotta finish this.
+
     let centerpos = { x: (touch1.x + touch2.x) / 2, y: (touch1.y - touch2.y) / 2 }
     if (initialPinchDistance == null) {
         initialPinchDistance = currentDistance
     }
     else {
-        adjustZoom(null, currentDistance / initialPinchDistance, centerpos.x, centerpos.y)
+        //adjustZoom(null, currentDistance / initialPinchDistance, centerpos.x, centerpos.y)
+        adjustZoom(distX, null, centerpos.x, centerpos.y)
 
     }
 }
 
 function adjustZoom(zoomAmount, zoomFactor, x, y) {
+
     if (!isDragging) {
 
         if (zoomAmount > 0) {
@@ -221,7 +229,7 @@ function adjustZoom(zoomAmount, zoomFactor, x, y) {
             cameraOffset.x = Math.floor(-dragStart.x + window.innerWidth / 2 / cameraZoom) // 2 cameraOffset.x - Math.abs(cameraOffset.x - x - window.innerWidth / 2) / 4
             cameraOffset.y = Math.floor(-dragStart.y + window.innerHeight / 2 / cameraZoom)// 2 cameraOffset.x - Math.abs(cameraOffset.y - y - window.innerHeight / 2) / 4
         }
-        console.log(cameraZoom)
+        console.log(zoomAmount)
         draw()
     }
 }
