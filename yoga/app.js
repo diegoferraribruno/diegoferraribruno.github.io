@@ -24,14 +24,14 @@ let MAX_ZOOM = 32
 let MIN_ZOOM = 0.27
 let SCROLL_SENSITIVITY = 0.005
 
-let mode = "drawing";
+let mode = "paint";
 var brush = new Image()
 brush.src = "brush5.png"
 
 let isDragging = false
 let dragStart = { x: 0, y: 0 }
 
-let isDrawing = false
+let ispaint = false
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
@@ -75,7 +75,7 @@ function draw() {
     ctx.fillStyle = "#fff"
    // ctx.rotate(31 * Math.PI / 180)
 
-    drawText("width: "+project.size.with+"height: "+project.size.height +" ", -26, 0, 48, "courier")
+    drawText("width: "+project.size.with+" height: "+project.size.height +" ", -26, 0, 48, "courier")
     comandosExec()
     ctx.restore()
 
@@ -125,18 +125,23 @@ let comandos = [[brush, 100, 100, 38, 38]]
 function comandosExec() {
     for (i = 0; i < comandos.length; i++) {
         let comando = comandos[i]
-        ctx.drawImage(comando[0], comando[1], comando[2], comando[3], comando[4]);
+        if (comando[0] == "GCO"){
+            ctx.globalCompositeOperation = comando[1]  
+        }else{
+
+            ctx.drawImage(comando[0], comando[1], comando[2], comando[3], comando[4]);
+        }
     }
 }
 
 function onPointerDown(e) {
     dragStart.x = Math.floor(getEventLocation(e).x / cameraZoom - cameraOffset.x)
     dragStart.y = Math.floor(getEventLocation(e).y / cameraZoom - cameraOffset.y)
-    if (mode === "drawing") {
+    if (mode === "paint" || mode === "erase") {
         let comando = [brush, dragStart.x, dragStart.y, 32, 32]
         comandos.push(comando)
         draw()
-        isDrawing = true
+        ispaint = true
     } else {
 
         isDragging = true
@@ -145,13 +150,13 @@ function onPointerDown(e) {
 
 function onPointerUp(e) {
     isDragging = false
-    isDrawing = false
+    ispaint = false
     initialPinchDistance = null
     lastZoom = cameraZoom
 }
 
 function onPointerMove(e) {
-    if (isDrawing) {
+    if (ispaint) {
         let comando = [brush, getEventLocation(e).x / cameraZoom - cameraOffset.x, getEventLocation(e).y / cameraZoom - cameraOffset.y, 32, 32]
         comandos.push(comando)
         draw()
@@ -245,7 +250,8 @@ function adjustZoom(zoomAmount, zoomFactor, x, y) {
 function zoom() {
     //temporary
     mode = "zoom"
-    // resetZoom()
+    criaCabeca()
+   // resetZoom()
 }
 
 function resetZoom() {
@@ -255,10 +261,6 @@ function resetZoom() {
     draw()
 
 }
-function paint() {
-    mode = "drawing"
-}
-
 canvas.addEventListener('mousedown', onPointerDown)
 canvas.addEventListener('touchstart', (e) => handleTouch(e, onPointerDown))
 canvas.addEventListener('mouseup', onPointerUp)

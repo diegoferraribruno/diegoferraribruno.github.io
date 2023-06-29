@@ -43,3 +43,22 @@ body {
     bottom: 20px;
     z-index: 300;
 }
+.selected {
+    background-color: #00000044;
+    border-color: #ffffff55;
+    border-width: 3px;
+    font-size: 3em;
+    padding-right: 8px;
+}
+.submenu {
+    position: absolute;
+    display: block;
+    width: 330px;
+    min-height: 60px;
+    padding: 6px;
+    z-index: 501;
+   /* visibility: hidden;*/
+    max-height: 320px;
+    overflow-y: scroll;
+
+}
