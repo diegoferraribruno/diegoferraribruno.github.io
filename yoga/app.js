@@ -60,7 +60,7 @@ function draw() {
 
     ctx.translate(window.innerWidth / 2, window.innerHeight / 2)
 
-    ctx.fillStyle = "#eecc77"
+    ctx.fillStyle = "#cccccc"
     drawRect(-35, -35, 20, 20)
     drawRect(15, -35, 20, 20)
     drawRect(-35, 15, 70, 20)
@@ -184,8 +184,8 @@ function handlePinch(e) {
     let currentDistance = (touch1.x - touch2.x) ** 2 + (touch1.y - touch2.y) ** 2
 
     //this is new
-    let distX = Math.floor(((touch1.x - touch2.x) + (touch1.y - touch2.y) / 2)/10)
-    if(( distX % 4) == 0 && distX != lastpinch){
+    let distX = Math.floor(((touch1.x - touch2.x) + (touch1.y - touch2.y))/10)
+    if(( distX % 2) == 0 && distX != lastpinch){
         lastpinch = distX
         // gotta finish this.
         
