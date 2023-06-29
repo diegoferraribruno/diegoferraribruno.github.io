@@ -66,7 +66,7 @@ function draw() {
     drawRect(-35, 15, 70, 20)
 
     ctx.fillStyle = "#fff"
-    drawText("Simple Pan and Zoom Canvas", -255, -100, 32, "courier")
+    drawText("Center and zoom Canvas", -255, -100, 32, "courier")
 
    // ctx.rotate(-31 * Math.PI / 180)
     ctx.fillStyle = `#${(Math.round(Date.now() / 40) % 4096).toString(16)}`
@@ -75,7 +75,7 @@ function draw() {
     ctx.fillStyle = "#fff"
    // ctx.rotate(31 * Math.PI / 180)
 
-    drawText("Wow, you found me!", -260, -2000, 48, "courier")
+    drawText("width: "+project.size.with+"height: "+project.size.height +" ", -26, 0, 48, "courier")
     comandosExec()
     ctx.restore()
 
@@ -184,7 +184,7 @@ function handlePinch(e) {
     let currentDistance = (touch1.x - touch2.x) ** 2 + (touch1.y - touch2.y) ** 2
 
     //this is new
-    let distX = Math.floor(((touch1.x - touch2.x) + (touch1.y - touch2.y))/10)
+    let distX = Math.floor(((touch1.x - touch2.x) + (touch1.y - touch2.y))/50)
     if(( distX % 1) == 0 && distX != lastpinch){
         lastpinch = distX
         // gotta finish this.
