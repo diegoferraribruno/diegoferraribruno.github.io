@@ -175,6 +175,7 @@ function handleTouch(e, singleTouchHandler) {
 }
 
 let touchesDistance = { x: 0, y: 0 }
+
 function handlePinch(e) {
     e.preventDefault()
 
@@ -186,16 +187,19 @@ function handlePinch(e) {
 
     //this is new
     let distX = Math.floor((touch1.x - touch2.x) + (touch1.y - touch2.y) / 2)
-    // gotta finish this.
+    if((distX%10)==0){
 
-    let centerpos = { x: (touch1.x + touch2.x) / 2, y: (touch1.y - touch2.y) / 2 }
-    if (initialPinchDistance == null) {
-        initialPinchDistance = currentDistance
-    }
-    else {
-        //adjustZoom(null, currentDistance / initialPinchDistance, centerpos.x, centerpos.y)
-        adjustZoom(distX, null, centerpos.x, centerpos.y)
-
+        // gotta finish this.
+        
+        let centerpos = { x: (touch1.x + touch2.x) / 2, y: (touch1.y - touch2.y) / 2 }
+        if (initialPinchDistance == null) {
+            initialPinchDistance = currentDistance
+        }
+        else {
+            //adjustZoom(null, currentDistance / initialPinchDistance, centerpos.x, centerpos.y)
+            adjustZoom(distX, null, centerpos.x, centerpos.y)
+            
+        }
     }
 }
 
