@@ -174,7 +174,7 @@ function handleTouch(e, singleTouchHandler) {
     }
 }
 
-let touchesDistance = { x: 0, y: 0 }
+
 
 function handlePinch(e) {
     e.preventDefault()
@@ -186,8 +186,8 @@ function handlePinch(e) {
     let currentDistance = (touch1.x - touch2.x) ** 2 + (touch1.y - touch2.y) ** 2
 
     //this is new
-    let distX = Math.floor((touch1.x - touch2.x) + (touch1.y - touch2.y) / 2)
-    if(( distX % 10) == 0 ||( distX % 10) == 5  ){
+    let distX = Math.floor(((touch1.x - touch2.x) + (touch1.y - touch2.y) / 2)/10)
+    if(( distX % 4) == 0 ){
 
         // gotta finish this.
         
