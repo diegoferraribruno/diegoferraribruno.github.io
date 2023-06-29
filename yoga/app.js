@@ -38,7 +38,7 @@ canvas.height = window.innerHeight
 
 let initialPinchDistance = null
 let lastZoom = cameraZoom
-
+let lastpinch = 4
 
 function draw() {
     ctx.save()
@@ -70,7 +70,7 @@ function draw() {
 
     ctx.rotate(-31 * Math.PI / 180)
     ctx.fillStyle = `#${(Math.round(Date.now() / 40) % 4096).toString(16)}`
-    drawText("Now with touch!", -110, 100, 32, "courier")
+    drawText(lastpinch, -110, 100, 32, "courier")
 
     ctx.fillStyle = "#fff"
     ctx.rotate(31 * Math.PI / 180)
@@ -174,8 +174,6 @@ function handleTouch(e, singleTouchHandler) {
     }
 }
 
-
-
 function handlePinch(e) {
     e.preventDefault()
 
@@ -187,8 +185,8 @@ function handlePinch(e) {
 
     //this is new
     let distX = Math.floor(((touch1.x - touch2.x) + (touch1.y - touch2.y) / 2)/10)
-    if(( distX % 4) == 0 ){
-
+    if(( distX % 4) == 0 && distX != lastpinch){
+        lastpinch = distX
         // gotta finish this.
         
         let centerpos = { x: (touch1.x + touch2.x) / 2, y: (touch1.y - touch2.y) / 2 }
