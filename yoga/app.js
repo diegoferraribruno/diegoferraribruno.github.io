@@ -187,7 +187,7 @@ function handlePinch(e) {
 
     //this is new
     let distX = Math.floor((touch1.x - touch2.x) + (touch1.y - touch2.y) / 2)
-    if(( distX % 4) == 0){
+    if(( distX % 10) == 0 ||( distX % 10) == 5  ){
 
         // gotta finish this.
         
