@@ -60,7 +60,7 @@ function draw() {
 
     ctx.translate(window.innerWidth / 2, window.innerHeight / 2)
 
-    ctx.fillStyle = "#eedd55"
+    ctx.fillStyle = "#00dd55"
     drawRect(-35, -35, 20, 20)
     drawRect(15, -35, 20, 20)
     drawRect(-35, 15, 70, 20)
@@ -181,10 +181,10 @@ function handlePinch(e) {
     let touch2 = { x: e.touches[1].clientX, y: e.touches[1].clientY }
 
     // This is distance squared, but no need for an expensive sqrt as it's only used in ratio
-    let currentDistance = (touch1.x - touch2.x) ** 2 + (touch1.y - touch2.y) ** 2
+    let currentDistance = Math.abs(touch1.x - touch2.x) /2 + Math.abs(touch1.y - touch2.y) /2
 
     //this is new
-    let distX = Math.floor(((touch1.x - touch2.x) + (touch1.y - touch2.y))/50)
+    let distX = Math.floor(currentDistance/50)
     if(( distX % 1) == 0 && distX != lastpinch){
         lastpinch = distX
         // gotta finish this.
@@ -194,8 +194,14 @@ function handlePinch(e) {
             initialPinchDistance = currentDistance
         }
         else {
+            if (currentDistance >initialPinchDistance){
+                adjustZoom(1, null, centerpos.x, centerpos.y)
+
+            }else if (currentDistance <initialPinchDistance){
+                adjustZoom(-1, null, centerpos.x, centerpos.y)
+
+            }
             //adjustZoom(null, currentDistance / initialPinchDistance, centerpos.x, centerpos.y)
-            adjustZoom(distX, null, centerpos.x, centerpos.y)
             
         }
     }
