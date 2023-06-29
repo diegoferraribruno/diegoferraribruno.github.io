@@ -68,12 +68,12 @@ function draw() {
     ctx.fillStyle = "#fff"
     drawText("Simple Pan and Zoom Canvas", -255, -100, 32, "courier")
 
-    ctx.rotate(-31 * Math.PI / 180)
+   // ctx.rotate(-31 * Math.PI / 180)
     ctx.fillStyle = `#${(Math.round(Date.now() / 40) % 4096).toString(16)}`
     drawText(lastpinch, -110, 100, 32, "courier")
 
     ctx.fillStyle = "#fff"
-    ctx.rotate(31 * Math.PI / 180)
+   // ctx.rotate(31 * Math.PI / 180)
 
     drawText("Wow, you found me!", -260, -2000, 48, "courier")
     comandosExec()
