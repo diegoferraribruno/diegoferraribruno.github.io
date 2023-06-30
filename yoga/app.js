@@ -68,14 +68,14 @@ function draw() {
     ctx.fillStyle = "#fff"
     drawText("Center and zoom Canvas", -255, -100, 32, "courier")
 
-   // ctx.rotate(-31 * Math.PI / 180)
+    // ctx.rotate(-31 * Math.PI / 180)
     ctx.fillStyle = `#${(Math.round(Date.now() / 40) % 4096).toString(16)}`
     drawText(lastpinch, -110, 100, 32, "courier")
 
     ctx.fillStyle = "#fff"
-   // ctx.rotate(31 * Math.PI / 180)
+    // ctx.rotate(31 * Math.PI / 180)
 
-    drawText("width: "+project.size.with+" height: "+project.size.height +" ", -26, 0, 48, "courier")
+    drawText("width: " + project.size.with + " height: " + project.size.height + " ", -26, 0, 48, "courier")
     comandosExec()
     ctx.restore()
 
@@ -125,10 +125,9 @@ let comandos = [[brush, 100, 100, 38, 38]]
 function comandosExec() {
     for (i = 0; i < comandos.length; i++) {
         let comando = comandos[i]
-        if (comando[0] == "GCO"){
-            ctx.globalCompositeOperation = comando[1]  
-        }else{
-
+        if (comando[0] == "GCO") {
+            ctx.globalCompositeOperation = comando[1]
+        } else {
             ctx.drawImage(comando[0], comando[1], comando[2], comando[3], comando[4]);
         }
     }
@@ -157,7 +156,9 @@ function onPointerUp(e) {
 
 function onPointerMove(e) {
     if (ispaint) {
-        let comando = [brush, getEventLocation(e).x / cameraZoom - cameraOffset.x, getEventLocation(e).y / cameraZoom - cameraOffset.y, 32, 32]
+        dragStart.x = getEventLocation(e).x / cameraZoom - cameraOffset.x
+        dragStart.y = getEventLocation(e).y / cameraZoom - cameraOffset.y
+        let comando = [brush, dragStart.x, dragStart.y, 32, 32]
         comandos.push(comando)
         draw()
     }
@@ -186,28 +187,22 @@ function handlePinch(e) {
     let touch2 = { x: e.touches[1].clientX, y: e.touches[1].clientY }
 
     // This is distance squared, but no need for an expensive sqrt as it's only used in ratio
-    let currentDistance = Math.abs(touch1.x - touch2.x) /2 + Math.abs(touch1.y - touch2.y) /2
+    let currentDistance = Math.abs(touch1.x - touch2.x) / 2 + Math.abs(touch1.y - touch2.y) / 2
 
-    //this is new
-    let distX = Math.floor(currentDistance/50)
-    if(( distX % 1) == 0 && distX != lastpinch){
+    let distX = Math.floor(currentDistance / 50)
+    if ((distX % 1) == 0 && distX != lastpinch) {
         lastpinch = distX
-        // gotta finish this.
-        
         let centerpos = { x: (touch1.x + touch2.x) / 2, y: (touch1.y - touch2.y) / 2 }
         if (initialPinchDistance == null) {
             initialPinchDistance = currentDistance
         }
         else {
-            if (currentDistance >initialPinchDistance){
+            if (currentDistance > initialPinchDistance) {
                 adjustZoom(1, null, centerpos.x, centerpos.y)
-
-            }else if (currentDistance <initialPinchDistance){
+            } else if (currentDistance < initialPinchDistance) {
                 adjustZoom(-1, null, centerpos.x, centerpos.y)
-
             }
-            //adjustZoom(null, currentDistance / initialPinchDistance, centerpos.x, centerpos.y)
-            
+
         }
     }
 }
@@ -244,14 +239,18 @@ function adjustZoom(zoomAmount, zoomFactor, x, y) {
         }
         console.log(zoomAmount)
         draw()
+        setTimeout(() => document.getElementById("x1").innerHTML = cameraZoom + "x")
     }
 }
 
-function zoom() {
+function zoom(value) {
+    if (value) {
+        adjustZoom(value, null, dragStart.x, dragStart.y)
+    }
     //temporary
     mode = "zoom"
     criaCabeca()
-   // resetZoom()
+    // resetZoom()
 }
 
 function resetZoom() {
@@ -260,6 +259,12 @@ function resetZoom() {
     cameraOffset.y = window.innerHeight / 2
     draw()
 
+}
+
+function scrollMoveCanva(x, y) {
+    cameraOffset.x -= x / cameraZoom
+    cameraOffset.y -= y / cameraZoom
+    draw()
 }
 canvas.addEventListener('mousedown', onPointerDown)
 canvas.addEventListener('touchstart', (e) => handleTouch(e, onPointerDown))

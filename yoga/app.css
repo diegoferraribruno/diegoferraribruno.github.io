@@ -43,6 +43,7 @@ body {
     bottom: 20px;
     z-index: 300;
 }
+
 .selected {
     background-color: #00000044;
     border-color: #ffffff55;
@@ -50,6 +51,7 @@ body {
     font-size: 3em;
     padding-right: 8px;
 }
+
 .submenu {
     position: absolute;
     display: block;
@@ -57,10 +59,17 @@ body {
     min-height: 60px;
     padding: 6px;
     z-index: 501;
-   /* visibility: hidden;*/
+    /* visibility: hidden;*/
     max-height: 320px;
     overflow-y: scroll;
-    bottom: 48px;
+    bottom: 52px;
     left: 10px;
 
+}
+
+.textOver {
+    display: inline-block;
+    position: absolute;
+    margin-left: -32px;
+    font-size: 0.8em
 }
