@@ -34,7 +34,7 @@ function limpaCabeca() {
 }
 
 function modeTo(m) {
-    if (m == mode) {
+    if (m == mode && document.getElementById("menu").innerHTML != "") {
         toggleMenu()
     } else {
         mode = m
