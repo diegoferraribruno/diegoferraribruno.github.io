@@ -60,5 +60,7 @@ body {
    /* visibility: hidden;*/
     max-height: 320px;
     overflow-y: scroll;
+    bottom: 48px;
+    left: 10px;
 
 }
