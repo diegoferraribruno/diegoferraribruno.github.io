@@ -277,13 +277,17 @@ function handlePinch(e) {
         if (initialPinchDistance == null) {
             initialPinchDistance = currentDistance
         }
-        else {
+        else if (mode = "zoom") {
             if (currentDistance > initialPinchDistance) {
                 adjustZoom(1, null, centerpos.x, centerpos.y)
             } else if (currentDistance < initialPinchDistance) {
                 adjustZoom(-1, null, centerpos.x, centerpos.y)
             }
 
+        } else if (mode == "paint") {
+            let comando = [touch1.x, touch1.y, touch2.x, touch2.y]
+            comandos.push(comando)
+            draw(touch1.x, touch1.y, touch2.x, touch2.y)
         }
     }
 }
@@ -293,9 +297,9 @@ function adjustZoom(zoomAmount, zoomFactor, x, y) {
     if (!isDragging) {
 
         if (zoomAmount > 0) {
-            cameraZoom *= 2
-        } else if (zoomAmount < 0) {
             cameraZoom /= 2
+        } else if (zoomAmount < 0) {
+            cameraZoom *= 2
         }
         else if (zoomFactor) {
             if (zoomFactor > 1) {
@@ -352,5 +356,3 @@ canvas.addEventListener('touchend', (e) => handleTouch(e, onPointerUp))
 canvas.addEventListener('mousemove', onPointerMove)
 canvas.addEventListener('touchmove', (e) => handleTouch(e, onPointerMove))
 canvas.addEventListener('wheel', (e) => { e.preventDefault(); adjustZoom(e.deltaY, null, e.clientX, e.clientY) })
-
-// Ready, set, go
