@@ -12,7 +12,8 @@ let project = {
     animation: {
         fps: 6,
         frames: 1
-    }
+    },
+    pixelGood: true
 }
 
 let canvas = document.getElementById("canvas")
@@ -40,22 +41,21 @@ let initialPinchDistance = null
 let lastZoom = cameraZoom
 let lastpinch = 4
 
-function draw() {
+let strokesize = { x: 32, y: 32 }
+
+let comandos = []
+
+function draw1() {
     ctx.save()
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Translate to the canvas centre before zooming - so you'll always zoom on what you're looking directly at
+    // Or Translate to the canvas centre before zooming - so you'll always zoom on what you're looking directly at
 
     ctx.scale(cameraZoom, cameraZoom)
     ctx.translate(-window.innerWidth / 2 + cameraOffset.x, -window.innerHeight / 2 + cameraOffset.y)
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
 
-    /*  ctx.fillStyle = "#cccccc"
-      drawRect(0, 0, project.size.with, project.size.height)
-      ctx.lineWidth = 5;
-      ctx.strokeStyle = "black";
-      ctx.stroke();*/
     drawCanvasSize()
 
     ctx.translate(window.innerWidth / 2, window.innerHeight / 2)
@@ -66,21 +66,51 @@ function draw() {
     drawRect(-35, 15, 70, 20)
 
     ctx.fillStyle = "#fff"
+    drawText("Yoga Paint", -255, -130, 32, "courier")
     drawText("Center and zoom Canvas", -255, -100, 32, "courier")
 
-    // ctx.rotate(-31 * Math.PI / 180)
+    ctx.rotate(-31 * Math.PI / 180)
     ctx.fillStyle = `#${(Math.round(Date.now() / 40) % 4096).toString(16)}`
-    drawText(lastpinch, -110, 100, 32, "courier")
+    drawText("HD", 50, -120, 32, "courier")
 
     ctx.fillStyle = "#fff"
-    // ctx.rotate(31 * Math.PI / 180)
+    ctx.rotate(31 * Math.PI / 180)
 
-    drawText("width: " + project.size.with + " height: " + project.size.height + " ", -26, 0, 48, "courier")
+    drawText("A4 300 dpi: width: " + project.size.with + " height: " + project.size.height + " ", -255, -70, 20, "courier")
+    ctx.restore()
+
+    // requestAnimationFrame(draw)
+}
+
+function draw(a, b, c, d) {
+    ctx.save()
+    ctx.scale(cameraZoom, cameraZoom)
+    ctx.translate(cameraOffset.x, cameraOffset.y)
+    drawBrush(a, b, c, d)
+    ctx.restore()
+
+    // requestAnimationFrame(draw)
+}
+function redraw() {
+    ctx.save()
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Or Translate to the canvas centre before zooming - so you'll always zoom on what you're looking directly at
+
+    ctx.scale(cameraZoom, cameraZoom)
+    ctx.translate(-window.innerWidth / 2 + cameraOffset.x, -window.innerHeight / 2 + cameraOffset.y)
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+
+    drawCanvasSize()
+    ctx.translate(window.innerWidth / 2, window.innerHeight / 2)
+
     comandosExec()
     ctx.restore()
 
     // requestAnimationFrame(draw)
 }
+draw1()
 function drawCanvasSize() {
     var x = 0
     var y = 0;
@@ -120,26 +150,72 @@ function drawText(text, x, y, size, font) {
     ctx.font = `${size}px ${font}`
     ctx.fillText(text, x, y)
 }
-
-let comandos = [[brush, 100, 100, 38, 38]]
 function comandosExec() {
-    for (i = 0; i < comandos.length; i++) {
-        let comando = comandos[i]
-        if (comando[0] == "GCO") {
-            ctx.globalCompositeOperation = comando[1]
-        } else {
-            ctx.drawImage(comando[0], comando[1], comando[2], comando[3], comando[4]);
+    let len = comandos.length
+    if (len != 0) {
+        for (i = 0; i < len; i++) {
+            let comando = comandos[i]
+            if (comando[0] == "GCO") {
+                ctx.globalCompositeOperation = comando[1]
+            } else {
+                drawBrush(comando[0], comando[1], comando[2], comando[3])
+            }
         }
     }
 }
 
+async function drawBrush(x1, y1, x2, y2, cont = ctx) {
+    let start
+    let end
+    if (project.pixelGood) {
+        start = { x: (x1 / cameraZoom) * cameraZoom, y: (y1 / cameraZoom) * cameraZoom }
+        end = { x: (x2 / cameraZoom) * cameraZoom, y: (y2 / cameraZoom) * cameraZoom }
+    } else {
+        start = { x: x1, y: y1 }
+        end = { x: x2, y: y2 }
+    }
+    var halfBrushW = strokesize.x / 2;
+    var halfBrushH = strokesize.y / 2;
+    var distance = parseInt(Trig.distanceBetween2Points(start, end));
+    var angle = Trig.angleBetween2Points(start, end);
+    var x, y;
+    cont.lineWidth = strokesize.x;
+
+    for (var z = 0; (z <= distance || z == 0); z++) {
+        x = start.x + (Math.sin(angle) * z) - halfBrushW;
+        y = start.y + (Math.cos(angle) * z) - halfBrushH;
+        if (strokesize.x == 1 || strokesize.y == 1) {
+            x = redondo(x) + 1
+            y = redondo(y) + 1
+        }
+        cont.drawImage(brush, x, y, strokesize.x, strokesize.y);
+    }
+}
+
+var Trig = {
+    distanceBetween2Points: function (point1, point2) {
+
+        var dx = point2.x - point1.x;
+        var dy = point2.y - point1.y;
+        return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+    },
+
+    angleBetween2Points: function (point1, point2) {
+
+        var dx = point2.x - point1.x;
+        var dy = point2.y - point1.y;
+        return Math.atan2(dx, dy);
+    }
+}
+
 function onPointerDown(e) {
-    dragStart.x = Math.floor(getEventLocation(e).x / cameraZoom - cameraOffset.x)
-    dragStart.y = Math.floor(getEventLocation(e).y / cameraZoom - cameraOffset.y)
+    dragStart.x = Math.floor(getEventLocation(e).x / cameraZoom - cameraOffset.x - strokesize.x / 2)
+    dragStart.y = Math.floor(getEventLocation(e).y / cameraZoom - cameraOffset.y - strokesize.y / 2)
     if (mode === "paint" || mode === "erase") {
-        let comando = [brush, dragStart.x, dragStart.y, 32, 32]
+        let comando = [dragStart.x, dragStart.y, dragStart.x, dragStart.y]
         comandos.push(comando)
-        draw()
+
+        draw(dragStart.x, dragStart.y, dragStart.x, dragStart.y)
         ispaint = true
     } else {
 
@@ -156,16 +232,21 @@ function onPointerUp(e) {
 
 function onPointerMove(e) {
     if (ispaint) {
-        dragStart.x = getEventLocation(e).x / cameraZoom - cameraOffset.x
-        dragStart.y = getEventLocation(e).y / cameraZoom - cameraOffset.y
-        let comando = [brush, dragStart.x, dragStart.y, 32, 32]
+        offsetX = canvas.getBoundingClientRect().left;
+        offsetY = canvas.getBoundingClientRect().top;
+        let x = getEventLocation(e).x / cameraZoom - cameraOffset.x - offsetX
+        let y = getEventLocation(e).y / cameraZoom - cameraOffset.y - offsetY
+        let comando = [x, y, dragStart.x, dragStart.y]
         comandos.push(comando)
-        draw()
+        draw(x, y, dragStart.x, dragStart.y)
+        dragStart.x = x
+        dragStart.y = y
+
     }
     if (isDragging) {
         cameraOffset.x = getEventLocation(e).x / cameraZoom - dragStart.x
         cameraOffset.y = getEventLocation(e).y / cameraZoom - dragStart.y
-        draw()
+        redraw()
     }
 
 }
@@ -237,34 +318,32 @@ function adjustZoom(zoomAmount, zoomFactor, x, y) {
             cameraOffset.x = Math.floor(-dragStart.x + window.innerWidth / 2 / cameraZoom) // 2 cameraOffset.x - Math.abs(cameraOffset.x - x - window.innerWidth / 2) / 4
             cameraOffset.y = Math.floor(-dragStart.y + window.innerHeight / 2 / cameraZoom)// 2 cameraOffset.x - Math.abs(cameraOffset.y - y - window.innerHeight / 2) / 4
         }
-        console.log(zoomAmount)
-        draw()
-        setTimeout(() => document.getElementById("x1").innerHTML = cameraZoom + "x")
+        redraw()
+        setTimeout(() => { let x1 = document.getElementById("x1"); if (x1) { x1.innerHTML = cameraZoom + "x" } }, 10)
     }
 }
 
 function zoom(value) {
     if (value) {
         adjustZoom(value, null, dragStart.x, dragStart.y)
+    } else {
+        modeTo("zoom")
+        criaCabeca()
     }
-    //temporary
-    mode = "zoom"
-    criaCabeca()
-    // resetZoom()
 }
 
 function resetZoom() {
     cameraZoom = 1
     cameraOffset.x = window.innerWidth / 2
     cameraOffset.y = window.innerHeight / 2
-    draw()
+    redraw()
 
 }
 
 function scrollMoveCanva(x, y) {
     cameraOffset.x -= x / cameraZoom
     cameraOffset.y -= y / cameraZoom
-    draw()
+    redraw()
 }
 canvas.addEventListener('mousedown', onPointerDown)
 canvas.addEventListener('touchstart', (e) => handleTouch(e, onPointerDown))
@@ -275,4 +354,3 @@ canvas.addEventListener('touchmove', (e) => handleTouch(e, onPointerMove))
 canvas.addEventListener('wheel', (e) => { e.preventDefault(); adjustZoom(e.deltaY, null, e.clientX, e.clientY) })
 
 // Ready, set, go
-draw()

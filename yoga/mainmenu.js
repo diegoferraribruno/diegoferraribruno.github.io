@@ -15,7 +15,7 @@ function menu() {
 }
 
 function criaCabeca() {
-    cabeca.innerHTML = "<div id='menu' class='bot shadow' title='Menu pinceis' onclick='limpaCabeca()'>🧘 </div>"
+    cabeca.innerHTML = "<div id='menu' class='bot shadow' title='Menu pinceis' onclick='limpaCabeca()'>🧘</div>"
     var mainmenu = menu()
     let len = mainmenu.length
     for (i = 0; i < len; i++) {
@@ -30,17 +30,17 @@ setTimeout(() => { criaCabeca() }, 100)
 //setTimeout(() => { limpaCabeca() }, 1100)
 
 function limpaCabeca() {
-    cabeca.innerHTML = "<div id='djs'class='bot shadow' title='Menu Pinceis' onclick='criaCabeca()'> 🧘</div>"
+    cabeca.innerHTML = "<div id='yoga'class='bot shadow' title='Menu Pinceis' onclick='criaCabeca()'> 🧘</div>"
+    removeSubmenu()
 }
-
-function modeTo(m) {
-    if (m == mode && document.getElementById("menu").innerHTML != "") {
-        toggleMenu()
-    } else {
-        mode = m
-        toggleMenu(mode)
+function removeSubmenu() {
+    if (submenu) {
+        document.body.removeChild(submenu)
     }
-
+}
+function modeTo(m) {
+    mode = m
+    toggleMenu(mode)
     criaCabeca()
     if (m == "erase") {
         ctx.globalCompositeOperation = 'destination-out'
@@ -54,10 +54,26 @@ function modeTo(m) {
 
 }
 function toggleMenu(value) {
-    document.getElementById("menu").innerHTML = ""
-    var menus = {
-        "zoom":
-            `<span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoom(-1)">🔎<span class="textOver">-</span></span>
+    let submenu = document.getElementById("submenu")
+    if (!submenu) {
+        if (value != undefined) {
+            let constructor = getmenu(value)
+            submenu = document.createElement("div")
+            submenu.id = "submenu"
+            submenu.classList.add("submenu")
+            submenu.innerHTML = constructor
+            document.body.appendChild(submenu)
+        }
+    } else {
+        removeSubmenu()
+    }
+
+}
+
+function getmenu(value) {
+    switch (value) {
+        case "zoom":
+            return `<span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoom(-1)">🔎<span class="textOver">-</span></span>
         <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoom(1)">🔎<span class="textOver">+</span></span>
         <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="resetZoom()">🔎<span class="textOver">1x</span></span>
         <br>
@@ -65,18 +81,17 @@ function toggleMenu(value) {
         <span class="bot" onmousedown="scrollMoveCanva(0,-320)">⬆️</span>
         <span class="bot" onmousedown="scrollMoveCanva(0,320)">⬇️</span>
         <span class="bot" onmousedown="scrollMoveCanva(320,0)">➡️</span>
-        </div > `,
-        "paint": "brushes<br>brushes<br>brushes<br>brushes<br>brushes<br>brushes<br>brushes<br>brushes<br>",
-        "colors": "color picker, color menu.. ",
-        "erase": "stroke range, brushes",
-        "nitidez": `<span id="oculos" class="botao">
-        👓 <txt name="79">nitidez</txt>
+        </div > `
+        case "paint":
+
+            return "brushes<br>brushes<br>brushes<br>brushes<br>brushes<br>brushes<br>brushes<br>brushes<br>";
+        case "colors":
+            return "color picker, color menu.. "
+        case "erase": return "stroke range, brushes";
+        case "nitidez": return `<span id="oculos" class="botao">👓 <txt name="79">nitidez</txt>
         <label class="toggle">
             <input id="pixel" type="checkbox" value="true" checked onchange="pixel()">
             <span class="knob"></span>
         </label></span>`
-    }
-    if (value != undefined) {
-        document.getElementById("menu").innerHTML = menus[value]
     }
 }

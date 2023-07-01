@@ -1,8 +1,28 @@
-body {
-    background-color: darkslategray;
-    margin-top: 0px;
-    margin-left: 0px;
+@font-face {
+    font-family: "color-emoji";
+    src: local("Apple Color Emoji"), local("Segoe UI Emoji"), local("Segoe UI Symbol"), local("Noto Color Emoji");
 }
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: #77767b;
+    overflow: hidden;
+    padding: 0px 0px;
+    margin: 0px 0px;
+    font-family: 'Segoe UI', font-face, sans-serif;
+}
+
+* {
+    /*IE10*/
+    user-select: none;
+    /*-ms-user-select: none;*/
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    /*You just need this if you are only concerned with android and not desktop browsers.*/
+    /*-webkit-tap-highlight-color: rgba(0, 0, 0, 0);*/
+}
+
 
 #canvas {
     border: 1px solid black;
@@ -14,9 +34,9 @@ body {
     margin-left: 2px;
     margin-right: 3px;
     margin-bottom: 4px;
-    height: 34px;
-    width: 34px;
-    font-size: 28px;
+    height: 40px;
+    width: 40px;
+    font-size: 38px;
     display: inline-block;
     position: relative;
     background-color: #4f45108e;
@@ -39,8 +59,8 @@ body {
     display: block;
     float: right;
     position: fixed;
-    left: 2px;
-    bottom: 20px;
+    left: 4px;
+    bottom: 4px;
     z-index: 300;
 }
 
@@ -48,7 +68,7 @@ body {
     background-color: #00000044;
     border-color: #ffffff55;
     border-width: 3px;
-    font-size: 3em;
+    font-size: 3.2em;
     padding-right: 8px;
 }
 
@@ -61,15 +81,15 @@ body {
     z-index: 501;
     /* visibility: hidden;*/
     max-height: 320px;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
     bottom: 52px;
     left: 10px;
 
 }
 
 .textOver {
-    display: inline-block;
+    display: block;
     position: absolute;
-    margin-left: -32px;
+    margin-top: -32px;
     font-size: 0.8em
 }
