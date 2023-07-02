@@ -31,9 +31,10 @@ setTimeout(() => { criaCabeca() }, 100)
 
 function limpaCabeca() {
     cabeca.innerHTML = "<div id='yoga'class='bot shadow' title='Menu Pinceis' onclick='criaCabeca()'> 🧘</div>"
-    removeSubmenu()
+    // removeSubmenu()
 }
 function removeSubmenu() {
+    let submenu = document.getElementById("submenu")
     if (submenu) {
         document.body.removeChild(submenu)
     }
