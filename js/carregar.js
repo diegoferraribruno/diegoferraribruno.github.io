@@ -168,9 +168,9 @@ var openFile = function (event) {
                 console.log(brushs)
 
                 changedBrush = false;
-                strokeColor = brushs[2]
-                strokeWidth = brushs[1]
-                lastbrush = brushs[0]
+                strokeColor = parseInt(brushs[2])
+                strokeWidth = parseInt(brushs[1])
+                lastbrush = parseInt(brushs[0])
                 brushName = brushNames[i]
                 brushMode = 1
                 brushCanva.crossOrigin = "anonymous"
