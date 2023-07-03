@@ -90,8 +90,8 @@ function zoom2x() {
     //resizeScreen()
 }
 
-function handleTouch(e, singleTouchHandler) {
-    if (e.type == "touchmove" && e.touches.length == 2 && mode == "zoom") {
+function handleTouch(e) {
+    if (e.type == "touchmove" && e.touches.length == 2 && mode == "zoomx") {
         isGrabing = false
         handlePinch(e)
     }
