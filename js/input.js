@@ -33,6 +33,9 @@ let tempStrokeSize
 var tempImg = document.createElement("img");
 var rotacionar = false
 iD("canvas_div").appendChild(canvasBack)
+let lastPressure = 0.5
+let dinamicInk = false
+let lastInk = 1
 
 function handleKeyUp(evt) {
     if (evt.keyCode === 16) {
@@ -94,9 +97,6 @@ function handleKeys(evt) {
 }
 
 
-let lastPressure = 0.5
-let dinamicInk = false
-let lastInk = 1
 function handleStart(evt) {
     evt.preventDefault();
     removeClass();
@@ -104,15 +104,15 @@ function handleStart(evt) {
     iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + evt.pressure
 
     changedBrush = false;
-
+    offsetX = canvas.getBoundingClientRect().left;
+    offsetY = canvas.getBoundingClientRect().top;
     origin.x = (evt.pageX - offsetX) / zoomFactor
     origin.y = (evt.pageY - offsetY) / zoomFactor
     if (pixelGood) {
         origin.x = redondo(origin.x)
         origin.y = redondo(origin.y)
     }
-    offsetX = canvas.getBoundingClientRect().left;
-    offsetY = canvas.getBoundingClientRect().top;
+
     if (mode === "recortar") {
         canvasFront.classList.remove("esconde")
         isSelecting = true;
@@ -260,6 +260,10 @@ function handleMove(evt) {
             y: origin.y - y
         }
         let vari = 0.5
+        if (origin.x == 0 && origin.y == 0) {
+            origin.x = x
+            origin.y = y
+        }
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
             if (dinamicInk == true) {
                 lastInk -= 0.002
@@ -506,6 +510,7 @@ function handleUp(evt) {
         ultimoToque.x = x
         ultimoToque.y = y
         isDrawing = false;
+
     }
     if (isGrabing) {
         isGrabing = false;
@@ -514,6 +519,8 @@ function handleUp(evt) {
         ultimoToque.x = x
         ultimoToque.y = y
     }
+    origin.x = 0
+    origin.y = 0
 
 
 }
@@ -557,6 +564,8 @@ function handleEnd(evt) {
     }
     scrollWindow.x = 0
     scrollWindow.y = 0
+    origin.x = 0
+    origin.y = 0
 }
 
 function handleCancel(evt) {

@@ -36,6 +36,8 @@ function setZoom(zoom, el) {
     el.style["transformOrigin"] = oString;
     resizeScreen();
     canvas.focus()
+    origin.x = 0
+    origin.y = 0
 }
 
 function ZOOMf(a) {
@@ -43,6 +45,7 @@ function ZOOMf(a) {
     ZOOM(escala);
 }
 function ZOOM(a) {
+
     setZoom(a, canvasDiv);
     //  setZoom(a, canvas_window);
     resetCanva();
@@ -60,10 +63,14 @@ function ZOOM(a) {
 function scrollMoveCanva(a, b) {
     win.scrollLeft += a * zoomFactor;
     win.scrollTop += b * zoomFactor;
+    origin.x = 0
+    origin.y = 0
 }
 function scrollCanva(a, b) {
     win.scrollLeft = a;
     win.scrollTop = b;
+    origin.x = 0
+    origin.y = 0
 }
 function resetCanva() {
     let objects = ["canvas_window", "canvas_div"];
@@ -73,6 +80,8 @@ function resetCanva() {
     }
     win.scrollTop = 0;
     win.scrollLeft = 0;
+    origin.x = 0
+    origin.y = 0
     setTimeout(autoScroll(), 100)
 
 }
@@ -126,40 +135,42 @@ function handlePinch(e) {
         comandos.push(comando)
         draw(touch1.x, touch1.y, touch2.x, touch2.y, strokesize.x, strokesize.y)
       }*/
+        origin.x = 0
+        origin.y = 0
     }
 }
 function adjustZoom(zoomAmount, zoomFactor, x, y) {
 
-    if (!isGrabing) {
+    //  if (!isGrabing) {
 
-        if (zoomAmount > 0) {
+    if (zoomAmount > 0) {
+        if (zoomIndex <= 6) {
+            zoomIndex++;
+            // zoomIndex = 0;
+            ZOOMf(zoomIndex);
+        }
+    } else if (zoomAmount < 0) {
+        if (zoomIndex > 0) {
+            zoomIndex--;
+            // zoomIndex = 0;
+            ZOOMf(zoomIndex);
+        }
+    }
+    else if (zoomFactor) {
+        if (zoomFactor > 1) {
             if (zoomIndex <= 6) {
                 zoomIndex++;
                 // zoomIndex = 0;
                 ZOOMf(zoomIndex);
             }
-        } else if (zoomAmount < 0) {
+        } else if (zoomFactor < 1) {
             if (zoomIndex > 0) {
                 zoomIndex--;
                 // zoomIndex = 0;
                 ZOOMf(zoomIndex);
             }
         }
-        else if (zoomFactor) {
-            if (zoomFactor > 1) {
-                if (zoomIndex <= 6) {
-                    zoomIndex++;
-                    // zoomIndex = 0;
-                    ZOOMf(zoomIndex);
-                }
-            } else if (zoomFactor < 1) {
-                if (zoomIndex > 0) {
-                    zoomIndex--;
-                    // zoomIndex = 0;
-                    ZOOMf(zoomIndex);
-                }
-            }
-            //  cameraZoom = zoomFactor * lastZoom
-        }
+        //  cameraZoom = zoomFactor * lastZoom
+        //   }
     }
 }
