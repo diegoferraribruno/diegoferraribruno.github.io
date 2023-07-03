@@ -246,7 +246,7 @@ function export2txt() {
         a.href = URL.createObjectURL(new Blob([JSON.stringify(pacote, null, 2)], {
             type: "text/plain"
         }));
-        a.setAttribute("download", "data.art");
+        a.setAttribute("download", "data.txt");
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
