@@ -32,10 +32,11 @@ function undo() {
     let len = comandos.length;
     let posicao = 1
     for (i = 0; i < len; i++) {
-        if (i < undoLevel - 1 && (comandos[i][0] == "s")) {
+        if (i < undoLevel - 1 && comandos[i][0] == "s") {
             posicao = i;
         }
     }
+    if (posicao < 0) { posicao = 0 }
     if (undoLevel < len - 1) {
         undoLevel++
         comandosExec(posicao)
@@ -59,7 +60,7 @@ function redo() {
             posicao = i;
         }
     }
-    if (undoLevel > 0) {
+    if (undoLevel > 1) {
         undoLevel--
         comandosExec(posicao)
     } else {
@@ -68,12 +69,13 @@ function redo() {
     }
 }
 
+const empty = canvas.toDataURL('image/png');
 
 
 
 function memorySwap() {
     let len = comandos.length;
-    if (len > 500) {
+    if (len > 1) {
         for (let c = 0; c < len; c++) {
             if (comandos[c][0] == "s") {
                 swaps.push(comandos[c])
@@ -91,13 +93,16 @@ function memorySwap() {
         comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
         swaps.push(comando)
         comandos = []
+        comando = ["s", "source-over", empty, 0, 0, canvas.width, canvas.height];
+        comandos.push(comando)
         let lenb = swaps.length
-        if (lenb > 8) { swaps.shift() }
+        if (lenb > 4) { swaps.shift() }
         lenb = swaps.length
         for (i = 0; i < lenb; i++) {
             comandos.push(swaps[i]);
         }
         swaps = []
+        comandosParaComandosb()
         // clearBrushes()
     }
 }

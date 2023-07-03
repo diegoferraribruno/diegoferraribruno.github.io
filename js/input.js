@@ -272,7 +272,6 @@ function handleMove(evt) {
 
                 if ((evt.pointerType == "touch" || "mouse") && dinamicBrush === true) {
                     let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2) * strokeWidth;
-                    console.log(pressure)
                     if (pressure > lastPressure) { lastPressure += 1.5 } else {
                         lastPressure -= 1.5
                     }
@@ -375,7 +374,9 @@ function handleMove(evt) {
                     canvasFront.ctx.drawImage(brushCanva, x - (lastPressure / 2), y - (lastPressure / 2));
 
                 } else {
-                    canvasFront.ctx.drawImage(brushCanva, x - (strokeWidth / 2), y - (strokeWidth / 2));
+                    let halfstroke = 0
+                    if (strokeWidth > 1) { halfstroke = strokeWidth / 2 }
+                    canvasFront.ctx.drawImage(brushCanva, redondo(x - halfstroke), redondo(y - halfstroke));
 
                 }
 
