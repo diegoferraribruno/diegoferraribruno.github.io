@@ -49,8 +49,6 @@ function ZOOM(a) {
 
     zoomFactor = Number(a);
     setZoom(zoomFactor, canvasDiv)
-
-
     setStrokeSize(strokeWidth);
     iD("tzoom").value = zoomFactor;
     iD("zoombar").value =
@@ -90,4 +88,78 @@ function zoom2x() {
     // cursorColor();
     //toggleSelect(qual);
     //resizeScreen()
+}
+
+function handleTouch(e, singleTouchHandler) {
+    if (e.type == "touchmove" && e.touches.length == 2 && mode == "zoom") {
+        isGrabing = false
+        handlePinch(e)
+    }
+}
+let lastpinch = 4
+function handlePinch(e) {
+    e.preventDefault()
+
+    let touch1 = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+    let touch2 = { x: e.touches[1].clientX, y: e.touches[1].clientY }
+
+    // This is distance squared, but no need for an expensive sqrt as it's only used in ratio
+    let currentDistance = Math.abs(touch1.x - touch2.x) / 2 + Math.abs(touch1.y - touch2.y) / 2
+
+    let distX = Math.floor(currentDistance / 50)
+    if ((distX % 1) == 0 && distX != lastpinch) {
+        lastpinch = distX
+
+        let centerpos = { x: (touch1.x + touch2.x) / 2, y: (touch1.y - touch2.y) / 2 }
+        if (initialPinchDistance == null) {
+            initialPinchDistance = currentDistance
+        }
+        else if (mode = "zoom") {
+            if (currentDistance > initialPinchDistance) {
+                adjustZoom(1, null, centerpos.x, centerpos.y)
+            } else if (currentDistance < initialPinchDistance) {
+                adjustZoom(-1, null, centerpos.x, centerpos.y)
+            }
+
+        }/* else if (mode == "paint") {
+        let comando = [touch1.x, touch1.y, touch2.x, touch2.y, strokesize.x, strokesize.y]
+        comandos.push(comando)
+        draw(touch1.x, touch1.y, touch2.x, touch2.y, strokesize.x, strokesize.y)
+      }*/
+    }
+}
+function adjustZoom(zoomAmount, zoomFactor, x, y) {
+
+    if (!isGrabing) {
+
+        if (zoomAmount > 0) {
+            if (zoomIndex <= 6) {
+                zoomIndex++;
+                // zoomIndex = 0;
+                ZOOMf(zoomIndex);
+            }
+        } else if (zoomAmount < 0) {
+            if (zoomIndex > 0) {
+                zoomIndex--;
+                // zoomIndex = 0;
+                ZOOMf(zoomIndex);
+            }
+        }
+        else if (zoomFactor) {
+            if (zoomFactor > 1) {
+                if (zoomIndex <= 6) {
+                    zoomIndex++;
+                    // zoomIndex = 0;
+                    ZOOMf(zoomIndex);
+                }
+            } else if (zoomFactor < 1) {
+                if (zoomIndex > 0) {
+                    zoomIndex--;
+                    // zoomIndex = 0;
+                    ZOOMf(zoomIndex);
+                }
+            }
+            //  cameraZoom = zoomFactor * lastZoom
+        }
+    }
 }

@@ -39,9 +39,6 @@ function startup() {
           removeVideo();
         } else if (event.key === "Escape") {
           removeClass();
-        }
-        else if (event.key === "Escape") {
-          removeClass()
           window.parent.focus()
         } else if (event.key === "z" && keyCtrl == false) {
           zoom2x()
@@ -51,8 +48,14 @@ function startup() {
         } else if (event.key === "e") {
           modeTo("apagar")
           removeClass()
-        } else if (event.code === "Space") {
-          if (mode == "play") { stop(); } else { play(); }
+        } else if (event.code === "Space" && keyCtrl == true) {
+
+          if (mode == "play") {
+            stop();
+          } else {
+            play();
+          }
+
         } else if (event.key === "+" && keyCtrl == false) {
           new_frame()
         } else if (event.key === "Delete") {
@@ -137,6 +140,10 @@ function startup() {
     canvas.addEventListener("pointercancel", handleCancel);
     canvas.addEventListener("pointermove", handleMove);
     canvas.addEventListener("pointerleave", handleEnd);
+    //canvas.addEventListener('touchmove', (e) => handleTouch(e, onPointerMove))
+    canvas.addEventListener('wheel', (e) => { wheel(e) })
+
+
     // limpaCabeca();
     apresenta()
   }, 1000);
@@ -144,7 +151,12 @@ function startup() {
   loading()
 
 }
+function wheel(e) {
+  if (keyCtrl == true) {
+    e.preventDefault(); adjustZoom(-1 * e.deltaY, null, e.clientX, e.clientY)
 
+  }
+}
 function loading() {
   setTimeout(() => { removeElement("carregandoa") }, 10000)
 }

@@ -1,6 +1,7 @@
 let keyZ = false
 let keyY = false
 let keyCtrl = false
+let spaceKey = false
 var shiftHeld = false;
 
 var canvasFront = document.createElement("canvas")
@@ -53,6 +54,12 @@ function handleKeyUp(evt) {
         undoTEnd()
 
     }
+    if (evt.code === "Space") {
+        spaceKey = false
+        isGrabing = false
+        document.body.style.cursor = "pointer";
+    }
+
 }
 function handleKeys(evt) {
     if (evt.keyCode === 90) {
@@ -77,6 +84,12 @@ function handleKeys(evt) {
             redoT()
         }
 
+    }
+    if (evt.code === "Space") {
+        evt.preventDefault()
+        spaceKey = true
+        isGrabing = true
+        document.body.style.cursor = "move"
     }
 }
 
@@ -117,7 +130,7 @@ function handleStart(evt) {
     if (mode == "zoomx") {
         isGrabing = true;
     }
-    if (mode == "pintar" || mode == "apagar" || mode == "cores") {
+    if (mode == "pintar" || mode == "apagar" || mode == "cores" && !isGrabing) {
         if (dinamicInk == true) {
             mudaCorQ(3, iD("A").value)
             lastInk = hsla[3]
@@ -240,7 +253,7 @@ function handleMove(evt) {
         }
         canvasFront.ctx.drawImage(cropcursor, x, y)
     }
-    if (isDrawing === true && isPicking == false && mode != 'move') {
+    if (isDrawing === true && isPicking == false && mode != 'move' && !isGrabing) {
         mouseOver = true;
         let dif = {
             x: origin.x - x,
@@ -339,6 +352,7 @@ function handleMove(evt) {
     }
 
     if (isGrabing) {
+        document.body.style.cursor = "move";
         scrollWindow.x += origin.x - x
         scrollWindow.y += origin.y - y
         if (scrollWindow.x != 0 || scrollWindow.y != 0) {

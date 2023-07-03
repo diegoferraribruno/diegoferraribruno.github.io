@@ -1,7 +1,8 @@
 let vers = [
     {
-        versao: "4.0",
-        notas: ["Piceis dinamicos para dispositivos com sensibilidade à pressão, mouse e touch com aumento do pincel de acordo com a velo",
+        versao: "4.3",
+        notas: ["new shortcut:", "ctrl+space = play", "space+move = scroll", "ctrl+ mouse whell = zoom in/out",
+            "Piceis dinamicos para dispositivos com sensibilidade à pressão, mouse e touch com aumento do pincel de acordo com a velo",
             "troca de comandos por imagens para economizar memoria."
         ]
 
