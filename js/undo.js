@@ -75,10 +75,13 @@ const empty = canvas.toDataURL('image/png');
 
 function memorySwap() {
     let len = comandos.length;
+    let quantos = 0
     if (len > 1) {
         for (let c = 0; c < len; c++) {
             if (comandos[c][0] == "s") {
                 swaps.push(comandos[c])
+                quantos++
+                if (quantos > 20) { swaps.shift() }
             }
         }
 
@@ -95,8 +98,6 @@ function memorySwap() {
         comandos = []
         comando = ["s", "source-over", empty, 0, 0, canvas.width, canvas.height];
         comandos.push(comando)
-        let lenb = swaps.length
-        if (lenb > 4) { swaps.shift() }
         lenb = swaps.length
         for (i = 0; i < lenb; i++) {
             comandos.push(swaps[i]);
