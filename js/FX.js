@@ -1,4 +1,4 @@
-let filters = ["none", "invert", "blur", "grayscale", "sepia", "contrast",]
+let filters = ["none", "invert", "blur", "grayscale", "sepia", "contrast", "brightness"]
 let fx = 0
 
 function FX(fx, onde) {
@@ -25,6 +25,11 @@ function FX(fx, onde) {
 
             onde.filter = filters[fx] + "(" + quanto + ")"
 
+        } else if (fx == 6) {
+            let quanto = iD(filters[fx] + "Bar").value
+
+            onde.filter = filters[fx] + "(" + quanto + ")"
+
         }
         updatecanvasFront()
 
@@ -44,13 +49,15 @@ function updatecanvasFront() {
 function confirmFX(fx, fxname) {
     //removeClass()
     let confirm = iD("confirmFX")
+    menufx(fx)
     confirm.classList.remove("esconde")
-    // confirm.classList.add("confirm")
-    confirm.innerHTML = `aplicar o efeito <br> <div  class="shadow" onClick="applyFX('` + fx + `')"> ` + fxname + ' ✅ </div >' +
+    "display: none;"
+    confirm.innerHTML = `<div  class="shadow" onClick="applyFX('` + fx + `')">  ✅ </div >` +
         `<div onClick="cancelaFX()"
-             class='shadow'">`+ textos[language]["80"] + ` ❌</div>`
+         class='shadow'">`+ textos[language]["80"] + ` ❌</div>`
 }
 function applyFX() {
+    menufx()
 
     removeClass()
     img_b64 = canvasFront.toDataURL("image/png");
@@ -62,24 +69,40 @@ function applyFX() {
         //   comando = ["FX", fx]
         //  comandos.unshift(comando)
         save_frame()
-        Alert(alerts[language][14])
-        removeClass()
+        Alert(alerts[language][14], 0.8)
         canvasFront.filter = filters[0]
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }, 300)
+    setTimeout(() =>
+        mostraMenu("FX")
+        , 1000)
 }
 function cancelaFX() {
-    mostraMenu("FX")
-    iD("confirmFX").classList.add("esconde")
+    setTimeout(() =>
+        mostraMenu("FX")
+        , 1000)
+    menufx()
     canvasFront.filter = filters[0]
     canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }
-function menufx(qual) {
-    for (i = 1; i < 6; i++) {
-        document.getElementById("fx" + i).classList.add("esconde")
 
+
+function menufx(qual = undefined) {
+    let confirm = iD("confirmFX")
+    if (qual == undefined) {
+        confirm.classList.add("esconde")
+        for (i = 0; i < 7; i++) {
+            document.getElementById("fx" + i).style.display = "block"
+
+        }
+    } else {
+        confirm.classList.remove("esconde")
+        for (i = 0; i < 7; i++) {
+            document.getElementById("fx" + i).style.display = "none"
+
+        }
+        document.getElementById("fx" + qual).style.display = "block"
     }
-    document.getElementById("fx" + qual).classList.remove("esconde")
 }
