@@ -140,8 +140,8 @@ function startup() {
     canvas.addEventListener("pointercancel", handleCancel);
     canvas.addEventListener("pointermove", handleMove);
     canvas.addEventListener("pointerleave", handleEnd);
-    //canvas.addEventListener('touchmove', (e) => handleTouch(e, onPointerMove))
-    canvas.addEventListener('wheel', (e) => { wheel(e) })
+    canvas.addEventListener('touchmove', (e) => handleTouch(e))
+    win.addEventListener('wheel', (e) => wheel(e))
 
 
     // limpaCabeca();
