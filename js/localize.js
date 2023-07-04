@@ -182,7 +182,11 @@ let textos = {
         "77": "Mover o quadro",
         "78": "Rotacionar pelo centro da tela",
         "79": "Nitidez (pixel quadrado)",
-        "80": "cancela"
+        "80": "cancela",
+        "81": "Recortar o quadro",
+        "82": "Informações",
+        "83": "Filtros"
+
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -263,7 +267,11 @@ let textos = {
         "77": "Move the canva",
         "78": "Rotate by canvas center",
         "79": "Sharpness (square pixels)",
-        "80": "Cancel"
+        "80": "Cancel",
+        "81": "Crop Canvas",
+        "82": "information",
+        "83": "filtros"
+
     }
 }
 var titles = {
