@@ -269,8 +269,8 @@ let textos = {
         "79": "Sharpness (square pixels)",
         "80": "Cancel",
         "81": "Crop Canvas",
-        "82": "information",
-        "83": "filtros"
+        "82": "Information",
+        "83": "Filters"
 
     }
 }
