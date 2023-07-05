@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    #canvas {
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+
+<body>
+  This is a chatGPt genarated code but i hade to fix it and know what i should do get my result.
+  <canvas id="canvas" width="400" height="300"></canvas>
+  <script>
+    // Get canvas element
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Variables to store selection data
+    let selectionPaths = [];
+    let currentPath = [];
+    let isSelecting = false;
+    let isShiftPressed = false;
+
+    // Event listeners for mouse and key events
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+
+    // Handle mouse down event
+    function handleMouseDown(event) {
+      const { offsetX, offsetY } = event;
+      if (!isShiftPressed) {
+        selectionPaths = [];
+        currentPath = [];
+
+
+      }
+      isSelecting = true;
+      currentPath.push([offsetX, offsetY]);
+    }
+
+    // Handle mouse move event
+    function handleMouseMove(event) {
+      if (!isSelecting) return;
+      const { offsetX, offsetY } = event;
+      currentPath.push([offsetX, offsetY]);
+      drawSelection();
+    }
+
+    // Handle mouse up event
+    function handleMouseUp() {
+      isSelecting = false;
+
+      selectionPaths.push(currentPath);
+      currentPath = [];
+
+    }
+
+    // Handle key down event
+    function handleKeyDown(event) {
+      if (event.key === 'Shift') {
+        isShiftPressed = true;
+      } else if (event.ctrlKey && event.key === 'c') {
+        copySelection();
+      }
+    }
+
+    // Handle key up event
+    function handleKeyUp(event) {
+      if (event.key === 'Shift') {
+        isShiftPressed = false;
+      }
+    }
+
+    // Draw the selection shapes on the canvas
+    function drawSelection() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0); // Replace 'image' with your actual image variable
+
+      for (const path of selectionPaths) {
+        ctx.beginPath();
+        ctx.moveTo(path[0][0], path[0][1]);
+        for (let i = 1; i < path.length; i++) {
+          ctx.lineTo(path[i][0], path[i][1]);
+        }
+        ctx.closePath();
+        ctx.fillStyle = '#ff000033'; // Set fill color with opacity
+        ctx.fill(); // Fill the selection shape
+      }
+
+      if (currentPath.length > 1) {
+        ctx.beginPath();
+        ctx.moveTo(currentPath[0][0], currentPath[0][1]);
+        for (let i = 1; i < currentPath.length; i++) {
+          ctx.lineTo(currentPath[i][0], currentPath[i][1]);
+        }
+        ctx.closePath();
+        ctx.fillStyle = '#ff000033'; // Set fill color with opacity
+        ctx.fill(); // Fill the current selection shape
+      }
+    }
+
+    // Copy the selection data and create a new image
+    function copySelection() {
+      const minX = Math.min(...selectionPaths.flat().map(([x]) => x));
+      const minY = Math.min(...selectionPaths.flat().map(([, y]) => y));
+      const maxX = Math.max(...selectionPaths.flat().map(([x]) => x));
+      const maxY = Math.max(...selectionPaths.flat().map(([, y]) => y));
+      const width = maxX - minX;
+      const height = maxY - minY;
+
+      const newCanvas = document.createElement('canvas');
+      newCanvas.width = width;
+      newCanvas.height = height;
+      const newCtx = newCanvas.getContext('2d');
+
+      for (const path of selectionPaths) {
+        newCtx.beginPath();
+        newCtx.moveTo(path[0][0] - minX, path[0][1] - minY);
+        for (let i = 1; i < path.length; i++) {
+          newCtx.lineTo(path[i][0] - minX, path[i][1] - minY);
+        }
+        newCtx.closePath();
+        newCtx.fillStyle = '#000000';
+        newCtx.fill(); // Fill the selection shape
+      }
+      newCtx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
+      newCtx.drawImage(image, -minX, -minY);
+
+      const newImage = new Image();
+      newImage.src = newCanvas.toDataURL();
+      document.body.appendChild(newImage);
+    }
+
+    const image = new Image();
+    image.src = '../game/bruno.png';
+    image.onload = function () {
+      ctx.drawImage(image, 0, 0);
+    };
+  </script>
+</body>
+
+</html>
