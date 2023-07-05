@@ -1,6 +1,7 @@
 var tempImg
 var autoCropMax = { x: 0, y: 0 }
 var autoCropMin = { x: canvas.width, y: canvas.height };
+let cropStart = { x: 0, y: 0 }
 var cropEnd = { x: 0, y: 0 };
 var newAnima = []
 var x2size = 1;
@@ -29,8 +30,8 @@ async function autoCrop(x, y, width = 0, height = 0) {
 
 function cortar(autoCortar = false) {
     if (autoCortar == true) {
-        origin.x = autoCropMin.x
-        origin.y = autoCropMin.y
+        cropStart.x = autoCropMin.x
+        cropStart.y = autoCropMin.y
         cropEnd.x = autoCropMax.x
         cropEnd.y = autoCropMax.y
         setTimeout(() => resetAutoCrop()
@@ -43,18 +44,18 @@ function cortar(autoCortar = false) {
         setTimeout(() => {
             let noy = []
             let nox = []
-            let pos = { x: -origin.x, y: -origin.y }
-            if (cropEnd.x < origin.x) {
-                nox = [origin.x, cropEnd.x]
+            let pos = { x: -cropStart.x, y: -cropStart.y }
+            if (cropEnd.x < cropStart.x) {
+                nox = [cropStart.x, cropEnd.x]
                 pos.x = -cropEnd.x;
             } else {
-                nox = [cropEnd.x, origin.x]
+                nox = [cropEnd.x, cropStart.x]
             }
-            if (cropEnd.y < origin.y) {
-                noy = [origin.y, cropEnd.y]
+            if (cropEnd.y < cropStart.y) {
+                noy = [cropStart.y, cropEnd.y]
                 pos.y = -cropEnd.y;
             } else {
-                noy = [cropEnd.y, origin.y]
+                noy = [cropEnd.y, cropStart.y]
             }
             let x0 = redondo(nox[0])
             let y0 = redondo(noy[0])
@@ -84,7 +85,7 @@ function cut() {
 
             desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22b000")
         }
-    }, 30)
+    }, 800)
 
     swapImg = canvas.toDataURL("image/png");
     blob = dataURItoBlob(swapImg);
@@ -231,7 +232,7 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
 }
 
 
-function desenhaRetangulo(x0 = origin.x, y0 = origin.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff2200") {
+function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff2200") {
 
     canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvasFront.ctx.globalCompositeOperation = "source-over"

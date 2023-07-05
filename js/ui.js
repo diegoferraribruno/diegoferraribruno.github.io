@@ -62,14 +62,14 @@ var checkOrientation = function () {
 
             iD("ferramentas").classList.add("horizontal");
             iD("ferramentas2").classList.add("horizontal2");
-            iD("anime").classList.add("horizontal3");
+            iD("ferramentas3").classList.add("horizontal3");
 
             iD("menus").style.top = "100px";
 
         } else {
             iD("ferramentas").classList.remove("horizontal");
             iD("ferramentas2").classList.remove("horizontal2");
-            iD("anime").classList.remove("horizontal3");
+            iD("ferramentas3").classList.remove("horizontal3");
 
             iD("menus").style.top = "0px";
 
@@ -159,7 +159,7 @@ function resizeScreen() {
 
         iD("ferramentas").classList.add("horizontal");
         iD("ferramentas2").classList.add("horizontal2");
-        iD("anime").classList.add("horizontal3");
+        iD("ferramentas3").classList.add("horizontal3");
 
         // alert(`virou, ${screen.width} , ${screen.height}`)
         win.style.width = parseInt(window.innerWidth, 10) - 160 + "px";
@@ -168,7 +168,7 @@ function resizeScreen() {
     } else {
         iD("ferramentas").classList.remove("horizontal");
         iD("ferramentas2").classList.remove("horizontal2");
-        iD("anime").classList.remove("horizontal3");
+        iD("ferramentas3").classList.remove("horizontal3");
 
         win.style.width = parseInt(window.innerWidth, 10) + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 170 + "px";

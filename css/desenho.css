@@ -396,10 +396,9 @@ input[type="range"] {
 .horizontal3 {
     display: block;
     top: 6px;
-    width: 40px;
-    margin-right: 38px;
-
+    width: 32px;
     position: absolute;
+    right: 46px;
 }
 
 #menuinfo {
@@ -572,15 +571,20 @@ input[type="range"] {
     font-size: 26px;
 }
 
-
+#anime {
+    display: block;
+    position: absolute;
+    width: 320px;
+    bottom: 50px;
+    background-size: 34px 34px;
+    animation: animatezoom 0.6s
+}
 
 .hideanime {
     margin-top: 0px;
-    margin-bottom: 4px;
     display: block;
-    float: right;
     position: fixed;
-    right: -274px;
+    left: -238px;
 }
 
 

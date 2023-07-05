@@ -116,6 +116,8 @@ function handleStart(evt) {
     if (mode === "recortar") {
         canvasFront.classList.remove("esconde")
         isSelecting = true;
+        cropStart.x = origin.x
+        cropStart.y = origin.y
     }
     if (mode == "emoji") {
         isEmoji = true
@@ -149,7 +151,7 @@ function handleStart(evt) {
             x = redondo(x)
             y = redondo(y)
         }
-        if ((evt.pointerType == "touch" || "mouse") && dinamicBrush === true) {
+        if ((evt.pointerType == "touch" || evt.pressure == 0.5) && dinamicBrush === true) {
             if (lastPressure < strokeWidth || lastPressure > strokeWidth) { lastPressure = strokeWidth }
 
             desenha("CB", lastbrush, lastPressure, strokeColor).then(
@@ -273,9 +275,9 @@ function handleMove(evt) {
             }
             if (lastInk > 0.1) {
                 // console.log("stroke color: " + strokeColor)
-
-                if ((evt.pointerType == "touch" || "mouse") && dinamicBrush === true) {
+                if ((evt.pointerType == "touch" || evt.pressure == 0.5) && dinamicBrush === true) {
                     let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2) * strokeWidth;
+                    console.log(pressure, lastPressure, evt.pointerType)
                     if (pressure > lastPressure) { lastPressure += 1.5 } else {
                         lastPressure -= 1.5
                     }
@@ -299,6 +301,8 @@ function handleMove(evt) {
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5) {
                         let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
+                        console.log(pressure, lastPressure, evt.pointerType)
+
                         lastPressure = pressure
                         desenha("CB", lastbrush, pressure, strokeColor).then(
                             desenha(

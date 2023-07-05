@@ -16,8 +16,9 @@ function criaAnime() {
     var uiFilme = iD('ui_filme')
     let contador = document.createElement("div")
     var ui = document.createElement('div')
-    anime.classList.add("anime")
-    anime.innerHTML = ""
+
+    anime.innerHTML = `<span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot">🎞️<span style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
+    </span>`
 
     Object.keys(anime_menu).forEach((key, index) => {
 
@@ -32,9 +33,8 @@ function criaAnime() {
     })
     anime.innerHTML += `<span id="new_frame()" title="Adiconar quadro á animação" class="bot" onclick="new_frame()"> <span class="bot">🎞️<span style="display: block; position: absolute; margin-top: -20px;
     font-size: 20px; line-height: 20px; background-color: ghostwhite; border-radius: 10px;">➕</span></span>
-    </span>
-    <span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot">🎞️<span style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
     </span>`
+
 
     contador.innerHTML = workingframe
     contador.id = "contador"
@@ -53,11 +53,15 @@ function criaAnime() {
 
 setTimeout(() => {
     criaAnime();
-    setTimeout(() => save_frame(), 350)
+    setTimeout(() => {
+        save_frame()
+        limpaAnime()
+    }, 350)
 }, 200)
 
 function limpaAnime() {
     filme.classList.toggle("hideanime")
+    anime.classList.toggle("hideanime")
 }
 
 
