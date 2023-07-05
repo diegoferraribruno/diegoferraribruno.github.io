@@ -6,6 +6,10 @@
     #canvas {
       border: 1px solid #000;
     }
+
+    body {
+      background-color: dimgray;
+    }
   </style>
 </head>
 
@@ -36,6 +40,11 @@
     let currentPath = [];
     let isSelecting = false;
     let isShiftPressed = false;
+
+    // Height and Width input fields 
+    const canvasWidthInput = document.getElementById('canvasWidth');
+    const canvasHeightInput = document.getElementById('canvasHeight');
+    canvasWidthInput.addEventListener('input', updateHeightField);
 
     // Event listeners for mouse and key events
     canvas.addEventListener('mousedown', handleMouseDown);
@@ -259,15 +268,11 @@
     }
 
 
-    const canvasWidthInput = document.getElementById('canvasWidth');
-    canvasWidthInput.addEventListener('input', updateHeightField);
-
     function updateHeightField() {
       const width = parseInt(canvasWidthInput.value);
       const currentAspectRatio = canvas.width / canvas.height;
       const newHeight = Math.round(width / currentAspectRatio);
 
-      const canvasHeightInput = document.getElementById('canvasHeight');
       canvasHeightInput.value = newHeight;
     }
 

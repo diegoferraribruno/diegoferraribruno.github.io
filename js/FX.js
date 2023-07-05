@@ -128,6 +128,10 @@ function lumaKey(range) {
             pix[i + 3] = newColor.a;
         }
     }
-    context.putImageData(imgd, 0, 0);
-    save_frame()
+
+    canvasFront.ctx.putImageData(imgd, 0, 0);
+    img_b64 = canvasFront.toDataURL("image/png");
+    desenha("s", "source-over", img_b64, 0, 0, canvas.width, canvas.height)
+    setTimeout(() => save_frame(), canvas.width / 2)
+
 }
