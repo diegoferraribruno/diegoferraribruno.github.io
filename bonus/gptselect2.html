@@ -10,11 +10,12 @@
 </head>
 
 <body>
+
   <input type="file" id="imageUpload" accept="image/*"><br>
   Width : <input type="number" id="canvasWidth" value="400" style="width: 100px;">
   Height: <input type="number" id="canvasHeight" value="300" style="width: 100px;">
   <button id="resizeButton">OK</button><br>
-  <canvas id="canvas" width="400" height="300"></canvas>
+  <canvas id="canvas" width="400" height="300"></canvas><br>
   0 - upload your image (resize it if you want changing values)<br>
   1 - click and drag to draw a selection area<br>
   2 - hold shift key and click to create more selection area<br>
@@ -187,6 +188,8 @@
     image.onload = function () {
       canvas.width = image.width;
       canvas.height = image.height;
+      canvasWidthInput.value = canvas.width
+      canvasHeightInput.value = canvas.height
       ctx.drawImage(image, 0, 0);
     };
 
