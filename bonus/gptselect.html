@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #canvas {
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="300"></canvas>
+  <script>
+    // Get canvas element
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Variables to store selection data
+    let selectionPath = [];
+    let isSelecting = false;
+
+    // Event listeners for mouse events
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseup', handleMouseUp);
+
+    // Handle mouse down event
+    function handleMouseDown(event) {
+      const { offsetX, offsetY } = event;
+      isSelecting = true;
+      selectionPath.push([offsetX, offsetY]);
+    }
+
+    // Handle mouse move event
+    function handleMouseMove(event) {
+      if (!isSelecting) return;
+      const { offsetX, offsetY } = event;
+      selectionPath.push([offsetX, offsetY]);
+      drawSelection();
+    }
+
+    // Handle mouse up event
+    function handleMouseUp() {
+      isSelecting = false;
+    }
+
+    // Draw the selection shape on the canvas
+    function drawSelection() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0); // Replace 'image' with your actual image variable
+
+      ctx.beginPath();
+      ctx.moveTo(selectionPath[0][0], selectionPath[0][1]);
+      for (let i = 1; i < selectionPath.length; i++) {
+        ctx.lineTo(selectionPath[i][0], selectionPath[i][1]);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = '#ff0000';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    // Copy the selection data and create a new image
+    function copySelection() {
+      const minX = Math.min(...selectionPath.map(([x]) => x));
+      const minY = Math.min(...selectionPath.map(([, y]) => y));
+      const maxX = Math.max(...selectionPath.map(([x]) => x));
+      const maxY = Math.max(...selectionPath.map(([, y]) => y));
+      const width = maxX - minX;
+      const height = maxY - minY;
+
+      const newCanvas = document.createElement('canvas');
+      newCanvas.width = width;
+      newCanvas.height = height;
+      const newCtx = newCanvas.getContext('2d');
+
+      newCtx.beginPath();
+      newCtx.moveTo(selectionPath[0][0] - minX, selectionPath[0][1] - minY);
+      for (let i = 1; i < selectionPath.length; i++) {
+        newCtx.lineTo(selectionPath[i][0] - minX, selectionPath[i][1] - minY);
+      }
+      newCtx.closePath();
+      newCtx.fillStyle = '#000000'; // Set fill color to black
+      newCtx.fill(); // Fill the selection shape with black
+
+      
+      newCtx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
+      newCtx.drawImage(image, -minX, -minY); // Draw the image at the new canvas with the offset
+    
+      
+      const newImage = new Image();
+      newImage.src = newCanvas.toDataURL();
+      document.body.appendChild(newImage);
+   
+
+    }
+
+    // Event listener for keydown event
+    document.addEventListener('keydown', function (event) {
+      if (event.ctrlKey && event.key === 'c') {
+        copySelection();
+      }
+    });
+
+    const image = new Image();
+    image.src = '../game/bruno.png';
+    image.onload = function () {
+      ctx.drawImage(image, 0, 0);
+    };
+  </script>
+</body>
+</html>
+
