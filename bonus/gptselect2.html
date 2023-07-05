@@ -10,8 +10,13 @@
 </head>
 
 <body>
-  This is a chatGPt genarated code but i hade to fix it and know what i should do get my result.
+  <input type="file" id="imageUpload" accept="image/*"><br>
+  Width : <input type="number" id="canvasWidth" value="400" style="width: 100px;">
+  Height: <input type="number" id="canvasHeight" value="300" style="width: 100px;">
+  <button id="resizeButton">OK</button><br>
   <canvas id="canvas" width="400" height="300"></canvas>
+
+
   <script>
     // Get canvas element
     const canvas = document.getElementById('canvas');
@@ -29,7 +34,8 @@
     canvas.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
-
+    const resizeButton = document.getElementById('resizeButton');
+    resizeButton.addEventListener('click', resizeCanvas);
     // Handle mouse down event
     function handleMouseDown(event) {
       const { offsetX, offsetY } = event;
@@ -66,7 +72,31 @@
         isShiftPressed = true;
       } else if (event.ctrlKey && event.key === 'c') {
         copySelection();
+      } else if (event.ctrlKey && event.key === 'x') {
+        cutSelection();
       }
+    }
+
+    // Cut the selection by copying and clearing the canvas
+    function cutSelection() {
+      copySelection();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Redraw the image
+
+      ctx.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
+
+      for (const path of selectionPaths) {
+        ctx.beginPath();
+        ctx.moveTo(path[0][0], path[0][1]);
+        for (let i = 1; i < path.length; i++) {
+          ctx.lineTo(path[i][0], path[i][1]);
+        }
+        ctx.closePath();
+        ctx.fillStyle = '#000000'; // Set fill color with opacity
+
+        ctx.fill(); // Fill the selection shape
+      }
+      ctx.globalCompositeOperation = "source-over"
     }
 
     // Handle key up event
@@ -79,28 +109,36 @@
     // Draw the selection shapes on the canvas
     function drawSelection() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(image, 0, 0); // Replace 'image' with your actual image variable
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Replace 'image' with your actual image variable
 
       for (const path of selectionPaths) {
         ctx.beginPath();
+
+        ctx.setLineDash([2, 2]);
         ctx.moveTo(path[0][0], path[0][1]);
         for (let i = 1; i < path.length; i++) {
           ctx.lineTo(path[i][0], path[i][1]);
         }
         ctx.closePath();
-        ctx.fillStyle = '#ff000033'; // Set fill color with opacity
+        ctx.fillStyle = '#ff000066'; // Set fill color with opacity
         ctx.fill(); // Fill the selection shape
       }
 
       if (currentPath.length > 1) {
         ctx.beginPath();
+
+        ctx.setLineDash([2, 2]);
         ctx.moveTo(currentPath[0][0], currentPath[0][1]);
         for (let i = 1; i < currentPath.length; i++) {
           ctx.lineTo(currentPath[i][0], currentPath[i][1]);
         }
         ctx.closePath();
-        ctx.fillStyle = '#ff000033'; // Set fill color with opacity
+        ctx.fillStyle = '#ff000066'; // Set fill color with opacity
+        ctx.strokeStyle = '#ffffff88'; // Set stroke color with opacity
+        ctx.lineWidth = 1;
         ctx.fill(); // Fill the current selection shape
+
+        ctx.stroke()
       }
     }
 
@@ -129,7 +167,7 @@
         newCtx.fill(); // Fill the selection shape
       }
       newCtx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
-      newCtx.drawImage(image, -minX, -minY);
+      newCtx.drawImage(image, -minX, -minY, canvas.width, canvas.height);
 
       const newImage = new Image();
       newImage.src = newCanvas.toDataURL();
@@ -139,8 +177,90 @@
     const image = new Image();
     image.src = '../game/bruno.png';
     image.onload = function () {
+      canvas.width = image.width;
+      canvas.height = image.height;
       ctx.drawImage(image, 0, 0);
     };
+
+
+    const imageUpload = document.getElementById('imageUpload');
+
+    // Event listener for file upload
+    imageUpload.addEventListener('change', handleImageUpload);
+
+    // Handle file upload event
+    function handleImageUpload(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (event) {
+        image.onload = function () {
+          updateCanvas(image);
+        };
+        image.src = event.target.result;
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Update the canvas with the uploaded image
+    function updateCanvas(image) {
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Set the canvas size to match the uploaded image
+      canvas.width = image.width;
+      canvas.height = image.height;
+      document.getElementById('canvasWidth').value = image.width
+      document.getElementById('canvasHeight').value = image.height
+
+      // Draw the image on the canvas
+      ctx.drawImage(image, 0, 0);
+
+      // Reset the selection paths and current path
+      selectionPaths = [];
+      currentPath = [];
+    }
+
+    // Remove the event listener when the page is unloaded
+    window.addEventListener('unload', function () {
+      imageUpload.removeEventListener('change', handleImageUpload);
+    });
+    function resizeCanvas() {
+      const newWidth = parseInt(document.getElementById('canvasWidth').value);
+      const newHeight = parseInt(document.getElementById('canvasHeight').value);
+
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Set the canvas size to the new values
+      canvas.width = newWidth;
+      canvas.height = newHeight;
+
+      // Draw the image on the canvas (image will be resized to fit the new canvas size)
+      ctx.drawImage(image, 0, 0, newWidth, newHeight);
+
+      // Reset the selection paths and current path
+      selectionPaths = [];
+      currentPath = [];
+    }
+
+
+    const canvasWidthInput = document.getElementById('canvasWidth');
+    canvasWidthInput.addEventListener('input', updateHeightField);
+
+    function updateHeightField() {
+      const width = parseInt(canvasWidthInput.value);
+      const currentAspectRatio = canvas.width / canvas.height;
+      const newHeight = Math.round(width / currentAspectRatio);
+
+      const canvasHeightInput = document.getElementById('canvasHeight');
+      canvasHeightInput.value = newHeight;
+    }
+
+
   </script>
 </body>
 
