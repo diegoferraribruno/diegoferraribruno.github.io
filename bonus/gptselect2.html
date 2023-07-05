@@ -10,11 +10,36 @@
     body {
       background-color: dimgray;
     }
+
+    #imageUpload {
+      display: none;
+    }
+
+    /* Style the custom button */
+    .custom-button {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #e2e2e2;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Style the emoji */
+    .custom-button::before {
+      content: "📎";
+      margin-right: 8px;
+    }
+
+    canvas {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 
 <body>
-
+  <label for="imageUpload" class="custom-button">Your File</label>
   <input type="file" id="imageUpload" accept="image/*"><br>
   Width : <input type="number" id="canvasWidth" value="400" style="width: 100px;">
   Height: <input type="number" id="canvasHeight" value="300" style="width: 100px;">
