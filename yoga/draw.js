@@ -3,7 +3,23 @@ function draw(a, b, c, d, e = null, f = null) {
 
 }
 
-function redraw() {
+
+function renderLayer(layer = images) {
+    canvasRender.width = art.size.width
+    canvasRender.height = art.size.height
+    let len = layer.length
+    for (i = 0; i < len; i++) {
+        let comando = layer[i]
+        let newImg = comando[0]
+        ctxR.drawImage(
+            newImg,
+            comando[1],
+            comando[2],
+            comando[3],
+            comando[4]);
+    }
+}
+function redraw(blob) {
     ctx.save()
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -16,8 +32,11 @@ function redraw() {
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
     drawCanvasSize()
     ctx.translate(window.innerWidth / 2, window.innerHeight / 2)
+    renderLayer()
+    ctx.drawImage(canvasRender, 0, 0)
+    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+    ctxF.clearRect(0, 0, canvas.width, canvas.height);
     ctx.restore()
-    comandosExec(ctx, images)
     // requestAnimationFrame(draw)
 }
 
@@ -70,13 +89,21 @@ function canvasFrontToImg() {
     comandosExec(ctxR)
     ctxR.restore()
     image = canvasRender.toDataURL('image/png');
-    let comando = [image, dimensions.x1 - cameraOffset.x, dimensions.y1 - cameraOffset.y, imgWidth, imgHeight]
-    images.push(comando)
-    ctxF.setTransform(1, 0, 0, 1, 0, 0);
-    ctxF.clearRect(0, 0, canvas.width, canvas.height);
-    ctxR.setTransform(1, 0, 0, 1, 0, 0);
-    ctxR.clearRect(0, 0, canvas.width, canvas.height);
-    redraw()
+
+    let newImg = new Image()
+    blob = dataURItoBlob(image)
+    newImg.src = URL.createObjectURL(blob)
+    let imagemfinale = [newImg, dimensions.x1, dimensions.y1, imgWidth, imgHeight]
+    images.push(imagemfinale)
+    setTimeout(() => {
+        redraw()
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        ctxR.setTransform(1, 0, 0, 1, 0, 0);
+        ctxR.clearRect(0, 0, canvas.width, canvas.height);
+    }, 100)
+
+
     //need to save image + cameraoffset position!
 
     //reset dimensions
