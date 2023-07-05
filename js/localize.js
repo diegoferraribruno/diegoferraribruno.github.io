@@ -185,7 +185,8 @@ let textos = {
         "80": "cancela",
         "81": "Recortar o quadro",
         "82": "Informações",
-        "83": "Filtros"
+        "83": "Filtros",
+        "84": "Apagar branco"
 
     },
     "en": {
@@ -270,7 +271,8 @@ let textos = {
         "80": "Cancel",
         "81": "Crop Canvas",
         "82": "Information",
-        "83": "Filters"
+        "83": "Filters",
+        "84": "Erase white"
 
     }
 }

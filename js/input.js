@@ -277,7 +277,6 @@ function handleMove(evt) {
                 // console.log("stroke color: " + strokeColor)
                 if ((evt.pointerType == "touch" || evt.pressure == 0.5) && dinamicBrush === true) {
                     let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2) * strokeWidth;
-                    console.log(pressure, lastPressure, evt.pointerType)
                     if (pressure > lastPressure) { lastPressure += 1.5 } else {
                         lastPressure -= 1.5
                     }

@@ -113,7 +113,7 @@ function save_frame(imagem = canvas.toDataURL('image/png')) {
     comandosParaComandosb()
     setTimeout(() => {
         adicionaQuadro();
-        console.log("save frame de novo")
+        // console.log("save frame de novo")
     }, 50)
 
 }

@@ -393,10 +393,10 @@
 
                 <span id=" fundo falso" class="botao">
                     <txt name="22">Adicionar Fundo falso:</txt><br>
-                    <span onmousedown="Fundo2('black')" class="bloquinho"
+                    <span onmousedown="Fundo('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">&nbsp;
                     </span>
-                    <span onmousedown="Fundo2('white')" class="bloquinho"
+                    <span onmousedown="Fundo('white')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 100%, 1)">&nbsp;
                     </span>
                     <span onmousedown="Fundo('img/grid.png')" class="bloquinho"
@@ -574,6 +574,10 @@
                 <span class="botao" id="fx6">🔆
                     <txt name="59">Brightness</txt><input id="brightnessBar" type="range" min="0" max="300" step="10"
                         onchange="FX(6)">
+                </span>
+                <span class="botao" id="fx7">
+                    <txt name="84">Apagar o branco</txt><input id="lumakeyBar" type="range" min="0" max="255" step="5"
+                        value="220" onchange="lumaKey(this.value)">
                 </span>
 
 

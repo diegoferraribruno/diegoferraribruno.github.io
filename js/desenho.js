@@ -261,7 +261,6 @@ function exec(coma = 0) {
 
 
 function restauraPincel() {
-    console.log("olbrush", oldBrush)
     desenha("CB", oldBrush[0], oldBrush[1], oldBrush[2], oldBrush[3])
 }
 
