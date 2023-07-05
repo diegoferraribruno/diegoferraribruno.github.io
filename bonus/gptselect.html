@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <style>
     #canvas {
@@ -7,6 +8,7 @@
     }
   </style>
 </head>
+
 <body>
   <canvas id="canvas" width="400" height="300"></canvas>
   <script>
@@ -82,15 +84,15 @@
       newCtx.fillStyle = '#000000'; // Set fill color to black
       newCtx.fill(); // Fill the selection shape with black
 
-      
+
       newCtx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
       newCtx.drawImage(image, -minX, -minY); // Draw the image at the new canvas with the offset
-    
-      
+
+
       const newImage = new Image();
       newImage.src = newCanvas.toDataURL();
       document.body.appendChild(newImage);
-   
+
 
     }
 
@@ -108,5 +110,5 @@
     };
   </script>
 </body>
-</html>
 
+</html>
