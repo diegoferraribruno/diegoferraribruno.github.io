@@ -186,7 +186,8 @@ let textos = {
         "81": "Recortar o quadro",
         "82": "Informações",
         "83": "Filtros",
-        "84": "Apagar branco"
+        "84": "Apagar branco",
+        "85": "Carregar Arquivo"
 
     },
     "en": {
@@ -220,7 +221,7 @@ let textos = {
         "28": "Change Frame Order",
         "29": "Load image",
         "30": "Ajust canvas to image size",
-        "31": "Load an animation sprite-sheet",
+        "31": "Load an sprite-sheet animation",
         "32": "Auto-detect frames",
         "33": "Load as a background animation?",
         "34": "Background animation over canvas",
@@ -272,7 +273,8 @@ let textos = {
         "81": "Crop Canvas",
         "82": "Information",
         "83": "Filters",
-        "84": "Erase white"
+        "84": "Erase white",
+        "85": "Load File"
 
     }
 }

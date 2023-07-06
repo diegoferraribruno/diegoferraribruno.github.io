@@ -227,19 +227,36 @@ body {
     border-radius: 0px;
 }
 
-/*#mostraCor2 {
-    width: 2px;
-    height: 2px;
-    border-style: solid;
-    border-radius: 200px;
-    border-color: gray;
-    border-width: thin;
-    display: block;
-    padding: 0px;
-    font-size: 1.125em;
-    float: left;
-    margin-left: 10px;
-}*/
+#input {
+    display: none;
+}
+
+#input2 {
+    display: none;
+}
+
+#inputSprite {
+    display: none;
+}
+
+#inputTxt {
+    display: none;
+}
+
+.custom-button {
+    display: inline-block;
+    padding: 2px 2px;
+    background-color: #e2e2e2;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Style the emoji */
+.custom-button::before {
+    content: "📎";
+    margin-right: 2px;
+}
 
 #cursor {
     pointer-events: none;

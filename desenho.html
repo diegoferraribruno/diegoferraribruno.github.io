@@ -412,8 +412,10 @@
                         ❎</span>
 
                     <span>
-                        <input type="file" id="input2" class="custom-file-input"
-                            accept=".png, .jpg, .jpeg, .gif .bmp" />
+                        <label for="input2" class="custom-button">
+                            <txt name="85">Seu arquivo</txt>
+                        </label>
+                        <input type="file" id="input2" accept=".png, .jpg, .jpeg, .gif .bmp" />
                         <label class="toggle">
                             <input id="pagebg" type="checkbox" checked><span class="knob"></span>
                         </label>
@@ -485,7 +487,10 @@
                 <span class="botao">📂
                     <span class="close" title="fechar menu enviar imagem" onmousedown="removeClass()">❎</span>
                     <txt name="50"> Caregar projeto</txt> .txt
-                    <input type='file' accept='.txt' onchange='openFile(event)'>
+                    <label for="inputTxt" class="custom-button">
+                        <txt name="85">Seu arquivo</txt>
+                    </label>
+                    <input id="inputTxt" type="file" accept='.txt' onchange='openFile(event)'>
                 </span>
 
                 <span class="botao"> <span
@@ -493,7 +498,11 @@
                             style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
                             📂</span></span>
                     <txt name="29">Carregar imagens</txt>
-                    <br> <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
+                    <br>
+                    <label for="input" class="custom-button">
+                        <txt name="85">Seu arquivo</txt>
+                    </label>
+                    <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
                         title="Enviar Arquivo de imagem" /><!-- name='files[]' multiple futurEiMPLEMENT--> <br>
                     <txt name="30">Ajustar tela ao tamanho da imagem</txt> <input type="checkbox" id="ajustar"
                         checked="true">
@@ -522,7 +531,10 @@
                         <txt name="37">altura:</txt> <input id="alturaS" type="number" maxlength="4" max="1920"
                             value="320" style="width:60px;padding: 4px;" /> pixels<br>
                     </span>
-                    <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" title="📤" />
+                    <label for="inputSprite" class="custom-button">
+                        <txt name="85">Seu arquivo</txt>
+                    </label>
+                    <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" />
                 </span>
             </div>
             <div id="menucam" class="submenu fundobranco">
