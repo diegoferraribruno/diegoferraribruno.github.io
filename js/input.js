@@ -112,7 +112,20 @@ function handleStart(evt) {
         origin.x = redondo(origin.x)
         origin.y = redondo(origin.y)
     }
+    if (mode === "selecionar") {
+        canvasFront.classList.remove("esconde")
+        isSelecting2 = true;
+        cropStart.x = origin.x
+        cropStart.y = origin.y
+        const { offsetX, offsetY } = evt;
+        if (!shiftHeld) {
+            selectionPaths = [];
+            currentPath = [];
+        }
+        isSelecting2 = true;
+        currentPath.push([offsetX, offsetY]);
 
+    }
     if (mode === "recortar") {
         canvasFront.classList.remove("esconde")
         isSelecting = true;
@@ -235,25 +248,34 @@ function handleMove(evt) {
         x = redondo(x)
         y = redondo(y)
     }
-
-    if (isSelecting === true) {
-        cropEnd.x = x
-        cropEnd.y = y
-        desenhaRetangulo();
-        // canvasFront.ctx.font = 24 + 'px serif';
-        canvasFront.ctx.drawImage(cropcursor, x, y)
-    } else if (mode == "recortar") {
+    if (isSelecting2) {
         canvasFront.classList.remove("esconde")
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (cropEnd.x == 0) {
-
-            desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22ff00")
-        } else {
-
+        const { offsetX, offsetY } = evt;
+        currentPath.push([offsetX, offsetY]);
+        drawSelection();
+    }
+    if (mode == "recortar") {
+        if (isSelecting === true) {
+            cropEnd.x = x
+            cropEnd.y = y
             desenhaRetangulo();
+            // canvasFront.ctx.font = 24 + 'px serif';
+            canvasFront.ctx.drawImage(cropcursor, x, y)
+        } else {
+            canvasFront.classList.remove("esconde")
+            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (cropEnd.x == 0) {
+
+                desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22ff00")
+            } else {
+
+                desenhaRetangulo();
+            }
+            canvasFront.ctx.drawImage(cropcursor, x, y)
         }
-        canvasFront.ctx.drawImage(cropcursor, x, y)
     }
     if (isDrawing === true && isPicking == false && mode != 'move' && !isGrabing) {
         mouseOver = true;
@@ -368,7 +390,7 @@ function handleMove(evt) {
         origin.x = x
         origin.y = y
     }
-    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar") {
+    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar" && mode != "selecionar") {
         origin.x = x
         origin.y = y
         if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
@@ -436,7 +458,14 @@ function handleMove(evt) {
         }
     }
 }
+
 function handleUp(evt) {
+    if (isSelecting2) {
+        isSelecting2 = false;
+        selectionPaths.push(currentPath);
+        currentPath = [];
+    }
+
 
     if (movendo == true) {
         desenha("move", x - origin.x, y - origin.y)
@@ -461,14 +490,8 @@ function handleUp(evt) {
         x = redondo(x)
         y = redondo(y)
     }
-    if (isSelecting === true) {
-        cropEnd.x = x
-        cropEnd.y = y
-        desenhaRetangulo();
-    }
-    if (mode == "recortar") {
-        desenhaRetangulo();
-    }
+
+
 
     if (mode === "emoji" && isEmoji) {
         let size = iD("emosize").value
@@ -488,6 +511,11 @@ function handleUp(evt) {
         mostraMenu("recortar")
         isSelecting = false
         desenhaRetangulo()
+        if (isSelecting === true) {
+            cropEnd.x = x
+            cropEnd.y = y
+
+        }
     }
 
     if (isPicking) {
@@ -526,16 +554,19 @@ function handleUp(evt) {
     origin.y = 0
 
 
-}
 
+}
 function handleEnd(evt) {
     mudaCorQ(3, iD("A").value)
-    if (mode == recortar) {
+    if (mode == "recortar") {
         desenhaRetangulo()
+    }
+    if (mode == "selecionar") {
+        drawSelection()
     }
     mostra()
 
-    if (mode != "play") {
+    if (mode != "play" && mode != "selecionar" && mode != "recortar") {
 
         mouseOver = false;
         setTimeout(() => {
@@ -544,6 +575,7 @@ function handleEnd(evt) {
                 isGrabing = false;
                 isPicking = false;
                 isSelecting = false;
+                isSelecting2 = false;
             }
         }, 500);
     } else {

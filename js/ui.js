@@ -21,7 +21,10 @@ function removeElement(id) {
 
 function toggleSelect(id) {
     removeClass("selected");
-    iD(id).classList.toggle("selected");
+    let selected = iD(id)
+    if (selected) {
+        iD(id).classList.toggle("selected");
+    }
 }
 
 function mostraMenu(id) {

@@ -25,7 +25,6 @@ async function modeTo(qual) {
             mostraMenu("pintar");
             Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  ${alerts[language][9]} ${alerts[language][11]} <br> ${alerts[language][7]}`, 1)
             changeGCO("destination-out")
-            //cursorColor()
         }
     } else {
         removeClass();
@@ -36,45 +35,35 @@ async function modeTo(qual) {
     }
     switch (qual) {
         case "FX":
-
             canvasFront.classList.remove("esconde")
             updatecanvasFront()
             mode = "FX";
             break;
         case "salvar":
-            // mode = qual;
             break;
         case "recortar":
-            /*  let len = comandos.length
-              if (len > 1 && comandos[len - 1][0] != "i") {
-                  new_frame()
-                  console.log("quadro salvo")
-              }*/
             cut()
+            mode = qual;
+            break;
+        case "redimensionar":
 
             mode = qual;
-            //removeClass();
+            break;
+        case "selecionar":
+
+            mode = qual;
             break;
         case "rotacionar":
             break;
         case "zoomx":
-            //removeClass();
-            /*  */
             mode = "zoomx"
             break;
         case "cam":
             mode = qual
             camera();
             changeGCO();
-            // memorySwap();
             break;
         case "apagar":
-
-            // cursorColor()
-            /*brushMode = 0;
-            setStrokeSize(estrokeWidth);
-            cursorColor();
-            mudaCorAlpha();*/
             changeGCO("destination-out");
             break;
         case "pintar":
@@ -82,29 +71,22 @@ async function modeTo(qual) {
             setStrokeSize(strokeWidth);
             setStrokeColor();
             changeGCO();
-            // memorySwap();
+
             break;
         case "cores":
             changeGCO();
-            //  memorySwap();
             break;
         case "fundo":
-
             changeGCO();
-            // memorySwap();
             break;
-
         case "preencher":
-
             changeGCO();
             break;
         case "picker":
             mode = qual
-            // cursorColor()
             break;
         case "move":
             mode = qual
-            // cursorColor()
             break;
         case "info":
             break;
@@ -116,10 +98,7 @@ async function modeTo(qual) {
             break;
         case "emoji":
             mode = qual
-            // setStrokeSize(strokeWidth);
-            // setStrokeColor();
             setTimeout(() => {
-
                 emojiSizeRange();
             }, 40)
             changeGCO();
@@ -130,5 +109,4 @@ async function modeTo(qual) {
         case _:
             break;
     }
-    //cursorColor();
 }

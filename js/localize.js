@@ -187,7 +187,12 @@ let textos = {
         "82": "Informações",
         "83": "Filtros",
         "84": "Apagar branco",
-        "85": "Carregar Arquivo"
+        "85": "Carregar Arquivo",
+        "86": "Redimensionar",
+        "87": "Redimensionar todos os quadros",
+        "88": "Salvar o Projeto antes",
+        "89": "seleção Retangular",
+        "90": "Copiar seleção para novo quadro"
 
     },
     "en": {
@@ -274,7 +279,12 @@ let textos = {
         "82": "Information",
         "83": "Filters",
         "84": "Erase white",
-        "85": "Load File"
+        "85": "Load File",
+        "86": "Scale canvas",
+        "87": "Scale all frames",
+        "88": "Save Project Before?",
+        "89": "Rectangular selection",
+        "90": "Copy selection to a new frame"
 
     }
 }

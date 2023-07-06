@@ -77,9 +77,8 @@
                         title="Pintando por baixo">🔲</span>
                 </span>
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
-
-
-
+                <span id="selecionar" onmousedown="modeTo('selecionar')" class="mais" alt="ferramenta de seleção">
+                    <img src="img/selectarrow.png" style="margin-top: 4px;"></span>
             </div>
 
             <div id="anime" class="ferramentas"></div>
@@ -203,6 +202,10 @@
                 <span id="recortar2" class="botao" onclick="modeTo('recortar')"><img src="img/crop.png">
                     <txt name="12">recorte manual</txt>
                 </span>
+                <span id="recdimensionar2" class="botao" onclick="modeTo('redimensionar')">🖼️ ↔️
+                    <txt name="86">Redimensionar</txt>
+                </span>
+
             </div>
 
 
@@ -504,23 +507,28 @@
                     </label>
                     <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
                         title="Enviar Arquivo de imagem" /><!-- name='files[]' multiple futurEiMPLEMENT--> <br>
-                    <txt name="30">Ajustar tela ao tamanho da imagem</txt> <input type="checkbox" id="ajustar"
-                        checked="true">
+                    <txt name="30">Ajustar tela ao tamanho da imagem</txt>
+                    <label class="toggle"> <input type="checkbox" id="ajustar" checked="true">
+                        <span class="knob"></span>
+                    </label>
                 </span>
                 <span class="botao"> 📂 🎞️ <txt name="31">Enviar uma animação</txt><br>
                     <txt name="32">Auto detectar quadros </txt>
-                    <input type="checkbox" id="autodetectar" onchange="hidecustom()" checked="true">
-                    <span class="knob"></span>
+                    <label class="toggle">
+                        <input type="checkbox" id="autodetectar" onchange="hidecustom()" checked="true">
+                        <span class="knob"></span>
                     </label>
                     <br>
                     <txt name="33">carregar como plano de fundo?</txt>
-                    <input type="checkbox" id="loadBackgroundAnimation">
-                    <span class="knob"></span>
+                    <label class="toggle">
+                        <input type="checkbox" id="loadBackgroundAnimation">
+                        <span class="knob"></span>
                     </label>
                     <br>
                     <txt name="34">sobrepor plano de fundo</txt>
-                    <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
-                    <span class="knob"></span>
+                    <label class="toggle">
+                        <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
+                        <span class="knob"></span>
                     </label>
                     <span id="custom" class="esconde">
                         <txt name="35">quantidade de quadros</txt><input type="number" id="fnumber" min="1" max="30"
@@ -627,7 +635,7 @@
 
             <div id="menurecortar" class="fundobranco submenu">
                 <span class="botao"><img src="img/crop.png"><span class="close" onmousedown="removeClass()">❎</span>
-                    <txt name="49">Salvar antes?</txt>
+                    <txt name="88">Salvar antes?</txt>
                     <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')"> 💾
                     </span>
                 </span>
@@ -645,6 +653,58 @@
                 </span>
 
             </div>
+
+
+
+            <div id="menuredimensionar" class="fundobranco submenu">
+                <span class="botao"> <span class="close" onmousedown="removeClass()">❎</span>
+
+                    <txt name="86">Scale canvas</txt>
+                </span>
+                <span class="botao">
+                    <txt name="88">Salvar antes?</txt>
+                    <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')"> 💾
+                    </span>
+                </span>
+                <span id="redimensionarbot" title="Recotar automaticamente" class="botao">
+
+                    <txt name="87">scale all?</txt>
+                    <label class="toggle">
+                        <input type="checkbox" id="scaleall" checked>
+                        <span class="knob"></span>
+                    </label><br>
+                    Width : <input type="number" id="canvasWidth" value="320" style="width: 80px;">
+                    Height: <input type="number" id="canvasHeight" value="320" style="width: 80px;">
+                    <button id="resizeButton">OK</button><br>
+                </span>
+
+
+            </div>
+
+
+            <div id="menuselecionar" class="fundobranco submenu">
+                <span id="newframe" title="Recotar automaticamente" class="botao" onclick="copiar()">
+                    <txt name="90"> copiar para novo quadro </txt><span class="bot">🎞️<span
+                            style="display: block; position: absolute; margin-top: -20px;
+                        font-size: 20px; line-height: 20px; background-color: ghostwhite; border-radius: 10px;">➕</span></span>
+                </span>
+
+                <span id="recortarbot" title="Seleção retangular" class="botao">
+                    <txt name="89">
+                        Seleção retangular</txt> <span
+                        style="display:inline-block; width: 20px; height: 12px; border: red dashed 2px;"></span>
+
+                    <label class="toggle">
+                        <input type="checkbox" id="retangularselection">
+                        <span class="knob"></span>
+                    </label>
+                </span>
+
+            </div>
+
+
+
+
             <div id="menulixeira" class="fundobranco submenu">
                 <div class="botao">
                     <txt name="53">⚠️ impossivel desfazer</txt> ⚠️
@@ -883,6 +943,8 @@
     <script type="text/javascript" src="js/mode.js"></script>
     <script type="text/javascript" src="js/ui.js"></script>
     <script type="text/javascript" src="js/recortar.js"></script>
+    <script type="text/javascript" src="js/copiar.js"></script>
+    <script type="text/javascript" src="js/redimensionar.js"></script>
     <script type="text/javascript" src="js/brushes.js"></script>
     <script type="text/javascript" src="js/zoom.js"></script>
     <!--script type="text/javascript" src="js/index.js"></script-->
