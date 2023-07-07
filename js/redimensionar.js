@@ -23,6 +23,83 @@ function preResizeCanvas(newWidth, newHeight) {
     canvasFront.classList.remove("esconde")
 }
 
+function redimendionarAnima(newWidth, newHeight) {
+    setTimeout(() => {
+        removeClass()
+        Alert(alerts[language][16] + " redimensionar <br>" + alerts[language][17])
+    }
+        , 10)
+
+
+
+    let frame = 0
+    let len = animacao.length
+
+    for (i = 0; i <= len; i++) {
+        if (i < len) {
+
+            framesToCanvas(newWidth, newHeight, i)
+        } else {
+            setTimeout(() => {
+                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasBack.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+
+                setTimeout(() => { for (i = 0; i < len; i++) { changeFrame(i) } }, 200)
+
+            }, 100)
+        }
+
+    }
+
+    function framesToCanvas(newWidth, newHeight, frame = 0) {
+        let imagem = new Image()
+        canvasFront.width = newWidth
+        canvasFront.height = newHeight
+        canvasBack.width = newWidth
+        canvasBack.height = newHeight
+        imagem.width = newWidth
+        imagem.height = newHeight
+        blob = dataURItoBlob(animacao[frame]);
+        imagem.src = URL.createObjectURL(blob);
+        imagem.onload =
+            function () {
+                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                canvasFront.ctx.drawImage(imagem, 0, 0, newWidth, newHeight);
+                canvasToFrame(frame)
+            }
+    }
+
+    function canvasToFrame(frame = 0) {
+        swapImg = canvasFront.toDataURL('image/png');
+        newAnima[frame] = swapImg
+        comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
+        comandos = []
+        comandos.push(comando)
+        workingframe = frame
+        comandosParaComandosb()
+
+    }
+    setTimeout(() => {
+        let len = newAnima.length
+        animacao.length = 0
+        for (i = 0; i < len; i++) {
+            animacao.push(newAnima[i])
+        }
+        setTimeout(function () {
+            setTimeout(() => { adicionaQuadro() }, 30)
+            autoCropMax = { x: 0, y: 0 }
+            autoCropMin = { x: canvas.width, y: canvas.height };
+            cropEnd.x = 0;
+            cropEnd.y = 0;
+        }, 10)
+
+    }, 100 * len)
+
+
+}
 
 
 
@@ -31,6 +108,23 @@ function resizeCanvas(newWidth, newHeight) {
         newWidth = parseInt(document.getElementById('canvasWidth').value);
         newHeight = parseInt(document.getElementById('canvasHeight').value);
     }
+    if (newWidth != canvas.height) {
+        limpaRetangulo()
+        save_frame()
+        setTimeout(() => {
+            let oldGCO = context.globalCompositeOperation;
+            changeGCO("source-over");
+            context.imageSmoothingEnabled = false;
+            tamanho(newWidth, newHeight)
+            changeGCO(oldGCO);
+            var len = animacao.length
+            setTimeout(redimendionarAnima(newWidth, newHeight), 600)
+            setTimeout(() => { prev_frame() }, 600 + (50 * len))
+
+        }, 200)
+
+    } else { removeClass() };
+    /*
     // Clear the canvas
     canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -56,11 +150,12 @@ function resizeCanvas(newWidth, newHeight) {
         canvas.width = newWidth;
         canvas.height = newHeight;
         context.drawImage(canvasFront, 0, 0, newWidth, newHeight);
-    }, canvas.height / 2)
+    }, canvas.height / 2)*/
 
     // Reset the selection paths and current path
-    // selectionPaths = [];
-    // currentPath = [];
+    selectionPaths = [];
+    currentPath = [];
+
 }
 
 
