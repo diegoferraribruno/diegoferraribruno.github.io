@@ -11,7 +11,7 @@
       background-color: dimgray;
     }
 
-    #copyImageUpload {
+    #imageUpload {
       display: none;
     }
 
@@ -39,18 +39,18 @@
 </head>
 
 <body>
-  <label for="copyImageUpload" class="custom-button">Your File</label>
-  <!--input type="file" id="copyImageUpload" accept="copyImage/*"><br>
+  <label for="imageUpload" class="custom-button">Your File</label>
+  <input type="file" id="imageUpload" accept="image/*"><br>
   Width : <input type="number" id="canvasWidth" value="400" style="width: 100px;">
   Height: <input type="number" id="canvasHeight" value="300" style="width: 100px;">
-  <button id="resizeButton">OK</button><br-->
+  <button id="resizeButton">OK</button><br>
   <canvas id="canvas" width="400" height="300"></canvas><br>
-  0 - upload your copyImage (resize it if you want changing values)<br>
+  0 - upload your image (resize it if you want changing values)<br>
   1 - click and drag to draw a selection area<br>
   2 - hold shift key and click to create more selection area<br>
-  3 - press ctrl+c to create a new copyImage on the page so you can save it.<br>
+  3 - press ctrl+c to create a new image on the page so you can save it.<br>
   4 - press ctrl+x will leave a hole for a moment. <br>
-  5 - (needs a function to save the copyImage with the hole)<br>
+  5 - (needs a function to save the image with the hole)<br>
 
   Made by Diego Ferrari Bruno with a lot of know-how and the help of chatGPT.<br>
   Free to use, share, modify...
@@ -124,7 +124,7 @@
     function cutSelection() {
       copySelection();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(copyImage, 0, 0, canvas.width, canvas.height); // Redraw the copyImage
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Redraw the image
 
       ctx.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
 
@@ -152,7 +152,7 @@
     // Draw the selection shapes on the canvas
     function drawSelection() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(copyImage, 0, 0, canvas.width, canvas.height); // Replace 'copyImage' with your actual copyImage variable
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Replace 'image' with your actual image variable
 
       for (const path of selectionPaths) {
         ctx.beginPath();
@@ -185,7 +185,7 @@
       }
     }
 
-    // Copy the selection data and create a new copyImage
+    // Copy the selection data and create a new image
     function copySelection() {
       const minX = Math.min(...selectionPaths.flat().map(([x]) => x));
       const minY = Math.min(...selectionPaths.flat().map(([, y]) => y));
@@ -210,28 +210,28 @@
         newCtx.fill(); // Fill the selection shape
       }
       newCtx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
-      newCtx.drawImage(copyImage, -minX, -minY, canvas.width, canvas.height);
+      newCtx.drawImage(image, -minX, -minY, canvas.width, canvas.height);
 
       const newImage = new Image();
       newImage.src = newCanvas.toDataURL();
       document.body.appendChild(newImage);
     }
 
-    const copyImage = new Image();
-    copyImage.src = '../game/bruno.png';
-    copyImage.onload = function () {
-      canvas.width = copyImage.width;
-      canvas.height = copyImage.height;
+    const image = new Image();
+    image.src = '../game/bruno.png';
+    image.onload = function () {
+      canvas.width = image.width;
+      canvas.height = image.height;
       canvasWidthInput.value = canvas.width
       canvasHeightInput.value = canvas.height
-      ctx.drawImage(copyImage, 0, 0);
+      ctx.drawImage(image, 0, 0);
     };
 
 
-    const copyImageUpload = document.getElementById('copyImageUpload');
+    const imageUpload = document.getElementById('imageUpload');
 
     // Event listener for file upload
-    copyImageUpload.addEventListener('change', handleImageUpload);
+    imageUpload.addEventListener('change', handleImageUpload);
 
     // Handle file upload event
     function handleImageUpload(event) {
@@ -239,10 +239,10 @@
       const reader = new FileReader();
 
       reader.onload = function (event) {
-        copyImage.onload = function () {
-          updateCanvas(copyImage);
+        image.onload = function () {
+          updateCanvas(image);
         };
-        copyImage.src = event.target.result;
+        image.src = event.target.result;
       };
 
       if (file) {
@@ -250,19 +250,19 @@
       }
     }
 
-    // Update the canvas with the uploaded copyImage
-    function updateCanvas(copyImage) {
+    // Update the canvas with the uploaded image
+    function updateCanvas(image) {
       // Clear the canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Set the canvas size to match the uploaded copyImage
-      canvas.width = copyImage.width;
-      canvas.height = copyImage.height;
-      document.getElementById('canvasWidth').value = copyImage.width
-      document.getElementById('canvasHeight').value = copyImage.height
+      // Set the canvas size to match the uploaded image
+      canvas.width = image.width;
+      canvas.height = image.height;
+      document.getElementById('canvasWidth').value = image.width
+      document.getElementById('canvasHeight').value = image.height
 
-      // Draw the copyImage on the canvas
-      ctx.drawImage(copyImage, 0, 0);
+      // Draw the image on the canvas
+      ctx.drawImage(image, 0, 0);
 
       // Reset the selection paths and current path
       selectionPaths = [];
@@ -271,7 +271,7 @@
 
     // Remove the event listener when the page is unloaded
     window.addEventListener('unload', function () {
-      copyImageUpload.removeEventListener('change', handleImageUpload);
+      imageUpload.removeEventListener('change', handleImageUpload);
     });
     function resizeCanvas() {
       const newWidth = parseInt(document.getElementById('canvasWidth').value);
@@ -284,8 +284,8 @@
       canvas.width = newWidth;
       canvas.height = newHeight;
 
-      // Draw the copyImage on the canvas (copyImage will be resized to fit the new canvas size)
-      ctx.drawImage(copyImage, 0, 0, newWidth, newHeight);
+      // Draw the image on the canvas (image will be resized to fit the new canvas size)
+      ctx.drawImage(image, 0, 0, newWidth, newHeight);
 
       // Reset the selection paths and current path
       selectionPaths = [];
