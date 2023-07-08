@@ -158,7 +158,7 @@ let textos = {
         "52": "Recortar para seleção",
         "53": "⚠️ impossivel desfazer",
         "54": "limpar quadro",
-        "55": "Apagar toda aanimação",
+        "55": "Apagar toda a animação",
         "56": "Remover quadro atual",
         "57": "Rotacionar a tela",
         "58": "A imagem irá perder definição. <br> Sugestão: duplique o quadro antes de rotacionar",
