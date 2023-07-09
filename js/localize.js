@@ -189,9 +189,9 @@ let textos = {
         "84": "Apagar branco",
         "85": "Carregar Arquivo",
         "86": "Redimensionar",
-        "87": "Redimensionar todos os quadros",
+        "87": "Redimensionar todo o projeto",
         "88": "Salvar o Projeto antes",
-        "89": "seleção Retangular",
+        "89": "Seleção Retangular",
         "90": "Copiar seleção para novo quadro"
 
     },
@@ -281,7 +281,7 @@ let textos = {
         "84": "Erase white",
         "85": "Load File",
         "86": "Scale canvas",
-        "87": "Scale all frames",
+        "87": "Scale all frames and canvas",
         "88": "Save Project Before?",
         "89": "Rectangular selection",
         "90": "Copy selection to a new frame"
