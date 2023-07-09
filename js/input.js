@@ -507,7 +507,7 @@ function handleUp(evt) {
         ultimoToque.y = y
         isEmoji = false
     }
-    if (mode === "recortar") {
+    if (isSelecting) {
         mostraMenu("recortar")
         isSelecting = false
         desenhaRetangulo()

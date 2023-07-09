@@ -31,73 +31,94 @@ function redimendionarAnima(newWidth, newHeight) {
         , 10)
 
 
+    if (iD("scaleall").checked){
 
-    let frame = 0
-    let len = animacao.length
+        let frame = 0
+        let len = animacao.length
 
-    for (i = 0; i <= len; i++) {
-        if (i < len) {
+        for (i = 0; i <= len; i++) {
+            if (i < len) {
 
-            framesToCanvas(newWidth, newHeight, i)
-        } else {
-            setTimeout(() => {
-                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
-                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasBack.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                framesToCanvas(newWidth, newHeight, i)
+            } else {
+                setTimeout(() => {
+                    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                    canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    canvasBack.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
 
-                setTimeout(() => { for (i = 0; i < len; i++) { changeFrame(i) } }, 200)
+                    setTimeout(() => { for (i = 0; i < len; i++) { changeFrame(i) } }, 200)
 
-            }, 100)
-        }
-
-    }
-
-    function framesToCanvas(newWidth, newHeight, frame = 0) {
-        let imagem = new Image()
-        canvasFront.width = newWidth
-        canvasFront.height = newHeight
-        canvasBack.width = newWidth
-        canvasBack.height = newHeight
-        imagem.width = newWidth
-        imagem.height = newHeight
-        blob = dataURItoBlob(animacao[frame]);
-        imagem.src = URL.createObjectURL(blob);
-        imagem.onload =
-            function () {
-                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
-                canvasFront.ctx.drawImage(imagem, 0, 0, newWidth, newHeight);
-                canvasToFrame(frame)
+                }, 100)
             }
-    }
 
-    function canvasToFrame(frame = 0) {
-        swapImg = canvasFront.toDataURL('image/png');
-        newAnima[frame] = swapImg
-        comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
-        comandos = []
-        comandos.push(comando)
-        workingframe = frame
-        comandosParaComandosb()
-
-    }
-    setTimeout(() => {
-        let len = newAnima.length
-        animacao.length = 0
-        for (i = 0; i < len; i++) {
-            animacao.push(newAnima[i])
         }
-        setTimeout(function () {
-            setTimeout(() => { adicionaQuadro() }, 30)
-            autoCropMax = { x: 0, y: 0 }
-            autoCropMin = { x: canvas.width, y: canvas.height };
-            cropEnd.x = 0;
-            cropEnd.y = 0;
-        }, 10)
 
-    }, 100 * len)
+        function framesToCanvas(newWidth, newHeight, frame = 0) {
+            let imagem = new Image()
+            canvasFront.width = newWidth
+            canvasFront.height = newHeight
+            canvasBack.width = newWidth
+            canvasBack.height = newHeight
+            imagem.width = newWidth
+            imagem.height = newHeight
+            blob = dataURItoBlob(animacao[frame]);
+            imagem.src = URL.createObjectURL(blob);
+            imagem.onload =
+                function () {
+                    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                    canvasFront.ctx.drawImage(imagem, 0, 0, newWidth, newHeight);
+                    canvasToFrame(frame)
+                }
+            }
+        
+            
+        function canvasToFrame(frame = workingframe) {
+            swapImg = canvasFront.toDataURL('image/png');
+            newAnima[frame] = swapImg
+            comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
+            comandos = []
+            comandos.push(comando)
+            workingframe = frame
+            comandosParaComandosb()
+            
+        }
+        setTimeout(() => {
+            let len = newAnima.length
+            animacao.length = 0
+            for (i = 0; i < len; i++) {
+                animacao.push(newAnima[i])
+            }
+            setTimeout(function () {
+                setTimeout(() => { adicionaQuadro() }, 30)
+                autoCropMax = { x: 0, y: 0 }
+                autoCropMin = { x: canvas.width, y: canvas.height };
+                cropEnd.x = 0;
+                cropEnd.y = 0;
+            }, 10)
 
+        }, 100 * len)
+    }else{
+            canvasFront.width = newWidth
+            canvasFront.height = newHeight
+            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+            canvasFront.ctx.drawImage(canvas, 0, 0, newWidth, newHeight);
+            swapImg = canvasFront.toDataURL('image/png');
+            newAnima[workingframe] = swapImg
+            comando = ["s", "source-over", swapImg, 0, 0,newWidth, newHeight];
+            comandos.push(comando)
+            comandosParaComandosb()
+            setTimeout(()=>{
+                canvasFront.width = canvas.width
+                canvasFront.height =  canvas.height
+                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                comandosExec()
+            },200)
+            
+    }
 
 }
 
@@ -115,11 +136,11 @@ function resizeCanvas(newWidth, newHeight) {
             let oldGCO = context.globalCompositeOperation;
             changeGCO("source-over");
             context.imageSmoothingEnabled = false;
+            if (iD("scaleall").checked ){
             tamanho(newWidth, newHeight)
-            changeGCO(oldGCO);
             var len = animacao.length
+            setTimeout(() => { prev_frame() }, 600 + (50 * len))}
             setTimeout(redimendionarAnima(newWidth, newHeight), 600)
-            setTimeout(() => { prev_frame() }, 600 + (50 * len))
 
         }, 200)
 
