@@ -37,7 +37,56 @@ function drawSelection() {
     }
 }
 
-function copiar() {
-
-    new_frame();
-}
+    function copySelection() {
+        const minX = Math.min(...selectionPaths.flat().map(([x]) => x));
+        const minY = Math.min(...selectionPaths.flat().map(([, y]) => y));
+        const maxX = Math.max(...selectionPaths.flat().map(([x]) => x));
+        const maxY = Math.max(...selectionPaths.flat().map(([, y]) => y));
+        const width = maxX - minX;
+        const height = maxY - minY;
+        canvasFront.width = width;
+        canvasFront.height = height;
+  
+        for (const path of selectionPaths) {
+          canvasFront.ctx.beginPath();
+          canvasFront.ctx.moveTo(path[0][0] - minX, path[0][1] - minY);
+          for (let i = 1; i < path.length; i++) {
+            canvasFront.ctx.lineTo(path[i][0] - minX, path[i][1] - minY);
+          }
+          canvasFront.ctx.closePath();
+          canvasFront.ctx.fillStyle = '#000000';
+          canvasFront.ctx.fill(); // Fill the selection shape
+        }
+        canvasFront.ctx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
+        canvasFront.ctx.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
+  
+        undoLevel = 0
+        save_frame()
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        workingframe++
+        swapImg = canvasFront.toDataURL('image/png');
+        animacao.splice(workingframe, 0, swapImg);
+        let work = []
+        comandosb.splice(workingframe, 0, work);
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        comandos = []
+        comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
+        comandos.push(comando)
+        comandosParaComandosb()
+        changeBrush()
+        changeFrame(workingframe)
+        iD("contador").innerHTML = workingframe
+        canvasFront.width = canvas.width
+canvasFront.height = canvas.height
+      }
+  
+    function handleKeyDown(event) {
+     if (event.ctrlKey && event.key === 'c') {
+          copySelection();
+        } else if (event.ctrlKey && event.key === 'x') {
+          cutSelection();
+        }
+      }
+    

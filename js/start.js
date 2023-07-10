@@ -25,6 +25,12 @@ function startup() {
     // console.log(event.key)
     if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
       if (mode != "emoji") {
+        if (event.ctrlKey && event.key === 'c') {
+          copySelection();
+        } else if (event.ctrlKey && event.key === 'x') {
+          cutSelection();
+        }
+      
         if (event.key === "Enter" && mode == "recortar") {
           cortar();
         } else if (event.key === "Enter" && mode == "cam") {
