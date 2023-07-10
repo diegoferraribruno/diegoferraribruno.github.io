@@ -97,14 +97,17 @@ function importSprite(e) {
                 adicionaQuadro()
                 //changeFrame(workingframe - 1);
                 removeClass()
-                removeElement("carregando")
+                iD("carregando").style.display = "none"
                 iD("contador").innerHTML = workingframe;
             }, 500)
         }
     }
 }
 
-
+function mostracarregando(){
+    removeClass()
+    iD("carregando").style.display = "block"
+}
 var projeto
 let customBr = []
 var numero
@@ -159,7 +162,7 @@ var openFile = function (event) {
             let brushNames = projeto["newBrushes"]
             let lenb = brushNames.length
             console.log(brushNames)
-            removeElement("carregando")
+            iD("carregando").style.display = "none"
             let len = projeto["comandosb"].length
             iD("pinceis2").innerHTML = ""
             Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>🖌️ x " + lenb + " <br> 🖼️  x " + len, len * 2)

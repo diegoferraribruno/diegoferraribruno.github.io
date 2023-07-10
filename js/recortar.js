@@ -206,7 +206,7 @@ function tamanho3(W = iD("largura2").value, H = iD("altura2").value) {
     iD("altura2").value = H
 }
 function tamanho(W = iD("largura").value, H = iD("altura").value) {
-    removeElement("carregando")
+    iD("carregando").style.display = "none"
     canvasBack = iD("canvasBack")
     canvasDiv.style.width = W + "px"; //add 30px for scroll
     canvasDiv.style.height = H + "px"; //add 30px for scroll

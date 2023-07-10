@@ -411,8 +411,6 @@ function handleMove(evt) {
 
             }
         }
-
-
     }
 
     if (mode == "play") {

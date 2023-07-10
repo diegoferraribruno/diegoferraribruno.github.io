@@ -162,10 +162,11 @@
                     <txt name="9">Tamanho atual:</txt><br>
                     <txt name="10">Largura: </txt><input id="largura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px; padding: 4px;" /> px <span title="margem a esquerda">➡️<input id="offsetx"
-                            type="number" maxlength="4" max="1910" value="0" style="width:60px; padding: 4px;" />
+                            type="number" maxlength="4" max="1920" value="0" style="width:60px; padding: 4px;" onchange="precut()"/>
                     </span><br>
                     <txt name="11">Altura:</txt> <input id="altura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px;padding: 4px;" /> px <span title="margem acima">⬇️<input id="offsety"
+                            type="number" maxlength="4" max="1920" value="0" style="width:60px; padding: 4px;" onchange="precut()"/>
                             type="number" maxlength="4" max="1910" value="0" style="width:60px; padding: 4px;" />
                     </span><br>
                     <div onmousedown="tamanho()" class="bot"
@@ -360,13 +361,16 @@
 
                 </span>
             </div>
-            <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;"> <!--span class="botao">
-                    🖼️ <txt name="18">Configurações do quadro</txt>
-                </span-->
-                <span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ <img src="img/crop.png">
-                    <txt name="19">Tamanho do quadro</txt>
+            <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;"> 
+                <span class="botao" onclick="mostracarregando()">
                     <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
+                   
+                    🖼️ <txt name="18">Configurações do quadro</txt>
                 </span>
+                <!--span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ <img src="img/crop.png">
+                    <txt name="19">Tamanho do quadro</txt>
+                   
+                </span-->
                 <!--
                 <span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span-->
                 <span class="botao">
