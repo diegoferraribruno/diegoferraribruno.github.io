@@ -191,8 +191,8 @@ function autoScroll() {
     win.scrollLeft = 0;
 
     scrollCanva(
-        ultimoToque.x * zoomFactor - window.innerWidth / 2,
-        ultimoToque.y * zoomFactor - window.innerHeight / 2
+        ultimoToque.x * zoomFactor - window.innerWidth / 4,
+        ultimoToque.y * zoomFactor - window.innerHeight / 4
     )
 
 }

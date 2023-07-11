@@ -206,7 +206,7 @@ body {
 
 .selected {
     background-color: #00000044;
-    border-color: #ffffff55;
+    border-color: #ffffff22;
     border-width: 3px;
     font-size: 2em;
 }
@@ -832,4 +832,11 @@ input[type="range"] {
     -webkit-transform: translateX(16px);
     -ms-transform: translateX(16px);
     transform: translateX(16px);
+}
+
+.textOver {
+    display: block;
+    position: absolute;
+    margin-top: -32px;
+    font-size: 0.8em
 }

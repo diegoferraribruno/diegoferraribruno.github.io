@@ -117,7 +117,7 @@ function cortarAnima(x1, y1, x2, y2) {
                 canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasBack.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
 
-                setTimeout(() => { for (i = 0; i < len; i++) { changeFrame(i) } }, 200)
+                setTimeout(() => { for (i = 0; i < len - 1; i++) { changeFrame(i) } }, 200)
 
             }, 100)
         }
@@ -145,16 +145,7 @@ function cortarAnima(x1, y1, x2, y2) {
             }
     }
 
-    function canvasToFrame(frame = 0) {
-        swapImg = canvasFront.toDataURL('image/png');
-        newAnima[frame] = swapImg
-        comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
-        comandos = []
-        comandos.push(comando)
-        workingframe = frame
-        comandosParaComandosb()
 
-    }
     setTimeout(() => {
         let len = newAnima.length
         animacao.length = 0
@@ -173,7 +164,16 @@ function cortarAnima(x1, y1, x2, y2) {
 
 
 }
+function canvasToFrame(frame = 0) {
+    swapImg = canvasFront.toDataURL('image/png');
+    newAnima[frame] = swapImg
+    comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
+    comandos = []
+    comandos.push(comando)
+    workingframe = frame
+    comandosParaComandosb()
 
+}
 
 function x2(w = iD("largura").value, h = iD("altura").value) {
     w = w * 2;

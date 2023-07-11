@@ -127,11 +127,6 @@ function startup() {
   );
   window.addEventListener("keyup", handleKeyUp);
   window.addEventListener("keydown", handleKeys);
-
-
-  iD("zoombar").value =
-    zoomScale.indexOf(zoomFactor);
-
   desenhoDiv.addEventListener("gesturestart", prevent, { passive: false });
   win.addEventListener("touchmove", prevent, { passive: false });
 
@@ -142,6 +137,8 @@ function startup() {
   setTimeout(() => {
     canvas.addEventListener("pointerdown", handleStart);
     canvas.addEventListener("pointerup", handleUp);
+    iD("canvas_div2").addEventListener("pointerup", handleUp);
+
     canvas.addEventListener("pointercancel", handleCancel);
     canvas.addEventListener("pointermove", handleMove);
     canvas.addEventListener("pointerleave", handleEnd);

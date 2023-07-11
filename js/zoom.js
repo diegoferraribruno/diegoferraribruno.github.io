@@ -1,6 +1,6 @@
 var zoomFactor = 1;
-var zoomScale = [0.5, 1, 2, 4, 8, 16, 32];
-var zoomIndex = 1;
+var zoomScale = [0.25, 0.5, 1, 2, 4, 8, 16, 32];
+var zoomIndex = 2;
 var scrollWindow = { x: 0, y: 0 }
 function toggleHand() {
     if (mode != "zoomx") {
@@ -53,10 +53,8 @@ function ZOOM(a) {
     zoomFactor = Number(a);
     setZoom(zoomFactor, canvasDiv)
     setStrokeSize(strokeWidth);
-    iD("tzoom").value = zoomFactor;
-    iD("zoombar").value =
-        zoomScale.indexOf(zoomFactor);
     iD("x1").innerHTML = zoomFactor + "x";
+    setTimeout(autoScroll(), 200)
 
 }
 
@@ -82,23 +80,31 @@ function resetCanva() {
     win.scrollLeft = 0;
     origin.x = 0
     origin.y = 0
-    setTimeout(autoScroll(), 100)
+    setTimeout(autoScroll(), 200)
 
 }
 function zoom2x() {
     zoomIndex++;
-    if (zoomIndex > 6) {
+    if (zoomIndex > 7) {
         zoomIndex = 0;
     }
     ZOOMf(zoomIndex);
-    /*  setTimeout(function () {
-         ZOOM()
-      }, 10);*/
-    // cursorColor();
-    //toggleSelect(qual);
-    //resizeScreen()
+    setTimeout(autoScroll(), 200)
 }
+function zoomMinus() {
+    zoomIndex--;
+    if (zoomIndex < 0) {
+        zoomIndex = 7;
+    }
+    ZOOMf(zoomIndex);
+    setTimeout(autoScroll(), 200)
 
+}
+function resetZoom() {
+    zoomIndex = 2;
+    ZOOMf(zoomIndex);
+    setTimeout(autoScroll(), 200)
+}
 function handleTouch(e) {
     if (e.type == "touchmove" && e.touches.length == 2 && mode == "zoomx") {
         isGrabing = false
@@ -140,37 +146,29 @@ function handlePinch(e) {
     }
 }
 function adjustZoom(zoomAmount, zoomFactor, x, y) {
-
-    //  if (!isGrabing) {
-
     if (zoomAmount > 0) {
-        if (zoomIndex <= 6) {
+        if (zoomIndex <= 8) {
             zoomIndex++;
-            // zoomIndex = 0;
             ZOOMf(zoomIndex);
         }
     } else if (zoomAmount < 0) {
         if (zoomIndex > 0) {
             zoomIndex--;
-            // zoomIndex = 0;
             ZOOMf(zoomIndex);
         }
     }
     else if (zoomFactor) {
         if (zoomFactor > 1) {
-            if (zoomIndex <= 6) {
+            if (zoomIndex <= 8) {
                 zoomIndex++;
-                // zoomIndex = 0;
                 ZOOMf(zoomIndex);
             }
         } else if (zoomFactor < 1) {
             if (zoomIndex > 0) {
                 zoomIndex--;
-                // zoomIndex = 0;
                 ZOOMf(zoomIndex);
             }
         }
-        //  cameraZoom = zoomFactor * lastZoom
-        //   }
+
     }
 }

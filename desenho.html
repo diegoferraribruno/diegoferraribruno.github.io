@@ -67,9 +67,9 @@
             <div id="ferramentas2" class="ferramentas">
 
                 <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">🖌️</span>
+                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
                 <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')">🎨</span>
                 <span title="Pega cor" id="picker" class="mais" onmousedown="modeTo('picker')">💉</span>
-                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
                 <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
 
                 <span onmousedown="backPaint()" class="mais" id="globalComposite">
@@ -85,15 +85,10 @@
             </div>
 
             <div id="anime" class="ferramentas"></div>
-            <div id="ui_filme">
-
-            </div>
-
+            <div id="ui_filme"></div>
 
             <div id="canvas_window" class="hideScroll">
-
                 <div id="canvas_div2">
-
                     <div id="canvas_div">
                         <canvas id="canvas" width="320px" height="320px" oncontextmenu="return false;">
                             Sinto muito, talvez haja uma incompatibilidade com seu navegador ou está offline e algo
@@ -101,9 +96,7 @@
                         </canvas>
                     </div>
                 </div>
-
             </div>
-
 
         </div>
         <div id="menus">
@@ -209,10 +202,7 @@
                     <txt name="12">recorte manual</txt>
                 </span>
 
-
             </div>
-
-
 
             <div id="menuemoji" class="fundobranco submenu menu">
                 <emoji-picker id="emojipicker" class="fundobranco"></emoji-picker>
@@ -225,8 +215,6 @@
                     style="display:inline-block; width:320px; max-height: 200px; overflow:hidden; line-height: 200px; vertical-align: middle;  background-image: url('img/grid3.png');">
                     <span id="emoExemplo">😍</span></span>
             </div>
-
-
 
             <div id="menupintar" class="fundobranco submenu menu">
 
@@ -295,8 +283,6 @@
                         oninput="mudaCorAlpha()" step="0.1" value="1"></div>
             </div>
 
-
-
             <div id="menucores" class="submenu fundobranco">
 
                 <span class="botao glow"><span title="pintar" class="bot selected"
@@ -356,10 +342,6 @@
             </div>
             <div id="menuconfiguracoes" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
                 <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
-
-
-
-
 
                 </span>
             </div>
@@ -477,21 +459,27 @@
             </div>
 
             <div id="menuzoomx" class="fundobranco submenu">
-                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoom2x()">🔎</span>
-                <input id="zoombar" type="range" min="0" max="6" value="1" step="1" style="width:160px"
+                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoomMinus()">🔎<span
+                        class="textOver">-</span></span>
+                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoom2x(1)">🔎<span
+                        class="textOver">+</span></span>
+                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="resetZoom()">🔎<span
+                        class="textOver">1x</span></span>
+                <span class="bot" onmousedown="scrollMoveCanva(-20,0)">⬅️</span>
+                <span class="bot" onmousedown="scrollMoveCanva(0,-20)">⬆️</span>
+                <span class="bot" onmousedown="scrollMoveCanva(0,20)">⬇️</span>
+                <span class="bot" onmousedown="scrollMoveCanva(20,0)">➡️</span>
+                <!--input id="zoombar" type="range" min="0" max="7" value="1" step="1" style="width:160px"
                     onchange="ZOOMf(this.value)">
                 <input id="tzoom" type="number" min="0.50" max="32" step="1" value="1" onchange="ZOOM(this.value)"
-                    style="width: 44px">
+                    style="width: 44px"-->
                 <span id="oculos" class="botao">
                     👓 <txt name="79">nitidez</txt>
                     <label class="toggle">
                         <input id="pixel" type="checkbox" value="true" checked onchange="pixel()">
                         <span class="knob"></span>
                     </label></span>
-                <span class="bot" onmousedown="scrollMoveCanva(-20,0)">⬅️</span>
-                <span class="bot" onmousedown="scrollMoveCanva(0,-20)">⬆️</span>
-                <span class="bot" onmousedown="scrollMoveCanva(0,20)">⬇️</span>
-                <span class="bot" onmousedown="scrollMoveCanva(20,0)">➡️</span>
+
             </div>
             <div id="menuimagem" class="fundobranco submenu">
                 <span class="botao">📂

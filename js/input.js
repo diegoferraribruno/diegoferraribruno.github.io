@@ -327,13 +327,9 @@ function handleMove(evt) {
                             lastPressure
                         )
                     )
-
-
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5) {
                         let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
-                        console.log(pressure, lastPressure, evt.pointerType)
-
                         lastPressure = pressure
                         desenha("CB", lastbrush, pressure, strokeColor).then(
                             desenha(
@@ -360,7 +356,6 @@ function handleMove(evt) {
                 }
             }
         }
-
     }
     if (isPicking) {
         var imageData = context.getImageData(x, y, 1, 1).data;
