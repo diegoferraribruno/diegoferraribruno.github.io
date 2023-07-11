@@ -96,8 +96,9 @@ function handleKeys(evt) {
     }
 }
 
-
+var isRecSelection = false
 function handleStart(evt) {
+
     evt.preventDefault();
     removeClass();
     //console.dir(evt)
@@ -252,9 +253,18 @@ function handleMove(evt) {
         canvasFront.classList.remove("esconde")
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const { offsetX, offsetY } = evt;
-        currentPath.push([offsetX, offsetY]);
+
         drawSelection();
+        if (iD("retangularselection").checked == true) {
+            cropEnd.x = x
+            cropEnd.y = y
+            desenhaRetangulo();
+        } else {
+
+            const { offsetX, offsetY } = evt;
+            currentPath.push([offsetX, offsetY]);
+
+        }
     }
     if (mode == "recortar") {
         if (isSelecting === true) {
@@ -462,6 +472,9 @@ function handleUp(evt) {
         isSelecting2 = false;
         selectionPaths.push(currentPath);
         currentPath = [];
+        mostraMenu("selecionar")
+        cropEnd.x = x
+        cropEnd.y = y
     }
 
 
@@ -508,13 +521,11 @@ function handleUp(evt) {
     if (isSelecting) {
         mostraMenu("recortar")
         isSelecting = false
+        cropEnd.x = x
+        cropEnd.y = y
         desenhaRetangulo()
-        if (isSelecting === true) {
-            cropEnd.x = x
-            cropEnd.y = y
-
-        }
     }
+
 
     if (isPicking) {
 
@@ -550,8 +561,6 @@ function handleUp(evt) {
     }
     origin.x = 0
     origin.y = 0
-
-
 
 }
 function handleEnd(evt) {

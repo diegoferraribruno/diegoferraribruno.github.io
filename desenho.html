@@ -55,9 +55,9 @@
                     <img src="img/movearrow.png" style="width: 28px; height: 28px; margin-top: 4px;">
                 </span>
                 <span id="recortar" class="mais" onclick="modeTo('recortar')"><img src="img/crop.png"></span>
-                
+
                 <span id="redimensionar" class="mais" onclick="modeTo('redimensionar')">↔️</span>
-                   
+
                 </span><span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎<span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
 
@@ -162,12 +162,14 @@
                     <txt name="9">Tamanho atual:</txt><br>
                     <txt name="10">Largura: </txt><input id="largura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px; padding: 4px;" /> px <span title="margem a esquerda">➡️<input id="offsetx"
-                            type="number" maxlength="4" max="1920" value="0" style="width:60px; padding: 4px;" onchange="precut()"/>
+                            type="number" maxlength="4" max="1920" value="0" style="width:60px; padding: 4px;"
+                            onchange="precut()" />
                     </span><br>
                     <txt name="11">Altura:</txt> <input id="altura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px;padding: 4px;" /> px <span title="margem acima">⬇️<input id="offsety"
-                            type="number" maxlength="4" max="1920" value="0" style="width:60px; padding: 4px;" onchange="precut()"/>
-                            type="number" maxlength="4" max="1910" value="0" style="width:60px; padding: 4px;" />
+                            type="number" maxlength="4" max="1920" value="0" style="width:60px; padding: 4px;"
+                            onchange="precut()" />
+                        type="number" maxlength="4" max="1910" value="0" style="width:60px; padding: 4px;" />
                     </span><br>
                     <div onmousedown="tamanho()" class="bot"
                         style="position: absolute; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -36px; right: 10px; text-align: center;">
@@ -206,7 +208,7 @@
                 <span id="recortar2" class="botao" onclick="modeTo('recortar')"><img src="img/crop.png">
                     <txt name="12">recorte manual</txt>
                 </span>
-              
+
 
             </div>
 
@@ -361,10 +363,10 @@
 
                 </span>
             </div>
-            <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;"> 
+            <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
                 <span class="botao" onclick="mostracarregando()">
                     <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
-                   
+
                     🖼️ <txt name="18">Configurações do quadro</txt>
                 </span>
                 <!--span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ <img src="img/crop.png">
@@ -688,7 +690,7 @@
 
 
             <div id="menuselecionar" class="fundobranco submenu">
-                <span id="newframe" title="Recotar automaticamente" class="botao" onclick="copiar()">
+                <span id="newframe" title="Recotar automaticamente" class="botao" onclick="copySelection()">
                     <txt name="90"> copiar para novo quadro </txt><span class="bot">🎞️<span
                             style="display: block; position: absolute; margin-top: -20px;
                         font-size: 20px; line-height: 20px; background-color: ghostwhite; border-radius: 10px;">➕</span></span>
@@ -697,7 +699,7 @@
                 <span id="recortarbot" title="Seleção retangular" class="botao">
                     <txt name="89">
                         Seleção retangular</txt> <span
-                        style="display:inline-block; width: 20px; height: 12px; border: red dashed 2px;"></span>
+                        style="display:inline-block; width: 20px; height: 12px; border: red dashed 1px;"></span>
 
                     <label class="toggle">
                         <input type="checkbox" id="retangularselection">
