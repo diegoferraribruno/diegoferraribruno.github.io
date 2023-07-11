@@ -223,7 +223,7 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
     canvasFront.style.marginLeft = -W + "px"
 
     if (W < screen.width || H < screen.height) {
-        ZOOMf(1)
+        ZOOMf(2)
     } else {
         ZOOMf(0)
     }
