@@ -147,28 +147,15 @@ function handlePinch(e) {
 }
 function adjustZoom(zoomAmount, zoomFactor, x, y) {
     if (zoomAmount > 0) {
-        if (zoomIndex <= 8) {
-            zoomIndex++;
-            ZOOMf(zoomIndex);
-        }
+        zoom2x()
     } else if (zoomAmount < 0) {
-        if (zoomIndex > 0) {
-            zoomIndex--;
-            ZOOMf(zoomIndex);
-        }
-    }
-    else if (zoomFactor) {
+        zoomMinus()
+    } else if (zoomFactor) {
         if (zoomFactor > 1) {
-            if (zoomIndex <= 8) {
-                zoomIndex++;
-                ZOOMf(zoomIndex);
-            }
+            zoom2x()
         } else if (zoomFactor < 1) {
-            if (zoomIndex > 0) {
-                zoomIndex--;
-                ZOOMf(zoomIndex);
-            }
+            zoomMinus()
         }
-
     }
+
 }
