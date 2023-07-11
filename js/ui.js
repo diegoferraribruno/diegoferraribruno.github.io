@@ -174,7 +174,7 @@ function resizeScreen() {
         iD("ferramentas3").classList.remove("horizontal3");
 
         win.style.width = parseInt(window.innerWidth, 10) + "px";
-        win.style.height = parseInt(window.innerHeight, 10) - 170 + "px";
+        win.style.height = parseInt(window.innerHeight, 10) - 214 + "px";
         iD("menus").style.top = "90px";
     }
 
