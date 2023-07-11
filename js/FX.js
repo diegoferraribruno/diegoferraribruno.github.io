@@ -1,4 +1,4 @@
-let filters = ["none", "invert", "blur", "grayscale", "sepia", "contrast", "brightness"]
+let filters = ["none", "invert", "blur", "grayscale", "sepia", "contrast", "brightness", "remove-White", "hue-rotate"]
 let fx = 0
 
 function FX(fx, onde) {
@@ -9,11 +9,7 @@ function FX(fx, onde) {
     }
     if (fx != 0) {
 
-        if (fx > 3) {
-            let quanto = iD(filters[fx] + "Bar").value
-            onde.filter = filters[fx] + "(" + quanto + "%)"
-
-        } else if (fx == 1) {
+        if (fx == 1) {
 
             onde.filter = filters[fx] + "()"
         } else if (fx == 2) {
@@ -25,17 +21,31 @@ function FX(fx, onde) {
 
             onde.filter = filters[fx] + "(" + quanto + ")"
 
-        } else if (fx == 6) {
+        }
+        if (fx == 4 || fx == 5) {
+            let quanto = iD(filters[fx] + "Bar").value
+            onde.filter = filters[fx] + "(" + quanto + "%)"
+
+        }
+        else if (fx == 6) {
             let quanto = iD(filters[fx] + "Bar").value
 
             onde.filter = filters[fx] + "(" + quanto + ")"
 
+        } else if (fx == 8) {
+            let quanto = iD(filters[fx] + "Bar").value
+            console.log(quanto)
+            onde.filter = filters[fx] + "(" + quanto + "deg)"
+
         }
         updatecanvasFront()
+        canvasOpacity(0)
 
     } else {
         onde.filter = filters[fx]
+
     }
+
 
 }
 function updatecanvasFront() {
@@ -69,13 +79,17 @@ function applyFX() {
         //   comando = ["FX", fx]
         //  comandos.unshift(comando)
         save_frame()
+        canvasOpacity(100)
+
         Alert(alerts[language][14], 0.8)
         canvasFront.filter = filters[0]
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }, 300)
-    setTimeout(() =>
+    setTimeout(() => {
+
         mostraMenu("FX")
+    }
         , 1000)
 }
 function cancelaFX() {
@@ -83,9 +97,11 @@ function cancelaFX() {
         mostraMenu("FX")
         , 1000)
     menufx()
+
     canvasFront.filter = filters[0]
     canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvasOpacity(100)
 }
 
 
@@ -93,13 +109,13 @@ function menufx(qual = undefined) {
     let confirm = iD("confirmFX")
     if (qual == undefined) {
         confirm.classList.add("esconde")
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < 9; i++) {
             document.getElementById("fx" + i).style.display = "block"
 
         }
     } else {
         confirm.classList.remove("esconde")
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < 9; i++) {
             document.getElementById("fx" + i).style.display = "none"
 
         }

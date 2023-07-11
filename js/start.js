@@ -30,7 +30,6 @@ function startup() {
         } else if (event.ctrlKey && event.key === 'x') {
           cutSelection();
         }
-      
         if (event.key === "Enter" && mode == "recortar") {
           cortar();
         } else if (event.key === "Enter" && mode == "cam") {

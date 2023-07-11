@@ -192,7 +192,8 @@ let textos = {
         "87": "Redimensionar todo o projeto",
         "88": "Salvar o Projeto antes",
         "89": "Seleção Retangular",
-        "90": "Copiar seleção para novo quadro"
+        "90": "Copiar seleção para novo quadro",
+        "91": "Cor / Matiz"
 
     },
     "en": {
@@ -284,7 +285,8 @@ let textos = {
         "87": "Scale all frames and canvas",
         "88": "Save Project Before?",
         "89": "Rectangular selection",
-        "90": "Copy selection to a new frame"
+        "90": "Copy selection to a new frame",
+        "91": "Color / Hue"
 
     }
 }

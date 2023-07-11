@@ -367,7 +367,7 @@
                 <span class="botao" onclick="mostracarregando()">
                     <span title="fechar" onmousedown="removeClass()" class="close">❎</span>
 
-                    🖼️ <txt name="18">Configurações do quadro</txt>
+                    🖼️ <txt name="19">tamanho do quadro</txt>
                 </span>
                 <!--span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ <img src="img/crop.png">
                     <txt name="19">Tamanho do quadro</txt>
@@ -581,33 +581,39 @@
             <div id="menuFX" class="fundobranco submenu">
                 <span class="botao" id="fx0"><span title="fechar efeitos" onmousedown="removeClass()"
                         class="close">❎</span>🪄 <txt name="83">Filtros</txt></span>
-                <span class="botao" onclick="FX(1)" id="fx1"> 🩻 <txt name="39">Invertido</txt> </span>
-                <span class="botao" id="fx2"> 👓 <txt name="40">Desfoque</txt><input id="blurBar" type="range" min="0"
-                        max="10" step="0.1" onchange="FX(2)">
+                <div style="display: block; overflow: scroll;min-height:40px; max-height: 96px; width: 320px; -ms-overflow-style: auto; 
+                        scrollbar-width: thin; margin-bottom: 10px; border: darkgrey solid 1px; 
+                        background-color: #ffffff22; border-radius: 8px; margin-right: auto; margin-left: auto;">
+                    <span class="botao" onclick="FX(1)" id="fx1"> 🩻 <txt name="39">Invertido</txt> </span>
+                    <span class="botao" id="fx2"> 👓 <txt name="40">Desfoque</txt><input id="blurBar" type="range"
+                            min="0" max="10" step="0.1" onchange="FX(2)">
 
-                </span>
-                <span class="botao" onclick="FX(3)" id="fx3">grayscale<input id="grayscaleBar" title="escala de cinza"
-                        type="range" min="0" max="1" step="0.1">
-                </span>
-                <span class="botao" id="fx4">⌛️
-                    <txt name="41">Sepia</txt><input id="sepiaBar" type="range" min="0" max="100" step="10"
-                        onchange="FX(4)">
-                </span>
+                    </span>
+                    <span class="botao" onclick="FX(3)" id="fx3">grayscale<input id="grayscaleBar"
+                            title="escala de cinza" type="range" min="0" max="1" step="0.1">
+                    </span>
+                    <span class="botao" id="fx4">⌛️
+                        <txt name="41">Sepia</txt><input id="sepiaBar" type="range" min="0" max="100" step="10"
+                            onchange="FX(4)">
+                    </span>
 
-                <span class="botao" id="fx5"> ◒
-                    <txt name="42">Contraste</txt><input id="contrastBar" type="range" min="0" max="300" step="10"
-                        onchange="FX(5)">
-                </span>
-                <span class="botao" id="fx6">🔆
-                    <txt name="59">Brightness</txt><input id="brightnessBar" type="range" min="0" max="300" step="10"
-                        onchange="FX(6)">
-                </span>
-                <span class="botao" id="fx7">
-                    <txt name="84">Apagar o branco</txt><input id="lumakeyBar" type="range" min="0" max="255" step="5"
-                        value="220" onchange="lumaKey(this.value)">
-                </span>
-
-
+                    <span class="botao" id="fx5"> ◒
+                        <txt name="42">Contraste</txt><input id="contrastBar" type="range" min="0" max="300" step="10"
+                            onchange="FX(5)">
+                    </span>
+                    <span class="botao" id="fx6">🔆
+                        <txt name="59">Brightness</txt><input id="brightnessBar" type="range" min="0" max="300"
+                            step="10" onchange="FX(6)">
+                    </span>
+                    <span class="botao" id="fx7">
+                        <txt name="84">Apagar o branco</txt><input id="lumakeyBar" type="range" min="0" max="255"
+                            step="5" value="220" onchange="lumaKey(this.value)">
+                    </span>
+                    <span class="botao" id="fx8">🌈
+                        <txt name="91">hue</txt><input id="hue-rotateBar" type="range" min="0" max="355" step="5"
+                            onchange="FX(8)">
+                    </span>
+                </div>
                 <span id="confirmFX" class="esconde">aplicar o efeito <br>
                     <div class="shadow" onClick="applyFX(1)">
                         <txt name="39"> invert</txt> ✅
@@ -749,13 +755,27 @@
             </div>
 
             <div id="menuyoga" class="submenu fundobranco">
-                <span class="close" onmousedown="removeClass()">❎</span>
-                Yoga!?<br>
-                <div id="yogapose"
-                    style="background-image:url(img/yoga.png); width:64px; height:77px; display:block; margin:auto"
-                    onClick="yogaChange()"></div><br>
-            </div>
 
+                <span class="botao" style="text-shadow: 1px 1px #000;">
+                    <span class="close" onmousedown="removeClass()">❎</span>
+                    <a href="index.html" style="font-size: medium; height: 32px; vertical-align: middle; ">
+                        <img src="favicon.ico"
+                            style="width: 36px; height: 36px; margin-bottom: 2px; float: left; margin-left: 40px; margin-top: 8px;"></a>
+                    <a href="index.html"><span
+                            style="display: inline-block; height: 48px; font-size: medium; color: #ebc908; margin-right: 40px; line-height: 16px; margin-top: 12px;">
+                            Diego Ferrari Bruno<br><span style=" font-size: smaller; font-weight: 400;" id="apresenta"
+                                title="apresenta">
+                                <txt name="75">apresenta</txt></a></span></span>
+                </span><br>
+                <span class="botao">
+
+                    <div id="yogapose"
+                        style="background-image:url(img/yoga.png); width:64px; height:77px; display:block; margin:auto;"
+                        onClick="yogaChange()"></div>
+                    Yoga Art 5<br><br>
+                </span>
+
+            </div>
             <div id="menucamconfig" class="fundobranco submenu" style="opacity:0.8; background-color: #ffffff00;">
                 <span class="close" title="fechar cam config" onmousedown="mostraSubMenu('camconfig')">❎</span>
                 <div id="camoptions">
@@ -857,20 +877,13 @@
     <div id="carregando" class="carregandoa fundobranco">
         <div id="carregandob" class="fundobranco">
 
-            <span class="botao" style="text-shadow: 1px 1px #000;">
-                <a href="index.html" style="font-size: medium; height: 32px; vertical-align: middle; ">
-                    <img src="favicon.ico"
-                        style="width: 36px; height: 36px; margin-bottom: 2px; float: left; margin-left: 40px; margin-top: 8px;"></a>
-                <a href="index.html"><span
-                        style="display: inline-block; height: 48px; font-size: medium; color: #ebc908; margin-right: 40px; line-height: 16px; margin-top: 12px;">
-                        Diego Ferrari Bruno<br><span style=" font-size: smaller; font-weight: 400;" id="apresenta"
-                            title="apresenta">
-                            <txt name="75">apresenta</txt> yoga paint 5</a></span></span>
-            </span><br>
-            <span class="botao" style="font-size: 0.6em; display:block; height: 180px;" title="formatos" id="formatos2">
-                <txt name="19">tamanho</txt>
+            <span class="botao" style="font-size: 0.6em; display:block; height: 210px; " title="formatos"
+                id="formatos2">
+                🖼️ <txt name="19">tamanho</txt>
                 <div
-                    style="display: block; overflow: scroll; height: 82px; width: 220px; -ms-overflow-style: auto; scrollbar-width: thin; margin-bottom: 10px; border: darkgrey solid 1px; background-color: white; border-radius: 8px; margin-right: auto; margin-left: auto;">
+                    style="display: block; overflow: scroll; height: 114px; width: 220px; -ms-overflow-style: auto; 
+                    scrollbar-width: thin; margin-bottom: 10px; border: darkgrey solid 1px; 
+                    background-color: #ffffff22; border-radius: 8px; margin-right: auto; margin-left: auto;margin-top: 4px;">
 
                     <span onmousedown="tamanho3(32,32)">32x32
                         <span style="border: 2px solid gray; width: 4px; height: 4px; display: inline-block;"></span>
@@ -908,14 +921,13 @@
                 <br>
                 <txt name="11">Altura:</txt> <input id="altura2" type="number" maxlength="4" max="1920" value="320"
                     style="width:60px;padding: 4px;" /> px
-                <span onmousedown="tamanho2()" class="bot"
-                    style="position: relative; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -80px; margin-left: 260px; text-align: center; width: 36px; height: 36px;">
-                    ok
+                <span onmousedown="tamanho2()" class="mais"
+                    style=" float: left; position: relative; margin-top: -40px; margin-left: 260px; text-align: center; width: 36px; height: 36px;">
+                    🎨
                 </span>
             </span>
             <span class=" botao" style="font-size: 0.8em;" title="Modos de arte">
                 <span id="night2" class="mais" onmousedown="night()" title="modo escuro / claro">💡</span>
-                <span id="desenho" class="mais" onmousedown="removeElement('carregando')" title="Desenho">🎨</span>
                 <span id="cam" title="foto" class="mais"
                     onmousedown="modeTo('cam'), removeElement('carregando')">📷</span>
                 <span id="imagem" title="Carregar projeto ou imagem" class="mais" onmousedown="mostraMenu('imagem')">

@@ -14,17 +14,17 @@ function resetAutoCrop() {
     autoCropMin.y = canvas.height
 }
 async function autoCrop(x, y, width = 0, height = 0) {
-    if (autoCropMax.x < x + (width / 2)) {
-        autoCropMax.x = x + (width / 2)
+    if (autoCropMax.x < x + redondo(width / 2)) {
+        autoCropMax.x = x + redondo(width / 2)
     }
-    if (autoCropMax.y < y + (height / 2)) {
-        autoCropMax.y = y + (height / 2)
+    if (autoCropMax.y < y + redondo(height / 2)) {
+        autoCropMax.y = y + redondo(height / 2)
     }
-    if (autoCropMin.x > x - (width / 2)) {
-        autoCropMin.x = x - (width / 2)
+    if (autoCropMin.x > x - redondo(width / 2)) {
+        autoCropMin.x = x - redondo(width / 2)
     }
-    if (autoCropMin.y > y - (height / 2)) {
-        autoCropMin.y = y - (height / 2)
+    if (autoCropMin.y > y - redondo(height / 2)) {
+        autoCropMin.y = y - redondo(height / 2)
     }
 }
 
@@ -229,6 +229,7 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
     }
     iD("largura").value = W
     iD("altura").value = H
+    setTimeout(() => comandosExec(), 100)
 }
 
 

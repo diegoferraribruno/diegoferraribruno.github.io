@@ -104,7 +104,7 @@ function importSprite(e) {
     }
 }
 
-function mostracarregando(){
+function mostracarregando() {
     removeClass()
     iD("carregando").style.display = "block"
 }

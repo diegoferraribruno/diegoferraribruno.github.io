@@ -370,10 +370,13 @@ function adicionaQuadro() {
             thumb.classList.add("thumb")
             thumb.draggable = true
             thumb.addEventListener("click", function (event) {
-                workingframe = parseInt(event.target.id, 10)
-                comandos = []
-                comandosbParaComandos()
-                changeFrame(workingframe)
+                let changeToFrame = parseInt(event.target.id, 10)
+                if (changeToFrame != workingframe) {
+                    comandos = []
+                    workingframe = changeToFrame
+                    comandosbParaComandos()
+                    changeFrame(workingframe)
+                }
 
             });
             thumb.addEventListener("dragstart", dragStart);
