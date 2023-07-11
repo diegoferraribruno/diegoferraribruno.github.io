@@ -240,14 +240,18 @@ function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1
     canvasFront.ctx.strokeStyle = cor;
 
     canvasFront.ctx.stroke();
-    canvasFront.ctx.setLineDash([1, 1]);
+    canvasFront.ctx.setLineDash([2, 2]);
     canvasFront.ctx.beginPath();
+    canvasFront.ctx.strokeStyle = '#ffffff88'; // Set stroke color with opacity
+    canvasFront.ctx.lineWidth = 1;
+
     canvasFront.ctx.rect(
         x0,
         y0,
         (x1 - x0),
         (y1 - y0)
     );
+
     canvasFront.ctx.stroke();
 
 

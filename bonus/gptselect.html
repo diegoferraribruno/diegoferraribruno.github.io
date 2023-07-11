@@ -51,9 +51,11 @@
       ctx.drawImage(image, 0, 0); // Replace 'image' with your actual image variable
 
       ctx.beginPath();
+      ctx.setLineDash([2, 2]);
       ctx.rect(startX, startY, endX - startX, endY - startY);
-      ctx.strokeStyle = '#ff0000';
-      ctx.lineWidth = 2;
+      ctx.fillStyle = '#ff000066'; // Set fill color with opacity
+      ctx.strokeStyle = '#ffffff88'; // Set stroke color with opacity
+      ctx.lineWidth = 1;
       ctx.stroke();
     }
 
