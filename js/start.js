@@ -29,6 +29,9 @@ function startup() {
           copySelection();
         } else if (event.ctrlKey && event.key === 'x') {
           cutSelection();
+        } if (event.ctrlKey && event.key === 'v') {
+          //pasteSelection()
+          mode = "paste"
         }
         if (event.key === "Enter" && mode == "recortar") {
           cortar();
@@ -156,14 +159,39 @@ function startup() {
   loading()
 
 }
+
+var canvasFrontDeg = 0
 function wheel(e) {
   if (keyCtrl == true) {
     e.preventDefault(); adjustZoom(-1 * e.deltaY, null, e.clientX, e.clientY)
 
   }
+
+  if (keyAlt == true) {
+    e.preventDefault();
+    canvasFrontDeg += redondo((e.deltaY / 50) % 360)
+    rotateFront(canvasFrontDeg, e.clientX, e.clientY)
+
+  }
 }
 function loading() {
   setTimeout(() => { removeElement("carregandoa") }, 10000)
+}
+
+function rotateFront(deg, x, y) {
+  console.log(deg)
+  canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+  canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+  canvasFront.ctx.save()
+  canvasFront.globalCompositeOperation = "source-out"
+  //if (iD("rotatecenter").checked == true) {
+  origin.x = canvas.width / 2;
+  origin.y = canvas.height / 2
+  //}
+  canvasFront.ctx.translate(origin.x, origin.y)
+  canvasFront.ctx.rotate((deg * Math.PI) / 180);
+  canvasFront.ctx.drawImage(image2, -origin.x, -origin.y)
+  canvasFront.ctx.restore()
 }
 
 function apresenta() {

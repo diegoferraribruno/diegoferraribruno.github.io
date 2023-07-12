@@ -90,6 +90,9 @@ function copySelection() {
   canvasFront.ctx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
   canvasFront.ctx.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
 
+  image2.src = canvasFront.toDataURL()
+  /*
+  //new frame
   undoLevel = 0
   save_frame()
   context.setTransform(1, 0, 0, 1, 0, 0);
@@ -108,17 +111,93 @@ function copySelection() {
   changeBrush()
   changeFrame(workingframe)
   iD("contador").innerHTML = workingframe
+*/
+  //reset canvas size
   canvasFront.width = canvas.width
   canvasFront.height = canvas.height
 }
 
-function handleKeyDown(event) {
-  if (event.ctrlKey && event.key === 'c') {
-    copySelection();
-  } else if (event.ctrlKey && event.key === 'x') {
-    cutSelection();
+// Cut the selection by copying and clearing the canvas
+function cutSelection() {
+  //copySelection(); precisa Dividir em cutstart cutmove e cutend
+  var minX, minY, maxX, maxY, width, height
+  if (iD("retangularselection").checked == false) {
+    minX = Math.min(...selectionPaths.flat().map(([x]) => x));
+    minY = Math.min(...selectionPaths.flat().map(([, y]) => y));
+    maxX = Math.max(...selectionPaths.flat().map(([x]) => x));
+    maxY = Math.max(...selectionPaths.flat().map(([, y]) => y));
+  } else {
+    minX = cropStart.x
+    minY = cropStart.y
+    maxX = cropEnd.x
+    maxY = cropEnd.y
+    if (minX > maxX) {
+      minX = cropEnd.x
+      maxX = cropStart.x
+    }
+    if (minY > maxY) {
+      minY = cropEnd.y
+      maxY = cropStart.y
+
+    }
   }
+
+  width = maxX - minX;
+  height = maxY - minY;
+
+  canvasFront.width = width;
+  canvasFront.height = height;
+
+  if (iD("retangularselection").checked) {
+    canvasFront.width = width;
+    canvasFront.height = height;
+    desenhaRetangulo2()
+
+
+  } else {
+    canvasFront.width = width;
+    canvasFront.height = height;
+    for (const path of selectionPaths) {
+      canvasFront.ctx.beginPath();
+      canvasFront.ctx.moveTo(path[0][0] - minX, path[0][1] - minY);
+      for (let i = 1; i < path.length; i++) {
+        canvasFront.ctx.lineTo(path[i][0] - minX, path[i][1] - minY);
+      }
+      canvasFront.ctx.closePath();
+    }
+
+    canvasFront.ctx.fillStyle = '#000000';
+    canvasFront.ctx.fill(); // Fill the selection shape
+  }
+  canvasFront.ctx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
+  canvasFront.ctx.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
+
+  image2.src = canvasFront.toDataURL()
+  // copy selection
+
+
+  //context.clearRect(0, 0, canvas.width, canvas.height);
+  // make a hole
+  context.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
+
+  for (const path of selectionPaths) {
+    context.beginPath();
+    context.moveTo(path[0][0], path[0][1]);
+    for (let i = 1; i < path.length; i++) {
+      context.lineTo(path[i][0], path[i][1]);
+    }
+    context.closePath();
+    context.fillStyle = '#000000'; // Set fill color with opacity
+
+    context.fill(); // Fill the selection shape
+  }
+  context.globalCompositeOperation = "source-over"
+  canvasFront.width = canvas.width;
+  canvasFront.height = canvas.height;
+  //  context.drawImage(image2, minX, minY, canvasFront.width, canvasFront.height); // Redraw the image
 }
+
+
 function desenhaRetangulo2(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff2200") {
 
   canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -135,3 +214,4 @@ function desenhaRetangulo2(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y
 
 
 }
+

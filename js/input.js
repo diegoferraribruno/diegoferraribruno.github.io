@@ -1,6 +1,7 @@
 let keyZ = false
 let keyY = false
 let keyCtrl = false
+let keyAlt = false
 let spaceKey = false
 var shiftHeld = false;
 
@@ -38,6 +39,7 @@ let dinamicInk = false
 let lastInk = 1
 
 function handleKeyUp(evt) {
+
     if (evt.keyCode === 16) {
         shiftHeld = false
         redoTEnd()
@@ -61,6 +63,9 @@ function handleKeyUp(evt) {
         spaceKey = false
         isGrabing = false
         document.body.style.cursor = "pointer";
+    }
+    if (evt.code === "AltRight" || evt.code === "AltLeft") {
+        keyAlt = false
     }
 
 }
@@ -93,6 +98,10 @@ function handleKeys(evt) {
         spaceKey = true
         isGrabing = true
         document.body.style.cursor = "move"
+    }
+    if (evt.code === "AltRight" || evt.code === "AltLeft") {
+        keyAlt = true
+        console.log(keyAlt)
     }
 }
 
@@ -431,17 +440,35 @@ function handleMove(evt) {
         canvasFront.ctx.fillText(emoji, x, y)
     }
     if (mode == "move") {
+
         canvasFront.classList.remove("esconde")
         canvasFront.ctx.globalAlpha = 1;
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasFront.ctx.drawImage(movecursor, x - 16, y - 16)
+        let selecionado = false
+        if (selecionado) {
+            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (movendo == true) {
+            canvasFront.ctx.drawImage(image2, x - image2.width / 2, y - image2.height / 2)
+        } else if (movendo == true && selecionado == false) {
+            canvasFront.ctx.drawImage(movecursor, x - 16, y - 16)
             canvasFront.globalCompositeOperation = "source-out"
             canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
         }
     }
+    if (mode == "paste") {
+
+        canvasFront.classList.remove("esconde")
+        canvasFront.ctx.globalAlpha = 1;
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasFront.ctx.drawImage(image2, x - image2.width / 2, y - image2.height / 2)
+    }
+
+
     if (mode == "rotacionar") {
         canvasFront.classList.remove("esconde")
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -474,11 +501,17 @@ function handleUp(evt) {
 
 
     if (movendo == true) {
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        let selecionado = true
+        if (selecionado) {
+
+        } else {
+
+            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
         context.drawImage(canvasFront, 0, 0)
         swapImg = canvas.toDataURL('image/png');
         comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
@@ -488,6 +521,19 @@ function handleUp(evt) {
         //desenha("move", x - origin.x, y - origin.y)
         movendo = false
     }
+
+    if (mode == "paste") {
+
+        context.drawImage(canvasFront, 0, 0)
+        swapImg = canvas.toDataURL('image/png');
+        comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
+        comandos.push(comando)
+        comandosParaComandosb()
+        //save_frame()
+        //desenha("move", x - origin.x, y - origin.y)
+        movendo = false
+    }
+
     if (rotacionar == true) {
         rotacionar = false
         context.setTransform(1, 0, 0, 1, 0, 0);
