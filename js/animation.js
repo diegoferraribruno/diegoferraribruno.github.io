@@ -406,8 +406,11 @@ function lixeira() {
     mostraMenu("lixeira")
 }
 var dataTransfer = 0
+var image2 = new Image;
 function dragStart(event) {
     dataTransfer = parseInt(event.target.id, 10);
+    image2.src = animacao[dataTransfer]
+
 }
 
 function dragEnd(event) {
@@ -415,6 +418,13 @@ function dragEnd(event) {
 
 function dragOver(event) {
     event.preventDefault();
+    const toContainer = event.currentTarget;
+    if (toContainer.id == "canvas") {
+        canvasFront.classList.remove("esconde")
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasFront.ctx.drawImage(image2, event.layerX - image2.width / 2, event.layerY - image2.height / 2)
+    }
 }
 
 function drop(event) {
@@ -439,11 +449,19 @@ function drop(event) {
         comandosbParaComandos()
         changeFrame(0)
         adicionaQuadro()
-
-
-
     } else if (toContainer.id == "new_frame()") {
         cloneFrame(dataTransfer)
+    } else if (toContainer.id == "canvas") {
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image2, event.layerX - image2.width / 2, event.layerY - image2.height / 2)
+        swapImg = canvas.toDataURL('image/png');
+        comando = ["f", context.globalCompositeOperation, swapImg, 0, 0];
+        comandos.push(comando)
+        comandosParaComandosb()
+        origin.x = 0
+        origin.y = 0
+
     }
     else if (toContainer !== dataTransfer) {
 

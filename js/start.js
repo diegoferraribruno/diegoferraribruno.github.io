@@ -142,6 +142,9 @@ function startup() {
     canvas.addEventListener("pointercancel", handleCancel);
     canvas.addEventListener("pointermove", handleMove);
     canvas.addEventListener("pointerleave", handleEnd);
+    canvas.addEventListener("dragover", dragOver);
+    canvas.addEventListener("drop", drop);
+    canvas.addEventListener("dragover", dragOver);
     // canvas.addEventListener('touchmove', (e) => handleTouch(e))
     win.addEventListener('wheel', (e) => wheel(e))
 

@@ -474,18 +474,39 @@ function handleUp(evt) {
 
 
     if (movendo == true) {
-        desenha("move", x - origin.x, y - origin.y)
+        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(canvasFront, 0, 0)
+        swapImg = canvas.toDataURL('image/png');
+        comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
+        comandos.push(comando)
+        comandosParaComandosb()
+        //save_frame()
+        //desenha("move", x - origin.x, y - origin.y)
         movendo = false
     }
     if (rotacionar == true) {
         rotacionar = false
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (iD("rotatecenter").checked == true) {
-            origin.x = canvas.width / 2;
-            origin.y = canvas.height / 2
-        }
-        desenha("rotacionar", ((y - origin.y + x - origin.x) * Math.PI) / 180, origin.x, origin.y)
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(canvasFront, 0, 0)
+        swapImg = canvas.toDataURL('image/png');
+        comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
+        comandos.push(comando)
+        comandosParaComandosb()
+        setTimeout(() => {
+
+            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (iD("rotatecenter").checked == true) {
+                origin.x = canvas.width / 2;
+                origin.y = canvas.height / 2
+            }
+        }, 300)
+        // desenha("rotacionar", ((y - origin.y + x - origin.x) * Math.PI) / 180, origin.x, origin.y)
     }
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;

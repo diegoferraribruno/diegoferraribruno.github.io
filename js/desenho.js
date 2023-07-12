@@ -444,11 +444,9 @@ async function desenha(
             }
             break;
         case "i":
-            comando = ["i", GCO, imagem, 0, 0, imagem.width, imagem.height]
-            context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
+            comando = ["i", GCO, X, Y, eoX, eoY, strokeWidth]
+            context.drawImage(X, Y, eoX);
             comandos.push(comando)
-            autoCrop(imagem.width, imagem.height)
-            autoCrop(0, 0)
             break;
 
         case "img":

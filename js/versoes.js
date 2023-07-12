@@ -1,6 +1,11 @@
 let vers = [{
-    versao: "5",
-    notas: ["Pressao da caneta funcionando de novo. desculpem havia desligado sem querer",
+    versao: "5.5",
+    notas: [
+        "Canvas drop: arrastar as miniaturas para copiar imagem sobre o quadro (sem touch)",
+        "nova função: redimensionar quadro ou animação",
+        "nova função: selecionar e copiar para novo quadro",
+        "novo zoom com scroll wheel infinito e mais zoom de 0.25",
+        "Pressao da caneta funcionando de novo. desculpem havia desligado sem querer",
         "Nova posição escondida do menu de animação",
         "recortar a tela arrumado de novo! rs rs.."
     ]
@@ -8,7 +13,7 @@ let vers = [{
 },
 {
     versao: "4.3",
-    notas: ["new shortcut:", "ctrl+space = play", "space+move = scroll", "ctrl+ mouse whell = zoom in/out",
+    notas: ["new shortcut:", "ctrl+space = play", "space+move = scroll", "ctrl+ mouse wheel = zoom in/out",
         "Piceis dinamicos para dispositivos com sensibilidade à pressão, mouse e touch com aumento do pincel de acordo com a velo",
         "troca de comandos por imagens para economizar memoria."
     ]
