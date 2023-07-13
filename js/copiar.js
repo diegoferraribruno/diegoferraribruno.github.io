@@ -91,6 +91,13 @@ function copySelection() {
   canvasFront.ctx.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
 
   image2.src = canvasFront.toDataURL()
+  //canvasRender.width = image2.width
+  //canvasRender.height = image2.height
+  console.log(canvasRender.width, canvasRender.height)
+  image2.onload = function () {
+    ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
+
+  }
   /*
   //new frame
   undoLevel = 0
@@ -173,6 +180,13 @@ function cutSelection() {
   canvasFront.ctx.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
 
   image2.src = canvasFront.toDataURL()
+  image2.onload = function () {
+
+    /*  canvasRender.width = image2.width
+      canvasRender.height = image2.height*/
+    rotateFront(0)
+    ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
+  }
   // copy selection
 
 

@@ -4,6 +4,14 @@ let keyCtrl = false
 let keyAlt = false
 let spaceKey = false
 var shiftHeld = false;
+var canvasRender = document.createElement("canvas")
+canvasRender.id = "canvasRender"
+canvasRender.height = 320
+canvasRender.width = 320
+canvasRender.style.backgroundColor = "#ff000088"
+ctxR = canvasRender.getContext('2d')
+//iD("canvas_window").appendChild(canvasRender)
+
 
 var canvasFront = document.createElement("canvas")
 canvasFront.id = "canvasFront"
@@ -463,9 +471,8 @@ function handleMove(evt) {
         canvasFront.ctx.globalAlpha = 1;
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasFront.ctx.drawImage(image2, x - image2.width / 2, y - image2.height / 2)
+        canvasFront.ctx.drawImage(canvasRender, x - canvas.width / 2, y - canvas.height / 2)
+
     }
 
 

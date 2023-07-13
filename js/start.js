@@ -169,8 +169,9 @@ function wheel(e) {
 
   if (keyAlt == true) {
     e.preventDefault();
-    canvasFrontDeg += redondo((e.deltaY / 50) % 360)
-    rotateFront(canvasFrontDeg, e.clientX, e.clientY)
+    canvasFrontDeg += redondo((e.deltaY / 20) % 360)
+    rotateFront(canvasFrontDeg, (e.pageX - offsetX) / zoomFactor
+      , (e.pageY - offsetY) / zoomFactor)
 
   }
 }
@@ -180,18 +181,26 @@ function loading() {
 
 function rotateFront(deg, x, y) {
   console.log(deg)
-  canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-  canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-  canvasFront.ctx.save()
-  canvasFront.globalCompositeOperation = "source-out"
+  ctxR.setTransform(1, 0, 0, 1, 0, 0);
+  ctxR.clearRect(0, 0, canvas.width, canvas.height);
+  ctxR.save()
+  canvasRender.globalCompositeOperation = "source-out"
   //if (iD("rotatecenter").checked == true) {
-  origin.x = canvas.width / 2;
-  origin.y = canvas.height / 2
+  origin.x = canvasRender.width / 2;
+  origin.y = canvasRender.height / 2;
   //}
-  canvasFront.ctx.translate(origin.x, origin.y)
-  canvasFront.ctx.rotate((deg * Math.PI) / 180);
-  canvasFront.ctx.drawImage(image2, -origin.x, -origin.y)
-  canvasFront.ctx.restore()
+  ctxR.translate(origin.x, origin.y)
+  ctxR.rotate((deg * Math.PI) / 180);
+
+  ctxR.drawImage(image2, - image2.width / 2, -image2.height / 2)
+  ctxR.restore()
+  setTimeout(() => {
+    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvasFront.ctx.drawImage(canvasRender, x - canvasRender.width / 2, y - canvasRender.height / 2)
+  }, 80)
+
+
 }
 
 function apresenta() {
