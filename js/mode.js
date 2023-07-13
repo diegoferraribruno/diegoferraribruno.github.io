@@ -53,6 +53,10 @@ async function modeTo(qual) {
 
             mode = qual;
             break;
+        case "paste":
+            updateClipboard()
+            mode = qual;
+            break;
         case "rotacionar":
             break;
         case "zoomx":

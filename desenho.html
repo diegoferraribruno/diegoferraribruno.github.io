@@ -681,15 +681,32 @@
 
 
             </div>
+            <div id="menupaste" class="fundobranco submenu">
+                <span class="botao"> <span class="close" onmousedown="removeClass()">❎</span>
+                    📋️ clipboard</span>
+                Rotate <input id="canvasfrontdeg" type="number" maxlength="3" max="360" value="0" step="6"
+                    style="width:60px; height:26px; padding: 4px;" onchange="updateCanvasFrontDeg()" />º
+                <span id="clipboard"></span>
 
+            </div>
 
             <div id="menuselecionar" class="fundobranco submenu">
-                <span id="newframe" title="Recotar automaticamente" class="botao" onclick="copySelection()">
-                    <txt name="90"> copiar para novo quadro </txt><span class="bot">🎞️<span
+                <span id="newframe" title="copiar seleção para novo quadro" class="botao">
+                    <!--txt name="90"> copiar para novo quadro </txt--><span class="mais"
+                        onclick="copySelection('new')">🎞️<span
                             style="display: block; position: absolute; margin-top: -20px;
                         font-size: 20px; line-height: 20px; background-color: ghostwhite; border-radius: 10px;">➕</span></span>
-                </span>
 
+                    <span id="copy" class="bot" title="Copiar seleção" class="mais" onclick="copySelection()">
+                        ©️
+                    </span>
+                    <span id="cut" class="bot" title="Recortar seleção" class="mais" onclick="cutSelection()">
+                        ✂️
+                    </span>
+                    <span id="paste" class="bot" title="Copiar seleção" class="mais" onclick="modeTo('paste')">
+                        📋️
+                    </span>
+                </span>
                 <span id="recortarbot" title="Seleção retangular" class="botao">
                     <txt name="89">
                         Seleção retangular</txt> <span

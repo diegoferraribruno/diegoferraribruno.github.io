@@ -1,6 +1,7 @@
 let vers = [{
-    versao: "5.5.6",
+    versao: "5.5.7",
     notas: [
+        "clipboard",
         "Canvas drop: arrastar as miniaturas para copiar imagem sobre o quadro (sem touch)",
         "nova função: redimensionar quadro ou animação",
         "nova função: selecionar e copiar para novo quadro",

@@ -840,3 +840,16 @@ input[type="range"] {
     margin-top: -32px;
     font-size: 0.8em;
 }
+
+#clipboard {
+    max-width: 240px;
+    display: inline-flex;
+    overflow-x: scroll;
+    column-gap: 0px;
+    padding: 0.1rem 0.1rem 0.6rem 0.1rem;
+    background: rgba(0, 0, 0, 0.7);
+    height: 50px;
+    line-height: 22px;
+    vertical-align: top;
+
+}

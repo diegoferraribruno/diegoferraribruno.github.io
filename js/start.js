@@ -169,18 +169,30 @@ function wheel(e) {
 
   if (keyAlt == true) {
     e.preventDefault();
-    canvasFrontDeg += redondo((e.deltaY / 20) % 360)
+    canvasFrontDeg += redondo((e.deltaY / 20))
+    if (canvasFrontDeg > 360) {
+      canvasFrontDeg = 0
+    } else if (canvasFrontDeg < 0) {
+      canvasFrontDeg = 360
+    }
     rotateFront(canvasFrontDeg, (e.pageX - offsetX) / zoomFactor
-      , (e.pageY - offsetY) / zoomFactor)
+      , (e.pageY - offsetY) / zoomFactor);
+    iD("canvasfrontdeg").value = +canvasFrontDeg
 
   }
+}
+
+
+function updateCanvasFrontDeg() {
+  canvasFrontDeg = +iD("canvasfrontdeg").value
+  rotateFront(canvasFrontDeg, 0, 0)
 }
 function loading() {
   setTimeout(() => { removeElement("carregandoa") }, 10000)
 }
 
 function rotateFront(deg, x, y) {
-  console.log(deg)
+  //console.log(deg)
   ctxR.setTransform(1, 0, 0, 1, 0, 0);
   ctxR.clearRect(0, 0, canvas.width, canvas.height);
   ctxR.save()

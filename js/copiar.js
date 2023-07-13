@@ -37,7 +37,7 @@ function drawSelection() {
   }
 }
 
-function copySelection() {
+function copySelection(newfr = false) {
   var minX, minY, maxX, maxY, width, height
   if (iD("retangularselection").checked == false) {
     minX = Math.min(...selectionPaths.flat().map(([x]) => x));
@@ -63,65 +63,73 @@ function copySelection() {
   width = maxX - minX;
   height = maxY - minY;
 
-  canvasFront.width = width;
-  canvasFront.height = height;
+  canvasRender.width = width;
+  canvasRender.height = height;
+  ctxR.setTransform(1, 0, 0, 1, 0, 0);
+  ctxR.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
   if (iD("retangularselection").checked) {
-    canvasFront.width = width;
-    canvasFront.height = height;
+    canvasRender.width = width;
+    canvasRender.height = height;
     desenhaRetangulo2()
 
 
   } else {
-    canvasFront.width = width;
-    canvasFront.height = height;
+    canvasRender.width = width;
+    canvasRender.height = height;
     for (const path of selectionPaths) {
-      canvasFront.ctx.beginPath();
-      canvasFront.ctx.moveTo(path[0][0] - minX, path[0][1] - minY);
+      ctxR.beginPath();
+      ctxR.moveTo(path[0][0] - minX, path[0][1] - minY);
       for (let i = 1; i < path.length; i++) {
-        canvasFront.ctx.lineTo(path[i][0] - minX, path[i][1] - minY);
+        ctxR.lineTo(path[i][0] - minX, path[i][1] - minY);
       }
-      canvasFront.ctx.closePath();
+      ctxR.closePath();
     }
 
-    canvasFront.ctx.fillStyle = '#000000';
-    canvasFront.ctx.fill(); // Fill the selection shape
+    ctxR.fillStyle = '#000000';
+    ctxR.fill(); // Fill the selection shape
   }
-  canvasFront.ctx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
-  canvasFront.ctx.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
+  ctxR.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
+  ctxR.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
+  let image1 = canvasRender.toDataURL()
 
-  image2.src = canvasFront.toDataURL()
+  image2.src = image1
   //canvasRender.width = image2.width
   //canvasRender.height = image2.height
-  console.log(canvasRender.width, canvasRender.height)
+  //console.log(canvasRender.width, canvasRender.height)
   image2.onload = function () {
+    clipboard.push(image1)
+    canvasRender.width = canvas.width
+    canvasRender.height = canvas.height
+    ctxR.setTransform(1, 0, 0, 1, 0, 0);
+    ctxR.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
     ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
 
   }
-  /*
-  //new frame
-  undoLevel = 0
-  save_frame()
-  context.setTransform(1, 0, 0, 1, 0, 0);
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  workingframe++
-  swapImg = canvasFront.toDataURL('image/png');
-  animacao.splice(workingframe, 0, swapImg);
-  let work = []
-  comandosb.splice(workingframe, 0, work);
-  canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-  canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  comandos = []
-  comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
-  comandos.push(comando)
-  comandosParaComandosb()
-  changeBrush()
-  changeFrame(workingframe)
-  iD("contador").innerHTML = workingframe
-*/
+  if (newfr) {
+
+    //new frame
+    undoLevel = 0
+    save_frame()
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    workingframe++
+    swapImg = canvasRender.toDataURL('image/png');
+    animacao.splice(workingframe, 0, swapImg);
+    let work = []
+    comandosb.splice(workingframe, 0, work);
+    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    comandos = []
+    comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
+    comandos.push(comando)
+    comandosParaComandosb()
+    changeBrush()
+    changeFrame(workingframe)
+    iD("contador").innerHTML = workingframe
+  }
   //reset canvas size
-  canvasFront.width = canvas.width
-  canvasFront.height = canvas.height
 }
 
 // Cut the selection by copying and clearing the canvas
@@ -178,14 +186,15 @@ function cutSelection() {
   }
   canvasFront.ctx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
   canvasFront.ctx.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
-
-  image2.src = canvasFront.toDataURL()
+  let image1 = canvasFront.toDataURL()
+  image2.src = image1
   image2.onload = function () {
 
     /*  canvasRender.width = image2.width
       canvasRender.height = image2.height*/
-    rotateFront(0)
+    //rotateFront(0)
     ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
+    clipboard.push(image1)
   }
   // copy selection
 
@@ -214,18 +223,37 @@ function cutSelection() {
 
 function desenhaRetangulo2(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff2200") {
 
-  canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-  canvasFront.ctx.globalCompositeOperation = "source-over"
-  canvasFront.ctx.lineWidth = 0.5
-  canvasFront.ctx.strokeStyle = cor;
-  canvasFront.ctx.beginPath();
-  canvasFront.ctx.rect(
+  ctxR.clearRect(0, 0, canvas.width, canvas.height);
+  ctxR.globalCompositeOperation = "source-over"
+  ctxR.lineWidth = 0.5
+  ctxR.strokeStyle = cor;
+  ctxR.beginPath();
+  ctxR.rect(
     0, 0, canvas.width,
     canvas.height,
   );
 
-  canvasFront.ctx.fill();
+  ctxR.fill();
 
 
 }
+let clipboard = []
+function updateClipboard() {
+  let content = ""
+  let len = clipboard.length
+  let clips = iD("clipboard")
+  clips.innerHTML = ""
+  for (i = 0; i < len; i++) {
+    let newthumb = new Image()
+    newthumb.src = clipboard[i]
+    newthumb.id = i
+    newthumb.classList.add("quadrofilme", "light")
+    newthumb.setAttribute("onclick", "changeImage2(" + i + ")")
+    clips.appendChild(newthumb)
+  }
+}
 
+function changeImage2(n) {
+  image2.src = clipboard[n]
+  ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
+}

@@ -650,6 +650,7 @@ function backPaint() {
         if (iD("video")) {
             iD("video").setAttribute("class", "destination-over")
         }
+        canvasFront.style.zIndex = -1
 
 
     } else {
@@ -662,6 +663,7 @@ function backPaint() {
             `position:absolute;  display:block; width:20px; left: 3px; top:-5px;" title="Pintando por cima">⭕</span> `;
         Alert(example = alerts[language][13])
         removeClass("destination-over")
+        canvasFront.style.zIndex = 3
     }
     changeGCO();
     if (mode == "apagar") { modeTo("pintar") }
