@@ -185,7 +185,8 @@ function wheel(e) {
 
 function updateCanvasFrontDeg() {
   canvasFrontDeg = +iD("canvasfrontdeg").value
-  rotateFront(canvasFrontDeg, 0, 0)
+  rotateFront(canvasFrontDeg, canvasRender.width/2, canvasRender.height/2)
+  canvasFront.classList.remove("esconde")
 }
 function loading() {
   setTimeout(() => { removeElement("carregandoa") }, 10000)
