@@ -1,8 +1,9 @@
 let selectionPaths = [];
 let currentPath = [];
 let isSelecting2 = false;
-
+let selecionado = false
 function drawSelection() {
+  selecionado = true
   canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
   //canvasFront.ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Replace 'image' with your actual image variable
 
@@ -128,10 +129,16 @@ function copySelection(newfr = false) {
     changeBrush()
     changeFrame(workingframe)
     iD("contador").innerHTML = workingframe
+
   }
   //reset canvas size
 }
-
+//resetSelection
+function resetSelection(){
+  selectionPaths = [];
+  currentPath = [];
+  selecionado = false
+}
 // Cut the selection by copying and clearing the canvas
 function cutSelection() {
   //copySelection(); precisa Dividir em cutstart cutmove e cutend
@@ -195,6 +202,7 @@ function cutSelection() {
     //rotateFront(0)
     ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
     clipboard.push(image1)
+    
   }
   // copy selection
 
@@ -217,6 +225,7 @@ function cutSelection() {
   context.globalCompositeOperation = "source-over"
   canvasFront.width = canvas.width;
   canvasFront.height = canvas.height;
+  setTimeout(()=>resetSelection(),200)
   //  context.drawImage(image2, minX, minY, canvasFront.width, canvasFront.height); // Redraw the image
 }
 
@@ -247,7 +256,7 @@ function updateClipboard() {
     let newthumb = new Image()
     newthumb.src = clipboard[i]
     newthumb.id = i
-    newthumb.classList.add("quadrofilme", "light")
+    newthumb.classList.add("quadrofilme", "light", "cursorcopy")
     newthumb.setAttribute("onclick", "changeImage2(" + i + ")")
     clips.appendChild(newthumb)
   }

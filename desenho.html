@@ -80,7 +80,7 @@
                         title="Pintando por baixo">🔲</span>
                 </span>
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
-                <span id="selecionar" onmousedown="modeTo('selecionar')" class="mais" alt="ferramenta de seleção">
+                <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais" alt="ferramenta de seleção">
                     <img src="img/selectarrow.png" style="margin-top: 4px;"></span>
             </div>
 
@@ -691,21 +691,31 @@
             </div>
 
             <div id="menuselecionar" class="fundobranco submenu">
-                <span id="newframe" title="copiar seleção para novo quadro" class="botao">
-                    <!--txt name="90"> copiar para novo quadro </txt--><span class="mais"
-                        onclick="copySelection('new')">🎞️<span
-                            style="display: block; position: absolute; margin-top: -20px;
-                        font-size: 20px; line-height: 20px; background-color: ghostwhite; border-radius: 10px;">➕</span></span>
+                <span  class="botao">
+                    <span class="close" onmousedown="removeClass()">❎</span>
 
-                    <span id="copy" class="bot" title="Copiar seleção" class="mais" onclick="copySelection()">
-                        ©️
+                    <!--txt name="90"> copiar para novo quadro </txt-->
+                 
+                    <span id="copy" class="mais" title="copy" class="mais" onclick="copySelection()">
+                        <span
+                        style="display: block; position: relative; margin-top: 4px; margin-left: -2px; font-size: 20px; ">
+                        📄</span>
+                        <span
+                        style="display: block; position: absolute; margin-top: -42px; margin-left: 12px; font-size: 20px;">
+                        📄</span>
                     </span>
-                    <span id="cut" class="bot" title="Recortar seleção" class="mais" onclick="cutSelection()">
+                    <span id="cut" class="mais" title="cut" class="mais" onclick="cutSelection()">
                         ✂️
                     </span>
-                    <span id="paste" class="bot" title="Copiar seleção" class="mais" onclick="modeTo('paste')">
+                    <span id="paste" class="mais" title="paste" class="mais" onclick="modeTo('paste')">
                         📋️
                     </span>
+                    <span class="mais" title="pastenew" id="pastenew"
+                    onclick="copySelection('new')">🎞️                    
+                    <span
+                    style="display: block; position: absolute; margin-top: -20px;
+                     font-size: 20px; line-height: 20px; ">📋️
+                     </span>
                 </span>
                 <span id="recortarbot" title="Seleção retangular" class="botao">
                     <txt name="89">

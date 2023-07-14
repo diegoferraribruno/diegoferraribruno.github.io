@@ -453,14 +453,14 @@ function handleMove(evt) {
         canvasFront.ctx.globalAlpha = 1;
         canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
         canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let selecionado = false
         if (selecionado) {
             canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
             canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             canvasFront.ctx.drawImage(image2, x - image2.width / 2, y - image2.height / 2)
         } else if (movendo == true && selecionado == false) {
-            canvasFront.ctx.drawImage(movecursor, x - 16, y - 16)
+            
+           // canvasFront.ctx.drawImage(movecursor, x - 16, y - 16)
             canvasFront.globalCompositeOperation = "source-out"
             canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
         }
@@ -508,9 +508,20 @@ function handleUp(evt) {
 
 
     if (movendo == true) {
-        let selecionado = true
         if (selecionado) {
+            cutSelection()
+            setTimeout(()=>{
 
+                context.drawImage(canvasFront, 0, 0)
+                swapImg = canvas.toDataURL('image/png');
+                comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
+                comandos.push(comando)
+                comandosParaComandosb()
+                //save_frame()
+                //desenha("move", x - origin.x, y - origin.y)
+                movendo = false
+            },200)
+            
         } else {
 
             canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);

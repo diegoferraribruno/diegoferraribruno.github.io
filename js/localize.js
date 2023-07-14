@@ -62,7 +62,7 @@ var alerts = {
         10: "duplicado",
         11: "apagador",
         12: "⚠️ Pintando <b>por trás</b> do quadro.",
-        13: "⚠️ Pintando por <b>cima</b> do quadro.",
+        13: "⚠️ Pintando <b>por cima</b> do quadro.",
         14: 'Efeito aplicado',
         15: "Chave PIX copiada: ",
         16: "recortando o quadro.<br>",
@@ -286,7 +286,10 @@ let textos = {
         "88": "Save Project Before?",
         "89": "Rectangular selection",
         "90": "Copy selection to a new frame",
-        "91": "Color / Hue"
+        "91": "Color / Hue",
+        "92": "⚠️ Painting <b>behind</b> the canvas",
+        "93": "⚠️ Painting <b>over</b> the canvas",
+       
 
     }
 }
@@ -348,7 +351,12 @@ var titles = {
         "apresenta": "apresenta",
         "night": "modo escuro / claro",
         "nigth2": "modo escuro / claro",
-        "desenho": "Desenho"
+        "desenho": "Desenho",
+        "cut":"Recortar seleção",
+        "copy":"Copiar seleção",
+        "paste":"Colar seleção (toque ou click para colar)",
+        "copynew":"Colar seleção para novo quadro",
+        "selecionar":"Selecionar copiar/recortar e colar"
     },
     "en": {
 
@@ -408,7 +416,13 @@ var titles = {
         "night": "switch light or dark",
         "night2": "switch light or dark",
         "apresenta": "presents",
-        "desenho": "Drawing"
+        "desenho": "Drawing",
+        "cut":"Cut selection",
+        "copy":"Copy selection",
+        "paste":"Paste selection (toque ou click para colar)",
+        "pastenew":"Paste selection to a new frame",
+        "selecionar":"Select copy/cut and paste"
+   
 
     }
 }

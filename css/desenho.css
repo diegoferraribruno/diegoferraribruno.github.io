@@ -344,6 +344,7 @@ body {
     z-index: 0;
 }
 
+
 range {
     margin-top: 14px;
     margin-bottom: -4px;
@@ -685,6 +686,7 @@ input[type="range"] {
     text-shadow: -1px 0 #ffffff, 0 1px #ffffff, 1px 0 #ffffff, 0 -1px #ffffff;
     text-align: center;
     padding-top: 24px;
+    cursor:grab;
 }
 
 .wf {
@@ -852,4 +854,10 @@ input[type="range"] {
     line-height: 22px;
     vertical-align: top;
 
+}
+.cursorcopy{
+    cursor: copy;
+}
+.cursorgrab{
+    cursor:grab;
 }
