@@ -2,6 +2,7 @@ let selectionPaths = [];
 let currentPath = [];
 let isSelecting2 = false;
 let selecionado = false
+
 function drawSelection() {
   selecionado = true
   canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -39,6 +40,8 @@ function drawSelection() {
 }
 
 function copySelection(newfr = false) {
+  if(selecionado){
+    
   var minX, minY, maxX, maxY, width, height
   if (iD("retangularselection").checked == false) {
     minX = Math.min(...selectionPaths.flat().map(([x]) => x));
@@ -85,10 +88,10 @@ function copySelection(newfr = false) {
         ctxR.lineTo(path[i][0] - minX, path[i][1] - minY);
       }
       ctxR.closePath();
+      ctxR.fillStyle = '#000000';
+      ctxR.fill(); // Fill the selection shape
     }
 
-    ctxR.fillStyle = '#000000';
-    ctxR.fill(); // Fill the selection shape
   }
   ctxR.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
   ctxR.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
@@ -108,7 +111,7 @@ function copySelection(newfr = false) {
     ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
 
   }
-  if (newfr) {
+  if (newfr == "new") {
 
     //new frame
     undoLevel = 0
@@ -132,101 +135,63 @@ function copySelection(newfr = false) {
 
   }
   //reset canvas size
+  console.log(newfr)
+  if (newfr == "cut"){
+    context.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
+
+    if(iD("retangularselection").checked == false){
+      for (const path of selectionPaths) {
+        context.beginPath();
+        context.moveTo(path[0][0], path[0][1]);
+        for (let i = 1; i < path.length; i++) {
+          context.lineTo(path[i][0], path[i][1]);
+        }
+        context.closePath();
+        context.fillStyle = '#000000'; // Set fill color with opacity
+
+        context.fill(); // Fill the selection shape
+      }
+      context.globalCompositeOperation = "source-over"
+    }else{
+   
+      context.fillStyle = '#000000';
+      context.fillRect(
+        minX,
+        minY,
+        width,
+        height
+      );
+    context.globalCompositeOperation = "source-over"
+    }
+  }
+
+  resetSelection()
+}else{
+  let image1 = canvas.toDataURL()
+
+  image2.src = image1
+  //canvasRender.width = image2.width
+  //canvasRender.height = image2.height
+  //console.log(canvasRender.width, canvasRender.height)
+  image2.onload = function () {
+   canvasRender.width = image2.width
+  canvasRender.height = image2.height
+    ctxR.drawImage(image2,0,0)
+    clipboard.push(image1)
+    updateClipboard()
+if(newfr =="cut"){
+  context.setTransform(1, 0, 0, 1, 0, 0);
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+}
+  }
+}
+
 }
 //resetSelection
 function resetSelection(){
   selectionPaths = [];
   currentPath = [];
   selecionado = false
-}
-// Cut the selection by copying and clearing the canvas
-function cutSelection() {
-  //copySelection(); precisa Dividir em cutstart cutmove e cutend
-  var minX, minY, maxX, maxY, width, height
-  if (iD("retangularselection").checked == false) {
-    minX = Math.min(...selectionPaths.flat().map(([x]) => x));
-    minY = Math.min(...selectionPaths.flat().map(([, y]) => y));
-    maxX = Math.max(...selectionPaths.flat().map(([x]) => x));
-    maxY = Math.max(...selectionPaths.flat().map(([, y]) => y));
-  } else {
-    minX = cropStart.x
-    minY = cropStart.y
-    maxX = cropEnd.x
-    maxY = cropEnd.y
-    if (minX > maxX) {
-      minX = cropEnd.x
-      maxX = cropStart.x
-    }
-    if (minY > maxY) {
-      minY = cropEnd.y
-      maxY = cropStart.y
-
-    }
-  }
-
-  width = maxX - minX;
-  height = maxY - minY;
-
-  canvasFront.width = width;
-  canvasFront.height = height;
-
-  if (iD("retangularselection").checked) {
-    canvasFront.width = width;
-    canvasFront.height = height;
-    desenhaRetangulo2()
-
-
-  } else {
-    canvasFront.width = width;
-    canvasFront.height = height;
-    for (const path of selectionPaths) {
-      canvasFront.ctx.beginPath();
-      canvasFront.ctx.moveTo(path[0][0] - minX, path[0][1] - minY);
-      for (let i = 1; i < path.length; i++) {
-        canvasFront.ctx.lineTo(path[i][0] - minX, path[i][1] - minY);
-      }
-      canvasFront.ctx.closePath();
-    }
-
-    canvasFront.ctx.fillStyle = '#000000';
-    canvasFront.ctx.fill(); // Fill the selection shape
-  }
-  canvasFront.ctx.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
-  canvasFront.ctx.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
-  let image1 = canvasFront.toDataURL()
-  image2.src = image1
-  image2.onload = function () {
-
-    /*  canvasRender.width = image2.width
-      canvasRender.height = image2.height*/
-    //rotateFront(0)
-    ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
-    clipboard.push(image1)
-    
-  }
-  // copy selection
-
-
-  //context.clearRect(0, 0, canvas.width, canvas.height);
-  // make a hole
-  context.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
-
-  for (const path of selectionPaths) {
-    context.beginPath();
-    context.moveTo(path[0][0], path[0][1]);
-    for (let i = 1; i < path.length; i++) {
-      context.lineTo(path[i][0], path[i][1]);
-    }
-    context.closePath();
-    context.fillStyle = '#000000'; // Set fill color with opacity
-
-    context.fill(); // Fill the selection shape
-  }
-  context.globalCompositeOperation = "source-over"
-  canvasFront.width = canvas.width;
-  canvasFront.height = canvas.height;
-  setTimeout(()=>resetSelection(),200)
-  //  context.drawImage(image2, minX, minY, canvasFront.width, canvasFront.height); // Redraw the image
 }
 
 
@@ -236,12 +201,11 @@ function desenhaRetangulo2(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y
   ctxR.globalCompositeOperation = "source-over"
   ctxR.lineWidth = 0.5
   ctxR.strokeStyle = cor;
-  ctxR.beginPath();
+  ctxR.fillStyle = '#000000';
   ctxR.rect(
     0, 0, canvas.width,
     canvas.height,
   );
-
   ctxR.fill();
 
 

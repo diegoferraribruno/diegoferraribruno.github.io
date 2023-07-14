@@ -21,18 +21,19 @@ function startup() {
   Fundo("none")
   counter = setInterval(() => undoing(), 70)
   window.onkeydown = function (event) {
+    if (event.ctrlKey && event.key === 'c') {
+      copySelection();
+    } else if (event.ctrlKey && event.key === 'x') {
+      copySelection("cut")
+    } if (event.ctrlKey && event.key === 'v') {
+      //pasteSelection()
+      mode = "paste"
+    }
     let activeEl = document.activeElement
     // console.log(event.key)
     if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
       if (mode != "emoji") {
-        if (event.ctrlKey && event.key === 'c') {
-          copySelection();
-        } else if (event.ctrlKey && event.key === 'x') {
-          cutSelection();
-        } if (event.ctrlKey && event.key === 'v') {
-          //pasteSelection()
-          mode = "paste"
-        }
+       
         if (event.key === "Enter" && mode == "recortar") {
           cortar();
         } else if (event.key === "Enter" && mode == "cam") {

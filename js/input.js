@@ -448,21 +448,19 @@ function handleMove(evt) {
         canvasFront.ctx.fillText(emoji, x, y)
     }
     if (mode == "move") {
-
-        canvasFront.classList.remove("esconde")
-        canvasFront.ctx.globalAlpha = 1;
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (selecionado) {
-            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-            canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            canvasFront.ctx.drawImage(image2, x - image2.width / 2, y - image2.height / 2)
-        } else if (movendo == true && selecionado == false) {
-            
-           // canvasFront.ctx.drawImage(movecursor, x - 16, y - 16)
-            canvasFront.globalCompositeOperation = "source-out"
-            canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
+        if (selecionado){
+            copySelection('cut')
+            mode = "paste"
+        }else if (movendo == true) {
+                    canvasFront.classList.remove("esconde")
+                    canvasFront.ctx.globalAlpha = 1;
+                    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // canvasFront.ctx.drawImage(movecursor, x - 16, y - 16)
+                    canvasFront.globalCompositeOperation = "source-out"
+                    canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
+                
         }
     }
     if (mode == "paste") {
@@ -509,7 +507,6 @@ function handleUp(evt) {
 
     if (movendo == true) {
         if (selecionado) {
-            cutSelection()
             setTimeout(()=>{
 
                 context.drawImage(canvasFront, 0, 0)
@@ -520,6 +517,8 @@ function handleUp(evt) {
                 //save_frame()
                 //desenha("move", x - origin.x, y - origin.y)
                 movendo = false
+                resetSelection()
+                modeTo("move")
             },200)
             
         } else {
@@ -538,6 +537,7 @@ function handleUp(evt) {
         //save_frame()
         //desenha("move", x - origin.x, y - origin.y)
         movendo = false
+        
     }
 
     if (mode == "paste") {
@@ -550,6 +550,8 @@ function handleUp(evt) {
         //save_frame()
         //desenha("move", x - origin.x, y - origin.y)
         movendo = false
+        resetSelection()
+        modeTo("move")
     }
 
     if (rotacionar == true) {

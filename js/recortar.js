@@ -254,6 +254,8 @@ function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1
     );
 
     canvasFront.ctx.stroke();
+    canvasFront.ctx.fillStyle = '#ff000066'; // Set fill color with opacity
+    canvasFront.ctx.fill();
 
 
 }
