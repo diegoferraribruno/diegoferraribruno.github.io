@@ -329,6 +329,7 @@ function handleMove(evt) {
                         lastPressure -= 1.5
                     }
                     lastPressure = redondo(lastPressure)
+                    
                     if (lastPressure < strokeWidth) { lastPressure = strokeWidth }
                     iD("console2").innerHTML = " pressure/speed: " + pressure
                     desenha("CB", lastbrush, lastPressure, strokeColor).then(
@@ -346,6 +347,7 @@ function handleMove(evt) {
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5) {
                         let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
+                        if (pressure < 3) {pressure =3}
                         lastPressure = pressure
                         desenha("CB", lastbrush, pressure, strokeColor).then(
                             desenha(
