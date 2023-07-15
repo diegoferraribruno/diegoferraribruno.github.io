@@ -495,6 +495,74 @@ function handleMove(evt) {
 }
 
 function handleUp(evt) {
+   
+    offsetX = canvas.getBoundingClientRect().left;
+    offsetY = canvas.getBoundingClientRect().top;
+    let over = checkOverCanvas(evt.pageX, evt.pageY)
+    x = (evt.pageX - offsetX) / zoomFactor
+    y = (evt.pageY - offsetY) / zoomFactor
+    if (pixelGood) {
+        x = redondo(x)
+        y = redondo(y)
+    }
+
+
+
+    if (mode === "emoji" && isEmoji) {
+        let size = iD("emosize").value
+        desenha(
+            "e",
+            context.globalCompositeOperation,
+            x,
+            y,
+            emoji,
+            size
+        );
+        ultimoToque.x = x
+        ultimoToque.y = y
+        isEmoji = false
+    }
+    if (isSelecting) {
+        mostraMenu("recortar")
+        isSelecting = false
+        cropEnd.x = x
+        cropEnd.y = y
+        desenhaRetangulo()
+    }
+
+
+    if (isPicking) {
+
+        var imageData = context.getImageData(x, y, 1, 1).data;
+        if (imageData[3] > 1) {
+            RGBAToHSLA(
+                imageData[0],
+                imageData[1],
+                imageData[2],
+                imageData[3]
+            );
+            setStrokeColor();
+            changeBrush()
+        }
+        setTimeout(() => modeTo("pintar"), 60)
+        isPicking = false
+    }
+    if (isDrawing) {
+        isDrawing = false;
+        if (dinamicBrush === true) {
+            memorySwap()
+        }
+        ultimoToque.x = x
+        ultimoToque.y = y
+
+    }
+    if (isGrabing) {
+        isGrabing = false;
+        scrollWindow.x = 0
+        scrollWindow.y = 0
+        ultimoToque.x = x
+        ultimoToque.y = y
+    }
     if (isSelecting2) {
         isSelecting2 = false;
         selectionPaths.push(currentPath);
@@ -550,7 +618,6 @@ function handleUp(evt) {
         //save_frame()
         //desenha("move", x - origin.x, y - origin.y)
         movendo = false
-        resetSelection()
         modeTo("move")
     }
 
@@ -574,73 +641,6 @@ function handleUp(evt) {
         }, 300)
         // desenha("rotacionar", ((y - origin.y + x - origin.x) * Math.PI) / 180, origin.x, origin.y)
     }
-    offsetX = canvas.getBoundingClientRect().left;
-    offsetY = canvas.getBoundingClientRect().top;
-    let over = checkOverCanvas(evt.pageX, evt.pageY)
-    x = (evt.pageX - offsetX) / zoomFactor
-    y = (evt.pageY - offsetY) / zoomFactor
-    if (pixelGood) {
-        x = redondo(x)
-        y = redondo(y)
-    }
-
-
-
-    if (mode === "emoji" && isEmoji) {
-        let size = iD("emosize").value
-        desenha(
-            "e",
-            context.globalCompositeOperation,
-            x,
-            y,
-            emoji,
-            size
-        );
-        ultimoToque.x = x
-        ultimoToque.y = y
-        isEmoji = false
-    }
-    if (isSelecting) {
-        mostraMenu("recortar")
-        isSelecting = false
-        cropEnd.x = x
-        cropEnd.y = y
-        desenhaRetangulo()
-    }
-
-
-    if (isPicking) {
-
-        var imageData = context.getImageData(x, y, 1, 1).data;
-        if (imageData[3] > 1) {
-            RGBAToHSLA(
-                imageData[0],
-                imageData[1],
-                imageData[2],
-                imageData[3]
-            );
-            setStrokeColor();
-            changeBrush()
-        }
-        setTimeout(() => modeTo("pintar"), 60)
-        isPicking = false
-    }
-    if (isDrawing) {
-        if (dinamicBrush === true) {
-            memorySwap()
-        }
-        ultimoToque.x = x
-        ultimoToque.y = y
-        isDrawing = false;
-
-    }
-    if (isGrabing) {
-        isGrabing = false;
-        scrollWindow.x = 0
-        scrollWindow.y = 0
-        ultimoToque.x = x
-        ultimoToque.y = y
-    }
     origin.x = 0
     origin.y = 0
 
@@ -658,15 +658,15 @@ function handleEnd(evt) {
     if (mode != "play" && mode != "selecionar" && mode != "recortar") {
 
         mouseOver = false;
-        setTimeout(() => {
-            if (mouseOver == false) {
+      //
+            if (mouseOver == false || lastPressure == 0.5) {
                 isDrawing = false;
                 isGrabing = false;
                 isPicking = false;
                 isSelecting = false;
                 isSelecting2 = false;
             }
-        }, 500);
+     //   }, 500);
     } else {
         canvasFront.classList.remove("esconde")
     }

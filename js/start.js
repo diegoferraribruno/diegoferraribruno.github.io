@@ -144,13 +144,16 @@ function startup() {
     // iD("canvas_div2").addEventListener("pointerup", handleUp);
 
     canvas.addEventListener("pointercancel", handleCancel);
-    canvas.addEventListener("pointermove", handleMove);
-    canvas.addEventListener("pointerleave", handleEnd);
+   // canvas.addEventListener("pointermove", handleMove);
+    win.addEventListener("pointerleave", handleEnd);
     canvas.addEventListener("dragover", dragOver);
     canvas.addEventListener("drop", drop);
     canvas.addEventListener("dragover", dragOver);
     // canvas.addEventListener('touchmove', (e) => handleTouch(e))
     win.addEventListener('wheel', (e) => wheel(e))
+    win.addEventListener("pointerup", handleUp);
+
+    win.addEventListener("pointermove", handleMove);
 
 
     // limpaCabeca();
