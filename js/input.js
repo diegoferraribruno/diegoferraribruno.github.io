@@ -203,7 +203,7 @@ function handleStart(evt) {
 
             if (dinamicBrush === true && evt.pressure != 0.5) {
                 let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 0.5)
-                if (pressure >= 1) {
+                if (pressure < 3) {pressure = 3}
 
                     desenha("CB", lastbrush, pressure, strokeColor).then(
 
@@ -217,7 +217,6 @@ function handleStart(evt) {
                             pressure
                         )
                     )
-                };
             }
             else {
                 desenha(
