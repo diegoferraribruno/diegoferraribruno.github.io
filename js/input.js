@@ -348,6 +348,8 @@ function handleMove(evt) {
                     if (dinamicBrush === true && evt.pressure != 0.5) {
                         let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
                         if (pressure < 3) {pressure =3}
+                        iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + pressure +"Lastpressure:"+ lastPressure;
+
                         lastPressure = pressure
                         desenha("CB", lastbrush, pressure, strokeColor).then(
                             desenha(
