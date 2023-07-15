@@ -71,11 +71,18 @@ function copySelection(newfr = false) {
   canvasRender.height = height;
   ctxR.setTransform(1, 0, 0, 1, 0, 0);
   ctxR.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
+  if(width==-Infinity || width==0 || height==0){
+    width = canvas.width
+    height = canvas.height
+    minX = 0
+    minY = 0
+    maxX = width
+    maxY = height
+  }
   if (iD("retangularselection").checked) {
     canvasRender.width = width;
     canvasRender.height = height;
-    desenhaRetangulo2()
+    desenhaRetangulo2(minX, minY, maxX, maxY)
 
 
   } else {
@@ -124,7 +131,7 @@ function copySelection(newfr = false) {
     let work = []
     comandosb.splice(workingframe, 0, work);
     canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
     comandos = []
     comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
     comandos.push(comando)
@@ -181,7 +188,7 @@ function copySelection(newfr = false) {
     updateClipboard()
 if(newfr =="cut"){
   context.setTransform(1, 0, 0, 1, 0, 0);
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+  context.clearRect(0, 0, canvas.width,context.canvas.height);
 }
   }
 }
