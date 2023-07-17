@@ -17,13 +17,13 @@ var canvasFront = document.createElement("canvas")
 canvasFront.id = "canvasFront"
 canvasFront.width = canvas.width
 canvasFront.height = canvas.height
-canvasFront.ctx = canvasFront.getContext('2d', [{ willReadFrequently: false }])
-canvasFront.ctx.drawImage(canvas, 0, 0)
+ctxF = canvasFront.getContext('2d', [{ willReadFrequently: false }])
+ctxF.drawImage(canvas, 0, 0)
 canvasFront.style.position = "absolute"
 canvasFront.style.marginTop = "0px"
 canvasFront.style.marginLeft = -canvas.width + "px"
 canvasFront.classList.add("cursor") // importante!
-canvasFront.ctx.imageSmoothingEnabled = false
+ctxF.imageSmoothingEnabled = false
 iD("canvas_div").appendChild(canvasFront)
 let cursorShow = true
 var canvasBack = document.createElement("canvas")
@@ -267,8 +267,8 @@ function handleMove(evt) {
     }
     if (isSelecting2) {
         canvasFront.classList.remove("esconde")
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
 
         drawSelection();
         if (iD("retangularselection").checked == true) {
@@ -287,12 +287,12 @@ function handleMove(evt) {
             cropEnd.x = x
             cropEnd.y = y
             desenhaRetangulo();
-            // canvasFront.ctx.font = 24 + 'px serif';
-            canvasFront.ctx.drawImage(cropcursor, x, y)
+            // ctxF.font = 24 + 'px serif';
+            ctxF.drawImage(cropcursor, x, y)
         } else {
             canvasFront.classList.remove("esconde")
-            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-            canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctxF.setTransform(1, 0, 0, 1, 0, 0);
+            ctxF.clearRect(0, 0, canvas.width, canvas.height);
             if (cropEnd.x == 0) {
 
                 desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22ff00")
@@ -300,7 +300,7 @@ function handleMove(evt) {
 
                 desenhaRetangulo();
             }
-            canvasFront.ctx.drawImage(cropcursor, x, y)
+            ctxF.drawImage(cropcursor, x, y)
         }
     }
     if (isDrawing === true && isPicking == false && mode != 'move' && !isGrabing) {
@@ -396,13 +396,13 @@ function handleMove(evt) {
     }
     if (mode == "zoomx") {// canvasFront
         canvasFront.classList.remove("esconde")
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasFront.ctx.font = 18 + 'px serif';
-        canvasFront.ctx.textAlign = "center";
-        canvasFront.ctx.textBaseline = "middle";
-        canvasFront.ctx.globalAlpha = 0.5;
-        canvasFront.ctx.fillText("🔎", x, y)
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        ctxF.font = 18 + 'px serif';
+        ctxF.textAlign = "center";
+        ctxF.textBaseline = "middle";
+        ctxF.globalAlpha = 0.5;
+        ctxF.fillText("🔎", x, y)
 
     }
 
@@ -424,15 +424,15 @@ function handleMove(evt) {
 
             if (cursorShow == true && !isDrawing) {
                 canvasFront.classList.remove("esconde")
-                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                ctxF.clearRect(0, 0, canvas.width, canvas.height);
                 if (dinamicBrush) {
-                    canvasFront.ctx.drawImage(brushCanva, x - (lastPressure / 2), y - (lastPressure / 2));
+                    ctxF.drawImage(brushCanva, x - (lastPressure / 2), y - (lastPressure / 2));
 
                 } else {
                     let halfstroke = 0
                     if (strokeWidth > 1) { halfstroke = strokeWidth / 2 }
-                    canvasFront.ctx.drawImage(brushCanva, redondo(x - halfstroke), redondo(y - halfstroke));
+                    ctxF.drawImage(brushCanva, redondo(x - halfstroke), redondo(y - halfstroke));
 
                 }
 
@@ -445,12 +445,12 @@ function handleMove(evt) {
     }
     if (mode == "emoji") {
         canvasFront.classList.remove("esconde")
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasFront.ctx.font = iD("emosize").value + 'px serif'
-        canvasFront.ctx.textAlign = "center";
-        canvasFront.ctx.textBaseline = "middle";
-        canvasFront.ctx.fillText(emoji, x, y)
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        ctxF.font = iD("emosize").value + 'px serif'
+        ctxF.textAlign = "center";
+        ctxF.textBaseline = "middle";
+        ctxF.fillText(emoji, x, y)
     }
     if (mode == "move") {
         if (selecionado){
@@ -458,43 +458,43 @@ function handleMove(evt) {
             mode = "paste"
         }else if (movendo == true) {
                     canvasFront.classList.remove("esconde")
-                    canvasFront.ctx.globalAlpha = 1;
-                    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                    canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctxF.globalAlpha = 1;
+                    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                    ctxF.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // canvasFront.ctx.drawImage(movecursor, x - 16, y - 16)
+                // ctxF.drawImage(movecursor, x - 16, y - 16)
                     canvasFront.globalCompositeOperation = "source-out"
-                    canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
+                    ctxF.drawImage(canvas, x - origin.x, y - origin.y)
                 
         }
     }
     if (mode == "paste") {
 
         canvasFront.classList.remove("esconde")
-        canvasFront.ctx.globalAlpha = 1;
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasFront.ctx.drawImage(canvasRender, x - canvas.width / 2, y - canvas.height / 2)
+        ctxF.globalAlpha = 1;
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        ctxF.drawImage(canvasRender, x - canvas.width / 2, y - canvas.height / 2)
 
     }
 
 
     if (mode == "rotacionar") {
         canvasFront.classList.remove("esconde")
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
         if (rotacionar == true) {
-            canvasFront.ctx.globalAlpha = 1;
-            canvasFront.ctx.save()
+            ctxF.globalAlpha = 1;
+            ctxF.save()
             canvasFront.globalCompositeOperation = "source-out"
             if (iD("rotatecenter").checked == true) {
                 origin.x = canvas.width / 2;
                 origin.y = canvas.height / 2
             }
-            canvasFront.ctx.translate(origin.x, origin.y)
-            canvasFront.ctx.rotate(((y - origin.y + x - origin.x) * Math.PI) / 180);
-            canvasFront.ctx.drawImage(canvas, -origin.x, -origin.y)
-            canvasFront.ctx.restore()
+            ctxF.translate(origin.x, origin.y)
+            ctxF.rotate(((y - origin.y + x - origin.x) * Math.PI) / 180);
+            ctxF.drawImage(canvas, -origin.x, -origin.y)
+            ctxF.restore()
         }
     }
 }
@@ -596,9 +596,9 @@ function handleUp(evt) {
             
         } else {
 
-            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-            canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-            canvasFront.ctx.drawImage(canvas, x - origin.x, y - origin.y)
+            ctxF.setTransform(1, 0, 0, 1, 0, 0);
+            ctxF.clearRect(0, 0, canvas.width, canvas.height);
+            ctxF.drawImage(canvas, x - origin.x, y - origin.y)
             context.setTransform(1, 0, 0, 1, 0, 0);
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
@@ -637,8 +637,8 @@ function handleUp(evt) {
         comandosParaComandosb()
         setTimeout(() => {
 
-            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-            canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctxF.setTransform(1, 0, 0, 1, 0, 0);
+            ctxF.clearRect(0, 0, canvas.width, canvas.height);
             if (iD("rotatecenter").checked == true) {
                 origin.x = canvas.width / 2;
                 origin.y = canvas.height / 2

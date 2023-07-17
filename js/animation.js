@@ -97,8 +97,8 @@ function new_frame() {
     animacao.splice(workingframe, 0, swapImg);
     let work = []
     comandosb.splice(workingframe, 0, work);
-    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+    ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     comandos = []
@@ -129,8 +129,8 @@ function play() {
         iD("play()").innerHTML = ' <span onmousedown="stop()">⏹️</span>'
         clearInterval(inter);
         canvasFront.classList.remove("esconde")
-        canvasFront.ctx.globalAlpha = 1;
-        canvasFront.ctx.globalCompositeOperation = 'destination-over'
+        ctxF.globalAlpha = 1;
+        ctxF.globalCompositeOperation = 'destination-over'
         if (nightmode) {
             canvasFront.style.backgroundColor = "#333333"
         } else {
@@ -153,21 +153,21 @@ function stop() {
         mode = oldMode
     }
     clearInterval(inter);
-    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+    ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasFront.style.backgroundColor = "transparent"
     iD("play()").innerHTML = "▶️"
 }
 
 function playerPlay(frame) {
 
-    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+    ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
     let blabla = new Image()
     blabla.src = animacao[frame]
-    canvasFront.ctx.drawImage(blabla, 0, 0)
+    ctxF.drawImage(blabla, 0, 0)
 }
 
 function changeFrame(frame) {
@@ -418,9 +418,9 @@ function dragOver(event) {
     const toContainer = event.currentTarget;
     if (toContainer.id == "canvas") {
         canvasFront.classList.remove("esconde")
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvasFront.ctx.drawImage(image2, event.layerX - image2.width / 2, event.layerY - image2.height / 2)
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        ctxF.drawImage(image2, event.layerX - image2.width / 2, event.layerY - image2.height / 2)
     }
 }
 
@@ -449,8 +449,8 @@ function drop(event) {
     } else if (toContainer.id == "new_frame()") {
         cloneFrame(dataTransfer)
     } else if (toContainer.id == "canvas") {
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image2, event.layerX - image2.width / 2, event.layerY - image2.height / 2)
         swapImg = canvas.toDataURL('image/png');
         comando = ["f", context.globalCompositeOperation, swapImg, 0, 0];

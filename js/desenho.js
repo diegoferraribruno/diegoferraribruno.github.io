@@ -74,13 +74,13 @@ function exec(coma = 0) {
     if (scope > coma) {
         switch (comandos[coma][0]) {
             case "move":
-                canvasFront.ctx.globalCompositeOperation = "destination-over"
-                canvasFront.ctx.globalAlpha = 1;
-                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvasFront.ctx.save()
-                canvasFront.ctx.drawImage(canvas, comandos[coma][1], comandos[coma][2])
-                canvasFront.ctx.restore()
+                ctxF.globalCompositeOperation = "destination-over"
+                ctxF.globalAlpha = 1;
+                ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                ctxF.clearRect(0, 0, canvas.width, canvas.height);
+                ctxF.save()
+                ctxF.drawImage(canvas, comandos[coma][1], comandos[coma][2])
+                ctxF.restore()
                 let img_b64 = canvasFront.toDataURL("image/png");
                 let blob = dataURItoBlob(img_b64)
                 let url = URL.createObjectURL(blob)
@@ -102,15 +102,15 @@ function exec(coma = 0) {
                 }
                 break;
             case "rotacionar":
-                canvasFront.ctx.globalCompositeOperation = "destination-over"
-                canvasFront.ctx.globalAlpha = 1;
-                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvasFront.ctx.save()
-                canvasFront.ctx.translate(comandos[coma][2], comandos[coma][3])
-                canvasFront.ctx.rotate(comandos[coma][1]);
-                canvasFront.ctx.drawImage(canvas, -comandos[coma][2], -comandos[coma][3])
-                canvasFront.ctx.restore()
+                ctxF.globalCompositeOperation = "destination-over"
+                ctxF.globalAlpha = 1;
+                ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                ctxF.clearRect(0, 0, canvas.width, canvas.height);
+                ctxF.save()
+                ctxF.translate(comandos[coma][2], comandos[coma][3])
+                ctxF.rotate(comandos[coma][1]);
+                ctxF.drawImage(canvas, -comandos[coma][2], -comandos[coma][3])
+                ctxF.restore()
 
                 let img_b64c = canvasFront.toDataURL("image/png");
                 let blobn = dataURItoBlob(img_b64c)
@@ -617,7 +617,7 @@ function limpar(what) {
                 workingframe = 0
                 iD("bplayer0").style.backgroundImage = 'none'
                 canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctxF.setTransform(1, 0, 0, 1, 0, 0);
                 save_frame()
                 changeFrame(workingframe)
                 adicionaQuadro()

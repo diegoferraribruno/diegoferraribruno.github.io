@@ -2,9 +2,9 @@ let filters = ["none", "invert", "blur", "grayscale", "sepia", "contrast", "brig
 let fx = 0
 
 function FX(fx, onde) {
-    canvasFront.ctx.save()
+    ctxF.save()
     if (onde == undefined) {
-        onde = canvasFront.ctx
+        onde = ctxF
         confirmFX(fx, filters[fx])
     }
     if (fx != 0) {
@@ -50,10 +50,10 @@ function FX(fx, onde) {
 }
 function updatecanvasFront() {
     // canvasFront.style.backgroundColor = "#ffffff"
-    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    canvasFront.ctx.drawImage(canvas, 0, 0)
-    canvasFront.ctx.restore()
+    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+    ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    ctxF.drawImage(canvas, 0, 0)
+    ctxF.restore()
 }
 
 function confirmFX(fx, fxname) {
@@ -83,8 +83,8 @@ function applyFX() {
 
         Alert(alerts[language][14], 0.8)
         canvasFront.filter = filters[0]
-        canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }, 300)
     setTimeout(() => {
 
@@ -99,8 +99,8 @@ function cancelaFX() {
     menufx()
 
     canvasFront.filter = filters[0]
-    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasFront.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+    ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasOpacity(100)
 }
 
@@ -145,7 +145,7 @@ function lumaKey(range) {
         }
     }
 
-    canvasFront.ctx.putImageData(imgd, 0, 0);
+    ctxF.putImageData(imgd, 0, 0);
     img_b64 = canvasFront.toDataURL("image/png");
     desenha("s", "source-over", img_b64, 0, 0, canvas.width, canvas.height)
     setTimeout(() => save_frame(), canvas.width / 2)

@@ -112,8 +112,8 @@ function cortarAnima(x1, y1, x2, y2) {
             framesToCanvas(x1, y1, x2, y2, i)
         } else {
             setTimeout(() => {
-                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
                 canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
                 canvasBack.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
 
@@ -138,9 +138,9 @@ function cortarAnima(x1, y1, x2, y2) {
         imagem.src = URL.createObjectURL(blob);
         imagem.onload =
             function () {
-                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
-                canvasFront.ctx.drawImage(imagem, x1, y1, x2, y2, 0, 0, x2, y2);
+                ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                ctxF.drawImage(imagem, x1, y1, x2, y2, 0, 0, x2, y2);
                 canvasToFrame(frame)
             }
     }
@@ -235,31 +235,31 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
 
 function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff2200") {
 
-    canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvasFront.ctx.globalCompositeOperation = "source-over"
-    canvasFront.ctx.lineWidth = 0.5
-    canvasFront.ctx.strokeStyle = cor;
+    ctxF.clearRect(0, 0, canvas.width, canvas.height);
+    ctxF.globalCompositeOperation = "source-over"
+    ctxF.lineWidth = 0.5
+    ctxF.strokeStyle = cor;
 
-    canvasFront.ctx.stroke();
-    canvasFront.ctx.setLineDash([2, 2]);
-    canvasFront.ctx.beginPath();
-    canvasFront.ctx.strokeStyle = '#ffffff88'; // Set stroke color with opacity
-    canvasFront.ctx.lineWidth = 1;
+    ctxF.stroke();
+    ctxF.setLineDash([2, 2]);
+    ctxF.beginPath();
+    ctxF.strokeStyle = '#ffffff88'; // Set stroke color with opacity
+    ctxF.lineWidth = 1;
 
-    canvasFront.ctx.rect(
+    ctxF.rect(
         x0,
         y0,
         (x1 - x0),
         (y1 - y0)
     );
 
-    canvasFront.ctx.stroke();
-    canvasFront.ctx.fillStyle = '#ff000066'; // Set fill color with opacity
-    canvasFront.ctx.fill();
+    ctxF.stroke();
+    ctxF.fillStyle = '#ff000066'; // Set fill color with opacity
+    ctxF.fill();
 
 
 }
 function limpaRetangulo() {
-    canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvasFront.ctx.globalCompositeOperation = "source-over"
+    ctxF.clearRect(0, 0, canvas.width, canvas.height);
+    ctxF.globalCompositeOperation = "source-over"
 }

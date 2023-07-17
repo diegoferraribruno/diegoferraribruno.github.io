@@ -150,7 +150,7 @@ function pixel() {
     canvasDiv.classList.toggle("pixel");
     pixelGood = !pixelGood
     context.imageSmoothingEnabled = !context.imageSmoothingEnabled;
-    canvasFront.ctx.imageSmoothingEnabled = !canvasFront.ctx.imageSmoothingEnabled
+    ctxF.imageSmoothingEnabled = !ctxF.imageSmoothingEnabled
     canvasBack.ctx.imageSmoothingEnabled = !canvasBack.ctx.imageSmoothingEnabled
 
 }

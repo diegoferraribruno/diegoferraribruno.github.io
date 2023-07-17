@@ -10,7 +10,7 @@ function preResizeCanvas(newWidth, newHeight) {
         newHeight = parseInt(document.getElementById('canvasHeight').value);
     }
     // Clear the canvas
-    canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctxF.clearRect(0, 0, canvas.width, canvas.height);
 
     // Set the canvas size to the new values
     // canvasFront.width = newWidth;
@@ -18,7 +18,7 @@ function preResizeCanvas(newWidth, newHeight) {
     desenhaRetangulo(0, 0, newWidth, newHeight)
 
     // Draw the image on the canvas (image will be resized to fit the new canvas size)
-    canvasFront.ctx.drawImage(canvas, 0, 0, newWidth, newHeight);
+    ctxF.drawImage(canvas, 0, 0, newWidth, newHeight);
     // Reset the selection paths and current path
     canvasFront.classList.remove("esconde")
 }
@@ -42,8 +42,8 @@ function redimendionarAnima(newWidth, newHeight) {
                 framesToCanvas(newWidth, newHeight, i)
             } else {
                 setTimeout(() => {
-                    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                    canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                    ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
                     canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
                     canvasBack.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
 
@@ -66,9 +66,9 @@ function redimendionarAnima(newWidth, newHeight) {
             imagem.src = URL.createObjectURL(blob);
             imagem.onload =
                 function () {
-                    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                    canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
-                    canvasFront.ctx.drawImage(imagem, 0, 0, newWidth, newHeight);
+                    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                    ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                    ctxF.drawImage(imagem, 0, 0, newWidth, newHeight);
                     canvasToFrame(frame)
                 }
             }
@@ -102,9 +102,9 @@ function redimendionarAnima(newWidth, newHeight) {
     }else{
             canvasFront.width = newWidth
             canvasFront.height = newHeight
-            canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-            canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
-            canvasFront.ctx.drawImage(canvas, 0, 0, newWidth, newHeight);
+            ctxF.setTransform(1, 0, 0, 1, 0, 0);
+            ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
+            ctxF.drawImage(canvas, 0, 0, newWidth, newHeight);
             swapImg = canvasFront.toDataURL('image/png');
             newAnima[workingframe] = swapImg
             comando = ["s", "source-over", swapImg, 0, 0,newWidth, newHeight];
@@ -113,8 +113,8 @@ function redimendionarAnima(newWidth, newHeight) {
             setTimeout(()=>{
                 canvasFront.width = canvas.width
                 canvasFront.height =  canvas.height
-                canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+                ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
                 comandosExec()
             },200)
             

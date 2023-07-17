@@ -218,9 +218,9 @@ function rotateFront(deg, x, y) {
   ctxR.drawImage(image2, - image2.width / 2, -image2.height / 2)
   ctxR.restore()
   setTimeout(() => {
-    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvasFront.ctx.drawImage(canvasRender, x - canvasRender.width / 2, y - canvasRender.height / 2)
+    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+    ctxF.clearRect(0, 0, canvas.width, canvas.height);
+    ctxF.drawImage(canvasRender, x - canvasRender.width / 2, y - canvasRender.height / 2)
   }, 80)
 
 
@@ -228,16 +228,16 @@ function rotateFront(deg, x, y) {
 
 function apresenta() {
   if (comandos.length == 0 && mode == "pintar") {
-    canvasFront.ctx.font = 24 + 'px serif';
-    canvasFront.ctx.textAlign = "center";
-    canvasFront.ctx.textBaseline = "middle";
+    ctxF.font = 24 + 'px serif';
+    ctxF.textAlign = "center";
+    ctxF.textBaseline = "middle";
     let len = texts[startText].length
     for (i = 0; i < len; i++) {
-      canvasFront.ctx.fillText(texts[startText][i], 160, 40 * i + 40)
+      ctxF.fillText(texts[startText][i], 160, 40 * i + 40)
     }
     setTimeout(() => {
-      canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-      canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctxF.setTransform(1, 0, 0, 1, 0, 0);
+      ctxF.clearRect(0, 0, canvas.width, canvas.height);
       setTimeout(() => { apresenta() }
         , 600);
     }, 1800);

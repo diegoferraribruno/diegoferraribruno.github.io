@@ -5,37 +5,37 @@ let selecionado = false
 
 function drawSelection() {
   selecionado = true
-  canvasFront.ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //canvasFront.ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Replace 'image' with your actual image variable
+  ctxF.clearRect(0, 0, canvas.width, canvas.height);
+  //ctxF.drawImage(image, 0, 0, canvas.width, canvas.height); // Replace 'image' with your actual image variable
 
   for (const path of selectionPaths) {
-    canvasFront.ctx.beginPath();
+    ctxF.beginPath();
 
-    canvasFront.ctx.setLineDash([2, 2]);
-    canvasFront.ctx.moveTo(path[0][0], path[0][1]);
+    ctxF.setLineDash([2, 2]);
+    ctxF.moveTo(path[0][0], path[0][1]);
     for (let i = 1; i < path.length; i++) {
-      canvasFront.ctx.lineTo(path[i][0], path[i][1]);
+      ctxF.lineTo(path[i][0], path[i][1]);
     }
-    canvasFront.ctx.closePath();
-    canvasFront.ctx.fillStyle = '#ff000066'; // Set fill color with opacity
-    canvasFront.ctx.fill(); // Fill the selection shape
+    ctxF.closePath();
+    ctxF.fillStyle = '#ff000066'; // Set fill color with opacity
+    ctxF.fill(); // Fill the selection shape
   }
 
   if (currentPath.length > 1) {
-    canvasFront.ctx.beginPath();
+    ctxF.beginPath();
 
-    canvasFront.ctx.setLineDash([2, 2]);
-    canvasFront.ctx.moveTo(currentPath[0][0], currentPath[0][1]);
+    ctxF.setLineDash([2, 2]);
+    ctxF.moveTo(currentPath[0][0], currentPath[0][1]);
     for (let i = 1; i < currentPath.length; i++) {
-      canvasFront.ctx.lineTo(currentPath[i][0], currentPath[i][1]);
+      ctxF.lineTo(currentPath[i][0], currentPath[i][1]);
     }
-    canvasFront.ctx.closePath();
-    canvasFront.ctx.fillStyle = '#ff000066'; // Set fill color with opacity
-    canvasFront.ctx.strokeStyle = '#ffffff88'; // Set stroke color with opacity
-    canvasFront.ctx.lineWidth = 1;
-    canvasFront.ctx.fill(); // Fill the current selection shape
+    ctxF.closePath();
+    ctxF.fillStyle = '#ff000066'; // Set fill color with opacity
+    ctxF.strokeStyle = '#ffffff88'; // Set stroke color with opacity
+    ctxF.lineWidth = 1;
+    ctxF.fill(); // Fill the current selection shape
 
-    canvasFront.ctx.stroke()
+    ctxF.stroke()
   }
 }
 
@@ -130,8 +130,8 @@ function copySelection(newfr = false) {
     animacao.splice(workingframe, 0, swapImg);
     let work = []
     comandosb.splice(workingframe, 0, work);
-    canvasFront.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    canvasFront.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
+    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+    ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
     comandos = []
     comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
     comandos.push(comando)
