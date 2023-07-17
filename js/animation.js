@@ -354,6 +354,7 @@ var animSize = 0
 function adicionaQuadro() {
     let filme = iD("filme")
     filme.innerHTML = ""
+    let newFilme =  document.createElement("div")
     setTimeout(() => {
         animSize = animacao.length
         for (i = 0; i < animSize; i++) {
@@ -382,14 +383,10 @@ function adicionaQuadro() {
             thumb.addEventListener("dragstart", dragStart);
             thumb.addEventListener("dragend", dragEnd);
             cont.appendChild(thumb)
-            filme.appendChild(cont)
-            setTimeout(() => {
-                iD("lixeira()").addEventListener("drop", drop);
-                iD("lixeira()").addEventListener("dragover", dragOver);
-                iD("new_frame()").addEventListener("drop", drop);
-                iD("new_frame()").addEventListener("dragover", dragOver);
-            }, 10)
+            newFilme.appendChild(cont)
+        
         }
+        filme.appendChild(newFilme)
         scrollFilme()
     }
         , 10)

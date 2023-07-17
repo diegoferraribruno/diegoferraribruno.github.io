@@ -131,7 +131,7 @@ function startup() {
   );
   window.addEventListener("keyup", handleKeyUp);
   window.addEventListener("keydown", handleKeys);
-  desenhoDiv.addEventListener("gesturestart", prevent, { passive: false });
+  win.addEventListener("gesturestart", prevent, { passive: false });
   win.addEventListener("touchmove", prevent, { passive: false });
 
   initStrokeRange()
@@ -155,6 +155,12 @@ function startup() {
 
     win.addEventListener("pointermove", handleMove);
 
+    
+      iD("lixeira()").addEventListener("drop", drop);
+      iD("lixeira()").addEventListener("dragover", dragOver);
+      iD("new_frame()").addEventListener("drop", drop);
+      iD("new_frame()").addEventListener("dragover", dragOver);
+ 
 
     // limpaCabeca();
     apresenta()
