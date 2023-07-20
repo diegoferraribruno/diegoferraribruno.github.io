@@ -1,3 +1,7 @@
+
+let workingframe = 0
+var comandos = [[],[]];
+
 const canvas = iD("canvas");
 const context = canvas.getContext('2d', { willReadFrequently: true });
 const canvasV = iD("canvasV");
@@ -8,6 +12,7 @@ let isGrabing = false;
 let isPicking = false;
 var isSelecting = false
 var isEmoji = false;
+var mandala = false
 let x = 0;
 let y = 0;
 var offsetX;
@@ -43,6 +48,53 @@ function tilePaint() {
         Alert(' <span title="infinity" class="emoji " id="emo -♾️">♾️</span> ' + alerts[language][6] + "<br>" + alerts[language][8])
     }
 }
+function setCenter(){
+    center = {x: canvas.width / 2 , y: canvas.height / 2};
+    radius = (canvas.width / 2) - 10;
+}
+
+function Mandala(){
+    mandala = !mandala
+    if (mandala == true) {
+        setCenter()
+        mostraMenu("mandala")
+        drawSlices()
+        Alert('<span title="infinity" class="emoji " id="emo -♾️">⚛️</span> ' + alerts[language][24] + "<br>" + alerts[language][7])
+    } else {
+        canvasBack.ctx.clearRect(0,0, canvas.width, canvas.height);
+        Alert(' <span title="infinity" class="emoji " id="emo -♾️">⚛️</span> ' + alerts[language][24] + "<br>" + alerts[language][8])
+    }
+}
+
+function mandalaSlices(value){
+   slices = value
+   _angle = 360 / slices
+   drawSlices()
+}
+function drawSlices(){
+    canvasBack.ctx.clearRect(0,0, canvas.width, canvas.height);
+    //canvasBack.ctx.fillStyle = '#212121';
+    //canvasBack.ctx.fillRect(0,0,canvas.width,canvas.height);
+    canvasBack.ctx.strokeStyle = lineColorTransparent;
+    canvasBack.ctx.beginPath();
+    canvasBack.ctx.arc(center.x, center.y, radius, 0, Math.PI * 2, true);
+    canvasBack.ctx.stroke();
+    canvasBack.ctx.closePath();
+    _start = 0;
+
+    for(var i = 0; i < slices; i++ ) {
+        lineStroke(center, getPointOnCircle(_start, center, radius), 3, lineColorTransparent);
+        _start += _angle;
+    }
+}
+var lineColorTransparent = 'rgba(120, 120, 120, 0.3)' 
+var lineStroke = function(start, end, width, color) {
+    canvasBack.ctx.lineWidth = width;
+    canvasBack.ctx.beginPath();
+    canvasBack.ctx.strokeStyle = color;
+    canvasBack.ctx.moveTo(start.x, start.y);
+    canvasBack.ctx.lineTo(end.x, end.y);
+    canvasBack.ctx.stroke()}
 
 function redondo(numero) {
     return Math.floor(numero, 10)
@@ -50,36 +102,42 @@ function redondo(numero) {
 
 function dataURItoBlob(dataurl) {
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        bstr = window.atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
     while (n--) {
         u8arr[n] = bstr.charCodeAt(n);
     }
     return new Blob([u8arr], { type: mime });
 }
 
-function comandosExec() {
+/*function comandosExec(x=undefined) {
+    
+    oldBrush = [lastbrush, strokeWidth, strokeColor, globalComposite]
 
-    if (executing == false) {
-        oldBrush = [lastbrush, strokeWidth, strokeColor, globalComposite]
+    if (x){ tempImg.src = historia[workingframe][x]
         context.clearRect(0, 0, canvas.width, canvas.height);
-        exec();
-        executing = true;
+        context.drawImage(tempImg,0,0)
+    }else if(animacao.length > 0){
+        
+        tempImg.src = animacao[workingframe]
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(tempImg,0,0)
     }
-}
-var blobs = {}
+    
+}*/
+/*var blobs = {}
 let blobv
-function exec(coma = 0) {
-    let lenc = comandos.length;
+function exec(coma = 1) {
+    let lenc = comandos[workingframe].length;
     let scope = lenc - undoLevel
     if (scope > coma) {
-        switch (comandos[coma][0]) {
+        switch (comandos[workingframe][coma][0]) {
             case "move":
                 ctxF.globalCompositeOperation = "destination-over"
                 ctxF.globalAlpha = 1;
                 ctxF.setTransform(1, 0, 0, 1, 0, 0);
                 ctxF.clearRect(0, 0, canvas.width, canvas.height);
                 ctxF.save()
-                ctxF.drawImage(canvas, comandos[coma][1], comandos[coma][2])
+                ctxF.drawImage(canvas, comandos[workingframe][coma][1], comandos[workingframe][coma][2])
                 ctxF.restore()
                 let img_b64 = canvasFront.toDataURL("image/png");
                 let blob = dataURItoBlob(img_b64)
@@ -107,9 +165,9 @@ function exec(coma = 0) {
                 ctxF.setTransform(1, 0, 0, 1, 0, 0);
                 ctxF.clearRect(0, 0, canvas.width, canvas.height);
                 ctxF.save()
-                ctxF.translate(comandos[coma][2], comandos[coma][3])
-                ctxF.rotate(comandos[coma][1]);
-                ctxF.drawImage(canvas, -comandos[coma][2], -comandos[coma][3])
+                ctxF.translate(comandos[workingframe][coma][2], comandos[workingframe][coma][3])
+                ctxF.rotate(comandos[workingframe][coma][1]);
+                ctxF.drawImage(canvas, -comandos[workingframe][coma][2], -comandos[workingframe][coma][3])
                 ctxF.restore()
 
                 let img_b64c = canvasFront.toDataURL("image/png");
@@ -139,7 +197,7 @@ function exec(coma = 0) {
                 break;
             case "FX":
                 context.filter = "none"
-                context.filter = filters[comandos[coma][1]]
+                context.filter = filters[comandos[workingframe][coma][1]]
                 coma++
                 exec(coma)
                 break;
@@ -148,25 +206,24 @@ function exec(coma = 0) {
                 exec(coma)
                 break;
             case "CB":
-                strokeWidth = comandos[coma][2]
-                strokeColor = comandos[coma][3]
+                strokeWidth = comandos[workingframe][coma][2]
+                strokeColor = comandos[workingframe][coma][3]
                 createNewBrush(
-                    comandos[coma][1],
-                    comandos[coma][2],
-                    comandos[coma][3])
+                    comandos[workingframe][coma][1],
+                    comandos[workingframe][coma][2],
+                    comandos[workingframe][coma][3])
                 coma++;
                 exec(coma)
                 break;
             case "f":
-                blobs[coma] = comandos[coma][2]
-                myImg.src = blobs[coma]
+                globaltemp = context.globalCompositeOperation
                 myImg.onload = function () {
                     let globaltemp = context.globalCompositeOperation
-                    context.globalCompositeOperation = comandos[coma][1];
+                    context.globalCompositeOperation = comandos[workingframe][coma][1];
                     context.drawImage(
                         myImg,
-                        comandos[coma][3],
-                        comandos[coma][4],
+                        comandos[workingframe][coma][3],
+                        comandos[workingframe][coma][4],
                         myImg.width,
                         myImg.height);
                     changeGCO(globaltemp)
@@ -178,15 +235,15 @@ function exec(coma = 0) {
                 //changeGCO("destination-out");
                 context.setTransform(1, 0, 0, 1, 0, 0);
                 context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-                blobs[coma] = comandos[coma][2]
+                blobs[coma] = comandos[workingframe][coma][2]
                 myImg.src = blobs[coma]
                 myImg.onload = function () {
                     let globaltemp = context.globalCompositeOperation
-                    context.globalCompositeOperation = comandos[coma][1]
+                    context.globalCompositeOperation = comandos[workingframe][coma][1]
                     context.drawImage(
                         myImg,
-                        comandos[coma][3],
-                        comandos[coma][4],
+                        comandos[workingframe][coma][3],
+                        comandos[workingframe][coma][4],
                         myImg.width,
                         myImg.height);
                     changeGCO(globaltemp)
@@ -195,57 +252,57 @@ function exec(coma = 0) {
                 }
                 break;
             case "i":
-                context.globalCompositeOperation = comandos[coma][1]
+                context.globalCompositeOperation = comandos[workingframe][coma][1]
                 context.drawImage(
-                    comandos[coma][2],
-                    comandos[coma][3],
-                    comandos[coma][4],
-                    comandos[coma][5],
-                    comandos[coma][6]);
+                    comandos[workingframe][coma][2],
+                    comandos[workingframe][coma][3],
+                    comandos[workingframe][coma][4],
+                    comandos[workingframe][coma][5],
+                    comandos[workingframe][coma][6]);
                 coma++;
                 exec(coma)
                 break;
             case "img":
-                context.globalCompositeOperation = comandos[coma][1]
+                context.globalCompositeOperation = comandos[workingframe][coma][1]
                 context.drawImage(
-                    comandos[coma][2],
-                    comandos[coma][3],
-                    comandos[coma][4],
-                    comandos[coma][5],
-                    comandos[coma][6]);
+                    comandos[workingframe][coma][2],
+                    comandos[workingframe][coma][3],
+                    comandos[workingframe][coma][4],
+                    comandos[workingframe][coma][5],
+                    comandos[workingframe][coma][6]);
                 coma++;
                 exec(coma)
                 break;
             case "b":
-                changeGCO(comandos[coma][1]);
-                context.fillStyle = comandos[coma][2];
+                changeGCO(comandos[workingframe][coma][1]);
+                context.fillStyle = comandos[workingframe][coma][2];
                 context.fillRect(0, 0, canvas.width, canvas.height);
                 coma++;
                 exec(coma)
                 break;
             case "r":
-                rotacionaCanva(comandos[coma][1])
+                rotacionaCanva(comandos[workingframe][coma][1])
                 coma++;
                 exec(coma)
                 break;
             case "e":
-                changeGCO(comandos[coma][1]);
-                context.font = comandos[coma][5] + 'px serif'
+                changeGCO(comandos[workingframe][coma][1]);
+                context.font = comandos[workingframe][coma][5] + 'px serif'
                 context.textAlign = "center";
                 context.textBaseline = "middle";
-                context.fillText(comandos[coma][4], comandos[coma][2], comandos[coma][3])
+                context.fillText(comandos[workingframe][coma][4], comandos[workingframe][coma][2], comandos[workingframe][coma][3])
                 coma++;
                 exec(coma)
                 break;
             case "brush":
-                context.globalCompositeOperation = comandos[coma][1]
+                context.globalCompositeOperation = comandos[workingframe][coma][1]
                 drawBrush(
-                    comandos[coma][1],
-                    comandos[coma][2],
-                    comandos[coma][3],
-                    comandos[coma][4],
-                    comandos[coma][5],
-                    comandos[coma][6]
+                    comandos[workingframe][coma][1],
+                    comandos[workingframe][coma][2],
+                    comandos[workingframe][coma][3],
+                    comandos[workingframe][coma][4],
+                    comandos[workingframe][coma][5],
+                    comandos[workingframe][coma][6]
                 );
                 coma++;
                 exec(coma)
@@ -259,9 +316,9 @@ function exec(coma = 0) {
 
 }
 
-
+*/
 function restauraPincel() {
-    desenha("CB", oldBrush[0], oldBrush[1], oldBrush[2], oldBrush[3])
+    createNewBrush(oldBrush[0], oldBrush[1], oldBrush[2], oldBrush[3])
 }
 
 function blobToDataURL(blob, callback) {
@@ -269,6 +326,7 @@ function blobToDataURL(blob, callback) {
     a.onload = function (e) { callback(e.target.result); }
     a.readAsDataURL(blob);
 }
+
 async function desenha(
     CMD,
     GCO,
@@ -278,30 +336,28 @@ async function desenha(
     eoY = undefined,
     strokeWidth = undefined
 ) {
-    let comando = []
+    //let  comando =[]
     switch (CMD) {
         case "CB":
             createNewBrush(GCO, X, Y)
-            comando = ["CB", GCO, X, Y]
-            comandos.push(comando)
             break;
 
         case "rotacionar":
-            comando = ["rotacionar", GCO, X, Y]
-            comandos.push(comando)
-            comandosExec()
+            // comando =["rotacionar", GCO, X, Y]
+           // comandos[workingframe].push(comando)
+           // comandosExec()
             break
         case "move":
-            comando = ["move", GCO, X]
-            comandos.push(comando)
-            comandosExec()
+            // comando =["move", GCO, X]
+           // comandos[workingframe].push(comando)
+           // comandosExec()
             break
 
         case "brush":
 
-            comando = ["brush", GCO, X, Y, eoX, eoY, strokeWidth]
+            // comando =["brush", GCO, X, Y, eoX, eoY, strokeWidth]
             drawBrush(GCO, X, Y, eoX, eoY, strokeWidth)
-            comandos.push(comando)
+            //comandos[workingframe].push(comando)
             autoCrop(X, Y, strokeWidth, strokeWidth)
 
             if (tilepaint == true) {
@@ -309,105 +365,63 @@ async function desenha(
                 if (X < strokeWidth / 2 && Y < strokeWidth) { //top left
                     setTimeout(() => {
                         //top right
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
-                        comandos.push(comando)
-
-                        //bottom left
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth]
+                         drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
+                         //bottom left
                         drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth)
-                        comandos.push(comando)
-
-                        //bottom right
-                        comando = ["brush", GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeWidth]
-                        drawBrush(GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeWidth)
-                        comandos.push(comando)
-
-
+                         //bottom right
+                         drawBrush(GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeWidth)
                     }, 10)
                 } else if (X > canvas.width - strokeWidth / 2 && Y < strokeWidth) {//top right
                     setTimeout(() => {
                         //top left
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
-                        comandos.push(comando)
+                         drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
                         //bottom left
-                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeWidth]
                         drawBrush(GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeWidth)
-                        comandos.push(comando)
-
+     
                         //bottom right
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth]
                         drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth)
-                        comandos.push(comando)
-
+        
 
                     }, 10)
                 } else if (X < strokeWidth / 2 && Y > canvas.height - strokeWidth / 2) { //bottom left
                     setTimeout(() => {
                         //bottom right
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
-                        comandos.push(comando)
-
+                         drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
                         //top left
-                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth]
                         drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
-                        comandos.push(comando)
-
                         //top right
-                        comando = ["brush", GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeWidth]
-                        drawBrush(GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeWidth)
-                        comandos.push(comando)
-
+                         drawBrush(GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeWidth)
+          
 
                     }, 10)
                 }
                 else if (X > canvas.width - strokeWidth / 2 / 2 && Y > canvas.height - strokeWidth / 2) { //bottom right
                     setTimeout(() => {
                         //bottom left
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
-                        comandos.push(comando)
-
-                        //top left
-                        comando = ["brush", GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeWidth]
+                         drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
+                         //top left
                         drawBrush(GCO, X - canvas.width, Y - canvas.height, eoX - canvas.width, eoY - canvas.height, strokeWidth)
-                        comandos.push(comando)
-
-                        //top right
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY - canvas.height, strokeWidth]
+                         //top right
                         drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
-                        comandos.push(comando)
-
-
-                    }, 10)
+                     }, 10)
                 }
                 else if (X < strokeWidth / 2) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth]
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
-                        comandos.push(comando)
-                    }, 10)
+                         drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
+                     }, 10)
                 } else if (X > canvas.width - strokeWidth / 2) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth]
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
-                        comandos.push(comando)
+                         drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
                     }, 10)
 
 
                 } else if (Y < strokeWidth) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth]
                         drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth)
-                        comandos.push(comando)
                     }, 10)
                 } else if (Y > canvas.height - strokeWidth / 2) {
                     setTimeout(() => {
-                        comando = ["brush", GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth]
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
-                        comandos.push(comando)
+                         drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
                     }, 10)
                 }
 
@@ -418,114 +432,114 @@ async function desenha(
 
         case "s":
 
-            comando = ["s", GCO, X, Y, eoX, eoY, strokeWidth]
-            comandos.push(comando)
-            comandosExec(comandos.length - 1)
+            // comando =["s", GCO, X, Y, eoX, eoY, strokeWidth]
+           // comandos[workingframe].push(comando)
+            //comandosExec(comandos.length - 1)
             break;
 
         case "f":
-            comando = ["f", GCO, X, Y, eoX, eoY, strokeWidth]
+            // comando =["f", GCO, X, Y, eoX, eoY, strokeWidth]
             blob = dataURItoBlob(X)
             let myImg = document.createElement("img");
             myImg.src = URL.createObjectURL(blob)
             myImg.onload = function () {
                 let oldGCO = context.globalCompositeOperation
-                changeGCO(globalComposite)
+                changeGCO(GCO)
                 context.drawImage(
                     myImg,
                     Y,
                     eoX,
                     myImg.width,
                     myImg.height);
-                comandos.push(comando)
+               // comandos[workingframe].push(comando)
                 changeGCO(oldGCO)
                 autoCrop(imagem.width, imagem.height)
                 autoCrop(0, 0)
             }
             break;
         case "i":
-            comando = ["i", GCO, X, Y, eoX, eoY, strokeWidth]
+            // comando =["i", GCO, X, Y, eoX, eoY, strokeWidth]
             context.drawImage(X, Y, eoX);
-            comandos.push(comando)
+           // comandos[workingframe].push(comando)
             break;
 
         case "img":
-            comando = ["img", GCO, imagem, 0, 0, imagem.width, imagem.height]
+            // comando =["img", GCO, imagem, 0, 0, imagem.width, imagem.height]
             context.drawImage(imagem, 0, 0, imagem.width, imagem.height);
-            comandos.push(comando)
+           // comandos[workingframe].push(comando)
             autoCrop(imagem.width, imagem.height)
             autoCrop(0, 0)
             break;
 
         case "b":
-            comando = ["b", GCO, X];
-            comandos.push(comando)
+            // comando =["b", GCO, X];
+           // comandos[workingframe].push(comando)
             context.fillStyle = X; //cor
             context.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case "e":
-            comando = ["e", GCO, X, Y, eoX, eoY]
+            // comando =["e", GCO, X, Y, eoX, eoY]
             context.font = eoY + 'px serif'
             // use these alignment properties for "better" positioning
             context.textAlign = "center";
             context.textBaseline = "middle";
             context.fillText(eoX, X, Y)
 
-            comandos.push(comando)
+           // comandos[workingframe].push(comando)
             if (tilepaint == true) {
                 // console.log(X, Y, eoY, eoY)
                 if (X < eoY / 2 && Y < eoY / 2) { //top left
                     setTimeout(() => {
                         //top right
-                        comando = ["e", GCO, X + canvas.width, Y, eoX, eoY]
+                        // comando =["e", GCO, X + canvas.width, Y, eoX, eoY]
                         context.fillText(eoX, X + canvas.width, Y)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
                         //bottom left
-                        comando = ["e", GCO, X, Y + canvas.height, eoX, eoY]
+                        // comando =["e", GCO, X, Y + canvas.height, eoX, eoY]
                         context.fillText(eoX, X, Y + canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
                         //bottom right
-                        comando = ["e", GCO, X + canvas.width, Y + canvas.height, eoX, eoY]
+                        // comando =["e", GCO, X + canvas.width, Y + canvas.height, eoX, eoY]
                         context.fillText(eoX, X + canvas.width, Y + canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
 
                     }, 10)
                 } else if (X > canvas.width - eoY / 2 && Y < eoY - 2) {//top right
                     setTimeout(() => {
                         //top left
-                        comando = ["e", GCO, X - canvas.width, Y, eoX, eoY]
+                        // comando =["e", GCO, X - canvas.width, Y, eoX, eoY]
                         context.fillText(eoX, X - canvas.width, Y)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
                         //bottom left
-                        comando = ["e", GCO, X - canvas.width, Y + canvas.height, eoX, eoY]
+                        // comando =["e", GCO, X - canvas.width, Y + canvas.height, eoX, eoY]
                         context.fillText(eoX, X - canvas.width, Y + canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
                         //bottom right
-                        comando = ["e", GCO, X, Y + canvas.height, eoX, eoY]
+                        // comando =["e", GCO, X, Y + canvas.height, eoX, eoY]
                         context.fillText(eoX, X, Y + canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
 
                     }, 10)
                 } else if (X < eoY / 2 && Y > canvas.height - eoY / 2) { //bottom left
                     setTimeout(() => {
                         //bottom right
-                        comando = ["e", GCO, X + canvas.width, Y, eoX + canvas.width, eoY]
+                        // comando =["e", GCO, X + canvas.width, Y, eoX + canvas.width, eoY]
                         context.fillText(eoX, X + canvas.width, Y)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
                         //top left
-                        comando = ["e", GCO, X, Y - canvas.height, eoX, eoY - canvas.height]
+                        // comando =["e", GCO, X, Y - canvas.height, eoX, eoY - canvas.height]
                         context.fillText(eoX, X, Y - canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
                         //top right
-                        comando = ["e", GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height]
+                        // comando =["e", GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height]
                         context.fillText(eoX, X + canvas.width, Y - canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
 
                     }, 10)
@@ -533,48 +547,48 @@ async function desenha(
                 else if (X > canvas.width - eoY / 2 / 2 && Y > canvas.height - eoY / 2) { //bottom right
                     setTimeout(() => {
                         //bottom left
-                        comando = ["e", GCO, X - canvas.width, Y, eoX - canvas.width, eoY]
+                        // comando =["e", GCO, X - canvas.width, Y, eoX - canvas.width, eoY]
                         context.fillText(eoX, X - canvas.width, Y)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
                         //top left
-                        comando = ["e", GCO, X - canvas.width, Y + canvas.height, eoX, eoY]
+                        // comando =["e", GCO, X - canvas.width, Y + canvas.height, eoX, eoY]
                         context.fillText(eoX, X - canvas.width, Y - canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
                         //top right
-                        comando = ["e", GCO, X, Y + canvas.height, eoX, eoY]
+                        // comando =["e", GCO, X, Y + canvas.height, eoX, eoY]
                         context.fillText(eoX, X, Y - canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
 
 
                     }, 10)
                 }
                 else if (X < eoY / 2) {
                     setTimeout(() => {
-                        comando = ["e", GCO, X + canvas.width, Y, eoX, eoY]
+                        // comando =["e", GCO, X + canvas.width, Y, eoX, eoY]
                         context.fillText(eoX, X + canvas.width, Y)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
                     }, 10)
                 } else if (X > canvas.width - eoY / 2) {
                     setTimeout(() => {
-                        comando = ["e", GCO, X - canvas.width, Y, eoX, eoY]
+                        // comando =["e", GCO, X - canvas.width, Y, eoX, eoY]
                         context.fillText(eoX, X - canvas.width, Y)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
                     }, 10)
 
 
                 } else if (Y < eoY) {
                     setTimeout(() => {
-                        comando = ["e", GCO, X, Y + canvas.height, eoX, eoY]
+                        // comando =["e", GCO, X, Y + canvas.height, eoX, eoY]
                         context.fillText(eoX, X, Y + canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
                     }, 10)
                 } else if (Y > canvas.height - eoY / 2) {
                     setTimeout(() => {
-                        comando = ["e", GCO, X, Y - canvas.height, eoX, eoY]
+                        // comando =["e", GCO, X, Y - canvas.height, eoX, eoY]
                         context.fillText(eoX, X, Y - canvas.height)
-                        comandos.push(comando)
+                       // comandos[workingframe].push(comando)
                     }, 10)
                 }
             }
@@ -585,7 +599,7 @@ async function desenha(
     }
 
     if (undoLevel != 0) {
-        for (i = 0; i < undoLevel; i++) { comandos.pop() }
+        for (i = 0; i < undoLevel; i++) {historia[workingframe].pop() }
         undoLevel = 0
         console.log("daqui pra frente..")
     }
@@ -601,7 +615,7 @@ function limpar(what) {
 
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    comandos = []
+   // comandos[workingframe] = []
     convertToImg()
     createNewBrush()
 
@@ -612,26 +626,25 @@ function limpar(what) {
             );
             if (confirma2 === true) {
                 animacao = []
-                comandosb = []
-                comandosb.push(comandos)
+                historia = []
                 workingframe = 0
                 iD("bplayer0").style.backgroundImage = 'none'
                 canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctxF.setTransform(1, 0, 0, 1, 0, 0);
-                save_frame()
+                Historia()
                 changeFrame(workingframe)
                 adicionaQuadro()
 
             }
         }
-    comandosExec()
+   // comandosExec()
 
 }
 function mostra() {
-    checksave()
-    if (mode != "recortar" && mode != "FX") {
-        canvasFront.classList.add("esconde")
-
+   
+    if (mode != "recortar" && mode != "FX" && mode != "selecionar" && mode != "paste") {
+        //canvasFront.classList.add("esconde")
+      //  checksave()
     }
 }
 
@@ -683,11 +696,11 @@ function mudaCorBG(cor) {
 }
 
 
-convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
+//convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
 
 function convertToImg() {
     undoLevel = 0
     img_b64 = canvas.toDataURL("image/png");
-    comando = ["f", "source-over", img_b64, 0, 0, canvas.width, canvas.height]
+    // comando =["s", "source-over", img_b64, 0, 0, canvas.width, canvas.height]
     comandos.unshift(comando)
 }

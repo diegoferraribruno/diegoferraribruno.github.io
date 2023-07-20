@@ -8,6 +8,7 @@ var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
 var strokeWidth = 6;
 var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
 var estrokeWidth = 36;
+
 var newBrushes = {}
 var lastbrush = 1
 var brushMode = 1
@@ -106,7 +107,7 @@ function setStrokeColor() {
     let objs = [
         "mostraCor",
         "salvaCor",
-        "mostraCor2",
+        //"mostraCor2",
         "pintar",
         "cores",
         "picker",
@@ -143,8 +144,8 @@ function mudaCor(valor) {
     }
     iD("mostraCor").style.backgroundColor =
         strokeColor;
-    iD("mostraCor2").style.backgroundColor =
-        strokeColor;
+    //iD("mostraCor2").style.backgroundColor =
+     //   strokeColor;
     iD("pintar").style.backgroundColor = strokeColor;
     iD("preenchercor").style.backgroundColor = strokeColor;
     const toHslaObject = (hslaStr) => {
@@ -231,6 +232,7 @@ function setStrokeSize(value = strokeWidth) {
     strokeWidth = value;
     iD("tpx").value = value;
     changeBrush()
+    lastPressure = value
 }
 
 
@@ -243,7 +245,7 @@ var changedBrush = false
 var brushName = "1-6-hsla(0,0%,0%,1)"
 
 
-function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
+async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
 
     brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
@@ -260,7 +262,7 @@ function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor
 
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     lastbrush = numero
-    desenha("CB", numero, tam, cor)
+    createNewBrush(numero, tam, cor)
     if (dinamicBrush === false) {
         addFavBrush()
 
@@ -332,8 +334,77 @@ function clearBrushes() {
         newBrushes[key] = novoBrushes[key]
     })
 }
+var center = {x: canvas.width / 2 , y: canvas.height / 2};
+var radius = (canvas.width / 2) - 10;
+var slices = 24;
+var _angle = 360 / slices;
+var _start = 0
+var flag = false;
+var dot_flag = false
 
-function drawBrush(GCO, x1, y1, x2, y2, strokeWidth, cont = context) {
+function drawMandala(GCO, X, Y, eoX, eoY, strokeWidth){
+    drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth)
+    _start = 0
+    for(var i = 0; i < slices - 1; i++) {
+        _start += _angle;
+        var rP = rotate({x: eoX, y: eoY}, center, _start);
+        var rC = rotate({x: X, y: Y}, center, _start);
+       drawBrush2(GCO, rP.x,rP.y, rC.x, rC.y, strokeWidth);
+
+    }
+}
+
+var d2r = function (deg) {
+    return deg * Math.PI/180;
+}
+
+var getPointOnCircle = function (deg, center, radius) {
+    var rad = d2r(deg);
+    var x = center.x + radius * Math.cos(rad);
+    var y = center.y + radius * Math.sin(rad);
+    return { x: x, y: y};
+}
+function rotate(p1, p2, a) {
+    a = d2r(a);
+    var xr = (p1.x - p2.x) * Math.cos(a) - (p1.y - p2.y) * Math.sin(a) + p2.x;
+    var yr = (p1.x - p2.x) * Math.sin(a) + (p1.y - p2.y) * Math.cos(a) + p2.y;
+    return {x:xr, y:yr};
+}
+function findxy(res, e) {
+    if (res == 'down') {
+        prevX = currX;
+        prevY = currY;
+        currX = e.clientX - canvas.offsetLeft;
+        currY = e.clientY - canvas.offsetTop;
+
+        flag = true;
+        dot_flag = true;
+        if (dot_flag) {
+            drawDot();
+            dot_flag = false;
+        }
+    }
+    if (res == 'up' || res == "out") {
+        flag = false;
+    }
+    if (res == 'move') {
+        if (flag) {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+            draw();
+        }
+    }
+}
+function drawBrush(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF){
+    if (mandala){
+        drawMandala(GCO, x1, y1, x2, y2, strokeWidth)
+    }else{
+        drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont)
+    }
+}
+function drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
     let start
     let end
     if (pixelGood) {
@@ -361,6 +432,7 @@ function drawBrush(GCO, x1, y1, x2, y2, strokeWidth, cont = context) {
         cont.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
     }
 }
+
 var Trig = {
     distanceBetween2Points: function (point1, point2) {
 
@@ -405,3 +477,13 @@ const RGBAToHSLA = (r, g, b, a) => {
 };
 
 
+var oldBrush = [lastbrush, strokeWidth, strokeColor, globalComposite]
+
+function changeType(){
+    let objs = ["H","S","L","A"]
+    let tipo = 'number'
+    if (iD("H").type == tipo){ tipo = 'range'}
+    for (i = 0; i < objs.length; i++){
+        iD(objs[i]).setAttribute('type', tipo)
+    }
+}

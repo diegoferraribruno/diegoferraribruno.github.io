@@ -72,7 +72,8 @@ var alerts = {
         20: "escreva um titulo para seu arquivo de imagem",
         21: "Seu arquivo esta sendo preparado.",
         22: "importando seu projeto",
-        23: "imagem de fundo removida"
+        23: "imagem de fundo removida",
+        24: "Modo Mandala"
     },
     "en": {
         0: "Please,<br> add ➕ frames to your animation",
@@ -98,7 +99,8 @@ var alerts = {
         20: "write a title for you image file",
         21: "your file is beeing prepared.",
         22: "importing your project",
-        23: "background image removed"
+        23: "background image removed",
+        24: "modo Mandala"
     }
 }
 let example = alerts[language][0]
@@ -193,7 +195,10 @@ let textos = {
         "88": "Salvar o Projeto antes",
         "89": "Seleção Retangular",
         "90": "Copiar seleção para novo quadro",
-        "91": "Cor / Matiz"
+        "91": "Cor / Matiz",
+        "92": "⚠️ Trabalhando <b>por baixo</b> do quadro",
+        "93": "⚠️ Trabalhando <b>por cima</b> do quadro",
+        "94": "Fatias da Mandala:"
 
     },
     "en": {
@@ -287,8 +292,9 @@ let textos = {
         "89": "Rectangular selection",
         "90": "Copy selection to a new frame",
         "91": "Color / Hue",
-        "92": "⚠️ Painting <b>behind</b> the canvas",
-        "93": "⚠️ Painting <b>over</b> the canvas",
+        "92": "⚠️ Working <b>under</b> the canvas",
+        "93": "⚠️ Working <b>over</b> the canvas",
+        "94": "Mandala slices:"
        
 
     }

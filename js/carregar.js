@@ -85,11 +85,9 @@ function importSprite(e) {
                 let swapImg = canvas.toDataURL('image/png');
                 blobb = dataURItoBlob(swapImg)
                 animacao[i] = swapImg
-                comandosb[i] = []
+                comandos[i] = []
                 // changeBrush()
-                comandosb[i].push(["f", "source-over", swapImg, 0, 0, canvas.width, canvas.height])
-                comandos = [["f", "source-over", swapImg, 0, 0, canvas.width, canvas.height]]
-
+                comandos[i].push(["f", "source-over", swapImg, 0, 0, canvas.width, canvas.height])
 
 
             }
@@ -148,12 +146,22 @@ var openFile = function (event) {
 
     var reader = new FileReader();
     reader.onload = async function () {
+ 
         removeClass()
         newBrushes = {}
         projeto = JSON.parse(reader.result)
 
         tamanho(projeto["canvasInfo"]["width"], projeto["canvasInfo"]["height"])
-
+        let len = projeto["animacao"].length
+        animacao = []
+        for (i = 0; i < len; i++) {
+            workingframe = i
+            animacao[i] = []
+            let newimg = projeto["animacao"][i]
+            animacao[i].push(newimg)
+        }
+        adicionaQuadro()
+        changeFrame(workingframe)
         //brushes
         await recreateCustomBrush()
         let lenb = projeto["newBrushes"].length
@@ -163,7 +171,7 @@ var openFile = function (event) {
             let lenb = brushNames.length
             console.log(brushNames)
             iD("carregando").style.display = "none"
-            let len = projeto["comandosb"].length
+            let len = projeto["animacao"].length
             iD("pinceis2").innerHTML = ""
             Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>🖌️ x " + lenb + " <br> 🖼️  x " + len, len * 2)
             for (i = 0; i < lenb; i++) {
@@ -216,18 +224,18 @@ var openFile = function (event) {
                 //setTimeout(() => setStrokeSize(brush[2]), 80)
             }
         }, 100)
-        setTimeout(() => {
+       /* setTimeout(() => {
             //comandosb
-            let len = projeto["comandosb"].length
-            comandosb = []
+            let len = projeto["animacao"].length
+            animacao = []
             for (i = 0; i < len; i++) {
-                workingframe = i
-                comandos = []
-                comandos = projeto["comandosb"][i]
-                comandosb[i] = comandos
-                animacao[workingframe] = canvas.toDataURL('image/png')
+                //workingframe = i
+                animacao[i] = []
+                let newimg = projeto["animacao"][i]
+                animacao[i].push(newimg)
+               // animacao[workingframe] = canvas.toDataURL('image/png')
                 //save_frame()
-                // adicionaQuadro()
+                 adicionaQuadro()
 
             }
             if (i > 1) {
@@ -240,8 +248,8 @@ var openFile = function (event) {
                 }
             } else {
                 setTimeout(() => {
-                    comandosExec()
-                    setTimeout(() => { save_frame() }, 200)
+                 //   comandosExec()
+                    setTimeout(() => { Historia() }, 200)
                 }, 600)
             }
             //changeBrush()
@@ -263,7 +271,7 @@ var openFile = function (event) {
                 iD("dinamicBrush").checked = false
             }
 
-        }, 400 * (lenb + 2))
+        }, 400 * (lenb + 2))*/
         /*   setTimeout(() => {
                favBrush('1-6-hsla(0,0%,0%,1)');
            }

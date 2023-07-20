@@ -709,7 +709,7 @@ input[type="range"] {
 }
 
 
-#filme {
+.filme {
     max-width: 240px;
     display: inline-flex;
     overflow-x: scroll;

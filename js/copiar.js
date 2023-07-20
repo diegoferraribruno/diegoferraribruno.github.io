@@ -41,157 +41,159 @@ function drawSelection() {
 
 function copySelection(newfr = false) {
   if(selecionado){
-    
-  var minX, minY, maxX, maxY, width, height
-  if (iD("retangularselection").checked == false) {
-    minX = Math.min(...selectionPaths.flat().map(([x]) => x));
-    minY = Math.min(...selectionPaths.flat().map(([, y]) => y));
-    maxX = Math.max(...selectionPaths.flat().map(([x]) => x));
-    maxY = Math.max(...selectionPaths.flat().map(([, y]) => y));
-  } else {
-    minX = cropStart.x
-    minY = cropStart.y
-    maxX = cropEnd.x
-    maxY = cropEnd.y
-    if (minX > maxX) {
-      minX = cropEnd.x
-      maxX = cropStart.x
-    }
-    if (minY > maxY) {
-      minY = cropEnd.y
-      maxY = cropStart.y
-
-    }
-  }
-
-  width = maxX - minX;
-  height = maxY - minY;
-
-  canvasRender.width = width;
-  canvasRender.height = height;
-  ctxR.setTransform(1, 0, 0, 1, 0, 0);
-  ctxR.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  if(width==-Infinity || width==0 || height==0){
-    width = canvas.width
-    height = canvas.height
-    minX = 0
-    minY = 0
-    maxX = width
-    maxY = height
-  }
-  if (iD("retangularselection").checked) {
-    canvasRender.width = width;
-    canvasRender.height = height;
-    desenhaRetangulo2(minX, minY, maxX, maxY)
-
-
-  } else {
-    canvasRender.width = width;
-    canvasRender.height = height;
-    for (const path of selectionPaths) {
-      ctxR.beginPath();
-      ctxR.moveTo(path[0][0] - minX, path[0][1] - minY);
-      for (let i = 1; i < path.length; i++) {
-        ctxR.lineTo(path[i][0] - minX, path[i][1] - minY);
+  
+    var minX, minY, maxX, maxY, width, height
+    if (iD("retangularselection").checked == false) {
+      minX = Math.min(...selectionPaths.flat().map(([x]) => x));
+      minY = Math.min(...selectionPaths.flat().map(([, y]) => y));
+      maxX = Math.max(...selectionPaths.flat().map(([x]) => x));
+      maxY = Math.max(...selectionPaths.flat().map(([, y]) => y));
+    } else {
+      minX = cropStart.x
+      minY = cropStart.y
+      maxX = cropEnd.x
+      maxY = cropEnd.y
+      if (minX > maxX) {
+        minX = cropEnd.x
+        maxX = cropStart.x
       }
-      ctxR.closePath();
-      ctxR.fillStyle = '#000000';
-      ctxR.fill(); // Fill the selection shape
+      if (minY > maxY) {
+        minY = cropEnd.y
+        maxY = cropStart.y
+
+      }
     }
 
-  }
-  ctxR.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
-  ctxR.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
-  let image1 = canvasRender.toDataURL()
+    width = maxX - minX;
+    height = maxY - minY;
 
-  image2.src = image1
-  //canvasRender.width = image2.width
-  //canvasRender.height = image2.height
-  //console.log(canvasRender.width, canvasRender.height)
-  image2.onload = function () {
-    clipboard.push(image1)
-    canvasRender.width = canvas.width
-    canvasRender.height = canvas.height
+    canvasRender.width = width;
+    canvasRender.height = height;
     ctxR.setTransform(1, 0, 0, 1, 0, 0);
     ctxR.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    if(width==-Infinity || width==0 || height==0){
+      width = canvas.width
+      height = canvas.height
+      minX = 0
+      minY = 0
+      maxX = width
+      maxY = height
+    }
+    if (iD("retangularselection").checked) {
+      canvasRender.width = width;
+      canvasRender.height = height;
+      desenhaRetangulo2(minX, minY, maxX, maxY)
 
-    ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
 
-  }
-  if (newfr == "new") {
-
-    //new frame
-    undoLevel = 0
-    save_frame()
-    context.setTransform(1, 0, 0, 1, 0, 0);
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    workingframe++
-    swapImg = canvasRender.toDataURL('image/png');
-    animacao.splice(workingframe, 0, swapImg);
-    let work = []
-    comandosb.splice(workingframe, 0, work);
-    ctxF.setTransform(1, 0, 0, 1, 0, 0);
-    ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
-    comandos = []
-    comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
-    comandos.push(comando)
-    comandosParaComandosb()
-    changeBrush()
-    changeFrame(workingframe)
-    iD("contador").innerHTML = workingframe
-
-  }
-  //reset canvas size
-  console.log(newfr)
-  if (newfr == "cut"){
-    context.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
-
-    if(iD("retangularselection").checked == false){
+    } else {
+      canvasRender.width = width;
+      canvasRender.height = height;
       for (const path of selectionPaths) {
-        context.beginPath();
-        context.moveTo(path[0][0], path[0][1]);
+        ctxR.beginPath();
+        ctxR.moveTo(path[0][0] - minX, path[0][1] - minY);
         for (let i = 1; i < path.length; i++) {
-          context.lineTo(path[i][0], path[i][1]);
+          ctxR.lineTo(path[i][0] - minX, path[i][1] - minY);
         }
-        context.closePath();
-        context.fillStyle = '#000000'; // Set fill color with opacity
-
-        context.fill(); // Fill the selection shape
+        ctxR.closePath();
+        ctxR.fillStyle = '#000000';
+        ctxR.fill(); // Fill the selection shape
       }
+
+    }
+    ctxR.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
+   // resetFrame()
+    ctxR.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
+    let image1 = canvasRender.toDataURL()
+
+    image2.src = image1
+    //canvasRender.width = image2.width
+    //canvasRender.height = image2.height
+    //console.log(canvasRender.width, canvasRender.height)
+    image2.onload = function () {
+      clipboard.push(image1)
+      canvasRender.width = canvas.width
+      canvasRender.height = canvas.height
+      ctxR.setTransform(1, 0, 0, 1, 0, 0);
+      ctxR.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+      ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
+
+    }
+  /* if (newfr == "new") {
+
+      //new frame
+      undoLevel = 0
+    // save_frame()
+      resetFrame()
+      context.setTransform(1, 0, 0, 1, 0, 0);
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      workingframe++
+      swapImg = canvasRender.toDataURL('image/png');
+      animacao.splice(workingframe, 0, swapImg);
+      let work = []
+      comandos.splice(workingframe, 0, work);
+      ctxF.setTransform(1, 0, 0, 1, 0, 0);
+      ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
+      clearFrame(workingframe)
+      comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
+      comandos[workingframe].push(comando)
+      // comandosParaComandosb()
+      changeBrush()
+      changeFrame(workingframe)
+      iD("contador").innerHTML = workingframe
+
+    }*/
+    //reset canvas size
+    console.log(newfr)
+    if (newfr == "cut"){
+      context.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
+
+      if(iD("retangularselection").checked == false){
+        for (const path of selectionPaths) {
+          context.beginPath();
+          context.moveTo(path[0][0], path[0][1]);
+          for (let i = 1; i < path.length; i++) {
+            context.lineTo(path[i][0], path[i][1]);
+          }
+          context.closePath();
+          context.fillStyle = '#000000'; // Set fill color with opacity
+
+          context.fill(); // Fill the selection shape
+        }
+        context.globalCompositeOperation = "source-over"
+      }else{
+    
+        context.fillStyle = '#000000';
+        context.fillRect(
+          minX,
+          minY,
+          width,
+          height
+        );
       context.globalCompositeOperation = "source-over"
-    }else{
-   
-      context.fillStyle = '#000000';
-      context.fillRect(
-        minX,
-        minY,
-        width,
-        height
-      );
-    context.globalCompositeOperation = "source-over"
+      }
+    }
+
+    resetSelection()
+  }else{
+    let image1 = canvas.toDataURL()
+
+    image2.src = image1
+    //canvasRender.width = image2.width
+    //canvasRender.height = image2.height
+    //console.log(canvasRender.width, canvasRender.height)
+    image2.onload = function () {
+      canvasRender.width = image2.width
+      canvasRender.height = image2.height
+      ctxR.drawImage(image2,0,0)
+      clipboard.push(image1)
+      updateClipboard()
+      if(newfr =="cut"){
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, canvas.width,context.canvas.height);
+      }
     }
   }
-
-  resetSelection()
-}else{
-  let image1 = canvas.toDataURL()
-
-  image2.src = image1
-  //canvasRender.width = image2.width
-  //canvasRender.height = image2.height
-  //console.log(canvasRender.width, canvasRender.height)
-  image2.onload = function () {
-   canvasRender.width = image2.width
-  canvasRender.height = image2.height
-    ctxR.drawImage(image2,0,0)
-    clipboard.push(image1)
-    updateClipboard()
-if(newfr =="cut"){
-  context.setTransform(1, 0, 0, 1, 0, 0);
-  context.clearRect(0, 0, canvas.width,context.canvas.height);
-}
-  }
-}
 
 }
 //resetSelection

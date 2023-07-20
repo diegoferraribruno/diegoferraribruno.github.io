@@ -138,7 +138,7 @@ function handlePinch(e) {
 
         }/* else if (mode == "paint") {
         let comando = [touch1.x, touch1.y, touch2.x, touch2.y, strokesize.x, strokesize.y]
-        comandos.push(comando)
+        comandos[workingframe].push(comando)
         draw(touch1.x, touch1.y, touch2.x, touch2.y, strokesize.x, strokesize.y)
       }*/
         origin.x = 0

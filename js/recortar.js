@@ -40,7 +40,7 @@ function cortar(autoCortar = false) {
     if (cropEnd.x != 0) {
 
         limpaRetangulo()
-        save_frame()
+        Historia()
         setTimeout(() => {
             let noy = []
             let nox = []
@@ -168,10 +168,10 @@ function canvasToFrame(frame = 0) {
     swapImg = canvasFront.toDataURL('image/png');
     newAnima[frame] = swapImg
     comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
-    comandos = []
-    comandos.push(comando)
+    comandos[workingframe] = []
+    comandos[workingframe].push(comando)
     workingframe = frame
-    comandosParaComandosb()
+    // comandosParaComandosb()
 
 }
 
@@ -229,7 +229,7 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
     }
     iD("largura").value = W
     iD("altura").value = H
-    setTimeout(() => comandosExec(), 100)
+   // setTimeout(() => comandosExec(), 100)
 }
 
 

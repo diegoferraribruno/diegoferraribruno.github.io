@@ -1,4 +1,4 @@
-let filters = ["none", "invert", "blur", "grayscale", "sepia", "contrast", "brightness", "remove-White", "hue-rotate"]
+let filters = ["none", "invert", "blur", "grayscale", "sepia", "contrast", "brightness", "lumakey", "hue-rotate"]
 let fx = 0
 
 function FX(fx, onde) {
@@ -30,8 +30,10 @@ function FX(fx, onde) {
         else if (fx == 6) {
             let quanto = iD(filters[fx] + "Bar").value
 
-            onde.filter = filters[fx] + "(" + quanto + ")"
+            onde.filter = filters[fx] + "(" + quanto + "%)"
 
+
+        
         } else if (fx == 8) {
             let quanto = iD(filters[fx] + "Bar").value
             console.log(quanto)
@@ -39,6 +41,10 @@ function FX(fx, onde) {
 
         }
         updatecanvasFront()
+        if (fx == 7) {
+            let quanto = iD(filters[fx] + "Bar").value
+            lumaKey(quanto)
+        }
         canvasOpacity(0)
 
     } else {
@@ -71,16 +77,13 @@ function applyFX() {
 
     removeClass()
     img_b64 = canvasFront.toDataURL("image/png");
-    desenha("s", "source-over", img_b64, 0, 0, canvas.width, canvas.height)
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    drawTo()
+    Historia(img_b64)
     canvasFront.filter = filters[0]
-
-    // comandosParaComandosb()
     setTimeout(() => {
-        //   comando = ["FX", fx]
-        //  comandos.unshift(comando)
-        save_frame()
         canvasOpacity(100)
-
         Alert(alerts[language][14], 0.8)
         canvasFront.filter = filters[0]
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
@@ -92,6 +95,7 @@ function applyFX() {
     }
         , 1000)
 }
+
 function cancelaFX() {
     setTimeout(() =>
         mostraMenu("FX")
@@ -125,9 +129,10 @@ function menufx(qual = undefined) {
 
 
 function lumaKey(range) {
-
+    ctxF.clearRect(0, 0, canvas.width, canvas.height);
+   
     var imgd = context.getImageData(0, 0, canvas.width, canvas.height),
-        pix = imgd.data,
+        pix = imgd.data
         newColor = { r: 0, g: 0, b: 0, a: 0 };
 
     for (var i = 0, n = pix.length; i < n; i += 4) {
@@ -146,8 +151,9 @@ function lumaKey(range) {
     }
 
     ctxF.putImageData(imgd, 0, 0);
-    img_b64 = canvasFront.toDataURL("image/png");
-    desenha("s", "source-over", img_b64, 0, 0, canvas.width, canvas.height)
-    setTimeout(() => save_frame(), canvas.width / 2)
+    
+  /*  img_b64 = canvasFront.toDataURL("image/png");
+    drawTo("source-over", img_b64, ctxF, 0, 0, canvas.width, canvas.height)
+    setTimeout(() => Historia(), canvas.width / 2)*/
 
 }

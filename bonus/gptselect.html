@@ -61,11 +61,11 @@
 
     // Copy the selection data and create a new image
     function copySelection() {
-      const selectionWidth = Math.abs(endX - startX);
-      const selectionHeight = Math.abs(endY - startY);
+      const selectionWidth = redondo(Math.abs(endX - startX));
+      const selectionHeight = redondo(Math.abs(endY - startY));
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(image, 0, 0); // Replace 'image' with your actual image variable
-      const imageData = ctx.getImageData(startX, startY, selectionWidth, selectionHeight);
+      const imageData = ctx.getImageData(redondo(startX), redondo(startY), selectionWidth, selectionHeight);
 
       const newCanvas = document.createElement('canvas');
       newCanvas.width = selectionWidth;

@@ -78,10 +78,10 @@ function redimendionarAnima(newWidth, newHeight) {
             swapImg = canvasFront.toDataURL('image/png');
             newAnima[frame] = swapImg
             comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
-            comandos = []
-            comandos.push(comando)
+            comandos[workingframe] = []
+            comandos[workingframe].push(comando)
             workingframe = frame
-            comandosParaComandosb()
+            // comandosParaComandosb()
             
         }
         setTimeout(() => {
@@ -108,8 +108,8 @@ function redimendionarAnima(newWidth, newHeight) {
             swapImg = canvasFront.toDataURL('image/png');
             newAnima[workingframe] = swapImg
             comando = ["s", "source-over", swapImg, 0, 0,newWidth, newHeight];
-            comandos.push(comando)
-            comandosParaComandosb()
+            comandos[workingframe].push(comando)
+            // comandosParaComandosb()
             setTimeout(()=>{
                 canvasFront.width = canvas.width
                 canvasFront.height =  canvas.height
@@ -131,7 +131,7 @@ function resizeCanvas(newWidth, newHeight) {
     }
     if (newWidth != canvas.height) {
         limpaRetangulo()
-        save_frame()
+        Historia()
         setTimeout(() => {
             let oldGCO = context.globalCompositeOperation;
             changeGCO("source-over");

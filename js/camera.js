@@ -166,17 +166,10 @@ async function tirafoto() {
         if (
             !isCanvasBlank(canvasV)
         ) {
-            let img_b64 = canvasV.toDataURL("image/png");
-            blob = dataURItoBlob(img_b64)
-            if (blob != undefined) {
-
-                desenha("f", globalComposite, img_b64, offsetW, offsetH, canvas.height, canvas.width)
+                drawTo( globalComposite, canvasV, context , offsetW, offsetH, W, H)
                 setTimeout(() => {
-                    // updatecanvasFront();
-                    swapImg = canvas.toDataURL('image/png');
-                    save_frame(swapImg);
-                    comandosParaComandosb()
                     if (stop_motion == false) {
+                        Historia()
                         removeVideo();
                     } else {
 
@@ -185,7 +178,6 @@ async function tirafoto() {
                         }, 200)
                     }
                 }, 20)
-            }
         }
     }
 

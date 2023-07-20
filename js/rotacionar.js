@@ -96,7 +96,7 @@ transform: rotate(${rotationDeg}deg);`)
 function comandoR() {
     if (rotationDeg != 0) {
         let comando = ["r", rotationDeg];
-        comandos.push(comando)
+        comandos[workingframe].push(comando)
         rotationDeg = 0
     }
     comandosExec()

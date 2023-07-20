@@ -2,7 +2,7 @@
 // Convert canvas to image added to startup .getElementById("btn-download")
 
 function salvaImagem() {
-    save_frame()
+    Historia()
     let nome = iD("filename").value
     if (nome != null && nome != "") {
         var dataURL = canvas
@@ -27,7 +27,7 @@ var cont
 var spritao = new Image();
 
 async function export_anim() {
-    save_frame()
+    Historia()
 
     let len = animacao.length
     if (len == 0) {
@@ -218,7 +218,7 @@ function export2txt() {
             "canvasInfo": canvasInfo,
             "newBrushes": brushes,
             "customBrushes": customBrushes,
-            "comandosb": comandosb,
+            "animacao": animacao,
             "preferences": { "pixelGood": pixelGood, "dinamicBrush": dinamicBrush }
         }
 

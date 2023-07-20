@@ -23,7 +23,7 @@ async function modeTo(qual) {
             mode = "pintar"
             oldMode = "pintar"
             mostraMenu("pintar");
-            Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  ${alerts[language][9]} ${alerts[language][11]} <br> ${alerts[language][7]}`, 1)
+            Alert(`<span title="Apagar" class="bot" onmousedown="modeTo('apagar')">🧽</span>  ${alerts[language][9]} ${alerts[language][11]} <br>`, 1)
             changeGCO("destination-out")
         }
     } else {

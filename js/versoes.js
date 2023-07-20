@@ -1,4 +1,11 @@
-let vers = [{
+let vers = [{versao:6.0,
+    notas:[
+        "Mandala mode! from <a href='https://jsart.co/150/drawing-mandala-with-js-canvas/'>Dragan Bajcic</a>",
+        "new history and executing commands WIP"
+
+    ]
+},
+    {
     versao: "5.5.8",
     notas: [
         "clipboard",

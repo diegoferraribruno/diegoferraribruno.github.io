@@ -67,7 +67,7 @@ var checkOrientation = function () {
             iD("ferramentas2").classList.add("horizontal2");
             iD("ferramentas3").classList.add("horizontal3");
 
-            iD("menus").style.top = "100px";
+            iD("menus").style.top = "110px";
 
         } else {
             iD("ferramentas").classList.remove("horizontal");
@@ -175,7 +175,7 @@ function resizeScreen() {
 
         win.style.width = parseInt(window.innerWidth, 10) + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 214 + "px";
-        iD("menus").style.top = "90px";
+        iD("menus").style.top = "110px";
     }
 
     canvasDiv.style.width = canvas.width + "px";
