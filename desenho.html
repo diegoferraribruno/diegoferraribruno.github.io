@@ -15,6 +15,7 @@
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
 
             <div id="ferramentas" class="ferramentas">
+                <span id="yoga" onmousedown="yoga()" class="mais">🧘</span>
                 <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">💾</span>
                 <span id="imagem" title="adicionar imagem" class="mais" onmousedown="mostraMenu('imagem')">
                     <span
@@ -26,8 +27,8 @@
                 <span id="canvasmenu" title="Propriedades do desenho" class="mais" onclick="mostraMenu('quadro')">🖼️
 
                 </span>
-                <span id="info" title="Informações" class="mais" onmousedown="mostraMenu('info')">ℹ️</span>
-                <span id="yoga" onmousedown="yoga()" class="mais">🧘</span>
+               
+                
                 <!--span id="recortar" class="mais" onclick="modeTo('recortar')"><img src="img/crop.png"></span -->
 
                 <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
@@ -40,14 +41,11 @@
             </div>
 
             <div id="ferramentas3" class="ferramentas">
-                <span id="localize" title="change language" class="mais" onclick="localize()">
-                    <span
-                        style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">🇬🇧<span
-                            style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">🇧🇷</span></span>
-
-                </span>
-                <span id="night" class="mais" onmousedown="night()" title="modo escuro / claro">💡</span>
                
+                <span id="night" class="mais" onmousedown="night()" title="modo escuro / claro">💡</span>
+                <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
+                <span id="FX" title="filtros" class="mais" onclick="modeTo('FX')">🪄
+                </span>
                 <span id="rotacionar" onmousedown="modeTo('rotacionar')" class="mais" alt="rotacionar o quado">
                     <img src="img/rotatearrow.png" style="width: 28px; height: 28px; margin-top: 4px;"></span>
                 <span id="move" onmousedown="modeTo('move')" class="mais" alt="mover o quadro">
@@ -57,9 +55,8 @@
 
                 <span id="redimensionar" class="mais" onclick="modeTo('redimensionar')">↔️</span>
 
-                </span><span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎<span id="x1"
-                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x</span></span>
-
+                </span>
+         
 
             </div>
 
@@ -75,11 +72,14 @@
                         style="position:relative;  width:30px; display:inline-block;  color:black; left:-32px; margin-top:0px;"
                         title="Pintando por baixo">🔲</span>
                 </span>
-                <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
-                <span id="FX" title="filtros" class="mais" onclick="modeTo('FX')">🪄
-                </span>
+            
                 <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais" alt="ferramenta de seleção">
                     <img src="img/selectarrow.png" style="margin-top: 4px;"></span>
+                <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎
+                    <span id="x1"
+                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x
+                    </span>
+                </span>
             </div>
 
             <div id="anime" class="ferramentas"></div>
@@ -352,6 +352,12 @@
 
                     🖼️ <txt name="19">tamanho do quadro</txt>
                 </span>
+                <span id="oculos" class="botao">
+                    👓 <txt name="79">nitidez</txt>
+                    <label class="toggle">
+                        <input id="pixel" type="checkbox" value="true" checked onchange="pixel()">
+                        <span class="knob"></span>
+                    </label></span>
                 <!--span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ <img src="img/crop.png">
                     <txt name="19">Tamanho do quadro</txt>
                    
@@ -368,23 +374,9 @@
                         name="transparencia" min="0.01" max="1" oninput="canvasOpacity(this.value)" step="0.01"
                         value="1">
                 </span>
-                <span class="botao"> <span class="mais"><span
-                            style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;padding-top: 0px; font-size: 12px;">🖼️</span>
-                        <span
-                            style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left: 5px;font-size: 12px; ">🖼️</span>
-                        <span
-                            style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:0px; left: 7px;font-size: 12px; ">🖼️</span>
+                
 
-
-                    </span>
-                    <txt name="21">Quadros visiveis</txt>
-                    <label class="toggle"> <input type="checkbox" id="camadasnumber" onchange="quadrosVisiveis()"
-                            style="width: 50px; margin-left: 8px" checked>
-                        <span class="knob"></span>
-                    </label>
-                </span>
-
-                <span id=" fundo falso" class="botao">
+                <span id="fundo falso" class="botao">
                     <txt name="22">Adicionar Fundo falso:</txt><br>
                     <span onmousedown="Fundo('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">&nbsp;
@@ -415,6 +407,7 @@
                         <txt name="76">como fundo do app?</txt>
                     </span>
                 </span>
+                
 
             </div>
 
@@ -445,11 +438,24 @@
                     <span onmousedown="changeFPSup()" class="bot">⬆️</span> <span onmousedown="changeFPSdown()"
                         class="bot"> ⬇️</span>
                     <span onmousedown="play()" class="bot">▶️</span> </span>
-                <span class="botao" onmousedown="removeFrame()">🗑 🖼️ <txt name="26">Remover quadro atual</txt> <span
-                        class="bot">➖</span></span>
-                <span class="botao" onmousedown="cloneFrame()"> 🖼️ + 🖼️ <txt name="27">clonar o quadro</txt>
-                    atual</span>
+            
+                <span class="botao" onmousedown="cloneFrame()"> 🖼️ + 🖼️ <txt name="27">Duplicar o quadro</txt>
+                    </span>
+                    <span class="botao"> <span class="mais"><span
+                        style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;padding-top: 0px; font-size: 12px;">🖼️</span>
+                    <span
+                        style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left: 5px;font-size: 12px; ">🖼️</span>
+                    <span
+                        style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:0px; left: 7px;font-size: 12px; ">🖼️</span>
 
+
+                </span>
+                <txt name="21">Quadros visiveis</txt>
+                <label class="toggle"> <input type="checkbox" id="camadasnumber" onchange="quadrosVisiveis()"
+                        style="width: 50px; margin-left: 8px" checked>
+                    <span class="knob"></span>
+                </label>
+            </span>
                 <span class="botao">
                     <txt name="28">Mudar ordem do quadro</txt>
                     <span class="bot" onmousedown="swapL()">⬅️</span>
@@ -474,12 +480,7 @@
                     onchange="ZOOMf(this.value)">
                 <input id="tzoom" type="number" min="0.50" max="32" step="1" value="1" onchange="ZOOM(this.value)"
                     style="width: 44px"-->
-                <span id="oculos" class="botao">
-                    👓 <txt name="79">nitidez</txt>
-                    <label class="toggle">
-                        <input id="pixel" type="checkbox" value="true" checked onchange="pixel()">
-                        <span class="knob"></span>
-                    </label></span>
+                
 
             </div>
             <div id="menuimagem" class="fundobranco submenu">
@@ -763,7 +764,7 @@
                 <span id="rotaciona" class="botao" onclick="">
                     ⚠️ <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de
                         rotacionar
-                    </txt><span class="botao" onmousedown="cloneFrame()"> 🖼️ + 🖼️ <txt name="27">Clone frame
+                    </txt><span class="botao" onmousedown="cloneFrame()"> 🖼️ + 🖼️ <txt name="27">Duplicate frame
                         </txt>
                     </span>
                 </span>
@@ -789,6 +790,25 @@
                         style="background-image:url(img/yoga.png); width:64px; height:77px; display:block; margin:auto;"
                         onClick="yogaChange()"></div>
                     Yoga Art 6<br><br>
+                </span>
+                <span class=" botao" style="font-size: 0.8em;" title="Modos de arte">
+                     <span id="cam" title="foto" class="mais"
+                        onmousedown="modeTo('cam'), removeElement('carregando')">📷</span>
+                    <span id="imagem" title="Carregar projeto ou imagem" class="mais" onmousedown="mostraMenu('imagem')">
+                        <span
+                            style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
+                                style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
+                                📂</span></span>
+                    </span>
+                    <span id="localize" title="change language" class="mais" onclick="localize()">
+                        <span
+                            style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">🇬🇧<span
+                                style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">🇧🇷</span></span>
+    
+                    </span>
+                    <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span>
+    
+    
                 </span>
 
             </div>
@@ -944,26 +964,6 @@
                     style=" float: left; position: relative; margin-top: -40px; margin-left: 260px; text-align: center; width: 36px; height: 36px;">
                     🎨
                 </span>
-            </span>
-            <span class=" botao" style="font-size: 0.8em;" title="Modos de arte">
-                <span id="night2" class="mais" onmousedown="night()" title="modo escuro / claro">💡</span>
-                <span id="cam" title="foto" class="mais"
-                    onmousedown="modeTo('cam'), removeElement('carregando')">📷</span>
-                <span id="imagem" title="Carregar projeto ou imagem" class="mais" onmousedown="mostraMenu('imagem')">
-                    <span
-                        style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
-                            style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
-                            📂</span></span>
-                </span>
-                <span id="localizeA" title="change language" class="mais" onclick="localize()">
-                    <span
-                        style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">🇬🇧<span
-                            style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">🇧🇷</span></span>
-
-                </span>
-                <span id="info2" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span>
-
-
             </span>
         </div>
     </div>

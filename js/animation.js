@@ -7,8 +7,8 @@ var anime_menu = {
     "prev_frame()": ["⏮️", "Quadro anterior"],
     "play()": ["▶️", "Tocar Animação"],
     "next_frame()": ["⏭️", "Próximo quadro"],
-    "swapL()": ["⬅️", "Mover quadro á esquerda"],
-    "swapR()": ["➡️", "Mover quadro á direita"],
+   // "swapL()": ["⬅️", "Mover quadro á esquerda"],
+   // "swapR()": ["➡️", "Mover quadro á direita"],
     'lixeira()': ["🗑", "Arraste um quadro para apaga-lo"]
 }
 

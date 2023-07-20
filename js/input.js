@@ -10,6 +10,8 @@ canvasRender.height = 320
 canvasRender.width = 320
 canvasRender.style.backgroundColor = "#ff000088"
 ctxR = canvasRender.getContext('2d')
+ctxR.imageSmoothingEnabled = false
+
 //iD("canvas_window").appendChild(canvasRender)
 
 
@@ -115,6 +117,7 @@ function handleKeys(evt) {
 
 var isRecSelection = false
 function handleStart(evt) {
+    ctxF.globalAlpha = 1;
     let color = strokeColor
     if (context.globalCompositeOperation == "destination-out"){}
     evt.preventDefault();
@@ -510,6 +513,7 @@ function handleMove(evt) {
 }
 
 function handleUp(evt) {
+    ctxF.globalAlpha = 1;
     let color = strokeColor
     offsetX = canvas.getBoundingClientRect().left;
     offsetY = canvas.getBoundingClientRect().top;
@@ -597,9 +601,9 @@ function handleUp(evt) {
             setTimeout(()=>{
 
                 context.drawImage(canvasFront, 0, 0)
-                swapImg = canvas.toDataURL('image/png');
-                comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
-                comandos[workingframe].push(comando)
+                //swapImg = canvas.toDataURL('image/png');
+                //comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
+                //comandos[workingframe].push(comando)
                 // comandosParaComandosb()
                 //save_frame()
                 //desenha("move", x - origin.x, y - origin.y)
@@ -628,7 +632,7 @@ function handleUp(evt) {
 
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(canvasRender, x - canvas.width / 2, y - canvas.height / 2)
+        context.drawImage(canvasRender, redondo(x - canvas.width / 2), redondo(y - canvas.height / 2))
 
         swapImg = canvas.toDataURL('image/png');
         swapImg.onload = 

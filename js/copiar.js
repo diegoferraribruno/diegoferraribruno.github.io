@@ -49,17 +49,17 @@ function copySelection(newfr = false) {
       maxX = Math.max(...selectionPaths.flat().map(([x]) => x));
       maxY = Math.max(...selectionPaths.flat().map(([, y]) => y));
     } else {
-      minX = cropStart.x
-      minY = cropStart.y
-      maxX = cropEnd.x
-      maxY = cropEnd.y
+      minX = redondo(cropStart.x)
+      minY = redondo(cropStart.y)
+      maxX = redondo(cropEnd.x)
+      maxY = redondo(cropEnd.y)
       if (minX > maxX) {
-        minX = cropEnd.x
-        maxX = cropStart.x
+        minX = redondo(cropEnd.x)
+        maxX = redondo(cropStart.x)
       }
       if (minY > maxY) {
-        minY = cropEnd.y
-        maxY = cropStart.y
+        minY = redondo(cropEnd.y)
+        maxY = redondo(cropStart.y)
 
       }
     }
@@ -70,7 +70,7 @@ function copySelection(newfr = false) {
     canvasRender.width = width;
     canvasRender.height = height;
     ctxR.setTransform(1, 0, 0, 1, 0, 0);
-    ctxR.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    ctxR.clearRect(0, 0, width, height);
     if(width==-Infinity || width==0 || height==0){
       width = canvas.width
       height = canvas.height
@@ -116,7 +116,7 @@ function copySelection(newfr = false) {
       ctxR.setTransform(1, 0, 0, 1, 0, 0);
       ctxR.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-      ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
+      ctxR.drawImage(image2, redondo(canvasRender.width / 2 - image2.width / 2), redondo(canvasRender.height / 2 - image2.height / 2))
 
     }
   /* if (newfr == "new") {

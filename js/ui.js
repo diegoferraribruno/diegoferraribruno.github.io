@@ -148,9 +148,11 @@ function Fundo(qual) {
 function pixel() {
     canvas.classList.toggle("pixel");
     canvasDiv.classList.toggle("pixel");
+    canvasFront.classList.toggle("pixel");
     pixelGood = !pixelGood
     context.imageSmoothingEnabled = !context.imageSmoothingEnabled;
     ctxF.imageSmoothingEnabled = !ctxF.imageSmoothingEnabled
+    ctxR.imageSmoothingEnabled = !ctxR.imageSmoothingEnabled
     canvasBack.ctx.imageSmoothingEnabled = !canvasBack.ctx.imageSmoothingEnabled
 
 }

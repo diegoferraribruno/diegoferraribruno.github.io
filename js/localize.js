@@ -228,7 +228,7 @@ let textos = {
         "24": "Animation speed 🎞️",
         "25": "Frames Per Second",
         "26": "Remove current Frame",
-        "27": "Clone frame",
+        "27": "Duplicate frame",
         "28": "Change Frame Order",
         "29": "Load image",
         "30": "Ajust canvas to image size",

@@ -8,7 +8,7 @@ let texts = [
 document.addEventListener("DOMContentLoaded", startup);
 
 function startup() {
-  setTimeout(() => { yoga() }, 1000)
+  setTimeout(() => { yoga() }, 300)
   window.addEventListener("resize", checkOrientation, false);
   window.addEventListener("orientationchange", checkOrientation, false);
   iD('inputSprite').addEventListener('change', importSprite);

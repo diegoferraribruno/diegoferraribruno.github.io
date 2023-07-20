@@ -596,7 +596,7 @@ input[type="range"] {
 #anime {
     display: block;
     position: absolute;
-    width: 320px;
+    width: 234px;
     bottom: 50px;
     background-size: 34px 34px;
     animation: animatezoom 0.6s
@@ -606,7 +606,7 @@ input[type="range"] {
     margin-top: 0px;
     display: block;
     position: fixed;
-    left: -238px;
+    left: -156px;
 }
 
 

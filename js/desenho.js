@@ -59,10 +59,10 @@ function Mandala(){
         setCenter()
         mostraMenu("mandala")
         drawSlices()
-        Alert('<span title="infinity" class="emoji " id="emo -♾️">⚛️</span> ' + alerts[language][24] + "<br>" + alerts[language][7])
+        Alert('<span title="infinity" class="emoji " id="emo -♾️">⚛️</span> ' + alerts[language][24])
     } else {
         canvasBack.ctx.clearRect(0,0, canvas.width, canvas.height);
-        Alert(' <span title="infinity" class="emoji " id="emo -♾️">⚛️</span> ' + alerts[language][24] + "<br>" + alerts[language][8])
+        Alert(' <span title="infinity" class="emoji " id="emo -♾️">⚛️</span> ' + alerts[language][24])
     }
 }
 

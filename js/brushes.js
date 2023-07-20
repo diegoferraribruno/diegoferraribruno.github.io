@@ -108,7 +108,7 @@ function setStrokeColor() {
         "mostraCor",
         "salvaCor",
         //"mostraCor2",
-        "pintar",
+        //"pintar",
         "cores",
         "picker",
         "preencher",
@@ -146,7 +146,7 @@ function mudaCor(valor) {
         strokeColor;
     //iD("mostraCor2").style.backgroundColor =
      //   strokeColor;
-    iD("pintar").style.backgroundColor = strokeColor;
+    //iD("pintar").style.backgroundColor = strokeColor;
     iD("preenchercor").style.backgroundColor = strokeColor;
     const toHslaObject = (hslaStr) => {
         const [hue, saturation, lightness, alpha] = hslaStr
