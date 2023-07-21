@@ -167,10 +167,11 @@ function playerPlay(frame) {
 
 function changeFrame(frame) {
     let old0 = frame
+    let oldGCO = context.globalCompositeOperation
     workingframe = frame
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, canvas.width, canvas.height);
-    
+    context.globalCompositeOperation = "source-over"
     canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
     iD("contador").innerHTML = workingframe;
@@ -213,7 +214,7 @@ function changeFrame(frame) {
     //context.globalAlpha = 0.1
     context.drawImage(imageFrame, 0, 0, canvasBack.width, canvasBack.height)
         undoLevel = 0
-        setTimeout(restauraPincel(), 60)
+        setTimeout(()=>{context.globalCompositeOperation=oldGCO}, 60)
         scrollFilme()
    
 }
