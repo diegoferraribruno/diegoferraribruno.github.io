@@ -10,6 +10,7 @@ let posicoes = new Array(0)
 var executing = false
 var undoLevel = 0
 var historia = [[],[]]
+var historiaLimite = 10
 
 function drawTo(GCO = context.globalCompositeOperation,
      source = canvasFront,
@@ -83,11 +84,15 @@ function redo() {
 function Historia(imagem = canvas.toDataURL('image/png')) {
     if (!historia[workingframe]) historia.push([])
     let len = historia[workingframe].length
-    if (len>20)historia[workingframe].shift()
+    if (len > historiaLimite)historia[workingframe].shift()
    if(String(historia[workingframe][len-1])!= String(imagem)){historia[workingframe].push(imagem)}
     animacao[workingframe] = imagem
     setTimeout(() => {
         adicionaQuadro();
     }, 50)
 
+}
+function historiaLimiteChange(value){
+    historiaLimite = value
+    alert(alerts[language][27] + historiaLimite)
 }

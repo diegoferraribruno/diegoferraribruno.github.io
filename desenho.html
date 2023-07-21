@@ -369,11 +369,18 @@
                         <span
                             style="color:white;position:absolute; opacity:0.5;  display:block; width:20px; top:-5px;left:3px; font-size: 20px; ">🖼️</span>
                     </span>
-                    <txt name="20">Transparencia do quadro</txt> <input type="range" id="canvasOpacity"
+                    <txt name="20">Transparencia do quadro</txt> <input type="number" id="canvasOpacity"
                         name="transparencia" min="0.01" max="1" oninput="canvasOpacity(this.value)" step="0.01"
-                        value="1">
+                        value="1" style="width: 46px;">
                 </span>
-                
+                <span class="botao">
+                    <span class="bot">
+                        ↩️
+                    </span>
+                    <txt name="95">max historico</txt> <input type="number" id="canvasOpacity"
+                        name="undolevel" min="1" max="16" oninput="historiaLimiteChange(this.value)" step="1"
+                        value="10" style="width:46px">
+                </span>
 
                 <span id="fundo falso" class="botao">
                     <txt name="22">Adicionar Fundo falso:</txt><br>

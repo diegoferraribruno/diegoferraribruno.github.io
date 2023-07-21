@@ -75,7 +75,8 @@ var alerts = {
         23: "imagem de fundo removida",
         24: "Modo Mandala",
         25: "Tamanho dinâmico do pincel",
-        26: "Modo Pincel"
+        26: "Modo Pincel",
+        27: "Limite para desfazer = "
     },
     "en": {
         0: "Please,<br> add ➕ frames to your animation",
@@ -104,7 +105,8 @@ var alerts = {
         23: "background image removed",
         24: "modo Mandala",
         25: "Dinamic brush size",
-        26: "Paint Brush mode"
+        26: "Paint Brush mode",
+        27: "Max undo Level = "
     }
 }
 let example = alerts[language][0]
@@ -202,7 +204,8 @@ let textos = {
         "91": "Cor / Matiz",
         "92": "⚠️ Trabalhando <b>por baixo</b> do quadro",
         "93": "⚠️ Trabalhando <b>por cima</b> do quadro",
-        "94": "Fatias da Mandala:"
+        "94": "Fatias da Mandala:",
+        "95": "Limite para desfazer"
 
     },
     "en": {
@@ -299,6 +302,7 @@ let textos = {
         "92": "⚠️ Working <b>under</b> the canvas",
         "93": "⚠️ Working <b>over</b> the canvas",
         "94": "Mandala slices:",
+        "95": "Max undo Level"
        
 
     }

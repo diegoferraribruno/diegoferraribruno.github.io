@@ -63,8 +63,9 @@ setTimeout(() => {
 
 function limpaAnime() {
     let filme = iD("filmecontainer")
+    filme.classList.toggle("hideanime2")
+    filme.classList.toggle("filme")
 
-    filme.classList.toggle("hideanime")
     anime.classList.toggle("hideanime")
 }
 
@@ -104,23 +105,13 @@ function new_frame() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     //comandos[workingframe] = []
-    changeBrush()
+    //changeBrush()
    // convertToImg()
     changeFrame(workingframe)
     iD("contador").innerHTML = workingframe
 
 }
-function Historia(imagem = canvas.toDataURL('image/png')) {
-    if (!historia[workingframe]) historia.push([])
-    let len = historia[workingframe].length
-    if (len>20)historia[workingframe].shift()
-   if(String(historia[workingframe][len-1])!= String(imagem)){historia[workingframe].push(imagem)}
-    animacao[workingframe] = imagem
-    setTimeout(() => {
-        adicionaQuadro();
-    }, 50)
 
-}
 
 let playing = 0
 var inter

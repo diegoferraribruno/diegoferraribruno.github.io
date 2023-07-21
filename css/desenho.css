@@ -613,6 +613,9 @@ input[type="range"] {
     position: fixed;
     left: -156px;
 }
+.hideanime2 {
+    display: none;   
+}
 
 
 .favbrush {
