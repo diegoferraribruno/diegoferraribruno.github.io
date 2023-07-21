@@ -28,7 +28,7 @@ function goback(pos){
     context.clearRect(0, 0, canvas.width, canvas.height);
     var imageFrame = new Image;
     imageFrame.src = historia[workingframe][pos]
-    drawTo(context.globalCompositeOperation,
+    drawTo("source-over",
         imageFrame,
         context,
         0, 
