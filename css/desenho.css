@@ -546,6 +546,11 @@ input[type="range"] {
     background-color: #eeeeee22;
 }
 
+
+
+.botao:hover {
+    background-color: #eeeeee22;
+}
 #menuinfo {
     font-family: sans-serif;
     align-items: left;
@@ -860,4 +865,10 @@ input[type="range"] {
 }
 .cursorgrab{
     cursor:grab;
+}
+.dinamicbrush{
+    background-image: url('../img/dinamicbrush.png');
+    height: 36px;
+    width: 36px;
+    display: inline-block;
 }

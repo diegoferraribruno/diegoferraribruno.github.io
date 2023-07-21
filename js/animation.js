@@ -116,13 +116,8 @@ function Historia(imagem = canvas.toDataURL('image/png')) {
     if (len>20)historia[workingframe].shift()
    if(String(historia[workingframe][len-1])!= String(imagem)){historia[workingframe].push(imagem)}
     animacao[workingframe] = imagem
-    console.log(historia)
-    /* comando = [["s", "source-over", imagem, 0, 0, canvas.width, canvas.height]];
-    comandos[workingframe].push(comando)
-    // comandosParaComandosb()*/
     setTimeout(() => {
         adicionaQuadro();
-        // console.log("save frame de novo")
     }, 50)
 
 }
@@ -242,38 +237,31 @@ function resetFrame(){
 
 function next_frame() {
     Historia()
-    if (animacao.length > 1) {
-        let len = comandos.length
-        // comandosParaComandosb()
+    let len = animacao.length
+    if (len > 1) {
         workingframe++
-        if (workingframe >= animacao.length) {
+        if (workingframe >= len) {
             workingframe = 0
         }
-        // comandosbParaComandos()
         changeFrame(workingframe)
     } else {
         Alert(alerts[language][0])
-
     }
 
 }
 function prev_frame() {
     Historia()
-    if (animacao.length > 1) {
-
-
-        // comandosParaComandosb()
+    let len = animacao.length
+    if (len > 1) {
         workingframe--
         if (workingframe < 0) {
-            workingframe = animacao.length - 1
+            workingframe = len - 1
             if (workingframe < 0) { workingframe = 0 }
         }
-        // comandosbParaComandos()
         changeFrame(workingframe)
         iD("contador").innerHTML = workingframe
     } else {
         Alert(alerts[language][0])
-
     }
 }
 
@@ -299,7 +287,7 @@ function removeFrame() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     animacao.splice(workingframe, 1)
-   // comandos.splice(workingframe, 1)
+    historia.splice(workingframe, 1)
     if (animacao.length > 0) {
         workingframe--
         if (workingframe < 0) {
@@ -321,28 +309,12 @@ function cloneFrame(frame = workingframe) {
     workingframe = frame + 1
     animacao.splice(workingframe, 0, animacao[frame]);
     historia.splice(workingframe, 0, historia[frame]);
-    //comandos[workingframe] = []
-    // comandosbParaComandos()
     changeFrame(workingframe)
     adicionaQuadro()
     Alert("🎞️ " + alerts[language][1] + " " + frame + " " + alerts[language][10])
 
 }
-function checksave() {
-//save_frame()
-    /*
-    let compa = compara(comandos, comandosb[workingframe])
-    console.log(comandos.length, comandosb[workingframe].length)
-    if (compa == false) {
-        iD("new_frame()").classList.toggle("blink")
-        // comandosParaComandosb()
-        save_frame()
-    } else {
-        iD("new_frame()").classList.remove("blink")
 
-    }*/
-    console.log("checksave deprecated")
-}
 let swapImg = new Image()
 
 var background_anim = false
@@ -364,7 +336,7 @@ function sobreporFundo() {
 
 var animSize = 0
 
-function adicionaQuadro() {
+async function adicionaQuadro() {
     let filme = iD("filmecontainer")
     filme.innerHTML = ""
     let newFilme =  document.createElement("div")
@@ -387,9 +359,7 @@ function adicionaQuadro() {
             thumb.addEventListener("click", function (event) {
                 let changeToFrame = parseInt(event.target.id, 10)
                 if (changeToFrame != workingframe) {
-                   // comandos[workingframe] = []
                     workingframe = changeToFrame
-                    // comandosbParaComandos()
                     changeFrame(workingframe)
                 }
 
@@ -458,10 +428,7 @@ function drop(event) {
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image2, event.layerX - image2.width / 2, event.layerY - image2.height / 2)
-        swapImg = canvas.toDataURL('image/png');
-        comando = ["s", context.globalCompositeOperation, swapImg, 0, 0];
-        comandos[workingframe].push(comando)
-        // comandosParaComandosb()
+        Historia()
         origin.x = 0
         origin.y = 0
 
@@ -471,8 +438,6 @@ function drop(event) {
         Alert("🎞️  " + dataTransfer + " 🔄 " + toContainer.id, 1.5)
         swapItems(toContainer.id, dataTransfer)
         workingframe = dataTransfer
-       // comandos[workingframe] = []
-        // comandosbParaComandos()
         changeFrame(workingframe)
 
     }
@@ -481,7 +446,6 @@ function drop(event) {
 
 function quadrosVisiveis() {
     canvasBack.classList.toggle("esconde")
-    //Alert("working on<br>trabalhando nisso")
 }
 
 

@@ -619,7 +619,7 @@ function limpar(what) {
     convertToImg()
     createNewBrush()
 
-    if (what == "animacao")
+    if (what == "animacao"){
         if (animacao.length > 0) {
             let confirma2 = confirm(
                 "🗑 🎞️ Apagar toda a animação? \n(impossível desfazer)"
@@ -631,23 +631,18 @@ function limpar(what) {
                 iD("bplayer0").style.backgroundImage = 'none'
                 canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                ctxF.clearRect(0, 0, canvas.width, canvas.height);
+
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.setTransform(1, 0, 0, 1, 0, 0);
+                
                 Historia()
                 changeFrame(workingframe)
                 adicionaQuadro()
-
             }
         }
-   // comandosExec()
-
-}
-function mostra() {
-   
-    if (mode != "recortar" && mode != "FX" && mode != "selecionar" && mode != "paste") {
-        //canvasFront.classList.add("esconde")
-      //  checksave()
     }
 }
-
 
 function backPaint() {
     if (globalComposite != "destination-over") {
@@ -658,7 +653,7 @@ function backPaint() {
             `<span style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;` +
             `padding-top: 0px;">⭕</span> <span style="color:white;` +
             `position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left:3px; " title="Pintando por baixo">🔲</span> `;
-        Alert(example = alerts[language][12])
+        Alert(alerts[language][12])
 
         if (iD("video")) {
             iD("video").setAttribute("class", "destination-over")
@@ -674,7 +669,7 @@ function backPaint() {
             `<span style="position:relative; width:32px; display:inline-block; left:4px; ` +
             `padding-top: 0px;">🔲</span> <span style="color:white;` +
             `position:absolute;  display:block; width:20px; left: 3px; top:-5px;" title="Pintando por cima">⭕</span> `;
-        Alert(example = alerts[language][13])
+        Alert(alerts[language][13])
         removeClass("destination-over")
         canvasFront.style.zIndex = 3
     }
@@ -699,8 +694,9 @@ function mudaCorBG(cor) {
 //convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
 
 function convertToImg() {
+    console.log("convertTo img removed")
     undoLevel = 0
     img_b64 = canvas.toDataURL("image/png");
     // comando =["s", "source-over", img_b64, 0, 0, canvas.width, canvas.height]
-    comandos.unshift(comando)
+   // comandos.unshift(comando)
 }

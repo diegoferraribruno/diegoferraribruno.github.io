@@ -56,7 +56,7 @@ var alerts = {
         4: "Camera API indisponível no seu navegador",
         5: "Não foi possivel acessar a camera",
         6: "Modo infinito",
-        7: "Ativado - <h5>Desenhe além das bordas da tela</h5>",
+        7: "Ativado",
         8: "Desativado",
         9: "Modo",
         10: "duplicado",
@@ -73,7 +73,9 @@ var alerts = {
         21: "Seu arquivo esta sendo preparado.",
         22: "importando seu projeto",
         23: "imagem de fundo removida",
-        24: "Modo Mandala"
+        24: "Modo Mandala",
+        25: "Tamanho dinâmico do pincel",
+        26: "Modo Pincel"
     },
     "en": {
         0: "Please,<br> add ➕ frames to your animation",
@@ -83,7 +85,7 @@ var alerts = {
         4: "Camera API is not available in your browser",
         5: "Could not access the camera",
         6: "Infinity paint mode",
-        7: "Activated - <h5>draw over the edges of the canvas</h5>",
+        7: "Activated",
         8: "Deactivated",
         9: "",
         10: "duplicated",
@@ -100,7 +102,9 @@ var alerts = {
         21: "your file is beeing prepared.",
         22: "importing your project",
         23: "background image removed",
-        24: "modo Mandala"
+        24: "modo Mandala",
+        25: "Dinamic brush size",
+        26: "Paint Brush mode"
     }
 }
 let example = alerts[language][0]
@@ -294,7 +298,7 @@ let textos = {
         "91": "Color / Hue",
         "92": "⚠️ Working <b>under</b> the canvas",
         "93": "⚠️ Working <b>over</b> the canvas",
-        "94": "Mandala slices:"
+        "94": "Mandala slices:",
        
 
     }
@@ -362,7 +366,9 @@ var titles = {
         "copy":"Copiar seleção",
         "paste":"Colar seleção (toque ou click para colar)",
         "copynew":"Colar seleção para novo quadro",
-        "selecionar":"Selecionar copiar/recortar e colar"
+        "selecionar":"Selecionar copiar/recortar e colar",
+        "mandala":"mandala",
+        "dinamicBrush":"Tamanho dinamico"
     },
     "en": {
 
@@ -427,7 +433,9 @@ var titles = {
         "copy":"Copy selection",
         "paste":"Paste selection (toque ou click para colar)",
         "pastenew":"Paste selection to a new frame",
-        "selecionar":"Select copy/cut and paste"
+        "selecionar":"Select copy/cut and paste",
+        "mandala":"mandala",
+        "dinamicBrush":"Dinamic size"
    
 
     }

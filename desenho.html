@@ -222,13 +222,14 @@
 
             <div id="menupintar" class="fundobranco submenu menu">
 
-                <span class="botao"><span title="pintar" class="bot" onmousedown="modeTo('pintar')">🖌️</span>
+                <span class="botao"><span title="pintar" class="mais" onmousedown="modeTo('pintar')">🖌️</span>
                 <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
-                <span id="mandala" title="mandala" class="bot" onmousedown="Mandala()">⚛️</span>
-                <span id="tilemapbot" class="bot" onclick="tilePaint()"><span title="infinity"
+                <span class="mais" onclick="toggleDinamicBrush()"><div class="dinamicbrush">.</div>
+                </span>
+                <span id="tilemapbot" class="mais" onclick="tilePaint()"><span title="infinity"
                             class="emoji ">♾️</span></span>
+                <span id="mandala" title="mandala" class="mais" onmousedown="Mandala()">⚛️</span>
                     <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
-                    <span title="Preencher" id="preencher" onmousedown="mostraMenu('preencher')" class=" bot">🪣</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
                     </span>
 
@@ -246,11 +247,7 @@
                     <span
                         style="display: block; float:left; margin: 2px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;"
                         onclick="addFavBrushPin()">📌</span>
-                    <label>
-
-                        <input id="dinamicBrush" type="checkbox" checked onchange="toggleDinamicBrush()"><img
-                            src="img/dinamicbrush.png">
-                    </label>
+                 
                 </span>
                 <!--span class="botao">
                     💧 <input type="range" id="A2" name="transparencia" min="0.01" max="1"
@@ -290,7 +287,9 @@
             <div id="menucores" class="submenu fundobranco">
 
                 <span class="botao glow">
+                    <span title="Preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais">🪣</span>
                       <span title="fechar" onmousedown="removeClass()" class="close">❎
+                   
                     </span>
 
                
@@ -304,7 +303,7 @@
                     <txt name="15">Use o 📌 para guardar sua cor.</txt>
                 </div>
                 <div id="paleta" class="fundobranco glow"></div>
-                <div id="menu" class="fundobranco glow" onmouseover="mostra()">
+                <div id="menu" class="fundobranco glow">
                     <span onclick="changeType()" style="display:block; position: absolute; margin-top: 60px; margin-left: 4px; font-size: large;">#</span>
                     <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais">
                         <span
@@ -969,7 +968,7 @@
     </div>
     <div id="console" style="display: none; position: absolute; top: 0px; left: 100px;">console</div>
     <div id="console2" style="display: none; position: absolute; top: 18px; left: 100px;">console</div>
-    <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)" onmouseout="mostra()"
+    <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)"
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/iD.js"></script>
     <script type="text/javascript" src="js/core.js"></script>

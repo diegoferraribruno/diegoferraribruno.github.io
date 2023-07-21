@@ -79,3 +79,15 @@ function redo() {
         redoTEnd()
     }
 }
+
+function Historia(imagem = canvas.toDataURL('image/png')) {
+    if (!historia[workingframe]) historia.push([])
+    let len = historia[workingframe].length
+    if (len>20)historia[workingframe].shift()
+   if(String(historia[workingframe][len-1])!= String(imagem)){historia[workingframe].push(imagem)}
+    animacao[workingframe] = imagem
+    setTimeout(() => {
+        adicionaQuadro();
+    }, 50)
+
+}

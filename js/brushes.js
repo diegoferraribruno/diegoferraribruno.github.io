@@ -29,6 +29,12 @@ var dinamicBrush = true
 
 function toggleDinamicBrush() {
     dinamicBrush = !dinamicBrush
+    if(dinamicBrush == true){
+        Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25]+ "<br>" + alerts[language][7]) 
+    }else{
+        Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25]+ "<br>" + alerts[language][8])
+  
+    }
 }
 function toggleDinamicInk() {
     dinamicInk = !dinamicInk

@@ -691,7 +691,7 @@ function handleEnd(evt) {
  
 
     if (mode != "play" && mode != "selecionar" && mode != "recortar") {
-        mostra()
+     //   mostra()
         mouseOver = false;
       //
             if (mouseOver == false || lastPressure == 0.5) {
