@@ -272,7 +272,7 @@ async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strok
     brushCtx.globalCompositeOperation = 'source-over'
 
     if (isGlowing){
-        var radius = tam/20;
+        var radius = tam/16;
         var centerX = brushCanva.width/2
         var centerY = brushCanva.height/2
         brushCtx.beginPath();

@@ -570,7 +570,7 @@ function handleUp(evt) {
     if (isDrawing) {
         isDrawing = false;
        // swapImg = canvasFront.toDataURL('image/png');
-       if (isGlowing === true){
+       if (isGlowing === true&& context.globalCompositeOperation != "destination-out"){
         context.globalCompositeOperation = 'lighter'
        }
         drawTo(context.globalCompositeOperation, canvasFront, context, 0, 0, canvas.width, canvas.height)
