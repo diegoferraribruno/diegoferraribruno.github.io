@@ -253,21 +253,35 @@ var changedBrush = false
 var brushName = "1-6-hsla(0,0%,0%,1)"
 
 async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
-    if (isGlowing){
-        cor = "#fff"
-        
-    }
+    if (isGlowing){numero = 1}
     brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
     brushMode = 1
     // brushCanva.crossOrigin = "anonymous"
     brushCanva.height = tam
     brushCanva.width = tam
+    brushCtx.globalAlpha = 0.1
+    if (isGlowing == false){
+    brushCtx.globalAlpha = 1
+    }
     brushCtx.fillStyle = cor;
     brushCtx.fillRect(0, 0, tam, tam)
+    brushCtx.globalAlpha = 1
     brushCtx.globalCompositeOperation = 'destination-in'
     brushCtx.drawImage(basicBrushes[numero], 0, 0, tam, tam)
-    brushCtx.globalCompositeOperation = 'destination-over'
+    brushCtx.globalCompositeOperation = 'source-over'
+
+    if (isGlowing){
+        var radius = tam/20;
+        var centerX = brushCanva.width/2
+        var centerY = brushCanva.height/2
+        brushCtx.beginPath();
+        brushCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+        brushCtx.fillStyle = 'white';
+        brushCtx.fill();
+//        cor = "#fff"
+        
+    }
 }
 
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
@@ -439,8 +453,8 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
             x = redondo(x) + 1
             y = redondo(y) + 1
         }
-     //   var text = "Hello world!"
-        if (isGlowing){
+    
+    /*    if (isGlowing){
             let globaltemp = context.globalCompositeOperation
             var blur = 10;
             context.shadowColor = strokeColor
@@ -453,7 +467,7 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
             context.shadowBlur = 0;
             
 
-        }
+        }*/
         cont.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
     }
 }
