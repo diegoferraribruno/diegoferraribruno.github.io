@@ -9,6 +9,8 @@ var strokeWidth = 6;
 var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
 var estrokeWidth = 36;
 
+var isGlowing = false
+
 var newBrushes = {}
 var lastbrush = 1
 var brushMode = 1
@@ -250,9 +252,11 @@ function selectBrush(numero) {
 var changedBrush = false
 var brushName = "1-6-hsla(0,0%,0%,1)"
 
-
 async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
-
+    if (isGlowing){
+        cor = "#fff"
+        
+    }
     brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
     brushMode = 1
@@ -434,6 +438,21 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
         if (strokeWidth == 1) {
             x = redondo(x) + 1
             y = redondo(y) + 1
+        }
+     //   var text = "Hello world!"
+        if (isGlowing){
+            let globaltemp = context.globalCompositeOperation
+            var blur = 10;
+            context.shadowColor = strokeColor
+            context.shadowOffsetX = 0;
+            context.shadowOffsetY = 0;
+            context.shadowBlur = blur;
+            context.globalCompositeOperation = "destination-over"
+            context.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
+            context.globalCompositeOperation = globaltemp
+            context.shadowBlur = 0;
+            
+
         }
         cont.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
     }

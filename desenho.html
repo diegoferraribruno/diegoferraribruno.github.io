@@ -208,7 +208,7 @@
 
             </div>
 
-            <div id="menuemoji" class="fundobranco submenu menu">
+            <!--div id="menuemoji" class="fundobranco submenu menu">
                 <emoji-picker id="emojipicker" class="fundobranco"></emoji-picker>
                 <span class="botao"> <span class="bot" onclick="emojipicker()" title="selecione seu emoji">😍</span>
                     ↕️<input type="range" id="emosize" name="strokeSize" min="16" max="320" step="8"
@@ -218,7 +218,7 @@
                 <span class="botao ligth" onclick="emojipicker()"
                     style="display:inline-block; width:320px; max-height: 200px; overflow:hidden; line-height: 200px; vertical-align: middle;  background-image: url('img/grid3.png');">
                     <span id="emoExemplo">😍</span></span>
-            </div>
+            </div-->
 
             <div id="menupintar" class="fundobranco submenu menu">
 
@@ -226,10 +226,12 @@
                 <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
                 <span class="mais" onclick="toggleDinamicBrush()"><div class="dinamicbrush">.</div>
                 </span>
-                <span id="tilemapbot" class="mais" onclick="tilePaint()"><span title="infinity"
+                <span id="tilemapbot" class="mais" onclick="tilePaint()">
+                    <span title="infinity"
                             class="emoji ">♾️</span></span>
                 <span id="mandala" title="mandala" class="mais" onmousedown="Mandala()">⚛️</span>
-                    <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span>
+                    <!--span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span-->
+                    <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="glow()" style="background-image: url('/img/glowpaint.png'); color: #ffffff01;">.</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
                     </span>
 
@@ -1002,8 +1004,8 @@
     <script type="text/javascript" src="js/FX.js"></script>
 
     <!-- codigos que nao tenho parte-->
-    <script type="module" src="js/emoji-picker-element/index.js"></script>
-    <script type="text/javascript" src="js/emoji.js"></script>
+    <!--script type="module" src="js/emoji-picker-element/index.js"></script-->
+    <!--script type="text/javascript" src="js/emoji.js"></script-->
     <!-- para exportar gifs animados-->
     <script src="js/gif/b64.js"></script>
     <script src="js/gif/LZWEncoder.js"></script>

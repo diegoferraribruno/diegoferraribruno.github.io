@@ -97,8 +97,12 @@ async function export_anim() {
                     console.log(encoder.start())
 
                     for (i = 0; i < animacao.length; i++) {
-                        cont.fillStyle = "rgb(255,255,255)"
-                        cont.fillRect(0, 0, canvas.width, canvas.height); //GIF can't do transparent so do white
+                        if(isGlowing){
+                        cont.fillStyle = "rgb(10,10,10)"
+                        }else{
+                        cont.fillStyle = "rgb(255,255,255)" //GIF can't do transparent so do white
+                        }
+                        cont.fillRect(0, 0, canvas.width, canvas.height); 
                         cont.drawImage(myanima, - canvas.width * i, 0, myanima.width, myanima.height)
                         encoder.addFrame(cont);
                     }

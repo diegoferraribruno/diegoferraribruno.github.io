@@ -14,10 +14,10 @@ function startup() {
   iD('inputSprite').addEventListener('change', importSprite);
   setInterval(checkOrientation, 2000);
 
-  document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(event) {
+  /*document.querySelector('emoji-picker').addEventListener('emoji-click', function onEvent(event) {
     trocaEmoji(event.detail.unicode);
     emojipicker();
-  });
+  });*/
   Fundo("none")
   counter = setInterval(() => undoing(), 300)
   window.onkeydown = function (event) {

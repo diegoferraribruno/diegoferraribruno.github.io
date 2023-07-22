@@ -119,3 +119,15 @@ async function modeTo(qual) {
             break;
     }
 }
+
+function glow(){
+    isGlowing = !isGlowing
+    if (isGlowing === true){
+        if(!nightmode) {
+            night()
+        }
+        modeTo("cores")
+    }else{
+        night()
+    }
+}
