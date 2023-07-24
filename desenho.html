@@ -291,9 +291,9 @@
             <div id="menucores" class="submenu fundobranco">
 
                 <span class="botao glow">
-                    <span title="Preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais">🪣</span>
-                    <span id="glow" title="glow" class="mais selected" onmousedown="rainbow()"
+                    <span id="rainbowink" title="glow" class="mais selected" onmousedown="rainbow()"
                         style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>
+                    <span title="Preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais">🪣</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
 
                     </span>
@@ -804,11 +804,15 @@
                         Yoga Art 6<br>
                     </div>
                     <br>
-                    <img src="img/mandala.png" onclick="Mandala()">
-                    <img src="img/glowmandala.png" onclick="Mandala(), glow()">
-                    <small>⚠️ Aplicativo instável. ⚠️<br>
-                        *recorte do quadro nao operante .<br>
-                        crop is not working. </small>
+                    <img src="img/mandala.png" onclick="Mandala()" class="mais" style="width: 64px; height: 64px;">
+                    <img src="img/glowmandala.png" onclick="Mandala(), glow()" class="mais"
+                        style="width: 64px; height: 64px;">
+                    <img src="img/rainbowmandalab.png" onclick="Mandala(), glow(), rainbow()" class="mais"
+                        style="width: 64px; height: 64px;">
+                    <br>
+                    <small>
+                        ⚠️recorte do quadro nao operante .<br>
+                        ⚠️crop is not working. </small>
                 </span>
                 <span class=" botao" style="font-size: 0.8em;" title="Modos de arte">
                     <span id="cam" title="foto" class="mais"
@@ -953,11 +957,11 @@
                     <span onmousedown="tamanho3(320,320)">320x320
                         <span style="border: 2px solid gray; width: 16px; height: 16px; display: inline-block;"></span>
                     </span><br>
-                    <span onmousedown="tamanho3(640,360)"> SD: 640x360
-                        <span style="border: 2px solid gray; width: 20px; height: 12px; display: inline-block;"></span>
-                    </span><br>
                     <span onmousedown="tamanho3(640,640)"> SD: 640x640
                         <span style="border: 2px solid gray; width: 20px; height: 20px; display: inline-block;"></span>
+                    </span><br>
+                    <span onmousedown="tamanho3(640,360)"> SD: 640x360
+                        <span style="border: 2px solid gray; width: 20px; height: 12px; display: inline-block;"></span>
                     </span><br>
                     <span onmousedown="tamanho3(1280,720)">1280x720*
                         <span style="border: 2px solid gray; width: 32px; height: 18px; display: inline-block;"></span>
