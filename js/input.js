@@ -47,6 +47,7 @@ iD("canvas_div").appendChild(canvasBack)
 let lastPressure = 0.5
 let dinamicInk = false
 let lastInk = 1
+let rainbowInk = false
 
 function handleKeyUp(evt) {
 
@@ -119,7 +120,7 @@ var isRecSelection = false
 function handleStart(evt) {
     ctxF.globalAlpha = 1;
     let color = strokeColor
-    if (context.globalCompositeOperation == "destination-out"){}
+    if (context.globalCompositeOperation == "destination-out") { }
     evt.preventDefault();
     removeClass();
     //console.dir(evt)
@@ -178,7 +179,7 @@ function handleStart(evt) {
         canvasFront.classList.remove("esconde")
         isDrawing = true
         mouseOver = true;
-        if (context.globalCompositeOperation == "destination-out"){
+        if (context.globalCompositeOperation == "destination-out") {
             color = "#ff0000"
         }
         offsetX = canvas.getBoundingClientRect().left;
@@ -211,20 +212,20 @@ function handleStart(evt) {
 
             if (dinamicBrush === true && evt.pressure != 0.5) {
                 let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 0.5)
-                if (pressure < 3) {pressure = 3}
+                if (pressure < 3) { pressure = 3 }
 
                 createNewBrush(lastbrush, pressure, color).then(
 
-                        desenha(
-                            "brush",
-                            context.globalCompositeOperation,
-                            x,
-                            y,
-                            origin.x,
-                            origin.y,
-                            pressure
-                        )
+                    desenha(
+                        "brush",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        origin.x,
+                        origin.y,
+                        pressure
                     )
+                )
             }
             else {
                 desenha(
@@ -265,7 +266,7 @@ function positivo(value) {
 function handleMove(evt) {
 
     let color = strokeColor
-    if (context.globalCompositeOperation == "destination-out"){
+    if (context.globalCompositeOperation == "destination-out") {
         color = `hsla(45,50%,80%,${hsla[3]})`
     }
     evt.preventDefault();
@@ -335,16 +336,22 @@ function handleMove(evt) {
 
             }
             if (lastInk > 0.1) {
+                if (rainbowInk) {
+                    value = hsla[0] + 6
+                    if (value > 360) { value = 0 }
+                    mudaCorQ(0, value)
+                }
                 // console.log("stroke color: " + strokeColor)
                 if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true) {
                     let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2) * strokeWidth;
-                    if (pressure > lastPressure) { 
-                        lastPressure += 1.5 }
-                         else {
+                    if (pressure > lastPressure) {
+                        lastPressure += 1.5
+                    }
+                    else {
                         lastPressure -= 1.5
                     }
                     lastPressure = redondo(lastPressure)
-                    
+
                     if (lastPressure < strokeWidth) { lastPressure = strokeWidth }
                     iD("console2").innerHTML = " pressure/speed: " + pressure
                     createNewBrush(lastbrush, lastPressure, color).then(
@@ -362,8 +369,8 @@ function handleMove(evt) {
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5) {
                         let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
-                        if (pressure < 3) {pressure =3}
-                        iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: "+ lastPressure;
+                        if (pressure < 3) { pressure = 3 }
+                        iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
 
                         lastPressure = pressure
                         createNewBrush(lastbrush, pressure, color).then(
@@ -466,19 +473,19 @@ function handleMove(evt) {
         ctxF.fillText(emoji, x, y)
     }
     if (mode == "move") {
-        if (selecionado){
+        if (selecionado) {
             copySelection('cut')
             mode = "paste"
-        }else if (movendo == true) {
-                    canvasFront.classList.remove("esconde")
-                    ctxF.globalAlpha = 1;
-                    ctxF.setTransform(1, 0, 0, 1, 0, 0);
-                    ctxF.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // ctxF.drawImage(movecursor, x - 16, y - 16)
-                    canvasFront.globalCompositeOperation = "source-out"
-                    ctxF.drawImage(canvas, x - origin.x, y - origin.y)
-                
+        } else if (movendo == true) {
+            canvasFront.classList.remove("esconde")
+            ctxF.globalAlpha = 1;
+            ctxF.setTransform(1, 0, 0, 1, 0, 0);
+            ctxF.clearRect(0, 0, canvas.width, canvas.height);
+
+            // ctxF.drawImage(movecursor, x - 16, y - 16)
+            canvasFront.globalCompositeOperation = "source-out"
+            ctxF.drawImage(canvas, x - origin.x, y - origin.y)
+
         }
     }
     if (mode == "paste") {
@@ -540,7 +547,7 @@ function handleUp(evt) {
         ultimoToque.x = x
         ultimoToque.y = y
         isEmoji = false
-        setTimeout(() => {Historia()},50)
+        setTimeout(() => { Historia() }, 50)
     }
     if (isSelecting) {
         mostraMenu("recortar")
@@ -569,17 +576,17 @@ function handleUp(evt) {
     }
     if (isDrawing) {
         isDrawing = false;
-       // swapImg = canvasFront.toDataURL('image/png');
-      /* if (isGlowing === true && context.globalCompositeOperation != "destination-out"){
-        context.globalCompositeOperation = 'lighter'
-       }*/
+        // swapImg = canvasFront.toDataURL('image/png');
+        /* if (isGlowing === true && context.globalCompositeOperation != "destination-out"){
+          context.globalCompositeOperation = 'lighter'
+         }*/
         drawTo(context.globalCompositeOperation, canvasFront, context, 0, 0, canvas.width, canvas.height)
         ultimoToque.x = x
         ultimoToque.y = y
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
-        setTimeout(() => {Historia()},30)
-        
+        setTimeout(() => { Historia() }, 30)
+
     }
     if (isGrabing) {
         isGrabing = false;
@@ -595,13 +602,13 @@ function handleUp(evt) {
         mostraMenu("selecionar")
         cropEnd.x = x
         cropEnd.y = y
-        
+
     }
 
 
     if (movendo == true) {
         if (selecionado) {
-            setTimeout(()=>{
+            setTimeout(() => {
 
                 context.drawImage(canvasFront, 0, 0)
                 //swapImg = canvas.toDataURL('image/png');
@@ -613,8 +620,8 @@ function handleUp(evt) {
                 movendo = false
                 resetSelection()
                 modeTo("move")
-            },200)
-            
+            }, 200)
+
         } else {
 
             ctxF.setTransform(1, 0, 0, 1, 0, 0);
@@ -628,7 +635,7 @@ function handleUp(evt) {
         Historia()
         //desenha("move", x - origin.x, y - origin.y)
         movendo = false
-        
+
     }
 
     if (mode == "paste") {
@@ -638,12 +645,12 @@ function handleUp(evt) {
         context.drawImage(canvasRender, redondo(x - canvas.width / 2), redondo(y - canvas.height / 2))
 
         swapImg = canvas.toDataURL('image/png');
-        swapImg.onload = 
+        swapImg.onload =
 
             Historia(swapImg)
-            
-       // comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
-       // comandos[workingframe].push(comando)
+
+        // comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
+        // comandos[workingframe].push(comando)
         // comandosParaComandosb()
         //save_frame()
         //desenha("move", x - origin.x, y - origin.y)
@@ -657,10 +664,10 @@ function handleUp(evt) {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(canvasFront, 0, 0)
         swapImg = canvas.toDataURL('image/png');
-        swapImg.onload = 
+        swapImg.onload =
 
-        Historia(swapImg)
-         // comandosParaComandosb()
+            Historia(swapImg)
+        // comandosParaComandosb()
         setTimeout(() => {
 
             ctxF.setTransform(1, 0, 0, 1, 0, 0);
@@ -674,10 +681,10 @@ function handleUp(evt) {
     }
     origin.x = 0
     origin.y = 0
-   
+
 }
 function handleEnd(evt) {
-    if (isDrawing){
+    if (isDrawing) {
         drawTo()
         Historia()
     }
@@ -691,19 +698,19 @@ function handleEnd(evt) {
         //mode = "paste"
         isSelecting2 = false;
     }
- 
+
 
     if (mode != "play" && mode != "selecionar" && mode != "recortar") {
-     //   mostra()
+        //   mostra()
         mouseOver = false;
-      //
-            if (mouseOver == false || lastPressure == 0.5) {
-                isDrawing = false;
-                isGrabing = false;
-                isPicking = false;
-                isSelecting = false;
-            }
-     //   }, 500);
+        //
+        if (mouseOver == false || lastPressure == 0.5) {
+            isDrawing = false;
+            isGrabing = false;
+            isPicking = false;
+            isSelecting = false;
+        }
+        //   }, 500);
     } else {
         canvasFront.classList.remove("esconde")
     }
@@ -723,21 +730,21 @@ function handleEnd(evt) {
 
 
     }
-   
+
     scrollWindow.x = 0
     scrollWindow.y = 0
     origin.x = 0
     origin.y = 0
-   
+
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
     ctxF.clearRect(0, 0, canvas.width, canvas.height);
-  
+
 }
 
 function handleCancel(evt) {
     evt.preventDefault();
     document.body.style.cursor = "pointer";
-    if (isDrawing){
+    if (isDrawing) {
         drawTo()
         Historia()
     }

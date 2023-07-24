@@ -31,11 +31,11 @@ var dinamicBrush = true
 
 function toggleDinamicBrush() {
     dinamicBrush = !dinamicBrush
-    if(dinamicBrush == true){
-        Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25]+ "<br>" + alerts[language][7]) 
-    }else{
-        Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25]+ "<br>" + alerts[language][8])
-  
+    if (dinamicBrush == true) {
+        Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25] + "<br>" + alerts[language][7])
+    } else {
+        Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25] + "<br>" + alerts[language][8])
+
     }
 }
 function toggleDinamicInk() {
@@ -153,7 +153,7 @@ function mudaCor(valor) {
     iD("mostraCor").style.backgroundColor =
         strokeColor;
     //iD("mostraCor2").style.backgroundColor =
-     //   strokeColor;
+    //   strokeColor;
     //iD("pintar").style.backgroundColor = strokeColor;
     iD("preenchercor").style.backgroundColor = strokeColor;
     const toHslaObject = (hslaStr) => {
@@ -253,7 +253,7 @@ var changedBrush = false
 var brushName = "1-6-hsla(0,0%,0%,1)"
 
 async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
-    if (isGlowing){numero = 1}
+    if (isGlowing) { numero = 1 }
     brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
     brushMode = 1
@@ -261,8 +261,8 @@ async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strok
     brushCanva.height = tam
     brushCanva.width = tam
     brushCtx.globalAlpha = 0.1
-    if (isGlowing == false){
-    brushCtx.globalAlpha = 1
+    if (isGlowing == false) {
+        brushCtx.globalAlpha = 1
     }
     brushCtx.fillStyle = cor;
     brushCtx.fillRect(0, 0, tam, tam)
@@ -271,16 +271,29 @@ async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strok
     brushCtx.drawImage(basicBrushes[numero], 0, 0, tam, tam)
     brushCtx.globalCompositeOperation = 'source-over'
 
-    if (isGlowing){
-        var radius = tam/16;
-        var centerX = brushCanva.width/2
-        var centerY = brushCanva.height/2
+    if (isGlowing) {
+        var radius = tam / 16;
+        var centerX = brushCanva.width / 2
+        var centerY = brushCanva.height / 2
         brushCtx.beginPath();
         brushCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
         brushCtx.fillStyle = 'white';
         brushCtx.fill();
-//        cor = "#fff"
-        
+        //        cor = "#fff"
+
+    }
+}
+
+function rainbow() {
+    rainbowInk = !rainbowInk
+    mudaCorQ(2, 50)
+    mudaCorQ(1, 100)
+
+    if (rainbowInk == true) {
+        Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][7])
+    } else {
+        Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][8])
+
     }
 }
 
@@ -358,7 +371,7 @@ function clearBrushes() {
         newBrushes[key] = novoBrushes[key]
     })
 }
-var center = {x: canvas.width / 2 , y: canvas.height / 2};
+var center = { x: canvas.width / 2, y: canvas.height / 2 };
 var radius = (canvas.width / 2) - 10;
 var slices = 24;
 var _angle = 360 / slices;
@@ -366,33 +379,33 @@ var _start = 0
 var flag = false;
 var dot_flag = false
 
-function drawMandala(GCO, X, Y, eoX, eoY, strokeWidth){
+function drawMandala(GCO, X, Y, eoX, eoY, strokeWidth) {
     drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth)
     _start = 0
-    for(var i = 0; i < slices - 1; i++) {
+    for (var i = 0; i < slices - 1; i++) {
         _start += _angle;
-        var rP = rotate({x: eoX, y: eoY}, center, _start);
-        var rC = rotate({x: X, y: Y}, center, _start);
-       drawBrush2(GCO, rP.x,rP.y, rC.x, rC.y, strokeWidth);
+        var rP = rotate({ x: eoX, y: eoY }, center, _start);
+        var rC = rotate({ x: X, y: Y }, center, _start);
+        drawBrush2(GCO, rP.x, rP.y, rC.x, rC.y, strokeWidth);
 
     }
 }
 
 var d2r = function (deg) {
-    return deg * Math.PI/180;
+    return deg * Math.PI / 180;
 }
 
 var getPointOnCircle = function (deg, center, radius) {
     var rad = d2r(deg);
     var x = center.x + radius * Math.cos(rad);
     var y = center.y + radius * Math.sin(rad);
-    return { x: x, y: y};
+    return { x: x, y: y };
 }
 function rotate(p1, p2, a) {
     a = d2r(a);
     var xr = (p1.x - p2.x) * Math.cos(a) - (p1.y - p2.y) * Math.sin(a) + p2.x;
     var yr = (p1.x - p2.x) * Math.sin(a) + (p1.y - p2.y) * Math.cos(a) + p2.y;
-    return {x:xr, y:yr};
+    return { x: xr, y: yr };
 }
 function findxy(res, e) {
     if (res == 'down') {
@@ -421,10 +434,10 @@ function findxy(res, e) {
         }
     }
 }
-function drawBrush(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF){
-    if (mandala){
+function drawBrush(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
+    if (mandala) {
         drawMandala(GCO, x1, y1, x2, y2, strokeWidth)
-    }else{
+    } else {
         drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont)
     }
 }
@@ -453,21 +466,21 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
             x = redondo(x) + 1
             y = redondo(y) + 1
         }
-    
-    /*    if (isGlowing){
-            let globaltemp = context.globalCompositeOperation
-            var blur = 10;
-            context.shadowColor = strokeColor
-            context.shadowOffsetX = 0;
-            context.shadowOffsetY = 0;
-            context.shadowBlur = blur;
-            context.globalCompositeOperation = "destination-over"
-            context.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
-            context.globalCompositeOperation = globaltemp
-            context.shadowBlur = 0;
-            
 
-        }*/
+        /*    if (isGlowing){
+                let globaltemp = context.globalCompositeOperation
+                var blur = 10;
+                context.shadowColor = strokeColor
+                context.shadowOffsetX = 0;
+                context.shadowOffsetY = 0;
+                context.shadowBlur = blur;
+                context.globalCompositeOperation = "destination-over"
+                context.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
+                context.globalCompositeOperation = globaltemp
+                context.shadowBlur = 0;
+                
+    
+            }*/
         cont.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
     }
 }
@@ -518,11 +531,11 @@ const RGBAToHSLA = (r, g, b, a) => {
 
 var oldBrush = [lastbrush, strokeWidth, strokeColor, globalComposite]
 
-function changeType(){
-    let objs = ["H","S","L","A"]
+function changeType() {
+    let objs = ["H", "S", "L", "A"]
     let tipo = 'number'
-    if (iD("H").type == tipo){ tipo = 'range'}
-    for (i = 0; i < objs.length; i++){
+    if (iD("H").type == tipo) { tipo = 'range' }
+    for (i = 0; i < objs.length; i++) {
         iD(objs[i]).setAttribute('type', tipo)
     }
 }

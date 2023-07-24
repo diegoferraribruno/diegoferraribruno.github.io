@@ -232,7 +232,7 @@
                         <span title="infinity" class="emoji ">♾️</span></span>
                     <span id="mandala" title="mandala" class="mais" onmousedown="Mandala()">⚛️</span>
                     <!--span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span-->
-                    <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="glow()"
+                    <span id="glow" title="glow" class="mais selected" onmousedown="glow()"
                         style="background-image: url('/img/glowpaint.png'); color: #ffffff01;">.</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
                     </span>
@@ -292,6 +292,8 @@
 
                 <span class="botao glow">
                     <span title="Preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais">🪣</span>
+                    <span id="glow" title="glow" class="mais selected" onmousedown="rainbow()"
+                        style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
 
                     </span>
@@ -801,9 +803,11 @@
                         onClick="yogaChange()">
                         Yoga Art 6<br>
                     </div>
-                    <br> <small>⚠️ Aplicativo instável. ⚠️<br>
-                        recorte do quadro nao operante .<br>
-                        Some functions are presenting problems:<br>
+                    <br>
+                    <img src="img/mandala.png" onclick="Mandala()">
+                    <img src="img/glowmandala.png" onclick="Mandala(), glow()">
+                    <small>⚠️ Aplicativo instável. ⚠️<br>
+                        *recorte do quadro nao operante .<br>
                         crop is not working. </small>
                 </span>
                 <span class=" botao" style="font-size: 0.8em;" title="Modos de arte">

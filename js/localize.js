@@ -76,7 +76,8 @@ var alerts = {
         24: "Modo Mandala",
         25: "Tamanho dinâmico do pincel",
         26: "Modo Pincel",
-        27: "Limite para desfazer = "
+        27: "Limite para desfazer = ",
+        28: "Tinta arco-íris"
     },
     "en": {
         0: "Please,<br> add ➕ frames to your animation",
@@ -106,7 +107,8 @@ var alerts = {
         24: "modo Mandala",
         25: "Dinamic brush size",
         26: "Paint Brush mode",
-        27: "Max undo Level = "
+        27: "Max undo Level = ",
+        28: "Rainbow Ink"
     }
 }
 let example = alerts[language][0]
@@ -303,7 +305,7 @@ let textos = {
         "93": "⚠️ Working <b>over</b> the canvas",
         "94": "Mandala slices:",
         "95": "Max undo Level"
-       
+
 
     }
 }
@@ -366,13 +368,13 @@ var titles = {
         "night": "modo escuro / claro",
         "nigth2": "modo escuro / claro",
         "desenho": "Desenho",
-        "cut":"Recortar seleção",
-        "copy":"Copiar seleção",
-        "paste":"Colar seleção (toque ou click para colar)",
-        "copynew":"Colar seleção para novo quadro",
-        "selecionar":"Selecionar copiar/recortar e colar",
-        "mandala":"mandala",
-        "dinamicBrush":"Tamanho dinamico"
+        "cut": "Recortar seleção",
+        "copy": "Copiar seleção",
+        "paste": "Colar seleção (toque ou click para colar)",
+        "copynew": "Colar seleção para novo quadro",
+        "selecionar": "Selecionar copiar/recortar e colar",
+        "mandala": "mandala",
+        "dinamicBrush": "Tamanho dinamico"
     },
     "en": {
 
@@ -433,14 +435,14 @@ var titles = {
         "night2": "switch light or dark",
         "apresenta": "presents",
         "desenho": "Drawing",
-        "cut":"Cut selection",
-        "copy":"Copy selection",
-        "paste":"Paste selection (toque ou click para colar)",
-        "pastenew":"Paste selection to a new frame",
-        "selecionar":"Select copy/cut and paste",
-        "mandala":"mandala",
-        "dinamicBrush":"Dinamic size"
-   
+        "cut": "Cut selection",
+        "copy": "Copy selection",
+        "paste": "Paste selection (toque ou click para colar)",
+        "pastenew": "Paste selection to a new frame",
+        "selecionar": "Select copy/cut and paste",
+        "mandala": "mandala",
+        "dinamicBrush": "Dinamic size"
+
 
     }
 }
