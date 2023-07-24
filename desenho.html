@@ -27,8 +27,8 @@
                 <span id="canvasmenu" title="Propriedades do desenho" class="mais" onclick="mostraMenu('quadro')">🖼️
 
                 </span>
-               
-                
+
+
                 <!--span id="recortar" class="mais" onclick="modeTo('recortar')"><img src="img/crop.png"></span -->
 
                 <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
@@ -41,7 +41,7 @@
             </div>
 
             <div id="ferramentas3" class="ferramentas">
-               
+
                 <span id="night" class="mais" onmousedown="night()" title="modo escuro / claro">💡</span>
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')">📷</span>
                 <span id="FX" title="filtros" class="mais" onclick="modeTo('FX')">🪄
@@ -56,7 +56,7 @@
                 <span id="redimensionar" class="mais" onclick="modeTo('redimensionar')">↔️</span>
 
                 </span>
-         
+
 
             </div>
 
@@ -65,15 +65,16 @@
                 <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">🖌️</span>
                 <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')">🎨</span>
                 <span title="Pega cor" id="picker" class="mais" onmousedown="modeTo('picker')">💉</span>
-                <span onmousedown="backPaint()" class="mais" id="globalComposite" >
+                <span onmousedown="backPaint()" class="mais" id="globalComposite">
                     <span
                         style="position:absolute; width:30px; display:inline-block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
                     <span
                         style="position:relative;  width:30px; display:inline-block;  color:black; left:-32px; margin-top:0px;"
                         title="Pintando por baixo">🔲</span>
                 </span>
-            
-                <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais" alt="ferramenta de seleção">
+
+                <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
+                    alt="ferramenta de seleção">
                     <img src="img/selectarrow.png" style="margin-top: 4px;"></span>
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎
                     <span id="x1"
@@ -102,7 +103,7 @@
                 <txt name="94">Fatias da mandala</txt>
                 <input id="mandalabar" type="number" min="0" max="32" value="24" step="1" style="width:160px"
                     onchange="mandalaSlices(this.value)"><br>
-                    
+
             </div>
             <div id="menupicker" class="submenu fundobranco">
                 <txt name="1">Toque numa área pintada<br>
@@ -223,15 +224,16 @@
             <div id="menupintar" class="fundobranco submenu menu">
 
                 <span class="botao"><span title="pintar" class="mais" onmousedown="modeTo('pintar')">🖌️</span>
-                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
-                <span class="mais" onclick="toggleDinamicBrush()"><div class="dinamicbrush">.</div>
-                </span>
-                <span id="tilemapbot" class="mais" onclick="tilePaint()">
-                    <span title="infinity"
-                            class="emoji ">♾️</span></span>
-                <span id="mandala" title="mandala" class="mais" onmousedown="Mandala()">⚛️</span>
+                    <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')">🧽</span>
+                    <span class="mais" onclick="toggleDinamicBrush()">
+                        <div class="dinamicbrush">.</div>
+                    </span>
+                    <span id="tilemapbot" class="mais" onclick="tilePaint()">
+                        <span title="infinity" class="emoji ">♾️</span></span>
+                    <span id="mandala" title="mandala" class="mais" onmousedown="Mandala()">⚛️</span>
                     <!--span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span-->
-                    <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="glow()" style="background-image: url('/img/glowpaint.png'); color: #ffffff01;">.</span>
+                    <span id="emoji" title="pintar emoji" class="mais selected" onmousedown="glow()"
+                        style="background-image: url('/img/glowpaint.png'); color: #ffffff01;">.</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
                     </span>
 
@@ -249,7 +251,7 @@
                     <span
                         style="display: block; float:left; margin: 2px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;"
                         onclick="addFavBrushPin()">📌</span>
-                 
+
                 </span>
                 <!--span class="botao">
                     💧 <input type="range" id="A2" name="transparencia" min="0.01" max="1"
@@ -290,38 +292,39 @@
 
                 <span class="botao glow">
                     <span title="Preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais">🪣</span>
-                      <span title="fechar" onmousedown="removeClass()" class="close">❎
-                   
+                    <span title="fechar" onmousedown="removeClass()" class="close">❎
+
                     </span>
 
-               
-                <!--img src="img/dinamicInk.png" style="margin-left: 4px;"><label class="toggle"> <input
+
+                    <!--img src="img/dinamicInk.png" style="margin-left: 4px;"><label class="toggle"> <input
                     type="checkbox" id="dinamicInk" onchange="toggleDinamicInk()"
                     style="width: 50px; margin-left: 8px">
                 <span class="knob"></span>
-            </label-->    
-            </span><br>
+            </label-->
+                </span><br>
                 <div id="paleta2" class="fundobranco glow">
                     <txt name="15">Use o 📌 para guardar sua cor.</txt>
                 </div>
                 <div id="paleta" class="fundobranco glow"></div>
                 <div id="menu" class="fundobranco glow">
-                    <span onclick="changeType()" style="display:block; position: absolute; margin-top: 60px; margin-left: 4px; font-size: large;">#</span>
+                    <span onclick="changeType()"
+                        style="display:block; position: absolute; margin-top: 60px; margin-left: 4px; font-size: large;">#</span>
                     <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais">
                         <span
                             style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span>
 
                     </span>
-                    
+
                     <br>
-                    🌈<input type="range" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)" style="width: 100px;"
-                    value="0"> <br>
-                    ◒ <input type="range" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)" style="width: 100px;"
-                    value="100"> <br>
-                    🔆 <input type="range" id="L" name="cor" min="0" max="100" oninput="mudaCorQ(2,this.value)" style="width: 100px;"
-                    value="50"> <br>
-                    💧<input type="range" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)" style="width: 100px;"
-                        step="0.01" value="1"><br>
+                    🌈<input type="range" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
+                        style="width: 100px;" value="0"> <br>
+                    ◒ <input type="range" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)"
+                        style="width: 100px;" value="100"> <br>
+                    🔆 <input type="range" id="L" name="cor" min="0" max="100" oninput="mudaCorQ(2,this.value)"
+                        style="width: 100px;" value="50"> <br>
+                    💧<input type="range" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
+                        style="width: 100px;" step="0.01" value="1"><br>
 
                 </div>
 
@@ -379,9 +382,8 @@
                     <span class="bot">
                         ↩️
                     </span>
-                    <txt name="95">max historico</txt> <input type="number" id="canvasOpacity"
-                        name="undolevel" min="1" max="16" oninput="historiaLimiteChange(this.value)" step="1"
-                        value="10" style="width:46px">
+                    <txt name="95">max historico</txt> <input type="number" id="canvasOpacity" name="undolevel" min="1"
+                        max="16" oninput="historiaLimiteChange(this.value)" step="1" value="10" style="width:46px">
                 </span>
 
                 <span id="fundo falso" class="botao">
@@ -415,7 +417,7 @@
                         <txt name="76">como fundo do app?</txt>
                     </span>
                 </span>
-                
+
 
             </div>
 
@@ -446,24 +448,24 @@
                     <span onmousedown="changeFPSup()" class="bot">⬆️</span> <span onmousedown="changeFPSdown()"
                         class="bot"> ⬇️</span>
                     <span onmousedown="play()" class="bot">▶️</span> </span>
-            
+
                 <span class="botao" onmousedown="cloneFrame()"> 🖼️ + 🖼️ <txt name="27">Duplicar o quadro</txt>
-                    </span>
-                    <span class="botao"> <span class="mais"><span
-                        style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;padding-top: 0px; font-size: 12px;">🖼️</span>
-                    <span
-                        style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left: 5px;font-size: 12px; ">🖼️</span>
-                    <span
-                        style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:0px; left: 7px;font-size: 12px; ">🖼️</span>
-
-
                 </span>
-                <txt name="21">Quadros visiveis</txt>
-                <label class="toggle"> <input type="checkbox" id="camadasnumber" onchange="quadrosVisiveis()"
-                        style="width: 50px; margin-left: 8px" checked>
-                    <span class="knob"></span>
-                </label>
-            </span>
+                <span class="botao"> <span class="mais"><span
+                            style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;padding-top: 0px; font-size: 12px;">🖼️</span>
+                        <span
+                            style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left: 5px;font-size: 12px; ">🖼️</span>
+                        <span
+                            style="color:white;position:absolute; opacity:0.7;  display:block; width:20px; top:0px; left: 7px;font-size: 12px; ">🖼️</span>
+
+
+                    </span>
+                    <txt name="21">Quadros visiveis</txt>
+                    <label class="toggle"> <input type="checkbox" id="camadasnumber" onchange="quadrosVisiveis()"
+                            style="width: 50px; margin-left: 8px" checked>
+                        <span class="knob"></span>
+                    </label>
+                </span>
                 <span class="botao">
                     <txt name="28">Mudar ordem do quadro</txt>
                     <span class="bot" onmousedown="swapL()">⬅️</span>
@@ -488,7 +490,7 @@
                     onchange="ZOOMf(this.value)">
                 <input id="tzoom" type="number" min="0.50" max="32" step="1" value="1" onchange="ZOOM(this.value)"
                     style="width: 44px"-->
-                
+
 
             </div>
             <div id="menuimagem" class="fundobranco submenu">
@@ -701,18 +703,18 @@
             </div>
 
             <div id="menuselecionar" class="fundobranco submenu">
-                <span  class="botao">
+                <span class="botao">
                     <span class="close" onmousedown="removeClass()">❎</span>
 
                     <!--txt name="90"> copiar para novo quadro </txt-->
-                 
+
                     <span id="copy" class="mais" title="copy" class="mais" onclick="copySelection()">
                         <span
-                        style="display: block; position: relative; margin-top: 4px; margin-left: -2px; font-size: 20px; ">
-                        📄</span>
+                            style="display: block; position: relative; margin-top: 4px; margin-left: -2px; font-size: 20px; ">
+                            📄</span>
                         <span
-                        style="display: block; position: absolute; margin-top: -42px; margin-left: 12px; font-size: 20px;">
-                        📄</span>
+                            style="display: block; position: absolute; margin-top: -42px; margin-left: 12px; font-size: 20px;">
+                            📄</span>
                     </span>
                     <span id="cut" class="mais" title="cut" class="mais" onclick="copySelection('cut')">
                         ✂️
@@ -799,15 +801,16 @@
                         onClick="yogaChange()">
                         Yoga Art 6<br>
                     </div>
-                    <br> <small>⚠️ Aplicativo instável. ⚠️<br>  
-                    Desfazer e recortar o quadro estão problematicos.<br>
-                    Some functions are presenting problems:<br> 
-                    undo, crop and probably some more. </small> 
+                    <br> <small>⚠️ Aplicativo instável. ⚠️<br>
+                        recorte do quadro nao operante .<br>
+                        Some functions are presenting problems:<br>
+                        crop is not working. </small>
                 </span>
                 <span class=" botao" style="font-size: 0.8em;" title="Modos de arte">
-                     <span id="cam" title="foto" class="mais"
+                    <span id="cam" title="foto" class="mais"
                         onmousedown="modeTo('cam'), removeElement('carregando')">📷</span>
-                    <span id="imagem" title="Carregar projeto ou imagem" class="mais" onmousedown="mostraMenu('imagem')">
+                    <span id="imagem" title="Carregar projeto ou imagem" class="mais"
+                        onmousedown="mostraMenu('imagem')">
                         <span
                             style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
                                 style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
@@ -817,11 +820,11 @@
                         <span
                             style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">🇬🇧<span
                                 style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">🇧🇷</span></span>
-    
+
                     </span>
                     <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span>
-    
-    
+
+
                 </span>
 
             </div>

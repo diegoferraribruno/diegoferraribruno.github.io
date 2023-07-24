@@ -19,7 +19,7 @@ function startup() {
     emojipicker();
   });*/
   Fundo("none")
-  counter = setInterval(() => undoing(), 300)
+  counter = setInterval(() => undoing(), 750)
   window.onkeydown = function (event) {
     if (event.ctrlKey && event.key === 'c') {
       copySelection();
@@ -33,7 +33,7 @@ function startup() {
     // console.log(event.key)
     if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
       if (mode != "emoji") {
-       
+
         if (event.key === "Enter" && mode == "recortar") {
           cortar();
         } else if (event.key === "Enter" && mode == "cam") {
@@ -144,7 +144,7 @@ function startup() {
     // iD("canvas_div2").addEventListener("pointerup", handleUp);
 
     canvas.addEventListener("pointercancel", handleCancel);
-   // canvas.addEventListener("pointermove", handleMove);
+    // canvas.addEventListener("pointermove", handleMove);
     win.addEventListener("pointerleave", handleEnd);
     canvas.addEventListener("dragover", dragOver);
     canvas.addEventListener("drop", drop);
@@ -155,12 +155,12 @@ function startup() {
 
     win.addEventListener("pointermove", handleMove);
 
-    
-      iD("lixeira()").addEventListener("drop", drop);
-      iD("lixeira()").addEventListener("dragover", dragOver);
-      iD("new_frame()").addEventListener("drop", drop);
-      iD("new_frame()").addEventListener("dragover", dragOver);
- 
+
+    iD("lixeira()").addEventListener("drop", drop);
+    iD("lixeira()").addEventListener("dragover", dragOver);
+    iD("new_frame()").addEventListener("drop", drop);
+    iD("new_frame()").addEventListener("dragover", dragOver);
+
 
     // limpaCabeca();
     apresenta()
@@ -195,7 +195,7 @@ function wheel(e) {
 
 function updateCanvasFrontDeg() {
   canvasFrontDeg = +iD("canvasfrontdeg").value
-  rotateFront(canvasFrontDeg, canvasRender.width/2, canvasRender.height/2)
+  rotateFront(canvasFrontDeg, canvasRender.width / 2, canvasRender.height / 2)
   canvasFront.classList.remove("esconde")
 }
 function loading() {
