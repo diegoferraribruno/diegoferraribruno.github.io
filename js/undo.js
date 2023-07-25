@@ -10,7 +10,7 @@ let posicoes = new Array(0)
 var executing = false
 var undoLevel = -1
 var historia = [[], []]
-var historiaLimite = 10
+var historiaLimite = 8
 
 function drawTo(GCO = context.globalCompositeOperation,
     source = canvasFront,
@@ -52,7 +52,7 @@ function redo() {
     let lenH = historia[workingframe].length;
     undoLevel++
     if (undoLevel > lenH - 1) {
-        undoLevel = 0
+        undoLevel = lenH - 1
     }
     goback(undoLevel)
 

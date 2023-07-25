@@ -19,7 +19,7 @@ function startup() {
     emojipicker();
   });*/
   Fundo("none")
-  counter = setInterval(() => undoing(), 750)
+  counter = setInterval(() => undoing(), 600)
   window.onkeydown = function (event) {
     if (event.ctrlKey && event.key === 'c') {
       copySelection();

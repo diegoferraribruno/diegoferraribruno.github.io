@@ -176,6 +176,11 @@ function handleStart(evt) {
             lastInk = hsla[3]
 
         }
+        if (rainbowInk) {
+            value = hsla[0] + 3
+            if (value > 360) { value = 0 }
+            mudaCorQ(0, value)
+        }
         canvasFront.classList.remove("esconde")
         isDrawing = true
         mouseOver = true;
@@ -337,7 +342,7 @@ function handleMove(evt) {
             }
             if (lastInk > 0.1) {
                 if (rainbowInk) {
-                    value = hsla[0] + 6
+                    value = hsla[0] + 3
                     if (value > 360) { value = 0 }
                     mudaCorQ(0, value)
                 }
@@ -716,19 +721,11 @@ function handleEnd(evt) {
     }
     document.body.style.cursor = "pointer";
     if (isGrabing) {
-
-
         scrollCanva(
             (evt.pageX - offsetX) - window.innerWidth / 4,
             (evt.pageY - offsetY) - window.innerHeight / 4
         )
-
-
-
-
         isGrabing = false;
-
-
     }
 
     scrollWindow.x = 0

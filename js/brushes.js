@@ -272,14 +272,14 @@ async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strok
     brushCtx.globalCompositeOperation = 'source-over'
 
     if (isGlowing) {
+
         var radius = tam / 16;
         var centerX = brushCanva.width / 2
         var centerY = brushCanva.height / 2
         brushCtx.beginPath();
         brushCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        brushCtx.fillStyle = 'white';
+        brushCtx.fillStyle = `hsla(${hsla[0]},60%,60%,0.3)`;
         brushCtx.fill();
-        //        cor = "#fff"
 
     }
 }
@@ -380,9 +380,9 @@ var flag = false;
 var dot_flag = false
 
 function drawMandala(GCO, X, Y, eoX, eoY, strokeWidth) {
-    drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth)
+    // drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth)
     _start = 0
-    for (var i = 0; i < slices - 1; i++) {
+    for (var i = 0; i < slices; i++) {
         _start += _angle;
         var rP = rotate({ x: eoX, y: eoY }, center, _start);
         var rC = rotate({ x: X, y: Y }, center, _start);

@@ -230,6 +230,9 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
     iD("largura").value = W
     iD("altura").value = H
     setCenter()
+    if (W > 640) {
+        historiaLimiteChange(4)
+    }
     // setTimeout(() => comandosExec(), 100)
 }
 
