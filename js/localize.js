@@ -374,7 +374,9 @@ var titles = {
         "copynew": "Colar seleção para novo quadro",
         "selecionar": "Selecionar copiar/recortar e colar",
         "mandala": "mandala",
-        "dinamicBrush": "Tamanho dinamico"
+        "dinamicBrush": "Tamanho dinamico",
+        "rainbow": "Tinta Arco-íris",
+        "glow": "Desenho com luz"
     },
     "en": {
 
@@ -403,7 +405,7 @@ var titles = {
         "imagem": "Load image / project",
         "mostraCor2": "Colors",
         "picker2": "Color Picker",
-        "Preencher": "Fill",
+        "preencher": "Fill",
         "mostraCor": "Colors",
         "salvaCor": "Keep Color",
         "canvasmenu": "Canvas Settings",
@@ -441,8 +443,9 @@ var titles = {
         "pastenew": "Paste selection to a new frame",
         "selecionar": "Select copy/cut and paste",
         "mandala": "mandala",
-        "dinamicBrush": "Dinamic size"
-
+        "dinamicBrush": "Dinamic size",
+        "rainbow": "Rainbow Ink",
+        "glow": "Glowing in the dark mode"
 
     }
 }
