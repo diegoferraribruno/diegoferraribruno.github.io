@@ -77,7 +77,8 @@ var alerts = {
         25: "Tamanho dinâmico do pincel",
         26: "Modo Pincel",
         27: "Limite para desfazer = ",
-        28: "Tinta arco-íris"
+        28: "Tinta arco-íris",
+        29: "Desenho Espelhado"
     },
     "en": {
         0: "Please,<br> add ➕ frames to your animation",
@@ -108,7 +109,8 @@ var alerts = {
         25: "Dinamic brush size",
         26: "Paint Brush mode",
         27: "Max undo Level = ",
-        28: "Rainbow Ink"
+        28: "Rainbow Ink",
+        29: "Mirror mode"
     }
 }
 let example = alerts[language][0]
@@ -376,7 +378,8 @@ var titles = {
         "mandala": "mandala",
         "dinamicBrush": "Tamanho dinamico",
         "rainbow": "Tinta Arco-íris",
-        "glow": "Desenho com luz"
+        "glow": "Desenho com luz",
+        "mirror": "Desenho espelhado"
     },
     "en": {
 
@@ -445,7 +448,8 @@ var titles = {
         "mandala": "mandala",
         "dinamicBrush": "Dinamic size",
         "rainbow": "Rainbow Ink",
-        "glow": "Glowing in the dark mode"
+        "glow": "Glowing in the dark mode",
+        "mirror": "Mirror mode"
 
     }
 }

@@ -1,6 +1,8 @@
 let vers = [{
-    versao: 6.2,
+    versao: "6.4",
     notas: [
+        "Modo Espelho (mirror)",
+        "Arrumado undo e redo",
         "rainbow ink - tinta arco-íris!",
         "glow ink - tinta brilhante",
         "Mandala mode from <a href='https://jsart.co/150/drawing-mandala-with-js-canvas/'>Dragan Bajcic</a>",

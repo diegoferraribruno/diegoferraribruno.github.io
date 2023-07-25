@@ -29,6 +29,7 @@ brush.onload = function () {
 newBrush.src = brush.src
 var dinamicBrush = true
 
+
 function toggleDinamicBrush() {
     dinamicBrush = !dinamicBrush
     if (dinamicBrush == true) {
@@ -390,6 +391,24 @@ function drawMandala(GCO, X, Y, eoX, eoY, strokeWidth) {
 
     }
 }
+function drawMirror(GCO, X, Y, eoX, eoY, strokeWidth) {
+    // drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth)
+    let X2, Y2, eoX2, eoY2
+    if (X < center.x) {
+        X2 = canvas.width - X
+        eoX2 = canvas.width - eoX
+    } else {
+        X2 = canvas.width - X
+        eoX2 = canvas.width - eoX
+
+    }
+
+    drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth);
+    drawBrush2(GCO, X2, Y, eoX2, eoY, strokeWidth);
+
+
+}
+
 
 var d2r = function (deg) {
     return deg * Math.PI / 180;
@@ -434,10 +453,14 @@ function findxy(res, e) {
         }
     }
 }
+
 function drawBrush(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
     if (mandala) {
         drawMandala(GCO, x1, y1, x2, y2, strokeWidth)
-    } else {
+    } else if (mirror) {
+        drawMirror(GCO, x1, y1, x2, y2, strokeWidth)
+    }
+    else {
         drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont)
     }
 }
