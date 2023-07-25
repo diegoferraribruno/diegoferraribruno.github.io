@@ -119,5 +119,5 @@ function Historia(imagem = canvas.toDataURL('image/png')) {
 }
 function historiaLimiteChange(value) {
     historiaLimite = value
-    alert(alerts[language][27] + historiaLimite)
+    Alert(alerts[language][27] + historiaLimite)
 }
