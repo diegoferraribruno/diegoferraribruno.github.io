@@ -264,12 +264,14 @@ function changeFPS(valor) {
 }
 function changeFPSup() {
     fps++
+    if (fps > 60) { fps = 60 }
     iD("fpsnumber").value = fps
     stop()
     play()
 }
 function changeFPSdown() {
     fps--
+    if (fps < 1) { fps = 1 }
     iD("fpsnumber").value = fps
     stop()
     play()
@@ -379,9 +381,15 @@ function lixeira() {
 var dataTransfer = 0
 var image2 = new Image;
 function dragStart(event) {
-    dataTransfer = parseInt(event.target.id, 10);
-    image2.src = animacao[dataTransfer]
+    if (event.target.id[0] != "c") {
+        dataTransfer = parseInt(event.target.id, 10);
+        image2.src = animacao[dataTransfer]
+    }
+    else {
+        dataTransfer = event.target.id
+        image2.src = clipboard[parseInt(dataTransfer, 10)]
 
+    }
 }
 
 function dragEnd(event) {
@@ -401,36 +409,51 @@ function dragOver(event) {
 function drop(event) {
     event.preventDefault()
     const toContainer = event.currentTarget;
-    if (toContainer.id == "lixeira()") {
-        historia.splice(dataTransfer, 1);
-        animacao.splice(dataTransfer, 1);
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        workingframe = 0
-        if (animacao.length == 0) {
-            animacao[workingframe] = []
+    if (dataTransfer[0] != "c") {
+        if (toContainer.id == "lixeira()") {
+
+            console.log(dataTransfer)
+            historia.splice(dataTransfer, 1);
+            animacao.splice(dataTransfer, 1);
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+            workingframe = 0
+            if (animacao.length == 0) {
+                animacao[workingframe] = []
+                Historia()
+            }
+
+            changeFrame(0)
+            adicionaQuadro()
+
+
+        } else if (toContainer.id == "new_frame()") {
+
+            cloneFrame(dataTransfer)
+        } else if (toContainer.id == "canvas") {
+            ctxF.setTransform(1, 0, 0, 1, 0, 0);
+            ctxF.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(image2, event.layerX - image2.width / 2, event.layerY - image2.height / 2)
             Historia()
+            origin.x = 0
+            origin.y = 0
+
         }
+        else if (toContainer !== dataTransfer) {
 
-        changeFrame(0)
-        adicionaQuadro()
-    } else if (toContainer.id == "new_frame()") {
-        cloneFrame(dataTransfer)
-    } else if (toContainer.id == "canvas") {
-        ctxF.setTransform(1, 0, 0, 1, 0, 0);
-        ctxF.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(image2, event.layerX - image2.width / 2, event.layerY - image2.height / 2)
-        Historia()
-        origin.x = 0
-        origin.y = 0
+            Alert("🎞️  " + dataTransfer + " 🔄 " + toContainer.id, 1.5)
+            swapItems(toContainer.id, dataTransfer)
+            workingframe = dataTransfer
+            changeFrame(workingframe)
 
-    }
-    else if (toContainer !== dataTransfer) {
-
-        Alert("🎞️  " + dataTransfer + " 🔄 " + toContainer.id, 1.5)
-        swapItems(toContainer.id, dataTransfer)
-        workingframe = dataTransfer
-        changeFrame(workingframe)
+        }
+    } else {
+        if (toContainer.id == "lixeira()") {
+            let n = dataTransfer.replace(/^\D+/g, '');// get number from string
+            clipboard.splice(n, 1);
+            console.log(n, "deleted")
+            setTimeout(() => { updateClipboard() }, 10)
+        }
 
     }
 }

@@ -551,6 +551,7 @@ input[type="range"] {
 .botao:hover {
     background-color: #eeeeee22;
 }
+
 #menuinfo {
     font-family: sans-serif;
     align-items: left;
@@ -613,8 +614,9 @@ input[type="range"] {
     position: fixed;
     left: -156px;
 }
+
 .hideanime2 {
-    display: none;   
+    display: none;
 }
 
 
@@ -683,6 +685,18 @@ input[type="range"] {
     background-size: cover;
 }
 
+.quadrofilme2 {
+    display: inline-block;
+    height: 30px;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    width: 32px;
+    min-width: 32px;
+    background-size: cover;
+}
+
 .thumb {
     width: 32px;
     height: 26px;
@@ -694,7 +708,7 @@ input[type="range"] {
     text-shadow: -1px 0 #ffffff, 0 1px #ffffff, 1px 0 #ffffff, 0 -1px #ffffff;
     text-align: center;
     padding-top: 24px;
-    cursor:grab;
+    cursor: grab;
 }
 
 .wf {
@@ -863,13 +877,16 @@ input[type="range"] {
     vertical-align: top;
 
 }
-.cursorcopy{
+
+.cursorcopy {
     cursor: copy;
 }
-.cursorgrab{
-    cursor:grab;
+
+.cursorgrab {
+    cursor: grab;
 }
-.dinamicbrush{
+
+.dinamicbrush {
     background-image: url('../img/dinamicbrush.png');
     height: 36px;
     width: 36px;

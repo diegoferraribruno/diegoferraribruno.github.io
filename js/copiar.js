@@ -40,8 +40,8 @@ function drawSelection() {
 }
 
 function copySelection(newfr = false) {
-  if(selecionado){
-  
+  if (selecionado) {
+
     var minX, minY, maxX, maxY, width, height
     if (iD("retangularselection").checked == false) {
       minX = Math.min(...selectionPaths.flat().map(([x]) => x));
@@ -71,7 +71,7 @@ function copySelection(newfr = false) {
     canvasRender.height = height;
     ctxR.setTransform(1, 0, 0, 1, 0, 0);
     ctxR.clearRect(0, 0, width, height);
-    if(width==-Infinity || width==0 || height==0){
+    if (width == -Infinity || width == 0 || height == 0) {
       width = canvas.width
       height = canvas.height
       minX = 0
@@ -101,7 +101,7 @@ function copySelection(newfr = false) {
 
     }
     ctxR.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
-   // resetFrame()
+    // resetFrame()
     ctxR.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
     let image1 = canvasRender.toDataURL()
 
@@ -109,8 +109,8 @@ function copySelection(newfr = false) {
     //canvasRender.width = image2.width
     //canvasRender.height = image2.height
     //console.log(canvasRender.width, canvasRender.height)
+    clipboard.push(image1)
     image2.onload = function () {
-      clipboard.push(image1)
       canvasRender.width = canvas.width
       canvasRender.height = canvas.height
       ctxR.setTransform(1, 0, 0, 1, 0, 0);
@@ -119,36 +119,36 @@ function copySelection(newfr = false) {
       ctxR.drawImage(image2, redondo(canvasRender.width / 2 - image2.width / 2), redondo(canvasRender.height / 2 - image2.height / 2))
 
     }
-  /* if (newfr == "new") {
-
-      //new frame
-      undoLevel = 0
-    // save_frame()
-      resetFrame()
-      context.setTransform(1, 0, 0, 1, 0, 0);
-      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-      workingframe++
-      swapImg = canvasRender.toDataURL('image/png');
-      animacao.splice(workingframe, 0, swapImg);
-      let work = []
-      comandos.splice(workingframe, 0, work);
-      ctxF.setTransform(1, 0, 0, 1, 0, 0);
-      ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
-      clearFrame(workingframe)
-      comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
-      comandos[workingframe].push(comando)
-      // comandosParaComandosb()
-      changeBrush()
-      changeFrame(workingframe)
-      iD("contador").innerHTML = workingframe
-
-    }*/
+    /* if (newfr == "new") {
+  
+        //new frame
+        undoLevel = 0
+      // save_frame()
+        resetFrame()
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        workingframe++
+        swapImg = canvasRender.toDataURL('image/png');
+        animacao.splice(workingframe, 0, swapImg);
+        let work = []
+        comandos.splice(workingframe, 0, work);
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
+        clearFrame(workingframe)
+        comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
+        comandos[workingframe].push(comando)
+        // comandosParaComandosb()
+        changeBrush()
+        changeFrame(workingframe)
+        iD("contador").innerHTML = workingframe
+  
+      }*/
     //reset canvas size
     console.log(newfr)
-    if (newfr == "cut"){
+    if (newfr == "cut") {
       context.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
 
-      if(iD("retangularselection").checked == false){
+      if (iD("retangularselection").checked == false) {
         for (const path of selectionPaths) {
           context.beginPath();
           context.moveTo(path[0][0], path[0][1]);
@@ -161,8 +161,8 @@ function copySelection(newfr = false) {
           context.fill(); // Fill the selection shape
         }
         context.globalCompositeOperation = "source-over"
-      }else{
-    
+      } else {
+
         context.fillStyle = '#000000';
         context.fillRect(
           minX,
@@ -170,34 +170,34 @@ function copySelection(newfr = false) {
           width,
           height
         );
-      context.globalCompositeOperation = "source-over"
+        context.globalCompositeOperation = "source-over"
       }
     }
 
     resetSelection()
-  }else{
+  } else {
     let image1 = canvas.toDataURL()
 
     image2.src = image1
     //canvasRender.width = image2.width
     //canvasRender.height = image2.height
     //console.log(canvasRender.width, canvasRender.height)
+    clipboard.push(image1)
     image2.onload = function () {
       canvasRender.width = image2.width
       canvasRender.height = image2.height
-      ctxR.drawImage(image2,0,0)
-      clipboard.push(image1)
+      ctxR.drawImage(image2, 0, 0)
       updateClipboard()
-      if(newfr =="cut"){
+      if (newfr == "cut") {
         context.setTransform(1, 0, 0, 1, 0, 0);
-        context.clearRect(0, 0, canvas.width,context.canvas.height);
+        context.clearRect(0, 0, canvas.width, context.canvas.height);
       }
     }
   }
 
 }
 //resetSelection
-function resetSelection(){
+function resetSelection() {
   selectionPaths = [];
   currentPath = [];
   selecionado = false
@@ -220,17 +220,21 @@ function desenhaRetangulo2(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y
 
 }
 let clipboard = []
+
 function updateClipboard() {
   let content = ""
   let len = clipboard.length
   let clips = iD("clipboard")
   clips.innerHTML = ""
+
   for (i = 0; i < len; i++) {
     let newthumb = new Image()
     newthumb.src = clipboard[i]
-    newthumb.id = i
-    newthumb.classList.add("quadrofilme", "light", "cursorcopy")
+    newthumb.id = "c" + i
+    newthumb.classList.add("quadrofilme2", "light", "cursorcopy")
     newthumb.setAttribute("onclick", "changeImage2(" + i + ")")
+    newthumb.addEventListener("dragstart", dragStart);
+    newthumb.addEventListener("dragend", dragEnd);
     clips.appendChild(newthumb)
   }
 }
