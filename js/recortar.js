@@ -41,38 +41,38 @@ function cortar(autoCortar = false) {
 
         limpaRetangulo()
         Historia()
-        setTimeout(() => {
-            let noy = []
-            let nox = []
-            let pos = { x: -cropStart.x, y: -cropStart.y }
-            if (cropEnd.x < cropStart.x) {
-                nox = [cropStart.x, cropEnd.x]
-                pos.x = -cropEnd.x;
-            } else {
-                nox = [cropEnd.x, cropStart.x]
-            }
-            if (cropEnd.y < cropStart.y) {
-                noy = [cropStart.y, cropEnd.y]
-                pos.y = -cropEnd.y;
-            } else {
-                noy = [cropEnd.y, cropStart.y]
-            }
-            let x0 = redondo(nox[0])
-            let y0 = redondo(noy[0])
-            let x1 = redondo(nox[1])
-            let y1 = redondo(noy[1])
-            let W = x0 - x1;
-            let H = y0 - y1;
-            let oldGCO = context.globalCompositeOperation;
-            changeGCO("source-over");
-            context.imageSmoothingEnabled = false;
-            tamanho(W, H)
-            changeGCO(oldGCO);
-            var len = animacao.length
-            setTimeout(cortarAnima(x0, y0, x1, y1), 600)
-            setTimeout(() => { prev_frame() }, 600 + (50 * len))
 
-        }, 200)
+        let noy = []
+        let nox = []
+        let pos = { x: -cropStart.x, y: -cropStart.y }
+        if (cropEnd.x < cropStart.x) {
+            nox = [cropStart.x, cropEnd.x]
+            pos.x = -cropEnd.x;
+        } else {
+            nox = [cropEnd.x, cropStart.x]
+        }
+        if (cropEnd.y < cropStart.y) {
+            noy = [cropStart.y, cropEnd.y]
+            pos.y = -cropEnd.y;
+        } else {
+            noy = [cropEnd.y, cropStart.y]
+        }
+        let x0 = redondo(nox[0])
+        let y0 = redondo(noy[0])
+        let x1 = redondo(nox[1])
+        let y1 = redondo(noy[1])
+        let W = x0 - x1;
+        let H = y0 - y1;
+        console.log("y0", y0, "y1", y1)
+        let oldGCO = context.globalCompositeOperation;
+        changeGCO("source-over");
+        context.imageSmoothingEnabled = false;
+        tamanho(W, H)
+        //   var len = animacao.length
+        cortarAnima(x1, y1, x0, y0)
+        //setTimeout(() => { prev_frame() }, 600 + (50 * len))
+        //changeGCO(oldGCO);
+
 
     } else { removeClass() };
 }
@@ -94,57 +94,27 @@ function cut() {
 
 }
 
-function cortarAnima(x1, y1, x2, y2) {
+function cortarAnima(x0, y0, x1, y1) {
     setTimeout(() => {
         removeClass()
         Alert(alerts[language][16] + "<br>" + alerts[language][17])
     }
         , 10)
 
-
-
-    let frame = 0
     let len = animacao.length
 
     for (i = 0; i <= len; i++) {
         if (i < len) {
 
-            framesToCanvas(x1, y1, x2, y2, i)
+            framesToCanvas(x0, y0, x1, y1, i)
         } else {
             setTimeout(() => {
-                ctxF.setTransform(1, 0, 0, 1, 0, 0);
-                ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
-                canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
-                canvasBack.ctx.clearRect(0, 0, canvasFront.width, canvasFront.height);
-
-                setTimeout(() => { for (i = 0; i < len - 1; i++) { changeFrame(i) } }, 200)
-
-            }, 100)
+                adicionaQuadro()
+                changeFrame(len - 1)
+            }, 1000 * len)
         }
 
     }
-
-    function framesToCanvas(x2, y2, x1, y1, frame = 0) {
-        let imagem = new Image()
-        let W = x2 - x1
-        let H = y2 - y1
-        canvasFront.width = W
-        canvasFront.height = H
-        canvasBack.width = W
-        canvasBack.height = H
-        imagem.width = W
-        imagem.height = H
-        blob = dataURItoBlob(animacao[frame]);
-        imagem.src = URL.createObjectURL(blob);
-        imagem.onload =
-            function () {
-                ctxF.setTransform(1, 0, 0, 1, 0, 0);
-                ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
-                ctxF.drawImage(imagem, x1, y1, x2, y2, 0, 0, x2, y2);
-                canvasToFrame(frame)
-            }
-    }
-
 
     setTimeout(() => {
         let len = newAnima.length
@@ -158,40 +128,34 @@ function cortarAnima(x1, y1, x2, y2) {
             autoCropMin = { x: canvas.width, y: canvas.height };
             cropEnd.x = 0;
             cropEnd.y = 0;
-        }, 10)
+        }, 500)
 
-    }, 100 * len)
+    }, 200 * len)
 
-
-}
-function canvasToFrame(frame = 0) {
-    swapImg = canvasFront.toDataURL('image/png');
-    newAnima[frame] = swapImg
-    comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
-    comandos[workingframe] = []
-    comandos[workingframe].push(comando)
-    workingframe = frame
-    // comandosParaComandosb()
 
 }
+function framesToCanvas(x0, y0, x1, y1, frame = 0) {
+    setTimeout(() => {
+        //alert(frame)
+        let W = x1 - x0
+        let H = y1 - y0
+        let imageFrame = new Image;
 
-function x2(w = iD("largura").value, h = iD("altura").value) {
-    w = w * 2;
-    h = h * 2;
-    if (w > 2500) {
-        w = w / 4;
-        h = h / 4;
-    }
-    var resultado = confirm(
-        "\t\t\t\t↔️ Deseja mudar o tamanho da tela de \n" +
-        `\t\t\t\t\t\t${w}px x ${h}px\n` +
-        `\t\t\t\t\t\t\tpara\n` +
-        `\t\t\t\t\t\t${w}px x ${h}px\n\n`
-    );
-    if (resultado === true) {
-        tamanho(w, h)
-    }
+        imageFrame.src = animacao[frame]
+        imageFrame.onload = function () {
 
+            //context.globalAlpha = 0.1
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.clearRect(0, 0, canvasFront.width, canvasFront.height);
+            context.drawImage(imageFrame, -x0, -y0, imageFrame.width, imageFrame.height)
+            workingframe = frame;
+            Historia()
+            swapImg = canvas.toDataURL('image/png');
+            newAnima[frame] = swapImg
+        }
+
+    }, 50 * frame
+    )
 }
 
 function tamanhom() {
