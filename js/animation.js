@@ -7,8 +7,8 @@ var anime_menu = {
     "prev_frame()": ["⏮️", "Quadro anterior"],
     "play()": ["▶️", "Tocar Animação"],
     "next_frame()": ["⏭️", "Próximo quadro"],
-   // "swapL()": ["⬅️", "Mover quadro á esquerda"],
-   // "swapR()": ["➡️", "Mover quadro á direita"],
+    // "swapL()": ["⬅️", "Mover quadro á esquerda"],
+    // "swapR()": ["➡️", "Mover quadro á direita"],
     'lixeira()': ["🗑", "Arraste um quadro para apaga-lo"]
 }
 
@@ -99,14 +99,14 @@ function new_frame() {
     swapImg = canvas.toDataURL('image/png');
     animacao.splice(workingframe, 0, swapImg);
     let work = []
-   // comandos.splice(workingframe, 0, work);
+    // comandos.splice(workingframe, 0, work);
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
     ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     //comandos[workingframe] = []
     //changeBrush()
-   // convertToImg()
+    // convertToImg()
     changeFrame(workingframe)
     iD("contador").innerHTML = workingframe
 
@@ -212,14 +212,14 @@ function changeFrame(frame) {
     var imageFrame = new Image;
     imageFrame.src = animacao[frame]
     //context.globalAlpha = 0.1
-    context.drawImage(imageFrame, 0, 0, canvasBack.width, canvasBack.height)
-        undoLevel = 0
-        setTimeout(()=>{context.globalCompositeOperation=oldGCO}, 60)
-        scrollFilme()
-   
+    context.drawImage(imageFrame, 0, 0, imageFrame.width, imageFrame.height)
+    undoLevel = 0
+    setTimeout(() => { context.globalCompositeOperation = oldGCO }, 60)
+    scrollFilme()
+
 }
 
-function resetFrame(){
+function resetFrame() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     var imageFrame = new Image;
@@ -331,40 +331,40 @@ var animSize = 0
 async function adicionaQuadro() {
     let filme = iD("filmecontainer")
     filme.innerHTML = ""
-    let newFilme =  document.createElement("div")
-        newFilme.classList.add("filme")
-        newFilme.id = "filme"
-           animSize = animacao.length
-        for (i = 0; i < animSize; i++) {
-            let cont = document.createElement("div")
-            cont.id = i
-            cont.classList.add("quadrofilme", "light")
-            cont.addEventListener("dragover", dragOver);
-            cont.addEventListener("drop", drop);
-            let thumb = document.createElement("div")
-            thumb.innerHTML = i
-            thumb.style.backgroundImage = 'url("' + animacao[i] + '")';
+    let newFilme = document.createElement("div")
+    newFilme.classList.add("filme")
+    newFilme.id = "filme"
+    animSize = animacao.length
+    for (i = 0; i < animSize; i++) {
+        let cont = document.createElement("div")
+        cont.id = i
+        cont.classList.add("quadrofilme", "light")
+        cont.addEventListener("dragover", dragOver);
+        cont.addEventListener("drop", drop);
+        let thumb = document.createElement("div")
+        thumb.innerHTML = i
+        thumb.style.backgroundImage = 'url("' + animacao[i] + '")';
 
-            thumb.id = i + "thumb"
-            thumb.classList.add("thumb")
-            thumb.draggable = true
-            thumb.addEventListener("click", function (event) {
-                let changeToFrame = parseInt(event.target.id, 10)
-                if (changeToFrame != workingframe) {
-                    workingframe = changeToFrame
-                    changeFrame(workingframe)
-                }
+        thumb.id = i + "thumb"
+        thumb.classList.add("thumb")
+        thumb.draggable = true
+        thumb.addEventListener("click", function (event) {
+            let changeToFrame = parseInt(event.target.id, 10)
+            if (changeToFrame != workingframe) {
+                workingframe = changeToFrame
+                changeFrame(workingframe)
+            }
 
-            });
-            thumb.addEventListener("dragstart", dragStart);
-            thumb.addEventListener("dragend", dragEnd);
-            cont.appendChild(thumb)
-            newFilme.appendChild(cont)
-        
-        }
-        filme.appendChild(newFilme)
-        scrollFilme()
+        });
+        thumb.addEventListener("dragstart", dragStart);
+        thumb.addEventListener("dragend", dragEnd);
+        cont.appendChild(thumb)
+        newFilme.appendChild(cont)
+
     }
+    filme.appendChild(newFilme)
+    scrollFilme()
+}
 function scrollFilme(onde = workingframe) {
     filme.scrollLeft = onde * 32
 
@@ -411,7 +411,7 @@ function drop(event) {
             animacao[workingframe] = []
             Historia()
         }
-        
+
         changeFrame(0)
         adicionaQuadro()
     } else if (toContainer.id == "new_frame()") {

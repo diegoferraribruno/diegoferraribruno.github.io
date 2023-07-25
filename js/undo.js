@@ -33,8 +33,8 @@ function goback(pos = undoLevel) {
         context,
         0,
         0,
-        canvas.width,
-        canvas.height)
+        imageFrame.width,
+        imageFrame.height)
         , 10)
 
 }
