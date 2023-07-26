@@ -129,31 +129,37 @@ function camera() {
 
     }
 }
+
+let recspeed = 800
+
 function recMotion() {
     let vezes = iD("times").value
-    for (i = 0; i < vezes; i++) {
+    Alert("🔴 Rec", vezes)
+    if (iD("anime").classList.contains("hideanime")) {
+        limpaAnime()
+
+    }
+    //tirafoto()
+    for (i = 0; i <= vezes; i++) {
         setTimeout(() => {
+
             let W = canvasV.width;
             let H = canvasV.height;
             let offsetW = (W - canvas.width) / -2
             let offsetH = (H - canvas.height) / -2
             contextV.drawImage(video, 0, 0, W, H)
-            if (
-                !isCanvasBlank(canvasV)
-            ) {
-                img_b64 = canvasV.toDataURL("image/png");
-                blob = dataURItoBlob(img_b64)
-                if (blob != undefined) {
+            context.drawImage(canvasV, offsetW, offsetH, W, H)
 
-                    desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
-                    setTimeout(() => {
-                        // save_frame(blob)
-                        new_frame()
-                    }, 10)
-                }
-            }
-        }, 800 * i)
+            Historia()
+            //desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
+            setTimeout(() => {
+                // save_frame(blob)
+                new_frame()
+            }, 10)
+
+        }, recspeed * i)
     }
+    setTimeout(() => { removeVideo(); removeFrame() }, 820 * i)
 }
 async function tirafoto() {
     if (fotografando == true) {
@@ -166,18 +172,18 @@ async function tirafoto() {
         if (
             !isCanvasBlank(canvasV)
         ) {
-                drawTo( globalComposite, canvasV, context , offsetW, offsetH, W, H)
-                setTimeout(() => {
-                    if (stop_motion == false) {
-                        Historia()
-                        removeVideo();
-                    } else {
+            drawTo(globalComposite, canvasV, context, offsetW, offsetH, W, H)
+            setTimeout(() => {
+                if (stop_motion == false) {
+                    Historia()
+                    removeVideo();
+                } else {
 
-                        setTimeout(() => {
-                            new_frame()
-                        }, 200)
-                    }
-                }, 20)
+                    setTimeout(() => {
+                        new_frame()
+                    }, 200)
+                }
+            }, 20)
         }
     }
 

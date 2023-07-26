@@ -512,11 +512,12 @@
                 <span id="stopMotion" title="Modo de captura" class="bot" onmousedown="stopMotion()">
                     🎥
                 </span>
+
+                <span title="Ajustes da camera" class="bot" onmousedown="mostraSubMenu('camconfig')">🎚️</span>
                 <span id="recMotion" title="Gravar automaticamente" class="bot" style="font-size: medium;"
                     onmousedown="recMotion()">
-                    🔴</span>
-                <span title="Ajustes da camera" class="bot" onmousedown="mostraSubMenu('camconfig')">🎚️</span>
-                🎞️<input id="times" type="number" value="8" min="1" step="1" max="24" size="2" style="width: 42px;">
+                    🔴</span>🎞️<input id="times" type="number" value="8" min="1" step="1" max="24" size="2"
+                    style="width: 42px;">
 
                 <span class="close" title="fechar camera" onmousedown="modeTo('cam')">❎</span><br>
                 <select id="select" class="esconde" onchange="trocaCamera()">
