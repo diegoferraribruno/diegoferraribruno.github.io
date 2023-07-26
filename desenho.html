@@ -778,7 +778,13 @@
 
             </div>
             <div id="menucamconfig" class="fundobranco submenu" style="opacity:0.8; background-color: #ffffff00;">
-                <span class="close" title="fechar cam config" onmousedown="mostraSubMenu('camconfig')">❎</span>
+                <span class="botao">
+                    <span id="recMotion2" title="Gravar automaticamente" class="bot" style="font-size: medium;">
+                        🔴 </span>
+                    <txt name="96">capture interval</txt><br> <input id="setRecInterval" title="setRecInterval"
+                        type="number" min="0.5" max="10" step="0.5" value="1" onchange="changeRecSpeed(this.value)">s
+                    <span class="close" title="fechar cam config" onmousedown="mostraSubMenu('camconfig')">❎</span>
+                </span>
                 <div id="camoptions">
 
                     <div id="brightnessDiv" class="botao3">

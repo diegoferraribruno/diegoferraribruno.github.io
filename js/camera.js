@@ -130,7 +130,10 @@ function camera() {
     }
 }
 
-let recspeed = 800
+function changeRecSpeed(value) {
+    recspeed = value * 1000
+}
+let recspeed = 1000
 
 function recMotion() {
     let vezes = iD("times").value
@@ -160,7 +163,7 @@ function recMotion() {
 
         }, recspeed * i)
     }
-    setTimeout(() => { removeVideo(); removeFrame() }, 820 * i)
+    setTimeout(() => { removeVideo(); removeFrame() }, recspeed * i + 100)
 }
 async function tirafoto() {
     if (fotografando == true) {

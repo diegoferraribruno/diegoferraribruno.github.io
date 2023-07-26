@@ -209,7 +209,8 @@ let textos = {
         "92": "⚠️ Trabalhando <b>por baixo</b> do quadro",
         "93": "⚠️ Trabalhando <b>por cima</b> do quadro",
         "94": "Fatias da Mandala:",
-        "95": "Limite para desfazer"
+        "95": "Limite para desfazer",
+        "96": "intervalo de captura"
 
     },
     "en": {
@@ -306,7 +307,8 @@ let textos = {
         "92": "⚠️ Working <b>under</b> the canvas",
         "93": "⚠️ Working <b>over</b> the canvas",
         "94": "Mandala slices:",
-        "95": "Max undo Level"
+        "95": "Max undo Level",
+        "96": "Capture interval"
 
 
     }
