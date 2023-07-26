@@ -134,7 +134,7 @@ let recspeed = 800
 
 function recMotion() {
     let vezes = iD("times").value
-    Alert("🔴 Rec", vezes)
+
     if (iD("anime").classList.contains("hideanime")) {
         limpaAnime()
 
@@ -155,6 +155,7 @@ function recMotion() {
             setTimeout(() => {
                 // save_frame(blob)
                 new_frame()
+                Alert("🔴 Rec")
             }, 10)
 
         }, recspeed * i)
