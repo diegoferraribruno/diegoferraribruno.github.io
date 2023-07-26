@@ -1,13 +1,15 @@
 let vers = [{
-    versao: "6.4",
+    versao: "6.4.7",
     notas: [
-        "Modo Espelho (mirror)",
-        "Arrumado undo e redo",
+        "Captura de foto em sequencia com ajuste do intervalo",
+        "Melhoras visuais no Clipboard e possibilidade de deletar os itens",
+        "Modo de desenho Espelho (mirror)",
+        "Arrumado undo - redo e recorte",
+        "funcao de limite do numero de undo",
         "rainbow ink - tinta arco-íris!",
         "glow ink - tinta brilhante",
         "Mandala mode from <a href='https://jsart.co/150/drawing-mandala-with-js-canvas/'>Dragan Bajcic</a>",
         "new history and executing commands WIP"
-
     ]
 },
 {
