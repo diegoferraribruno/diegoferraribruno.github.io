@@ -65,6 +65,9 @@
                 <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
                     alt="ferramenta de seleção">
                     <img src="img/selectarrow.png" style="margin-top: 4px;"></span>
+                <span id="paste" class="mais" title="paste" class="mais" onclick="modeTo('paste')">
+                    📋️
+                </span>
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎
                     <span id="x1"
                         style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x
@@ -653,7 +656,7 @@
                 <span class="botao">
                     <span class="close" onmousedown="removeClass()">❎</span>
 
-                    <span id="copy" class="mais" title="copy" class="mais" onclick="copySelection()">
+                    <span id="copy" class="mais" title="copy" onclick="copySelection()">
                         <span
                             style="display: block; position: relative; margin-top: 4px; margin-left: -2px; font-size: 20px; ">
                             📄</span>
@@ -661,10 +664,10 @@
                             style="display: block; position: absolute; margin-top: -42px; margin-left: 12px; font-size: 20px;">
                             📄</span>
                     </span>
-                    <span id="cut" class="mais" title="cut" class="mais" onclick="copySelection('cut')">
+                    <span id="cut" class="mais" title="cut" onclick="copySelection('cut')">
                         ✂️
                     </span>
-                    <span id="paste" class="mais" title="paste" class="mais" onclick="modeTo('paste')">
+                    <span id="paste2" class="mais" title="paste" onclick="modeTo('paste')">
                         📋️
                     </span>
                 </span>

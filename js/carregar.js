@@ -146,7 +146,7 @@ var openFile = function (event) {
 
     var reader = new FileReader();
     reader.onload = async function () {
- 
+
         removeClass()
         newBrushes = {}
         projeto = JSON.parse(reader.result)
@@ -157,8 +157,10 @@ var openFile = function (event) {
         for (i = 0; i < len; i++) {
             workingframe = i
             animacao[i] = []
+            historia[i] = []
             let newimg = projeto["animacao"][i]
             animacao[i].push(newimg)
+            historia[i].push(newimg)
         }
         adicionaQuadro()
         changeFrame(workingframe)
@@ -224,54 +226,54 @@ var openFile = function (event) {
                 //setTimeout(() => setStrokeSize(brush[2]), 80)
             }
         }, 100)
-       /* setTimeout(() => {
-            //comandosb
-            let len = projeto["animacao"].length
-            animacao = []
-            for (i = 0; i < len; i++) {
-                //workingframe = i
-                animacao[i] = []
-                let newimg = projeto["animacao"][i]
-                animacao[i].push(newimg)
-               // animacao[workingframe] = canvas.toDataURL('image/png')
-                //save_frame()
-                 adicionaQuadro()
-
-            }
-            if (i > 1) {
-
-                for (i = 0; i <= len; i++) {
-                    setTimeout(() => {
-                        //   favBrush(newBrushes[0].key)
-                        next_frame()
-                    }, 400 * (i + 2))
-                }
-            } else {
-                setTimeout(() => {
-                 //   comandosExec()
-                    setTimeout(() => { Historia() }, 200)
-                }, 600)
-            }
-            //changeBrush()
-
-            if (
-
-                projeto["preferences"]["pixelGood"] == false
-            ) {
-                pixelGood = false
-            } else {
-                pixelGood = true
-            }
-
-            if (
-                projeto["preferences"]["dinamicBrush"] == true) {
-                dinamicBrush = true
-            } else {
-                dinamicBrush = false
-                iD("dinamicBrush").checked = false
-            }
-
-        }, 400 * (lenb + 2))*/
+        /* setTimeout(() => {
+             //comandosb
+             let len = projeto["animacao"].length
+             animacao = []
+             for (i = 0; i < len; i++) {
+                 //workingframe = i
+                 animacao[i] = []
+                 let newimg = projeto["animacao"][i]
+                 animacao[i].push(newimg)
+                // animacao[workingframe] = canvas.toDataURL('image/png')
+                 //save_frame()
+                  adicionaQuadro()
+ 
+             }
+             if (i > 1) {
+ 
+                 for (i = 0; i <= len; i++) {
+                     setTimeout(() => {
+                         //   favBrush(newBrushes[0].key)
+                         next_frame()
+                     }, 400 * (i + 2))
+                 }
+             } else {
+                 setTimeout(() => {
+                  //   comandosExec()
+                     setTimeout(() => { Historia() }, 200)
+                 }, 600)
+             }
+             //changeBrush()
+ 
+             if (
+ 
+                 projeto["preferences"]["pixelGood"] == false
+             ) {
+                 pixelGood = false
+             } else {
+                 pixelGood = true
+             }
+ 
+             if (
+                 projeto["preferences"]["dinamicBrush"] == true) {
+                 dinamicBrush = true
+             } else {
+                 dinamicBrush = false
+                 iD("dinamicBrush").checked = false
+             }
+ 
+         }, 400 * (lenb + 2))*/
         /*   setTimeout(() => {
                favBrush('1-6-hsla(0,0%,0%,1)');
            }
