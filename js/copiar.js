@@ -231,16 +231,20 @@ function updateClipboard() {
     let newthumb = new Image()
     newthumb.src = clipboard[i]
     newthumb.id = "c" + i
-    newthumb.classList.add("quadrofilme2", "light", "cursorcopy")
+    newthumb.classList.add("quadrofilme2", "cursorcopy")
+    if (newthumb.id == dataTransfer) {
+      newthumb.classList.add("wc")
+    }
     newthumb.setAttribute("onclick", "changeImage2(" + i + ")")
-    newthumb.addEventListener("dragstart", dragStart);
-    newthumb.addEventListener("dragend", dragEnd);
+    // newthumb.addEventListener("dragstart", dragStart);
+    // newthumb.addEventListener("dragend", dragEnd);
     clips.appendChild(newthumb)
   }
 }
 
 function changeImage2(n) {
   dataTransfer = "c" + n
+  iD(dataTransfer).classList.add("wC")
   image2.src = clipboard[n]
   ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
 }
