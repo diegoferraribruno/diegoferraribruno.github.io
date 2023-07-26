@@ -129,6 +129,7 @@ function startup() {
     },
     { passive: false }
   );
+  iD("lixeira").addEventListener("drop", drop);
   window.addEventListener("keyup", handleKeyUp);
   window.addEventListener("keydown", handleKeys);
   win.addEventListener("gesturestart", prevent, { passive: false });

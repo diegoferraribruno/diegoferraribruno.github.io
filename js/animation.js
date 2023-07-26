@@ -410,7 +410,7 @@ function drop(event) {
     event.preventDefault()
     const toContainer = event.currentTarget;
     if (dataTransfer[0] != "c") {
-        if (toContainer.id == "lixeira()") {
+        if (toContainer.id == "lixeira()" || toContainer.id == "lixeira") {
 
             console.log(dataTransfer)
             historia.splice(dataTransfer, 1);
@@ -449,15 +449,22 @@ function drop(event) {
         }
     } else {
         if (toContainer.id == "lixeira()") {
-            let n = dataTransfer.replace(/^\D+/g, '');// get number from string
-            clipboard.splice(n, 1);
-            console.log(n, "deleted")
-            setTimeout(() => { updateClipboard() }, 10)
+            clearClipboard()
         }
 
     }
 }
 
+function clearClipboard() {
+    let n = dataTransfer.replace(/^\D+/g, '');// get number from string
+    if (n < clipboard.length) {
+        clipboard.splice(n, 1);
+        Alert(n)
+    } else {
+        clipboard = []
+    }
+    setTimeout(() => { updateClipboard() }, 10)
+}
 
 function quadrosVisiveis() {
     canvasBack.classList.toggle("esconde")

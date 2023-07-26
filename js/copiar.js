@@ -240,6 +240,7 @@ function updateClipboard() {
 }
 
 function changeImage2(n) {
+  dataTransfer = "c" + n
   image2.src = clipboard[n]
   ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
 }

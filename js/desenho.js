@@ -633,33 +633,37 @@ function changeGCO(GCO = globalComposite) {
 
 
 function limpar(what) {
+    if (what == "clipboard") {
+        clearClipboard()
+    } else {
 
-    context.setTransform(1, 0, 0, 1, 0, 0);
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    // comandos[workingframe] = []
-    convertToImg()
-    createNewBrush()
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        // comandos[workingframe] = []
+        convertToImg()
+        createNewBrush()
 
-    if (what == "animacao") {
-        if (animacao.length > 0) {
-            let confirma2 = confirm(
-                "🗑 🎞️ Apagar toda a animação? \n(impossível desfazer)"
-            );
-            if (confirma2 === true) {
-                animacao = []
-                historia = []
-                workingframe = 0
-                iD("bplayer0").style.backgroundImage = 'none'
-                canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctxF.setTransform(1, 0, 0, 1, 0, 0);
-                ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        if (what == "animacao") {
+            if (animacao.length > 0) {
+                let confirma2 = confirm(
+                    "🗑 🎞️ Apagar toda a animação? \n(impossível desfazer)"
+                );
+                if (confirma2 === true) {
+                    animacao = []
+                    historia = []
+                    workingframe = 0
+                    iD("bplayer0").style.backgroundImage = 'none'
+                    canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                    ctxF.clearRect(0, 0, canvas.width, canvas.height);
 
-                context.clearRect(0, 0, canvas.width, canvas.height);
-                context.setTransform(1, 0, 0, 1, 0, 0);
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.setTransform(1, 0, 0, 1, 0, 0);
 
-                Historia()
-                changeFrame(workingframe)
-                adicionaQuadro()
+                    Historia()
+                    changeFrame(workingframe)
+                    adicionaQuadro()
+                }
             }
         }
     }

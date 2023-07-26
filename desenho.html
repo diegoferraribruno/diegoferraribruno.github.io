@@ -385,7 +385,7 @@
                     <span class="bot">
                         ↩️
                     </span>
-                    <txt name="95">max historico</txt> <input type="number" id="canvasOpacity" name="undolevel" min="1"
+                    <txt name="95">max historico</txt> <input type="number" id="undolevel" name="undolevel" min="1"
                         max="16" oninput="historiaLimiteChange(this.value)" step="1" value="10" style="width:46px">
                 </span>
 
@@ -698,7 +698,7 @@
             </div>
             <div id="menupaste" class="fundobranco submenu">
                 <span class="botao"> <span class="close" onmousedown="removeClass()">❎</span>
-                    📋️ clipboard</span>
+                    📋️ clipboard</span> <span id="lixeira" class="bot" onmousedown="limpar('clipboard')"> 🗑 </span>
                 Rotate <input id="canvasfrontdeg" type="number" maxlength="3" max="360" value="0" step="6"
                     style="width:60px; height:26px; padding: 4px;" onchange="updateCanvasFrontDeg()" />º
                 <span id="clipboard"></span>
@@ -763,6 +763,7 @@
                 <span class="botao" onmousedown="removeFrame()"> 🎞️ ➖ 🖼️ <txt name="56">Remover quadro atual
                     </txt>
                     <span class="bot">➖</span></span>
+
             </div>
 
             <div id="menurotacionar" class="fundobranco submenu">
