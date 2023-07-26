@@ -157,12 +157,32 @@ var openFile = function (event) {
         for (i = 0; i < len; i++) {
             workingframe = i
             animacao[i] = []
-            historia[i] = []
             let newimg = projeto["animacao"][i]
             animacao[i].push(newimg)
+            historia[i] = []
             historia[i].push(newimg)
+
+            /*            let lenha = projeto["historia"][i].length
+                        for (b = 0; b < lenha; b++) {
+                            let newimg = projeto["historia"][i][b]
+                            historia[i].push(newimg)
+                        }*/
+
         }
         adicionaQuadro()
+        let lenc = projeto["clipboard"].length
+        clipboard = []
+        for (i = 0; i < lenc; i++) {
+            let newimg = projeto["clipboard"][i]
+            clipboard.push(newimg)
+        }
+        updateClipboard()
+        let lenf = projeto["favoritas"].length
+        favoritas = []
+        for (i = 0; i < lenf; i++) {
+            favoritas.push(projeto["favoritas"][i])
+        }
+        criaPaleta2()
         changeFrame(workingframe)
         //brushes
         await recreateCustomBrush()
