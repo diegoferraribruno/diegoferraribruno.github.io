@@ -180,22 +180,29 @@ function changeFrame(frame) {
         let old3 = frame - 3;
         var image3 = new Image;
         image3.src = animacao[old3]
-        canvasBack.ctx.globalAlpha = 0.1
-        canvasBack.ctx.drawImage(image3, 0, 0, canvasBack.width, canvasBack.height)
+        image3.onload = function () {
+            canvasBack.ctx.globalAlpha = 0.1
+            canvasBack.ctx.drawImage(image3, 0, 0, canvasBack.width, canvasBack.height)
+        }
     }
     if (frame > 1) {
         let old2 = frame - 2
         var image2 = new Image;
         image2.src = animacao[old2]
-        canvasBack.ctx.globalAlpha = 0.15
-        canvasBack.ctx.drawImage(image2, 0, 0, canvasBack.width, canvasBack.height)
+        image2.onload = function () {
+            canvasBack.ctx.globalAlpha = 0.15
+            canvasBack.ctx.drawImage(image2, 0, 0, canvasBack.width, canvasBack.height)
+        }
     }
     if (frame > 0) {
         let old1 = frame - 1;
         var image1 = new Image;
         image1.src = animacao[old1]
-        canvasBack.ctx.globalAlpha = 0.2
-        canvasBack.ctx.drawImage(image1, 0, 0, canvasBack.width, canvasBack.height)
+        image1.onload = function () {
+
+            canvasBack.ctx.globalAlpha = 0.2
+            canvasBack.ctx.drawImage(image1, 0, 0, canvasBack.width, canvasBack.height)
+        }
     }
     if (background_anim == true) {
         iD("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
@@ -205,17 +212,22 @@ function changeFrame(frame) {
         let old4 = frame + 1;
         var image4 = new Image;
         image4.src = animacao[old4]
-        canvasBack.ctx.globalAlpha = 0.05
-        canvasBack.ctx.drawImage(image4, 0, 0, canvasBack.width, canvasBack.height)
+        image4.onload = function () {
+            canvasBack.ctx.globalAlpha = 0.05
+            canvasBack.ctx.drawImage(image4, 0, 0, canvasBack.width, canvasBack.height)
+        }
     }
 
     var imageFrame = new Image;
     imageFrame.src = animacao[frame]
     //context.globalAlpha = 0.1
-    context.drawImage(imageFrame, 0, 0, imageFrame.width, imageFrame.height)
-    undoLevel = 0
-    setTimeout(() => { context.globalCompositeOperation = oldGCO }, 60)
-    scrollFilme()
+    imageFrame.onload = function () {
+
+        context.drawImage(imageFrame, 0, 0, imageFrame.width, imageFrame.height)
+        undoLevel = 0
+        setTimeout(() => { context.globalCompositeOperation = oldGCO }, 60)
+        scrollFilme()
+    }
 
 }
 

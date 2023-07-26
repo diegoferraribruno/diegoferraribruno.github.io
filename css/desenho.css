@@ -559,9 +559,13 @@ input[type="range"] {
 }
 
 #menualerta {
-    margin-top: 100px;
     font-size: 1.5em;
     z-index: 5000;
+    display: block;
+    position: absolute;
+    bottom: 100px;
+    left: 20px;
+    margin: auto;
 }
 
 .filter {

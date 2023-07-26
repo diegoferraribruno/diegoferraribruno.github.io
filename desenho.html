@@ -13,31 +13,24 @@
 <body class="naotoque" style="cursor: pointer;">
     <div id="tela" style="overflow-y: hidden;" class="naotoque">
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
-
             <div id="ferramentas" class="ferramentas">
                 <span id="yoga" onmousedown="yoga()" class="mais">🧘</span>
                 <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">💾</span>
                 <span id="imagem" title="adicionar imagem" class="mais" onmousedown="mostraMenu('imagem')">
                     <span
-                        style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
+                        style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️
+                        <span
                             style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
-                            📂</span></span>
+                            📂</span>
+                    </span>
                 </span>
 
                 <span id="canvasmenu" title="Propriedades do desenho" class="mais" onclick="mostraMenu('quadro')">🖼️
-
                 </span>
-
-
-                <!--span id="recortar" class="mais" onclick="modeTo('recortar')"><img src="img/crop.png"></span -->
-
                 <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
                     onmouseleave="undoTEnd()">↩️</span>
                 <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
                     onmouseleave="redoTEnd()">↪️</span>
-
-
-
             </div>
 
             <div id="ferramentas3" class="ferramentas">
@@ -52,12 +45,8 @@
                     <img src="img/movearrow.png" style="width: 28px; height: 28px; margin-top: 4px;">
                 </span>
                 <span id="recortar" class="mais" onclick="modeTo('recortar')"><img src="img/crop.png"></span>
-
                 <span id="redimensionar" class="mais" onclick="modeTo('redimensionar')">↔️</span>
-
                 </span>
-
-
             </div>
 
             <div id="ferramentas2" class="ferramentas">
@@ -113,17 +102,7 @@
                 <img src="img/movearrow.png" style="width: 28px; height: 28px; margin-top: 4px;">
                 <txt name="77"> mover o quadro</txt>
             </div>
-            <div id="menualerta" class="submenu fundobranco">
-                <span class="botao" onmousedown="closeAlert()">
-                    <span class="close"> ❎</span>
-                    <span id="alertconteudo">
-                        <txt name="2">
-                            Toque numa área pintada<br>
-                            para capturar uma cor
-                        </txt>
-                    </span>
-                </span>
-            </div>
+
             <div id="menuinfo" class="submenu fundobranco">
                 <span class="fundobranco" onmousedown="removeClass()">
                     <span class="close"> ❎</span><span
@@ -250,24 +229,12 @@
                     <span
                         style="display: block; float:left; margin: 2px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;"
                         onclick="addFavBrushPin()">📌</span>
-
                 </span>
-                <!--span class="botao">
-                    💧 <input type="range" id="A2" name="transparencia" min="0.01" max="1"
-                        oninput="mudaCorQ(3,this.value)" step="0.01" value="1"></span-->
-
-                <!--span style="float: center; position: relative; width: 70px" onmousedown="changeLine()">estilo:<span
-                        id="line">
-                        ➕</span></span><br-->
-
                 <span class="botao light" onmousedown="removeClass()"
                     style="background-image: url('img/grid3.png'); max-height: 220px;"><canvas id="brushCanva"
                         width="40px" height="40px"></canvas><span class="close">❎</span>
-
                 </span>
-
             </div>
-
             <div id="menuapagar" class="fundobranco submenu">
                 <span class="botao" title="fechar menu apagar" onmousedown="removeClass()">🧽
                     <txt name="14">Apagador</txt>
@@ -286,9 +253,7 @@
                     💧<input type="range" id="transparenciaE" name="transparencia" min="0.1" max="1"
                         oninput="mudaCorAlpha()" step="0.1" value="1"></div>
             </div>
-
             <div id="menucores" class="submenu fundobranco">
-
                 <span class="botao glow">
                     <span id="glow" title="glow" class="mais selected" onmousedown="glow()"
                         style="background-image: url('/img/glowpaint.png'); color: #ffffff01;">.</span>
@@ -296,10 +261,7 @@
                         style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>
                     <span title="preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais">🪣</span>
                     <span title="fechar" onmousedown="removeClass()" class="close">❎
-
                     </span>
-
-
                     <!--img src="img/dinamicInk.png" style="margin-left: 4px;"><label class="toggle"> <input
                     type="checkbox" id="dinamicInk" onchange="toggleDinamicInk()"
                     style="width: 50px; margin-left: 8px">
@@ -316,9 +278,7 @@
                     <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais">
                         <span
                             style="margin: -8px 8px 0px 0px; width: 20px; padding-left:10px; padding-top:-8px; font-size:24px;">📌</span>
-
                     </span>
-
                     <br>
                     🌈<input type="range" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
                         style="width: 100px;" value="0"> <br>
@@ -330,7 +290,6 @@
                         style="width: 100px;" step="0.01" value="1"><br>
 
                 </div>
-
                 <div id="paleta3" class="fundobranco glow"></div>
             </div>
             <div id="menucustombrush" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
@@ -365,12 +324,6 @@
                         <input id="pixel" type="checkbox" value="true" checked onchange="pixel()">
                         <span class="knob"></span>
                     </label></span>
-                <!--span class="botao" title="Redimensionar tela" onclick="tamanhom()">🖼️ ↔️ <img src="img/crop.png">
-                    <txt name="19">Tamanho do quadro</txt>
-                   
-                </span-->
-                <!--
-                <span id="rotacionar" class="botao" onclick="modeTo('rotacionar')">🔃 Rotacionar a tela </span-->
                 <span class="botao">
                     <span class="mais"><span
                             style="position:relative; width:32px; display:inline-block; opacity:0.5;  left: 2px; top:0px ;padding-top: 0px; font-size: 20px;">🖼️</span>
@@ -420,10 +373,7 @@
                         <txt name="76">como fundo do app?</txt>
                     </span>
                 </span>
-
-
             </div>
-
             <div id="menupreencher" class="fundobranco submenu">
                 <span class="botao" onmousedown="removeClass()">🪣 <txt name="23">Preencher tudo </txt><span
                         class="close">❎</span></span>
@@ -479,21 +429,16 @@
             </div>
 
             <div id="menuzoomx" class="fundobranco submenu">
-                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoomMinus()">🔎<span
-                        class="textOver">-</span></span>
-                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoom2x(1)">🔎<span
-                        class="textOver">+</span></span>
-                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="resetZoom()">🔎<span
-                        class="textOver">1x</span></span>
                 <span class="bot" onmousedown="scrollMoveCanva(-20,0)">⬅️</span>
                 <span class="bot" onmousedown="scrollMoveCanva(0,-20)">⬆️</span>
                 <span class="bot" onmousedown="scrollMoveCanva(0,20)">⬇️</span>
                 <span class="bot" onmousedown="scrollMoveCanva(20,0)">➡️</span>
-                <!--input id="zoombar" type="range" min="0" max="7" value="1" step="1" style="width:160px"
-                    onchange="ZOOMf(this.value)">
-                <input id="tzoom" type="number" min="0.50" max="32" step="1" value="1" onchange="ZOOM(this.value)"
-                    style="width: 44px"-->
-
+                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="resetZoom()">🔎<span
+                        class="textOver">1x</span></span>
+                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoomMinus()">🔎<span
+                        class="textOver">-</span></span>
+                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoom2x(1)">🔎<span
+                        class="textOver">+</span></span>
 
             </div>
             <div id="menuimagem" class="fundobranco submenu">
@@ -575,7 +520,6 @@
                 </select>
                 <div id="zoomDiv" class="botao3">
                     <label for="zoom">Zoom</label>
-                    <!-- input id="zoom" title="Zoom" type="range"-->
                     <input type="range" id="zoom" title="Zoom" name="zoom" min="0.1" max="1" step="0.1" value="1">
                 </div>
 
@@ -709,8 +653,6 @@
                 <span class="botao">
                     <span class="close" onmousedown="removeClass()">❎</span>
 
-                    <!--txt name="90"> copiar para novo quadro </txt-->
-
                     <span id="copy" class="mais" title="copy" class="mais" onclick="copySelection()">
                         <span
                             style="display: block; position: relative; margin-top: 4px; margin-left: -2px; font-size: 20px; ">
@@ -725,12 +667,6 @@
                     <span id="paste" class="mais" title="paste" class="mais" onclick="modeTo('paste')">
                         📋️
                     </span>
-                    <!--span class="mais" title="pastenew" id="pastenew"
-                    onclick="copySelection('new')">🎞️                    
-                    <span
-                    style="display: block; position: absolute; margin-top: -20px;
-                     font-size: 20px; line-height: 20px; ">📋️
-                     </span-->
                 </span>
                 <span id="recortarbot" title="Seleção retangular" class="botao">
                     <txt name="89">
@@ -991,6 +927,17 @@
             </span>
         </div>
     </div>
+    <div id="menualerta" class="submenu fundobranco">
+        <span class="botao" onmousedown="closeAlert()">
+            <span class="close"> ❎</span>
+            <span id="alertconteudo">
+                <txt name="2">
+                    Toque numa área pintada<br>
+                    para capturar uma cor
+                </txt>
+            </span>
+        </span>
+    </div>
     <div id="console" style="display: none; position: absolute; top: 0px; left: 100px;">console</div>
     <div id="console2" style="display: none; position: absolute; top: 18px; left: 100px;">console</div>
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)"
@@ -1010,11 +957,9 @@
     <script type="text/javascript" src="js/redimensionar.js"></script>
     <script type="text/javascript" src="js/brushes.js"></script>
     <script type="text/javascript" src="js/zoom.js"></script>
-    <!--script type="text/javascript" src="js/index.js"></script-->
     <script type="text/javascript" src="js/versoes.js"></script>
     <script type="text/javascript" src="js/start.js"></script>
     <script type="text/javascript" src="js/animation.js"></script>
-    <!--script type="text/javascript" src="js/rotacionar.js"></script-->
     <script type="text/javascript" src="js/save.js"></script>
     <script type="text/javascript" src="js/carregar.js"></script>
     <script type="text/javascript" src="js/FX.js"></script>
