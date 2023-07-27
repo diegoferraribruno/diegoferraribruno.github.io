@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="css/desenho.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/icons.css">
     <title>Yoga Art 6 - Mandala edition</title>
 </head>
 
@@ -52,9 +53,25 @@
 
             <div id="ferramentas2" class="ferramentas">
 
-                <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">🖌️</span>
-                <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')">🎨</span>
-                <span title="Pega cor" id="picker" class="mais" onmousedown="modeTo('picker')">💉</span>
+                <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')"><span
+                        class="icon pintaricon"></span></span>
+                <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')"><span
+                        class="icon coresicon"></span></span>
+                <span title="Pega cor" id="picker" class="mais" onmousedown="modeTo('picker')"><span
+                        class="icon pickericon"></span></span>
+
+                <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
+                    alt="ferramenta de seleção">
+                    <span class="icon selecticon"></span></span>
+                <span id="paste" class="mais" title="paste" class="mais" onclick="modeTo('paste')">
+                    <span class="icon clipboardicon"></span>
+                </span>
+                <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')"><span
+                        class="icon zoomicon"></span>
+                    <span id="x1"
+                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x
+                    </span>
+                </span>
                 <span onmousedown="backPaint()" class="mais" id="globalComposite">
                     <span
                         style="position:absolute; width:30px; display:inline-block; color:white; margin-left:-4px; padding-top:4px;">⭕</span>
@@ -63,17 +80,6 @@
                         title="Pintando por baixo">🔲</span>
                 </span>
 
-                <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
-                    alt="ferramenta de seleção">
-                    <img src="img/selectarrow.png" style="margin-top: 4px;"></span>
-                <span id="paste" class="mais" title="paste" class="mais" onclick="modeTo('paste')">
-                    📋️
-                </span>
-                <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')">🔎
-                    <span id="x1"
-                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -24px; width:20px; height:20px;">1x
-                    </span>
-                </span>
             </div>
 
             <div id="anime" class="ferramentas"></div>

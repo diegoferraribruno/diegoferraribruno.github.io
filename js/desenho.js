@@ -712,6 +712,7 @@ function mudaCorBG(cor) {
         // context.fillRect(0, 0, canvas.width, canvas.height);
         let GCO = context.globalCompositeOperation;
         desenha("b", GCO, cor);
+        Historia()
     }
 }
 

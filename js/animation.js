@@ -4,12 +4,12 @@ var anime = iD("anime")
 var fps = 8
 
 var anime_menu = {
-    "prev_frame()": ["⏮️", "Quadro anterior"],
-    "play()": ["▶️", "Tocar Animação"],
-    "next_frame()": ["⏭️", "Próximo quadro"],
+    "prev_frame()": ['<span class="icon backicon"></span>', "Quadro anterior"],
+    "play()": ['<span class="icon playticon"></span>', "Tocar Animação"],
+    "next_frame()": ['<span class="icon nexticon"></span>', "Próximo quadro"],
     // "swapL()": ["⬅️", "Mover quadro á esquerda"],
     // "swapR()": ["➡️", "Mover quadro á direita"],
-    'lixeira()': ["🗑", "Arraste um quadro para apaga-lo"]
+    'lixeira()': ['<span class="icon lixeiraicon"></span>', "Arraste um quadro para apaga-lo"]
 }
 
 function criaAnime() {
@@ -18,7 +18,7 @@ function criaAnime() {
     let contador = document.createElement("div")
     var ui = document.createElement('div')
 
-    anime.innerHTML = `<span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot">🎞️<span style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
+    anime.innerHTML = `<span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot"> <span class="icon filmicon"></span> <span style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
     </span>`
 
     Object.keys(anime_menu).forEach((key, index) => {
@@ -26,13 +26,13 @@ function criaAnime() {
         let item = document.createElement("div")
         item.setAttribute("onClick", key)
         item.id = key
-        item.innerText = anime_menu[key][0]
+        item.innerHTML = anime_menu[key][0]
         item.title = anime_menu[key][1]
         item.classList.add("shadow", "bot")
         anime.appendChild(item)
 
     })
-    anime.innerHTML += `<span id="new_frame()" title="Adiconar quadro á animação" class="bot" onclick="new_frame()"> <span class="bot">🎞️<span style="display: block; position: absolute; margin-top: -20px;
+    anime.innerHTML += `<span id="new_frame()" title="Adiconar quadro á animação" class="bot" onclick="new_frame()"> <span class="bot"><span class="icon filmicon"></span><span style="display: block; position: absolute; margin-top: -20px;
     font-size: 20px; line-height: 20px; background-color: ghostwhite; border-radius: 10px;">➕</span></span>
     </span>`
 
@@ -42,7 +42,7 @@ function criaAnime() {
     ui.classList.add("bot", "shadow")
     ui.title = 'Quadros da animação toque para mostrar/esconder'
     ui.setAttribute("onclick", "limpaAnime()")
-    ui.innerHTML = "🎞️"
+    ui.innerHTML = '<span class="icon filmicon"></span>'
     ui.appendChild(contador)
     var filme = document.createElement('div')
     filme.id = "filmecontainer"
@@ -151,7 +151,7 @@ function stop() {
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
     ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasFront.style.backgroundColor = "transparent"
-    iD("play()").innerHTML = "▶️"
+    iD("play()").innerHTML = '<span class="icon playicon"></span>'
 }
 
 function playerPlay(frame) {
@@ -453,7 +453,7 @@ function drop(event) {
         }
         else if (toContainer !== dataTransfer) {
 
-            Alert("🎞️  " + dataTransfer + " 🔄 " + toContainer.id, 1.5)
+            Alert('<span class="icon filmicon"></span>  ' + dataTransfer + " 🔄 " + toContainer.id, 1.5)
             swapItems(toContainer.id, dataTransfer)
             workingframe = dataTransfer
             changeFrame(workingframe)
@@ -511,7 +511,7 @@ function swapR() {
 }
 
 function moveObjectAtIndex(arr, indexA, indexB) {
-    Alert("🎞️  " + indexA + " 🔄 " + indexB, 1.5)
+    Alert('<span class="icon filmicon"></span>  ' + indexA + " 🔄 " + indexB, 1.5)
     var temp = arr[indexA];
     arr[indexA] = arr[indexB];
     arr[indexB] = temp;

@@ -206,10 +206,11 @@ body {
 }
 
 .selected {
-    background-color: #00000044;
-    border-color: #ffffff22;
+    background-color: #ffffffd3;
+    border-color: #7e99b3cb;
     border-width: 3px;
-    font-size: 2em;
+    /*font-size: 2em;*/
+    transform: scale(1.2);
 }
 
 .selectedBr {

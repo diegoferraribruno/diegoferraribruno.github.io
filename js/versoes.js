@@ -1,6 +1,8 @@
 let vers = [{
-    versao: "6.4.7",
+    versao: "6.5",
     notas: [
+        "Modo linha segurando Ctrl",
+        "Menu help com atalhos.",
         "Captura de foto em sequencia com ajuste do intervalo",
         "Melhoras visuais no Clipboard e possibilidade de deletar os itens",
         "Modo de desenho Espelho (mirror)",
