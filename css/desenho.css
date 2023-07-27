@@ -923,3 +923,9 @@ input[type="range"] {
     width: 36px;
     display: inline-block;
 }
+
+#menuhelp {
+    text-align: left;
+    font-size: medium;
+    margin: 6px;
+}

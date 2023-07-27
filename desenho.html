@@ -15,6 +15,7 @@
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
             <div id="ferramentas" class="ferramentas">
                 <span id="yoga" onmousedown="yoga()" class="mais">🧘</span>
+                <span id="help" title="help" class="mais selected" onmousedown="modeTo('help')">?</span>
                 <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">💾</span>
                 <span id="imagem" title="adicionar imagem" class="mais" onmousedown="mostraMenu('imagem')">
                     <span
@@ -618,7 +619,9 @@
 
             </div>
 
+            <div id="menuhelp" class="fundobranco submenu">
 
+            </div>
 
             <div id="menuredimensionar" class="fundobranco submenu">
                 <span class="botao"> <span class="close" onmousedown="removeClass()">❎</span>
@@ -975,6 +978,7 @@
     <script type="text/javascript" src="js/credits.js"></script>
     <script type="text/javascript" src="js/carregar.js"></script>
     <script type="text/javascript" src="js/FX.js"></script>
+    <script type="text/javascript" src="js/shortcuts.js"></script>
 
     <!-- codigos que nao tenho parte-->
     <!--script type="module" src="js/emoji-picker-element/index.js"></script-->

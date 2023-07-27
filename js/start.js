@@ -31,9 +31,8 @@ function startup() {
     }
     let activeEl = document.activeElement
     // console.log(event.key)
-    if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
-      if (mode != "emoji") {
-
+    if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text" && keyCtrl == false) {
+      if (mode != "emoji" && keyCtrl == false) {
         if (event.key === "Enter" && mode == "recortar") {
           cortar();
         } else if (event.key === "Enter" && mode == "cam") {
@@ -49,26 +48,42 @@ function startup() {
         } else if (event.key === "Escape") {
           removeClass();
           window.parent.focus()
-        } else if (event.key === "z" && keyCtrl == false) {
+        } else if (event.key === "z") {
           zoom2x()
         } else if (event.key === "p" || event.key === "b") {
           modeTo("pintar")
-          removeClass()
+          //removeClass()
         } else if (event.key === "e") {
           modeTo("apagar")
           removeClass()
-        } else if (event.code === "Space" && keyCtrl == true) {
-
-          if (mode == "play") {
-            stop();
-          } else {
-            play();
-          }
-
-        } else if (event.key === "+" && keyCtrl == false) {
+        } else if (event.key === "s") {
+          modeTo("selecionar")
+        } else if (event.key === "c") {
+          mostraMenu("cores")
+        } else if (event.key === "v") {
+          Mirror()
+        } else if (event.key === "m") {
+          modeTo("move")
+        } else if (event.key === "*") {
+          Mandala()
+        } else if (event.key === "d") {
+          toggleDinamicBrush()
+        } else if (event.key === "x") {
+          rainbow()
+        } else if (event.key === "r") {
+          modeTo("rotacionar")
+        } else if (event.key === "g") {
+          glow()
+        } else if (event.key === "+") {
           new_frame()
         } else if (event.key === "Delete") {
           removeFrame()
+        }
+      } else if (event.code === "Space" && keyCtrl == true) {
+        if (mode == "play") {
+          stop();
+        } else {
+          play();
         }
       }
     }

@@ -150,27 +150,27 @@ function handleStart(evt) {
         isSelecting2 = true;
         currentPath.push([offsetX, offsetY]);
 
-    }
-    if (mode === "recortar") {
+    } else if (mode === "recortar") {
         canvasFront.classList.remove("esconde")
         isSelecting = true;
         cropStart.x = origin.x
         cropStart.y = origin.y
-    }
-    if (mode == "emoji") {
+    } else if (mode == "emoji") {
         isEmoji = true
         isDrawing = false
-    }
-    if (mode == "move") {
+    } else if (mode == "move") {
         movendo = true
-    }
-    if (mode == "rotacionar") {
+    } else if (mode == "rotacionar") {
         rotacionar = true
-    }
-    if (mode == "zoomx") {
+    } else if (mode == "zoomx") {
         isGrabing = true;
+    } else if (mode == "picker") {
+        canvasFront.classList.add("esconde")
+        isPicking = true
+    } else if (mode == "play") {
+        stop();
     }
-    if (mode == "pintar" || mode == "apagar" || mode == "cores" && !isGrabing) {
+    else if ((mode == "pintar" || mode == "apagar" || mode == "cores") && !isGrabing) {
         if (dinamicInk == true) {
             mudaCorQ(3, iD("A").value)
             lastInk = hsla[3]
@@ -247,13 +247,7 @@ function handleStart(evt) {
         }
 
     }
-    if (mode == "picker") {
-        canvasFront.classList.add("esconde")
-        isPicking = true
-    }
-    if (mode == "play") {
-        stop();
-    }
+
 }
 let cursinho = new Image
 const movecursor = new Image(); // Create new img element
@@ -321,8 +315,7 @@ function handleMove(evt) {
             }
             ctxF.drawImage(cropcursor, x, y)
         }
-    }
-    if (isDrawing === true && isPicking == false && mode != 'move' && !isGrabing) {
+    } else if ((isDrawing === true && isPicking == false && mode != 'move') && !isGrabing) {
         mouseOver = true;
         let dif = {
             x: origin.x - x,
@@ -341,13 +334,17 @@ function handleMove(evt) {
 
             }
             if (lastInk > 0.1) {
+                if (keyCtrl) {
+                    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                    ctxF.clearRect(0, 0, canvas.width, canvas.height);
+                }
                 if (rainbowInk) {
                     value = hsla[0] + 3
                     if (value > 360) { value = 0 }
                     mudaCorQ(0, value)
                 }
                 // console.log("stroke color: " + strokeColor)
-                if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true) {
+                if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true && !keyCtrl) {
                     let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2) * strokeWidth;
                     if (pressure > lastPressure) {
                         lastPressure += 1.5
@@ -372,7 +369,7 @@ function handleMove(evt) {
                         )
                     )
                 } else {
-                    if (dinamicBrush === true && evt.pressure != 0.5) {
+                    if (dinamicBrush === true && evt.pressure != 0.5 && !keyCtrl) {
                         let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
                         if (pressure < 3) { pressure = 3 }
                         iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
@@ -403,8 +400,7 @@ function handleMove(evt) {
                 }
             }
         }
-    }
-    if (isPicking) {
+    } else if (isPicking) {
         var imageData = context.getImageData(x, y, 1, 1).data;
         if (imageData[3] > 0) {
             RGBAToHSLA(
@@ -418,8 +414,7 @@ function handleMove(evt) {
 
         }
 
-    }
-    if (mode == "zoomx") {// canvasFront
+    } else if (mode == "zoomx") {// canvasFront
         canvasFront.classList.remove("esconde")
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
@@ -429,20 +424,51 @@ function handleMove(evt) {
         ctxF.globalAlpha = 0.5;
         ctxF.fillText("🔎", x, y)
 
-    }
+    } else if (mode == "play") {
+        canvasFront.classList.remove("esconde")
+    } else if (mode == "emoji") {
+        canvasFront.classList.remove("esconde")
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        ctxF.font = iD("emosize").value + 'px serif'
+        ctxF.textAlign = "center";
+        ctxF.textBaseline = "middle";
+        ctxF.fillText(emoji, x, y)
+    } else if (mode == "move") {
+        if (selecionado) {
+            copySelection('cut')
+            mode = "paste"
+        } else if (movendo == true) {
+            canvasFront.classList.remove("esconde")
+            ctxF.globalAlpha = 1;
+            ctxF.setTransform(1, 0, 0, 1, 0, 0);
+            ctxF.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (isGrabing) {
-        document.body.style.cursor = "move";
-        scrollWindow.x += origin.x - x
-        scrollWindow.y += origin.y - y
-        if (scrollWindow.x != 0 || scrollWindow.y != 0) {
-            scrollMoveCanva(scrollWindow.x, scrollWindow.y)
-            // console.log(scrollWindow.x, scrollWindow.y)
+            // ctxF.drawImage(movecursor, x - 16, y - 16)
+            canvasFront.globalCompositeOperation = "source-out"
+            ctxF.drawImage(canvas, x - origin.x, y - origin.y)
+
         }
-        origin.x = x
-        origin.y = y
+
+    } else if (mode == "rotacionar") {
+        canvasFront.classList.remove("esconde")
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        if (rotacionar == true) {
+            ctxF.globalAlpha = 1;
+            ctxF.save()
+            canvasFront.globalCompositeOperation = "source-out"
+            if (iD("rotatecenter").checked == true) {
+                origin.x = canvas.width / 2;
+                origin.y = canvas.height / 2
+            }
+            ctxF.translate(origin.x, origin.y)
+            ctxF.rotate(((y - origin.y + x - origin.x) * Math.PI) / 180);
+            ctxF.drawImage(canvas, -origin.x, -origin.y)
+            ctxF.restore()
+        }
     }
-    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar" && mode != "selecionar") {
+    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar" && mode != "selecionar" && !keyCtrl) {
         origin.x = x
         origin.y = y
         if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
@@ -464,34 +490,16 @@ function handleMove(evt) {
             }
         }
     }
-
-    if (mode == "play") {
-        canvasFront.classList.remove("esconde")
-    }
-    if (mode == "emoji") {
-        canvasFront.classList.remove("esconde")
-        ctxF.setTransform(1, 0, 0, 1, 0, 0);
-        ctxF.clearRect(0, 0, canvas.width, canvas.height);
-        ctxF.font = iD("emosize").value + 'px serif'
-        ctxF.textAlign = "center";
-        ctxF.textBaseline = "middle";
-        ctxF.fillText(emoji, x, y)
-    }
-    if (mode == "move") {
-        if (selecionado) {
-            copySelection('cut')
-            mode = "paste"
-        } else if (movendo == true) {
-            canvasFront.classList.remove("esconde")
-            ctxF.globalAlpha = 1;
-            ctxF.setTransform(1, 0, 0, 1, 0, 0);
-            ctxF.clearRect(0, 0, canvas.width, canvas.height);
-
-            // ctxF.drawImage(movecursor, x - 16, y - 16)
-            canvasFront.globalCompositeOperation = "source-out"
-            ctxF.drawImage(canvas, x - origin.x, y - origin.y)
-
+    if (isGrabing) {
+        document.body.style.cursor = "move";
+        scrollWindow.x += origin.x - x
+        scrollWindow.y += origin.y - y
+        if (scrollWindow.x != 0 || scrollWindow.y != 0) {
+            scrollMoveCanva(scrollWindow.x, scrollWindow.y)
+            // console.log(scrollWindow.x, scrollWindow.y)
         }
+        origin.x = x
+        origin.y = y
     }
     if (mode == "paste") {
 
@@ -500,28 +508,9 @@ function handleMove(evt) {
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
         ctxF.drawImage(canvasRender, x - canvas.width / 2, y - canvas.height / 2)
-
     }
 
 
-    if (mode == "rotacionar") {
-        canvasFront.classList.remove("esconde")
-        ctxF.setTransform(1, 0, 0, 1, 0, 0);
-        ctxF.clearRect(0, 0, canvas.width, canvas.height);
-        if (rotacionar == true) {
-            ctxF.globalAlpha = 1;
-            ctxF.save()
-            canvasFront.globalCompositeOperation = "source-out"
-            if (iD("rotatecenter").checked == true) {
-                origin.x = canvas.width / 2;
-                origin.y = canvas.height / 2
-            }
-            ctxF.translate(origin.x, origin.y)
-            ctxF.rotate(((y - origin.y + x - origin.x) * Math.PI) / 180);
-            ctxF.drawImage(canvas, -origin.x, -origin.y)
-            ctxF.restore()
-        }
-    }
 }
 
 function handleUp(evt) {
@@ -536,10 +525,26 @@ function handleUp(evt) {
         x = redondo(x)
         y = redondo(y)
     }
+    if (keyCtrl) {
 
+        origin.x = x
+        origin.y = y
 
+    }
+    if (isDrawing && !isGrabing) {
+        isDrawing = false;
+        // swapImg = canvasFront.toDataURL('image/png');
+        /* if (isGlowing === true && context.globalCompositeOperation != "destination-out"){
+          context.globalCompositeOperation = 'lighter'
+         }*/
+        drawTo(context.globalCompositeOperation, canvasFront, context, 0, 0, canvas.width, canvas.height)
+        ultimoToque.x = x
+        ultimoToque.y = y
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        setTimeout(() => { Historia() }, 30)
 
-    if (mode === "emoji" && isEmoji) {
+    } else if (mode === "emoji" && isEmoji) {
         let size = iD("emosize").value
         desenha(
             "e",
@@ -553,17 +558,13 @@ function handleUp(evt) {
         ultimoToque.y = y
         isEmoji = false
         setTimeout(() => { Historia() }, 50)
-    }
-    if (isSelecting) {
+    } else if (isSelecting) {
         mostraMenu("recortar")
         isSelecting = false
         cropEnd.x = x
         cropEnd.y = y
         desenhaRetangulo()
-    }
-
-
-    if (isPicking) {
+    } else if (isPicking) {
 
         var imageData = context.getImageData(x, y, 1, 1).data;
         if (imageData[3] > 1) {
@@ -578,29 +579,13 @@ function handleUp(evt) {
         }
         setTimeout(() => modeTo("pintar"), 60)
         isPicking = false
-    }
-    if (isDrawing) {
-        isDrawing = false;
-        // swapImg = canvasFront.toDataURL('image/png');
-        /* if (isGlowing === true && context.globalCompositeOperation != "destination-out"){
-          context.globalCompositeOperation = 'lighter'
-         }*/
-        drawTo(context.globalCompositeOperation, canvasFront, context, 0, 0, canvas.width, canvas.height)
-        ultimoToque.x = x
-        ultimoToque.y = y
-        ctxF.setTransform(1, 0, 0, 1, 0, 0);
-        ctxF.clearRect(0, 0, canvas.width, canvas.height);
-        setTimeout(() => { Historia() }, 30)
-
-    }
-    if (isGrabing) {
+    } else if (isGrabing) {
         isGrabing = false;
         scrollWindow.x = 0
         scrollWindow.y = 0
         ultimoToque.x = x
         ultimoToque.y = y
-    }
-    if (isSelecting2) {
+    } else if (isSelecting2) {
         isSelecting2 = false;
         selectionPaths.push(currentPath);
         currentPath = [];
@@ -608,10 +593,7 @@ function handleUp(evt) {
         cropEnd.x = x
         cropEnd.y = y
 
-    }
-
-
-    if (movendo == true) {
+    } else if (movendo == true) {
         if (selecionado) {
             setTimeout(() => {
 
@@ -641,9 +623,7 @@ function handleUp(evt) {
         //desenha("move", x - origin.x, y - origin.y)
         movendo = false
 
-    }
-
-    if (mode == "paste") {
+    } else if (mode == "paste") {
 
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
@@ -661,9 +641,7 @@ function handleUp(evt) {
         //desenha("move", x - origin.x, y - origin.y)
         movendo = false
         modeTo("move")
-    }
-
-    if (rotacionar == true) {
+    } else if (rotacionar == true) {
         rotacionar = false
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -692,8 +670,16 @@ function handleEnd(evt) {
     if (isDrawing) {
         drawTo()
         Historia()
+        if (dinamicInk) {
+            mudaCorQ(3, iD("A").value)
+        }
+    } else if (isGrabing) {
+        scrollCanva(
+            (evt.pageX - offsetX) - window.innerWidth / 4,
+            (evt.pageY - offsetY) - window.innerHeight / 4
+        )
+        isGrabing = false;
     }
-    mudaCorQ(3, iD("A").value)
     if (mode == "recortar") {
         desenhaRetangulo()
         isSelecting2 = false;
@@ -720,13 +706,6 @@ function handleEnd(evt) {
         canvasFront.classList.remove("esconde")
     }
     document.body.style.cursor = "pointer";
-    if (isGrabing) {
-        scrollCanva(
-            (evt.pageX - offsetX) - window.innerWidth / 4,
-            (evt.pageY - offsetY) - window.innerHeight / 4
-        )
-        isGrabing = false;
-    }
 
     scrollWindow.x = 0
     scrollWindow.y = 0

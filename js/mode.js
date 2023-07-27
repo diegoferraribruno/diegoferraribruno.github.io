@@ -4,11 +4,11 @@ async function modeTo(qual) {
     setTimeout(() => stop(), 300)
     canvasFront.style.backgroundColor = "transparent"
     canvasFront.filter = "none"
-    if (qual == "pintar"){
+    if (qual == "pintar") {
         Alert(`<span title="Pintar" class="bot">🖌️</span>  ${alerts[language][26]}<br> ${alerts[language][7]}`, 1)
-        
+
     }
-    
+
     if (mode != qual) {
         if (qual != "recortar") {
             removeClass("flip")
@@ -22,9 +22,9 @@ async function modeTo(qual) {
         if (qual != "apagar") {
             mode = qual
             mostraMenu(qual);
-           
+
         } else {
-            
+
             mode = "pintar"
             oldMode = "pintar"
             mostraMenu("pintar");
@@ -97,6 +97,9 @@ async function modeTo(qual) {
         case "move":
             mode = qual
             break;
+        case "help":
+            Help();
+            break;
         case "info":
             break;
         case "undo":
@@ -120,17 +123,17 @@ async function modeTo(qual) {
     }
 }
 
-function glow(){
+function glow() {
     isGlowing = !isGlowing
-    if (isGlowing === true){
+    if (isGlowing === true) {
         ctxF.globalCompositeOperation = 'lighter'
         //context.globalCompositeOperation = 'lighter'
 
-        if(!nightmode) {
+        if (!nightmode) {
             night()
         }
         modeTo("cores")
-    }else{
+    } else {
         ctxF.globalCompositeOperation = 'destination-over'
         night()
     }
