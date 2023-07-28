@@ -2,7 +2,7 @@ function apoio() {
     let ap = iD("conteudo")
     if (ap) {
         let apoioHTML = `
-			    <div onClick='cancela("conteudo")' style=' float:right'class='bot'>❎</div>
+			    <div onClick='cancela("conteudo")' style=' float:right'class='close'></div>
            Este website é um projeto de
             <a href="https://github.com/diegoferraribruno"> código livre</a> em constante evolução.<br><br>
            Se desejar contribuir financeiramente com seu desenvolvedor, você pode via:</b>

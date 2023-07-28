@@ -85,10 +85,11 @@ function importSprite(e) {
                 let swapImg = canvas.toDataURL('image/png');
                 blobb = dataURItoBlob(swapImg)
                 animacao[i] = swapImg
-                comandos[i] = []
+                /*comandos[i] = []
                 // changeBrush()
-                comandos[i].push(["f", "source-over", swapImg, 0, 0, canvas.width, canvas.height])
-
+                comandos[i].push(["f", "source-over", swapImg, 0, 0, canvas.width, canvas.height])*/
+                historia[i] = []
+                historia[i].push(swapImg)
 
             }
             setTimeout(() => {
@@ -245,7 +246,7 @@ var openFile = function (event) {
                 // setTimeout(() => setStrokeColor(brush[3]), 120)
                 //setTimeout(() => setStrokeSize(brush[2]), 80)
             }
-        }, 100)
+        }, 300)
         /* setTimeout(() => {
              //comandosb
              let len = projeto["animacao"].length

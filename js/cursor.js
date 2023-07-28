@@ -24,15 +24,15 @@ function cursorColor() {
         case "apagar":
             break;
         case "pintar":
-            cursor.innerHTML = ""
-            if (context.globalCompositeOperation == "destination-out") {
-                setTimeout(() => {
-                    cursor.innerHTML = "🧽";
-                    cursor.style.width = "1px"
-                    cursor.style.height = "1px"
-                }, 65)
-            }
-            cursor.style.borderColor = strokeColor;
+            /* cursor.innerHTML = ""
+             if (context.globalCompositeOperation == "destination-out") {
+                 setTimeout(() => {
+                     cursor.innerHTML = "🧽";
+                     cursor.style.width = "1px"
+                     cursor.style.height = "1px"
+                 }, 65)
+             }
+             cursor.style.borderColor = strokeColor;**/
             break;
         case "zoomx":
             setTimeout(() => {

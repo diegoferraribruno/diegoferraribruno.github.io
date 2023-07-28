@@ -5,7 +5,8 @@ async function modeTo(qual) {
     canvasFront.style.backgroundColor = "transparent"
     canvasFront.filter = "none"
     if (qual == "pintar") {
-        Alert(`<span title="Pintar" class="bot">🖌️</span>  ${alerts[language][26]}<br> ${alerts[language][7]}`, 1)
+        Alert(`<span title="Pintar" class="bot"><span
+        class="icon pintaricon"></span></span>  ${alerts[language][26]}<br> ${alerts[language][7]}`, 1)
 
     }
 
@@ -28,7 +29,8 @@ async function modeTo(qual) {
             mode = "pintar"
             oldMode = "pintar"
             mostraMenu("pintar");
-            Alert(`<span title="Apagar" class="bot">🧽</span>${alerts[language][9]} ${alerts[language][11]}<br> ${alerts[language][7]}`, 1)
+            Alert(`<span title="Apagar" class="bot"><span
+            class="icon eraseicon"></span></span>${alerts[language][9]} ${alerts[language][11]}<br> ${alerts[language][7]}`, 1)
             changeGCO("destination-out")
         }
     } else {

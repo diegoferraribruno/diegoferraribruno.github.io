@@ -24,7 +24,7 @@
     background-position-x: -288px;
 }
 
-.erasericon {
+.eraseicon {
     background-position-x: -36px;
 }
 
@@ -54,4 +54,52 @@
 
 .nexticon {
     background-position-x: -252px;
+}
+
+.stopicon {
+    background-position-x: -432px;
+}
+
+.custombrushicon {
+    background-position-x: -468px;
+}
+
+.dinamicbrushicon {
+    background-position-x: -504px;
+}
+
+.infinityicon {
+    background-position-x: -540px;
+}
+
+.mandalaicon {
+    background-position-x: -576px;
+}
+
+.mirroricon {
+    background-position-x: -612px;
+}
+
+.addframeicon {
+    background-position-x: -648px;
+}
+
+.configtimeicon {
+    background-position-x: -684px;
+}
+
+.addframe2icon {
+    background-position-x: -720px;
+}
+
+.swaplefticon {
+    background-position-x: -756px;
+}
+
+.swaprighticon {
+    background-position-x: -792px;
+}
+
+.cloneframeicon {
+    background-position-x: -828px;
 }

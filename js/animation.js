@@ -18,7 +18,7 @@ function criaAnime() {
     let contador = document.createElement("div")
     var ui = document.createElement('div')
 
-    anime.innerHTML = `<span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot"> <span class="icon filmicon"></span> <span style="display: block; position: absolute; margin-top: -26px; font-size:20px;">⏱️</span></span>
+    anime.innerHTML = `<span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot"> <span class="icon configtimeicon"></span></span>
     </span>`
 
     Object.keys(anime_menu).forEach((key, index) => {
@@ -32,13 +32,13 @@ function criaAnime() {
         anime.appendChild(item)
 
     })
-    anime.innerHTML += `<span id="new_frame()" title="Adiconar quadro á animação" class="bot" onclick="new_frame()"> <span class="bot"><span class="icon filmicon"></span><span style="display: block; position: absolute; margin-top: -20px;
-    font-size: 20px; line-height: 20px; background-color: ghostwhite; border-radius: 10px;">➕</span></span>
+    anime.innerHTML += `<span id="new_frame()" title="Adiconar quadro á animação" class="bot" onclick="new_frame()"> <span class="bot"><span class="icon addframeicon"></span></span>
     </span>`
 
 
     contador.innerHTML = workingframe
     contador.id = "contador"
+    contador.setAttribute("style", "color:white; z-index:8")
     ui.classList.add("bot", "shadow")
     ui.title = 'Quadros da animação toque para mostrar/esconder'
     ui.setAttribute("onclick", "limpaAnime()")
@@ -121,7 +121,7 @@ function play() {
     oldMode = mode;
     mode = "play";
     if (animacao.length > 1) {
-        iD("play()").innerHTML = ' <span onmousedown="stop()">⏹️</span>'
+        iD("play()").innerHTML = ' <span onmousedown="stop()" class="icon stopicon"></span>'
         clearInterval(inter);
         canvasFront.classList.remove("esconde")
         ctxF.globalAlpha = 1;

@@ -28,6 +28,7 @@ function goback(pos = undoLevel) {
     context.clearRect(0, 0, canvas.width, canvas.height);
     var imageFrame = new Image;
     imageFrame.src = historia[workingframe][pos]
+    let oldGCO = context.globalCompositeOperation
     setTimeout(() => drawTo("source-over",
         imageFrame,
         context,
@@ -36,6 +37,7 @@ function goback(pos = undoLevel) {
         imageFrame.width,
         imageFrame.height)
         , 10)
+    setTimeout(() => changeGCO(oldGCO), 40)
 
 }
 

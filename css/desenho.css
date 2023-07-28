@@ -599,10 +599,12 @@ input[type="range"] {
 
 
 #contador {
-    text-shadow: -2px 0 rgb(199, 199, 199), 0 2px #d2d2d2, 2px 0 #e2e2e2, 0 -2px #a9a9a9;
+    text-shadow: -2px 0 rgb(61, 61, 61), 0 2px #3f3f3f, 2px 0 #383838, 0 -2px #2c2c2c;
     display: block;
-    margin-top: -32px;
+    position: relative;
+    margin-top: -42px;
     font-size: 26px;
+    z-index: 3001;
 }
 
 #anime {
@@ -643,8 +645,13 @@ input[type="range"] {
 .close {
     float: right;
     margin-right: 6px;
-    margin-top: 6spx;
-    font-size: x-large;
+    margin-top: 6px;
+    display: block;
+    width: 36px;
+    height: 36px;
+    background-image: url("./../img/x.png");
+    filter: drop-shadow(0px 0px 6px white);
+
 }
 
 #pinceis2 {
@@ -684,7 +691,7 @@ input[type="range"] {
     height: 30px;
     border-right: 1px solid black;
     border-left: 1px solid black;
-    border-top: 3px solid black;
+    border-top: 1px dashed rgb(255, 255, 255);
     border-bottom: 3px solid black;
     width: 32px;
     min-width: 32px;
