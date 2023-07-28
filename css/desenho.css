@@ -87,13 +87,12 @@ body {
     position: relative;
     width: 108px;
     display: inline-block;
-    top: -14px;
+    top: -20px;
     padding-top: 12px;
     padding-bottom: 12px;
 }
 
 #paleta2 {
-
     position: relative;
     width: 314px;
     height: 30px;
@@ -102,17 +101,16 @@ body {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 4px;
-    margin-top: 2px;
+    margin-top: -22px;
 
 }
 
 #paleta3 {
-    position: relative;
     width: 314px;
     height: 32px;
     display: flex;
-    /*margin-bottom: 4px;*/
-    top: -14px;
+    margin-top: -2px;
+    margin-left: 3px;
 }
 
 
@@ -124,12 +122,13 @@ body {
 }
 
 #menu {
-    font-kerning: 2em;
+    position: relative;
     width: 200px;
     height: 166px;
     display: inline-block;
     text-align: center;
     line-height: 1.9em;
+    top: 2px;
 }
 
 .submenu {
@@ -281,10 +280,11 @@ body {
 }
 
 #salvaCor {
-    height: 32px;
-    width: 32px;
+    height: 28px;
+    width: 130px;
+    margin-top: 4px;
     margin-right: auto;
-    margin-left: auto;
+    margin-left: 2px;
     line-height: 1em;
     font-size: 1.5em;
 }
@@ -516,13 +516,13 @@ input[type="range"] {
     min-height: 34px;
     max-height: 360px;
     padding-top: 4px;
-    border: solid 1px #55555555;
+    border-bottom: solid 1px #55555555;
     background-color: none;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2px;
-    margin-bottom: 2px;
-    border-radius: 8px;
+    /*margin-bottom: 2px;
+    border-radius: 8px;*/
     vertical-align: bottom;
     overflow: auto;
 }

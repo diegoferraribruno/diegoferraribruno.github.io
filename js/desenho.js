@@ -675,9 +675,7 @@ function backPaint() {
         iD(
             "globalComposite"
         ).innerHTML =
-            `<span style="position:relative; width:32px; display:inline-block;  left: 2px; top:0px ;` +
-            `padding-top: 0px;">⭕</span> <span style="color:white;` +
-            `position:absolute; opacity:0.7;  display:block; width:20px; top:-5px;left:3px; " title="Pintando por baixo">🔲</span> `;
+            `<span class="iconsright paintundericon"></span>`;
         Alert(alerts[language][12])
 
         if (iD("video")) {
@@ -686,20 +684,20 @@ function backPaint() {
         canvasFront.style.zIndex = -1
 
 
+
     } else {
         globalComposite = "source-over";
         iD(
             "globalComposite"
         ).innerHTML =
-            `<span style="position:relative; width:32px; display:inline-block; left:4px; ` +
-            `padding-top: 0px;">🔲</span> <span style="color:white;` +
-            `position:absolute;  display:block; width:20px; left: 3px; top:-5px;" title="Pintando por cima">⭕</span> `;
+            `<span class="iconsright paintovericon"></span>`;
         Alert(alerts[language][13])
         removeClass("destination-over")
         canvasFront.style.zIndex = 3
     }
     changeGCO();
     if (mode == "apagar") { modeTo("pintar") }
+    iD("globalComposite").classList.add("selected")
     //removeClass()
 }
 

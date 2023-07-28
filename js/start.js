@@ -105,9 +105,7 @@ function startup() {
   iD(
     "globalComposite"
   ).innerHTML =
-    `<span style="position:relative; width:32px; display:inline-block; left:4px; ` +
-    `padding-top: 0px;">🔲</span> <span style="color:white;` +
-    `position:absolute;  display:block; width:20px; left: 3px; top:-5px;" title="Pintando por cima">⭕</span> `;
+    `<span class="iconsright paintovericon"></span>`;
   window.addEventListener("resize", function (event) {
     resizeScreen();
   });

@@ -8,24 +8,16 @@
 
 }
 
-.pintaricon {
-    background-position-x: -72px;
-}
-
 .pickericon {
     background-position-x: 0px;
 }
 
-.coresicon {
-    background-position-x: -324px;
-}
-
-.lixeiraicon {
-    background-position-x: -288px;
-}
-
 .eraseicon {
     background-position-x: -36px;
+}
+
+.pintaricon {
+    background-position-x: -72px;
 }
 
 .clipboardicon {
@@ -34,14 +26,6 @@
 
 .zoomicon {
     background-position-x: -144px;
-}
-
-.selecticon {
-    background-position-x: -396px;
-}
-
-.filmicon {
-    background-position-x: -360px;
 }
 
 .backicon {
@@ -54,6 +38,22 @@
 
 .nexticon {
     background-position-x: -252px;
+}
+
+.lixeiraicon {
+    background-position-x: -288px;
+}
+
+.coresicon {
+    background-position-x: -324px;
+}
+
+.filmicon {
+    background-position-x: -360px;
+}
+
+.selecticon {
+    background-position-x: -396px;
 }
 
 .stopicon {
@@ -88,7 +88,7 @@
     background-position-x: -684px;
 }
 
-.addframe2icon {
+.ghosticon {
     background-position-x: -720px;
 }
 
@@ -102,4 +102,95 @@
 
 .cloneframeicon {
     background-position-x: -828px;
+}
+
+.pinicon {
+    background-position-x: -864px;
+}
+
+.plusicon {
+    background-position-x: -900px;
+}
+
+.minusicon {
+    background-position-x: -936px;
+}
+
+
+.iconsright {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-image: url("./../img/iconsright.png");
+    filter: drop-shadow(0px 0px 6px white);
+
+
+}
+
+.cropicon {
+    background-position-x: 0px;
+}
+
+.moveicon {
+    background-position-x: -36px;
+}
+
+.rotateicon {
+    background-position-x: -72px;
+}
+
+.scaleicon {
+    background-position-x: -108px;
+}
+
+.fxicon {
+    background-position-x: -144px;
+}
+
+.cameraicon {
+    background-position-x: -180px;
+}
+
+.nighticon {
+    background-position-x: -216px;
+}
+
+.undoicon {
+    background-position-x: -252px;
+}
+
+.redoicon {
+    background-position-x: -288px;
+}
+
+.saveicon {
+    background-position-x: -324px;
+}
+
+.helpicon {
+    background-position-x: -360px;
+}
+
+.foldericon {
+    background-position-x: -396px;
+}
+
+.frameicon {
+    background-position-x: -432px;
+}
+
+.yogaicon {
+    background-position-x: -468px;
+}
+
+.animationframeicon {
+    background-position-x: -504px;
+}
+
+.paintovericon {
+    background-position-x: -540px;
+}
+
+.paintundericon {
+    background-position-x: -576px;
 }

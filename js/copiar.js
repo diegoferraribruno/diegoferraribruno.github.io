@@ -183,6 +183,7 @@ function copySelection(newfr = false) {
     //canvasRender.height = image2.height
     //console.log(canvasRender.width, canvasRender.height)
     clipboard.push(image1)
+    dataTransfer = "c" + (clipboard.length - 1)
     image2.onload = function () {
       canvasRender.width = image2.width
       canvasRender.height = image2.height
