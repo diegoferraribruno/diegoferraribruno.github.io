@@ -229,7 +229,7 @@ let textos = {
         "13": "limit to 30 frames",
         "14": "Eraser",
         "15": 'Use the pin to save your colors.',
-        "16": "Personalized brushes",
+        "16": "Custom brushes",
         "17": "New brush from canvas art?",
         "18": "Canvas Settings",
         "19": "Canvas Size",
