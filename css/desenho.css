@@ -688,11 +688,11 @@ input[type="range"] {
 
 .quadrofilme {
     display: inline-block;
-    height: 30px;
+    height: 32px;
     border-right: 1px solid black;
     border-left: 1px solid black;
-    border-top: 1px dashed rgb(255, 255, 255);
-    border-bottom: 3px solid black;
+    border-top: 4px solid black;
+    border-bottom: 1px solid black;
     width: 32px;
     min-width: 32px;
     background-size: cover;
@@ -737,14 +737,14 @@ input[type="range"] {
 }
 
 .wf {
-    border-right: 2px solid #ebebeb4f;
-    border-left: 2px solid #ebebeb4f;
-    border-top: 3px solid #ebebeb4f;
-    border-bottom: 22px solid #ebebeb4f;
-    width: 32px;
-    height: 32px;
-    margin-top: -4px;
-    margin-left: -1px;
+    border-right: 1px dashed #fff;
+    border-left: 1px dashed #fff;
+    border-top: 1px dashed #fff;
+    border-bottom: 1px dashed #fff;
+    width: 30px;
+    height: 30px;
+    margin-top: 3px;
+    margin-left: 0px;
     /*  background-size: 40px 40px;
     background-clip: padding-box;
     background-position: center;*/
@@ -776,13 +776,16 @@ input[type="range"] {
     display: inline-flex;
     overflow-x: scroll;
     column-gap: 0px;
-    padding: 0.1rem 0.1rem 0.6rem 0.1rem;
-    background: rgba(0, 0, 0, 0.7);
+    padding-top: 4px;
+   /* background: rgba(0, 0, 0, 1);*/
     height: 50px;
-    line-height: 22px;
+    line-height: 21px;
     vertical-align: top;
+    background-image: url("../img/filmebg.png");
 }
-
+#filme{
+    display: inline-flex;
+}
 #ui_filme {
     max-width: 100%;
     min-width: 36px;

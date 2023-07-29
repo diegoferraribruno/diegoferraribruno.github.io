@@ -346,7 +346,6 @@ async function adicionaQuadro() {
     let filme = iD("filmecontainer")
     filme.innerHTML = ""
     let newFilme = document.createElement("div")
-    newFilme.classList.add("filme")
     newFilme.id = "filme"
     animSize = animacao.length
     for (i = 0; i < animSize; i++) {
@@ -383,7 +382,7 @@ function scrollFilme(onde = workingframe) {
     filme.scrollLeft = onde * 32
 
     removeClass("wf")
-    let thum = iD(workingframe + "thumb")
+    let thum = iD(workingframe)
     if (thum) { thum.classList.add("wf") }
 
 }
