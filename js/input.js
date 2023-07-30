@@ -691,7 +691,7 @@ function handleEnd(evt) {
     }
 
 
-    if (mode != "play" && mode != "selecionar" && mode != "recortar") {
+    if (mode != "play" && mode != "selecionar" && mode != "recortar" && mode !="FX" && mode != "rotacionar") {
         //   mostra()
         mouseOver = false;
         //
@@ -706,24 +706,29 @@ function handleEnd(evt) {
         canvasFront.classList.remove("esconde")
     }
     document.body.style.cursor = "pointer";
-
+if (mode != "FX" && mode != "rotacionar"){
+    
     scrollWindow.x = 0
     scrollWindow.y = 0
     origin.x = 0
     origin.y = 0
-
+    
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
     ctxF.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 }
 
 function handleCancel(evt) {
     evt.preventDefault();
+    
+if (mode != "FX"){
     document.body.style.cursor = "pointer";
     if (isDrawing) {
         drawTo()
         Historia()
     }
+}
 }
 
 function prevent(evt) {

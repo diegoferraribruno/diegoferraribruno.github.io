@@ -1,6 +1,7 @@
 let oldMode = mode;
 
 async function modeTo(qual) {
+    cancelaFX()
     setTimeout(() => stop(), 300)
     canvasFront.style.backgroundColor = "transparent"
     canvasFront.filter = "none"

@@ -69,7 +69,7 @@ function confirmFX(fx, fxname) {
     confirm.classList.remove("esconde")
     "display: none;"
     confirm.innerHTML = `<div  class="shadow" onClick="applyFX('` + fx + `')">  ✅ </div >` +
-        `<div onClick="cancelaFX()"
+        `<div onClick="cancelaFX(true)"
          class='shadow'">`+ textos[language]["80"] + ` ❌</div>`
 }
 function applyFX() {
@@ -96,11 +96,13 @@ function applyFX() {
         , 1000)
 }
 
-function cancelaFX() {
-    setTimeout(() =>
-        mostraMenu("FX")
-        , 1000)
-    menufx()
+function cancelaFX(show=false) {
+   if (show){
+       setTimeout(() =>
+       mostraMenu("FX")
+       , 1000)
+       menufx()
+    }
 
     canvasFront.filter = filters[0]
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
