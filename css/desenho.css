@@ -610,7 +610,7 @@ input[type="range"] {
 #anime {
     display: block;
     position: absolute;
-    width: 234px;
+    width: 320px;
     bottom: 50px;
     background-size: 34px 34px;
     animation: animatezoom 0.6s
@@ -620,7 +620,7 @@ input[type="range"] {
     margin-top: 0px;
     display: block;
     position: fixed;
-    left: -156px;
+    left: -240px;
 }
 
 .hideanime2 {
@@ -645,7 +645,7 @@ input[type="range"] {
 .close {
     float: right;
     margin-right: 6px;
-    margin-top: 6px;
+    margin-top: 0px;
     display: block;
     width: 36px;
     height: 36px;
@@ -778,8 +778,8 @@ input[type="range"] {
     column-gap: 0px;
     padding-top: 4px;
    /* background: rgba(0, 0, 0, 1);*/
-    height: 50px;
-    line-height: 21px;
+    height: 54px;
+    line-height: 24px;
     vertical-align: top;
     background-image: url("../img/filmebg.png");
 }

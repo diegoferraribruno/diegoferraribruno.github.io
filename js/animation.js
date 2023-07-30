@@ -9,6 +9,9 @@ var anime_menu = {
     "next_frame()": ['<span class="icon nexticon"></span>', "Próximo quadro"],
     // "swapL()": ["⬅️", "Mover quadro á esquerda"],
     // "swapR()": ["➡️", "Mover quadro á direita"],
+    "new_frame()":['<span class="icon addframeicon"></span>',"Adiconar quadro á animação"],
+    "cloneFrame()":['<span class="icon cloneframeicon"></span>',"duplicate frame"],
+    "quadrosVisiveis()":[`<span class="icon ghosticon"></span>`, "Ghost Frames"],
     'lixeira()': ['<span class="icon lixeiraicon"></span>', "Arraste um quadro para apaga-lo"]
 }
 
@@ -32,8 +35,7 @@ function criaAnime() {
         anime.appendChild(item)
 
     })
-    anime.innerHTML += `<span id="new_frame()" title="Adiconar quadro á animação" class="bot" onclick="new_frame()"> <span class="bot"><span class="icon addframeicon"></span></span>
-    </span>`
+   
 
 
     contador.innerHTML = workingframe
