@@ -675,7 +675,7 @@ function backPaint() {
         iD(
             "globalComposite"
         ).innerHTML =
-            `<span class="iconsright paintundericon"></span>`;
+            `<span class="icon2 paintundericon"></span>`;
         Alert(alerts[language][12])
 
         if (iD("video")) {
@@ -690,7 +690,7 @@ function backPaint() {
         iD(
             "globalComposite"
         ).innerHTML =
-            `<span class="iconsright paintovericon"></span>`;
+            `<span class="icon2 paintovericon"></span>`;
         Alert(alerts[language][13])
         removeClass("destination-over")
         canvasFront.style.zIndex = 3

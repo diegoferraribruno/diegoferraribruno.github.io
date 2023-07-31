@@ -211,7 +211,9 @@ let textos = {
         "93": "⚠️ Trabalhando <b>por cima</b> do quadro",
         "94": "Fatias da Mandala:",
         "95": "Limite para desfazer",
-        "96": "intervalo de captura"
+        "96": "Intervalo de captura",
+        "97": "Switch to English",
+        "98": "Carregue sua arte"
 
     },
     "en": {
@@ -309,8 +311,9 @@ let textos = {
         "93": "⚠️ Working <b>over</b> the canvas",
         "94": "Mandala slices:",
         "95": "Max undo Level",
-        "96": "Capture interval"
-
+        "96": "Capture interval",
+        "97": "Trocar para Português?",
+        "98": "Load your art",
 
     }
 }

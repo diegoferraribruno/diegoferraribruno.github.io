@@ -5,8 +5,6 @@
     height: 36px;
     background-image: url("./../img/iconsleft.png");
     filter: drop-shadow(0px 0px 6px white);
-
-
 }
 
 .pickericon {
@@ -118,12 +116,12 @@
 }
 
 
-.iconsright {
+.icon2 {
     display: block;
     float: left;
     width: 36px;
     height: 36px;
-    background-image: url("./../img/iconsright.png");
+    background-image: url("./../img/icon2.png");
     filter: drop-shadow(0px 0px 6px white);
 
 
@@ -196,3 +194,46 @@
 .paintundericon {
     background-position-x: -576px;
 }
+
+
+.projecticon {
+    background-position-x: -612px;
+}
+
+.brightnessicon {
+    background-position-x: -648px;
+}
+
+
+.contrasticon {
+    background-position-x: -684px;
+}
+
+.hueicon {
+    background-position-x: -720px;
+}
+
+.alphaicon {
+    background-position-x: -756px;
+}
+
+/*
+.swaprighticon {
+    background-position-x: -792px;
+}
+
+.cloneframeicon {
+    background-position-x: -828px;
+}
+
+.pinicon {
+    background-position-x: -864px;
+}
+
+.plusicon {
+    background-position-x: -900px;
+}
+
+.minusicon {
+    background-position-x: -936px;
+}*/

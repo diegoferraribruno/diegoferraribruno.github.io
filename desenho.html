@@ -15,44 +15,43 @@
     <div id="tela" style="overflow-y: hidden;" class="naotoque">
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
             <div id="ferramentas" class="ferramentas">
-                <span id="yoga" onmousedown="yoga()" class="mais"><span class="iconsright yogaicon"></span></span>
+                <span id="yoga" onmousedown="yoga()" class="mais"><span class="icon2 yogaicon"></span></span>
                 <span id="help" title="help" class="mais selected" onmousedown="modeTo('help')">
-                    <span class="iconsright helpicon"></span></span>
+                    <span class="icon2 helpicon"></span></span>
                 <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">
-                    <span class="iconsright saveicon"></span></span>
+                    <span class="icon2 saveicon"></span></span>
                 <span id="imagem" title="adicionar imagem" class="mais" onmousedown="mostraMenu('imagem')">
-                    <span class="iconsright foldericon"></span>
+                    <span class="icon2 foldericon"></span>
                 </span>
 
                 <span id="canvasmenu" title="Propriedades do desenho" class="mais" onclick="mostraMenu('quadro')">
-                    <span class="iconsright frameicon"></span>
+                    <span class="icon2 frameicon"></span>
                 </span>
                 <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
-                    onmouseleave="undoTEnd()"><span class="iconsright undoicon"></span></span>
+                    onmouseleave="undoTEnd()"><span class="icon2 undoicon"></span></span>
                 <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
-                    onmouseleave="redoTEnd()"><span class="iconsright redoicon"></span></span>
+                    onmouseleave="redoTEnd()"><span class="icon2 redoicon"></span></span>
             </div>
 
             <div id="ferramentas3" class="ferramentas">
 
                 <span id="night" class="mais" onmousedown="night()" title="modo escuro / claro">
 
-                    <span class="iconsright nighticon"></span>
+                    <span class="icon2 nighticon"></span>
                 </span>
                 <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')"><span
-                        class="iconsright cameraicon"></span></span>
-                <span id="FX" title="filtros" class="mais" onclick="modeTo('FX')"><span
-                        class="iconsright fxicon"></span>
+                        class="icon2 cameraicon"></span></span>
+                <span id="FX" title="filtros" class="mais" onclick="modeTo('FX')"><span class="icon2 fxicon"></span>
                 </span>
                 <span id="rotacionar" onmousedown="modeTo('rotacionar')" class="mais" alt="rotacionar o quado">
-                    <span class="iconsright rotateicon"></span></span>
+                    <span class="icon2 rotateicon"></span></span>
                 <span id="move" onmousedown="modeTo('move')" class="mais" alt="mover o quadro">
-                    <span class="iconsright moveicon"></span>
+                    <span class="icon2 moveicon"></span>
                 </span>
                 <span id="recortar" class="mais" onclick="modeTo('recortar')"><span
-                        class="iconsright cropicon"></span></span>
+                        class="icon2 cropicon"></span></span>
                 <span id="redimensionar" class="mais" onclick="modeTo('redimensionar')"><span
-                        class="iconsright scaleicon"></span></span>
+                        class="icon2 scaleicon"></span></span>
                 </span>
             </div>
 
@@ -75,7 +74,7 @@
                 </span>
 
                 <span onmousedown="backPaint()" class="mais" id="globalComposite">
-                    <span class="iconsright paintovericon"></span>
+                    <span class="icon2 paintovericon"></span>
                 </span>
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')"><span
                         class="icon zoomicon"></span>
@@ -455,8 +454,14 @@
 
             </div>
             <div id="menuimagem" class="fundobranco submenu">
-                <span class="botao">📂
-                    <span class="close" title="fechar menu enviar imagem" onmousedown="removeClass()"></span>
+                <span class="botao">
+                    <span class="icon2 foldericon">
+                    </span>
+                    <txt name="98" class="title"> Load your Art</txt>
+                    <span class="close" title="fechar" onmousedown="removeClass()"></span>
+                </span>
+                <span class="botao">
+                    <span class="icon2 projecticon"></span>
                     <txt name="50"> Caregar projeto</txt> .txt
                     <label for="inputTxt" class="custom-button">
                         <txt name="85">Seu arquivo</txt>
@@ -464,12 +469,8 @@
                     <input id="inputTxt" type="file" accept='.txt' onchange='openFile(event)'>
                 </span>
 
-                <span class="botao"> <span
-                        style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
-                            style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
-                            📂</span></span>
-                    <txt name="29">Carregar imagens</txt>
-                    <br>
+                <span class="botao"><span class="icon2 frameicon"></span>
+                    <txt name="29">Carregar imagen</txt>
                     <label for="input" class="custom-button">
                         <txt name="85">Seu arquivo</txt>
                     </label>
@@ -480,7 +481,8 @@
                         <span class="knob"></span>
                     </label>
                 </span>
-                <span class="botao"> 📂 🎞️ <txt name="31">Enviar uma animação</txt><br>
+                <span class="botao"> <span class="icon addframeicon"></span>
+                    <txt name="31">Enviar uma animação</txt><br>
                     <txt name="32">Auto detectar quadros </txt>
                     <label class="toggle">
                         <input type="checkbox" id="autodetectar" onchange="hidecustom()" checked="true">
@@ -541,7 +543,7 @@
             </div>
             <div id="menuFX" class="fundobranco submenu">
                 <span class="botao" id="fx0"><span title="fechar efeitos" onmousedown="removeClass()"
-                        class="close"></span><span class="iconsright fxicon"></span>
+                        class="close"></span><span class="icon2 fxicon"></span>
                     <txt name="83" class="title">Filtros</txt>
                 </span>
                 <div style="display: block; overflow: scroll;min-height:40px; max-height: 120px; width: 320px; -ms-overflow-style: auto; 
@@ -633,7 +635,7 @@
             <div id="menuhelp" class="fundobranco submenu">
                 <span class="botao">
                     <span id="help2" title="help" class="mais selected" onmousedown="modeTo('help')">
-                        <span class="iconsright helpicon"></span> </span>
+                        <span class="icon2 helpicon"></span> </span>
                     What can I help you with?
                     <span title="fechar" onmousedown="removeClass()" class="close"></span>
                 </span>
@@ -651,7 +653,7 @@
                 <span class="botao">
                     <txt name="88">Salvar antes?</txt>
                     <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')"> <span
-                            class="iconsright saveicon"></span>
+                            class="icon2 saveicon"></span>
                     </span>
                 </span>
                 <span id="redimensionarbot" title="Recotar automaticamente" class="botao">
@@ -672,7 +674,7 @@
                 <span class="botao"> <span class="close" onmousedown="removeClass()"></span>
                     <span class="icon clipboardicon"></span> <span class="title"> Clipboard</span></span>
                 <span id="lixeira" onmousedown="limpar('clipboard')" class="icon lixeiraicon"></span>
-                <span class="iconsright rotateicon"></span>
+                <span class="icon2 rotateicon"></span>
                 <input id="canvasfrontdeg" type="number" maxlength="3" max="360" value="0" step="6"
                     style="width:60px; height:26px; padding: 4px;" class="floatleft"
                     onchange="updateCanvasFrontDeg()" />
@@ -735,7 +737,7 @@
 
             <div id="menurotacionar" class="fundobranco submenu">
                 <span id="rotacionar" class="botao title"><span class="close" onmousedown="removeClass()"></span>
-                    <span class="iconsright rotateicon"></span>
+                    <span class="icon2 rotateicon"></span>
                     <txt name="57">Rotacionar a tela</txt>
                 </span>
                 <span id="rotaciona" class="botao" onclick="">
@@ -784,18 +786,18 @@
                 </span>
                 <span class=" botao" style="font-size: 0.8em; display: flex;" title="Modos de arte">
                     <span id="help2" title="help" class="mais selected" onmousedown="modeTo('help')">
-                        <span class="iconsright helpicon"></span> </span>
+                        <span class="icon2 helpicon"></span> </span>
 
 
                     <span id="imagem" title="Carregar projeto ou imagem" class="mais"
                         onmousedown="mostraMenu('imagem')">
-                        <span class="iconsright foldericon"></span>
+                        <span class="icon2 foldericon"></span>
                     </span>
                     <span id="localize" title="change language" class="mais" onclick="localize()">
                         🇧🇷
                     </span>
                     <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam'), removeElement('carregando')">
-                        <span class="iconsright cameraicon"></span>
+                        <span class="icon2 cameraicon"></span>
                     </span>
                     <span id="info" title="Informações" class="mais" onmousedown="mostraMenu('info')">ℹ️</span>
 

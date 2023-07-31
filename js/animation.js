@@ -382,7 +382,7 @@ async function adicionaQuadro() {
     scrollFilme()
 }
 function scrollFilme(onde = workingframe) {
-    filme.scrollLeft = onde * 32
+    iD("filmecontainer").scrollLeft = onde * 32
 
     removeClass("wf")
     let thum = iD(workingframe)

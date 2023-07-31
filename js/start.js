@@ -105,7 +105,7 @@ function startup() {
   iD(
     "globalComposite"
   ).innerHTML =
-    `<span class="iconsright paintovericon"></span>`;
+    `<span class="icon2 paintovericon"></span>`;
   window.addEventListener("resize", function (event) {
     resizeScreen();
   });

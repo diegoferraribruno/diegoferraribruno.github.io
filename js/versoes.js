@@ -1,6 +1,8 @@
 let vers = [{
-    versao: "6.5",
+    versao: "6.8",
     notas: [
+        "Varias mudanças no visual e menus",
+        "Correções diversas",
         "Modo linha segurando Ctrl",
         "Menu help com atalhos.",
         "Captura de foto em sequencia com ajuste do intervalo",
