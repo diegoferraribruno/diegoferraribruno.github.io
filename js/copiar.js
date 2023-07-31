@@ -249,3 +249,21 @@ function changeImage2(n) {
   image2.src = clipboard[n]
   ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
 }
+
+
+function clearClipboard() {
+  let len = clipboard.length
+  let n
+  if (len > 0) {
+    n = dataTransfer.replace(/^\D+/g, '');// get number from string
+    if (n < len) {
+      clipboard.splice(n, 1);
+      Alert('<span class="icon clipboardicon"></span><span style="display:block; float:left; margin:4px">' + n + '<span class="icon lixeiraicon"></span>')
+    } else {
+      clipboard = []
+    }
+    setTimeout(() => { updateClipboard() }, 10)
+  } else {
+    Alert(' <span class="icon clipboardicon"></span> = 0')
+  }
+}

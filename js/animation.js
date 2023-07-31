@@ -2,6 +2,7 @@
 var animacao = []
 var anime = iD("anime")
 var fps = 8
+var ghostframes = true
 
 var anime_menu = {
     "prev_frame()": ['<span class="icon backicon"></span>', "Quadro anterior"],
@@ -9,9 +10,9 @@ var anime_menu = {
     "next_frame()": ['<span class="icon nexticon"></span>', "Próximo quadro"],
     // "swapL()": ["⬅️", "Mover quadro á esquerda"],
     // "swapR()": ["➡️", "Mover quadro á direita"],
-    "new_frame()":['<span class="icon addframeicon"></span>',"Adiconar quadro á animação"],
-    "cloneFrame()":['<span class="icon cloneframeicon"></span>',"duplicate frame"],
-    "quadrosVisiveis()":[`<span class="icon ghosticon"></span>`, "Ghost Frames"],
+    "new_frame()": ['<span class="icon addframeicon"></span>', "Adiconar quadro á animação"],
+    "cloneFrame()": ['<span class="icon cloneframeicon"></span>', "duplicate frame"],
+    "ghost()": [`<span class="icon ghosticon"></span>`, "Ghost Frames"],
     'lixeira()': ['<span class="icon lixeiraicon"></span>', "Arraste um quadro para apaga-lo"]
 }
 
@@ -35,7 +36,7 @@ function criaAnime() {
         anime.appendChild(item)
 
     })
-   
+
 
 
     contador.innerHTML = workingframe
@@ -468,19 +469,16 @@ function drop(event) {
     }
 }
 
-function clearClipboard() {
-    let n = dataTransfer.replace(/^\D+/g, '');// get number from string
-    if (n < clipboard.length) {
-        clipboard.splice(n, 1);
-        Alert(n)
+function ghost() {
+    ghostframes = !ghostframes
+    if (ghostframes == true) {
+        canvasBack.classList.add("esconde")
+        Alert('<span class="icon ghosticon"></span>' + alerts[language][30] + " " + alerts[language][7])
     } else {
-        clipboard = []
+        canvasBack.classList.remove("esconde")
+        Alert('<span class="icon ghosticon"></span>' + alerts[language][30] + " " + alerts[language][8])
     }
-    setTimeout(() => { updateClipboard() }, 10)
-}
 
-function quadrosVisiveis() {
-    canvasBack.classList.toggle("esconde")
 }
 
 

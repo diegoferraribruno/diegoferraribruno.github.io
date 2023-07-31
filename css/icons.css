@@ -1,5 +1,6 @@
 .icon {
-    display: inline-block;
+    display: block;
+    float: left;
     width: 36px;
     height: 36px;
     background-image: url("./../img/iconsleft.png");
@@ -118,7 +119,8 @@
 
 
 .iconsright {
-    display: inline-block;
+    display: block;
+    float: left;
     width: 36px;
     height: 36px;
     background-image: url("./../img/iconsright.png");

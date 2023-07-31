@@ -110,7 +110,8 @@ var alerts = {
         26: "Paint Brush mode",
         27: "Max undo Level = ",
         28: "Rainbow Ink",
-        29: "Mirror mode"
+        29: "Mirror mode",
+        30: "Ghost Frames"
     }
 }
 let example = alerts[language][0]

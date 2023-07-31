@@ -52,16 +52,10 @@ function createBasicBrushes() {
         basicBrushes.push(prush)
         prush.id = "br" + i
         prush.setAttribute("onmousedown", "selectBrush(" + i + ")")
-        prush.setAttribute("style", "width:30px; height:30px; margin-top:2px;")
+        prush.setAttribute("style", "width:30px; height:30px; margin:2px;")
         iD("pinceis").appendChild(prush)
 
     }
-    let customBrush = document.createElement("span")
-    customBrush.id = "custombrush"
-    //customBrush.classList.add("bot")
-    customBrush.setAttribute("onmousedown", 'mostraSubMenu("custombrush")')
-    customBrush.innerHTML = '<span class="icon custombrushicon"></span>'
-    iD("pinceis").appendChild(customBrush)
 }
 createBasicBrushes()
 
@@ -114,10 +108,8 @@ criaPaleta();
 function setStrokeColor() {
     strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
     let objs = [
-        "mostraCor",
         "salvaCor",
-        //"mostraCor2",
-        //"pintar",
+        "pintar",
         "cores",
         "picker",
         "preencher",
@@ -139,20 +131,19 @@ function mudaCor(valor) {
 
     if (valor == "P") {
         strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
-        iD("mostraCor").style.color = strokeColor;
+        //   iD("mostraCor").style.color = strokeColor;
 
         //     iD("menu").style.visibility = "hidden";
     } else if (valor == "B") {
         strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
-        iD("mostraCor").style.color = strokeColor;
+        // iD("mostraCor").style.color = strokeColor;
         //     iD("menu").style.visibility = "hidden";
     } else {
         strokeColor = valor;
         //     iD("menu").style.visibility = "hidden";
         // cursorColor();
     }
-    iD("mostraCor").style.backgroundColor =
-        strokeColor;
+    // iD("mostraCor").style.backgroundColor = strokeColor;
     //iD("mostraCor2").style.backgroundColor =
     //   strokeColor;
     //iD("pintar").style.backgroundColor = strokeColor;

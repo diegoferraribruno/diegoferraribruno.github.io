@@ -128,7 +128,7 @@ body {
     display: inline-block;
     text-align: center;
     line-height: 1.9em;
-    top: 2px;
+    top: -1px;
 }
 
 .submenu {
@@ -520,7 +520,8 @@ input[type="range"] {
     background-color: none;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 2px;
+    margin-top: 4px;
+    padding-bottom: 4px;
     /*margin-bottom: 2px;
     border-radius: 8px;*/
     vertical-align: bottom;
@@ -777,15 +778,17 @@ input[type="range"] {
     overflow-x: scroll;
     column-gap: 0px;
     padding-top: 4px;
-   /* background: rgba(0, 0, 0, 1);*/
+    /* background: rgba(0, 0, 0, 1);*/
     height: 54px;
     line-height: 24px;
     vertical-align: top;
     background-image: url("../img/filmebg.png");
 }
-#filme{
+
+#filme {
     display: inline-flex;
 }
+
 #ui_filme {
     max-width: 100%;
     min-width: 36px;
@@ -939,4 +942,9 @@ input[type="range"] {
     text-align: left;
     font-size: medium;
     margin: 6px;
+}
+
+.floatleft {
+    display: block;
+    float: left;
 }

@@ -57,12 +57,9 @@
             </div>
 
             <div id="ferramentas2" class="ferramentas">
-                <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')"><span
-                        class="icon zoomicon"></span>
-                    <span id="x1"
-                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -36px; width:36px; height:20px; font-weight: 700; text-align: center; color: #fff;">1x
-                    </span>
-                </span>
+                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')"><span
+                        class="icon eraseicon"></span></span>
+
                 <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')"><span
                         class="icon pintaricon"></span></span>
                 <span title="Pega cor" id="picker" class="mais" onmousedown="modeTo('picker')"><span
@@ -79,6 +76,12 @@
 
                 <span onmousedown="backPaint()" class="mais" id="globalComposite">
                     <span class="iconsright paintovericon"></span>
+                </span>
+                <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')"><span
+                        class="icon zoomicon"></span>
+                    <span id="x1"
+                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -36px; width:36px; height:20px; font-weight: 700; text-align: center; color: #fff;">1x
+                    </span>
                 </span>
 
             </div>
@@ -100,12 +103,16 @@
         </div>
         <div id="menus">
             <div id="menumandala" class="submenu fundobranco">
-                <txt name="94">Fatias da mandala</txt>
+                <span class="close" title="fechar" onmousedown="removeClass()"></span>
+                <span class="icon mandalaicon"></span>
+                <txt name="94">Fatias da mandala</txt><br>
                 <input id="mandalabar" type="number" min="2" max="32" value="24" step="1" style="width:160px"
                     onchange="mandalaSlices(this.value)"><br>
 
             </div>
             <div id="menupicker" class="submenu fundobranco">
+                <span class="close" title="fechar menu tamanho da tela" onmousedown="removeClass()"></span>
+                <span class="icon pickericon"></span>
                 <txt name="1">Toque numa área pintada<br>
                     para capturar uma cor</txt>
             </div>
@@ -211,10 +218,8 @@
 
             <div id="menupintar" class="fundobranco submenu menu">
 
-                <span class="botao"><span title="pintar" class="mais" onmousedown="modeTo('pintar')"><span
-                            class="icon pintaricon"></span></span>
-                    <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')"><span
-                            class="icon eraseicon"></span></span>
+                <span class="botao">
+
                     <span class="mais" onclick="toggleDinamicBrush()">
                         <span class="icon dinamicbrushicon"></span>
                     </span>
@@ -224,8 +229,9 @@
                             class="icon mandalaicon"></span></span>
                     <span id="mirror" title="mirror" class="mais" onmousedown="Mirror()"><span
                             class="icon mirroricon"></span></span>
+                    <span class="mais" onmousedown="mostraSubMenu('custombrush')">
+                        <span class="icon custombrushicon"></span></span>
                     <!--span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span-->
-
                     <span title="fechar" onmousedown="removeClass()" class="close">
                     </span>
 
@@ -249,7 +255,7 @@
                         width="40px" height="40px"></canvas><span class="close"></span>
                 </span>
             </div>
-            <div id="menuapagar" class="fundobranco submenu">
+            <!--div id="menuapagar" class="fundobranco submenu">
                 <span class="botao" title="fechar menu apagar" onmousedown="removeClass()"><span
                         class="icon eraseicon"></span>
                     <txt name="14">Apagador</txt>
@@ -267,7 +273,7 @@
                 <div>
                     💧<input type="range" id="transparenciaE" name="transparencia" min="0.1" max="1"
                         oninput="mudaCorAlpha()" step="0.1" value="1"></div>
-            </div>
+            </div-->
             <div id="menucores" class="submenu fundobranco">
                 <span class="botao glow">
 
@@ -420,7 +426,7 @@
                 </span>
                 <span class="botao"> <span class="mais"><span class="icon ghosticon"></span></span>
                     <txt name="21">Quadros visiveis</txt>
-                    <label class="toggle"> <input type="checkbox" id="camadasnumber" onchange="quadrosVisiveis()"
+                    <label class="toggle"> <input type="checkbox" id="camadasnumber" onchange="ghost()"
                             style="width: 50px; margin-left: 8px" checked>
                         <span class="knob"></span>
                     </label>
@@ -624,7 +630,14 @@
             </div>
 
             <div id="menuhelp" class="fundobranco submenu">
+                <span class="botao">
+                    <span title="fechar" onmousedown="removeClass()" class="close">
+                    </span>
+                    <span class="mais" onclick="shortCuts()" style="font-size: smaller;">xcv</span>
+                    <span class="icon playticon" onclick="videoTutorial()"></span>
+                </span>
 
+                <span id="helpcontent"></span>
             </div>
 
             <div id="menuredimensionar" class="fundobranco submenu">
@@ -655,11 +668,11 @@
             <div id="menupaste" class="fundobranco submenu">
                 <span class="botao"> <span class="close" onmousedown="removeClass()"></span>
                     <span class="icon clipboardicon"></span> clipboard</span>
-                <span id="lixeira" class="bot" onmousedown="limpar('clipboard')"> <span class="icon lixeiraicon"></span>
-                </span>
+                <span id="lixeira" onmousedown="limpar('clipboard')" class="icon lixeiraicon"></span>
                 <span class="iconsright rotateicon"></span>
                 <input id="canvasfrontdeg" type="number" maxlength="3" max="360" value="0" step="6"
-                    style="width:60px; height:26px; padding: 4px;" onchange="updateCanvasFrontDeg()" />º<br>
+                    style="width:60px; height:26px; padding: 4px;" class="floatleft"
+                    onchange="updateCanvasFrontDeg()" />
                 <span id="clipboard"></span>
 
             </div>
@@ -986,7 +999,7 @@
     <script type="text/javascript" src="js/credits.js"></script>
     <script type="text/javascript" src="js/carregar.js"></script>
     <script type="text/javascript" src="js/FX.js"></script>
-    <script type="text/javascript" src="js/shortcuts.js"></script>
+    <script type="text/javascript" src="js/help.js"></script>
 
     <!-- codigos que nao tenho parte-->
     <!--script type="module" src="js/emoji-picker-element/index.js"></script-->

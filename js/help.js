@@ -80,9 +80,8 @@ let shortcuts = {
         }
     }
 }
-function Help() {
-
-    let help = iD("menuhelp")
+let help = iD("helpcontent")
+function shortCuts() {
     help.innerHTML = ""
     let len = shortcuts.len
     help.innerHTML = "Shortcuts <br>"
@@ -95,4 +94,7 @@ function Help() {
         })
     })
 
+}
+function videoTutorial() {
+    help.innerHTML = '<span class="icon playticon"></span>em breve<br> Video tutorial<br> comming soon<br>'
 }
