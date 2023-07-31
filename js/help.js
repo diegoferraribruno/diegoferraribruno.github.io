@@ -81,6 +81,21 @@ let shortcuts = {
     }
 }
 let help = iD("helpcontent")
+
+function Help() {
+    help.innerHTML = `<span class="botao" onclick="localize()">
+    <span id="localize2" title="change language" class="mais">
+        🇧🇷
+    </span> Mudar para português?
+    </span>
+    <span class="botao" onclick="shortCuts()">Shortcuts / atalhos</span>
+    <span class="botao" onclick="videoTutorial()">
+        <span class="icon playicon"></span>Video tutorial
+    </span>
+    <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span> ${textos[language][82]}
+    `
+}
+
 function shortCuts() {
     help.innerHTML = ""
     let len = shortcuts.len
@@ -96,5 +111,5 @@ function shortCuts() {
 
 }
 function videoTutorial() {
-    help.innerHTML = '<span class="icon playticon"></span>em breve<br> Video tutorial<br> comming soon<br>'
+    help.innerHTML = '<span class="icon playticon"></span> em breve<br> Video tutorial<br> comming soon<br>'
 }

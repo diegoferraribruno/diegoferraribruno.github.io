@@ -80,7 +80,7 @@
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')"><span
                         class="icon zoomicon"></span>
                     <span id="x1"
-                        style="font-size: 0.6em; display:block; position:absolute; margin-top: -36px; width:36px; height:20px; font-weight: 700; text-align: center; color: #fff;">1x
+                        style="font-size: 0.6em; display:block; position:absolute; width:36px; height:20px; font-weight: 700; text-align: center; color: #fff;">1x
                     </span>
                 </span>
 
@@ -123,8 +123,9 @@
 
             <div id="menuinfo" class="submenu fundobranco">
                 <span class="fundobranco" onmousedown="removeClass()">
-                    <span class="close"> </span><span
-                        style="display: block; position: relative; float: left; font-size: 32px; margin-right: 4px;">😅</span>
+                    <span class="close"> </span>
+                    <span style="display: block; position: relative; float: left; font-size: 32px; margin-right: 4px;">
+                        😅</span>
                     <txt name="3"><b>⚠️Atenção!⚠️</b></txt><br>
                     <txt name="4"> Este é um App de diversão!</b><br>
                         durante o processo de criação e exportação,
@@ -631,13 +632,15 @@
 
             <div id="menuhelp" class="fundobranco submenu">
                 <span class="botao">
-                    <span title="fechar" onmousedown="removeClass()" class="close">
-                    </span>
-                    <span class="mais" onclick="shortCuts()" style="font-size: smaller;">xcv</span>
-                    <span class="icon playticon" onclick="videoTutorial()"></span>
+                    <span id="help2" title="help" class="mais selected" onmousedown="modeTo('help')">
+                        <span class="iconsright helpicon"></span> </span>
+                    What can I help you with?
+                    <span title="fechar" onmousedown="removeClass()" class="close"></span>
                 </span>
+                <span id="helpcontent" class="botao">
 
-                <span id="helpcontent"></span>
+
+                </span>
             </div>
 
             <div id="menuredimensionar" class="fundobranco submenu">
@@ -766,10 +769,10 @@
                 <span class="botao">
 
                     Yoga Art 6<br>
-                    <div id="yogapose"
-                        style="background-image:url(img/yoga.png); width:64px; height:77px; display:block; margin:10px; float: left;"
+                    <span id="yogapose"
+                        style="background-image:url(img/yoga.png); width:64px; height:77px; display: inline-block; margin-top: -20px;"
                         onClick="yogaChange()">
-                    </div>
+                    </span>
                     <br>
                     <img src="img/mandala.png" onclick="Mandala()" class="mais" style="width: 64px; height: 64px;">
                     <img src="img/glowmandala.png" onclick="Mandala(), glow()" class="mais"
@@ -779,23 +782,22 @@
                     <br>
 
                 </span>
-                <span class=" botao" style="font-size: 0.8em;" title="Modos de arte">
-                    <span id="cam" title="foto" class="mais"
-                        onmousedown="modeTo('cam'), removeElement('carregando')">📷</span>
+                <span class=" botao" style="font-size: 0.8em; display: flex;" title="Modos de arte">
+                    <span id="help2" title="help" class="mais selected" onmousedown="modeTo('help')">
+                        <span class="iconsright helpicon"></span> </span>
+
+
                     <span id="imagem" title="Carregar projeto ou imagem" class="mais"
                         onmousedown="mostraMenu('imagem')">
-                        <span
-                            style="display:inline-block; position:relative; font-size:18px; width:30px; height:30px; top: -4px;">🖼️<span
-                                style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 16px;">
-                                📂</span></span>
+                        <span class="iconsright foldericon"></span>
                     </span>
                     <span id="localize" title="change language" class="mais" onclick="localize()">
-                        <span
-                            style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">🇬🇧<span
-                                style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">🇧🇷</span></span>
-
+                        🇧🇷
                     </span>
-                    <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span>
+                    <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam'), removeElement('carregando')">
+                        <span class="iconsright cameraicon"></span>
+                    </span>
+                    <span id="info" title="Informações" class="mais" onmousedown="mostraMenu('info')">ℹ️</span>
 
 
                 </span>
