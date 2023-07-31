@@ -143,7 +143,7 @@ let textos = {
         "21": "Quadros fantasmas visiveis",
         "22": "Adicionar Fundo falso:",
         "23": "Preencher tudo ",
-        "24": "Velocidade da Animação🎞️",
+        "24": "Velocidade da Animação",
         "25": "Quadros Por Segundo",
         "26": "Remover quadro atual",
         "27": "clonar o quadro",
@@ -216,8 +216,10 @@ let textos = {
         "95": "Limite para desfazer",
         "96": "Intervalo de captura",
         "97": "Switch to English",
-        "98": "Carregue sua arte"
-
+        "98": "Carregue sua arte",
+        "99": "Prancheta de recortes",
+        "100": "Teclas de Atalho",
+        "101": "Ajuda"
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -243,7 +245,7 @@ let textos = {
         "21": "Ghost frames",
         "22": "Add fake background:",
         "23": "Fill all ",
-        "24": "Animation speed 🎞️",
+        "24": "Animation speed ",
         "25": "Frames Per Second",
         "26": "Remove current Frame",
         "27": "Duplicate frame",
@@ -317,7 +319,9 @@ let textos = {
         "96": "Capture interval",
         "97": "Trocar para Português?",
         "98": "Load your art",
-
+        "99": "Clipboard",
+        "100": "Keyboard Shortcuts",
+        '101': "Help"
     }
 }
 var titles = {

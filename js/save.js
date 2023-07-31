@@ -27,94 +27,102 @@ var cont
 var spritao = new Image();
 
 async function export_anim() {
-    Historia()
+    if (animacao.length > 1) {
 
-    let len = animacao.length
-    if (len == 0) {
-        Alert(alerts[language][0] + " " + alerts[language][19])
-        return
-    }
-    if (iD("filenameS").value == "") {
-        Alert(alerts[language][20])
-        return
-    }
-    Alert(alerts[language][21] + "<br>" + alerts[language][17])
 
-    let exp = document.createElement("canvas")
-    exp.width = canvas.width * len
-    exp.height = canvas.height
-    exp.id = "exp";
-    exp.style.visibility = "hidden"
-    exp.style.position = "absolute"
-    iD("tela").appendChild(exp);
-    cont = iD("exp").getContext("2d");
+        Historia()
 
-    for (i = 0; i < len; i++) {
-        blob = dataURItoBlob(animacao[i]);
-        let imagem = new Image();
-        imagem.src = URL.createObjectURL(blob);
-        let pos = i * canvas.width
-        imagem.onload = function () {
-            cont.globalCompositeOperation = "source-over"
-            cont.drawImage(imagem, 0, 0, imagem.width, imagem.height, pos, 0, imagem.width, imagem.height);
-            if (iD("unir").checked && background_anim == true) {
-                if (!iD("sobrepor").checked) {
-                    cont.globalCompositeOperation = "destination-over"
-                    cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
-
-                } else {
-                    cont.globalCompositeOperation = "source-under"
-                    cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
-                    cont.globalCompositeOperation = "destination-over"
-                }
-
-            }
+        let len = animacao.length
+        if (len == 0) {
+            Alert(alerts[language][0] + " " + alerts[language][19])
+            return
         }
-    }
-
-
-    setTimeout(() => {
-        let fname = iD("filenameS").value
-        var dataURL = iD("exp")
-            .toDataURL("image/png")
-            .replace("image/png", "image/octet-stream");
-        if (iD("seq").checked) {
-            downloadImage(dataURL, `${fname}.png`);
+        if (iD("filename").value == "") {
+            Alert(alerts[language][20])
+            return
         }
-        spritao.src = dataURL
-        spritao.onload = function () {
+        Alert(alerts[language][21] + "<br>" + alerts[language][17])
 
-            if (iD("gif").checked) {
-                exp.width = canvas.width
-                exp.height = canvas.height
-                let myanima = new Image()
-                myanima.src = spritao.src
-                myanima.onload = function () {
+        let exp = document.createElement("canvas")
+        exp.width = canvas.width * len
+        exp.height = canvas.height
+        exp.id = "exp";
+        exp.style.visibility = "hidden"
+        exp.style.position = "absolute"
+        iD("tela").appendChild(exp);
+        cont = iD("exp").getContext("2d");
 
-                    var encoder = new GIFEncoder();
-                    encoder.setRepeat(0); //auto-loop
-                    encoder.setDelay(1000 / fps);
-                    console.log(encoder.start())
+        for (i = 0; i < len; i++) {
+            blob = dataURItoBlob(animacao[i]);
+            let imagem = new Image();
+            imagem.src = URL.createObjectURL(blob);
+            let pos = i * canvas.width
+            imagem.onload = function () {
+                cont.globalCompositeOperation = "source-over"
+                cont.drawImage(imagem, 0, 0, imagem.width, imagem.height, pos, 0, imagem.width, imagem.height);
+                if (iD("unir").checked && background_anim == true) {
+                    if (!iD("sobrepor").checked) {
+                        cont.globalCompositeOperation = "destination-over"
+                        cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
 
-                    for (i = 0; i < animacao.length; i++) {
-                        if (isGlowing) {
-                            cont.fillStyle = "rgb(10,10,10)"
-                        } else {
-                            cont.fillStyle = "rgb(255,255,255)" //GIF can't do transparent so do white
-                        }
-                        cont.fillRect(0, 0, canvas.width, canvas.height);
-                        cont.drawImage(myanima, - canvas.width * i, 0, myanima.width, myanima.height)
-                        encoder.addFrame(cont);
+                    } else {
+                        cont.globalCompositeOperation = "source-under"
+                        cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
+                        cont.globalCompositeOperation = "destination-over"
                     }
-                    encoder.finish();
-                    encoder.download(fname + ".gif");
+
                 }
+            }
+        }
+
+
+        setTimeout(() => {
+            let fname = iD("filename").value + animacao.length
+            var dataURL = iD("exp")
+                .toDataURL("image/png")
+                .replace("image/png", "image/octet-stream");
+            if (iD("seq").checked) {
+                downloadImage(dataURL, `${fname}.png`);
+            }
+            spritao.src = dataURL
+            spritao.onload = function () {
+
+                if (iD("gif").checked) {
+                    exp.width = canvas.width
+                    exp.height = canvas.height
+                    let myanima = new Image()
+                    myanima.src = spritao.src
+                    myanima.onload = function () {
+
+                        var encoder = new GIFEncoder();
+                        encoder.setRepeat(0); //auto-loop
+                        encoder.setDelay(1000 / fps);
+                        console.log(encoder.start())
+
+                        for (i = 0; i < animacao.length; i++) {
+                            if (isGlowing) {
+                                cont.fillStyle = "rgb(10,10,10)"
+                            } else {
+                                cont.fillStyle = "rgb(255,255,255)" //GIF can't do transparent so do white
+                            }
+                            cont.fillRect(0, 0, canvas.width, canvas.height);
+                            cont.drawImage(myanima, - canvas.width * i, 0, myanima.width, myanima.height)
+                            encoder.addFrame(cont);
+                        }
+                        encoder.finish();
+                        encoder.download(fname + ".gif");
+                    }
+
+                }
+                removeElement("exp")
 
             }
-            removeElement("exp")
-
-        }
-    }, 1200 + (100 * len))
+        }, 1200 + (100 * len))
+    }
+    else {
+        salvaImagem()
+        Alert("animação muito curta para exporatr um gif animado.")
+    }
 }
 function confirmLink(url) {
     if (url == "apoio.html") {
@@ -158,6 +166,7 @@ function criaConteudo() {
 }
 
 function export2txt() {
+    let fname = iD("filename").value + ".txt"
     changedBrush = false
     changeBrush()
     setTimeout(() => {
@@ -199,7 +208,7 @@ function export2txt() {
         a.href = URL.createObjectURL(new Blob([JSON.stringify(pacote, null, 2)], {
             type: "text/plain"
         }));
-        a.setAttribute("download", "data.txt");
+        a.setAttribute("download", fname);
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

@@ -908,8 +908,8 @@ input[type="range"] {
 .textOver {
     display: block;
     position: absolute;
-    margin-top: -32px;
     font-size: 0.8em;
+    color: #fff;
 }
 
 #clipboard {

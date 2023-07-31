@@ -42,7 +42,7 @@ let shortcuts = {
     },
     "pt_BR": {
         "Em todos os Modos": {
-            "Ctrl + C": "Copia o quadro todo para o clipboard caso nada esteja selecionado",
+            "Ctrl + C": `Copia o quadro todo para o ${textos[language]["99"]} caso nada esteja selecionado`,
             "Ctrl + V": "Entra no modo colar com a ultima imagem copiada(ou selecionada) para ser desenhada na posição do fim do click ou toque",
             "Ctrl + X": "O mesmo que copiar mas deixa um buraco na área selecionada",
             "Ctrl + Z": "pressione para voltar no histórico",
@@ -87,7 +87,9 @@ function Help() {
     <span id="localize2" title="change language" class="mais">
         🇧🇷 
     </span> <txt name="97">${textos[language]["97"]}</txt> </span>
-    <span class="botao" onclick="shortCuts()">Shortcuts / atalhos</span>
+    <span class="botao" onclick="shortCuts()">
+        <span class="icon backicon"></span>  <txt name="100">${textos[language]["100"]}</txt>
+    </span>
     <span class="botao" onclick="videoTutorial()">
         <span class="icon playicon"></span>Video tutorial
     </span>
@@ -98,7 +100,7 @@ function Help() {
 function shortCuts() {
     help.innerHTML = ""
     let len = shortcuts.len
-    help.innerHTML = "Shortcuts <br>"
+    help.innerHTML = `<txt name="100">${textos[language]["100"]}</txt>`
     let itens = shortcuts[language]
     Object.keys(itens).forEach((key, index) => {
         help.innerHTML += "<br><b>" + key + "<b><br><br>"
