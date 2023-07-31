@@ -78,7 +78,9 @@ var alerts = {
         26: "Modo Pincel",
         27: "Limite para desfazer = ",
         28: "Tinta arco-íris",
-        29: "Desenho Espelhado"
+        29: "Desenho Espelhado",
+        30: "Quadros fantasma",
+        31: "Ultima imagem copiada como fundo falso",
     },
     "en": {
         0: "Please,<br> add ➕ frames to your animation",
@@ -111,7 +113,8 @@ var alerts = {
         27: "Max undo Level = ",
         28: "Rainbow Ink",
         29: "Mirror mode",
-        30: "Ghost Frames"
+        30: "Ghost Frames",
+        31: "Last image from clipboard set as fake background"
     }
 }
 let example = alerts[language][0]

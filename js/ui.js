@@ -148,6 +148,7 @@ function Fundo(qual) {
         alvo.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
     } else if (qual == "clipboard") {
         alvo.style.backgroundImage = `url(${clipboard[clipboard.length - 1]})`;
+        Alert(alerts[language][31])
     } else {
         alvo.style.backgroundImage = `url(${qual})`;
     }

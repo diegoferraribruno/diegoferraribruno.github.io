@@ -83,7 +83,7 @@ function cut() {
         canvasFront.classList.remove("esconde")
         if (cropEnd.x == 0) {
 
-            desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22b000")
+            desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22b00033")
         }
     }, 800)
 
@@ -201,7 +201,7 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
 }
 
 
-function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff2200") {
+function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff000066") {
 
     ctxF.clearRect(0, 0, canvas.width, canvas.height);
     ctxF.globalCompositeOperation = "source-over"
@@ -222,7 +222,7 @@ function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1
     );
 
     ctxF.stroke();
-    ctxF.fillStyle = '#ff000066'; // Set fill color with opacity
+    ctxF.fillStyle = cor; // Set fill color with opacity
     ctxF.fill();
 
 

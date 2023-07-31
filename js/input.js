@@ -706,7 +706,7 @@ function handleEnd(evt) {
         canvasFront.classList.remove("esconde")
     }
     document.body.style.cursor = "pointer";
-    if (mode != "FX" && mode != "rotacionar") {
+    if (mode != "FX" && mode != "rotacionar" && mode != "recortar" && mode != "selecionar") {
 
         scrollWindow.x = 0
         scrollWindow.y = 0
