@@ -104,7 +104,7 @@ let vers = [{
     versao: "2.0.5",
     notas: [
         "troquei o botao do salvar por 🛟",
-        "troquei o botao de adicionar imagem por ➕ 🖼️",
+        'troquei o botao de adicionar imagem por ➕ <span class="icon2 frameicon"></span>',
         "aplicar e remover o filtro agora funcionando",
         "camera flip somente quando camera frontal :)",
         "desenho da caixa de recorte automatico",
@@ -145,7 +145,9 @@ let vers = [{
     notas: [
         "🧽 alerta para modo apagador ativado",
         "♾️ Modo de pintura Infinito (t ile-map, backgrounds, pintura de ladrilho)",
-        "🖌️➕ 🖼️ ➡️ 🖌️função de pincel personalizado. transforma sua arte em um pincel. <br>(dica abuse da transparencia 💧 e apagador 🧽 para criar belos pincéis ;)",
+        "<span class='icon custombrushicon'></span>" +
+        "função de pincel personalizado. transforma sua arte em um pincel." +
+        "<br>(dica abuse da transparencia 💧 e apagador 🧽 para criar belos pincéis ;)",
         "😍 modulo do emoji-picker incorporado ao codigo e tambem com tile paint"
     ]
 
@@ -180,7 +182,7 @@ let vers = [{
         "(sem quadros brancos)",
         "🎞️  Exporta Gif Animado (<img src='img/crop.png'>recortado inclusive) ",
         "❎ icone fechar janela padronizado",
-        "🖌️ pincel suave como primeira opção",
+        "<span class='icon pintaricon'></span> pincel suave como primeira opção",
         "- remoção de quadros aprimorada"
     ]
 },

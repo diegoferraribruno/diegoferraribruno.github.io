@@ -163,14 +163,10 @@ var openFile = function (event) {
             historia[i] = []
             historia[i].push(newimg)
 
-            /*            let lenha = projeto["historia"][i].length
-                        for (b = 0; b < lenha; b++) {
-                            let newimg = projeto["historia"][i][b]
-                            historia[i].push(newimg)
-                        }*/
 
         }
         adicionaQuadro()
+        setTimeout(() => scrollFilme(len - 1), 1000)
         let lenc = projeto["clipboard"].length
         clipboard = []
         for (i = 0; i < lenc; i++) {
@@ -196,7 +192,7 @@ var openFile = function (event) {
             iD("carregando").style.display = "none"
             let len = projeto["animacao"].length
             iD("pinceis2").innerHTML = ""
-            Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>🖌️ x " + lenb + " <br> 🖼️  x " + len, len * 2)
+            Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>" + lenb + '<span class="icon pintaricon"></span> x <br>' + len + "  <span class='icon2 frameicon'></span>  x ", len * 2)
             for (i = 0; i < lenb; i++) {
                 let brushs = brushNames[i].split("-")
                 console.log(brushs)

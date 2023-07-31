@@ -71,7 +71,7 @@ var posts = [
 		conteudo: " Ta ficando bom mas algumas partes precisam realmete de uma reforma para resolver problemas como o" +
 			" desfazer que por vezes nao funciona e salvar quadros brancos quando  🔴 a gravaçao automática ta rolando.<br><br>" +
 			"No mais, gostei das mudanças dos menus e layouts e novas funções como o recorte automatico com quadro verde,<br>" +
-			'o novo icone de adicionar pincel personalizado ficou bonitinho 🖌️➕.<br><br>"' +
+			'o novo icone de adicionar pincel personalizado ficou bonitinho <span class="icon pintaricon"></span>➕.<br><br>"' +
 			"Gostaria de refazer todo seu código para a versão 3.0 rs rs..<br>" +
 			"mas Vamo que vamo!"
 
@@ -91,7 +91,7 @@ var posts = [
 			", Resumindo: está tudo meio quebrado e vou lá arrumar esse edifício (que era pra ter um elevador a principio rs...)" +
 			"<br>Bora trabalhar"
 
-	},	{
+	}, {
 		id: 10,
 		titulo: "Smart Zumbis",
 		data: "25/05/2023 16:20",

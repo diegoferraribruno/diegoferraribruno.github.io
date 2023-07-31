@@ -178,7 +178,7 @@ function export2txt() {
         }
 
         let lenb = brushes.length
-        Alert("salvando 🖌️ x " + lenb)
+        Alert('salvando <span class="icon pintaricon"></span> x ' + lenb)
         let lenc = basicBrushes.length
         if (lenc > 9) {
             console.log("maior q 9")

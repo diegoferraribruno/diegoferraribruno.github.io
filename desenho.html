@@ -59,8 +59,9 @@
                 <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')"><span
                         class="icon eraseicon"></span></span>
 
-                <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')"><span
-                        class="icon pintaricon"></span></span>
+                <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">
+                    <span class="icon pintaricon"></span>
+                </span>
                 <span title="Pega cor" id="picker" class="mais" onmousedown="modeTo('picker')"><span
                         class="icon pickericon"></span></span>
                 <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')"><span
@@ -151,8 +152,8 @@
 
             <div id="menutamanho" class="fundobranco submenu">
 
-                <span class="botao">🖼️<span class="close" title="fechar menu tamanho da tela"
-                        onmousedown="removeClass()"></span>
+                <span class="botao"><span class="icon2 frameicon"></span><span class="close"
+                        title="fechar menu tamanho da tela" onmousedown="removeClass()"></span>
 
                     <txt name="9">Tamanho atual:</txt><br>
                     <txt name="10">Largura: </txt><input id="largura" type="number" maxlength="4" max="1920" value="320"
@@ -333,7 +334,8 @@
                 <span class="botao" onclick="mostracarregando()">
                     <span title="fechar" onmousedown="removeClass()" class="close"></span>
 
-                    🖼️ <txt name="19">tamanho do quadro</txt>
+                    <span class="icon2 frameicon"></span>
+                    <txt name="19">tamanho do quadro</txt>
                 </span>
                 <span id="oculos" class="botao">
                     👓 <txt name="79">nitidez</txt>
@@ -343,9 +345,11 @@
                     </label></span>
                 <span class="botao">
                     <span class="mais"><span
-                            style="position:relative; width:32px; display:inline-block; opacity:0.5;  left: 2px; top:0px ;padding-top: 0px; font-size: 20px;">🖼️</span>
+                            style="position:relative; width:32px; display:inline-block; opacity:0.5;  left: 2px; top:0px ;padding-top: 0px; font-size: 20px;"><span
+                                class="icon2 frameicon"></span></span>
                         <span
-                            style="color:white;position:absolute; opacity:0.5;  display:block; width:20px; top:-5px;left:3px; font-size: 20px; ">🖼️</span>
+                            style="color:white;position:absolute; opacity:0.5;  display:block; width:20px; top:-5px;left:3px; font-size: 20px; "><span
+                                class="icon2 frameicon"></span></span>
                     </span>
                     <txt name="20">Transparencia do quadro</txt> <input type="number" id="canvasOpacity"
                         name="transparencia" min="0.01" max="1" oninput="canvasOpacity(this.value)" step="0.01"
@@ -374,9 +378,9 @@
                     <span onmousedown="Fundo('img/grid3.png')" class="bloquinho"
                         style="background-image: url('./img/grid3.png')">&nbsp;</span>
                     <span onmousedown="Fundo('img')" class="bloquinho">🔗</span>
-
+                    <span onmousedown="Fundo('clipboard')" class="icon clipboardicon bloquinho"></span>
                     <span onmousedown="Fundo('none')" class="bloquinho"
-                        style="background-color: hsla(0, 100%, 100%, 0)">
+                        style="background-color: hsla(0, 100%, 100%, 0)">-
                     </span>
 
                     <span>
@@ -385,7 +389,7 @@
                         </label>
                         <input type="file" id="input2" accept=".png, .jpg, .jpeg, .gif .bmp" />
                         <br><label class="toggle">
-                            <input id="pagebg" type="checkbox" checked><span class="knob"></span>
+                            <input id="pagebg" type="checkbox"><span class="knob"></span>
                         </label>
                         <txt name="76">como fundo do app?</txt>
                     </span>
@@ -475,11 +479,13 @@
                         <txt name="85">Seu arquivo</txt>
                     </label>
                     <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
-                        title="Enviar Arquivo de imagem" /><!-- name='files[]' multiple futurEiMPLEMENT--> <br>
-                    <txt name="30">Ajustar tela ao tamanho da imagem</txt>
+                        title="Enviar Arquivo de imagem" /><!-- name='files[]' multiple futurEiMPLEMENT-->
+                    <br>
+                    <span class="icon2 scaleicon"></span>
                     <label class="toggle"> <input type="checkbox" id="ajustar" checked="true">
                         <span class="knob"></span>
                     </label>
+                    <txt name="30">Ajustar tela ao tamanho da imagem</txt><br>
                 </span>
                 <span class="botao"> <span class="icon addframeicon"></span>
                     <txt name="31">Enviar uma animação</txt><br>
@@ -594,15 +600,16 @@
                     💾<txt name="49">Exportar projeto </txt> .txt
                     <span class="close" title="fechar menu apagar" onmousedown="removeClass()"></span>
                 </span>
-                <span class="botao">💾 🖼️ <txt name="43">Salvar quadro atual</txt> <br>
+                <span class="botao">💾 <span class="icon2 frameicon"></span>
+                    <txt name="43">Salvar quadro atual</txt> <br>
                     <txt name="44">Título:</txt> <input id="filename" type="text" alt="Nome do arquivo"
                         placeholder="Nome do arquivo" value="desenho" onfocus="this.value=''"> <span
                         onclick="salvaImagem()" class="bot">💾</span>
                 </span>
                 <span class="botao">💾 🎞️ <br>
                     <txt name="45">Exportar sequencia de quadros</txt><input type="checkbox" id="seq" checked="true">
-                    <br> 🖼️🎞️ <txt name="46">Exportar Gif animado:</txt> <input type="checkbox" id="gif"
-                        checked="true">
+                    <br> <span class="icon2 frameicon"></span>🎞️ <txt name="46">Exportar Gif animado:</txt> <input
+                        type="checkbox" id="gif" checked="true">
                     <br>
                     <txt name="47">Unir quadro com fundo</txt> <input type="checkbox" id="unir"><br>
                     <txt name="48">Título:</txt> <input id="filenameS" type="text" alt="Nome do arquivo"
@@ -723,15 +730,18 @@
                     <span class="close" onmousedown="removeClass()"></span>
                 </div>
 
-                <div class="botao" onclick="limpar('quadro'), removeClass()">🖼️ 🗑 <txt name="54">limpar quadro
+                <div class="botao" onclick="limpar('quadro'), removeClass()"><span class="icon2 frameicon"></span> 🗑
+                    <txt name="54">limpar quadro
                     </txt>
                 </div>
                 <div class="botao" onclick="limpar('animacao'), removeClass()"> 🎞️ 🗑
                     <txt name="55">Apagar toda a animação</txt>
                 </div>
-                <span class="botao" onmousedown="removeFrame()"> 🎞️ ➖ 🖼️ <txt name="56">Remover quadro atual
+                <span class="botao" onmousedown="removeFrame()"> 🎞️ ➖ <span class="icon2 frameicon"></span>
+                    <txt name="56">Remover quadro atual
                     </txt>
-                    <span class="bot">➖</span></span>
+                    <span class="bot">➖</span>
+                </span>
 
             </div>
 
@@ -914,7 +924,8 @@
 
             <span class="botao" style="font-size: 0.6em; display:block; height: 210px; " title="formatos"
                 id="formatos2">
-                🖼️ <txt name="19">tamanho</txt>
+                <span class="icon2 frameicon"></span>
+                <txt name="19">tamanho</txt>
                 <div
                     style="display: block; overflow: scroll; height: 114px; width: 220px; -ms-overflow-style: auto; 
                     scrollbar-width: thin; margin-bottom: 10px; border: darkgrey solid 1px; 

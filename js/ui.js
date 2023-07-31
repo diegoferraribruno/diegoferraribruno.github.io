@@ -111,6 +111,11 @@ function night() {
 
 
 function Fundo(qual) {
+    let alvo = canvasDiv
+    if (iD("pagebg").checked == true) {
+        alvo = iD("tela")
+
+    }
     if (qual === "img") {
         var item = prompt(
             "endereço da imagem de fundo",
@@ -118,9 +123,10 @@ function Fundo(qual) {
         );
         if (item == null || item == "") {
             //alert("fundo do app removido");
-            canvasDiv.style.backgroundImage = `none`;
+            alvo.style.backgroundImage = `none`;
+
         } else {
-            canvasDiv.style.backgroundImage = `url(${item})`;
+            alvo.style.backgroundImage = `url(${item})`;
         }
     } else if (qual === "cam") {
         var item = prompt(
@@ -129,20 +135,23 @@ function Fundo(qual) {
         );
         if (item == null || item == "") {
             Alert(alerts[language][23]);
-            canvasDiv.style.backgroundImage = `none`;
+            alvo.style.backgroundImage = `none`;
         } else {
-            canvasDiv.style.backgroundImage = `url(${item})`;
+            alvo.style.backgroundImage = `url(${item})`;
         }
     } else if (qual === "black") {
-        canvasDiv.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
+        alvo.style.backgroundColor = "hsla(0, 100%, 0%, 1)";
     } else if (qual === "white") {
-        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
+        alvo.style.backgroundColor = "hsla(0, 100%, 100%, 1)";
     } else if (qual === "none") {
-        canvasDiv.style.backgroundImage = `none`;
-        canvasDiv.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
+        alvo.style.backgroundImage = `none`;
+        alvo.style.backgroundColor = "hsla(0, 100%, 100%, 0)";
+    } else if (qual == "clipboard") {
+        alvo.style.backgroundImage = `url(${clipboard[clipboard.length - 1]})`;
     } else {
-        canvasDiv.style.backgroundImage = `url(${qual})`;
+        alvo.style.backgroundImage = `url(${qual})`;
     }
+
 }
 
 function pixel() {

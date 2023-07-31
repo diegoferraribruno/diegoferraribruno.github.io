@@ -948,6 +948,12 @@ input[type="range"] {
     float: left;
 }
 
+.floatright {
+    display: block;
+    float: right;
+}
+
+
 .title {
     font-size: x-large;
 }

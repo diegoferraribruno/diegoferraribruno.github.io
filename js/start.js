@@ -1,6 +1,6 @@
 let startText = 0
 let texts = [
-  ["", "", "🖐 oie.", "Pode desenhar aqui!", "🖌️ 👆️"],
+  ["", "", "🖐 oie.", "Pode desenhar aqui!", '<span class="icon pintaricon"></span> 👆️'],
   ["", "", "Ou tirar uma 📷", "depois apagar 🧽 e", "no modo por baixo ⭕,"],
   ["", "", "tirar outra 📷", "E fazer uma bela", "foto-montagem!"]
 ]
