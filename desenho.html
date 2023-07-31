@@ -541,7 +541,7 @@
             <div id="menuFX" class="fundobranco submenu">
                 <span class="botao" id="fx0"><span title="fechar efeitos" onmousedown="removeClass()"
                         class="close"></span><span class="iconsright fxicon"></span>
-                    <txt name="83">Filtros</txt>
+                    <txt name="83" class="title">Filtros</txt>
                 </span>
                 <div style="display: block; overflow: scroll;min-height:40px; max-height: 120px; width: 320px; -ms-overflow-style: auto; 
                         scrollbar-width: thin; margin-bottom: 10px;
@@ -667,7 +667,7 @@
             </div>
             <div id="menupaste" class="fundobranco submenu">
                 <span class="botao"> <span class="close" onmousedown="removeClass()"></span>
-                    <span class="icon clipboardicon"></span> clipboard</span>
+                    <span class="icon clipboardicon"></span> <span class="title"> Clipboard</span></span>
                 <span id="lixeira" onmousedown="limpar('clipboard')" class="icon lixeiraicon"></span>
                 <span class="iconsright rotateicon"></span>
                 <input id="canvasfrontdeg" type="number" maxlength="3" max="360" value="0" step="6"
@@ -731,8 +731,8 @@
             </div>
 
             <div id="menurotacionar" class="fundobranco submenu">
-                <span id="rotacionar" class="botao"><span class="close" onmousedown="removeClass()"></span>
-                    <img src="img/rotatearrow.png">
+                <span id="rotacionar" class="botao title"><span class="close" onmousedown="removeClass()"></span>
+                    <span class="iconsright rotateicon"></span>
                     <txt name="57">Rotacionar a tela</txt>
                 </span>
                 <span id="rotaciona" class="botao" onclick="">
@@ -742,7 +742,7 @@
                 <span id="rotaciona" class="botao" onclick="">
                     ⚠️ <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de
                         rotacionar
-                    </txt><span class="botao" onmousedown="cloneFrame()"> <span class="icon cloneframeicon"></span>
+                    </txt><span class="bot" onmousedown="cloneFrame()"> <span class="icon cloneframeicon"></span>
                         <txt name="27">Duplicate frame
                         </txt>
                     </span>

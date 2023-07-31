@@ -520,8 +520,8 @@ input[type="range"] {
     background-color: none;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 4px;
-    padding-bottom: 4px;
+    margin-bottom: 2px;
+    padding-bottom: 2px;
     /*margin-bottom: 2px;
     border-radius: 8px;*/
     vertical-align: bottom;
@@ -602,10 +602,11 @@ input[type="range"] {
 #contador {
     text-shadow: -2px 0 rgb(61, 61, 61), 0 2px #3f3f3f, 2px 0 #383838, 0 -2px #2c2c2c;
     display: block;
-    position: relative;
-    margin-top: -42px;
+    position: absolute;
     font-size: 26px;
     z-index: 3001;
+    width: 36px;
+    text-align: center;
 }
 
 #anime {
@@ -913,8 +914,6 @@ input[type="range"] {
 
 #clipboard {
     max-width: 240px;
-    display: inline-flex;
-    overflow-x: scroll;
     column-gap: 0px;
     padding: 0.1rem 0.1rem 0.6rem 0.1rem;
     height: 40px;
@@ -947,4 +946,8 @@ input[type="range"] {
 .floatleft {
     display: block;
     float: left;
+}
+
+.title {
+    font-size: x-large;
 }
