@@ -319,7 +319,7 @@ function cloneFrame(frame = workingframe) {
     historia.splice(workingframe, 0, historia[frame]);
     changeFrame(workingframe)
     adicionaQuadro()
-    Alert("🎞️ " + alerts[language][1] + " " + frame + " " + alerts[language][10])
+    Alert('<span class="icon cloneframeicon"></span>' + alerts[language][1] + " " + frame + " " + alerts[language][10])
 
 }
 

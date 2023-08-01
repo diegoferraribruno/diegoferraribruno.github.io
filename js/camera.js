@@ -9,9 +9,9 @@ function stopMotion() {
         iD("stopMotion").innerHTML = ' <span class="bot">📷<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">🎥</span></span>'
 
         canvas.style.opacity = 1
-        Alert(alerts[language][2]);
+        Alert(alerts[language][2], 2);
     } else {
-        Alert(alerts[language][3]);
+        Alert(alerts[language][3], 2);
         iD("stopMotion").innerHTML = ' <span class="bot">🎥<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span></span>'
         canvas.style.opacity = 0.3
     }
