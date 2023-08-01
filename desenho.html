@@ -388,7 +388,8 @@
                             <txt name="85">Seu arquivo</txt>
                         </label>
                         <input type="file" id="input2" accept=".png, .jpg, .jpeg, .gif .bmp" />
-                        <br><label class="toggle">
+                        <br>
+                        <label class="toggle">
                             <input id="pagebg" type="checkbox"><span class="knob"></span>
                         </label>
                         <txt name="76">como fundo do app?</txt>
@@ -489,12 +490,7 @@
                 </span>
                 <span class="botao"> <span class="icon addframeicon"></span>
                     <txt name="31">Enviar uma animação</txt><br>
-                    <txt name="32">Auto detectar quadros </txt>
-                    <label class="toggle">
-                        <input type="checkbox" id="autodetectar" onchange="hidecustom()" checked="true">
-                        <span class="knob"></span>
-                    </label>
-                    <br>
+
                     <txt name="33">carregar como plano de fundo?</txt>
                     <label class="toggle">
                         <input type="checkbox" id="loadBackgroundAnimation">
@@ -506,9 +502,15 @@
                         <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
                         <span class="knob"></span>
                     </label>
+                    <txt name="32">Auto detectar quadros </txt>
+                    <label class="toggle">
+                        <input type="checkbox" id="autodetectar" onchange="hidecustom()" checked="true">
+                        <span class="knob"></span>
+                    </label>
+                    <br>
                     <span id="custom" class="esconde">
-                        <txt name="35">quantidade de quadros</txt><input type="number" id="fnumber" min="1" max="30"
-                            step="1" value="2" style="width: 40px; margin-left: 8px"><br>
+                        <!--txt name="35">quantidade de quadros</txt><input type="number" id="fnumber" min="1" max="30"
+                            step="1" value="2" style="width: 40px; margin-left: 8px"><br-->
                         <txt name="36"> largura:</txt> <input id="larguraS" type="number" maxlength="4" max="1920"
                             value="320" style="width:60px; padding: 4px;" />
                         pixels<br>
@@ -611,11 +613,23 @@
                 </span>
                 <span class="botao">
                     <span class="icon filmicon" onclick="export_anim()"></span>
-                    <txt name="46">Exportar Gif animado:</txt> <input type="checkbox" id="gif" checked="true">
+                    <txt name="46">Exportar Gif animado:</txt>
+                    <label class="toggle">
+                        <input type="checkbox" id="gif" checked="true">
+                        <span class="knob"></span>
+                    </label>
                     <br>
-                    <txt name="45">Exportar sequencia de quadros</txt><input type="checkbox" id="seq" checked="true">
+                    <txt name="45">Exportar sequencia de quadros</txt>
+                    <label class="toggle">
+                        <input type="checkbox" id="seq" checked="true">
+                        <span class="knob"></span>
+                    </label>
                     <br>
-                    <txt name="47">Unir quadro com fundo</txt> <input type="checkbox" id="unir">
+                    <txt name="47">Unir quadro com fundo</txt>
+                    <label class="toggle">
+                        <input type="checkbox" id="unir">
+                        <span class="knob"></span>
+                    </label>
                 </span>
             </div>
 
@@ -732,14 +746,18 @@
                     <span class="close" onmousedown="removeClass()"></span>
                 </div>
 
-                <div class="botao" onclick="limpar('quadro'), removeClass()"><span class="icon2 frameicon"></span> 🗑
+                <div class="botao" onclick="limpar('quadro'), removeClass()">
+                    <span class="icon erasericon"></span>
+                    <span class="icon2 frameicon"></span>
                     <txt name="54">limpar quadro
                     </txt>
                 </div>
-                <div class="botao" onclick="limpar('animacao'), removeClass()"> 🎞️ 🗑
+                <div class="botao" onclick="limpar('animacao'), removeClass()">
+                    <span class="icon lixeiraicon"></span><span class="icon2 frameicon"></span>
                     <txt name="55">Apagar toda a animação</txt>
                 </div>
-                <span class="botao" onmousedown="removeFrame()"> 🎞️ ➖ <span class="icon2 frameicon"></span>
+                <span class="botao" onmousedown="removeFrame()"> <span class="icon lixeiraicon"></span> <span
+                        class="icon filmeicon"></span><span class="icon2 frameicon"></span>
                     <txt name="56">Remover quadro atual
                     </txt>
                     <span class="bot">➖</span>
@@ -754,7 +772,10 @@
                 </span>
                 <span id="rotaciona" class="botao" onclick="">
                     <txt name="78">Rotacionar pelo centro da tela?</txt>
-                    <input type="checkbox" id="rotatecenter">
+                    <label class="toggle">
+                        <input type="checkbox" id="rotatecenter">
+                        <span class="knob"></span>
+                    </label>
                 </span>
                 <span id="rotaciona" class="botao" onclick="">
                     ⚠️ <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de
@@ -842,7 +863,10 @@
                     </div>
 
                     <div id="exposureTimeDiv" class="botao3">
-                        <input id="exposureMode" type="checkbox">
+                        <label class="toggle">
+                            <input id="exposureMode" type="checkbox">
+                            <span class="knob"></span>
+                        </label>
                         <txt name="60">Manual exposureMode</txt><br>
                         <label for="exposureTime">
                             <txt name="61">exposureTime</txt>
@@ -877,7 +901,10 @@
                         <input id="sharpness" title="sharpness" type="range" min="0" max="255" step="1">
                     </div>
                     <div id="whiteBalanceDiv" class="botao3">
-                        <input id="whiteBalanceMode" type="checkbox">
+                        <label class="toggle">
+                            <input id="whiteBalanceMode" type="checkbox">
+                            <span class="knob"></span>
+                        </label>
                         <txt name="70"> Manual white Balance / color</txt><br>
                         <div id="colorTemperatureDiv">
                             <label for="colorTemperature">
@@ -892,7 +919,10 @@
                         <input id="whiteBalace" title="whiteBalace" type="range">
                     </div>
                     <div id="focusDistanceDiv" class="botao3">
-                        <input id="focusMode" type="checkbox">
+                        <label class="toggle">
+                            <input id="focusMode" type="checkbox">
+                            <span class="knob"></span>
+                        </label>
                         <txt name="73">Manual focusMode</txt><br>
                         <label for="focusDistance">
                             <txt name="66">focusDistance</txt>

@@ -157,15 +157,14 @@ function stop() {
     iD("play()").innerHTML = '<span class="icon playicon"></span>'
 }
 
+let playerimg = new Image()
 function playerPlay(frame) {
-
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
     ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let blabla = new Image()
-    blabla.src = animacao[frame]
-    ctxF.drawImage(blabla, 0, 0)
+    playerimg.src = animacao[frame]
+    ctxF.drawImage(playerimg, 0, 0)
 }
 
 function changeFrame(frame) {

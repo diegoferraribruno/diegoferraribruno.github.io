@@ -70,11 +70,19 @@ function handleKeyUp(evt) {
         undoTEnd()
 
     }
-    if (evt.code === "Space") {
+    if (evt.code === "Space" && keyCtrl == false) {
         spaceKey = false
         isGrabing = false
         document.body.style.cursor = "pointer";
     }
+    if (evt.code === "Space" && keyCtrl == true) {
+        if (mode == "play") {
+            stop();
+        } else {
+            play();
+        }
+    }
+
     if (evt.code === "AltRight" || evt.code === "AltLeft") {
         keyAlt = false
     }
@@ -104,7 +112,7 @@ function handleKeys(evt) {
         }
 
     }
-    if (evt.code === "Space") {
+    if (evt.code === "Space" && keyCtrl == false) {
         evt.preventDefault()
         spaceKey = true
         isGrabing = true

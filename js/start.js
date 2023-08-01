@@ -79,13 +79,13 @@ function startup() {
         } else if (event.key === "Delete") {
           removeFrame()
         }
-      } else if (event.code === "Space" && keyCtrl == true) {
+      }/* else if (event.code === "Space" && keyCtrl == true) {
         if (mode == "play") {
           stop();
         } else {
           play();
         }
-      }
+      }*/
     }
 
   }
