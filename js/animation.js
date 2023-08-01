@@ -471,10 +471,10 @@ function drop(event) {
 function ghost() {
     ghostframes = !ghostframes
     if (ghostframes == true) {
-        canvasBack.classList.add("esconde")
+        canvasBack.classList.remove("esconde")
         Alert('<span class="icon ghosticon"></span>' + alerts[language][30] + " " + alerts[language][7])
     } else {
-        canvasBack.classList.remove("esconde")
+        canvasBack.classList.add("esconde")
         Alert('<span class="icon ghosticon"></span>' + alerts[language][30] + " " + alerts[language][8])
     }
 

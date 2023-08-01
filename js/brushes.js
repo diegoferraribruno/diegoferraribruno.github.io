@@ -13,7 +13,6 @@ var isGlowing = false
 
 var newBrushes = {}
 var lastbrush = 1
-var brushMode = 1
 let brushesImg = {}
 var basicBrushes = []
 let novoBrushes = {}
@@ -248,7 +247,6 @@ async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strok
     if (isGlowing) { numero = 1 }
     brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
-    brushMode = 1
     // brushCanva.crossOrigin = "anonymous"
     brushCanva.height = tam
     brushCanva.width = tam
@@ -285,7 +283,6 @@ function rainbow() {
         Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][7])
     } else {
         Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][8])
-
     }
 }
 
@@ -294,7 +291,6 @@ function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     createNewBrush(numero, tam, cor)
     /* if (dinamicBrush === false) {
          addFavBrush()
- 
      }*/
 }
 function addFavBrushPin() {
@@ -401,9 +397,7 @@ function drawMirror(GCO, X, Y, eoX, eoY, strokeWidth) {
     drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth);
     drawBrush2(GCO, X2, Y, eoX2, eoY, strokeWidth);
 
-
 }
-
 
 var d2r = function (deg) {
     return deg * Math.PI / 180;
@@ -484,21 +478,6 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
             x = redondo(x) + 1
             y = redondo(y) + 1
         }
-
-        /*    if (isGlowing){
-                let globaltemp = context.globalCompositeOperation
-                var blur = 10;
-                context.shadowColor = strokeColor
-                context.shadowOffsetX = 0;
-                context.shadowOffsetY = 0;
-                context.shadowBlur = blur;
-                context.globalCompositeOperation = "destination-over"
-                context.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
-                context.globalCompositeOperation = globaltemp
-                context.shadowBlur = 0;
-                
-    
-            }*/
         cont.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
     }
 }
@@ -555,5 +534,22 @@ function changeType() {
     if (iD("H").type == tipo) { tipo = 'range' }
     for (i = 0; i < objs.length; i++) {
         iD(objs[i]).setAttribute('type', tipo)
+    }
+}
+
+
+function glow() {
+    isGlowing = !isGlowing
+    if (isGlowing === true) {
+        ctxF.globalCompositeOperation = 'lighter'
+        //context.globalCompositeOperation = 'lighter'
+
+        if (!nightmode) {
+            night()
+        }
+        modeTo("cores")
+    } else {
+        ctxF.globalCompositeOperation = 'source-over'
+        night()
     }
 }

@@ -202,7 +202,6 @@ var openFile = function (event) {
                 strokeWidth = parseInt(brushs[1])
                 lastbrush = parseInt(brushs[0])
                 brushName = brushNames[i]
-                brushMode = 1
                 brushCanva.crossOrigin = "anonymous"
                 brushCanva.height = strokeWidth
                 brushCanva.width = strokeWidth

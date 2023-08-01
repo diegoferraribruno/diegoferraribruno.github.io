@@ -127,19 +127,3 @@ async function modeTo(qual) {
             break;
     }
 }
-
-function glow() {
-    isGlowing = !isGlowing
-    if (isGlowing === true) {
-        ctxF.globalCompositeOperation = 'lighter'
-        //context.globalCompositeOperation = 'lighter'
-
-        if (!nightmode) {
-            night()
-        }
-        modeTo("cores")
-    } else {
-        ctxF.globalCompositeOperation = 'destination-over'
-        night()
-    }
-}

@@ -682,9 +682,6 @@ function backPaint() {
             iD("video").setAttribute("class", "destination-over")
         }
         canvasFront.style.zIndex = -1
-
-
-
     } else {
         globalComposite = "source-over";
         iD(
