@@ -44,7 +44,7 @@ function camera() {
         canvasDiv.appendChild(videoC)
 
 
-        fotografando = true
+        fotografando = false
         if (stop_motion == true) {
             botao2.innerHTML = "🎞️"
             videoC.style.opacity = 0.6
@@ -166,8 +166,8 @@ function recMotion() {
     setTimeout(() => { removeVideo(); removeFrame() }, recspeed * i + 100)
 }
 async function tirafoto() {
-    if (fotografando == true) {
-        fotografando = false
+    if (fotografando == false) {
+        fotografando = true
         let W = canvasV.width;
         let H = canvasV.height;
         let offsetW = (W - canvas.width) / -2
@@ -181,21 +181,19 @@ async function tirafoto() {
                 if (stop_motion == false) {
                     Historia()
                     removeVideo();
-                } else {
+                    fotografando = false
 
+                } else {
+                    Historia()
                     setTimeout(() => {
                         new_frame()
+                        fotografando = false
+
                     }, 200)
                 }
             }, 20)
         }
     }
-
-
-    setTimeout(() => {
-        fotografando = true
-
-    }, 800)
 }
 
 
