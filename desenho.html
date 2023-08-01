@@ -357,9 +357,9 @@
                 </span>
                 <span class="botao">
                     <span class="bot">
-                        ↩️
+                        <span class="icon2 undoicon"></span>
                     </span>
-                    <txt name="95">max historico</txt> <input type="number" id="undolevel" name="undolevel" min="1"
+                    <txt name="95">max undo level</txt> <input type="number" id="undolevel" name="undolevel" min="1"
                         max="16" oninput="historiaLimiteChange(this.value)" step="1" value="10" style="width:46px">
                 </span>
 
@@ -748,7 +748,7 @@
 
                 <div class="botao" onclick="limpar('quadro'), removeClass()">
                     <span class="icon eraseicon"></span>
-                    <span class="icon2 filmicon"></span>
+                    <span class="icon filmicon"></span>
                     <txt name="54">limpar quadro
                     </txt>
                 </div>
@@ -757,7 +757,7 @@
                     <txt name="55">Apagar toda a animação</txt>
                 </div>
                 <span class="botao" onmousedown="removeFrame()"> <span class="icon lixeiraicon"></span> <span
-                        class="icon frameicon"></span>
+                        class="icon2 frameicon"></span>
                     <txt name="56">Remover quadro atual
                     </txt>
 

@@ -201,7 +201,7 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
 }
 
 
-function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff000066") {
+function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff000033") {
 
     ctxF.clearRect(0, 0, canvas.width, canvas.height);
     ctxF.globalCompositeOperation = "source-over"

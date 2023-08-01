@@ -304,6 +304,7 @@ function handleMove(evt) {
         }
     }
     if (mode == "recortar") {
+        canvasFront.classList.remove("esconde")
         if (isSelecting === true) {
             cropEnd.x = x
             cropEnd.y = y
@@ -311,12 +312,11 @@ function handleMove(evt) {
             // ctxF.font = 24 + 'px serif';
             ctxF.drawImage(cropcursor, x, y)
         } else {
-            canvasFront.classList.remove("esconde")
             ctxF.setTransform(1, 0, 0, 1, 0, 0);
             ctxF.clearRect(0, 0, canvas.width, canvas.height);
             if (cropEnd.x == 0) {
 
-                desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22ff00")
+                desenhaRetangulo(autoCropMin.x, autoCropMin.y, autoCropMax.x, autoCropMax.y, "#22b00033")
             } else {
 
                 desenhaRetangulo();
@@ -730,7 +730,7 @@ function handleEnd(evt) {
 function handleCancel(evt) {
     evt.preventDefault();
 
-    if (mode != "FX") {
+    if (mode != "FX" && mode != "recortar") {
         document.body.style.cursor = "pointer";
         if (isDrawing) {
             drawTo()
