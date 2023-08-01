@@ -292,25 +292,26 @@ function rainbow() {
 function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
     lastbrush = numero
     createNewBrush(numero, tam, cor)
-    if (dinamicBrush === false) {
-        addFavBrush()
-
-    }
+    /* if (dinamicBrush === false) {
+         addFavBrush()
+ 
+     }*/
 }
 function addFavBrushPin() {
     changedBrush = false
     addFavBrush()
 }
 function addFavBrush() {
+    brushName = "" + lastbrush + "-" + strokeWidth + "-" + strokeColor
     setTimeout(() => {
-        let newNewBrush = new Image();
-        newNewBrush.src = brushCanva.toDataURL("image/png");
-        newBrush.src = newNewBrush.src
-        newBrushes[brushName] = [newNewBrush, lastbrush, strokeWidth, strokeColor]
-        if (changedBrush == false) {
-            changedBrush = true;
-            let existe = iD(brushName)
-            if (!existe && mode != "picker") {
+        let existe = iD(brushName)
+        if (!existe && mode != "picker") {
+            let newNewBrush = new Image();
+            newNewBrush.src = brushCanva.toDataURL("image/png");
+            newBrush.src = newNewBrush.src
+            newBrushes[brushName] = [newNewBrush, lastbrush, strokeWidth, strokeColor]
+            if (changedBrush == false) {
+                changedBrush = true;
                 setTimeout(() => {
                     let favbrush = newBrushes[brushName][0]
                     favbrush.style.maxHeight = "32px";
@@ -335,9 +336,12 @@ function addFavBrush() {
                     clearBrushes()
 
                 }, 25)
+
+
             }
-
-
+        } else if (existe) {
+            existe.parentNode.removeChild(existe);
+            delete newBrushes[brushName]
         }
     }, 20)
 }
