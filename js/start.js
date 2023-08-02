@@ -8,6 +8,10 @@ let texts = [
 document.addEventListener("DOMContentLoaded", startup);
 
 function startup() {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    night()
+  }
+
   setTimeout(() => { yoga() }, 300)
   window.addEventListener("resize", checkOrientation, false);
   window.addEventListener("orientationchange", checkOrientation, false);
@@ -179,7 +183,12 @@ function startup() {
     // limpaCabeca();
     apresenta()
   }, 1000);
-  setTimeout(() => { localize(), createNewBrush() }, 160)
+  setTimeout(() => localize(), 200)
+  if (/^pt\b/.test(navigator.language)) {
+    setTimeout(() => localize(), 320)
+
+  }
+  setTimeout(() => { createNewBrush() }, 160)
   loading()
 
 }
