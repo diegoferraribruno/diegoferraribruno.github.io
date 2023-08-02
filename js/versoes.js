@@ -177,7 +177,7 @@ let vers = [{
     notas: [
         "🎚️ Transparencia do quadro",
         "📷 menu camera",
-        "⚠️ mudança no sistema de alerta",
+        '<span class="icon alerticon"> mudança no sistema de alerta',
         "📷 + 🎞️ camera faz sequencia de quadros conforme o click",
         "(sem quadros brancos)",
         "🎞️  Exporta Gif Animado (<img src='img/crop.png'>recortado inclusive) ",

@@ -126,7 +126,8 @@
                     <span class="close"> </span>
                     <span style="display: block; position: relative; float: left; font-size: 32px; margin-right: 4px;">
                         😅</span>
-                    <txt name="3"><b>⚠️Atenção!⚠️</b></txt><br>
+                    <span class="iconsmall alerticon"></span>
+                    <txt name="3"><b>Atenção!</b></txt><br>
                     <txt name="4"> Este é um App de diversão!</b><br>
                         durante o processo de criação e exportação,
                         a imagem perderá qualidade!<br>
@@ -252,8 +253,8 @@
                         onclick="addFavBrushPin()"><span class="icon pinicon"></span></span>
                 </span>
                 <span class="botao light" onmousedown="removeClass()"
-                    style="background-image: url('img/grid3.png'); max-height: 220px;"><canvas id="brushCanva"
-                        width="40px" height="40px"></canvas><span class="close"></span>
+                    style="background-color: #ffffff22; max-height: 220px;"><canvas id="brushCanva" width="40px"
+                        height="40px"></canvas><span class="close"></span>
                 </span>
             </div>
             <!--div id="menuapagar" class="fundobranco submenu">
@@ -369,6 +370,10 @@
 
                 <span id="fundo falso" class="botao">
                     <txt name="22">Adicionar Fundo falso:</txt><br>
+                    <txt name="76">como fundo do app?</txt>
+                    <label class="toggle">
+                        <input id="pagebg" type="checkbox"><span class="knob"></span>
+                    </label><br>
                     <span onmousedown="Fundo('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">&nbsp;
                     </span>
@@ -383,7 +388,7 @@
                         style="background-image: url('./img/grid3.png')">&nbsp;</span>
                     <span onmousedown="Fundo('img')" class="bloquinho">🔗</span>
                     <span onmousedown="Fundo('clipboard')" class="icon clipboardicon bloquinho"></span>
-                    <span onmousedown="Fundo('none')" class="bloquinho"
+                    <span onmousedown="Fundo('none')" class="bloquinho close"
                         style="background-color: hsla(0, 100%, 100%, 0)">-
                     </span>
 
@@ -393,10 +398,6 @@
                         </label>
                         <input type="file" id="input2" accept=".png, .jpg, .jpeg, .gif .bmp" />
                         <br>
-                        <label class="toggle">
-                            <input id="pagebg" type="checkbox"><span class="knob"></span>
-                        </label>
-                        <txt name="76">como fundo do app?</txt>
                     </span>
                 </span>
             </div>
@@ -413,7 +414,7 @@
                     <span onmousedown="mudaCorBG('strokeColor')" id="preenchercor" class="bloquinho"
                         style="background-color: rgba(158, 239, 129, 0.28);">
                     </span> <span title="cores" class="bot" onmousedown="mostraMenu('cores')"
-                        style="background-color: rgba(247, 161, 165, 0.15);">🎨</span>
+                        style="background-color: rgba(247, 161, 165, 0.15);"><span class="icon coresicon"></span></span>
                 </span>
             </div>
             <div id="menuanime" class="fundobranco submenu">
@@ -560,46 +561,55 @@
                         class="close"></span><span class="icon2 fxicon"></span>
                     <txt name="83" class="title">Filtros</txt>
                 </span>
-                <div style="display: block; overflow: scroll;min-height:40px; max-height: 120px; width: 320px; -ms-overflow-style: auto; 
+                <div style="display: block; overflow: scroll;min-height:40px; max-height: 180px; width: 320px; -ms-overflow-style: auto; 
                         scrollbar-width: thin; margin-bottom: 10px;
                         background-color: #ffffff22; border-radius: 8px; margin-right: auto; margin-left: auto;">
-                    <span class="botao" onclick="FX(1)" id="fx1"> 🩻 <txt name="39">Invertido</txt> </span>
-                    <span class="botao" id="fx2"> 👓 <txt name="40">Desfoque</txt><input id="blurBar" type="range"
-                            min="0" max="10" step="0.1" onchange="FX(2)">
+                    <span class="botao" onclick="FX(1)" id="fx1">
+                        <span class="icon2 invert"></span>
+                        <txt name="39">Invertido</txt>
+                    </span>
+                    <span class="botao" id="fx2"> <span class="icon2 blur"></span>
+                        <input id="blurBar" type="range" min="0" max="10" step="0.1" onchange="FX(2)">
+                        <txt name="40">Desfoque</txt>
 
                     </span>
-                    <span class="botao" onclick="FX(3)" id="fx3"><span
-                            class="icon2small alphaicon"></span>grayscale<input id="grayscaleBar"
-                            title="escala de cinza" type="range" min="0" max="1" step="0.1">
+                    <span class="botao" onclick="FX(3)" id="fx3">
+                        <span class="icon2 grayscale"></span>
+                        <input id="grayscaleBar" title="escala de cinza" type="range" min="0" max="1" step="0.1">
+                        grayscale
                     </span>
-                    <span class="botao" id="fx4">⌛️
-                        <txt name="41">Sepia</txt><input id="sepiaBar" type="range" min="0" max="100" step="10"
-                            onchange="FX(4)">
+                    <span class="botao" id="fx4">
+                        <span class="icon2 sepia"></span>
+                        <input id="sepiaBar" type="range" min="0" max="100" step="10" onchange="FX(4)">
+                        <txt name="41">Sepia</txt>
                     </span>
 
-                    <span class="botao" id="fx5"><span class="icon2small contrasticon"></span>
-                        <txt name="42">Contraste</txt><input id="contrastBar" type="range" min="0" max="300" step="10"
-                            onchange="FX(5)">
+                    <span class="botao" id="fx5">
+                        <span class="icon2 contrast"></span>
+                        <input id="contrastBar" type="range" min="0" max="300" step="10" onchange="FX(5)">
+                        <txt name="42">Contraste</txt>
                     </span>
-                    <span class="botao" id="fx6"><span class="icon2small brightnessicon"></span>
-                        <txt name="59">Brightness</txt><input id="brightnessBar" type="range" min="0" max="300"
-                            step="10" onchange="FX(6)">
+                    <span class="botao" id="fx6">
+                        <span class="icon2 brightness"></span>
+                        <input id="brightnessBar" type="range" min="0" max="300" step="10" onchange="FX(6)">
+                        <txt name="59">Brightness</txt>
                     </span>
                     <span class="botao" id="fx7">
-                        <txt name="84">Apagar o branco</txt><input id="lumakeyBar" type="range" min="0" max="255"
-                            step="5" value="220" onchange="FX(7)">
+                        <span class="icon2 lumakey"></span>
+                        <input id="lumakeyBar" type="range" min="0" max="255" step="5" value="220" onchange="FX(7)">
+                        <txt name="84">Apagar o branco</txt>
                     </span>
-                    <span class="botao" id="fx8"><span class="icon2small hueicon"></span>
-                        <txt name="91">hue</txt><input id="hue-rotateBar" type="range" min="0" max="355" step="5"
-                            onchange="FX(8)">
+                    <span class="botao" id="fx8"><span class="icon2 hue-rotate"></span>
+                        <input id="hue-rotateBar" type="range" min="0" max="355" step="5" onchange="FX(8)">
+                        <txt name="91">hue</txt>
                     </span>
                 </div>
                 <span id="confirmFX" class="esconde">aplicar o efeito <br>
                     <div class="shadow" onClick="applyFX(1)">
-                        <txt name="39"> invert</txt> ✅
+                        <txt name="39"> invert</txt> <span class="icon2 check"></span>
                     </div>
                     <div onClick="cancelaFX()" class="shadow">
-                        <txt name="80">cancela</txt> ❌
+                        <txt name="80">cancela</txt> <span class="icon closeicon"></span>
                     </div>
                 </span>
             </div>
@@ -718,18 +728,13 @@
                     <span class="close" onmousedown="removeClass()"></span>
 
                     <span id="copy" class="mais" title="copy" onclick="copySelection()">
-                        <span
-                            style="display: block; position: relative; margin-top: 4px; margin-left: -2px; font-size: 20px; ">
-                            📄</span>
-                        <span
-                            style="display: block; position: absolute; margin-top: -42px; margin-left: 12px; font-size: 20px;">
-                            📄</span>
+                        <span class="icon copyicon"></span>
                     </span>
                     <span id="cut" class="mais" title="cut" onclick="copySelection('cut')">
-                        ✂️
+                        <span class="icon cuticon"></span>
                     </span>
                     <span id="paste2" class="mais" title="paste" onclick="modeTo('paste')">
-                        📋️
+                        <span class="icon pasteicon"></span>
                     </span>
                 </span>
                 <span id="recortarbot" title="Seleção retangular" class="botao">
@@ -747,7 +752,8 @@
 
             <div id="menulixeira" class="fundobranco submenu">
                 <div class="botao">
-                    <txt name="53">⚠️ impossivel desfazer</txt> ⚠️
+                    <span class="icon alerticon"></span>
+                    <txt name="53" class="title"> impossivel desfazer</txt>
                     <span class="close" onmousedown="removeClass()"></span>
                 </div>
 
@@ -784,7 +790,8 @@
                     </label>
                 </span>
                 <span id="rotaciona" class="botao" onclick="">
-                    ⚠️ <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de
+                    <span class="iconsmall alerticon"></span>
+                    <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de
                         rotacionar
                     </txt><span class="bot" onmousedown="cloneFrame()"> <span class="icon cloneframeicon"></span>
                         <txt name="27">Duplicate frame
@@ -833,12 +840,13 @@
                         <span class="icon2 foldericon"></span>
                     </span>
                     <span id="localize" title="change language" class="mais" onclick="localize()">
-                        🇧🇷
+                        <span class="icon2 bricon"></span>
                     </span>
                     <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam'), removeElement('carregando')">
                         <span class="icon2 cameraicon"></span>
                     </span>
-                    <span id="info" title="Informações" class="mais" onmousedown="mostraMenu('info')">ℹ️</span>
+                    <span id="info" title="Informações" class="mais" onmousedown="mostraMenu('info')"><span
+                            class="icon infoicon"></span></span>
 
 
                 </span>
@@ -847,7 +855,7 @@
             <div id="menucamconfig" class="fundobranco submenu" style="opacity:0.8; background-color: #ffffff00;">
                 <span class="botao">
                     <span id="recMotion2" title="Gravar automaticamente" class="bot" style="font-size: medium;">
-                        🔴 </span>
+                        <span class="icon recicon"></span> </span>
                     <txt name="96">capture interval</txt><br> <input id="setRecInterval" title="setRecInterval"
                         type="number" min="0.5" max="10" step="0.5" value="1" onchange="changeRecSpeed(this.value)">s
                     <span class="close" title="fechar cam config" onmousedown="mostraSubMenu('camconfig')"></span>
@@ -962,7 +970,6 @@
 
             <span class="botao" style="font-size: 0.6em; display:block; height: 210px; " title="formatos"
                 id="formatos2">
-                <span class="icon2 frameicon"></span>
                 <txt name="19">tamanho</txt>
                 <div
                     style="display: block; overflow: scroll; height: 114px; width: 220px; -ms-overflow-style: auto; 
@@ -1010,7 +1017,7 @@
                     style="width:60px;padding: 4px;" /> px
                 <span onmousedown="tamanho2()" class="mais"
                     style=" float: left; position: relative; margin-top: -40px; margin-left: 260px; text-align: center; width: 36px; height: 36px;">
-                    🎨
+                    <span class="icon coresicon"> </span>
                 </span>
             </span>
         </div>

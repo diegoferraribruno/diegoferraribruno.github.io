@@ -33,7 +33,7 @@ function FX(fx, onde) {
             onde.filter = filters[fx] + "(" + quanto + "%)"
 
 
-        
+
         } else if (fx == 8) {
             let quanto = iD(filters[fx] + "Bar").value
             console.log(quanto)
@@ -51,11 +51,8 @@ function FX(fx, onde) {
         onde.filter = filters[fx]
 
     }
-
-
 }
 function updatecanvasFront() {
-    // canvasFront.style.backgroundColor = "#ffffff"
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
     ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     ctxF.drawImage(canvas, 0, 0)
@@ -63,14 +60,13 @@ function updatecanvasFront() {
 }
 
 function confirmFX(fx, fxname) {
-    //removeClass()
     let confirm = iD("confirmFX")
     menufx(fx)
     confirm.classList.remove("esconde")
     "display: none;"
-    confirm.innerHTML = `<div  class="shadow" onClick="applyFX('` + fx + `')">  ✅ </div >` +
-        `<div onClick="cancelaFX(true)"
-         class='shadow'">`+ textos[language]["80"] + ` ❌</div>`
+    confirm.innerHTML = `<span  class="shadow" onClick="applyFX('` + fx + `')"> <span class="icon2 check"></span></span>` +
+        `<span onClick="cancelaFX(true)"
+         class='shadow'"><span class="close"></span></span>`
 }
 function applyFX() {
     menufx()
@@ -96,12 +92,12 @@ function applyFX() {
         , 1000)
 }
 
-function cancelaFX(show=false) {
-   if (show){
-       setTimeout(() =>
-       mostraMenu("FX")
-       , 1000)
-       menufx()
+function cancelaFX(show = false) {
+    if (show) {
+        setTimeout(() =>
+            mostraMenu("FX")
+            , 1000)
+        menufx()
     }
 
     canvasFront.filter = filters[0]
@@ -132,10 +128,10 @@ function menufx(qual = undefined) {
 
 function lumaKey(range) {
     ctxF.clearRect(0, 0, canvas.width, canvas.height);
-   
+
     var imgd = context.getImageData(0, 0, canvas.width, canvas.height),
         pix = imgd.data
-        newColor = { r: 0, g: 0, b: 0, a: 0 };
+    newColor = { r: 0, g: 0, b: 0, a: 0 };
 
     for (var i = 0, n = pix.length; i < n; i += 4) {
         var r = pix[i],
@@ -153,9 +149,4 @@ function lumaKey(range) {
     }
 
     ctxF.putImageData(imgd, 0, 0);
-    
-  /*  img_b64 = canvasFront.toDataURL("image/png");
-    drawTo("source-over", img_b64, ctxF, 0, 0, canvas.width, canvas.height)
-    setTimeout(() => Historia(), canvas.width / 2)*/
-
 }

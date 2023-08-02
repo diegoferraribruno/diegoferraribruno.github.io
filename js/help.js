@@ -93,7 +93,8 @@ function Help() {
     <span class="botao" onclick="videoTutorial()">
         <span class="icon playicon"></span>Video tutorial
     </span>
-    <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')">ℹ️</span> <txt name="82">${textos[language][82]}</txt>
+    <span id="info" title="Informações" class="bot" onmousedown="mostraMenu('info')"><span
+    class="icon infoicon"></span></span> <txt name="82">${textos[language][82]}</txt>
     `
 }
 

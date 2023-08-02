@@ -7,6 +7,17 @@
     filter: drop-shadow(0px 0px 6px white);
 }
 
+.iconsmall {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-image: url("./../img/iconsleft.png");
+    filter: drop-shadow(0px 0px 6px white);
+    transform: scale(0.6);
+    margin-bottom: -10px;
+    margin-top: -10px;
+}
+
 .pickericon {
     background-position-x: 0px;
 }
@@ -115,8 +126,6 @@
     background-position-x: -936px;
 }
 
-
-
 .projecticon {
     background-position-x: -972px;
 }
@@ -130,7 +139,7 @@
 }
 
 .pasteicon {
-    background-position-x: -1080
+    background-position-x: -1080px
 }
 
 .infoicon {
@@ -168,7 +177,6 @@
 .camconfigicon {
     background-position-x: -1404px
 }
-
 
 .icon2 {
     display: block;
@@ -249,7 +257,6 @@
     background-position-x: -576px;
 }
 
-
 .lefticon {
     background-position-x: -612px;
 }
@@ -298,8 +305,6 @@
     background-position-x: -1008px;
 }
 
-
-
 .icon2small {
     display: inline-block;
     width: 36px;
@@ -333,25 +338,38 @@
     background-position-x: -1188px;
 }
 
-
-
-/*
-.swaprighticon {
-    background-position-x: -792px;
+.invert {
+    background-position-x: -1224px;
 }
 
-.cloneframeicon {
-    background-position-x: -828px;
+.blur {
+    background-position-x: -1260px;
 }
 
-.pinicon {
-    background-position-x: -864px;
+.grayscale {
+    background-position-x: -1296px;
 }
 
-.plusicon {
-    background-position-x: -900px;
+.sepia {
+    background-position-x: -1332px;
 }
 
-.minusicon {
-    background-position-x: -936px;
-}*/
+.contrast {
+    background-position-x: -1368px;
+}
+
+.brightness {
+    background-position-x: -1404px;
+}
+
+.lumakey {
+    background-position-x: -1440px;
+}
+
+.hue-rotate {
+    background-position-x: -1476px;
+}
+
+.check {
+    background-position-x: -1512px;
+}

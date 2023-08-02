@@ -380,7 +380,7 @@ async function initializeCamera() {
             // automenu
             const jatem = ["whiteBalanceMode", "focusMode", "exposureMode"]
             const comum = iD("comumConstraints")
-            comum.innerHTML = "⚠️ configurações extras ⚠️<br>"
+            comum.innerHTML = ' <span class="iconsmall alerticon"> Extras <span class="iconsmall alerticon">'
             for (const [pts, value] of Object.entries(capabilities)) {
                 if (!(comumConstraints.includes(pts) || jatem.includes(pts))) {
 
