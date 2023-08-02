@@ -88,7 +88,7 @@ function Help() {
         🇧🇷 
     </span> <txt name="97">${textos[language]["97"]}</txt> </span>
     <span class="botao" onclick="shortCuts()">
-        <span class="icon backicon"></span>  <txt name="100">${textos[language]["100"]}</txt>
+    <span class="icon ctrlicon"></span> <span class="icon alticon"></span>  <txt name="100">${textos[language]["100"]}</txt>
     </span>
     <span class="botao" onclick="videoTutorial()">
         <span class="icon playicon"></span>Video tutorial

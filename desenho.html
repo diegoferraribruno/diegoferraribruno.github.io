@@ -278,12 +278,14 @@
             <div id="menucores" class="submenu fundobranco">
                 <span class="botao glow">
 
-                    <span onclick="changeType()" class="mais" style=" font-size: large;">#</span>
-                    <span id="glow" title="glow" class="mais selected" onmousedown="glow()"
-                        style="background-image: url('/img/glowpaint.png'); color: #ffffff01;">.</span>
-                    <span id="rainbow" title="rainbow" class="mais selected" onmousedown="rainbow()"
-                        style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>
-                    <span title="preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais">🪣</span>
+                    <span onclick="changeType()" class="mais" style=" font-size: large;"><span
+                            class="icon2 numbericon"></span></span>
+                    <span id="glow" title="glow" class="mais selected" onmousedown="glow()"><span
+                            class="icon2 glowicon"></span></span>
+                    <span id="rainbow" title="rainbow" class="mais selected" onmousedown="rainbow()"><span
+                            class="icon2 rainbowicon"></span></span>
+                    <span title="preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais">
+                        <span class="icon2 bucketicon"></span></span>
                     <span title="fechar" onmousedown="removeClass()" class="close">
                     </span>
                     <!--img src="img/dinamicInk.png" style="margin-left: 4px;"><label class="toggle"> <input
@@ -294,14 +296,14 @@
                 </span><br>
                 <div id="paleta" class="fundobranco glow"></div>
                 <div id="menu" class="fundobranco glow">
-                    🌈<input type="range" id="H" name="cor" min="0" max="359" oninput="mudaCorQ(0,this.value)"
-                        style="width: 100px;" value="0"> <br>
-                    ◒ <input type="range" id="S" name="cor" min="0" max="100" oninput="mudaCorQ(1,this.value)"
-                        style="width: 100px;" value="100"> <br>
-                    🔆 <input type="range" id="L" name="cor" min="0" max="100" oninput="mudaCorQ(2,this.value)"
-                        style="width: 100px;" value="50"> <br>
-                    💧<input type="range" id="A" name="cor" min="0.01" max="1" oninput="mudaCorQ(3,this.value)"
-                        style="width: 100px;" step="0.01" value="1"><br>
+                    <span class="icon2small hueicon"></span><input type="range" id="H" name="cor" min="0" max="359"
+                        oninput="mudaCorQ(0,this.value)" style="width: 100px;" value="0"> <br>
+                    <span class="icon2small contrasticon"></span><input type="range" id="S" name="cor" min="0" max="100"
+                        oninput="mudaCorQ(1,this.value)" style="width: 100px;" value="100"> <br>
+                    <span class="icon2small brightnessicon"></span> <input type="range" id="L" name="cor" min="0"
+                        max="100" oninput="mudaCorQ(2,this.value)" style="width: 100px;" value="50"> <br>
+                    <span class="icon2small alphaicon"></span><input type="range" id="A" name="cor" min="0.01" max="1"
+                        oninput="mudaCorQ(3,this.value)" style="width: 100px;" step="0.01" value="1"><br>
                     <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais"><span
                             class="icon pinicon"
                             style="position: absolute; margin-left: 56px; margin-top: -16px;"></span></span>
@@ -338,11 +340,13 @@
                     <txt name="19">tamanho do quadro</txt>
                 </span>
                 <span id="oculos" class="botao">
-                    👓 <txt name="79">nitidez</txt>
+                    <span class="icon2 sharpnessicon"></span>
+                    <txt name="79">nitidez</txt>
                     <label class="toggle">
                         <input id="pixel" type="checkbox" value="true" checked onchange="pixel()">
                         <span class="knob"></span>
-                    </label></span>
+                    </label>
+                </span>
                 <span class="botao">
                     <span class="mais"><span
                             style="position:relative; width:32px; display:inline-block; opacity:0.5;  left: 2px; top:0px ;padding-top: 0px; font-size: 20px;"><span
@@ -446,12 +450,12 @@
             </div>
 
             <div id="menuzoomx" class="fundobranco submenu">
-                <span class="bot" onmousedown="scrollMoveCanva(-20,0)">⬅️</span>
-                <span class="bot" onmousedown="scrollMoveCanva(0,-20)">⬆️</span>
-                <span class="bot" onmousedown="scrollMoveCanva(0,20)">⬇️</span>
-                <span class="bot" onmousedown="scrollMoveCanva(20,0)">➡️</span>
-                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="resetZoom()"><span
-                        class="icon zoomicon"></span><span class="textOver">1x</span></span>
+                <span onmousedown="scrollMoveCanva(-20,0)"><span class="icon2 lefticon"></span></span>
+                <span onmousedown="scrollMoveCanva(0,-20)"><span class="icon2 upicon"></span></span>
+                <span onmousedown="scrollMoveCanva(0,20)"><span class="icon2 downicon"></span></span>
+                <span onmousedown="scrollMoveCanva(20,0)"><span class="icon2 righticon"></span></span>
+                <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="resetZoom()">
+                    <span class="icon zoomicon"></span><span class="textOver">1x</span></span>
                 <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoomMinus()"><span
                         class="icon zoomicon"></span><span class="textOver">-</span></span>
                 <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoom2x(1)"><span
@@ -466,7 +470,7 @@
                     <span class="close" title="fechar" onmousedown="removeClass()"></span>
                 </span>
                 <span class="botao">
-                    <span class="icon2 projecticon"></span>
+                    <span class="icon projecticon"></span>
                     <txt name="50"> Caregar projeto</txt> .txt
                     <label for="inputTxt" class="custom-button">
                         <txt name="85">Seu arquivo</txt>
@@ -524,20 +528,22 @@
                 </span>
             </div>
             <div id="menucam" class="submenu fundobranco">
-                <span title="espelhar a camera" class="bot" onmousedown="flipCamera()">🤳</span>
+                <span title="espelhar a camera" class="bot" onmousedown="flipCamera()">
+                    <span class="icon selfieicon"></span></span>
                 <span id="btnChangeCam" title="Trocar camera" class="bot" onmousedown="changeCamera()">
-                    🔃<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span>
+                    <span class="icon changecam1"></span>
                 </span>
 
                 <span id="stopMotion" title="Modo de captura" class="bot" onmousedown="stopMotion()">
-                    🎥
+                    <span class="icon filmicon"></span>
                 </span>
 
-                <span title="Ajustes da camera" class="bot" onmousedown="mostraSubMenu('camconfig')">🎚️</span>
+                <span title="Ajustes da camera" class="bot" onmousedown="mostraSubMenu('camconfig')">
+                    <span class="icon camconfigicon"></span></span>
                 <span id="recMotion" title="Gravar automaticamente" class="bot" style="font-size: medium;"
                     onmousedown="recMotion()">
-                    🔴</span>🎞️<input id="times" type="number" value="8" min="1" step="1" max="24" size="2"
-                    style="width: 42px;">
+                    <span class="icon recicon"></span></span><input id="times" type="number" value="8" min="1" step="1"
+                    max="24" size="2" style="width: 42px;">
 
                 <span class="close" title="fechar camera" onmousedown="modeTo('cam')"></span><br>
                 <select id="select" class="esconde" onchange="trocaCamera()">
@@ -562,7 +568,8 @@
                             min="0" max="10" step="0.1" onchange="FX(2)">
 
                     </span>
-                    <span class="botao" onclick="FX(3)" id="fx3">grayscale<input id="grayscaleBar"
+                    <span class="botao" onclick="FX(3)" id="fx3"><span
+                            class="icon2small alphaicon"></span>grayscale<input id="grayscaleBar"
                             title="escala de cinza" type="range" min="0" max="1" step="0.1">
                     </span>
                     <span class="botao" id="fx4">⌛️
@@ -570,11 +577,11 @@
                             onchange="FX(4)">
                     </span>
 
-                    <span class="botao" id="fx5"> ◒
+                    <span class="botao" id="fx5"><span class="icon2small contrasticon"></span>
                         <txt name="42">Contraste</txt><input id="contrastBar" type="range" min="0" max="300" step="10"
                             onchange="FX(5)">
                     </span>
-                    <span class="botao" id="fx6">🔆
+                    <span class="botao" id="fx6"><span class="icon2small brightnessicon"></span>
                         <txt name="59">Brightness</txt><input id="brightnessBar" type="range" min="0" max="300"
                             step="10" onchange="FX(6)">
                     </span>
@@ -582,7 +589,7 @@
                         <txt name="84">Apagar o branco</txt><input id="lumakeyBar" type="range" min="0" max="255"
                             step="5" value="220" onchange="FX(7)">
                     </span>
-                    <span class="botao" id="fx8">🌈
+                    <span class="botao" id="fx8"><span class="icon2small hueicon"></span>
                         <txt name="91">hue</txt><input id="hue-rotateBar" type="range" min="0" max="355" step="5"
                             onchange="FX(8)">
                     </span>
@@ -605,7 +612,7 @@
                 </span>
                 <span class="botao" onclick="export2txt()">
                     <txt name="49">Exportar projeto </txt> .txt
-                    <span class="icon coresicon"></span>
+                    <span class="icon projecticon"></span>
                 </span>
                 <span class="botao" onclick="salvaImagem()">
                     <txt name="43">Salvar quadro atual</txt>.png

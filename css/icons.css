@@ -116,6 +116,60 @@
 }
 
 
+
+.projecticon {
+    background-position-x: -972px;
+}
+
+.copyicon {
+    background-position-x: -1008px
+}
+
+.cuticon {
+    background-position-x: -1044px
+}
+
+.pasteicon {
+    background-position-x: -1080
+}
+
+.infoicon {
+    background-position-x: -1116px
+}
+
+.ctrlicon {
+    background-position-x: -1152px
+}
+
+.alticon {
+    background-position-x: -1188px
+}
+
+.alerticon {
+    background-position-x: -1224px
+}
+
+.recicon {
+    background-position-x: -1260px
+}
+
+.selfieicon {
+    background-position-x: -1296px
+}
+
+.changecam1 {
+    background-position-x: -1332px
+}
+
+.changecam2 {
+    background-position-x: -1368px
+}
+
+.camconfigicon {
+    background-position-x: -1404px
+}
+
+
 .icon2 {
     display: block;
     float: left;
@@ -196,26 +250,90 @@
 }
 
 
-.projecticon {
+.lefticon {
     background-position-x: -612px;
 }
 
-.brightnessicon {
+.upicon {
     background-position-x: -648px;
 }
 
-
-.contrasticon {
+.downicon {
     background-position-x: -684px;
 }
 
-.hueicon {
+.righticon {
     background-position-x: -720px;
 }
 
-.alphaicon {
+.rainbowicon {
     background-position-x: -756px;
 }
+
+.glowicon {
+    background-position-x: -792px;
+}
+
+.bucketicon {
+    background-position-x: -828px;
+}
+
+.numbericon {
+    background-position-x: -864px;
+}
+
+.swapicon {
+    background-position-x: -900px;
+}
+
+.bricon {
+    background-position-x: -936px;
+}
+
+.enicon {
+    background-position-x: -972px;
+}
+
+.lightofficon {
+    background-position-x: -1008px;
+}
+
+
+
+.icon2small {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-image: url("./../img/icon2.png");
+    filter: drop-shadow(0px 0px 6px white);
+    transform: scale(0.6);
+    margin-bottom: -10px;
+    margin-top: -10px;
+
+
+}
+
+.hueicon {
+    background-position-x: -1044px;
+}
+
+.brightnessicon {
+    background-position-x: -1080px;
+}
+
+.contrasticon {
+    background-position-x: -1116px;
+}
+
+.alphaicon {
+    background-position-x: -1152px;
+}
+
+.sharpnessicon {
+    background-position-x: -1188px;
+}
+
+
 
 /*
 .swaprighticon {

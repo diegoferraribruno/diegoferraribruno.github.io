@@ -699,7 +699,7 @@ function handleEnd(evt) {
     }
 
 
-    if (mode != "play" && mode != "selecionar" && mode != "recortar" && mode != "FX" && mode != "rotacionar") {
+    if (mode != "play" && mode != "selecionar" && mode != "recortar" && mode != "FX" && mode != "rotacionar" && mode != "redimensionar") {
         //   mostra()
         mouseOver = false;
         //
@@ -714,7 +714,7 @@ function handleEnd(evt) {
         canvasFront.classList.remove("esconde")
     }
     document.body.style.cursor = "pointer";
-    if (mode != "FX" && mode != "rotacionar" && mode != "recortar" && mode != "selecionar") {
+    if (mode != "FX" && mode != "rotacionar" && mode != "recortar" && mode != "selecionar" && mode != "redimensionar") {
 
         scrollWindow.x = 0
         scrollWindow.y = 0
