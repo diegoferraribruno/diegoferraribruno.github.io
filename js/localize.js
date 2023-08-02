@@ -3,16 +3,12 @@ function localize() {
     if (language == "pt_BR") {
         language = "en"
         iD("localize").innerHTML =
-            '<span style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">' +
-            '🇧🇷<span style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">' +
-            '🇬🇧</span></span>'
+            '<span class="icon2 bricon"></span>'
 
     } else {
         language = "pt_BR"
         iD("localize").innerHTML =
-            '<span style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">' +
-            '🇬🇧<span style="display:inline-block; position:relative; margin-left: -24px; top:8px; font-size: 18px;">' +
-            '🇧🇷</span></span>'
+            '<span class="icon2 enicon"></span>'
     }
     Array.from(document.querySelectorAll('txt'))
         .forEach(function (el) {
@@ -150,7 +146,7 @@ let textos = {
         "28": "Mudar ordem do quadro",
         "29": "Carregar imagem",
         "30": "Ajustar tela ao tamanho da imagem ",
-        "31": "Enviar uma animação",
+        "31": "Carregar sequencia de imagens",
         "32": "Auto detectar quadros ",
         "33": "Carregar como plano de fundo?",
         "34": "Sobrepor plano de fundo",
@@ -203,7 +199,7 @@ let textos = {
         "82": "Informações",
         "83": "Filtros",
         "84": "Apagar branco",
-        "85": "Carregar Arquivo",
+        "85": "Arquivo",
         "86": "Redimensionar",
         "87": "Redimensionar todo o projeto",
         "88": "Salvar o Projeto antes",
@@ -305,7 +301,7 @@ let textos = {
         "82": "Information",
         "83": "Filters",
         "84": "Erase white",
-        "85": "Load File",
+        "85": "File",
         "86": "Scale canvas",
         "87": "Scale all frames and canvas",
         "88": "Save Project Before?",
@@ -428,7 +424,7 @@ var titles = {
         "info": "Information",
         "zoom2xbot": "Zoom in",
         "input": "Open image file",
-        "inputSprite": "Sprite-sheet file",
+        "inputSprite": "Sprite-sheet file or url",
         "btnChangeCam": "Switch camera",
         "stopMotion": "Capture mode",
         "recMotion": "Auto-Record",

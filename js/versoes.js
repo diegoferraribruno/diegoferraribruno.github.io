@@ -1,4 +1,14 @@
 let vers = [{
+    versao: "6.9",
+    notas: [
+        "Varias mudanças no visual icones",
+        "Correções Camera e menu da camera",
+        "auto night mode",
+        "auto language select",
+        "Load image and spritesheet from URL",
+        "carrega imagems diretamente de um endereço web"
+    ]
+}, {
     versao: "6.8",
     notas: [
         "Varias mudanças no visual e menus",

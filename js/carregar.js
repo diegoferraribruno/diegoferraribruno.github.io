@@ -57,6 +57,37 @@ function readURL() {
     } else {
     }
 }
+function readURL2() {
+    var item = prompt(
+        "endereço da imagem ",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/352px-Alan_Turing_Aged_16.jpg"
+    );
+    if (item == null || item == "") {
+        Alert(":(");
+
+    } else {
+        imagem = new Image;
+        imagem.crossOrigin = "anonymous"
+        imagem.src = item;
+        imagem.onload = function () {
+            {
+                let ajustar = iD("ajustar").checked
+                if (ajustar === true) {
+                    tamanho(imagem.width, imagem.height)
+                } else if (imagem.width > canvas.width) {
+                    let proporcao = canvas.width / imagem.width
+                    imagem.height = imagem.height * proporcao
+                    imagem.width = imagem.width * proporcao
+                    let centerx = canvas.width / 2 - imagem.width / 2
+                    let centery = canvas.height / 2 - imagem.height / 2
+                }
+
+                desenha("img", globalComposite, imagem, 0, 0, imagem.width, imagem.height)
+                Historia()
+            }
+        }
+    }
+}
 
 function importSprite(e) {
     imagem = new Image;
@@ -69,13 +100,16 @@ function importSprite(e) {
                 changeBackGroundAnimation(workingframe)
             }
         } else {
-            let quadros = imagem.width / canvas.width
+            let quadros = 1
             let largura = iD("larguraS").value
             let altura = iD("alturaS").value
             let auto = iD("autodetectar").checked
             if (auto === false) {
                 quadros = iD("fnumber").value
                 tamanho(largura, altura)
+            } else {
+                quadros = imagem.width / imagem.height
+                tamanho(imagem.height, imagem.height)
             }
             for (i = 0; i < quadros; i++) {
                 workingframe = i
@@ -85,20 +119,69 @@ function importSprite(e) {
                 let swapImg = canvas.toDataURL('image/png');
                 blobb = dataURItoBlob(swapImg)
                 animacao[i] = swapImg
-                /*comandos[i] = []
-                // changeBrush()
-                comandos[i].push(["f", "source-over", swapImg, 0, 0, canvas.width, canvas.height])*/
                 historia[i] = []
                 historia[i].push(swapImg)
 
             }
             setTimeout(() => {
                 adicionaQuadro()
-                //changeFrame(workingframe - 1);
                 removeClass()
                 iD("carregando").style.display = "none"
                 iD("contador").innerHTML = workingframe;
             }, 500)
+        }
+    }
+}
+function importSpriteUrl() {
+    var item = prompt(
+        "endereço da imagem ",
+        "https://diegoferraribruno.github.io/img/icon2.png"
+    );
+    if (item == null || item == "") {
+        Alert(":(");
+
+    } else {
+        imagem = new Image;
+        imagem.crossOrigin = "anonymous"
+        imagem.src = item;
+        imagem.onload = function () {
+            if (iD("loadBackgroundAnimation").checked) {
+                background_anim = true
+                backgroundSprite.src = item;
+                backgroundSprite.onload = function () {
+                    changeBackGroundAnimation(workingframe)
+                }
+            } else {
+                let quadros = imagem.width / canvas.width
+                let largura = iD("larguraS").value
+                let altura = iD("alturaS").value
+                let auto = iD("autodetectar").checked
+                if (auto === false) {
+                    quadros = iD("fnumber").value
+                    tamanho(largura, altura)
+                } else {
+                    tamanho(imagem.height, imagem.height)
+                    quadros = imagem.width / imagem.height
+
+                }
+                for (i = 0; i < quadros; i++) {
+                    workingframe = i
+                    context.setTransform(1, 0, 0, 1, 0, 0);
+                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                    context.drawImage(imagem, i * canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
+                    let swapImg = canvas.toDataURL('image/png');
+                    blobb = dataURItoBlob(swapImg)
+                    animacao[i] = swapImg
+                    historia[i] = []
+                    historia[i].push(swapImg)
+                }
+                setTimeout(() => {
+                    adicionaQuadro()
+                    removeClass()
+                    iD("carregando").style.display = "none"
+                    iD("contador").innerHTML = workingframe;
+                }, 500)
+            }
         }
     }
 }

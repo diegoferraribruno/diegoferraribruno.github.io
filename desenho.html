@@ -467,7 +467,7 @@
                 <span class="botao">
                     <span class="icon2 foldericon">
                     </span>
-                    <txt name="98" class="title"> Load your Art</txt>
+                    <txt name="98" class="title"> Carregue sua arte</txt>
                     <span class="close" title="fechar" onmousedown="removeClass()"></span>
                 </span>
                 <span class="botao">
@@ -486,6 +486,7 @@
                     </label>
                     <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
                         title="Enviar Arquivo de imagem" /><!-- name='files[]' multiple futurEiMPLEMENT-->
+                    <span onmousedown="readURL2()" class="bloquinho">🔗</span>
                     <br>
                     <span class="icon2 scaleicon"></span>
                     <label class="toggle"> <input type="checkbox" id="ajustar" checked="true">
@@ -526,6 +527,7 @@
                         <txt name="85">Seu arquivo</txt>
                     </label>
                     <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" />
+                    <span onmousedown="importSpriteUrl()" class="bloquinho">🔗</span>
                 </span>
             </div>
             <div id="menucam" class="submenu fundobranco">
@@ -807,12 +809,17 @@
                     <span class="close" onmousedown="removeClass()"></span>
                     <a href="index.html" style="font-size: medium; height: 32px; vertical-align: middle; ">
                         <img src="favicon.ico"
-                            style="width: 36px; height: 36px; margin-bottom: 2px; float: left; margin-left: 20px; margin-top: 8px;"></a>
-                    <a href="index.html"><span
+                            style="width: 36px; height: 36px; margin-bottom: 2px; float: left; margin-left: 20px; margin-top: 8px;">
+                    </a>
+                    <a href="index.html">
+                        <span
                             style="display: inline-block; height: 48px; font-size: medium; color: #ebc908; margin-right: 40px; line-height: 16px; margin-top: 12px;">
-                            Diego Ferrari Bruno<br><span style=" font-size: smaller; font-weight: 400;" id="apresenta"
-                                title="apresenta">
-                                <txt name="75">apresenta</txt></a></span></span>
+                            Diego Ferrari Bruno<br>
+                            <span style=" font-size: smaller; font-weight: 400;" id="apresenta" title="apresenta">
+                                <txt name="75">apresenta</txt>
+                            </span>
+                        </span>
+                    </a>
                 </span><br>
                 <span class="botao">
 
