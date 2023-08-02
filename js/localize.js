@@ -51,8 +51,8 @@ var alerts = {
     "pt_BR": {
         0: 'Por favor,<br> adicione <span class="icon addframeicon"></span> quadros a sua animação',
         1: "Quadro",
-        2: 'Modo foto única <span class="icon cameraicon"></span>.',
-        3: "Modo sequencia de quadros.<br> Toque na tela para tirar uma foto <br> e criar um novo quadro",
+        2: '<span class="icon2 cameraicon"></span><span class="icon2 frameicon"></span> Modo foto única .',
+        3: '<span class="icon2 cameraicon"></span><span class="icon filmicon"></span> Modo sequencia de quadros.<br> Toque na tela para tirar uma foto <br> e criar um novo quadro',
         4: "Camera API indisponível no seu navegador",
         5: "Não foi possivel acessar a camera",
         6: "Modo infinito",
@@ -85,8 +85,8 @@ var alerts = {
     "en": {
         0: "Please,<br> add ➕ frames to your animation",
         1: "Frame",
-        2: "Single shot mode 📷.",
-        3: "Sequence mode <br> touch to save picture<br>to a new frame.",
+        2: '<span class="icon2 cameraicon"></span><span class="icon2 frameicon"></span> Single shot mode ',
+        3: '<span class="icon2 cameraicon"></span><span class="icon filmicon"></span> Sequence mode <br> touch to save picture<br>to a new frame.',
         4: "Camera API is not available in your browser",
         5: "Could not access the camera",
         6: "Infinity paint mode",
@@ -117,7 +117,7 @@ var alerts = {
         31: "Last image from clipboard set as fake background"
     }
 }
-let example = alerts[language][0]
+//let example = alerts[language][0]
 let textos = {
     "pt_BR": {
         "1": "Toque numa áre pintada para capturar sua cor",
@@ -172,7 +172,7 @@ let textos = {
         "50": "Carregar Projeto",
         "51": "Recortar automaticamente ",
         "52": "Recortar para seleção",
-        "53": '<span class="iconsmall alerticon"> impossivel desfazer',
+        "53": 'Impossivel desfazer',
         "54": "limpar quadro",
         "55": "Apagar toda a animação",
         "56": "Remover quadro atual",

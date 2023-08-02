@@ -105,7 +105,7 @@ function importSprite(e) {
 
 function mostracarregando() {
     removeClass()
-    iD("carregando").style.display = "block"
+    iD("carregando").style.display = "grid"
 }
 var projeto
 let customBr = []

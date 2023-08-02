@@ -6,13 +6,13 @@ function stopMotion() {
     stop_motion = !stop_motion
     iD("video").classList.toggle("destination-over")
     if (stop_motion == false) {
-        iD("stopMotion").innerHTML = ' <span class="bot">📷<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">🎥</span></span>'
+        iD("stopMotion").innerHTML = '<span class="icon2 cameraicon"></span>'
 
         canvas.style.opacity = 1
         Alert(alerts[language][2], 2);
     } else {
         Alert(alerts[language][3], 2);
-        iD("stopMotion").innerHTML = ' <span class="bot">🎥<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">📷</span></span>'
+        iD("stopMotion").innerHTML = '<span class="icon filmicon"></span>'
         canvas.style.opacity = 0.3
     }
 }
@@ -46,13 +46,13 @@ function camera() {
 
         fotografando = false
         if (stop_motion == true) {
-            botao2.innerHTML = "🎞️"
+            botao2.innerHTML = '<span class="icon filmicon"></span>'
             videoC.style.opacity = 0.6
             Alert(alerts[language][3]);
 
             canvas.style.opacity = 0.3
         } else {
-            botao2.innerHTML = ' <span class="bot">📷<span style="display: block; position: absolute; margin-top: -20px; font-size:20px;">🎥</span></span>'
+            botao2.innerHTML = ' <span class="icon2 cameraicon"></span>'
             Alert(alerts[language][2]);
             videoC.style.opacity = 1
             canvas.style.opacity = 1
@@ -137,13 +137,15 @@ let recspeed = 1000
 
 function recMotion() {
     let vezes = iD("times").value
-
     if (iD("anime").classList.contains("hideanime")) {
         limpaAnime()
 
     }
+    if (workingframe > 0) {
+        new_frame()
+    }
     //tirafoto()
-    for (i = 0; i <= vezes; i++) {
+    for (i = 0; i < vezes; i++) {
         setTimeout(() => {
 
             let W = canvasV.width;
@@ -158,7 +160,7 @@ function recMotion() {
             setTimeout(() => {
                 // save_frame(blob)
                 new_frame()
-                Alert("🔴 Rec")
+                Alert("🔴 Rec", (recspeed - 200) / 1000)
             }, 10)
 
         }, recspeed * i)
@@ -176,22 +178,31 @@ async function tirafoto() {
         if (
             !isCanvasBlank(canvasV)
         ) {
-            drawTo(globalComposite, canvasV, context, offsetW, offsetH, W, H)
-            setTimeout(() => {
-                if (stop_motion == false) {
+            if (stop_motion == false) {
+                drawTo(globalComposite, canvasV, context, offsetW, offsetH, W, H)
+                setTimeout(() => {
+
                     Historia()
                     removeVideo();
                     fotografando = false
 
-                } else {
-                    Historia()
-                    setTimeout(() => {
-                        new_frame()
-                        fotografando = false
+                }, 200)
+            } else {
 
-                    }, 200)
+                if (!isCanvasBlank(canvas)) {
+                    new_frame()
                 }
-            }, 20)
+                setTimeout(() => {
+                    drawTo(globalComposite, canvasV, context, offsetW, offsetH, W, H)
+                    setTimeout(() => {
+                        Historia()
+                        fotografando = false
+                        if (!isCanvasBlank(canvas)) {
+                            new_frame()
+                        }
+                    }, 200)
+                }, 20)
+            }
         }
     }
 }

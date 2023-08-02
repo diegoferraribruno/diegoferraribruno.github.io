@@ -774,7 +774,7 @@ input[type="range"] {
 
 
 .filme {
-    max-width: 240px;
+    max-width: 274px;
     display: inline-flex;
     overflow-x: scroll;
     column-gap: 0px;
