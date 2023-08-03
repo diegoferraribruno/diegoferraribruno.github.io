@@ -12,7 +12,7 @@ function startup() {
     night()
   }
 
-  setTimeout(() => { yoga() }, 300)
+  setTimeout(() => { yoga() }, 1200)
   window.addEventListener("resize", checkOrientation, false);
   window.addEventListener("orientationchange", checkOrientation, false);
   iD('inputSprite').addEventListener('change', importSprite);

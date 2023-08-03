@@ -5,14 +5,14 @@ var fps = 8
 var ghostframes = true
 
 var anime_menu = {
+    "ghost()": [`<span class="icon ghosticon"></span>`, "Ghost Frames"],
     "prev_frame()": ['<span class="icon backicon"></span>', "Quadro anterior"],
     "play()": ['<span class="icon playticon"></span>', "Tocar Animação"],
     "next_frame()": ['<span class="icon nexticon"></span>', "Próximo quadro"],
     // "swapL()": ["⬅️", "Mover quadro á esquerda"],
     // "swapR()": ["➡️", "Mover quadro á direita"],
-    "new_frame()": ['<span class="icon addframeicon"></span>', "Adiconar quadro á animação"],
     "cloneFrame()": ['<span class="icon cloneframeicon"></span>', "duplicate frame"],
-    "ghost()": [`<span class="icon ghosticon"></span>`, "Ghost Frames"],
+    "new_frame()": ['<span class="icon addframeicon"></span>', "Adiconar quadro á animação"],
     'lixeira()': ['<span class="icon lixeiraicon"></span>', "Arraste um quadro para apaga-lo"]
 }
 
@@ -22,9 +22,7 @@ function criaAnime() {
     let contador = document.createElement("div")
     var ui = document.createElement('div')
 
-    anime.innerHTML = `<span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot"> <span class="icon configtimeicon"></span></span>
-    </span>`
-
+    anime.innerHTML = ''
     Object.keys(anime_menu).forEach((key, index) => {
 
         let item = document.createElement("div")
@@ -36,6 +34,8 @@ function criaAnime() {
         anime.appendChild(item)
 
     })
+    anime.innerHTML += `<span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot"> <span class="icon configtimeicon"></span></span>
+    </span>`
 
 
 
@@ -222,7 +222,7 @@ function changeFrame(frame) {
 
     var imageFrame = new Image;
     imageFrame.src = animacao[frame]
-    //context.globalAlpha = 0.1
+    context.globalAlpha = 1
     imageFrame.onload = function () {
 
         context.drawImage(imageFrame, 0, 0, imageFrame.width, imageFrame.height)

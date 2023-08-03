@@ -71,12 +71,12 @@ body {
 }
 
 #canvas_window {
+    position: absolute;
     display: flex;
     overflow: scroll;
     /* width: 320px;*/
     height: 342px;
     margin: auto;
-    margin-top: auto;
     -webkit-touch-overflow: scroll;
     box-shadow: 2px 2px 3px #83818748,
         -2px -2px 3px #9d9ca25e;

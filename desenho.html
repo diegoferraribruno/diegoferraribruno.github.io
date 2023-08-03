@@ -11,9 +11,23 @@
     <title>Yoga Art 6 - Mandala edition</title>
 </head>
 
+
 <body class="naotoque" style="cursor: pointer;">
+    <div id="canvas_window" class="hideScroll" style="top:120px; left:0px">
+        <div id="canvas_div2">
+            <div id="canvas_div">
+                <canvas id="canvas" width="320px" height="320px" oncontextmenu="return false;">
+                    Sinto muito, talvez haja uma incompatibilidade com seu navegador ou está offline e algo
+                    não carregou como deveria...<br>
+                </canvas>
+            </div>
+        </div>
+    </div>
     <div id="tela" style="overflow-y: hidden;" class="naotoque">
         <div id="desenho_div" style="overflow-y: hidden;" class="naotoque">
+
+
+
             <div id="ferramentas" class="ferramentas">
                 <span id="yoga" onmousedown="yoga()" class="mais"><span class="icon2 yogaicon"></span></span>
                 <span id="help" title="help" class="mais selected" onmousedown="modeTo('help')">
@@ -88,17 +102,6 @@
 
             <div id="anime" class="ferramentas"></div>
             <div id="ui_filme"></div>
-
-            <div id="canvas_window" class="hideScroll">
-                <div id="canvas_div2">
-                    <div id="canvas_div">
-                        <canvas id="canvas" width="320px" height="320px" oncontextmenu="return false;">
-                            Sinto muito, talvez haja uma incompatibilidade com seu navegador ou está offline e algo
-                            não carregou como deveria...<br>
-                        </canvas>
-                    </div>
-                </div>
-            </div>
 
         </div>
         <div id="menus">
@@ -692,6 +695,7 @@
                 <span class="botao"> <span class="close" onmousedown="removeClass()"></span>
 
                     <txt name="86">Scale canvas</txt>
+                    <!--span class="bot" onclick="doubleImageSize()">2x</span-->
                 </span>
                 <span class="botao">
                     <txt name="88">Salvar antes?</txt>
@@ -1045,6 +1049,7 @@
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)"
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/iD.js"></script>
+    <!--script type="text/javascript" src="js/scale.js"></script-->
     <script type="text/javascript" src="js/core.js"></script>
     <script type="text/javascript" src="js/localize.js"></script>
     <script type="text/javascript" src="js/yoga.js"></script>
