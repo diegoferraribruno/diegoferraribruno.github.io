@@ -274,7 +274,7 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
     let newWidth = redondo(strokeWidth * tam)
     let newHeight = redondo(strokeHeight * tam)
 
-    if (!dinamicBrush) {
+    if (dinamicBrush == false) {
 
         if (newWidth < 1) { newWidth = 1 }
         if (newHeight < 1) { newHeight = 1 }
@@ -506,8 +506,8 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeScale, cont = ctxF) {
     }
     let newStrokeWidth = strokeWidth * strokeScale
     let newStrokeHeight = strokeHeight * strokeScale
-    if (newStrokeHeight < 3 || newStrokeWidth < 3 && dinamicBrush) {
-        newStrokeHeight = 3
+    if ((newStrokeHeight < 3 || newStrokeWidth < 3) && dinamicBrush == true) {
+        newStrokeWidth = 3
         newStrokeHeight = 3
     }
     var halfBrushW = newStrokeWidth / 2;
