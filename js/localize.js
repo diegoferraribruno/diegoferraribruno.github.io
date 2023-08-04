@@ -77,6 +77,7 @@ var alerts = {
         29: "Desenho Espelhado",
         30: "Quadros fantasma",
         31: "Ultima imagem copiada como fundo falso",
+        32: "Redimensionando"
     },
     "en": {
         0: "Please,<br> add ➕ frames to your animation",
@@ -110,7 +111,8 @@ var alerts = {
         28: "Rainbow Ink",
         29: "Mirror mode",
         30: "Ghost Frames",
-        31: "Last image from clipboard set as fake background"
+        31: "Last image from clipboard set as fake background",
+        32: "Resizing"
     }
 }
 //let example = alerts[language][0]
@@ -217,7 +219,8 @@ let textos = {
         "100": "Teclas de Atalho",
         "101": "Ajuda",
         '102': 'Novo pincel de recorte',
-        '103': 'Pancheta de recortes esta vazia, use a ferramenta de seleção para copiar algo'
+        '103': 'Pancheta de recortes esta vazia, use a ferramenta de seleção para copiar algo',
+        '104': 'Manter proporção'
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -321,7 +324,8 @@ let textos = {
         "100": "Keyboard Shortcuts",
         '101': "Help",
         '102': "New Brush from Cipboard",
-        '103': "Clipobard is Empty, use the selection tool to copy something"
+        '103': "Clipobard is Empty, use the selection tool to copy something",
+        '104': "Keep proportion"
     }
 }
 var titles = {

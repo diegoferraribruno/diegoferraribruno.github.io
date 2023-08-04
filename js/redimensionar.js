@@ -15,10 +15,14 @@ function preResizeCanvas(newWidth, newHeight) {
     // Set the canvas size to the new values
     // canvasFront.width = newWidth;
     //canvasFront.height = newHeight;
-    desenhaRetangulo(0, 0, newWidth, newHeight)
-
+    let center = { x: 0, y: 0 }
+    if (iD("scalecenter").checked == true) {
+        center.x = canvas.width / 2 - newWidth / 2;
+        center.y = canvas.height / 2 - newHeight / 2
+    }
+    desenhaRetangulo(center.x, center.y, newWidth + center.x, newHeight + center.y)
     // Draw the image on the canvas (image will be resized to fit the new canvas size)
-    ctxF.drawImage(canvas, 0, 0, newWidth, newHeight);
+    ctxF.drawImage(canvas, center.x, center.y, newWidth, newHeight);
     // Reset the selection paths and current path
     canvasFront.classList.remove("esconde")
 }
@@ -26,7 +30,7 @@ function preResizeCanvas(newWidth, newHeight) {
 function redimendionarAnima(newWidth, newHeight) {
     setTimeout(() => {
         removeClass()
-        Alert(alerts[language][16] + " redimensionar <br>" + alerts[language][17])
+        Alert(alerts[language][32] + "<br>" + alerts[language][17])
     }
         , 10)
 
@@ -106,6 +110,12 @@ comandos[workingframe].push(comando)
         canvasFront.height = newHeight
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
+        let center = { x: 0, y: 0 }
+        if (iD("scalecenter").checked == true) {
+            center.x = canvas.width / 2 - newWidth / 2;
+            center.y = canvas.height / 2 - newHeight / 2
+        }
+        // Draw the image on the canvas (image will be resized to fit the new canvas size)
         ctxF.drawImage(canvas, 0, 0, newWidth, newHeight);
         //swapImg = canvasFront.toDataURL('image/png');
         //newAnima[workingframe] = swapImg
@@ -113,8 +123,11 @@ comandos[workingframe].push(comando)
         setTimeout(() => {
             context.setTransform(1, 0, 0, 1, 0, 0);
             context.clearRect(0, 0, canvas.width, canvas.height);
-            context.drawImage(canvasFront, 0, 0)
-            Historia()
+            context.drawImage(canvasFront, center.x, center.y, newWidth, newHeight);
+
+            swapImg = canvas.toDataURL('image/png');
+            swapImg.onload =
+                Historia(swapImg)
         }, 20)
         //comando = ["s", "source-over", swapImg, 0, 0,newWidth, newHeight];
         //comandos[workingframe].push(comando)

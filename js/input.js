@@ -48,6 +48,7 @@ let lastPressure = 0.1
 let dinamicInk = false
 let lastInk = 1
 let rainbowInk = false
+let redimensionar = false
 
 function handleKeyUp(evt) {
 
@@ -170,6 +171,8 @@ function handleStart(evt) {
         movendo = true
     } else if (mode == "rotacionar") {
         rotacionar = true
+    } else if (mode == "redimensionar") {
+        redimensionar = true
     } else if (mode == "zoomx") {
         isGrabing = true;
     } else if (mode == "picker") {
@@ -475,7 +478,27 @@ function handleMove(evt) {
             ctxF.restore()
         }
     }
-    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar" && mode != "selecionar" && !keyCtrl) {
+    else if (mode == "redimensionar") {
+        canvasFront.classList.remove("esconde")
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
+        if (redimensionar == true) {
+            if (!keyCtrl && iD("cadeado").checked == false) {
+                preResizeCanvas(redondo(canvas.width - (x - origin.x)), redondo(canvas.height - (y - origin.y)))
+            } else {
+                let proporcional = (x - origin.x + y - origin.y) / 200 + 1
+                preResizeCanvas(redondo(canvas.width * proporcional), redondo(canvas.height * proporcional))
+            }
+
+            // canvasWidthInput.value = 
+            //  ctxF.translate(origin.x, origin.y)
+            /*  ctxF.scale(x - origin.x, y - origin.y);
+              ctxF.drawImage(canvas, -origin.x, -origin.y)*/
+            // ctxF.drawImage(canvas, -10, -10, canvas.width * (x - origin.x), canvas.height * (y - origin.y))
+            //  ctxF.restore()
+        }
+    }
+    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar" && mode != "selecionar" && !keyCtrl && mode != "redimensionar") {
         origin.x = x
         origin.y = y
         if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
@@ -535,13 +558,27 @@ function handleUp(evt) {
         x = redondo(x)
         y = redondo(y)
     }
-    if (keyCtrl) {
+    if (redimensionar == true) {
+        if (!keyCtrl && iD("cadeado").checked == false) {
+            resizeCanvas(redondo(canvas.width - (x - origin.x)), redondo(canvas.height - (y - origin.y)))
+        } else {
+            let proporcional = (x - origin.x + y - origin.y) / 200 + 1
+            resizeCanvas(redondo(canvas.width * proporcional), redondo(canvas.height * proporcional))
 
-        origin.x = x
-        origin.y = y
+        }
+
+        redimensionar = false
+        modeTo("move")
+
 
     }
     if (isDrawing && !isGrabing) {
+        if (keyCtrl) {
+
+            origin.x = x
+            origin.y = y
+
+        }
         isDrawing = false;
         // swapImg = canvasFront.toDataURL('image/png');
         /* if (isGlowing === true && context.globalCompositeOperation != "destination-out"){
@@ -606,14 +643,7 @@ function handleUp(evt) {
     } else if (movendo == true) {
         if (selecionado) {
             setTimeout(() => {
-
                 context.drawImage(canvasFront, 0, 0)
-                //swapImg = canvas.toDataURL('image/png');
-                //comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
-                //comandos[workingframe].push(comando)
-                // comandosParaComandosb()
-                //save_frame()
-                //desenha("move", x - origin.x, y - origin.y)
                 movendo = false
                 resetSelection()
                 modeTo("move")
@@ -628,9 +658,7 @@ function handleUp(evt) {
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
         context.drawImage(canvasFront, 0, 0)
-        // comandosParaComandosb()
         Historia()
-        //desenha("move", x - origin.x, y - origin.y)
         movendo = false
 
     } else if (mode == "paste") {
@@ -672,11 +700,14 @@ function handleUp(evt) {
         }, 300)
         // desenha("rotacionar", ((y - origin.y + x - origin.x) * Math.PI) / 180, origin.x, origin.y)
     }
+
+
     origin.x = 0
     origin.y = 0
 
 }
 function handleEnd(evt) {
+
     if (isDrawing) {
         drawTo()
         Historia()
@@ -732,7 +763,7 @@ function handleEnd(evt) {
 function handleCancel(evt) {
     evt.preventDefault();
 
-    if (mode != "FX" && mode != "recortar") {
+    if (mode != "FX" && mode != "recortar" && mode != "redimensionar" && mode != "selecionar") {
         document.body.style.cursor = "pointer";
         if (isDrawing) {
             drawTo()
