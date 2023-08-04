@@ -161,7 +161,8 @@ async function desenha(
 ) {
     //let  comando =[]
     if (undoLevel != 0) {
-        for (i = 0; i < undoLevel; i++) { historia[workingframe].pop() }
+        let dif = historia[workingframe].length - undoLevel
+        for (i = dif; i < historia[workingframe].length; i++) { historia[workingframe].pop() }
         undoLevel = 0
         console.log("daqui pra frente..")
     }
