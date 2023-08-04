@@ -44,7 +44,7 @@ let tempStrokeSize
 var tempImg = document.createElement("img");
 var rotacionar = false
 iD("canvas_div").appendChild(canvasBack)
-let lastPressure = 0.5
+let lastPressure = 0.1
 let dinamicInk = false
 let lastInk = 1
 let rainbowInk = false
@@ -205,7 +205,7 @@ function handleStart(evt) {
             y = redondo(y)
         }
         if ((evt.pointerType == "touch" || evt.pressure == 0.5) && dinamicBrush === true) {
-            if (lastPressure < strokeWidth || lastPressure > strokeWidth) { lastPressure = strokeWidth }
+            if (lastPressure < strokeScale || lastPressure > strokeScale) { lastPressure = strokeScale }
 
             createNewBrush(lastbrush, lastPressure, color).then(
 
@@ -224,10 +224,8 @@ function handleStart(evt) {
         } else {
 
             if (dinamicBrush === true && evt.pressure != 0.5) {
-                let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 0.5)
-                if (pressure < 3) { pressure = 3 }
-
-                createNewBrush(lastbrush, pressure, color).then(
+                lastPressure = evt.pressure * 2 + 1
+                createNewBrush(lastbrush, lastPressure, color).then(
 
                     desenha(
                         "brush",
@@ -236,7 +234,7 @@ function handleStart(evt) {
                         y,
                         origin.x,
                         origin.y,
-                        pressure
+                        lastPressure
                     )
                 )
             }
@@ -248,7 +246,7 @@ function handleStart(evt) {
                     y,
                     origin.x,
                     origin.y,
-                    strokeWidth
+                    strokeScale
                 )
             }
 
@@ -353,16 +351,17 @@ function handleMove(evt) {
                 }
                 // console.log("stroke color: " + strokeColor)
                 if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true && !keyCtrl) {
-                    let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2) * strokeWidth;
+                    let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2);
                     if (pressure > lastPressure) {
-                        lastPressure += 1.5
+                        lastPressure += 0.1
                     }
                     else {
-                        lastPressure -= 1.5
+                        lastPressure -= 0.1
                     }
-                    lastPressure = redondo(lastPressure)
 
-                    if (lastPressure < strokeWidth) { lastPressure = strokeWidth }
+                    if (lastPressure < 1) { lastPressure = 1 }
+                    if (lastPressure > 4) { lastPressure = 4 }
+
                     iD("console2").innerHTML = " pressure/speed: " + pressure
                     createNewBrush(lastbrush, lastPressure, color).then(
 
@@ -378,8 +377,8 @@ function handleMove(evt) {
                     )
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5 && !keyCtrl) {
-                        let pressure = Math.floor(Math.floor(evt.pressure * 200) * strokeWidth / 100 + 1)
-                        if (pressure < 3) { pressure = 3 }
+                        let pressure = evt.pressure * 5 + 1
+                        //if (pressure < 3) { pressure = 3 }
                         iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
 
                         lastPressure = pressure
@@ -402,7 +401,7 @@ function handleMove(evt) {
                             y,
                             origin.x,
                             origin.y,
-                            strokeWidth
+                            1
                         )
                     }
                 }
@@ -486,12 +485,15 @@ function handleMove(evt) {
                 ctxF.setTransform(1, 0, 0, 1, 0, 0);
                 ctxF.clearRect(0, 0, canvas.width, canvas.height);
                 if (dinamicBrush) {
-                    ctxF.drawImage(brushCanva, x - (lastPressure / 2), y - (lastPressure / 2));
+                    ctxF.drawImage(brushCanva, x - (strokeWidth * lastPressure / 2), y - (strokeHeight * lastPressure / 2));
 
                 } else {
-                    let halfstroke = 0
-                    if (strokeWidth > 1) { halfstroke = strokeWidth / 2 }
-                    ctxF.drawImage(brushCanva, redondo(x - halfstroke), redondo(y - halfstroke));
+                    let halfstrokew = 0
+                    let halfstrokeh = 0
+                    if (strokeWidth * strokeScale > 1) { halfstrokew = strokeWidth * strokeScale / 2 }
+                    if (strokeHeight * strokeScale > 1) { halfstrokeh = strokeHeight * strokeScale / 2 }
+
+                    ctxF.drawImage(brushCanva, redondo(x - halfstrokew), redondo(y - halfstrokeh));
 
                 }
 
@@ -512,7 +514,7 @@ function handleMove(evt) {
     if (mode == "paste") {
 
         canvasFront.classList.remove("esconde")
-        ctxF.globalAlpha = 0.5;
+        ctxF.globalAlpha = 0.8;
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
         ctxF.drawImage(canvasRender, x - canvas.width / 2, y - canvas.height / 2)

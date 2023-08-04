@@ -1,6 +1,8 @@
 let vers = [{
-    versao: "6.9",
+    versao: "6.9.12",
     notas: [
+        "rectangular custom brushes",
+        "cutom brush from clipboard",
         "Varias mudanças no visual icones",
         "Correções Camera e menu da camera",
         "auto night mode",

@@ -52,7 +52,7 @@ function ZOOM(a) {
 
     zoomFactor = Number(a);
     setZoom(zoomFactor, canvasDiv)
-    setStrokeSize(strokeWidth);
+    //setStrokeSize(strokeWidth);
     iD("x1").innerHTML = zoomFactor + "x";
     setTimeout(autoScroll(), 200)
 

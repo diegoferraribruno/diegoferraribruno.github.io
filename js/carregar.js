@@ -281,22 +281,23 @@ var openFile = function (event) {
                 console.log(brushs)
 
                 changedBrush = false;
-                strokeColor = parseInt(brushs[2])
+                strokeColor = parseInt(brushs[3])
+                strokeHeight = parseInt(brush[2])
                 strokeWidth = parseInt(brushs[1])
                 lastbrush = parseInt(brushs[0])
                 brushName = brushNames[i]
                 brushCanva.crossOrigin = "anonymous"
-                brushCanva.height = strokeWidth
+                brushCanva.height = strokeHeight
                 brushCanva.width = strokeWidth
                 brushCtx.fillStyle = strokeColor;
-                brushCtx.fillRect(0, 0, strokeWidth, strokeWidth)
+                brushCtx.fillRect(0, 0, strokeWidth, strokeHeight)
                 brushCtx.globalCompositeOperation = 'destination-in'
-                brushCtx.drawImage(basicBrushes[lastbrush], 0, 0, strokeWidth, strokeWidth)
+                brushCtx.drawImage(basicBrushes[lastbrush], 0, 0, strokeWidth, strokeHeight)
                 brushCtx.globalCompositeOperation = 'destination-over'
                 let newNewBrush = new Image();
                 newNewBrush.src = brushCanva.toDataURL("image/png");
                 newBrush.src = newNewBrush.src
-                newBrushes[brushName] = [newNewBrush, lastbrush, strokeWidth, strokeColor]
+                newBrushes[brushName] = [newNewBrush, lastbrush, strokeWidth, strokeHeight, strokeColor]
                 let favbrush = newBrushes[brushName][0]
                 favbrush.style.maxHeight = "32px";
 

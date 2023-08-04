@@ -132,7 +132,7 @@ let textos = {
         "14": "Apagador",
         "15": 'Use a taxinha para guardar sua cor.',
         "16": "Pinceis personalizados",
-        "17": "Tranformar a tela em pincel?",
+        "17": "Quadro como pincel",
         "18": "Configurações do quadro",
         "19": "Tamanho do quadro",
         "20": "Transparencia do quadro",
@@ -215,7 +215,9 @@ let textos = {
         "98": "Carregue sua arte",
         "99": "Prancheta de recortes",
         "100": "Teclas de Atalho",
-        "101": "Ajuda"
+        "101": "Ajuda",
+        '102': 'Novo pincel de recorte',
+        '103': 'Pancheta de recortes esta vazia, use a ferramenta de seleção para copiar algo'
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -317,7 +319,9 @@ let textos = {
         "98": "Load your art",
         "99": "Clipboard",
         "100": "Keyboard Shortcuts",
-        '101': "Help"
+        '101': "Help",
+        '102': "New Brush from Cipboard",
+        '103': "Clipobard is Empty, use the selection tool to copy something"
     }
 }
 var titles = {

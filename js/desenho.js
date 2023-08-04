@@ -44,8 +44,12 @@ let myImg = document.createElement("img");
 function tilePaint() {
     tilepaint = !tilepaint
     if (tilepaint == true) {
+        iD("infinity").innerHTML = '<span class="icon infinityicon"><span class="icon2 minicheck"></span></span>'
+
         Alert('<span title="infinity" class="emoji " id="emo -♾️">♾️</span> ' + alerts[language][6] + "<br>" + alerts[language][7])
     } else {
+        iD("infinity").innerHTML = '<span class="icon infinityicon"></span>'
+
         Alert(' <span title="infinity" class="emoji " id="emo -♾️">♾️</span> ' + alerts[language][6] + "<br>" + alerts[language][8])
     }
 }
@@ -56,13 +60,16 @@ function setCenter() {
 function Mirror() {
     mirror = !mirror
     if (mirror == true) {
+        iD("mirror").innerHTML = '<span class="icon mirroricon"><span class="icon2 minicheck"></span></span>'
         setCenter()
         drawVerticalLine()
-        Alert(`  <span id="mirror" title="mirror" class="mais"
+        Alert(`  <span id="mirror2" title="mirror" class="mais"
         style="background-image: url('/img/mirror.png'); color: #ffffff01;">.</span>`+ alerts[language][29] + "<br>" + alerts[language][7])
     } else {
+        iD("mirror").innerHTML = '<span class="icon mirroricon"></span>'
+
         canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        Alert(`  <span id="mirror" title="mirror" class="mais" 
+        Alert(`  <span id="mirror2" title="mirror" class="mais" 
         style="background-image: url('/img/mirror.png'); color: #ffffff01;">.</span>`+ alerts[language][29] + "<br>" + alerts[language][8])
     }
 }
@@ -76,12 +83,15 @@ function drawVerticalLine() {
 function Mandala() {
     mandala = !mandala
     if (mandala == true) {
+        iD("mandala").innerHTML = '<span class="icon mandalaicon"><span class="icon2 minicheck"></span></span>'
         setCenter()
         mostraMenu("mandala")
         drawSlices()
         Alert('<span title="mandala" class="emoji " id="emo -♾️">⚛️</span> ' + alerts[language][24] + "<br>" + alerts[language][7])
     } else {
         canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        iD("mandala").innerHTML = '<span class="icon mandalaicon"></span>'
+
         Alert(' <span title="mandala" class="emoji " id="emo -♾️">⚛️</span> ' + alerts[language][24] + "<br>" + alerts[language][8])
     }
 }
@@ -130,214 +140,6 @@ function dataURItoBlob(dataurl) {
     return new Blob([u8arr], { type: mime });
 }
 
-/*function comandosExec(x=undefined) {
-    
-    oldBrush = [lastbrush, strokeWidth, strokeColor, globalComposite]
-
-    if (x){ tempImg.src = historia[workingframe][x]
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(tempImg,0,0)
-    }else if(animacao.length > 0){
-        
-        tempImg.src = animacao[workingframe]
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(tempImg,0,0)
-    }
-    
-}*/
-/*var blobs = {}
-let blobv
-function exec(coma = 1) {
-    let lenc = comandos[workingframe].length;
-    let scope = lenc - undoLevel
-    if (scope > coma) {
-        switch (comandos[workingframe][coma][0]) {
-            case "move":
-                ctxF.globalCompositeOperation = "destination-over"
-                ctxF.globalAlpha = 1;
-                ctxF.setTransform(1, 0, 0, 1, 0, 0);
-                ctxF.clearRect(0, 0, canvas.width, canvas.height);
-                ctxF.save()
-                ctxF.drawImage(canvas, comandos[workingframe][coma][1], comandos[workingframe][coma][2])
-                ctxF.restore()
-                let img_b64 = canvasFront.toDataURL("image/png");
-                let blob = dataURItoBlob(img_b64)
-                let url = URL.createObjectURL(blob)
-                blobs[coma] = url
-                myImg.src = blobs[coma]
-                myImg.onload = function () {
-                    context.globalAlpha = 1;
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                    let globaltemp = context.globalCompositeOperation
-                    context.globalCompositeOperation = "destination-over";
-                    context.drawImage(
-                        myImg,
-                        0,
-                        0);
-                    changeGCO(globaltemp)
-                    coma++;
-                    exec(coma)
-
-                }
-                break;
-            case "rotacionar":
-                ctxF.globalCompositeOperation = "destination-over"
-                ctxF.globalAlpha = 1;
-                ctxF.setTransform(1, 0, 0, 1, 0, 0);
-                ctxF.clearRect(0, 0, canvas.width, canvas.height);
-                ctxF.save()
-                ctxF.translate(comandos[workingframe][coma][2], comandos[workingframe][coma][3])
-                ctxF.rotate(comandos[workingframe][coma][1]);
-                ctxF.drawImage(canvas, -comandos[workingframe][coma][2], -comandos[workingframe][coma][3])
-                ctxF.restore()
-
-                let img_b64c = canvasFront.toDataURL("image/png");
-                let blobn = dataURItoBlob(img_b64c)
-                myImg.src = URL.createObjectURL(blobn)
-                myImg.onload = function () {
-                    context.globalAlpha = 1;
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                    let globaltemp = context.globalCompositeOperation
-                    context.globalCompositeOperation = "destination-over";
-                    context.drawImage(
-                        myImg,
-                        0,
-                        0);
-                    changeGCO(globaltemp)
-                    coma++;
-                    exec(coma)
-
-                }
-                break;
-
-            case "new_frame()":
-                new_frame()
-                createNewBrush()
-                coma++
-                exec(coma)
-                break;
-            case "FX":
-                context.filter = "none"
-                context.filter = filters[comandos[workingframe][coma][1]]
-                coma++
-                exec(coma)
-                break;
-            case "NB":
-                coma++
-                exec(coma)
-                break;
-            case "CB":
-                strokeWidth = comandos[workingframe][coma][2]
-                strokeColor = comandos[workingframe][coma][3]
-                createNewBrush(
-                    comandos[workingframe][coma][1],
-                    comandos[workingframe][coma][2],
-                    comandos[workingframe][coma][3])
-                coma++;
-                exec(coma)
-                break;
-            case "f":
-                globaltemp = context.globalCompositeOperation
-                myImg.onload = function () {
-                    let globaltemp = context.globalCompositeOperation
-                    context.globalCompositeOperation = comandos[workingframe][coma][1];
-                    context.drawImage(
-                        myImg,
-                        comandos[workingframe][coma][3],
-                        comandos[workingframe][coma][4],
-                        myImg.width,
-                        myImg.height);
-                    changeGCO(globaltemp)
-                    coma++;
-                    exec(coma)
-                }
-                break;
-            case "s":
-                //changeGCO("destination-out");
-                context.setTransform(1, 0, 0, 1, 0, 0);
-                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-                blobs[coma] = comandos[workingframe][coma][2]
-                myImg.src = blobs[coma]
-                myImg.onload = function () {
-                    let globaltemp = context.globalCompositeOperation
-                    context.globalCompositeOperation = comandos[workingframe][coma][1]
-                    context.drawImage(
-                        myImg,
-                        comandos[workingframe][coma][3],
-                        comandos[workingframe][coma][4],
-                        myImg.width,
-                        myImg.height);
-                    changeGCO(globaltemp)
-                    coma++;
-                    exec(coma)
-                }
-                break;
-            case "i":
-                context.globalCompositeOperation = comandos[workingframe][coma][1]
-                context.drawImage(
-                    comandos[workingframe][coma][2],
-                    comandos[workingframe][coma][3],
-                    comandos[workingframe][coma][4],
-                    comandos[workingframe][coma][5],
-                    comandos[workingframe][coma][6]);
-                coma++;
-                exec(coma)
-                break;
-            case "img":
-                context.globalCompositeOperation = comandos[workingframe][coma][1]
-                context.drawImage(
-                    comandos[workingframe][coma][2],
-                    comandos[workingframe][coma][3],
-                    comandos[workingframe][coma][4],
-                    comandos[workingframe][coma][5],
-                    comandos[workingframe][coma][6]);
-                coma++;
-                exec(coma)
-                break;
-            case "b":
-                changeGCO(comandos[workingframe][coma][1]);
-                context.fillStyle = comandos[workingframe][coma][2];
-                context.fillRect(0, 0, canvas.width, canvas.height);
-                coma++;
-                exec(coma)
-                break;
-            case "r":
-                rotacionaCanva(comandos[workingframe][coma][1])
-                coma++;
-                exec(coma)
-                break;
-            case "e":
-                changeGCO(comandos[workingframe][coma][1]);
-                context.font = comandos[workingframe][coma][5] + 'px serif'
-                context.textAlign = "center";
-                context.textBaseline = "middle";
-                context.fillText(comandos[workingframe][coma][4], comandos[workingframe][coma][2], comandos[workingframe][coma][3])
-                coma++;
-                exec(coma)
-                break;
-            case "brush":
-                context.globalCompositeOperation = comandos[workingframe][coma][1]
-                drawBrush(
-                    comandos[workingframe][coma][1],
-                    comandos[workingframe][coma][2],
-                    comandos[workingframe][coma][3],
-                    comandos[workingframe][coma][4],
-                    comandos[workingframe][coma][5],
-                    comandos[workingframe][coma][6]
-                );
-                coma++;
-                exec(coma)
-                break;
-        }
-    } else {
-        // updatecanvasFront()
-
-        executing = false
-    }
-
-}
-
-*/
 function restauraPincel() {
     createNewBrush(oldBrush[0], oldBrush[1], oldBrush[2], oldBrush[3])
 }
@@ -355,7 +157,7 @@ async function desenha(
     Y = undefined,
     eoX = undefined,
     eoY = undefined,
-    strokeWidth = undefined
+    strokeScale = undefined
 ) {
     //let  comando =[]
     switch (CMD) {
@@ -376,73 +178,74 @@ async function desenha(
 
         case "brush":
 
-            // comando =["brush", GCO, X, Y, eoX, eoY, strokeWidth]
-            drawBrush(GCO, X, Y, eoX, eoY, strokeWidth)
+            // comando =["brush", GCO, X, Y, eoX, eoY, strokeScale]
+            drawBrush(GCO, X, Y, eoX, eoY, strokeScale)
             //comandos[workingframe].push(comando)
-            autoCrop(X, Y, strokeWidth, strokeWidth)
-
+            autoCrop(X, Y, strokeWidth * strokeScale, strokeHeight * strokeScale)
+            let newStrokeWidth = strokeWidth * strokeScale
+            let newStrokeHeight = strokeHeight * strokeScale
             if (tilepaint == true) {
                 // console.log(X, Y, eoY, eoY)
-                if (X < strokeWidth / 2 && Y < strokeWidth) { //top left
+                if (X < newStrokeWidth / 2 && Y < newStrokeHeight) { //top left
                     setTimeout(() => {
                         //top right
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
+                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeScale)
                         //bottom left
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth)
+                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeScale)
                         //bottom right
-                        drawBrush(GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeWidth)
+                        drawBrush(GCO, X + canvas.width, Y + canvas.height, eoX + canvas.width, eoY + canvas.height, strokeScale)
                     }, 10)
-                } else if (X > canvas.width - strokeWidth / 2 && Y < strokeWidth) {//top right
+                } else if (X > canvas.width - newStrokeWidth / 2 && Y < newStrokeHeight) {//top right
                     setTimeout(() => {
                         //top left
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
+                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeScale)
                         //bottom left
-                        drawBrush(GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeWidth)
+                        drawBrush(GCO, X - canvas.width, Y + canvas.height, eoX - canvas.width, eoY + canvas.height, strokeScale)
 
                         //bottom right
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth)
+                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeScale)
 
 
                     }, 10)
-                } else if (X < strokeWidth / 2 && Y > canvas.height - strokeWidth / 2) { //bottom left
+                } else if (X < newStrokeWidth / 2 && Y > canvas.height - newStrokeHeight / 2) { //bottom left
                     setTimeout(() => {
                         //bottom right
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
+                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeScale)
                         //top left
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
+                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeScale)
                         //top right
-                        drawBrush(GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeWidth)
+                        drawBrush(GCO, X + canvas.width, Y - canvas.height, eoX + canvas.width, eoY - canvas.height, strokeScale)
 
 
                     }, 10)
                 }
-                else if (X > canvas.width - strokeWidth / 2 / 2 && Y > canvas.height - strokeWidth / 2) { //bottom right
+                else if (X > canvas.width - newStrokeWidth / 2 / 2 && Y > canvas.height - newStrokeHeight / 2) { //bottom right
                     setTimeout(() => {
                         //bottom left
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
+                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeScale)
                         //top left
-                        drawBrush(GCO, X - canvas.width, Y - canvas.height, eoX - canvas.width, eoY - canvas.height, strokeWidth)
+                        drawBrush(GCO, X - canvas.width, Y - canvas.height, eoX - canvas.width, eoY - canvas.height, strokeScale)
                         //top right
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
+                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeScale)
                     }, 10)
                 }
-                else if (X < strokeWidth / 2) {
+                else if (X < newStrokeWidth / 2) {
                     setTimeout(() => {
-                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeWidth)
+                        drawBrush(GCO, X + canvas.width, Y, eoX + canvas.width, eoY, strokeScale)
                     }, 10)
-                } else if (X > canvas.width - strokeWidth / 2) {
+                } else if (X > canvas.width - newStrokeWidth / 2) {
                     setTimeout(() => {
-                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeWidth)
+                        drawBrush(GCO, X - canvas.width, Y, eoX - canvas.width, eoY, strokeScale)
                     }, 10)
 
 
-                } else if (Y < strokeWidth) {
+                } else if (Y < newStrokeHeight) {
                     setTimeout(() => {
-                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeWidth)
+                        drawBrush(GCO, X, Y + canvas.height, eoX, eoY + canvas.height, strokeScale)
                     }, 10)
-                } else if (Y > canvas.height - strokeWidth / 2) {
+                } else if (Y > canvas.height - newStrokeHeight / 2) {
                     setTimeout(() => {
-                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeWidth)
+                        drawBrush(GCO, X, Y - canvas.height, eoX, eoY - canvas.height, strokeScale)
                     }, 10)
                 }
 
@@ -710,7 +513,6 @@ function mudaCorBG(cor) {
         Historia()
     }
 }
-
 
 //convertToImg() // importate para q haja pelo menos um comando na lista de comandos.
 

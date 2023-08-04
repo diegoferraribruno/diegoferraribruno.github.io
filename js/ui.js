@@ -114,7 +114,6 @@ function Fundo(qual) {
     let alvo = canvasDiv
     if (iD("pagebg").checked == true) {
         alvo = iD("tela")
-
     }
     if (qual === "img") {
         var item = prompt(
@@ -179,6 +178,8 @@ function resizeScreen() {
         // alert(`virou, ${screen.width} , ${screen.height}`)
         win.style.width = parseInt(window.innerWidth, 10) - 160 + "px";
         win.style.height = parseInt(window.innerHeight, 10) + "px";
+        win.style.top = "0px"
+        win.style.left = "80px"
         iD("menus").style.top = "0px";
     } else {
         iD("ferramentas").classList.remove("horizontal");
@@ -187,6 +188,8 @@ function resizeScreen() {
 
         win.style.width = parseInt(window.innerWidth, 10) + "px";
         win.style.height = parseInt(window.innerHeight, 10) - 214 + "px";
+        win.style.top = "120px"
+        win.style.left = "0px"
         iD("menus").style.top = "110px";
     }
 

@@ -225,10 +225,10 @@
 
                 <span class="botao">
 
-                    <span class="mais" onclick="toggleDinamicBrush()">
+                    <span id="dinamicbrush" class="mais" onclick="toggleDinamicBrush()">
                         <span class="icon dinamicbrushicon"></span>
                     </span>
-                    <span id="tilemapbot" class="mais" onclick="tilePaint()">
+                    <span id="infinity" class="mais" onclick="tilePaint()">
                         <span class="icon infinityicon"></span></span>
                     <span id="mandala" title="mandala" class="mais" onmousedown="Mandala()"><span
                             class="icon mandalaicon"></span></span>
@@ -282,13 +282,13 @@
             <div id="menucores" class="submenu fundobranco">
                 <span class="botao glow">
 
-                    <span onclick="changeType()" class="mais" style=" font-size: large;"><span
-                            class="icon2 numbericon"></span></span>
-                    <span id="glow" title="glow" class="mais selected" onmousedown="glow()"><span
-                            class="icon2 glowicon"></span></span>
-                    <span id="rainbow" title="rainbow" class="mais selected" onmousedown="rainbow()"><span
-                            class="icon2 rainbowicon"></span></span>
-                    <span title="preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais">
+                    <span onclick="changeType()" class="mais icon2 numbericon" style=" font-size: large;"></span>
+                    <span id="glow" title="glow" class="mais selected icon2 glowicon" onmousedown="glow()">
+                    </span>
+                    <span id="rainbow" title="rainbow" class="mais selected icon2 rainbowicon"
+                        onmousedown="rainbow()"></span>
+                    <span title="preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais"
+                        style="float: left;">
                         <span class="icon2 bucketicon"></span></span>
                     <span title="fechar" onmousedown="removeClass()" class="close">
                     </span>
@@ -324,8 +324,14 @@
                     <txt name="16"> pinceis personalizados</txt>
                 </div>
                 <div class="botao " id="criaCustom" onmousedown="criaCustom()">
-                    <span class="bot"><span class="icon custombrushicon"></span></span>
+                    <span class="icon2 frameicon"></span><span class="bot"><span
+                            class="icon custombrushicon"></span></span>
                     <txt name="17">quadro como pincel</txt>
+                </div>
+                <div class="botao " id="criaCustom2" onmousedown="criaCustom(true)">
+                    <span class="icon clipboardicon"></span><span class="bot"><span
+                            class="icon custombrushicon"></span></span>
+                    <txt name="102">clipboard como pincel</txt>
                 </div>
 
                 <div class="botao " id="pinceis3">

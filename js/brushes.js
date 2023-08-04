@@ -5,7 +5,9 @@ const brushCtx = brushCanva.getContext("2d");
 var favoritas = [];
 var hsla = [0, 0, 0, 1];
 var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+var strokeScale = 1;
 var strokeWidth = 6;
+var strokeHeight = 6;
 var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
 var estrokeWidth = 36;
 
@@ -26,14 +28,18 @@ brush.onload = function () {
     changeBrush()
 }
 newBrush.src = brush.src
-var dinamicBrush = true
+var dinamicBrush = false
 
 
 function toggleDinamicBrush() {
     dinamicBrush = !dinamicBrush
     if (dinamicBrush == true) {
+        iD("dinamicbrush").innerHTML = '<span class="icon dinamicbrushicon"><span class="icon2 minicheck"></span></span>'
+
         Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25] + "<br>" + alerts[language][7])
     } else {
+        iD("dinamicbrush").innerHTML = '<span class="icon dinamicbrushicon"></span>'
+
         Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25] + "<br>" + alerts[language][8])
 
     }
@@ -62,12 +68,22 @@ function customBrush() {
     mostraSubMenu("custombrush")
 }
 
-function criaCustom() {
+function criaCustom(fromclipboard = false) {
+    if (fromclipboard && clipboard.length == 0) {
+        Alert('<span class="icon clipboardicon"></span> ' + textos[language]["103"], 4)
+        return
+    }
     let i = basicBrushes.length
 
     let newNewBrush2 = new Image();
     //newNewBrush2.crossOrigin = "anonymous"
-    newNewBrush2.src = canvas.toDataURL("image/png");
+    if (fromclipboard == false) {
+        newNewBrush2.src = canvas.toDataURL("image/png");
+    } else {
+
+        newNewBrush2.src = clipboard[clipboard.length - 1]
+
+    }
 
     basicBrushes.push(newNewBrush2)
 
@@ -228,10 +244,11 @@ function strokeSizeRange(value) {
 }
 
 function setStrokeSize(value = strokeWidth) {
+    let proportion = (strokeWidth / strokeHeight)
     strokeWidth = value;
+    strokeHeight = strokeWidth * proportion
     iD("tpx").value = value;
     changeBrush()
-    lastPressure = value
 }
 
 
@@ -241,24 +258,44 @@ function selectBrush(numero) {
     changeBrush(numero)
 }
 var changedBrush = false
-var brushName = "1-6-hsla(0,0%,0%,1)"
-
-async function createNewBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
+var brushName = "1-6-6-hsla(0,0%,0%,1)"
+//var basicBrushe = new Image()
+async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strokeColor) {
     if (isGlowing) { numero = 1 }
-    brushName = "" + numero + "-" + tam + "-" + cor
     lastbrush = numero
     // brushCanva.crossOrigin = "anonymous"
-    brushCanva.height = tam
-    brushCanva.width = tam
-    brushCtx.globalAlpha = 0.1
+    //basicBrushe.src = basicBrushes[numero]
+    let imagem = new Image()
+    imagem.src = basicBrushes[numero].src
+
+    let proportion = imagem.height / imagem.width
+    strokeHeight = strokeWidth * proportion
+    brushName = "" + numero + "-" + strokeWidth + "-" + strokeHeight + "-" + cor
+    let newWidth = redondo(strokeWidth * tam)
+    let newHeight = redondo(strokeHeight * tam)
+
+    if (!dinamicBrush) {
+
+        if (newWidth < 1) { newWidth = 1 }
+        if (newHeight < 1) { newHeight = 1 }
+    } else {
+
+        if (newWidth < 3) { newWidth = 3 }
+        if (newHeight < 3) { newHeight = 3 }
+    }
+
+    brushCanva.height = newHeight
+    brushCanva.width = newWidth
     if (isGlowing == false) {
         brushCtx.globalAlpha = 1
+    } else {
+        brushCtx.globalAlpha = 0.1
     }
     brushCtx.fillStyle = cor;
-    brushCtx.fillRect(0, 0, tam, tam)
+    brushCtx.fillRect(0, 0, newWidth, newHeight)
     brushCtx.globalAlpha = 1
     brushCtx.globalCompositeOperation = 'destination-in'
-    brushCtx.drawImage(basicBrushes[numero], 0, 0, tam, tam)
+    brushCtx.drawImage(imagem, 0, 0, newWidth, newHeight)
     brushCtx.globalCompositeOperation = 'source-over'
 
     if (isGlowing) {
@@ -280,13 +317,17 @@ function rainbow() {
     mudaCorQ(1, 100)
 
     if (rainbowInk == true) {
+        iD("rainbow").innerHTML = '<span class="icon2 minicheck"></span>'
+
         Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][7])
     } else {
+        iD("rainbow").innerHTML = ''
+
         Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][8])
     }
 }
 
-function changeBrush(numero = lastbrush, tam = strokeWidth, cor = strokeColor) {
+function changeBrush(numero = lastbrush, tam = strokeScale, cor = strokeColor) {
     lastbrush = numero
     createNewBrush(numero, tam, cor)
     /* if (dinamicBrush === false) {
@@ -298,14 +339,14 @@ function addFavBrushPin() {
     addFavBrush()
 }
 function addFavBrush() {
-    brushName = "" + lastbrush + "-" + strokeWidth + "-" + strokeColor
+    brushName = "" + lastbrush + "-" + strokeWidth + "-" + strokeHeight + "-" + strokeColor
     setTimeout(() => {
         let existe = iD(brushName)
         if (!existe && mode != "picker") {
             let newNewBrush = new Image();
             newNewBrush.src = brushCanva.toDataURL("image/png");
             newBrush.src = newNewBrush.src
-            newBrushes[brushName] = [newNewBrush, lastbrush, strokeWidth, strokeColor]
+            newBrushes[brushName] = [newNewBrush, lastbrush, strokeScale, strokeColor]
             if (changedBrush == false) {
                 changedBrush = true;
                 setTimeout(() => {
@@ -323,10 +364,10 @@ function addFavBrush() {
 
                     favBrushButton.setAttribute("onmousedown", "favBrush('" + brushName + "')")
                     favBrushButton.appendChild(favbrush)
-                    if (strokeWidth > 10) {
-                        favBrushButton.innerHTML += "<span class='favbrush'>" + strokeWidth + "</span>"
+                    if (strokeScale > 10) {
+                        favBrushButton.innerHTML += "<span class='favbrush'>" + strokeScale + "</span>"
                     } else {
-                        favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeWidth + "</span>"
+                        favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeScale + "</span>"
                     }
                     iD("pinceis2").prepend(favBrushButton)
                     clearBrushes()
@@ -345,7 +386,7 @@ function addFavBrush() {
 function favBrush(brushName) {
     let brr = newBrushes[brushName]
     lastbrush = brr[1]
-    strokeWidth = brr[2]
+    strokeScale = brr[2]
     strokeColor = brr[3]
     changeBrush(brr[1], brr[2], brr[3])
 
@@ -371,19 +412,19 @@ var _start = 0
 var flag = false;
 var dot_flag = false
 
-function drawMandala(GCO, X, Y, eoX, eoY, strokeWidth) {
-    // drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth)
+function drawMandala(GCO, X, Y, eoX, eoY, strokeScale) {
+    // drawBrush2(GCO, X, Y, eoX, eoY, strokeScale)
     _start = 0
     for (var i = 0; i < slices; i++) {
         _start += _angle;
         var rP = rotate({ x: eoX, y: eoY }, center, _start);
         var rC = rotate({ x: X, y: Y }, center, _start);
-        drawBrush2(GCO, rP.x, rP.y, rC.x, rC.y, strokeWidth);
+        drawBrush2(GCO, rP.x, rP.y, rC.x, rC.y, strokeScale);
 
     }
 }
-function drawMirror(GCO, X, Y, eoX, eoY, strokeWidth) {
-    // drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth)
+function drawMirror(GCO, X, Y, eoX, eoY, strokeScale) {
+    // drawBrush2(GCO, X, Y, eoX, eoY, strokeScale)
     let X2, Y2, eoX2, eoY2
     if (X < center.x) {
         X2 = canvas.width - X
@@ -394,8 +435,8 @@ function drawMirror(GCO, X, Y, eoX, eoY, strokeWidth) {
 
     }
 
-    drawBrush2(GCO, X, Y, eoX, eoY, strokeWidth);
-    drawBrush2(GCO, X2, Y, eoX2, eoY, strokeWidth);
+    drawBrush2(GCO, X, Y, eoX, eoY, strokeScale);
+    drawBrush2(GCO, X2, Y, eoX2, eoY, strokeScale);
 
 }
 
@@ -443,17 +484,17 @@ function findxy(res, e) {
     }
 }
 
-function drawBrush(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
+function drawBrush(GCO, x1, y1, x2, y2, strokeScale, cont = ctxF) {
     if (mandala) {
-        drawMandala(GCO, x1, y1, x2, y2, strokeWidth)
+        drawMandala(GCO, x1, y1, x2, y2, strokeScale)
     } else if (mirror) {
-        drawMirror(GCO, x1, y1, x2, y2, strokeWidth)
+        drawMirror(GCO, x1, y1, x2, y2, strokeScale)
     }
     else {
-        drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont)
+        drawBrush2(GCO, x1, y1, x2, y2, strokeScale, cont)
     }
 }
-function drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
+function drawBrush2(GCO, x1, y1, x2, y2, strokeScale, cont = ctxF) {
     let start
     let end
     if (pixelGood) {
@@ -463,22 +504,28 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeWidth, cont = ctxF) {
         start = { x: x1, y: y1 }
         end = { x: x2, y: y2 }
     }
-    var halfBrushW = strokeWidth / 2;
-    var halfBrushH = strokeWidth / 2;
+    let newStrokeWidth = strokeWidth * strokeScale
+    let newStrokeHeight = strokeHeight * strokeScale
+    if (newStrokeHeight < 3 || newStrokeWidth < 3 && dinamicBrush) {
+        newStrokeHeight = 3
+        newStrokeHeight = 3
+    }
+    var halfBrushW = newStrokeWidth / 2;
+    var halfBrushH = newStrokeHeight / 2;
     var distance = parseInt(Trig.distanceBetween2Points(start, end));
     var angle = Trig.angleBetween2Points(start, end);
     var x, y;
     changeGCO(GCO);
-    cont.lineWidth = strokeWidth;
+    cont.lineWidth = newStrokeWidth;
 
     for (var z = 0; (z <= distance || z == 0); z++) {
         x = start.x + (Math.sin(angle) * z) - halfBrushW;
         y = start.y + (Math.cos(angle) * z) - halfBrushH;
-        if (strokeWidth == 1) {
+        if (strokeScale == 1) {
             x = redondo(x) + 1
             y = redondo(y) + 1
         }
-        cont.drawImage(brushCanva, x, y, strokeWidth, strokeWidth);
+        cont.drawImage(brushCanva, x, y, newStrokeWidth, newStrokeHeight);
     }
 }
 
@@ -526,7 +573,7 @@ const RGBAToHSLA = (r, g, b, a) => {
 };
 
 
-var oldBrush = [lastbrush, strokeWidth, strokeColor, globalComposite]
+var oldBrush = [lastbrush, strokeScale, strokeColor, globalComposite]
 
 function changeType() {
     let objs = ["H", "S", "L", "A"]
@@ -541,6 +588,8 @@ function changeType() {
 function glow() {
     isGlowing = !isGlowing
     if (isGlowing === true) {
+        iD("glow").innerHTML = '<span class="icon2 minicheck"></span>'
+
         ctxF.globalCompositeOperation = 'lighter'
         //context.globalCompositeOperation = 'lighter'
 
@@ -551,5 +600,6 @@ function glow() {
     } else {
         ctxF.globalCompositeOperation = 'source-over'
         night()
+        iD("glow").innerHTML = ''
     }
 }
