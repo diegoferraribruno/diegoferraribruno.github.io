@@ -160,6 +160,11 @@ async function desenha(
     strokeScale = undefined
 ) {
     //let  comando =[]
+    if (undoLevel != 0) {
+        for (i = 0; i < undoLevel; i++) { historia[workingframe].pop() }
+        undoLevel = 0
+        console.log("daqui pra frente..")
+    }
     switch (CMD) {
         case "CB":
             createNewBrush(GCO, X, Y)
@@ -422,11 +427,7 @@ async function desenha(
 
     }
 
-    if (undoLevel != 0) {
-        for (i = 0; i < undoLevel; i++) { historia[workingframe].pop() }
-        undoLevel = 0
-        console.log("daqui pra frente..")
-    }
+
 
 }
 

@@ -45,7 +45,7 @@ function undo() {
     let lenH = historia[workingframe].length;
     undoLevel--
     if (undoLevel < 0) {
-        undoLevel = lenH - 2
+        undoLevel = lenH - 1
     }
     goback(undoLevel)
 

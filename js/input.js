@@ -377,7 +377,7 @@ function handleMove(evt) {
                     )
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5 && !keyCtrl) {
-                        let pressure = evt.pressure * 5 + 1
+                        let pressure = evt.pressure * 4
                         //if (pressure < 3) { pressure = 3 }
                         iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
 
