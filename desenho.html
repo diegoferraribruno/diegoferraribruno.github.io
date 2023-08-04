@@ -76,8 +76,7 @@
                 <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">
                     <span class="icon pintaricon"></span>
                 </span>
-                <span title="Pega cor" id="picker" class="mais" onmousedown="modeTo('picker')"><span
-                        class="icon pickericon"></span></span>
+
                 <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')"><span
                         class="icon coresicon"></span></span>
 
@@ -281,8 +280,8 @@
             </div-->
             <div id="menucores" class="submenu fundobranco">
                 <span class="botao glow">
-
-                    <span onclick="changeType()" class="mais icon2 numbericon" style=" font-size: large;"></span>
+                    <span title="Pega cor" id="picker" class="mais icon pickericon"
+                        onmousedown="modeTo('picker')"></span>
                     <span id="glow" title="glow" class="mais selected icon2 glowicon" onmousedown="glow()">
                     </span>
                     <span id="rainbow" title="rainbow" class="mais selected icon2 rainbowicon"
@@ -292,6 +291,8 @@
                         <span class="icon2 bucketicon"></span></span>
                     <span title="fechar" onmousedown="removeClass()" class="close">
                     </span>
+                    <span onclick="changeType()" class="mais icon2 numbericon" style=" font-size: large;"></span>
+
                     <!--img src="img/dinamicInk.png" style="margin-left: 4px;"><label class="toggle"> <input
                     type="checkbox" id="dinamicInk" onchange="toggleDinamicInk()"
                     style="width: 50px; margin-left: 8px">
@@ -411,8 +412,10 @@
                 </span>
             </div>
             <div id="menupreencher" class="fundobranco submenu">
-                <span class="botao" onmousedown="removeClass()">🪣 <txt name="23">Preencher tudo </txt><span
-                        class="close"></span></span>
+                <span class="botao" onmousedown="removeClass()"> <span class="mais"><span
+                            class="icon2 bucketicon"></span></span>
+                    <txt name="23" class="title">Preencher tudo </txt><span class="close"></span>
+                </span>
                 <span width="140px" style="margin: 8px 80px; display: block">
                     <span onmousedown="mudaCorBG('black')" class="bloquinho"
                         style="background-color: hsla(0, 100%, 0%, 1)">
