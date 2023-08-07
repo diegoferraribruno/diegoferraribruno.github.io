@@ -293,9 +293,6 @@ body {
     overflow-y: hidden;
 }
 
-.esconde {
-    display: none;
-}
 
 .desaparece {
 
@@ -956,4 +953,19 @@ input[type="range"] {
 
 .title {
     font-size: x-large;
+}
+
+#yogapose{
+    filter: drop-shadow(0px 0px 3px white);
+}
+.colormenu{
+    display:block; 
+    float: left; 
+    height: 121px; 
+    width: 148px;
+}
+
+.esconde {
+    display: none !important;
+
 }

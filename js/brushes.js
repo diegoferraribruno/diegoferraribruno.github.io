@@ -101,6 +101,7 @@ function mudaCorQ(q = 0, valor) {
     hsla[q] = Number(valor);
     //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
     strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+ 
     setStrokeColor();
     criaPaleta();
 
@@ -175,8 +176,11 @@ function mudaCor(valor) {
         hsla[1] = saturation;
         hsla[2] = lightness;
         hsla[3] = alpha;
+     
+       
     };
     toHslaObject(strokeColor);
+    
     strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
     setStrokeColor();
     criaPaleta();
@@ -282,7 +286,7 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
 
         if (newWidth < 3) { newWidth = 3 }
         if (newHeight < 3) { newHeight = 3 }
-    }
+    }1
 
     brushCanva.height = newHeight
     brushCanva.width = newWidth
@@ -549,7 +553,6 @@ const RGBAToHSLA = (r, g, b, a) => {
     r /= 255;
     g /= 255;
     b /= 255;
-    a /= 255;
     const l = Math.max(r, g, b);
     const s = l - Math.min(r, g, b);
     const h = s
@@ -569,21 +572,122 @@ const RGBAToHSLA = (r, g, b, a) => {
     hsla[1] = S;
     hsla[2] = L;
     hsla[3] = A;
-    return `hsla(${H},${S}%,${L}%,${a})`;
+    //hslaToRgba(H,S,L,A)
+    return `hsla(${H},${S}%,${L}%,${A})`;
 };
 
+function hslaToRgba(h=hsla[0], s=hsla[1], l=hsla[2],a=hsla[3]){
+    var r, g, b;
+
+    if(s == 0){
+        r = g = b = l; // achromatic
+    }else{
+        var hue2rgb = function hue2rgb(p, q, t){
+            if(t < 0) t += 1;
+            if(t > 1) t -= 1;
+            if(t < 1/6) return p + (q - p) * 6 * t;
+            if(t < 1/2) return q;
+            if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+            return p;
+        }
+
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+    }
+
+   // return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255), Math.round(a * 255)];
+    iD("Rgba").value = Math.floor(r/255)
+    iD("rGba").value = Math.floor(g/255)
+    iD("rgBa").value = Math.floor(b/255)
+    iD("rgbA").value =  a
+    
+
+}
+function mudaRGB(q = 0, valor=0) {
+    let r, g ,b, a
+    r = iD("Rgba").value
+    g = iD("rGba").value
+    b = iD("rgBa").value
+    a = iD("rgbA").value
+    mudaCor( RGBAToHSLA(r,g,b,a))
+}
+function hexadecimal(){
+    let hex = iD("hexadecimal").value
+    const isValidHex = (hex) => /^#([A-Fa-f0-9]{3,4}){1,2}$/.test(hex)
+
+    const getChunksFromString = (st, chunkSize) => st.match(new RegExp(`.{${chunkSize}}`, "g"))
+    
+    const convertHexUnitTo256 = (hexStr) => parseInt(hexStr.repeat(2 / hexStr.length), 16)
+    
+    const getAlphafloat = (a, alpha) => {
+        if (typeof a !== "undefined") {return a / 255}
+        if ((typeof alpha != "number") || alpha <0 || alpha >1){
+          return 1
+        }
+        return alpha
+    }
+    
+    const hexToRGBA = (hex, alpha) => {
+        if (!isValidHex(hex)) {throw new Error("Invalid HEX")}
+        const chunkSize = Math.floor((hex.length - 1) / 3)
+        const hexArr = getChunksFromString(hex.slice(1), chunkSize)
+        const [r, g, b, a] = hexArr.map(convertHexUnitTo256)
+        return mudaCor(RGBAToHSLA( r, g, b, getAlphafloat(a, alpha)))
+    }
+      hexToRGBA(hex)
+}
 
 var oldBrush = [lastbrush, strokeScale, strokeColor, globalComposite]
 
-function changeType() {
-    let objs = ["H", "S", "L", "A"]
-    let tipo = 'number'
-    if (iD("H").type == tipo) { tipo = 'range' }
-    for (i = 0; i < objs.length; i++) {
-        iD(objs[i]).setAttribute('type', tipo)
+function changeType(qual = "number") {
+    if (qual == "number"){
+
+        let objs = ["H", "S", "L", "A", "Rgba", "rGba", "rgBa","rgbA"]
+        let tipo = 'number'
+        if (iD("H").type == tipo) { tipo = 'range' }
+        for (i = 0; i < objs.length; i++) {
+            iD(objs[i]).setAttribute('type', tipo)
+        }
+    }
+    else if( qual == "hsla"){
+    
+        iD("colorhsla").classList.remove("esconde")
+        iD("colorrgba").classList.add("esconde")
+        iD("colorhex").classList.add("esconde")
+
+
+    }else if( qual == "rgba"){
+        iD("colorrgba").classList.remove("esconde")
+        iD("colorhsla").classList.add("esconde")
+        iD("colorhex").classList.add("esconde")
+        hslaToRgba()
+        
+    }
+    else if( qual == "hex"){
+        iD("hexadecimal").value = hsl2hex(hsla[0],hsla[1],hsla[2],hsla[3])
+        iD("colorrgba").classList.add("esconde")
+        iD("colorhsla").classList.add("esconde")
+        iD("colorhex").classList.remove("esconde")
+
     }
 }
+function hsl2hex(h,s,l,alpha) {
+    l /= 100;
+    const a = s * Math.min(l, 1 - l) / 100;
+    const f = n => {
+      const k = (n + h / 30) % 12;
+      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color).toString(16).padStart(2, '0');   
+      // convert to Hex and prefix "0" if needed
+    };
+  //alpha conversion
+  alpha = Math.round(alpha * 255).toString(16).padStart(2, '0');
 
+  return `#${f(0)}${f(8)}${f(4)}${alpha}`;
+} 
 
 function glow() {
     isGlowing = !isGlowing

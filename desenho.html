@@ -280,8 +280,9 @@
             </div-->
             <div id="menucores" class="submenu fundobranco">
                 <span class="botao glow">
-                    <span title="Pega cor" id="picker" class="mais icon pickericon"
-                        onmousedown="modeTo('picker')"></span>
+                    <span title="Pega cor" id="picker" class="mais"
+                        onmousedown="modeTo('picker')">
+                    <span class="icon pickericon"></span></span>
                     <span id="glow" title="glow" class="mais selected icon2 glowicon" onmousedown="glow()">
                     </span>
                     <span id="rainbow" title="rainbow" class="mais selected icon2 rainbowicon"
@@ -291,7 +292,6 @@
                         <span class="icon2 bucketicon"></span></span>
                     <span title="fechar" onmousedown="removeClass()" class="close">
                     </span>
-                    <span onclick="changeType()" class="mais icon2 numbericon" style=" font-size: large;"></span>
 
                     <!--img src="img/dinamicInk.png" style="margin-left: 4px;"><label class="toggle"> <input
                     type="checkbox" id="dinamicInk" onchange="toggleDinamicInk()"
@@ -301,18 +301,51 @@
                 </span><br>
                 <div id="paleta" class="fundobranco glow"></div>
                 <div id="menu" class="fundobranco glow">
-                    <span class="icon2small hueicon"></span><input type="range" id="H" name="cor" min="0" max="359"
-                        oninput="mudaCorQ(0,this.value)" style="width: 100px;" value="0"> <br>
-                    <span class="icon2small contrasticon"></span><input type="range" id="S" name="cor" min="0" max="100"
-                        oninput="mudaCorQ(1,this.value)" style="width: 100px;" value="100"> <br>
-                    <span class="icon2small brightnessicon"></span> <input type="range" id="L" name="cor" min="0"
-                        max="100" oninput="mudaCorQ(2,this.value)" style="width: 100px;" value="50"> <br>
-                    <span class="icon2small alphaicon"></span><input type="range" id="A" name="cor" min="0.01" max="1"
-                        oninput="mudaCorQ(3,this.value)" style="width: 100px;" step="0.01" value="1"><br>
-                    <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais"><span
-                            class="icon pinicon"
-                            style="position: absolute; margin-left: 56px; margin-top: -16px;"></span></span>
+                    <span style="display:block; float: left; height: 120px; width: 40px;">
+                        <span onclick="changeType('number')" class="mais icon2small numbericon" style=" font-size: large;"></span>
+                        <span onclick="changeType('hex')" class="mais icon2small fxicon" style=" font-size: large;">hex</span>
+                        <span onclick="changeType('rgba')" class="mais icon2small fxicon" style=" font-size: large;">rgba</span>
+                        <span onclick="changeType('hsla')" class="mais icon2small fxicon" style=" font-size: large;">hsla</span>
+                    </span>
+                    <span id="colorhsla" class="colormenu" >
+                        <span class="icon2small hueicon"></span>
+                        <input type="range" id="H" name="cor" min="0" max="359"
+                            oninput="mudaCorQ(0,this.value)" style="width: 100px;" value="0"> <br>
+                        <span class="icon2small contrasticon"></span>
+                        <input type="range" id="S" name="cor" min="0" max="100"
+                            oninput="mudaCorQ(1,this.value)" style="width: 100px;" value="100"> <br>
+                        <span class="icon2small brightnessicon"></span> 
+                        <input type="range" id="L" name="cor" min="0"
+                            max="100" oninput="mudaCorQ(2,this.value)" style="width: 100px;" value="50"> <br>
+                        <span class="icon2small alphaicon"></span>
+                        <input type="range" id="A" name="cor" min="0.01" max="1"
+                            oninput="mudaCorQ(3,this.value)" style="width: 100px;" step="0.01" value="1"><br>
+                    </span>
+                    <span id="colorrgba" class="colormenu esconde"  >
+                        <span  class="bloquinho" style="background-color:hsla(0,100%,50%,4.2);">R</span>
+                        <input type="range" id="Rgba" name="cor" min="0" max="255"
+                            oninput="mudaRGB(0,this.value)" style="width: 100px;" value="0"> <br>
+                            <span  class="bloquinho" style="background-color:hsla(135,100%,50%,4.2);">G</span>
+                        <input type="range" id="rGba" name="cor" min="0" max="255"
+                            oninput="mudaRGB(1,this.value)" style="width: 100px;" value="0"> <br>
+                            <span  class="bloquinho" style="background-color:hsla(225,100%,50%,4.2);">B</span> 
+                        <input type="range" id="rgBa" name="cor" min="0"
+                            max="255" oninput="mudaRGB(2,this.value)" style="width: 100px;" value="0"> <br>
+                        <span class="icon2small alphaicon">A</span>
+                        <input type="range" id="rgbA" name="cor" min="0" max="1"
+                            oninput="mudaRGB(3,this.value)" style="width: 100px;" step="0.1" value="255"><br>
+                    </span>
+                    <span id="colorhex" class="colormenu esconde">
+                        #hexadecimal
+                        <input type="text" id="hexadecimal" onchange="hexadecimal(this.value)" size="9" style="max-width: 120px;">
+                    </span>
+                    </span>
 
+                    <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais">
+                        <span class="icon pinicon"
+                            style="position: absolute; margin-left: 56px; margin-top: -16px;">
+                        </span>
+                    </span>
                 </div>
                 <div id="paleta2" class="fundobranco glow">
                     <txt name="15">Use a taxinha para guardar sua cor.</txt>
