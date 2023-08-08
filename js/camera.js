@@ -27,7 +27,7 @@ function camera() {
         const botao = iD("btnChangeCam")
 
         const videoE = document.createElement("video");
-        const escala = canvas.height / 320
+        const escala = canvas.height / canvas.width
         videoE.id = "video"
         videoE.height = canvas.height; // in px
         videoE.width = redondo(430 * (escala)); // in px
@@ -38,7 +38,7 @@ function camera() {
         let vcW = redondo(430 * escala * 2);
         let vcH = redondo(320 * escala * 2);
         const videoC = document.createElement("div");
-        videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px; `)
+        videoC.setAttribute("style", `display:flex; width:${vcW}px; height:${vcH}px; position:absolute; top:0px;`)
         videoC.setAttribute("id", "videoC")
         videoC.appendChild(videoE);
         canvasDiv.appendChild(videoC)
@@ -109,7 +109,7 @@ function camera() {
 
                     let offsetW = (parseInt(videoC.style.width, 10) - canvas.width) * escala
                     let offsetH = -canvas.height - 5
-                    videoC.setAttribute("style", `margin-top:${offsetH}px; display: flex; width:100%; height:100%; justify-content: center;`)
+                    videoC.setAttribute("style", `display: flex; width:100%; height:100%; justify-content: center; position:absolute; top:0px;`)
                 } else {
                     proporcao = videoHeight / videoWidth
                     canvasV.width = canvas.width
@@ -118,7 +118,7 @@ function camera() {
                     let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
                     let offsetH = - canvas.height * escala - ((canvasV.height - canvas.height) / 2)
                     videoC.setAttribute("style",
-                        `margin-top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
+                        ` position:absolute; top:0px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
                 }
             }
         };
