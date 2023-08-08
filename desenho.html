@@ -70,12 +70,15 @@
             </div>
 
             <div id="ferramentas2" class="ferramentas">
-                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')"><span
-                        class="icon eraseicon"></span></span>
 
                 <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">
                     <span class="icon pintaricon"></span>
                 </span>
+                <span onmousedown="backPaint()" class="mais" id="globalComposite">
+                    <span class="icon2 paintovericon"></span>
+                </span>
+                <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')"><span
+                        class="icon eraseicon"></span></span>
 
                 <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')"><span
                         class="icon coresicon"></span></span>
@@ -87,9 +90,6 @@
                     <span class="icon clipboardicon"></span>
                 </span>
 
-                <span onmousedown="backPaint()" class="mais" id="globalComposite">
-                    <span class="icon2 paintovericon"></span>
-                </span>
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')"><span
                         class="icon zoomicon"></span>
                     <span id="x1"
@@ -222,7 +222,7 @@
 
             <div id="menupintar" class="fundobranco submenu menu">
 
-                <span class="botao">
+                <span class="botao" style="display: inline-flex;">
 
                     <span id="dinamicbrush" class="mais" onclick="toggleDinamicBrush()">
                         <span class="icon dinamicbrushicon"></span>
@@ -279,7 +279,7 @@
                         oninput="mudaCorAlpha()" step="0.1" value="1"></div>
             </div-->
             <div id="menucores" class="submenu fundobranco">
-                <span class="botao glow">
+                <span class="botao" style="display: inline-flex;">
                     <span title="Pega cor" id="picker" class="mais" onmousedown="modeTo('picker')">
                         <span class="icon pickericon"></span></span>
                     <span id="glow" title="glow" class="mais selected icon2 glowicon" onmousedown="glow()">
@@ -316,6 +316,9 @@
                         <span class="icon pinicon" style="position: absolute; margin-left: 56px; margin-top: -16px;">
                         </span>
                     </span>
+                    <span id="salvaCor2" onmousedown="switchEstroke()" title=" old stroke" class="mais"><span
+                            class="icon2 swapicon" style="transform: scale(0.6); margin: -4px;"></span></span>
+
                 </div>
                 <div id="paleta2" class="fundobranco glow">
                     <txt name="15">Use a taxinha para guardar sua cor.</txt>
@@ -323,14 +326,12 @@
                 <div id="paleta3" class="fundobranco glow"></div>
             </div>
             <div id="menucustombrush" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-                <div class="botao "> <span title="fechar" onmousedown="mostraSubMenu('custombrush')"
-                        class="close"></span>
-                    <txt name="16"> pinceis personalizados</txt>
-                </div>
-                <div class="botao " id="criaCustom" onmousedown="criaCustom()">
-                    <span class="icon2 frameicon"></span><span class="bot"><span
-                            class="icon custombrushicon"></span></span>
-                    <txt name="17">quadro como pincel</txt>
+                <div class="botao ">
+                    <span title="fechar" onmousedown="mostraSubMenu('custombrush')" class="close"></span>
+                    <span id="criaCustom" class="icon2 frameicon" onmousedown="criaCustom()"></span>
+                    <span class="bot"><span class="icon custombrushicon"></span>
+                    </span>
+                    <txt name="17" onmousedown="criaCustom()">quadro como pincel</txt>
                 </div>
                 <div class="botao " id="criaCustom2" onmousedown="criaCustom(true)">
                     <span class="icon clipboardicon"></span><span class="bot"><span
@@ -340,6 +341,10 @@
 
                 <div class="botao " id="pinceis3">
                 </div>
+                <txt name="16"> use this brush color</txt> <label class="toggle">
+                    <input id="custombrushcolor" type="checkbox" checked onchange="customBrushColor()">
+                    <span class="knob"></span>
+                </label>
             </div>
             <div id="menuconfiguracoes" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
                 <span title="fechar" onmousedown="removeClass()" class="close"></span>

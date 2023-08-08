@@ -1,6 +1,14 @@
 let vers = [{
-    versao: "6.9.12",
+    versao: "7.1.1",
     notas: [
+        "color modes RGB, HSL, HEXAdecimal",
+        "Usar cores do pincel customizado",
+        "last color swap button"
+    ]
+}, {
+    versao: "6.10",
+    notas: [
+        "scale by center and by touch or click",
         "rectangular custom brushes",
         "cutom brush from clipboard",
         "Varias mudanças no visual icones",

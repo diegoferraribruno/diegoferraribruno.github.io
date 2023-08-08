@@ -28,8 +28,18 @@ function salvaCor() {
 
 setStrokeColor();
 
+function switchEstroke() {
+    let old = strokeColor
+    strokeColor = estrokeColor
+    mudaCor(strokeColor, true)
+    estrokeColor = old
+    iD("salvaCor2").style.backgroundColor = old
+}
 function mudaCor(valor, bloquinho = false) {
-
+    if (bloquinho) {
+        estrokeColor = strokeColor
+        iD("salvaCor2").style.backgroundColor = estrokeColor
+    }
     if (valor == "P") {
         hsla[0] = 0;
         hsla[1] = 100;
@@ -58,7 +68,6 @@ function mudaCor(valor, bloquinho = false) {
     if (bloquinho) {
         hslaToRgba()
         changeColorMode()
-
     }
     // iD("mostraCor").style.backgroundColor = strokeColor;
     //iD("mostraCor2").style.backgroundColor =
@@ -197,21 +206,17 @@ function hslaToRgba(h = hsla[0], s = hsla[1], l = hsla[2], A = hsla[3]) {
     rgba[1] = redondo(255 * f(8))
     rgba[2] = redondo(255 * f(4))
     rgba[3] = A
-    console.log("hslaToRgba: ", rgba)
 
 }
 
 function mudaRGB(q = 0, valor = 0) {
     rgba[q] = Number(valor);
-    //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
 
     mudaCor(RGBAToHSLA(rgba[0], rgba[1], rgba[2], rgba[3]))
     strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
     setStrokeColor();
     criaPaleta();
 
-    // toHslaObject(strokeColor)
-    // mudaCor(strokeColor)
 
 }
 function hexadecimal() {
@@ -240,7 +245,7 @@ function hexadecimal() {
     hexToRGBA(hex)
 }
 
-function hsl2hex(h, s, l, alpha) {
+function hsl2hex(h = hsla[0], s = hsla[1], l = hsla[2], alpha = hsla[3]) {
     l /= 100;
     const a = s * Math.min(l, 1 - l) / 100;
     const f = n => {
@@ -257,10 +262,7 @@ function hsl2hex(h, s, l, alpha) {
 
 
 function changeColorMode(qual = colormode) {
-    /*  if (qual != colormode) {
-          hslaToRgba()
-  
-      }*/
+
     const control = iD("colorcontrol")
 
     if (qual == "hsla") {
@@ -281,9 +283,6 @@ function changeColorMode(qual = colormode) {
         <input type="${rangetipo}" id="A" name="cor" min="0.01" max="1" 
         oninput="mudaCorQ(3,this.value)"
             style="width: 100px;" step="0.01" value="${hsla[3]}"><br>`
-        /*iD("colorhsla").classList.remove("esconde")
-        iD("colorrgba").classList.add("esconde")
-        iD("colorhex").classList.add("esconde")*/
 
 
     } else if (qual == "rgba") {
@@ -301,24 +300,17 @@ function changeColorMode(qual = colormode) {
         <span class="icon2small alphaicon">A</span>
         <input type="${rangetipo}" id="rgbA" name="cor" min="0" max="1" oninput="mudaRGB(3,this.value)"
         style="width: 100px;" step="0.1" value="${rgba[3]}"><br>`
-        /* iD("colorrgba").classList.remove("esconde")
-        iD("colorhsla").classList.add("esconde")
-        iD("colorhex").classList.add("esconde")*/
-        //changeToRGBA()
 
 
 
     }
     else if (qual == "hex") {
         colormode = "hex"
-        hexa = hsl2hex(hsla[0], hsla[1], hsla[2], hsla[3])
+        hexa = hsl2hex()
         control.innerHTML = `   #hexadecimal
         <input type="text" id="hexadecimal" onchange="hexadecimal()" size="9"
             style="max-width: 96px; font-siz:18px" value="${hexa}"><span class="bot"><span class="icon2small check" onClick="hexadecimal()"></span></span>`
-        /*  iD("hexadecimal").value = hsl2hex(hsla[0], hsla[1], hsla[2], hsla[3])
-          iD("colorrgba").classList.add("esconde")
-          iD("colorhsla").classList.add("esconde")
-          iD("colorhex").classList.remove("esconde")*/
+
 
     }
 }

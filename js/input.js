@@ -413,14 +413,16 @@ function handleMove(evt) {
     } else if (isPicking) {
         var imageData = context.getImageData(x, y, 1, 1).data;
         if (imageData[3] > 0) {
-            RGBAToHSLA(
+            mudaCor(RGBAToHSLA(
                 imageData[0],
                 imageData[1],
                 imageData[2],
-                imageData[3]
-            );
-            setStrokeColor();
-            changeBrush()
+                imageData[3] / 255
+            ), true);
+            /* setStrokeColor();
+             changeBrush()
+             changeColorMode()*/
+
 
         }
 
@@ -615,14 +617,13 @@ function handleUp(evt) {
 
         var imageData = context.getImageData(x, y, 1, 1).data;
         if (imageData[3] > 1) {
-            RGBAToHSLA(
+            mudaCor(RGBAToHSLA(
                 imageData[0],
                 imageData[1],
                 imageData[2],
-                imageData[3]
-            );
-            setStrokeColor();
-            changeBrush()
+                imageData[3] / 255
+            ), true);
+
         }
         setTimeout(() => { modeTo("pintar"), mostraMenu("cores") }, 60)
         isPicking = false

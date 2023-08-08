@@ -17,6 +17,7 @@ var strokeWidth = 6;
 var strokeHeight = 6;
 var estrokeWidth = 36;
 
+var custombrushcolor = false
 var newBrushes = {}
 var lastbrush = 1
 let brushesImg = {}
@@ -34,6 +35,9 @@ brush.onload = function () {
 newBrush.src = brush.src
 var dinamicBrush = false
 
+function customBrushColor() {
+    custombrushcolor = !custombrushcolor
+}
 
 function toggleDinamicBrush() {
     dinamicBrush = !dinamicBrush
@@ -147,7 +151,7 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
 
         if (newWidth < 3) { newWidth = 3 }
         if (newHeight < 3) { newHeight = 3 }
-    } 1
+    }
 
     brushCanva.height = newHeight
     brushCanva.width = newWidth
@@ -156,12 +160,20 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
     } else {
         brushCtx.globalAlpha = 0.1
     }
-    brushCtx.fillStyle = cor;
-    brushCtx.fillRect(0, 0, newWidth, newHeight)
-    brushCtx.globalAlpha = 1
-    brushCtx.globalCompositeOperation = 'destination-in'
-    brushCtx.drawImage(imagem, 0, 0, newWidth, newHeight)
-    brushCtx.globalCompositeOperation = 'source-over'
+    if (custombrushcolor === false) {
+        brushCtx.fillStyle = cor;
+        brushCtx.fillRect(0, 0, newWidth, newHeight)
+        brushCtx.globalAlpha = 1
+        brushCtx.globalCompositeOperation = 'destination-in'
+        brushCtx.drawImage(imagem, 0, 0, newWidth, newHeight)
+        brushCtx.globalCompositeOperation = 'source-over'
+    } else {
+        //  brushCtx.fillStyle = cor;
+        //  brushCtx.fillRect(0, 0, newWidth, newHeight)
+        brushCtx.globalAlpha = hsla[3]
+        brushCtx.globalCompositeOperation = 'source-over'
+        brushCtx.drawImage(imagem, 0, 0, newWidth, newHeight)
+    }
 
     if (isGlowing) {
 
@@ -230,9 +242,9 @@ function addFavBrush() {
                     favBrushButton.setAttribute("onmousedown", "favBrush('" + brushName + "')")
                     favBrushButton.appendChild(favbrush)
                     if (strokeScale > 10) {
-                        favBrushButton.innerHTML += "<span class='favbrush'>" + strokeScale + "</span>"
+                        favBrushButton.innerHTML += "<span class='favbrush'>" + strokeWidth + "</span>"
                     } else {
-                        favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeScale + "</span>"
+                        favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeWidth + "</span>"
                     }
                     iD("pinceis2").prepend(favBrushButton)
                     clearBrushes()

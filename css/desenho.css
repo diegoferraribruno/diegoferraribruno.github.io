@@ -289,6 +289,16 @@ body {
     font-size: 1.5em;
 }
 
+#salvaCor2 {
+    height: 28px;
+    width: 30px;
+    margin-top: 4px;
+    margin-right: auto;
+    margin-left: 2px;
+    line-height: 1em;
+    font-size: 1.5em;
+}
+
 .disable-scroll {
     overflow-y: hidden;
 }
@@ -955,13 +965,14 @@ input[type="range"] {
     font-size: x-large;
 }
 
-#yogapose{
+#yogapose {
     filter: drop-shadow(0px 0px 3px white);
 }
-.colormenu{
-    display:block; 
-    float: left; 
-    height: 121px; 
+
+.colormenu {
+    display: block;
+    float: left;
+    height: 121px;
     width: 148px;
 }
 
