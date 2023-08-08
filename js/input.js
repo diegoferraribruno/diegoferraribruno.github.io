@@ -49,6 +49,7 @@ let dinamicInk = false
 let lastInk = 1
 let rainbowInk = false
 let redimensionar = false
+let strokemax = 2
 
 function handleKeyUp(evt) {
 
@@ -363,7 +364,7 @@ function handleMove(evt) {
                     }
 
                     if (lastPressure < 1) { lastPressure = 1 }
-                    if (lastPressure > 4) { lastPressure = 4 }
+                    if (lastPressure > strokemax) { lastPressure = strokemax }
 
                     iD("console2").innerHTML = " pressure/speed: " + pressure
                     createNewBrush(lastbrush, lastPressure, color).then(
@@ -380,7 +381,7 @@ function handleMove(evt) {
                     )
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5 && !keyCtrl) {
-                        let pressure = evt.pressure * 4
+                        let pressure = evt.pressure * strokemax
                         //if (pressure < 3) { pressure = 3 }
                         iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
 

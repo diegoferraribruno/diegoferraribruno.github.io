@@ -119,7 +119,9 @@ function setStrokeSize(value = strokeWidth) {
     iD("tpx").value = value;
     changeBrush()
 }
-
+function setStrokeMax(value) {
+    strokemax = value
+}
 
 function selectBrush(numero) {
     removeClass('selectedBr')

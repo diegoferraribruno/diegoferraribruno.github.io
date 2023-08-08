@@ -31,7 +31,7 @@ function camera() {
         videoE.id = "video"
         videoE.height = canvas.height; // in px
         videoE.width = redondo(430 * (escala)); // in px
-        videoE.setAttribute('style', `position:relative; width:auto; height:auto;`)
+        videoE.setAttribute('style', ` width:auto; height:auto;`)
         if (stop_motion == true) videoE.setAttribute("class", "destination-over")
 
 
