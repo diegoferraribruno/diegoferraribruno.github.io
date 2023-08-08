@@ -1,5 +1,5 @@
 let nightmode = false
-
+let rangetipo = "range"
 function Alert(text, time = 2.8) {
     let alert = iD("menualerta")
     alert.classList.add("aparece2")
@@ -210,4 +210,14 @@ function autoScroll() {
         ultimoToque.y * zoomFactor - window.innerHeight / 4
     )
 
+}
+
+function changeType() {
+    if (rangetipo == 'number') {
+        let tipo = 'number'
+        rangetipo = 'range'
+    } else {
+        rangetipo = 'number'
+    }
+    changeColorMode()
 }

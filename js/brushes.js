@@ -2,16 +2,20 @@
 
 const brushCanva = iD("brushCanva")
 const brushCtx = brushCanva.getContext("2d");
+
 var favoritas = [];
 var hsla = [0, 0, 0, 1];
+var rgba = [0, 0, 0, 1];
+var hexa = "#000000ff"
+var isGlowing = false
 var strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+var colormode = "hsla"
+
 var strokeScale = 1;
 var strokeWidth = 6;
 var strokeHeight = 6;
-var estrokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
 var estrokeWidth = 36;
-
-var isGlowing = false
 
 var newBrushes = {}
 var lastbrush = 1
@@ -35,17 +39,11 @@ function toggleDinamicBrush() {
     dinamicBrush = !dinamicBrush
     if (dinamicBrush == true) {
         iD("dinamicbrush").innerHTML = '<span class="icon dinamicbrushicon"><span class="icon2 minicheck"></span></span>'
-
         Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25] + "<br>" + alerts[language][7])
     } else {
         iD("dinamicbrush").innerHTML = '<span class="icon dinamicbrushicon"></span>'
-
         Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25] + "<br>" + alerts[language][8])
-
     }
-}
-function toggleDinamicInk() {
-    dinamicInk = !dinamicInk
 }
 
 
@@ -95,143 +93,6 @@ function criaCustom(fromclipboard = false) {
     iD("pinceis3").appendChild(prush)
     setTimeout(() => selectBrush(basicBrushes.length - 1), 350)
 }
-
-
-function mudaCorQ(q = 0, valor) {
-    hsla[q] = Number(valor);
-    //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
-    strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
- 
-    setStrokeColor();
-    criaPaleta();
-
-}
-function mudaCorAlpha() {
-    let valor = iD("transparenciaE").value
-    strokeColor = `hsla(0, 100%, 0%, ${valor})`
-}
-function salvaCor() {
-    if (!favoritas.includes(strokeColor)) {
-        favoritas.push(strokeColor);
-    } else {
-        favoritas = favoritas.filter((item) => item !== strokeColor);
-    }
-    setTimeout(criaPaleta2(), 20);
-}
-
-criaPaleta();
-
-function setStrokeColor() {
-    strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-    let objs = [
-        "salvaCor",
-        "pintar",
-        "cores",
-        "picker",
-        "preencher",
-        "preenchercor"
-    ];
-
-    let quantos = objs.length;
-    for (i = 0; i < quantos; i++) {
-        iD(objs[i]).style.backgroundColor = strokeColor;
-        iD(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
-    }
-    changeBrush()
-
-}
-
-setStrokeColor();
-
-function mudaCor(valor) {
-
-    if (valor == "P") {
-        strokeColor = `hsl(0,100%,0%,${hsla[3]})`;
-        //   iD("mostraCor").style.color = strokeColor;
-
-        //     iD("menu").style.visibility = "hidden";
-    } else if (valor == "B") {
-        strokeColor = `hsla(0,100%,100%,${hsla[3]})`;
-        // iD("mostraCor").style.color = strokeColor;
-        //     iD("menu").style.visibility = "hidden";
-    } else {
-        strokeColor = valor;
-        //     iD("menu").style.visibility = "hidden";
-        // cursorColor();
-    }
-    // iD("mostraCor").style.backgroundColor = strokeColor;
-    //iD("mostraCor2").style.backgroundColor =
-    //   strokeColor;
-    //iD("pintar").style.backgroundColor = strokeColor;
-    iD("preenchercor").style.backgroundColor = strokeColor;
-    const toHslaObject = (hslaStr) => {
-        const [hue, saturation, lightness, alpha] = hslaStr
-            .match(/[\d\.]+/g)
-            .map(Number);
-        iD("H").value = hue;
-        iD("S").value = saturation;
-        iD("L").value = lightness;
-        iD("A").value = alpha;
-        hsla[0] = hue;
-        hsla[1] = saturation;
-        hsla[2] = lightness;
-        hsla[3] = alpha;
-     
-       
-    };
-    toHslaObject(strokeColor);
-    
-    strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
-    setStrokeColor();
-    criaPaleta();
-
-}
-
-function criaPaleta() {
-    let paleta = `<span onmousedown='mudaCor("B")'  class='bloquinho' ` +
-        "style='background-color:hsla(0, 100%, 100%, " + hsla[3] * 4 + ")'> </span>";
-    let hue100 = 100;
-    for (i = 1; i < 15; i++) {
-        hue100 -= Math.floor(100 / 14)
-        let cor = iD("H").value
-        paleta += `<span onmousedown='mudaCor("hsla(${cor},${hsla[1]}%,${hue100
-            }%,${hsla[3]
-            })")' class='bloquinho' style='background-color:hsla(${cor},${hsla[1]
-            }%,${hue100}%,${hsla[3] * 4});'> </span>`;
-
-    }
-
-    iD("paleta").innerHTML = paleta;
-
-}
-
-function criaPaleta2() {
-    let paleta = "";
-    let quantas = favoritas.length;
-    for (i = 0; i < quantas; i++) {
-        paleta += `<span onmousedown='mudaCor("` + favoritas[i] + `")' class='bloquinho' style="background-color:` + favoritas[i] + `"> </span>`
-    }
-    iD("paleta2").innerHTML = paleta;
-}
-function criapaleta3() {
-    let paleta3 = '';
-    let c = 0;
-    while (c < 7) {
-        let cor = (c * 55)
-        c++;
-        paleta3 += `<span onmousedown='mudaCor("hsla(${cor},100%,50%,${hsla[3]
-            })")' class='bloquinho' style='background-color:hsla(${cor},100%,50%,${hsla[3] * 4 + 0.2});'> </span>`;
-        iD("paleta3").innerHTML = paleta3;
-        iD("paleta3").innerHTML +=
-            `<span onmousedown='mudaCor("hsla(0, 0%, 50%, ` + hsla[3] * 4 + `)")' class='bloquinho' ` +
-            "style='background-color:hsla(0, 0%, 50%, " + hsla[3] * 4 + ")'> </span>";
-        iD("paleta3").innerHTML +=
-            `<span onmousedown='mudaCor("P")' class='bloquinho' ` +
-            "style='background-color:hsla(0, 0%, 0%, " + hsla[3] * 4 + ")'> </span>";
-    }
-} criapaleta3()
-
-
 
 function initStrokeRange() {
     let r = 2;
@@ -286,7 +147,7 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
 
         if (newWidth < 3) { newWidth = 3 }
         if (newHeight < 3) { newHeight = 3 }
-    }1
+    } 1
 
     brushCanva.height = newHeight
     brushCanva.width = newWidth
@@ -549,161 +410,5 @@ var Trig = {
     }
 }
 
-const RGBAToHSLA = (r, g, b, a) => {
-    r /= 255;
-    g /= 255;
-    b /= 255;
-    const l = Math.max(r, g, b);
-    const s = l - Math.min(r, g, b);
-    const h = s
-        ? l === r
-            ? (g - b) / s
-            : l === g
-                ? 2 + (b - r) / s
-                : 4 + (r - g) / s
-        : 0;
-    const H = Math.floor(60 * h < 0 ? 60 * h + 360 : 60 * h);
-    const S = Math.floor(
-        100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)
-    );
-    const L = Math.floor((100 * (2 * l - s)) / 2);
-    const A = a;
-    hsla[0] = H;
-    hsla[1] = S;
-    hsla[2] = L;
-    hsla[3] = A;
-    //hslaToRgba(H,S,L,A)
-    return `hsla(${H},${S}%,${L}%,${A})`;
-};
-
-function hslaToRgba(h=hsla[0], s=hsla[1], l=hsla[2],a=hsla[3]){
-    var r, g, b;
-
-    if(s == 0){
-        r = g = b = l; // achromatic
-    }else{
-        var hue2rgb = function hue2rgb(p, q, t){
-            if(t < 0) t += 1;
-            if(t > 1) t -= 1;
-            if(t < 1/6) return p + (q - p) * 6 * t;
-            if(t < 1/2) return q;
-            if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-            return p;
-        }
-
-        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        var p = 2 * l - q;
-        r = hue2rgb(p, q, h + 1/3);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1/3);
-    }
-
-   // return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255), Math.round(a * 255)];
-    iD("Rgba").value = Math.floor(r/255)
-    iD("rGba").value = Math.floor(g/255)
-    iD("rgBa").value = Math.floor(b/255)
-    iD("rgbA").value =  a
-    
-
-}
-function mudaRGB(q = 0, valor=0) {
-    let r, g ,b, a
-    r = iD("Rgba").value
-    g = iD("rGba").value
-    b = iD("rgBa").value
-    a = iD("rgbA").value
-    mudaCor( RGBAToHSLA(r,g,b,a))
-}
-function hexadecimal(){
-    let hex = iD("hexadecimal").value
-    const isValidHex = (hex) => /^#([A-Fa-f0-9]{3,4}){1,2}$/.test(hex)
-
-    const getChunksFromString = (st, chunkSize) => st.match(new RegExp(`.{${chunkSize}}`, "g"))
-    
-    const convertHexUnitTo256 = (hexStr) => parseInt(hexStr.repeat(2 / hexStr.length), 16)
-    
-    const getAlphafloat = (a, alpha) => {
-        if (typeof a !== "undefined") {return a / 255}
-        if ((typeof alpha != "number") || alpha <0 || alpha >1){
-          return 1
-        }
-        return alpha
-    }
-    
-    const hexToRGBA = (hex, alpha) => {
-        if (!isValidHex(hex)) {throw new Error("Invalid HEX")}
-        const chunkSize = Math.floor((hex.length - 1) / 3)
-        const hexArr = getChunksFromString(hex.slice(1), chunkSize)
-        const [r, g, b, a] = hexArr.map(convertHexUnitTo256)
-        return mudaCor(RGBAToHSLA( r, g, b, getAlphafloat(a, alpha)))
-    }
-      hexToRGBA(hex)
-}
 
 var oldBrush = [lastbrush, strokeScale, strokeColor, globalComposite]
-
-function changeType(qual = "number") {
-    if (qual == "number"){
-
-        let objs = ["H", "S", "L", "A", "Rgba", "rGba", "rgBa","rgbA"]
-        let tipo = 'number'
-        if (iD("H").type == tipo) { tipo = 'range' }
-        for (i = 0; i < objs.length; i++) {
-            iD(objs[i]).setAttribute('type', tipo)
-        }
-    }
-    else if( qual == "hsla"){
-    
-        iD("colorhsla").classList.remove("esconde")
-        iD("colorrgba").classList.add("esconde")
-        iD("colorhex").classList.add("esconde")
-
-
-    }else if( qual == "rgba"){
-        iD("colorrgba").classList.remove("esconde")
-        iD("colorhsla").classList.add("esconde")
-        iD("colorhex").classList.add("esconde")
-        hslaToRgba()
-        
-    }
-    else if( qual == "hex"){
-        iD("hexadecimal").value = hsl2hex(hsla[0],hsla[1],hsla[2],hsla[3])
-        iD("colorrgba").classList.add("esconde")
-        iD("colorhsla").classList.add("esconde")
-        iD("colorhex").classList.remove("esconde")
-
-    }
-}
-function hsl2hex(h,s,l,alpha) {
-    l /= 100;
-    const a = s * Math.min(l, 1 - l) / 100;
-    const f = n => {
-      const k = (n + h / 30) % 12;
-      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-      return Math.round(255 * color).toString(16).padStart(2, '0');   
-      // convert to Hex and prefix "0" if needed
-    };
-  //alpha conversion
-  alpha = Math.round(alpha * 255).toString(16).padStart(2, '0');
-
-  return `#${f(0)}${f(8)}${f(4)}${alpha}`;
-} 
-
-function glow() {
-    isGlowing = !isGlowing
-    if (isGlowing === true) {
-        iD("glow").innerHTML = '<span class="icon2 minicheck"></span>'
-
-        ctxF.globalCompositeOperation = 'lighter'
-        //context.globalCompositeOperation = 'lighter'
-
-        if (!nightmode) {
-            night()
-        }
-        modeTo("cores")
-    } else {
-        ctxF.globalCompositeOperation = 'source-over'
-        night()
-        iD("glow").innerHTML = ''
-    }
-}
