@@ -201,6 +201,13 @@ function startup() {
 
 var canvasFrontDeg = 0
 var canvasFrontScale = 100
+var isFlip = false
+
+function flipClip() {
+  isFlip = !isFlip
+  transformClip()
+}
+
 function wheel(e) {
   if (keyCtrl == true) {
     if (mode != "paste") {
@@ -259,7 +266,10 @@ function transformClip(x = canvas.width / 2, y = canvas.height / 2) {
   ctxR.rotate((canvasFrontDeg * Math.PI) / 180);
   let h = redondo(image2.height * canvasFrontScale / 100)
   let w = redondo(image2.width * canvasFrontScale / 100)
-
+  // ctxR.translate(w, 0);
+  if (isFlip) {
+    ctxR.scale(-1, 1);
+  }
   ctxR.drawImage(image2, - redondo(w / 2), -redondo(h / 2), w, h)
   ctxR.restore()
   setTimeout(() => {
