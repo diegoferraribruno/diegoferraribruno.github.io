@@ -8,37 +8,23 @@ function FX(fx, onde) {
         confirmFX(fx, filters[fx])
     }
     if (fx != 0) {
-
         if (fx == 1) {
-
             onde.filter = filters[fx] + "()"
         } else if (fx == 2) {
             let quanto = iD(filters[fx] + "Bar").value
-
             onde.filter = filters[fx] + "(" + quanto + "px)"
         } else if (fx == 3) {
             let quanto = iD(filters[fx] + "Bar").value
-
             onde.filter = filters[fx] + "(" + quanto + ")"
-
         }
-        if (fx == 4 || fx == 5) {
+        if (fx == 4 || fx == 5 || fx == 6) {
             let quanto = iD(filters[fx] + "Bar").value
             onde.filter = filters[fx] + "(" + quanto + "%)"
-
-        }
-        else if (fx == 6) {
-            let quanto = iD(filters[fx] + "Bar").value
-
-            onde.filter = filters[fx] + "(" + quanto + "%)"
-
-
 
         } else if (fx == 8) {
             let quanto = iD(filters[fx] + "Bar").value
             console.log(quanto)
             onde.filter = filters[fx] + "(" + quanto + "deg)"
-
         }
         updatecanvasFront()
         if (fx == 7) {
@@ -46,12 +32,11 @@ function FX(fx, onde) {
             lumaKey(quanto)
         }
         canvasOpacity(0)
-
     } else {
         onde.filter = filters[fx]
-
     }
 }
+
 function updatecanvasFront() {
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
     ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);

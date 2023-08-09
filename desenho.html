@@ -593,7 +593,7 @@
                         <txt name="39">Invertido</txt>
                     </span>
                     <span class="botao" id="fx2"> <span class="icon2 blur"></span>
-                        <input id="blurBar" type="range" min="0" max="10" step="0.1">
+                        <input id="blurBar" type="range" min="0" max="10" step="0.1" onchange="FX(2)">
                         <txt name="40">Desfoque</txt>
 
                     </span>
@@ -630,11 +630,11 @@
                     </span>
                 </div>
                 <span id="confirmFX" class="esconde">aplicar o efeito <br>
+                    <span onClick="cancelaFX()" class="shadow">
+                        <span class="icon closeicon"></span>
+                    </span>
                     <div class="shadow" onClick="applyFX(1)">
                         <txt name="39"> invert</txt> <span class="icon2 check"></span>
-                    </div>
-                    <div onClick="cancelaFX()" class="shadow">
-                        <txt name="80">cancela</txt> <span class="icon closeicon"></span>
                     </div>
                 </span>
             </div>
@@ -758,10 +758,10 @@
                     style="width:60px; height:26px; padding: 4px; margin-top: 4px;" class="floatleft"
                     onchange="transformClip()" />
                 <span class="icon2 scaleicon"></span>
-                <input id="canvasfrontscale" type="number" maxlength="3" max="200" value="100" step="1"
+                <input id="canvasfrontscale" type="number" maxlength="3" max="400" value="100" step="1"
                     style="width:60px; height:26px; padding: 4px; margin-top: 4px;" class="floatleft"
                     onchange="transformClip()" /><span
-                    style="width:60px; height:26px; padding: 4px; margin-top: 4px; font-weight: 700;"
+                    style="width:30px; height:26px; padding: 4px; margin-top: 4px; font-weight: 700;"
                     class="floatleft">%</span><br><br>
                 <span id="clipboard"></span>
 
