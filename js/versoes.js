@@ -1,6 +1,7 @@
 let vers = [{
     versao: "7.2",
     notas: [
+        "new keyboard shortcuts - novos atalhos de teclado",
         "Escala (e rotação) no clipboard",
         "tamanho maximo para o tamanho do pincel dinamico. ",
         "color modes RGB, HSL, HEXAdecimal",

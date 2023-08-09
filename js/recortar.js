@@ -184,19 +184,26 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
     iD("bplayer0").style.marginTop = - H - 4 + "px"
     canvasFront.width = W;
     canvasFront.height = H;
-    canvasFront.style.marginLeft = -W + "px"
+
 
     if (W < screen.width || H < screen.height) {
         ZOOMf(2)
     } else {
         ZOOMf(0)
     }
+    canvasFront.style.marginLeft = -W + "px"
+
+    canvasWidthInput.value = W
+    canvasHeightInput.value = H
     iD("largura").value = W
     iD("altura").value = H
+    iD("largura2").value = W
+    iD("altura2").value = H
     setCenter()
     if (W > 640) {
         historiaLimiteChange(4)
     }
+    setTimeout(() => undo(), 100) // because the undo dos not work at first
     // setTimeout(() => comandosExec(), 100)
 }
 

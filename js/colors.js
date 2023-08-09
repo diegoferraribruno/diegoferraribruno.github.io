@@ -236,13 +236,17 @@ function hexadecimal() {
     }
 
     const hexToRGBA = (hex, alpha) => {
-        if (!isValidHex(hex)) { throw new Error("Invalid HEX") }
-        const chunkSize = Math.floor((hex.length - 1) / 3)
-        const hexArr = getChunksFromString(hex.slice(1), chunkSize)
-        const [r, g, b, a] = hexArr.map(convertHexUnitTo256)
-        return mudaCor(RGBAToHSLA(r, g, b, getAlphafloat(a, alpha)))
+        if (!isValidHex(hex)) { iD("checkhex").innerHTML = `<span class="close" onClick="hexadecimal()"></span>`; Alert("Invalid HEX") } else {
+
+            const chunkSize = Math.floor((hex.length - 1) / 3)
+            const hexArr = getChunksFromString(hex.slice(1), chunkSize)
+            const [r, g, b, a] = hexArr.map(convertHexUnitTo256)
+            iD("checkhex").innerHTML = `<span class="icon2small check" onClick="hexadecimal()"></span>`
+            return mudaCor(RGBAToHSLA(r, g, b, getAlphafloat(a, alpha)))
+        }
     }
     hexToRGBA(hex)
+
 }
 
 function hsl2hex(h = hsla[0], s = hsla[1], l = hsla[2], alpha = hsla[3]) {
@@ -308,8 +312,8 @@ function changeColorMode(qual = colormode) {
         colormode = "hex"
         hexa = hsl2hex()
         control.innerHTML = `   #hexadecimal
-        <input type="text" id="hexadecimal" onchange="hexadecimal()" size="9"
-            style="max-width: 96px; font-siz:18px" value="${hexa}"><span class="bot"><span class="icon2small check" onClick="hexadecimal()"></span></span>`
+        <input type="text" id="hexadecimal" oninput="hexadecimal()" size="9"  maxlength="9" minlength="4"
+            style="max-width: 80px; font-siz:18px" value="${hexa}"><span class="bot" id="checkhex"><span class="icon2small check" onClick="hexadecimal()"></span></span>`
 
 
     }

@@ -420,10 +420,6 @@ function handleMove(evt) {
                 imageData[2],
                 imageData[3] / 255
             ), true);
-            /* setStrokeColor();
-             changeBrush()
-             changeColorMode()*/
-
 
         }
 
@@ -456,8 +452,6 @@ function handleMove(evt) {
             ctxF.globalAlpha = 1;
             ctxF.setTransform(1, 0, 0, 1, 0, 0);
             ctxF.clearRect(0, 0, canvas.width, canvas.height);
-
-            // ctxF.drawImage(movecursor, x - 16, y - 16)
             canvasFront.globalCompositeOperation = "source-out"
             ctxF.drawImage(canvas, x - origin.x, y - origin.y)
 
@@ -492,13 +486,6 @@ function handleMove(evt) {
                 let proporcional = (x - origin.x + y - origin.y) / 200 + 1
                 preResizeCanvas(redondo(canvas.width * proporcional), redondo(canvas.height * proporcional))
             }
-
-            // canvasWidthInput.value = 
-            //  ctxF.translate(origin.x, origin.y)
-            /*  ctxF.scale(x - origin.x, y - origin.y);
-              ctxF.drawImage(canvas, -origin.x, -origin.y)*/
-            // ctxF.drawImage(canvas, -10, -10, canvas.width * (x - origin.x), canvas.height * (y - origin.y))
-            //  ctxF.restore()
         }
     }
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar" && mode != "selecionar" && !keyCtrl && mode != "redimensionar") {
