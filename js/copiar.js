@@ -234,6 +234,7 @@ function updateClipboard() {
     let newthumb = new Image()
     newthumb.src = clipboard[i]
     newthumb.id = "c" + i
+    dataTransfer = newthumb.id
     newthumb.classList.add("quadrofilme2", "cursorcopy")
     if (newthumb.id == dataTransfer) {
       newthumb.classList.add("wc")

@@ -752,7 +752,7 @@
             <div id="menupaste" class="fundobranco submenu">
                 <span class="botao"> <span class="close" onmousedown="removeClass()"></span>
                     <span class="icon clipboardicon"></span> <span class="title"> Clipboard</span></span>
-                <span id="lixeira" onmousedown="limpar('clipboard')" class="icon lixeiraicon"></span>
+
                 <span class="icon2 rotateicon"></span>
                 <input id="canvasfrontdeg" type="number" maxlength="3" max="360" value="0" step="6"
                     style="width:60px; height:26px; padding: 4px; margin-top: 4px;" class="floatleft"
@@ -762,9 +762,14 @@
                     style="width:60px; height:26px; padding: 4px; margin-top: 4px;" class="floatleft"
                     onchange="transformClip()" /><span
                     style="width:30px; height:26px; padding: 4px; margin-top: 4px; font-weight: 700;"
-                    class="floatleft">%</span> <span onclick="flipClip()">V</span><br><br>
+                    class="floatleft">%</span>
+                <span class="mais" onclick="flipClip()">
+                    <span id="mirror2" class="iconsmall mirroricon"></span>
+                </span>
+                <span class="mais" onmousedown="limpar('clipboard')">
+                    <span id="lixeira" class="iconsmall lixeiraicon"></span>
+                </span><br><br>
                 <span style="display: block; width: 320px; max-height: 160px; overflow: auto;">
-
                     <span id="clipboard"></span>
                 </span>
 
