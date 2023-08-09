@@ -714,8 +714,8 @@ input[type="range"] {
     border-left: 2px dashed #fff;
     border-top: 2px dashed #fff;
     border-bottom: 2px dashed #fff;
-    width: 32px;
-    min-width: 32px;
+    max-width: 32px;
+    max-height: 32px;
     background-size: cover;
     margin: 3px;
 }
@@ -765,8 +765,8 @@ input[type="range"] {
     border-left: 2px dashed #fff;
     border-top: 2px dashed #fff;
     border-bottom: 2px dashed #fff;
-    width: 36px;
-    height: 36px;
+    max-width: 36px;
+    max-height: 36px;
     margin-top: -1px;
     margin-left: -2px;
     /*  background-size: 40px 40px;

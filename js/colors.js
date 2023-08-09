@@ -221,6 +221,9 @@ function mudaRGB(q = 0, valor = 0) {
 }
 function hexadecimal() {
     let hex = iD("hexadecimal").value
+    if (hex[0] != "#") {
+        hex = "#" + hex
+    }
     const isValidHex = (hex) => /^#([A-Fa-f0-9]{3,4}){1,2}$/.test(hex)
 
     const getChunksFromString = (st, chunkSize) => st.match(new RegExp(`.{${chunkSize}}`, "g"))
@@ -236,7 +239,14 @@ function hexadecimal() {
     }
 
     const hexToRGBA = (hex, alpha) => {
-        if (!isValidHex(hex)) { iD("checkhex").innerHTML = `<span class="close" onClick="hexadecimal()"></span>`; Alert("Invalid HEX") } else {
+        if (!isValidHex(hex)) {
+            iD("checkhex").innerHTML = `<span class="close" onClick="hexadecimal()"></span>`;
+            if (hex.length < 4) {
+                Alert("must have min of 3 max of 9 letters and numbers including the #<br>( 0-9 and a-f )", 2)
+            } else {
+                Alert("Invalid Hexadecimal color<br>use 0-9 and a-f")
+            }
+        } else {
 
             const chunkSize = Math.floor((hex.length - 1) / 3)
             const hexArr = getChunksFromString(hex.slice(1), chunkSize)
