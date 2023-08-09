@@ -242,7 +242,7 @@ function loading() {
 }
 
 
-function transformClip(x = canvasRender.width / 2, y = canvasRender.height / 2) {
+function transformClip(x = canvas.width / 2, y = canvas.height / 2) {
   canvasFrontScale = +iD("canvasfrontscale").value
   canvasFront.classList.remove("esconde")
   canvasFrontDeg = +iD("canvasfrontdeg").value
