@@ -8,11 +8,11 @@ var anime_menu = {
     "ghost()": [`<span class="icon ghosticon"></span>`, "Ghost Frames"],
     "prev_frame()": ['<span class="icon backicon"></span>', "Quadro anterior"],
     "play()": ['<span class="icon playticon"></span>', "Tocar Animação"],
-    "next_frame()": ['<span class="icon nexticon"></span>', "Próximo quadro"],
+    "nextFrame()": ['<span class="icon nexticon"></span>', "Próximo quadro"],
     // "swapL()": ["⬅️", "Mover quadro á esquerda"],
     // "swapR()": ["➡️", "Mover quadro á direita"],
     "cloneFrame()": ['<span class="icon cloneframeicon"></span>', "duplicate frame"],
-    "new_frame()": ['<span class="icon addframeicon"></span>', "Adiconar quadro á animação"],
+    "newFrame()": ['<span class="icon addframeicon"></span>', "Adiconar quadro á animação"],
     'lixeira()': ['<span class="icon lixeiraicon"></span>', "Arraste um quadro para apaga-lo"]
 }
 
@@ -93,7 +93,7 @@ function criaBackPlayer() {
 
 criaBackPlayer()
 
-function new_frame() {
+function newFrame() {
     undoLevel = 0
     Historia()
     context.setTransform(1, 0, 0, 1, 0, 0);
@@ -241,7 +241,7 @@ function resetFrame() {
     context.drawImage(imageFrame, 0, 0, canvasBack.width, canvasBack.height)
 }
 
-function next_frame() {
+function nextFrame() {
     Historia()
     let len = animacao.length
     if (len > 1) {
@@ -440,7 +440,7 @@ function drop(event) {
             adicionaQuadro()
 
 
-        } else if (toContainer.id == "new_frame()") {
+        } else if (toContainer.id == "newFrame()") {
 
             cloneFrame(dataTransfer)
         } else if (toContainer.id == "canvas") {

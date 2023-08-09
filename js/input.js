@@ -541,9 +541,10 @@ function handleMove(evt) {
 
         canvasFront.classList.remove("esconde")
         ctxF.globalAlpha = 0.8;
+        //transformClip()
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
-        ctxF.drawImage(canvasRender, x - canvas.width / 2, y - canvas.height / 2)
+        ctxF.drawImage(canvasRender, redondo(x - canvasRender.width / 2), redondo(y - canvasRender.height / 2))
     }
 
 
@@ -667,7 +668,7 @@ function handleUp(evt) {
 
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(canvasRender, redondo(x - canvas.width / 2), redondo(y - canvas.height / 2))
+        context.drawImage(canvasRender, redondo(x - canvasRender.width / 2), redondo(y - canvasRender.height / 2))
 
         swapImg = canvas.toDataURL('image/png');
         swapImg.onload =
@@ -677,10 +678,10 @@ function handleUp(evt) {
         // comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
         // comandos[workingframe].push(comando)
         // comandosParaComandosb()
-        //save_frame()
+        //saveFrame()
         //desenha("move", x - origin.x, y - origin.y)
         movendo = false
-        modeTo("move")
+        // modeTo("move")
     } else if (rotacionar == true) {
         rotacionar = false
         context.setTransform(1, 0, 0, 1, 0, 0);

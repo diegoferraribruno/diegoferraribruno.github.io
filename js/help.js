@@ -7,7 +7,7 @@ let shortcuts = {
             "Ctrl + X": "same as copy, but makes a hole at the selection area",
             "Ctrl + Z": "press and hold it to go back a few steps on your drawing history",
             "Ctrl + Z": "press and hold it to go foward a few steps on your drawing history",
-            "Shift + Scroll-wheel": "zomm in and zoom out",
+            "Ctrl + Scroll-wheel": "zomm in and zoom out (except in paste mode)",
             "b or p": " Paint Brush mode",
             "c": "Show Color Menu",
             "d": "Toggle Dinamic size Brush on/off",
@@ -20,8 +20,9 @@ let shortcuts = {
             "x": "Toggle Rainbow Ink on/off",
             "*": "Toggle Mandala mode on/off",
             "esc": "close menus",
-            "+": "add a new frame to the animation",
-            "delete": "delete the current animation frame",
+            "+": "Add a new frame to the animation",
+            "Alt +": "Duplicate the current animation frame",
+            "delete": "opens the trash menu",
             "z": "will double zoom size until 32x than back to 0.25x",
             "Ctrl + Space bar": "play animation",
             "->": "arrow right will change to next frame",
@@ -36,7 +37,8 @@ let shortcuts = {
             "Shift": "Holding shift key will let you ad more shapes to your selection (does not work with rectangular)"
         },
         "Paste mode": {
-            "Alt + Scroll-wheel": "will Rotate your selection before paste"
+            "Alt + Scroll-wheel": "will Rotate your selection before paste",
+            "Ctrl + Scroll-wheel": "will Scale your selection before paste"
         }
 
     },
@@ -47,7 +49,7 @@ let shortcuts = {
             "Ctrl + X": "O mesmo que copiar mas deixa um buraco na área selecionada",
             "Ctrl + Z": "pressione para voltar no histórico",
             "Ctrl + Z": "pressione para avançar no histórico",
-            "Shift + Scroll-wheel": "aumenta e reduz o zoom",
+            "Ctrl + Scroll-wheel": "aumenta e reduz o zoom (exceto no modo colar)",
             "b or p": "Modo Pincel",
             "c": "Menu Cores",
             "d": "Tamanho do pincel dinamico on/off",
@@ -61,7 +63,8 @@ let shortcuts = {
             "*": "Modo Mandala (liga desliga)",
             "esc": "Fecha menus",
             "+": "Adiciona novo quadro a animação",
-            "delete": "remove o quadro atual da animação",
+            "Alt +": "Duplica o quadro atual da animação",
+            "delete": "abre o menu lixeira",
             "z": "dobra o zoom até 32x e volta para 0.25x",
             "Ctrl + Space bar": "Toca a animação",
             "->": "Seta para direita, passa para o próximo quadro",
@@ -76,7 +79,8 @@ let shortcuts = {
             "Shift": "Segurando o Shift você pode adicionar mais formas à sua seleção (nao funciona para retangular)"
         },
         "Modo Colar": {
-            "Alt + Scroll-wheel": "Ira rotacionar sua imagem antes de colar"
+            "Alt + Scroll-wheel": "rotaciona a imagem antes de colar",
+            "Ctrl + Scroll-wheel": "redimensiona a imagem antes de colar"
         }
     }
 }

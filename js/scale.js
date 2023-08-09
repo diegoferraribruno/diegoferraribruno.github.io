@@ -34,7 +34,7 @@ function doubleImageSize() {
             Historia()
         }
     }
-    setTimeout(() => next_frame(), 2000 * len)
+    setTimeout(() => nextFrame(), 2000 * len)
     // Show the modified image
     // sourceImage.style.display = 'block';
 }

@@ -336,7 +336,7 @@ var openFile = function (event) {
                  let newimg = projeto["animacao"][i]
                  animacao[i].push(newimg)
                 // animacao[workingframe] = canvas.toDataURL('image/png')
-                 //save_frame()
+                 //saveFrame()
                   adicionaQuadro()
  
              }
@@ -345,7 +345,7 @@ var openFile = function (event) {
                  for (i = 0; i <= len; i++) {
                      setTimeout(() => {
                          //   favBrush(newBrushes[0].key)
-                         next_frame()
+                         nextFrame()
                      }, 400 * (i + 2))
                  }
              } else {

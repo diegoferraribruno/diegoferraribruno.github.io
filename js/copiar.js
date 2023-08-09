@@ -111,19 +111,19 @@ function copySelection(newfr = false) {
     //console.log(canvasRender.width, canvasRender.height)
     clipboard.push(image1)
     image2.onload = function () {
-      canvasRender.width = canvas.width
-      canvasRender.height = canvas.height
+      let rotationsize = Math.hypot(image2.width + image2.height) * 2
+      canvasRender.width = rotationsize
+      canvasRender.height = rotationsize
       ctxR.setTransform(1, 0, 0, 1, 0, 0);
-      ctxR.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-      ctxR.drawImage(image2, redondo(canvasRender.width / 2 - image2.width / 2), redondo(canvasRender.height / 2 - image2.height / 2))
+      ctxR.clearRect(0, 0, rotationsize, rotationsize);
+      transformClip()
 
     }
     /* if (newfr == "new") {
   
         //new frame
         undoLevel = 0
-      // save_frame()
+      // saveFrame()
         resetFrame()
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -185,10 +185,12 @@ function copySelection(newfr = false) {
     clipboard.push(image1)
     dataTransfer = "c" + (clipboard.length - 1)
     image2.onload = function () {
-      canvasRender.width = image2.width
-      canvasRender.height = image2.height
-      ctxR.drawImage(image2, 0, 0)
+      let rotationsize = Math.hypot(image2.width + image2.height) * 2
+      canvasRender.width = rotationsize
+      canvasRender.height = rotationsize
+      transformClip()
       updateClipboard()
+
       if (newfr == "cut") {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, canvas.width, context.canvas.height);
@@ -207,7 +209,7 @@ function resetSelection() {
 
 function desenhaRetangulo2(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1 = cropEnd.y, cor = "#ff2200") {
 
-  ctxR.clearRect(0, 0, canvas.width, canvas.height);
+  ctxR.clearRect(0, 0, canvasRender.width, canvasRender.height);
   ctxR.globalCompositeOperation = "source-over"
   ctxR.lineWidth = 0.5
   ctxR.strokeStyle = cor;
@@ -247,7 +249,10 @@ function changeImage2(n) {
   dataTransfer = "c" + n
   iD(dataTransfer).classList.add("wC")
   image2.src = clipboard[n]
-  ctxR.drawImage(image2, canvasRender.width / 2 - image2.width / 2, canvasRender.height / 2 - image2.height / 2)
+  image2.onload = function () {
+    transformClip()
+    setTimeout(() => { updateClipboard() }, 10)
+  }
 }
 
 
@@ -258,11 +263,17 @@ function clearClipboard() {
     n = dataTransfer.replace(/^\D+/g, '');// get number from string
     if (n < len) {
       clipboard.splice(n, 1);
+      if (n == 0) { n = 1 }
+      dataTransfer = "c" + (n - 1)
+      updateClipboard()
       Alert('<span class="icon clipboardicon"></span><span style="display:block; float:left; margin:4px">' + n + '<span class="icon lixeiraicon"></span>')
+
     } else {
       clipboard = []
+      dataTransfer = 0
+      updateClipboard()
     }
-    setTimeout(() => { updateClipboard() }, 10)
+
   } else {
     Alert(' <span class="icon clipboardicon"></span> = 0')
   }

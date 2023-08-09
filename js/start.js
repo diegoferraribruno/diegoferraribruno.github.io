@@ -36,14 +36,14 @@ function startup() {
     let activeEl = document.activeElement
     // console.log(event.key)
     if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text" && keyCtrl == false) {
-      if (mode != "emoji" && keyCtrl == false) {
+      if (mode != "emoji" && keyCtrl == false && keyAlt == false) {
         if (event.key === "Enter" && mode == "recortar") {
           cortar();
         } else if (event.key === "Enter" && mode == "cam") {
           tirafoto()
         } else if (event.key === "ArrowRight") {
           event.preventDefault()
-          next_frame()
+          nextFrame()
         } else if (event.key === "ArrowLeft") {
           event.preventDefault()
           prev_frame()
@@ -79,11 +79,17 @@ function startup() {
         } else if (event.key === "g") {
           glow()
         } else if (event.key === "+") {
-          new_frame()
+          newFrame()
         } else if (event.key === "Delete") {
-          removeFrame()
+          lixeira()
         }
-      }/* else if (event.code === "Space" && keyCtrl == true) {
+      } else if (keyAlt == true) {
+        if (event.key === "+") {
+          cloneFrame()
+        }
+
+      }
+      /* else if (event.code === "Space" && keyCtrl == true) {
         if (mode == "play") {
           stop();
         } else {
@@ -176,8 +182,8 @@ function startup() {
 
     iD("lixeira()").addEventListener("drop", drop);
     iD("lixeira()").addEventListener("dragover", dragOver);
-    iD("new_frame()").addEventListener("drop", drop);
-    iD("new_frame()").addEventListener("dragover", dragOver);
+    iD("newFrame()").addEventListener("drop", drop);
+    iD("newFrame()").addEventListener("dragover", dragOver);
 
 
     // limpaCabeca();
@@ -194,9 +200,24 @@ function startup() {
 }
 
 var canvasFrontDeg = 0
+var canvasFrontScale = 100
 function wheel(e) {
   if (keyCtrl == true) {
-    e.preventDefault(); adjustZoom(-1 * e.deltaY, null, e.clientX, e.clientY)
+    if (mode != "paste") {
+      e.preventDefault();
+      adjustZoom(-1 * e.deltaY, null, e.clientX, e.clientY)
+    } else {
+      e.preventDefault();
+      canvasFrontScale += redondo((e.deltaY / 100))
+      if (canvasFrontScale > 400) {
+        canvasFrontScale = 400
+      } else if (canvasFrontScale < 1) {
+        canvasFrontScale = 1
+      }
+      iD("canvasfrontscale").value = +canvasFrontScale
+      transformClip((e.pageX - offsetX) / zoomFactor
+        , (e.pageY - offsetY) / zoomFactor)
+    }
 
   }
 
@@ -208,27 +229,26 @@ function wheel(e) {
     } else if (canvasFrontDeg < 0) {
       canvasFrontDeg = 360
     }
-    rotateFront(canvasFrontDeg, (e.pageX - offsetX) / zoomFactor
-      , (e.pageY - offsetY) / zoomFactor);
     iD("canvasfrontdeg").value = +canvasFrontDeg
-
+    /*transformClip((e.pageX - offsetX) / zoomFactor
+      , (e.pageY - offsetY) / zoomFactor);*/
+    transformClip((e.pageX - offsetX) / zoomFactor
+      , (e.pageY - offsetY) / zoomFactor)
   }
 }
 
-
-function updateCanvasFrontDeg() {
-  canvasFrontDeg = +iD("canvasfrontdeg").value
-  rotateFront(canvasFrontDeg, canvasRender.width / 2, canvasRender.height / 2)
-  canvasFront.classList.remove("esconde")
-}
 function loading() {
   setTimeout(() => { removeElement("carregandoa") }, 10000)
 }
 
-function rotateFront(deg, x, y) {
+
+function transformClip(x = canvasRender.width / 2, y = canvasRender.height / 2) {
+  canvasFrontScale = +iD("canvasfrontscale").value
+  canvasFront.classList.remove("esconde")
+  canvasFrontDeg = +iD("canvasfrontdeg").value
   //console.log(deg)
   ctxR.setTransform(1, 0, 0, 1, 0, 0);
-  ctxR.clearRect(0, 0, canvas.width, canvas.height);
+  ctxR.clearRect(0, 0, canvasRender.width, canvasRender.height);
   ctxR.save()
   canvasRender.globalCompositeOperation = "source-out"
   //if (iD("rotatecenter").checked == true) {
@@ -236,18 +256,19 @@ function rotateFront(deg, x, y) {
   origin.y = canvasRender.height / 2;
   //}
   ctxR.translate(origin.x, origin.y)
-  ctxR.rotate((deg * Math.PI) / 180);
+  ctxR.rotate((canvasFrontDeg * Math.PI) / 180);
+  let h = redondo(image2.height * canvasFrontScale / 100)
+  let w = redondo(image2.width * canvasFrontScale / 100)
 
-  ctxR.drawImage(image2, - image2.width / 2, -image2.height / 2)
+  ctxR.drawImage(image2, - redondo(w / 2), -redondo(h / 2), w, h)
   ctxR.restore()
   setTimeout(() => {
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
-    ctxF.clearRect(0, 0, canvas.width, canvas.height);
+    ctxF.clearRect(0, 0, canvasRender.width, canvasRender.height);
     ctxF.drawImage(canvasRender, x - canvasRender.width / 2, y - canvasRender.height / 2)
   }, 80)
-
-
 }
+
 
 function apresenta() {
   if (comandos.length == 0 && mode == "pintar") {

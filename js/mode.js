@@ -65,6 +65,7 @@ async function modeTo(qual) {
             break;
         case "paste":
             updateClipboard()
+            transformClip()
             mode = qual;
             break;
         case "rotacionar":

@@ -142,7 +142,7 @@ function recMotion() {
 
     }
     if (workingframe > 0) {
-        new_frame()
+        newFrame()
     }
     //tirafoto()
     for (i = 0; i < vezes; i++) {
@@ -158,8 +158,8 @@ function recMotion() {
             Historia()
             //desenha("f", globalComposite, blob, offsetW, offsetH, canvas.height, canvas.width)
             setTimeout(() => {
-                // save_frame(blob)
-                new_frame()
+                // saveFrame(blob)
+                newFrame()
                 Alert("🔴 Rec", (recspeed - 200) / 1000)
             }, 10)
 
@@ -190,7 +190,7 @@ async function tirafoto() {
             } else {
 
                 if (!isCanvasBlank(canvas)) {
-                    new_frame()
+                    newFrame()
                 }
                 setTimeout(() => {
                     drawTo(globalComposite, canvasV, context, offsetW, offsetH, W, H)
@@ -198,7 +198,7 @@ async function tirafoto() {
                         Historia()
                         fotografando = false
                         if (!isCanvasBlank(canvas)) {
-                            new_frame()
+                            newFrame()
                         }
                     }, 200)
                 }, 20)

@@ -1,6 +1,7 @@
 let vers = [{
-    versao: "7.1.1",
+    versao: "7.2",
     notas: [
+        "Escala (e rotação) no clipboard",
         "tamanho maximo para o tamanho do pincel dinamico. ",
         "color modes RGB, HSL, HEXAdecimal",
         "Usar cores do pincel customizado",

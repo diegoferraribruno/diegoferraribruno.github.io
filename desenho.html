@@ -755,8 +755,14 @@
                 <span id="lixeira" onmousedown="limpar('clipboard')" class="icon lixeiraicon"></span>
                 <span class="icon2 rotateicon"></span>
                 <input id="canvasfrontdeg" type="number" maxlength="3" max="360" value="0" step="6"
-                    style="width:60px; height:26px; padding: 4px;" class="floatleft"
-                    onchange="updateCanvasFrontDeg()" />
+                    style="width:60px; height:26px; padding: 4px; margin-top: 4px;" class="floatleft"
+                    onchange="transformClip()" />
+                <span class="icon2 scaleicon"></span>
+                <input id="canvasfrontscale" type="number" maxlength="3" max="200" value="100" step="1"
+                    style="width:60px; height:26px; padding: 4px; margin-top: 4px;" class="floatleft"
+                    onchange="transformClip()" /><span
+                    style="width:60px; height:26px; padding: 4px; margin-top: 4px; font-weight: 700;"
+                    class="floatleft">%</span><br><br>
                 <span id="clipboard"></span>
 
             </div>
@@ -859,7 +865,7 @@
                 </span><br>
                 <span class="botao">
 
-                    Yoga Art 6<br>
+                    Yoga Art 7<br>
                     <span id="yogapose"
                         style="background-image:url(img/yoga.png); width:64px; height:77px; display: inline-block; margin-top: -20px;"
                         onClick="yogaChange()">
