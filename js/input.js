@@ -192,6 +192,7 @@ function handleStart(evt) {
             if (value > 360) { value = 0 }
             mudaCorQ(0, value)
         }
+
         canvasFront.classList.remove("esconde")
         isDrawing = true
         mouseOver = true;
@@ -263,6 +264,9 @@ const movecursor = new Image(); // Create new img element
 movecursor.src = "img/movearrow.png";
 const cropcursor = new Image();
 cropcursor.src = "img/crop.png";
+
+
+let colorincrease = 3
 
 function positivo(value) {
     if (value < 0) {
@@ -348,8 +352,20 @@ function handleMove(evt) {
                     ctxF.clearRect(0, 0, canvas.width, canvas.height);
                 }
                 if (rainbowInk) {
-                    value = hsla[0] + 3
+                    let value = hsla[0] + 3
                     if (value > 360) { value = 0 }
+                    mudaCorQ(0, value)
+                }
+                if (rainbowAB) {
+                    //  if (value > 360) { value = 0 }
+                    let value = hsla[0] + colorincrease
+                    if (value > +rainbowABcolors[0].hue && value < +rainbowABcolors[1].hue) {
+                        colorincrease = -1 * colorincrease
+
+                    } else if (value < +rainbowABcolors[0].hue && value > +rainbowABcolors[1].hue) {
+                        colorincrease = -1 * colorincrease
+
+                    }
                     mudaCorQ(0, value)
                 }
                 // console.log("stroke color: " + strokeColor)

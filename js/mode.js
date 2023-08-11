@@ -60,7 +60,7 @@ async function modeTo(qual) {
             mode = qual;
             break;
         case "selecionar":
-
+            canvasFront.style.zIndex = 3
             mode = qual;
             break;
         case "paste":

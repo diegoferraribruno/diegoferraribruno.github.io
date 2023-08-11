@@ -38,6 +38,7 @@ function switchEstroke() {
 function mudaCor(valor, bloquinho = false) {
     if (bloquinho) {
         estrokeColor = strokeColor
+        rainbowABcolors = [toHSLObjectAB(strokeColor), toHSLObjectAB(estrokeColor)]
         iD("salvaCor2").style.backgroundColor = estrokeColor
     }
     if (valor == "P") {
@@ -93,6 +94,7 @@ const toHslaObject = (hslaStr) => {
     hsla[1] = saturation;
     hsla[2] = lightness;
     hsla[3] = alpha;
+    return { hue, saturation, lightness };
 
 
 };
