@@ -357,10 +357,10 @@ function handleMove(evt) {
                 if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true && !keyCtrl) {
                     let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2);
                     if (pressure > lastPressure) {
-                        lastPressure += 0.1
+                        lastPressure += 0.05
                     }
                     else {
-                        lastPressure -= 0.1
+                        lastPressure -= 0.05
                     }
 
                     if (lastPressure < 1) { lastPressure = 1 }

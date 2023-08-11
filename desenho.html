@@ -245,16 +245,18 @@
                 <div class="botao " id="pinceis2">
                 </div>
                 <span class="botao">
+                    <span
+                        style="display: block; float:right; margin-right: 8px; width: 30px; padding-top:-12px; font-size:24px;"
+                        onclick="addFavBrushPin()"><span class="icon pinicon"></span>
+                    </span>
                     <input type="number" id="tpx" min="1" max="100" step="1" value="1"
                         onchange="setStrokeSize(this.value)" style="width: 50px; margin-left: 8px">
 
                     <input type="range" id="strokeSize" name="strokeSize" min="0" max="26" step="1"
                         oninput="strokeSizeRange(this.value)" value="6" width="200px">
-                    max<input type="number" id="tpx2" min="1" max="6" step="0.5" value="2"
-                        onchange="setStrokeMax(this.value)" style="width: 50px; margin-left: 8px">
-                    <span
-                        style="display: block; float:right; margin-right: 8px; width: 30px; padding-top:-12px; font-size:24px;"
-                        onclick="addFavBrushPin()"><span class="icon pinicon"></span></span>
+                    <br> <span class="iconsmall dinamicbrushicon"></span> max<input type="number" id="tpx2" min="1"
+                        max="6" step="0.1" value="2" onchange="setStrokeMax(this.value)"
+                        style="width: 50px; margin-left: 8px">x
                 </span>
                 <span class="botao light" onmousedown="removeClass()"
                     style="background-color: #ffffff22; max-height: 220px;"><canvas id="brushCanva" width="40px"

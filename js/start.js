@@ -194,7 +194,7 @@ function startup() {
     setTimeout(() => localize(), 320)
 
   }
-  setTimeout(() => { createNewBrush() }, 160)
+  setTimeout(() => { createNewBrush(); ghost() }, 160)
   loading()
 
 }

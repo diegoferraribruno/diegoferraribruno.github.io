@@ -154,7 +154,12 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
         if (newWidth < 3) { newWidth = 3 }
         if (newHeight < 3) { newHeight = 3 }
     }
+    if (isGlowing) {
 
+        if (newWidth < 12) { newWidth = 12 * tam }
+        if (newHeight < 12) { newHeight = 12 * tam }
+
+    }
     brushCanva.height = newHeight
     brushCanva.width = newWidth
     if (isGlowing == false) {
@@ -162,6 +167,7 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
     } else {
         brushCtx.globalAlpha = 0.1
     }
+
     if (custombrushcolor === false) {
         brushCtx.fillStyle = cor;
         brushCtx.fillRect(0, 0, newWidth, newHeight)
@@ -179,12 +185,13 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
 
     if (isGlowing) {
 
-        var radius = tam / 16;
+        var radius = newHeight / 16;
+        if (radius < 1) { radius = 1 }
         var centerX = brushCanva.width / 2
         var centerY = brushCanva.height / 2
         brushCtx.beginPath();
         brushCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        brushCtx.fillStyle = `hsla(${hsla[0]},60%,60%,0.3)`;
+        brushCtx.fillStyle = `hsla(${hsla[0]},60%,60%,0.5)`;
         brushCtx.fill();
 
     }
