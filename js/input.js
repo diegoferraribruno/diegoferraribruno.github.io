@@ -49,7 +49,6 @@ let dinamicInk = false
 let lastInk = 1
 let rainbowInk = false
 let redimensionar = false
-let strokemax = 2
 
 function handleKeyUp(evt) {
 

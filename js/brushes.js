@@ -16,6 +16,7 @@ var strokeScale = 1;
 var strokeWidth = 6;
 var strokeHeight = 6;
 var estrokeWidth = 36;
+let strokemax = 3
 
 var custombrushcolor = false
 var newBrushes = {}
@@ -154,18 +155,13 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
         if (newWidth < 3) { newWidth = 3 }
         if (newHeight < 3) { newHeight = 3 }
     }
-    if (isGlowing) {
 
-        if (newWidth < 12) { newWidth = 12 * tam }
-        if (newHeight < 12) { newHeight = 12 * tam }
-
-    }
     brushCanva.height = newHeight
     brushCanva.width = newWidth
     if (isGlowing == false) {
         brushCtx.globalAlpha = 1
     } else {
-        brushCtx.globalAlpha = 0.1
+        brushCtx.globalAlpha = 0.05
     }
 
     if (custombrushcolor === false) {
@@ -191,7 +187,7 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
         var centerY = brushCanva.height / 2
         brushCtx.beginPath();
         brushCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        brushCtx.fillStyle = `hsla(${hsla[0]},60%,60%,0.5)`;
+        brushCtx.fillStyle = `hsla(${hsla[0]},60%,60%,0.3)`;
         brushCtx.fill();
 
     }
@@ -408,8 +404,8 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeScale, cont = ctxF) {
         x = start.x + (Math.sin(angle) * z) - halfBrushW;
         y = start.y + (Math.cos(angle) * z) - halfBrushH;
         if (strokeScale == 1) {
-            x = redondo(x) + 1
-            y = redondo(y) + 1
+            x = redondo(x)
+            y = redondo(y)
         }
         cont.drawImage(brushCanva, x, y, newStrokeWidth, newStrokeHeight);
     }
