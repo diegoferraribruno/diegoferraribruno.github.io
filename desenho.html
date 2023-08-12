@@ -110,6 +110,14 @@
                 <txt name="94">Fatias da mandala</txt><br>
                 <input id="mandalabar" type="number" min="2" max="32" value="24" step="1" style="width:160px"
                     onchange="mandalaSlices(this.value)"><br>
+            </div>
+            <div id="menuAB" class="submenu fundobranco">
+                <span class="close" title="fechar" onmousedown="removeClass()"></span>
+                A to B gradient brush
+                <!--txt name="94">Fatias da mandala</txt><br-->
+                <input id="abdistance" type="range" min="5" max="100" value="20" step="1" style="width:160px"
+                    onchange="abDistanceChange(this.value)"><br>
+                    <span id="abbar" style="display: inline-block; height: 20px; width: 100px; border-radius: 10px;"></span>
 
             </div>
             <div id="menupicker" class="submenu fundobranco">
@@ -319,11 +327,12 @@
                     </span>
 
                     <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais">
-                        <span class="icon pinicon" style="position: absolute; margin-left: 56px; margin-top: -16px;">
+                        <span class="icon pinicon" style="position: absolute; margin-left: 80px; margin-top: -10px;">
+                        </span><span style="position: absolute; margin-left: -4px; margin-top: 0px; font-size: medium;">A
                         </span>
                     </span>
                     <span id="salvaCor2" onmousedown="switchEstroke()" title=" old stroke" class="mais"><span
-                            class="icon2 swapicon" style="transform: scale(0.6); margin: -4px;"></span></span>
+                            class="icon2 swapicon" style="transform: scale(0.6); margin: -4px;">B</span></span>
 
                 </div>
                 <div id="paleta2" class="fundobranco glow">

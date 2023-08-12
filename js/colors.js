@@ -381,51 +381,64 @@ var colorAbigger = false
 var satAbigger = false
 var lightAbigger = false
 var alphaAbigger = false
+var colorABdist = 20
+
+function abDistanceChange(value){colorABdist = value; updateAbBar (value)}
+function updateAbBar (value){
+        iD("abbar").setAttribute("style", `width:${value*3}px; background:linear-gradient(90deg, ${strokeColor},${estrokeColor});display: inline-block; height: 20px; border-radius: 10px;`);}
+        
 function rainbow(ab = false, bloquinho = true) {
     if (ab == "ab") {
         if (rainbowInk == true) {
             rainbowInk = false
+           
         }
         if(bloquinho){rainbowAB = !rainbowAB}
         rainbowABcolors = [toHSLAObjectAB(strokeColor), toHSLAObjectAB(estrokeColor)]
-        let difAB1 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
-        let difAB2 = rainbowABcolors[1].hue - rainbowABcolors[0].hue
-        if (difAB1 > 180 || difAB1 < -180){rainbowABcolors[0].hue +=360}
-        difAB1 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
-        if(rainbowABcolors[0].hue - rainbowABcolors[1].hue > 0){
-            colorincrease = -2
+        let difAB0 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
+        let difAB1 = rainbowABcolors[0].saturation - rainbowABcolors[1].saturation
+        let difAB2 = rainbowABcolors[0].lightness - rainbowABcolors[1].lightness
+        let difAB3  = rainbowABcolors[0].alpha - rainbowABcolors[1].alpha
+
+        if (difAB0 > 180 || difAB0 < -180){rainbowABcolors[0].hue +=360}
+        difAB0 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
+        if(difAB0 > 0){
+            colorincrease = -difAB0/colorABdist
             colorAbigger = true
         }else{
-            colorincrease = 2
+            colorincrease = difAB0/colorABdist
             colorAbigger = false
         }
 
-        if(rainbowABcolors[0].lightness > rainbowABcolors[1].lightness ){
-            lightnessincrease = -1
+        if(difAB1>0 ){
+            lightnessincrease = -difAB1/colorABdist
             lightAbigger = true
         }else{
-            lightnessincrease = 1
+            lightnessincrease = difAB1/colorABdist
             lightAbigger = false
         }
 
-        if(rainbowABcolors[0].saturation > rainbowABcolors[1].saturation ){
+        if( difAB2> 0){
             satAbigger = true
-            satincrease = -1
+            satincrease = -difAB2/colorABdist
         }else{satAbigger = false
-            satincrease = 1
+            satincrease = difAB2/colorABdist
         }
-        if(rainbowABcolors[0].alpha > rainbowABcolors[1].alpha ){
+        if(difAB3>0 ){
             alphaAbigger = true
-            alphaincrease = -0.05
+            alphaincrease = -difAB3/colorABdist
         }else{
             alphaAbigger = false
-            alphaincrease = 0.05
+            alphaincrease = difAB3/colorABdist
         }
         
         if (rainbowAB == true) {
             iD("rainbowAB").innerHTML = '<span class="icon2 minicheck">a-b</span>'
 
             Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + " a-b<br>" + alerts[language][7])
+           iD("menuAB").classList.add("aparece")
+           updateAbBar(colorABdist)
+
         } else {
             iD("rainbowAB").innerHTML = 'a-b'
 

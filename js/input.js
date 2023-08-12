@@ -765,7 +765,16 @@ function handleUp(evt) {
         }, 300)
         // desenha("rotacionar", ((y - origin.y + x - origin.x) * Math.PI) / 180, origin.x, origin.y)
     }
+    if (rainbowAB){
+        hsla[0]= rainbowABcolors[0].hue
+        hsla[1]= rainbowABcolors[0].saturation
+        hsla[2] = rainbowABcolors[0].lightness
+        hsla[3]= rainbowABcolors[0].alpha;
 
+        strokeColor = `hsla(${rainbowABcolors[0].hue},${rainbowABcolors[0].saturation}%,${rainbowABcolors[0].lightness}%,${rainbowABcolors[0].alpha})`;
+        estrokeColor = `hsla(${rainbowABcolors[1].hue},${rainbowABcolors[1].saturation}%,${rainbowABcolors[1].lightness}%,${rainbowABcolors[1].alpha})`;
+
+    }
 
     origin.x = 0
     origin.y = 0
