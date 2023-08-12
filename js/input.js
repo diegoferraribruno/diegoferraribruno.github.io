@@ -267,9 +267,11 @@ cropcursor.src = "img/crop.png";
 
 
 let colorincrease = 3
+let hueinvert = false
 let satincrease = 5
 let lightnessincrease = 5
 let alphaincrease = 0.001
+
 
 function positivo(value) {
     if (value < 0) {
@@ -361,17 +363,33 @@ function handleMove(evt) {
                 }
                 if (rainbowAB) {
                     let value = hsla[0] + colorincrease
-                    if(colorAbigger){
+                    if(colorAbigger && hueinvert == false){
                         if(value > +rainbowABcolors[0].hue || value < +rainbowABcolors[1].hue){
-                              colorincrease = -1 * colorincrease}
-                     value = hsla[0] + colorincrease
+                              colorincrease = -1 * colorincrease
+                              value = hsla[0] + colorincrease 
+                            }
                          
-                    }else if(value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue){
-                        colorincrease = -1 * colorincrease
-                    value = hsla[0] + colorincrease
+                    }else if(colorAbigger && hueinvert == true){
 
+                        if(value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue){
+                            colorincrease = +1 * colorincrease
+                            value = hsla[0] + colorincrease 
+                        }
                     }
-                
+                    else if(colorAbigger == false && hueinvert == false) {
+                        if(value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue){
+                        colorincrease = -1 * colorincrease
+                         value = hsla[0] + colorincrease 
+                        }
+                    } else if(colorAbigger == false && hueinvert == true) {
+                        if(value > +rainbowABcolors[0].hue || value < +rainbowABcolors[1].hue){
+                        colorincrease = 1 * colorincrease
+                         value = hsla[0] + colorincrease 
+                        }
+                    }
+                    if (value > 360) { value = value - 360 }
+                    if (value < 0) { value = 360 - value }
+
                     mudaCorD(0, value)
 
                     value = hsla[1] + satincrease

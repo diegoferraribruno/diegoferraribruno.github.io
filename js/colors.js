@@ -400,8 +400,9 @@ function rainbow(ab = false, bloquinho = true) {
         let difAB2 = rainbowABcolors[0].lightness - rainbowABcolors[1].lightness
         let difAB3  = rainbowABcolors[0].alpha - rainbowABcolors[1].alpha
 
-        if (difAB0 > 180 || difAB0 < -180){rainbowABcolors[0].hue +=360}
-        difAB0 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
+        if (difAB0 > 180 || difAB0 < -180){hueinvert = true}else{ hueinvert = false}
+        console.log(difAB0)
+      //  difAB0 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
         if(difAB0 > 0){
             colorincrease = -difAB0/colorABdist
             colorAbigger = true
