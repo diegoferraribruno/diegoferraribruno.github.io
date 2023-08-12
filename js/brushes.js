@@ -193,47 +193,6 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
     }
 }
 
-let rainbowAB = false
-let rainbowABcolors
-const toHSLObjectAB = hslStr => {
-    const [hue, saturation, lightness, alpha] = hslStr.match(/\d+/g).map(Number);
-    return { hue, saturation, lightness, alpha };
-};
-
-
-function rainbow(ab = false) {
-    if (ab == "ab") {
-        if (rainbowInk == true) {
-            rainbowInk = !rainbowInk
-        }
-        rainbowAB = !rainbowAB
-        rainbowABcolors = [toHSLObjectAB(strokeColor), toHSLObjectAB(estrokeColor)]
-        if (rainbowAB == true) {
-            iD("rainbowAB").innerHTML = '<span class="icon2 minicheck">a-b</span>'
-
-            Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + " a-b<br>" + alerts[language][7])
-        } else {
-            iD("rainbowAB").innerHTML = 'a-b'
-
-            Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + " a-b<br>" + alerts[language][8])
-        }
-
-    } else {
-        rainbowInk = !rainbowInk
-        mudaCorQ(2, 50)
-        mudaCorQ(1, 100)
-
-        if (rainbowInk == true) {
-            iD("rainbow").innerHTML = '<span class="icon2 minicheck"></span>'
-
-            Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][7])
-        } else {
-            iD("rainbow").innerHTML = ''
-
-            Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][8])
-        }
-    }
-}
 
 function changeBrush(numero = lastbrush, tam = strokeScale, cor = strokeColor) {
     lastbrush = numero

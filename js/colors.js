@@ -13,6 +13,12 @@ function mudaCorQ(q = 0, valor) {
     criaPaleta();
 
 }
+function mudaCorD(q = 0, valor) {
+    hsla[q] = Number(valor);
+    //        if (q == 0){hsla[q]=(hsla[q]*2)%360 }
+    strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${hsla[3]})`;
+
+}
 /*function mudaCorAlpha() {
     let valor = iD("transparenciaE").value
     strokeColor = `hsla(0, 100%, 0%, ${valor})`
@@ -38,8 +44,8 @@ function switchEstroke() {
 function mudaCor(valor, bloquinho = false) {
     if (bloquinho) {
         estrokeColor = strokeColor
-        rainbowABcolors = [toHSLObjectAB(strokeColor), toHSLObjectAB(estrokeColor)]
         iD("salvaCor2").style.backgroundColor = estrokeColor
+        
     }
     if (valor == "P") {
         hsla[0] = 0;
@@ -69,6 +75,12 @@ function mudaCor(valor, bloquinho = false) {
     if (bloquinho) {
         hslaToRgba()
         changeColorMode()
+      //  rainbowABcolors = [toHSLObjectAB(strokeColor), toHSLObjectAB(estrokeColor)]
+
+      
+    }
+    if (rainbowAB == true){
+        rainbow("ab",false)
     }
     // iD("mostraCor").style.backgroundColor = strokeColor;
     //iD("mostraCor2").style.backgroundColor =
@@ -159,6 +171,7 @@ function setStrokeColor() {
         iD(objs[i]).style.backgroundColor = strokeColor;
         iD(objs[i]).style.background = `linear-gradient(145deg, ${strokeColor},${strokeColor})`
     }
+    iD("rainbowAB").style.background = `linear-gradient(145deg, ${strokeColor},${estrokeColor})`
     changeBrush()
 
 }
@@ -347,5 +360,84 @@ function glow() {
         ctxF.globalCompositeOperation = 'source-over'
         night()
         iD("glow").innerHTML = ''
+    }
+}
+
+
+let rainbowAB = false
+let rainbowABcolors
+const toHSLObjectAB = hslStr => {
+    const [hue, saturation, lightness, alpha] = hslStr.match(/\d+/g).map(Number);
+    return { hue, saturation, lightness, alpha };
+};
+
+var colorAbigger = false
+var satAbigger = false
+var lightAbigger = false
+var alphaAbigger = false
+function rainbow(ab = false, bloquinho = true) {
+    if (ab == "ab") {
+        if (rainbowInk == true) {
+            rainbowInk = false
+        }
+        if(bloquinho){rainbowAB = !rainbowAB}
+        rainbowABcolors = [toHSLObjectAB(strokeColor), toHSLObjectAB(estrokeColor)]
+        let difAB1 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
+        let difAB2 = rainbowABcolors[1].hue - rainbowABcolors[0].hue
+        if (difAB1 > 180 || difAB1 < -180){rainbowABcolors[0].hue +=360}
+        difAB1 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
+        if(rainbowABcolors[0].hue - rainbowABcolors[1].hue > 0){
+            colorincrease = -2
+            colorAbigger = true
+        }else{
+            colorincrease = 2
+            colorAbigger = false
+        }
+
+        if(rainbowABcolors[0].lightness - rainbowABcolors[1].lightness > 0){
+            lightnessincrease = -1
+            lightAbigger = true
+        }else{
+            lightnessincrease = 1
+            lightAbigger = false
+        }
+
+        if(rainbowABcolors[0].saturation - rainbowABcolors[1].saturation > 0){
+            satAbigger = true
+            satincrease = -1
+        }else{satAbigger = false
+            satincrease = 1
+        }
+        if(rainbowABcolors[0].alpha - rainbowABcolors[1].alpha > 0){
+            alphaAbigger = true
+            alphaincrease = -0.05
+        }else{alphaAbigger = false
+            alphaincrease = 0.05
+        }
+        
+        if (rainbowAB == true) {
+            iD("rainbowAB").innerHTML = '<span class="icon2 minicheck">a-b</span>'
+
+            Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + " a-b<br>" + alerts[language][7])
+        } else {
+            iD("rainbowAB").innerHTML = 'a-b'
+
+            Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + " a-b<br>" + alerts[language][8])
+        }
+
+    } else {
+        rainbowInk = !rainbowInk
+        mudaCorQ(2, 50)
+        mudaCorQ(1, 100)
+
+        if (rainbowInk == true) {
+            iD("rainbow").innerHTML = '<span class="icon2 minicheck"></span>'
+
+            Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][7])
+        } else {
+            iD("rainbow").innerHTML = ''
+
+            Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][8])
+        }
     }
 }

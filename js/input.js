@@ -183,14 +183,14 @@ function handleStart(evt) {
     }
     else if ((mode == "pintar" || mode == "apagar" || mode == "cores") && !isGrabing) {
         if (dinamicInk == true) {
-            mudaCorQ(3, iD("A").value)
+            mudaCorD(3, iD("A").value)
             lastInk = hsla[3]
 
         }
         if (rainbowInk) {
             value = hsla[0] + 3
             if (value > 360) { value = 0 }
-            mudaCorQ(0, value)
+            mudaCorD(0, value)
         }
 
         canvasFront.classList.remove("esconde")
@@ -267,6 +267,9 @@ cropcursor.src = "img/crop.png";
 
 
 let colorincrease = 3
+let satincrease = 5
+let lightnessincrease = 5
+let alphaincrease = 0.001
 
 function positivo(value) {
     if (value < 0) {
@@ -342,7 +345,7 @@ function handleMove(evt) {
         if (dif.x > vari || dif.y > vari || dif.x < -vari || dif.y < -vari) {
             if (dinamicInk == true) {
                 lastInk -= 0.002
-                mudaCorQ(3, lastInk)
+                mudaCorD(3, lastInk)
                 // strokeColor = `hsla(${hsla[0]},${hsla[1]}%,${hsla[2]}%,${lastInk})`;
 
             }
@@ -354,19 +357,69 @@ function handleMove(evt) {
                 if (rainbowInk) {
                     let value = hsla[0] + 3
                     if (value > 360) { value = 0 }
-                    mudaCorQ(0, value)
+                    mudaCorD(0, value)
                 }
                 if (rainbowAB) {
-                    //  if (value > 360) { value = 0 }
                     let value = hsla[0] + colorincrease
-                    if (value > +rainbowABcolors[0].hue && value < +rainbowABcolors[1].hue) {
+                    if(colorAbigger){
+                        if(value > +rainbowABcolors[0].hue || value < +rainbowABcolors[1].hue){
+                              colorincrease = -1 * colorincrease}
+                     value = hsla[0] + colorincrease
+                         
+                    }else if(value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue){
                         colorincrease = -1 * colorincrease
-
-                    } else if (value < +rainbowABcolors[0].hue && value > +rainbowABcolors[1].hue) {
-                        colorincrease = -1 * colorincrease
+                    value = hsla[0] + colorincrease
 
                     }
-                    mudaCorQ(0, value)
+                
+                    mudaCorD(0, value)
+
+                    value = hsla[1] + satincrease
+                    if (satAbigger){
+                        if(hsla[1] > +rainbowABcolors[0].saturation || hsla[1]  < +rainbowABcolors[1].hue){
+                            satincrease = -1 * satincrease
+                            value = hsla[1] + satincrease
+                        }
+                    }else{
+                        if(hsla[1] < +rainbowABcolors[0].saturation || hsla[1]  > +rainbowABcolors[1].hue){
+                            satincrease = -1 * satincrease
+                            value = hsla[1] + satincrease
+                        }
+                    }
+                    mudaCorD(1, value)
+
+                    value = hsla[2] + lightnessincrease
+                    if (lightAbigger){
+                        if(hsla[2] > +rainbowABcolors[0].lightness || hsla[2]  < +rainbowABcolors[1].lightness){
+                            lightnessincrease = -1 * lightnessincrease
+                    value = hsla[2] + lightnessincrease
+
+                            
+                        }
+                    }else{
+                        if(hsla[2] < +rainbowABcolors[0].lightness || hsla[2]  > +rainbowABcolors[1].lightness){
+                            lightnessincrease = -1 * lightnessincrease
+                    value = hsla[2] + lightnessincrease
+
+                        }
+                    }
+                    mudaCorD(2, value)
+
+                    value = hsla[3] + alphaincrease
+                    if (alphaAbigger){
+                        if(hsla[3] > +rainbowABcolors[0].alpha || hsla[3]  < +rainbowABcolors[1].alpha){
+                            alphaincrease = -1 * alphaincrease
+                             value = hsla[3] + alphaincrease
+                       
+                        }
+                    }else{
+                        if(hsla[3] < +rainbowABcolors[0].alpha || hsla[3] > +rainbowABcolors[1].alpha){
+                            alphaincrease = -1 * alphaincrease
+                            value = hsla[3] + alphaincrease
+                      
+                        }
+                    }
+                    mudaCorD(3, value)
                 }
                 // console.log("stroke color: " + strokeColor)
                 if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true && !keyCtrl) {
