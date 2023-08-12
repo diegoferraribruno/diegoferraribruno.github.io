@@ -376,50 +376,57 @@ function handleMove(evt) {
 
                     value = hsla[1] + satincrease
                     if (satAbigger){
-                        if(hsla[1] > +rainbowABcolors[0].saturation || hsla[1]  < +rainbowABcolors[1].hue){
+                        if(value > +rainbowABcolors[0].saturation || value  < +rainbowABcolors[1].hue){
                             satincrease = -1 * satincrease
                             value = hsla[1] + satincrease
                         }
                     }else{
-                        if(hsla[1] < +rainbowABcolors[0].saturation || hsla[1]  > +rainbowABcolors[1].hue){
+                        if(value < +rainbowABcolors[0].saturation || value  > +rainbowABcolors[1].hue){
                             satincrease = -1 * satincrease
                             value = hsla[1] + satincrease
                         }
                     }
                     mudaCorD(1, value)
-
+                    if(+rainbowABcolors[0].lightness != +rainbowABcolors[1].lightness){
+            
                     value = hsla[2] + lightnessincrease
                     if (lightAbigger){
-                        if(hsla[2] > +rainbowABcolors[0].lightness || hsla[2]  < +rainbowABcolors[1].lightness){
+                        if(value > +rainbowABcolors[0].lightness || value  < +rainbowABcolors[1].lightness){
                             lightnessincrease = -1 * lightnessincrease
                     value = hsla[2] + lightnessincrease
 
                             
                         }
                     }else{
-                        if(hsla[2] < +rainbowABcolors[0].lightness || hsla[2]  > +rainbowABcolors[1].lightness){
+                        if(value< +rainbowABcolors[0].lightness || value  > +rainbowABcolors[1].lightness){
                             lightnessincrease = -1 * lightnessincrease
                     value = hsla[2] + lightnessincrease
 
                         }
                     }
                     mudaCorD(2, value)
+                }
 
-                    value = hsla[3] + alphaincrease
-                    if (alphaAbigger){
-                        if(hsla[3] > +rainbowABcolors[0].alpha || hsla[3]  < +rainbowABcolors[1].alpha){
-                            alphaincrease = -1 * alphaincrease
-                             value = hsla[3] + alphaincrease
-                       
+                if ( +rainbowABcolors[0].alpha !=  +rainbowABcolors[1].alpha){
+                        value = hsla[3] + alphaincrease
+
+                        if (alphaAbigger){
+                            if(value > +rainbowABcolors[0].alpha || value < + rainbowABcolors[1].alpha){
+                                alphaincrease = -1 * alphaincrease
+                                value = hsla[3] + alphaincrease
+                                console.log("alphaAbigger",value, alphaincrease)
+
+                            }
+                        }else{
+                            if(value < +rainbowABcolors[0].alpha || value > +rainbowABcolors[1].alpha){
+                                alphaincrease = -1 * alphaincrease
+                                value = hsla[3] + alphaincrease
+                                console.log("alpha",value, alphaincrease)
+                            }
                         }
-                    }else{
-                        if(hsla[3] < +rainbowABcolors[0].alpha || hsla[3] > +rainbowABcolors[1].alpha){
-                            alphaincrease = -1 * alphaincrease
-                            value = hsla[3] + alphaincrease
-                      
-                        }
+                        console.log("rainbowABcolors[0].alpha0",rainbowABcolors[0].alpha)
+                        mudaCorD(3, value)
                     }
-                    mudaCorD(3, value)
                 }
                 // console.log("stroke color: " + strokeColor)
                 if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true && !keyCtrl) {

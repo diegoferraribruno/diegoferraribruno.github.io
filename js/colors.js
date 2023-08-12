@@ -11,6 +11,7 @@ function mudaCorQ(q = 0, valor) {
 
     setStrokeColor();
     criaPaleta();
+    if (rainbowAB){rainbow("ab",false)}
 
 }
 function mudaCorD(q = 0, valor) {
@@ -40,8 +41,11 @@ function switchEstroke() {
     mudaCor(strokeColor, true)
     estrokeColor = old
     iD("salvaCor2").style.backgroundColor = old
+    if (rainbowAB){rainbow("ab",false)}
+    
 }
 function mudaCor(valor, bloquinho = false) {
+   
     if (bloquinho) {
         estrokeColor = strokeColor
         iD("salvaCor2").style.backgroundColor = estrokeColor
@@ -75,7 +79,7 @@ function mudaCor(valor, bloquinho = false) {
     if (bloquinho) {
         hslaToRgba()
         changeColorMode()
-      //  rainbowABcolors = [toHSLObjectAB(strokeColor), toHSLObjectAB(estrokeColor)]
+      //  rainbowABcolors = [toHSLAObjectAB(strokeColor), toHSLAObjectAB(estrokeColor)]
 
       
     }
@@ -106,7 +110,7 @@ const toHslaObject = (hslaStr) => {
     hsla[1] = saturation;
     hsla[2] = lightness;
     hsla[3] = alpha;
-    return { hue, saturation, lightness };
+    return { hue, saturation, lightness , alpha};
 
 
 };
@@ -366,8 +370,10 @@ function glow() {
 
 let rainbowAB = false
 let rainbowABcolors
-const toHSLObjectAB = hslStr => {
-    const [hue, saturation, lightness, alpha] = hslStr.match(/\d+/g).map(Number);
+const toHSLAObjectAB = hslaStr => {
+    const [hue, saturation, lightness, alpha] = hslaStr
+    .match(/[\d\.]+/g)
+    .map(Number);
     return { hue, saturation, lightness, alpha };
 };
 
@@ -381,7 +387,7 @@ function rainbow(ab = false, bloquinho = true) {
             rainbowInk = false
         }
         if(bloquinho){rainbowAB = !rainbowAB}
-        rainbowABcolors = [toHSLObjectAB(strokeColor), toHSLObjectAB(estrokeColor)]
+        rainbowABcolors = [toHSLAObjectAB(strokeColor), toHSLAObjectAB(estrokeColor)]
         let difAB1 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
         let difAB2 = rainbowABcolors[1].hue - rainbowABcolors[0].hue
         if (difAB1 > 180 || difAB1 < -180){rainbowABcolors[0].hue +=360}
@@ -394,7 +400,7 @@ function rainbow(ab = false, bloquinho = true) {
             colorAbigger = false
         }
 
-        if(rainbowABcolors[0].lightness - rainbowABcolors[1].lightness > 0){
+        if(rainbowABcolors[0].lightness > rainbowABcolors[1].lightness ){
             lightnessincrease = -1
             lightAbigger = true
         }else{
@@ -402,16 +408,17 @@ function rainbow(ab = false, bloquinho = true) {
             lightAbigger = false
         }
 
-        if(rainbowABcolors[0].saturation - rainbowABcolors[1].saturation > 0){
+        if(rainbowABcolors[0].saturation > rainbowABcolors[1].saturation ){
             satAbigger = true
             satincrease = -1
         }else{satAbigger = false
             satincrease = 1
         }
-        if(rainbowABcolors[0].alpha - rainbowABcolors[1].alpha > 0){
+        if(rainbowABcolors[0].alpha > rainbowABcolors[1].alpha ){
             alphaAbigger = true
             alphaincrease = -0.05
-        }else{alphaAbigger = false
+        }else{
+            alphaAbigger = false
             alphaincrease = 0.05
         }
         
