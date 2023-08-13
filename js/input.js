@@ -363,32 +363,36 @@ function handleMove(evt) {
                 }
                 if (rainbowAB) {
                     let value = hsla[0] + colorincrease
-                    if(colorAbigger && hueinvert == false){
-                        if(value > +rainbowABcolors[0].hue || value < +rainbowABcolors[1].hue){
-                              colorincrease = -1 * colorincrease
-                              value = hsla[0] + colorincrease 
-                            }
-                         
-                    }else if(colorAbigger && hueinvert == true){
+                    if (value > 360) { value -=  360 }
+                    else if (value < 0 ) { value = 360 - value }
+                    if (hueinvert){
+                        if(colorAbigger && ( 
+                            (value > rainbowABcolors[1].hue && value < rainbowABcolors[0].hue)
+                            )){
+                            colorincrease = -1 * colorincrease
+                            value = hsla[0] + colorincrease
+                            console.log("<a||>b")
+                        }else if(colorAbigger == false &&
+                            value > +rainbowABcolors[0].hue && value < +rainbowABcolors[1].hue) 
+                             {
+                            colorincrease = -1 * colorincrease
+                            value = hsla[0] + colorincrease
+                            console.log("<b||>a")
 
-                        if(value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue){
-                            colorincrease = +1 * colorincrease
-                            value = hsla[0] + colorincrease 
+                            }
+                    }else{
+                        if(colorAbigger && (value > +rainbowABcolors[0].hue || value < rainbowABcolors[1].hue))
+                        {
+                                colorincrease = -1 * colorincrease
+                                value = hsla[0] + colorincrease 
                         }
+                        else if(colorAbigger == false &&(value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue)){
+                            colorincrease = -1 * colorincrease
+                            value = hsla[0] + colorincrease
+                            }
                     }
-                    else if(colorAbigger == false && hueinvert == false) {
-                        if(value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue){
-                        colorincrease = -1 * colorincrease
-                         value = hsla[0] + colorincrease 
-                        }
-                    } else if(colorAbigger == false && hueinvert == true) {
-                        if(value > +rainbowABcolors[0].hue || value < +rainbowABcolors[1].hue){
-                        colorincrease = 1 * colorincrease
-                         value = hsla[0] + colorincrease 
-                        }
-                    }
-                    if (value > 360) { value = value - 360 }
-                    if (value < 0) { value = 360 - value }
+                    console.log("cor0",value)
+               
 
                     mudaCorD(0, value)
 
