@@ -209,8 +209,10 @@ function handleStart(evt) {
             y = redondo(y)
         }
         if ((evt.pointerType == "touch" || evt.pressure == 0.5) && dinamicBrush === true) {
-            if (lastPressure < strokeScale || lastPressure > strokeScale) { lastPressure = strokeScale }
-
+           // strange if bellow wtf?!
+           if (lastPressure < 1) { lastPressure = 1 }
+           if (lastPressure > strokemax) { lastPressure = strokemax }  
+          
             createNewBrush(lastbrush, lastPressure, color).then(
 
                 desenha(
@@ -228,7 +230,11 @@ function handleStart(evt) {
         } else {
 
             if (dinamicBrush === true && evt.pressure != 0.5) {
-                lastPressure = evt.pressure * 2 + 1
+                lastPressure = evt.pressure + 1
+                iD("console2").innerHTML = "pen pressure "+evt.pressure
+                if (lastPressure < 1) { lastPressure = 1 }
+                if (lastPressure > strokemax) { lastPressure = strokemax }  
+               
                 createNewBrush(lastbrush, lastPressure, color).then(
 
                     desenha(
@@ -366,11 +372,10 @@ function handleMove(evt) {
                     if (value > 360) { value -=  360 }
                     else if (value < 0 ) { value = 360 - value }
                     if (hueinvert){
-                        if(colorAbigger && ( 
-                            (value > rainbowABcolors[1].hue && value < rainbowABcolors[0].hue)
-                            )){
+                        if(colorAbigger && value > rainbowABcolors[1].hue && value < rainbowABcolors[0].hue)
+                            {
                             colorincrease = -1 * colorincrease
-                            value = hsla[0] + colorincrease
+                            value = hsla[0] - colorincrease
                             console.log("<a||>b")
                         }else if(colorAbigger == false &&
                             value > +rainbowABcolors[0].hue && value < +rainbowABcolors[1].hue) 
@@ -378,7 +383,6 @@ function handleMove(evt) {
                             colorincrease = -1 * colorincrease
                             value = hsla[0] + colorincrease
                             console.log("<b||>a")
-
                             }
                     }else{
                         if(colorAbigger && (value > +rainbowABcolors[0].hue || value < rainbowABcolors[1].hue))
@@ -463,7 +467,7 @@ function handleMove(evt) {
                     if (lastPressure < 1) { lastPressure = 1 }
                     if (lastPressure > strokemax) { lastPressure = strokemax }
 
-                    iD("console2").innerHTML = " pressure/speed: " + pressure
+                    iD("console2").innerHTML = " pressure/speed: " + lastPressure
                     createNewBrush(lastbrush, lastPressure, color).then(
 
                         desenha(
@@ -478,12 +482,12 @@ function handleMove(evt) {
                     )
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5 && !keyCtrl) {
-                        let pressure = evt.pressure * strokemax
-                        //if (pressure < 3) { pressure = 3 }
-                        iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
-
-                        lastPressure = pressure
-                        createNewBrush(lastbrush, pressure, color).then(
+                        let pressure = (evt.pressure*3+1) * strokeScale
+                        lastPressure = redondo(pressure)
+                        if (lastPressure < 1) { lastPressure = 1 }
+                        if (lastPressure > strokemax) { lastPressure = strokemax }  
+                        iD("console").innerHTML = "PEN width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
+                        createNewBrush(lastbrush, lastPressure, color).then(
                             desenha(
                                 "brush",
                                 context.globalCompositeOperation,
@@ -491,7 +495,7 @@ function handleMove(evt) {
                                 y,
                                 origin.x,
                                 origin.y,
-                                pressure
+                                lastPressure
                             )
                         )
                     } else {

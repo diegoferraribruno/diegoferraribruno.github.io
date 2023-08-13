@@ -1,6 +1,8 @@
 let vers = [{
-    versao: "7.2",
+    versao: "7.4",
     notas: [
+        "mode de Cor A -> B. Troca as cores enquanto você pinta",
+        "Pintura com luz refeito",
         "new keyboard shortcuts - novos atalhos de teclado",
         "Escala (e rotação) no clipboard",
         "tamanho maximo para o tamanho do pincel dinamico. ",
