@@ -981,3 +981,10 @@ input[type="range"] {
     display: none !important;
 
 }
+
+.console{
+    display: block; 
+    position: absolute; 
+    bottom: 0px; 
+    left: 100px;
+}
