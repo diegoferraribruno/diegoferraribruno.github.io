@@ -1,5 +1,6 @@
 let nightmode = false
 let rangetipo = "range"
+var consoleDiv = false
 function Alert(text, time = 2.8) {
     let alert = iD("menualerta")
     alert.classList.add("aparece2")
@@ -11,6 +12,20 @@ function Alert(text, time = 2.8) {
 function closeAlert() {
     iD("menualerta").classList.remove("aparece2")
 }
+function toggleConsole(){
+    console.log("console")
+    consoleDiv = !consoleDiv
+    if (consoleDiv == true){
+
+        iD("console").classList.remove("esconde")
+        iD("console2").classList.remove("esconde")
+    }else{
+        iD("console").classList.add("esconde")
+        iD("console2").classList.add("esconde")
+    }
+
+}
+
 
 function removeElement(id) {
     var elem = iD(id);

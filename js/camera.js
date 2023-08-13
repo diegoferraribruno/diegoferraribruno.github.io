@@ -225,7 +225,7 @@ function gotDevices(mediaDevices) {
             const textNode = document.createTextNode(label);
             option.appendChild(textNode);
             select.appendChild(option);
-            console.log(mediaDevice)
+         //   console.log(mediaDevice)
         }
     });
 }
@@ -359,10 +359,10 @@ async function initializeCamera() {
                             valor = 'continuous'
                         }
                         await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [key]: valor }] })
-                        console.log(valor)
+                      //  console.log(valor)
                     }
                     track.applyConstraints(constr)
-                    console.log(`${key}: ${value}`);
+                    //console.log(`${key}: ${value}`);
                 }
             }
             const comumConstraints = ["sharpness", "contrast", "saturation", "exposureTime", "colorTemperature", 'brightness', 'focusDistance', 'pan', 'tilt', 'zoom', "exposureCompensation", "iso"]
