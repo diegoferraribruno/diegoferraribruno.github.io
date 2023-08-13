@@ -97,6 +97,18 @@ var posts = [
 		data: "25/05/2023 16:20",
 		conteudo: "Este Smart Zumbi andando por aí é obra derivada do personagem de <a href='http://bettodamasceno.art' target='blank'> Betto Damasceno </a><br>Quer saber mais? Aguarde!"
 
+	}, {
+		id: 11,
+		titulo: "Mandalas, Arco-íris e muito mais",
+		data: "14/08/2023 00h00",
+		conteudo: 'Muita coisa mudou no app de arte nestes quase 3 meses que nao escrevo incluindo o nome: "Yoga art"'+
+		'Desenhei todos os ícones que antes eram emojis, reorganizei diversos menus, criei os modos mandala, espelho, pincel arco-íris, '+
+		'pincel cor A->B com as duas ultimas cores, copiar recortar e colar com redimensionar e rotacionar (ou espelhar) a imagem a ser colada,'+
+		'mudança nos na pressao/velocidade que altera o tamanho do pincel dinamico (com valor máximo), nas funções de histórico. '+
+		'Pinceis customizados do quadro ou do clipboard e com opção de cor própria. '+
+		`Fundo do App (ou do quadro de pintura) do clipboard ou do arquivo. Atalhos do teclado, menu "?" e muito mais.<br>`+ 
+		`Ainda preciso resolver o alinhamento da camera vertical do celular que bugou em algum momento.<br>`+
+		` PAra conhecer mais, <a href="http://diegoferraribruno.github.io/desenho.html">click aqui</a>  `
 	}
 
 ]

@@ -580,6 +580,7 @@ function handleMove(evt) {
             }
         }
     }
+
     if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar" && mode != "selecionar" && !keyCtrl && mode != "redimensionar") {
         origin.x = x
         origin.y = y
@@ -593,12 +594,19 @@ function handleMove(evt) {
                     ctxF.drawImage(brushCanva, x - (strokeWidth * lastPressure / 2), y - (strokeHeight * lastPressure / 2));
 
                 } else {
-                    let halfstrokew = 0
-                    let halfstrokeh = 0
-                    if (strokeWidth * strokeScale > 1) { halfstrokew = strokeWidth * strokeScale / 2 }
-                    if (strokeHeight * strokeScale > 1) { halfstrokeh = strokeHeight * strokeScale / 2 }
 
-                    ctxF.drawImage(brushCanva, redondo(x - halfstrokew), redondo(y - halfstrokeh));
+                            canvasFront.classList.remove("esconde")
+                            ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                            ctxF.clearRect(0, 0, canvas.width, canvas.height);
+                               desenha(
+                            "brush",
+                            context.globalCompositeOperation,
+                            x,
+                            y,
+                            origin.x,
+                            origin.y,
+                            strokeScale
+                        )
 
                 }
 
