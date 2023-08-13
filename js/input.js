@@ -483,7 +483,7 @@ function handleMove(evt) {
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5 && !keyCtrl) {
                         let pressure = (evt.pressure*3+1) * strokeScale
-                        lastPressure = redondo(pressure)
+                        lastPressure = pressure
                         if (lastPressure < 1) { lastPressure = 1 }
                         if (lastPressure > strokemax) { lastPressure = strokemax }  
                         iD("console").innerHTML = "PEN width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
