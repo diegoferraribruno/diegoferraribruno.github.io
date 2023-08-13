@@ -164,7 +164,7 @@ async function desenha(
         let dif = historia[workingframe].length - undoLevel
         for (i = dif; i < historia[workingframe].length; i++) { historia[workingframe].pop() }
         undoLevel = 0
-        console.log("daqui pra frente..")
+       // console.log("daqui pra frente..")
     }
     switch (CMD) {
         case "CB":

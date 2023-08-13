@@ -23,10 +23,6 @@ function FX(fx, onde) {
 
         } else if (fx == 8) {
             let quanto = iD(filters[fx] + "Bar").value
-<<<<<<< HEAD
-=======
-          //  console.log(quanto)
->>>>>>> b0a087c92186e7114c0cd758d294b4205978faa0
             onde.filter = filters[fx] + "(" + quanto + "deg)"
         }
         updatecanvasFront()

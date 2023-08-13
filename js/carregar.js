@@ -198,8 +198,8 @@ async function recreateCustomBrush() {
     let lend = customBr.length
     for (i = 0; i < lend; i++) {
         numero = basicBrushes.length + i
-        console.log(customBr[i])
-        console.log(numero, "numero")
+       // console.log(customBr[i])
+       // console.log(numero, "numero")
         //context.putImageData(basic[i], 0, 0)
         let prush = new Image();
         prush.src = customBr[i]
@@ -268,17 +268,17 @@ var openFile = function (event) {
         await recreateCustomBrush()
         let lenb = projeto["newBrushes"].length
         setTimeout(() => {
-            console.log(projeto, "projeto okkkkk")
+            //console.log(projeto, "projeto okkkkk")
             let brushNames = projeto["newBrushes"]
             let lenb = brushNames.length
-            console.log(brushNames)
+           // console.log(brushNames)
             iD("carregando").style.display = "none"
             let len = projeto["animacao"].length
             iD("pinceis2").innerHTML = ""
             Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>" + lenb + '<span class="icon pintaricon"></span> x <br>' + len + "  <span class='icon2 frameicon'></span>  x ", len * 2)
             for (i = 0; i < lenb; i++) {
                 let brushs = brushNames[i].split("-")
-                console.log(brushs)
+              //  console.log(brushs)
 
                 changedBrush = false;
                 strokeColor = parseInt(brushs[3])

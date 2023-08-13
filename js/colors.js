@@ -405,8 +405,6 @@ function rainbow(ab = false, bloquinho = true) {
         }else{ 
             hueinvert = false
         }
-        console.log(difAB0)
-      //  difAB0 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
         if(difAB0 > 0){
             
             colorincrease = -difAB0/colorABdist

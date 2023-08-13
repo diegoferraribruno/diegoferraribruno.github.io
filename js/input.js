@@ -11,7 +11,7 @@ canvasRender.width = 320
 canvasRender.style.backgroundColor = "#ff000088"
 ctxR = canvasRender.getContext('2d')
 ctxR.imageSmoothingEnabled = false
-var consoleDiv = false
+
 //iD("canvas_window").appendChild(canvasRender)
 
 
@@ -875,15 +875,3 @@ function checkOverCanvas(x, y, offset = 0) {
     }
 }
 
-function toggleConsole(){
-    consoleDiv = !consoleDiv
-    if (consoleDiv == true){
-
-        iD("console").classList.remove("esconde")
-        iD("console2").classList.remove("esconde")
-    }else{
-        iD("console").classList.add("esconde")
-        iD("console2").classList.add("esconde")
-    }
-
-}

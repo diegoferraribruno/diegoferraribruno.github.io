@@ -6,7 +6,7 @@ let selecionado = false
 function drawSelection() {
   selecionado = true
   ctxF.clearRect(0, 0, canvas.width, canvas.height);
-  //ctxF.drawImage(image, 0, 0, canvas.width, canvas.height); // Replace 'image' with your actual image variable
+ 
 
   for (const path of selectionPaths) {
     ctxF.beginPath();
@@ -17,8 +17,8 @@ function drawSelection() {
       ctxF.lineTo(path[i][0], path[i][1]);
     }
     ctxF.closePath();
-    ctxF.fillStyle = '#ff000066'; // Set fill color with opacity
-    ctxF.fill(); // Fill the selection shape
+    ctxF.fillStyle = '#ff000066'; 
+    ctxF.fill(); 
   }
 
   if (currentPath.length > 1) {
@@ -30,10 +30,10 @@ function drawSelection() {
       ctxF.lineTo(currentPath[i][0], currentPath[i][1]);
     }
     ctxF.closePath();
-    ctxF.fillStyle = '#ff000066'; // Set fill color with opacity
-    ctxF.strokeStyle = '#ffffff88'; // Set stroke color with opacity
+    ctxF.fillStyle = '#ff000066';
+    ctxF.strokeStyle = '#ffffff88'; 
     ctxF.lineWidth = 1;
-    ctxF.fill(); // Fill the current selection shape
+    ctxF.fill();
 
     ctxF.stroke()
   }
@@ -96,19 +96,17 @@ function copySelection(newfr = false) {
         }
         ctxR.closePath();
         ctxR.fillStyle = '#000000';
-        ctxR.fill(); // Fill the selection shape
+        ctxR.fill(); 
       }
 
     }
-    ctxR.globalCompositeOperation = 'source-in'; // Set global composite operation to source-in
-    // resetFrame()
+    ctxR.globalCompositeOperation = 'source-in';
+
     ctxR.drawImage(canvas, -minX, -minY, canvas.width, canvas.height);
     let image1 = canvasRender.toDataURL()
 
     image2.src = image1
-    //canvasRender.width = image2.width
-    //canvasRender.height = image2.height
-    //console.log(canvasRender.width, canvasRender.height)
+
     clipboard.push(image1)
     image2.onload = function () {
       let rotationsize = Math.hypot(image2.width + image2.height) * 2
@@ -119,32 +117,7 @@ function copySelection(newfr = false) {
       transformClip()
 
     }
-    /* if (newfr == "new") {
   
-        //new frame
-        undoLevel = 0
-      // saveFrame()
-        resetFrame()
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        workingframe++
-        swapImg = canvasRender.toDataURL('image/png');
-        animacao.splice(workingframe, 0, swapImg);
-        let work = []
-        comandos.splice(workingframe, 0, work);
-        ctxF.setTransform(1, 0, 0, 1, 0, 0);
-        ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
-        clearFrame(workingframe)
-        comando = ["s", "source-over", swapImg, minX, minY, canvasFront.width, canvasFront.height];
-        comandos[workingframe].push(comando)
-        // comandosParaComandosb()
-        changeBrush()
-        changeFrame(workingframe)
-        iD("contador").innerHTML = workingframe
-  
-      }*/
-    //reset canvas size
-    console.log(newfr)
     if (newfr == "cut") {
       context.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
 

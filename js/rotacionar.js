@@ -2,7 +2,7 @@ var rotationDeg = 0;
 
 function rotacionar() {
     rotationDeg = (rotationDeg + 90) % 360,
-        console.log(rotationDeg)
+       // console.log(rotationDeg)
     // comandoR()
     canvasDiv.style.width = canvas.width + "px";
     // canvasDiv.height = cw;
