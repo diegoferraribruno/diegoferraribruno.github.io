@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/desenho.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/icons.css">
-    <title>Yoga Art 6 - Mandala edition</title>
+    <title>Yoga Art 7</title>
 </head>
 
 
@@ -132,10 +132,10 @@
             </div>
 
             <div id="menuinfo" class="submenu fundobranco">
-                <span class="fundobranco" onmousedown="removeClass()">
-                    <span class="close"> </span>
-                    <span style="display: block; position: relative; float: left; font-size: 32px; margin-right: 4px;">
-                        😅</span>
+                <span class="fundobranco">
+                    <span class="close"  onmousedown="removeClass()"> </span>
+                    <span style="display: block; position: relative; float: left; font-size: 32px; margin-right: 4px;" onmousedown="toggleConsole()">
+                        <span class="icon infoicon"></span></span>
                     <span class="iconsmall alerticon"></span>
                     <txt name="3"><b>Atenção!</b></txt><br>
                     <txt name="4"> Este é um App de diversão!</b><br>
@@ -1103,8 +1103,8 @@
             </span>
         </span>
     </div>
-    <div id="console" style="display: block; position: absolute; bottom: 0px; left: 100px;">console</div>
-    <div id="console2" style="display: block; position: absolute; bottom: 18px; left: 100px;">console</div>
+    <div id="console" class="console esconde">console</div>
+    <div id="console2" class="console esconde" style="position:absolute; bottom:18px;">console</div>
     <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)"
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/iD.js"></script>

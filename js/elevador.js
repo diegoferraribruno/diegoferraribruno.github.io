@@ -88,7 +88,7 @@ function mouse_down(e) {
     if (t == "player") {
         seguemouse = true
     }
-    console.log(t)
+   // console.log(t)
 }
 
 function mouse_up(event) {
@@ -436,7 +436,7 @@ function frontEnd(move) {
                         newUser.left =
                             user.left + move.x * speed;
                         newUser.top = user.top + move.y * speed / 1.4;
-                        console.log(true)
+                    //    console.log(true)
                         colidiu = true;
                     }
                 }

@@ -11,7 +11,7 @@ canvasRender.width = 320
 canvasRender.style.backgroundColor = "#ff000088"
 ctxR = canvasRender.getContext('2d')
 ctxR.imageSmoothingEnabled = false
-
+var consoleDiv = false
 //iD("canvas_window").appendChild(canvasRender)
 
 
@@ -121,7 +121,6 @@ function handleKeys(evt) {
     }
     if (evt.code === "AltRight" || evt.code === "AltLeft") {
         keyAlt = true
-        console.log(keyAlt)
     }
 }
 
@@ -132,7 +131,6 @@ function handleStart(evt) {
     if (context.globalCompositeOperation == "destination-out") { }
     evt.preventDefault();
     removeClass();
-    //console.dir(evt)
     iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + evt.pressure
 
     changedBrush = false;
@@ -376,13 +374,11 @@ function handleMove(evt) {
                             {
                             colorincrease = -1 * colorincrease
                             value = hsla[0] - colorincrease
-                            console.log("<a||>b")
                         }else if(colorAbigger == false &&
                             value > +rainbowABcolors[0].hue && value < +rainbowABcolors[1].hue) 
                              {
                             colorincrease = -1 * colorincrease
                             value = hsla[0] + colorincrease
-                            console.log("<b||>a")
                             }
                     }else{
                         if(colorAbigger && (value > +rainbowABcolors[0].hue || value < rainbowABcolors[1].hue))
@@ -395,7 +391,6 @@ function handleMove(evt) {
                             value = hsla[0] + colorincrease
                             }
                     }
-                    console.log("cor0",value)
                
 
                     mudaCorD(0, value)
@@ -440,21 +435,17 @@ function handleMove(evt) {
                             if(value > +rainbowABcolors[0].alpha || value < + rainbowABcolors[1].alpha){
                                 alphaincrease = -1 * alphaincrease
                                 value = hsla[3] + alphaincrease
-                                console.log("alphaAbigger",value, alphaincrease)
 
                             }
                         }else{
                             if(value < +rainbowABcolors[0].alpha || value > +rainbowABcolors[1].alpha){
                                 alphaincrease = -1 * alphaincrease
                                 value = hsla[3] + alphaincrease
-                                console.log("alpha",value, alphaincrease)
                             }
                         }
-                        console.log("rainbowABcolors[0].alpha0",rainbowABcolors[0].alpha)
                         mudaCorD(3, value)
                     }
                 }
-                // console.log("stroke color: " + strokeColor)
                 if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true && !keyCtrl) {
                     let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2);
                     if (pressure > lastPressure) {
@@ -620,7 +611,6 @@ function handleMove(evt) {
         scrollWindow.y += origin.y - y
         if (scrollWindow.x != 0 || scrollWindow.y != 0) {
             scrollMoveCanva(scrollWindow.x, scrollWindow.y)
-            // console.log(scrollWindow.x, scrollWindow.y)
         }
         origin.x = x
         origin.y = y
@@ -885,3 +875,15 @@ function checkOverCanvas(x, y, offset = 0) {
     }
 }
 
+function toggleConsole(){
+    consoleDiv = !consoleDiv
+    if (consoleDiv == true){
+
+        iD("console").classList.remove("esconde")
+        iD("console2").classList.remove("esconde")
+    }else{
+        iD("console").classList.add("esconde")
+        iD("console2").classList.add("esconde")
+    }
+
+}
