@@ -99,16 +99,16 @@ var posts = [
 
 	}, {
 		id: 11,
-		titulo: "Mandalas, Arco-íris e muito mais",
+		titulo: "Mandalas, Pinceis, Arco-íris e muito mais",
 		data: "14/08/2023 00h00",
-		conteudo: 'Muita coisa mudou no app de arte nestes quase 3 meses que nao escrevo incluindo o nome: "Yoga art"'+
-		'Desenhei todos os ícones que antes eram emojis, reorganizei diversos menus, criei os modos mandala, espelho, pincel arco-íris, '+
+		conteudo: 'Muita coisa mudou no app de arte nestes quase 3 meses que nao escrevo e ja estamos na versão 7.5 do "Yoga art".<br>'+
+		'Desenhei todos os ícones que antes eram emojis, reorganizei diversos menus, criei os modos mandala, espelho, pincel arco-íris, pincel de luz'+
 		'pincel cor A->B com as duas ultimas cores, copiar recortar e colar com redimensionar e rotacionar (ou espelhar) a imagem a ser colada,'+
-		'mudança nos na pressao/velocidade que altera o tamanho do pincel dinamico (com valor máximo), nas funções de histórico. '+
-		'Pinceis customizados do quadro ou do clipboard e com opção de cor própria. '+
-		`Fundo do App (ou do quadro de pintura) do clipboard ou do arquivo. Atalhos do teclado, menu "?" e muito mais.<br>`+ 
-		`Ainda preciso resolver o alinhamento da camera vertical do celular que bugou em algum momento.<br>`+
-		` PAra conhecer mais, <a href="http://diegoferraribruno.github.io/desenho.html">click aqui</a>  `
+		'mudança na pressao/velocidade que altera o tamanho do pincel dinamico (com valor máximo), nas funções de histórico. '+
+		'Pinceis customizados do quadro ou do clipboard e com opção de cor própria.<br> e por falar em cores, novas opções para configurar suas cores: HSLA, RGBA e HEXA (#RRGGBBAA) '+
+		`Agora é possível adicionar uma imagem de fundo para aplicativo (ou para quadro de pintura) do clipboard ou do arquivo inclusive diretamente de uma URL. Atalhos do teclado, menu "?" e muito mais.<br>`+ 
+		`<br>`+
+		`Para conhecer mais, <a href="http://diegoferraribruno.github.io/desenho.html">click aqui</a> `
 	}
 
 ]
