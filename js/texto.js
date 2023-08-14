@@ -20,6 +20,7 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     const isItalic = italicButton.classList.contains('active');
     const selectedColor = colorSelect.value;
     const textradius = text.length * fontSize / 2
+    ctxF.save()
     ctxF.textAlign = "center";
     ctxF.clearRect(0, 0, canvas.width, canvas.height);
     ctxF.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize}px ${selectedFont}, sans-serif`;
@@ -29,10 +30,24 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
         gradient.addColorStop("1.0", estrokeColor);
         // Fill with gradient
         ctxF.fillStyle = gradient;
-    } else {
+    } else if (isGlowing) {
+        ctxF.shadowColor = strokeColor; // string
+
+        // Horizontal distance of the shadow, in relation to the text.
+        ctxF.shadowOffsetX = 0; // integer
+
+        // Vertical distance of the shadow, in relation to the text.
+        ctxF.shadowOffsetY = 0; // integer
+
+        // Blurring effect to the shadow, the larger the value, the greater the blur.
+        ctxF.shadowBlur = 10; // integer
+        ctxF.fillStyle = "#ffffffee";
+    }
+    else {
         ctxF.fillStyle = selectedColor;
     }
     ctxF.fillText(text, x, y - fontSize / 2);
+    ctxF.restore()
 }
 
 
