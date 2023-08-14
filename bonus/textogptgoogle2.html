@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Drawing App</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="textInput">Text:</label>
+        <input type="text" id="textInput" />
+
+        <label for="fontSelect">Font:</label>
+        <select id="fontSelect"></select>
+
+        <label for="fontSizeInput">Font Size:</label>
+        <input type="number" id="fontSizeInput" min="6" max="120" />
+
+        <button id="drawButton">Draw</button>
+    </div>
+    <canvas id="canvas" width="400" height="200"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const fontSelect = document.getElementById('fontSelect');
+        const fontSizeInput = document.getElementById('fontSizeInput');
+        const drawButton = document.getElementById('drawButton');
+        
+        // Populate font list dynamically
+        const fonts = getAvailableFonts();
+        fonts.forEach(font => {
+            const option = document.createElement('option');
+            option.textContent = font;
+            option.value = font;
+            fontSelect.appendChild(option);
+        });
+
+        // Draw text on canvas
+        drawButton.addEventListener('click', () => {
+            const text = document.getElementById('textInput').value;
+            const selectedFont = fontSelect.value;
+            const fontSize = fontSizeInput.value;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `${fontSize}px ${selectedFont}`;
+            ctx.fillText(text, 10, 50);
+        });
+
+        // Function to get available fonts
+        function getAvailableFonts() {
+            const fontFamilyList = [];
+
+            const fonts = [
+                'Arial',
+                'Times New Roman',
+                'Courier New',
+                'Verdana',
+                'Helvetica',
+                'Tahoma',
+                'Comic Sans MS',
+                // ... you can add more common fonts here
+            ];
+
+            const testText = document.createElement('span');
+            testText.style.visibility = 'hidden';
+            testText.style.position = 'absolute';
+            testText.style.fontFamily = 'monospace';
+            testText.textContent = 'Font Test';
+
+            document.body.appendChild(testText);
+
+            fonts.forEach(font => {
+                testText.style.fontFamily = font + ', monospace';
+                if (testText.offsetWidth !== 0) {
+                    fontFamilyList.push(font);
+                }
+            });
+
+            document.body.removeChild(testText);
+
+            return fontFamilyList;
+        }
+    </script>
+</body>
+</html>
+

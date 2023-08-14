@@ -58,7 +58,7 @@ function ZOOM(a) {
 
 }
 
-function scrollMoveCanva(a, b) {
+async function scrollMoveCanva(a, b) {
     win.scrollLeft += a * zoomFactor;
     win.scrollTop += b * zoomFactor;
     origin.x = 0

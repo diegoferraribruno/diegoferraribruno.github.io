@@ -178,6 +178,34 @@
     background-position-x: -1404px
 }
 
+.textoicon {
+    background-position-x: -1440px;
+}
+
+.italicicon {
+    background-position-x: -1476px;
+}
+
+.boldicon {
+    background-position-x: -1512px;
+}
+
+.fontsizeicon {
+    background-position-x: -1548px;
+}
+
+.fonticon {
+    background-position-x: -1584px;
+}
+
+.undefined1 {
+    background-position-x: -1620px;
+}
+
+.undefined {
+    background-position-x: -1656px;
+}
+
 .icon2 {
     display: block;
     float: left;

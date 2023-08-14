@@ -152,7 +152,7 @@ function resetZoom() {
 
 }
 
-function scrollMoveCanva(x, y) {
+async function scrollMoveCanva(x, y) {
     cameraOffset.x -= x / cameraZoom
     cameraOffset.y -= y / cameraZoom
     redraw()

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Text Drawing App</title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap">
+
+    <style>
+        body {
+            /*  display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;*/
+        }
+
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="400" height="200"></canvas>
+    <div>
+        <label for="textInput">Text:</label>
+        <input type="text" id="textInput" />
+
+        <label for="fontSelect">Font:</label>
+        <select id="fontSelect">
+            <!-- Options will be dynamically added through JavaScript -->
+        </select>
+        <br>
+        <label for="fontSizeInput">Font Size:</label>
+        <input type="number" id="fontSizeInput" min="6" max="200" value="16" style="width: 50px;" />
+
+        <button id="boldButton">Bold</button>
+        <button id="italicButton">Italic</button>
+
+        <label for="colorSelect">Color:</label>
+        <select id="colorSelect">
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="gray">Gray</option>
+            <option value="#ff005544">#ff005544</option>
+        </select>
+
+        <button id="drawButton">Draw</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const textInput = document.getElementById('textInput');
+        const fontSelect = document.getElementById('fontSelect');
+        const fontSizeInput = document.getElementById('fontSizeInput');
+        const boldButton = document.getElementById('boldButton');
+        const italicButton = document.getElementById('italicButton');
+        const colorSelect = document.getElementById('colorSelect');
+        const drawButton = document.getElementById('drawButton');
+
+        // Function to update canvas
+        function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
+            const text = textInput.value;
+            const selectedFont = fontSelect.value;
+            const fontSize = fontSizeInput.value;
+            const isBold = boldButton.classList.contains('active');
+            const isItalic = italicButton.classList.contains('active');
+            const selectedColor = colorSelect.value;
+            const textradius = text.length * fontSize / 2
+            ctx.textAlign = "center";
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize}px ${selectedFont}, sans-serif`;
+            ctx.fillStyle = selectedColor;
+            ctx.fillText(text, x, y - fontSize / 2);
+        }
+
+
+        // Add event listeners
+        textInput.addEventListener('input', () => {
+            updateCanvas();
+        });
+        canvas.addEventListener("mousemove", handlemove);
+        fontSelect.addEventListener('input', () => { updateCanvas() });
+        fontSizeInput.addEventListener('input', () => { updateCanvas() });
+        boldButton.addEventListener('click', () => {
+            boldButton.classList.toggle('active');
+            updateCanvas();
+        });
+        italicButton.addEventListener('click', () => {
+            italicButton.classList.toggle('active');
+            updateCanvas();
+        });
+        colorSelect.addEventListener('change', () => { updateCanvas() });
+        drawButton.addEventListener('click', () => { updateCanvas() });
+
+        // Populate font list dynamically
+        const fonts = getAvailableFonts();
+        fonts.forEach(font => {
+            const option = document.createElement('option');
+            option.textContent = font;
+            option.value = font;
+            fontSelect.appendChild(option);
+        });
+        function handlemove(evt) {
+            updateCanvas(evt.layerX, evt.layerY)
+
+        }
+        // Function to get available fonts
+        function getAvailableFonts() {
+            const fontFamilyList = [];
+
+            const fonts = ["Raleway",
+                "Montserrat",
+                'Arial',
+                'Times New Roman',
+                'Courier New',
+                'Verdana',
+                'Helvetica',
+                'Tahoma',
+                'Comic Sans MS',
+                // ... you can add more common fonts here
+            ];
+
+            const testText = document.createElement('span');
+            testText.style.visibility = 'hidden';
+            testText.style.position = 'absolute';
+            testText.style.fontFamily = 'monospace';
+            testText.textContent = 'Font Test';
+
+            document.body.appendChild(testText);
+
+            fonts.forEach(font => {
+                testText.style.fontFamily = font + ', monospace';
+                if (testText.offsetWidth !== 0) {
+                    fontFamilyList.push(font);
+                }
+            });
+
+            document.body.removeChild(testText);
+
+            return fontFamilyList;
+        }
+    </script>
+</body>
+
+</html>

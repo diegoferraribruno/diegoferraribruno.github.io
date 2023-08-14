@@ -90,37 +90,41 @@ function handleKeyUp(evt) {
 
 }
 function handleKeys(evt) {
-    if (evt.keyCode === 90) {
-        keyZ = true
-    }
-    if (evt.keyCode === 16) {
-        shiftHeld = true
-    }
-    if (evt.keyCode === 17) {
-        keyCtrl = true
-    }
-    if (evt.key === "y") {
-        keyY = true
-    }
-    if (keyCtrl) {
-        if (keyZ) {
-            if (shiftHeld) {
-                redoT();
-            } else { undoT() }
+    let activeEl = document.activeElement
+    if (activeEl.type != "text") {
 
-        } else if (keyY) {
-            redoT()
+        if (evt.keyCode === 90) {
+            keyZ = true
         }
+        if (evt.keyCode === 16) {
+            shiftHeld = true
+        }
+        if (evt.keyCode === 17) {
+            keyCtrl = true
+        }
+        if (evt.key === "y") {
+            keyY = true
+        }
+        if (keyCtrl) {
+            if (keyZ) {
+                if (shiftHeld) {
+                    redoT();
+                } else { undoT() }
 
-    }
-    if (evt.code === "Space" && keyCtrl == false) {
-        evt.preventDefault()
-        spaceKey = true
-        isGrabing = true
-        document.body.style.cursor = "move"
-    }
-    if (evt.code === "AltRight" || evt.code === "AltLeft") {
-        keyAlt = true
+            } else if (keyY) {
+                redoT()
+            }
+
+        }
+        if (evt.code === "Space" && keyCtrl == false) {
+            evt.preventDefault()
+            spaceKey = true
+            isGrabing = true
+            document.body.style.cursor = "move"
+        }
+        if (evt.code === "AltRight" || evt.code === "AltLeft") {
+            keyAlt = true
+        }
     }
 }
 
@@ -129,110 +133,90 @@ function handleStart(evt) {
     ctxF.globalAlpha = 1;
     let color = strokeColor
     if (context.globalCompositeOperation == "destination-out") { }
-    evt.preventDefault();
-    removeClass();
-    iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + evt.pressure
 
-    changedBrush = false;
-    offsetX = canvas.getBoundingClientRect().left;
-    offsetY = canvas.getBoundingClientRect().top;
-    origin.x = (evt.pageX - offsetX) / zoomFactor
-    origin.y = (evt.pageY - offsetY) / zoomFactor
-    ctxF.setTransform(1, 0, 0, 1, 0, 0);
-    ctxF.clearRect(0, 0, canvas.width, canvas.height);
-    if (pixelGood) {
-        origin.x = redondo(origin.x)
-        origin.y = redondo(origin.y)
-    }
-    if (mode === "selecionar") {
-        canvasFront.classList.remove("esconde")
-        isSelecting2 = true;
-        cropStart.x = origin.x
-        cropStart.y = origin.y
-        const { offsetX, offsetY } = evt;
-        if (!shiftHeld) {
-            selectionPaths = [];
-            currentPath = [];
-        }
-        isSelecting2 = true;
-        currentPath.push([offsetX, offsetY]);
+    if (!spaceKey) {
+        evt.preventDefault();
+        removeClass();
+        iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + evt.pressure
 
-    } else if (mode === "recortar") {
-        canvasFront.classList.remove("esconde")
-        isSelecting = true;
-        cropStart.x = origin.x
-        cropStart.y = origin.y
-    } else if (mode == "emoji") {
-        isEmoji = true
-        isDrawing = false
-    } else if (mode == "move") {
-        movendo = true
-    } else if (mode == "rotacionar") {
-        rotacionar = true
-    } else if (mode == "redimensionar") {
-        redimensionar = true
-    } else if (mode == "zoomx") {
-        isGrabing = true;
-    } else if (mode == "picker") {
-        canvasFront.classList.add("esconde")
-        isPicking = true
-    } else if (mode == "play") {
-        stop();
-    }
-    else if ((mode == "pintar" || mode == "apagar" || mode == "cores") && !isGrabing) {
-        if (dinamicInk == true) {
-            mudaCorD(3, iD("A").value)
-            lastInk = hsla[3]
-
-        }
-        if (rainbowInk) {
-            value = hsla[0] + 3
-            if (value > 360) { value = 0 }
-            mudaCorD(0, value)
-        }
-
-        canvasFront.classList.remove("esconde")
-        isDrawing = true
-        mouseOver = true;
-        if (context.globalCompositeOperation == "destination-out") {
-            color = "#ff0000"
-        }
+        changedBrush = false;
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
-        x = (evt.pageX - offsetX) / zoomFactor
-        y = (evt.pageY - offsetY) / zoomFactor
-
+        origin.x = (evt.pageX - offsetX) / zoomFactor
+        origin.y = (evt.pageY - offsetY) / zoomFactor
+        ctxF.setTransform(1, 0, 0, 1, 0, 0);
+        ctxF.clearRect(0, 0, canvas.width, canvas.height);
         if (pixelGood) {
-            x = redondo(x)
-            y = redondo(y)
+            origin.x = redondo(origin.x)
+            origin.y = redondo(origin.y)
         }
-        if ((evt.pointerType == "touch" || evt.pressure == 0.5) && dinamicBrush === true) {
-           // strange if bellow wtf?!
-           if (lastPressure < 1) { lastPressure = 1 }
-           if (lastPressure > strokemax) { lastPressure = strokemax }  
-          
-            createNewBrush(lastbrush, lastPressure, color).then(
+        if (mode === "selecionar") {
+            canvasFront.classList.remove("esconde")
+            isSelecting2 = true;
+            cropStart.x = origin.x
+            cropStart.y = origin.y
+            const { offsetX, offsetY } = evt;
+            if (!shiftHeld) {
+                selectionPaths = [];
+                currentPath = [];
+            }
+            isSelecting2 = true;
+            currentPath.push([offsetX, offsetY]);
 
-                desenha(
-                    "brush",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-                    lastPressure
-                )
-            )
+        } else if (mode === "recortar") {
+            canvasFront.classList.remove("esconde")
+            isSelecting = true;
+            cropStart.x = origin.x
+            cropStart.y = origin.y
+        } else if (mode == "emoji") {
+            isEmoji = true
+            isDrawing = false
+        } else if (mode == "move") {
+            movendo = true
+        } else if (mode == "rotacionar") {
+            rotacionar = true
+        } else if (mode == "redimensionar") {
+            redimensionar = true
+        } else if (mode == "zoomx") {
+            isGrabing = true;
+        } else if (mode == "picker") {
+            canvasFront.classList.add("esconde")
+            isPicking = true
+        } else if (mode == "play") {
+            stop();
+        }
+        else if ((mode == "pintar" || mode == "apagar" || mode == "cores") && !isGrabing) {
+            if (dinamicInk == true) {
+                mudaCorD(3, iD("A").value)
+                lastInk = hsla[3]
 
+            }
+            if (rainbowInk) {
+                value = hsla[0] + 3
+                if (value > 360) { value = 0 }
+                mudaCorD(0, value)
+            }
 
-        } else {
+            canvasFront.classList.remove("esconde")
+            isDrawing = true
+            mouseOver = true;
+            if (context.globalCompositeOperation == "destination-out") {
+                color = "#ff0000"
+            }
+            offsetX = canvas.getBoundingClientRect().left;
+            offsetY = canvas.getBoundingClientRect().top;
+            x = (evt.pageX - offsetX) / zoomFactor
+            y = (evt.pageY - offsetY) / zoomFactor
 
-            if (dinamicBrush === true && evt.pressure != 0.5) {
-                lastPressure = evt.pressure + 1
-                iD("console2").innerHTML = "pen pressure "+evt.pressure
+            if (pixelGood) {
+                x = redondo(x)
+                y = redondo(y)
+            }
+            if ((evt.pointerType == "touch" || evt.pressure == 0.5) && dinamicBrush === true) {
+                // strange if bellow wtf?!
                 if (lastPressure < 1) { lastPressure = 1 }
-                if (lastPressure > strokemax) { lastPressure = strokemax }  
-               
+                if (lastPressure > strokemax) { lastPressure = strokemax }
+
                 createNewBrush(lastbrush, lastPressure, color).then(
 
                     desenha(
@@ -245,23 +229,45 @@ function handleStart(evt) {
                         lastPressure
                     )
                 )
-            }
-            else {
-                desenha(
-                    "brush",
-                    context.globalCompositeOperation,
-                    x,
-                    y,
-                    origin.x,
-                    origin.y,
-                    strokeScale
-                )
+
+
+            } else {
+
+                if (dinamicBrush === true && evt.pressure != 0.5) {
+                    lastPressure = evt.pressure + 1
+                    iD("console2").innerHTML = "pen pressure " + evt.pressure
+                    if (lastPressure < 1) { lastPressure = 1 }
+                    if (lastPressure > strokemax) { lastPressure = strokemax }
+
+                    createNewBrush(lastbrush, lastPressure, color).then(
+
+                        desenha(
+                            "brush",
+                            context.globalCompositeOperation,
+                            x,
+                            y,
+                            origin.x,
+                            origin.y,
+                            lastPressure
+                        )
+                    )
+                }
+                else {
+                    desenha(
+                        "brush",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        origin.x,
+                        origin.y,
+                        strokeScale
+                    )
+                }
+
             }
 
         }
-
     }
-
 }
 let cursinho = new Image
 const movecursor = new Image(); // Create new img element
@@ -316,8 +322,9 @@ function handleMove(evt) {
             currentPath.push([offsetX, offsetY]);
 
         }
-    }
-    if (mode == "recortar") {
+    } if (mode == "texto") {
+        updateCanvas(x, y)
+    } else if (mode == "recortar") {
         canvasFront.classList.remove("esconde")
         if (isSelecting === true) {
             cropEnd.x = x
@@ -367,78 +374,75 @@ function handleMove(evt) {
                 }
                 if (rainbowAB) {
                     let value = hsla[0] + colorincrease
-                    if (value > 360) { value -=  360 }
-                    else if (value < 0 ) { value = 360 - value }
-                    if (hueinvert){
-                        if(colorAbigger && value > rainbowABcolors[1].hue && value < rainbowABcolors[0].hue)
-                            {
+                    if (value > 360) { value -= 360 }
+                    else if (value < 0) { value = 360 - value }
+                    if (hueinvert) {
+                        if (colorAbigger && value > rainbowABcolors[1].hue && value < rainbowABcolors[0].hue) {
                             colorincrease = -1 * colorincrease
                             value = hsla[0] - colorincrease
-                        }else if(colorAbigger == false &&
-                            value > +rainbowABcolors[0].hue && value < +rainbowABcolors[1].hue) 
-                             {
+                        } else if (colorAbigger == false &&
+                            value > +rainbowABcolors[0].hue && value < +rainbowABcolors[1].hue) {
                             colorincrease = -1 * colorincrease
                             value = hsla[0] + colorincrease
-                            }
-                    }else{
-                        if(colorAbigger && (value > +rainbowABcolors[0].hue || value < rainbowABcolors[1].hue))
-                        {
-                                colorincrease = -1 * colorincrease
-                                value = hsla[0] + colorincrease 
                         }
-                        else if(colorAbigger == false &&(value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue)){
+                    } else {
+                        if (colorAbigger && (value > +rainbowABcolors[0].hue || value < rainbowABcolors[1].hue)) {
                             colorincrease = -1 * colorincrease
                             value = hsla[0] + colorincrease
-                            }
+                        }
+                        else if (colorAbigger == false && (value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue)) {
+                            colorincrease = -1 * colorincrease
+                            value = hsla[0] + colorincrease
+                        }
                     }
-               
+
 
                     mudaCorD(0, value)
 
                     value = hsla[1] + satincrease
-                    if (satAbigger){
-                        if(value > +rainbowABcolors[0].saturation || value  < +rainbowABcolors[1].hue){
+                    if (satAbigger) {
+                        if (value > +rainbowABcolors[0].saturation || value < +rainbowABcolors[1].hue) {
                             satincrease = -1 * satincrease
                             value = hsla[1] + satincrease
                         }
-                    }else{
-                        if(value < +rainbowABcolors[0].saturation || value  > +rainbowABcolors[1].hue){
+                    } else {
+                        if (value < +rainbowABcolors[0].saturation || value > +rainbowABcolors[1].hue) {
                             satincrease = -1 * satincrease
                             value = hsla[1] + satincrease
                         }
                     }
                     mudaCorD(1, value)
-                    if(+rainbowABcolors[0].lightness != +rainbowABcolors[1].lightness){
-            
-                    value = hsla[2] + lightnessincrease
-                    if (lightAbigger){
-                        if(value > +rainbowABcolors[0].lightness || value  < +rainbowABcolors[1].lightness){
-                            lightnessincrease = -1 * lightnessincrease
-                    value = hsla[2] + lightnessincrease
+                    if (+rainbowABcolors[0].lightness != +rainbowABcolors[1].lightness) {
 
-                            
-                        }
-                    }else{
-                        if(value< +rainbowABcolors[0].lightness || value  > +rainbowABcolors[1].lightness){
-                            lightnessincrease = -1 * lightnessincrease
-                    value = hsla[2] + lightnessincrease
+                        value = hsla[2] + lightnessincrease
+                        if (lightAbigger) {
+                            if (value > +rainbowABcolors[0].lightness || value < +rainbowABcolors[1].lightness) {
+                                lightnessincrease = -1 * lightnessincrease
+                                value = hsla[2] + lightnessincrease
 
+
+                            }
+                        } else {
+                            if (value < +rainbowABcolors[0].lightness || value > +rainbowABcolors[1].lightness) {
+                                lightnessincrease = -1 * lightnessincrease
+                                value = hsla[2] + lightnessincrease
+
+                            }
                         }
+                        mudaCorD(2, value)
                     }
-                    mudaCorD(2, value)
-                }
 
-                if ( +rainbowABcolors[0].alpha !=  +rainbowABcolors[1].alpha){
+                    if (+rainbowABcolors[0].alpha != +rainbowABcolors[1].alpha) {
                         value = hsla[3] + alphaincrease
 
-                        if (alphaAbigger){
-                            if(value > +rainbowABcolors[0].alpha || value < + rainbowABcolors[1].alpha){
+                        if (alphaAbigger) {
+                            if (value > +rainbowABcolors[0].alpha || value < + rainbowABcolors[1].alpha) {
                                 alphaincrease = -1 * alphaincrease
                                 value = hsla[3] + alphaincrease
 
                             }
-                        }else{
-                            if(value < +rainbowABcolors[0].alpha || value > +rainbowABcolors[1].alpha){
+                        } else {
+                            if (value < +rainbowABcolors[0].alpha || value > +rainbowABcolors[1].alpha) {
                                 alphaincrease = -1 * alphaincrease
                                 value = hsla[3] + alphaincrease
                             }
@@ -473,10 +477,10 @@ function handleMove(evt) {
                     )
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5 && !keyCtrl) {
-                        let pressure = (evt.pressure*3+1) * strokeScale
+                        let pressure = (evt.pressure * 3 + 1) * strokeScale
                         lastPressure = pressure
                         if (lastPressure < 1) { lastPressure = 1 }
-                        if (lastPressure > strokemax) { lastPressure = strokemax }  
+                        if (lastPressure > strokemax) { lastPressure = strokemax }
                         iD("console").innerHTML = "PEN width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
                         createNewBrush(lastbrush, lastPressure, color).then(
                             desenha(
@@ -581,7 +585,7 @@ function handleMove(evt) {
         }
     }
 
-    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar" && mode != "selecionar" && !keyCtrl && mode != "redimensionar") {
+    if (!isGrabing && mode != "recortar" && !isPicking && mode != "FX" && mode != "zoomx" && mode != "play" && mode != "move" && mode != "rotacionar" && mode != "selecionar" && !keyCtrl && mode != "redimensionar" && mode != "texto") {
         origin.x = x
         origin.y = y
         if (isDrawing == false && (pixelGood == true || context.globalCompositeOperation == "destination-out") && mode != "emoji") {
@@ -595,18 +599,18 @@ function handleMove(evt) {
 
                 } else {
 
-                            canvasFront.classList.remove("esconde")
-                            ctxF.setTransform(1, 0, 0, 1, 0, 0);
-                            ctxF.clearRect(0, 0, canvas.width, canvas.height);
-                               desenha(
-                            "brush",
-                            context.globalCompositeOperation,
-                            x,
-                            y,
-                            origin.x,
-                            origin.y,
-                            strokeScale
-                        )
+                    canvasFront.classList.remove("esconde")
+                    ctxF.setTransform(1, 0, 0, 1, 0, 0);
+                    ctxF.clearRect(0, 0, canvas.width, canvas.height);
+                    desenha(
+                        "brush",
+                        context.globalCompositeOperation,
+                        x,
+                        y,
+                        origin.x,
+                        origin.y,
+                        strokeScale
+                    )
 
                 }
 
@@ -662,7 +666,16 @@ function handleUp(evt) {
 
 
     }
-    if (isDrawing && !isGrabing) {
+    if (mode == "texto") {
+        updateCanvas(x, y)
+        context.drawImage(canvasFront, 0, 0)
+
+        swapImg = canvas.toDataURL('image/png');
+        swapImg.onload =
+
+            Historia(swapImg)
+    }
+    else if (isDrawing && !isGrabing) {
         if (keyCtrl) {
 
             origin.x = x
@@ -789,11 +802,11 @@ function handleUp(evt) {
         }, 300)
         // desenha("rotacionar", ((y - origin.y + x - origin.x) * Math.PI) / 180, origin.x, origin.y)
     }
-    if (rainbowAB){
-        hsla[0]= rainbowABcolors[0].hue
-        hsla[1]= rainbowABcolors[0].saturation
+    if (rainbowAB) {
+        hsla[0] = rainbowABcolors[0].hue
+        hsla[1] = rainbowABcolors[0].saturation
         hsla[2] = rainbowABcolors[0].lightness
-        hsla[3]= rainbowABcolors[0].alpha;
+        hsla[3] = rainbowABcolors[0].alpha;
 
         strokeColor = `hsla(${rainbowABcolors[0].hue},${rainbowABcolors[0].saturation}%,${rainbowABcolors[0].lightness}%,${rainbowABcolors[0].alpha})`;
         estrokeColor = `hsla(${rainbowABcolors[1].hue},${rainbowABcolors[1].saturation}%,${rainbowABcolors[1].lightness}%,${rainbowABcolors[1].alpha})`;

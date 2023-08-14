@@ -96,7 +96,9 @@
                         style="font-size: 0.6em; display:block; position:absolute; width:36px; height:20px; font-weight: 700; text-align: center; color: #fff;">1x
                     </span>
                 </span>
-
+                <span id="texto" class="mais" title="texto" class="mais" onclick="modeTo('texto')">
+                    <span class="icon textoicon"></span>
+                </span>
             </div>
 
             <div id="anime" class="ferramentas"></div>
@@ -104,6 +106,35 @@
 
         </div>
         <div id="menus">
+            <div id="menutexto" class="submenu fundobranco">
+                <span class="close" title="fechar" onmousedown="removeClass()"></span>
+
+                <label for="textInput"> <span class="icon textoicon"></span>
+                </label>
+                <input type="text" id="textInput" />
+
+                <br><label for="fontSelect"><span class="icon fonticon"></span></label>
+                <select id="fontSelect">
+                    <!-- Options will be dynamically added through JavaScript -->
+                </select>
+                <br>
+                <label for="fontSizeInput"><span class="iconsmall fontsizeicon"></span></label>
+                <input type="number" id="fontSizeInput" min="6" max="200" value="16" style="width: 50px;" />
+
+                <span id="boldButton" class="mais icon boldicon"></span>
+                <span id="italicButton" class="mais icon italicicon"></span>
+                <br>
+                <label for="colorSelect">Color:</label>
+                <select id="colorSelect">
+                    <option value="black" style="display: block; background-color: #000; color: #fff;">Black</option>
+                    <option value="white">White</option>
+                    <option id="fontStrokeColor" style="display: block; color: #fff;" value="#ff005544">A</option>
+                    <option id="fontEstrokeColor" style="display: block; color: #fff;" value="#ff005544">B</option>
+
+                </select>
+
+                <!--button id="drawButton">Draw</button-->
+            </div>
             <div id="menumandala" class="submenu fundobranco">
                 <span class="close" title="fechar" onmousedown="removeClass()"></span>
                 <span class="icon mandalaicon"></span>
@@ -117,7 +148,7 @@
                 <!--txt name="94">Fatias da mandala</txt><br-->
                 <input id="abdistance" type="range" min="5" max="100" value="20" step="1" style="width:160px"
                     onchange="abDistanceChange(this.value)"><br>
-                    <span id="abbar" style="display: inline-block; height: 20px; width: 100px; border-radius: 10px;"></span>
+                <span id="abbar" style="display: inline-block; height: 20px; width: 100px; border-radius: 10px;"></span>
 
             </div>
             <div id="menupicker" class="submenu fundobranco">
@@ -133,8 +164,9 @@
 
             <div id="menuinfo" class="submenu fundobranco">
                 <span class="fundobranco">
-                    <span class="close"  onmousedown="removeClass()"> </span>
-                    <span style="display: block; position: relative; float: left; font-size: 32px; margin-right: 4px;" onmousedown="toggleConsole()">
+                    <span class="close" onmousedown="removeClass()"> </span>
+                    <span style="display: block; position: relative; float: left; font-size: 32px; margin-right: 4px;"
+                        onmousedown="toggleConsole()">
                         <span class="icon infoicon"></span></span>
                     <span class="iconsmall alerticon"></span>
                     <txt name="3"><b>Atenção!</b></txt><br>
@@ -328,11 +360,13 @@
 
                     <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais">
                         <span class="icon pinicon" style="position: absolute; margin-left: 80px; margin-top: -10px;">
-                        </span><span style="position: absolute; margin-left: -4px; margin-top: 0px; font-size: medium;">A
+                        </span><span
+                            style="position: absolute; margin-left: -4px; margin-top: 0px; font-size: medium;">A
                         </span>
                     </span>
                     <span id="salvaCor2" onmousedown="switchEstroke()" title=" old stroke" class="mais"><span
-                            class="icon2 swapicon" style="transform: scale(0.6); margin: -4px;">B</span></span>
+                            class="icon2 swapicon"
+                            style="transform: scale(0.6); margin: -4px; color: #fff;">B</span></span>
 
                 </div>
                 <div id="paleta2" class="fundobranco glow">
@@ -1131,6 +1165,7 @@
     <script type="text/javascript" src="js/credits.js"></script>
     <script type="text/javascript" src="js/carregar.js"></script>
     <script type="text/javascript" src="js/FX.js"></script>
+    <script type="text/javascript" src="js/texto.js"></script>
     <script type="text/javascript" src="js/help.js"></script>
 
     <!-- codigos que nao tenho parte-->

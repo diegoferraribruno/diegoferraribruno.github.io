@@ -35,7 +35,7 @@ function startup() {
     }
     let activeEl = document.activeElement
     // console.log(event.key)
-    if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text" && keyCtrl == false) {
+    if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
       if (mode != "emoji" && keyCtrl == false && keyAlt == false) {
         if (event.key === "Enter" && mode == "recortar") {
           cortar();
@@ -82,12 +82,25 @@ function startup() {
           newFrame()
         } else if (event.key === "Delete") {
           lixeira()
+        } else if (event.key === "t") {
+          modeTo("texto")
         }
       } else if (keyAlt == true) {
         if (event.key === "+") {
           cloneFrame()
         }
 
+      } else if (keyCtrl && event.key === "+") {
+        event.preventDefault()
+        zoom2x()
+        //console.dir(event)
+      } else if (keyCtrl && event.key === "-") {
+        event.preventDefault()
+        zoomMinus()
+        //console.dir(event)
+      }
+      if (event.key === "Enter" && mode == "texto") {
+        textToHistory();
       }
       /* else if (event.code === "Space" && keyCtrl == true) {
         if (mode == "play") {
