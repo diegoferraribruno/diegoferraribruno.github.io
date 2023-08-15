@@ -925,23 +925,22 @@
                 <span class="botao">
 
                     Yoga Art 7<br>
+                    <img src="img/lovepix.gif" onclick=" criaConteudo(),
+                    apoio()"
+                        style="display: block; position: absolute; left: 10px; top:80px; border: solid 1px rgb(90, 90, 90);">
+                    <br>
                     <span id="yogapose"
                         style="background-image:url(img/yoga.png); width:64px; height:77px; display: inline-block; margin-top: -20px;"
                         onClick="yogaChange()">
                     </span>
-                    <br>
-                    <img src="img/mandala.png" onclick="Mandala()" class="mais" style="width: 64px; height: 64px;">
-                    <img src="img/glowmandala.png" onclick="Mandala(), glow()" class="mais"
-                        style="width: 64px; height: 64px;">
-                    <img src="img/rainbowmandalab.png" onclick="Mandala(), glow(), rainbow()" class="mais"
-                        style="width: 64px; height: 64px;">
+
                     <br>
 
                 </span>
                 <span class=" botao" style="font-size: 0.8em; display: flex;" title="Modos de arte">
-                    <span id="help2" title="help" class="mais selected" onmousedown="modeTo('help')">
-                        <span class="icon2 helpicon"></span> </span>
 
+                    <img src="img/rainbowmandalab.png" onclick="Mandala(),  rainbow(), glow(), setStrokeSize(12)"
+                        class="mais">
 
                     <span id="imagem" title="Carregar projeto ou imagem" class="mais"
                         onmousedown="mostraMenu('imagem')">
@@ -950,12 +949,11 @@
                     <span id="localize" title="change language" class="mais" onclick="localize()">
                         <span class="icon2 bricon"></span>
                     </span>
-                    <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam'), removeElement('carregando')">
-                        <span class="icon2 cameraicon"></span>
-                    </span>
                     <span id="info" title="Informações" class="mais" onmousedown="mostraMenu('info')"><span
                             class="icon infoicon"></span></span>
 
+                    <span id="help2" title="help" class="mais selected" onmousedown="modeTo('help')">
+                        <span class="icon2 helpicon"></span> </span>
 
                 </span>
 

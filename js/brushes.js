@@ -365,8 +365,8 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeScale, cont = ctxF) {
     let start
     let end
     if (pixelGood) {
-        start = { x: (x1 / zoomFactor) * zoomFactor, y: (y1 / zoomFactor) * zoomFactor }
-        end = { x: (x2 / zoomFactor) * zoomFactor, y: (y2 / zoomFactor) * zoomFactor }
+        start = { x: (x1 / zoomFactor) * zoomFactor + 1, y: (y1 / zoomFactor) * zoomFactor + 1 }
+        end = { x: (x2 / zoomFactor) * zoomFactor + 1, y: (y2 / zoomFactor) * zoomFactor + 1 }
     } else {
         start = { x: x1, y: y1 }
         end = { x: x2, y: y2 }
