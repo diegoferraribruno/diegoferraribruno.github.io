@@ -116,9 +116,9 @@ function camera() {
                     canvasV.height = canvas.width * proporcao
 
                     let offsetW = (parseInt(videoC.style.height, 10) - canvas.height) * escala
-                    let offsetH = - canvas.height * escala - ((canvasV.height - canvas.height) / 2)
+                    let offsetH = - ((canvasV.height - canvas.height) / 2)
                     videoC.setAttribute("style",
-                        ` position:absolute; top:0px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
+                        ` position:absolute; top:${offsetH}px; display: flex; width:100%; height:100%; flex-direction: column; justify-content: space-between;`)
                 }
             }
         };
@@ -225,7 +225,7 @@ function gotDevices(mediaDevices) {
             const textNode = document.createTextNode(label);
             option.appendChild(textNode);
             select.appendChild(option);
-         //   console.log(mediaDevice)
+            //   console.log(mediaDevice)
         }
     });
 }
@@ -359,7 +359,7 @@ async function initializeCamera() {
                             valor = 'continuous'
                         }
                         await videoStream.getVideoTracks()[0].applyConstraints({ advanced: [{ [key]: valor }] })
-                      //  console.log(valor)
+                        //  console.log(valor)
                     }
                     track.applyConstraints(constr)
                     //console.log(`${key}: ${value}`);
