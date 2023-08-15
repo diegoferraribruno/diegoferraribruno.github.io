@@ -3,7 +3,59 @@ var texto = {
     font: "times new Roman",
     size: "20px",
 }
+var textostarted = false
 
+function startTexto() {
+    if (textostarted) return;
+    textostarted = true
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // Populate font list with pre-defined font families
+        const fontFamilies = [
+            'Arial',
+            'Times New Roman',
+            'Courier New',
+            'Verdana',
+            'Helvetica',
+            'Tahoma',
+            'Comic Sans MS'
+            // ... Add more font families as needed
+        ];
+
+        fontFamilies.forEach(font => {
+            const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
+            const option = document.createElement('option');
+            const truncatedText = sampleText.substring(0, 18); // Max length 26 characters
+            option.textContent = font + truncatedText;
+            option.style.fontFamily = font + ', sans-serif';
+            option.style.fontSize = "16px"
+            option.value = font;
+            fontSelect.appendChild(option);
+        });
+    } else {
+        // Use the queryLocalFonts approach
+        async function logFontData() {
+            try {
+                const availableFonts = await window.queryLocalFonts();
+                availableFonts.forEach(fontData => {
+                    const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
+                    const option = document.createElement('option');
+                    const truncatedText = sampleText.substring(0, 18); // Max length 26 characters
+                    option.textContent = fontData.family + truncatedText;
+                    option.style.fontFamily = fontData.family + ', sans-serif';
+                    option.style.fontSize = "16px"
+                    option.value = fontData.family;
+                    fontSelect.appendChild(option);
+                });
+            } catch (err) {
+                console.error(err.name, err.message);
+            }
+        }
+
+        logFontData();
+    }
+}
 const textInput = document.getElementById('textInput');
 const fontSelect = document.getElementById('fontSelect');
 const fontSizeInput = document.getElementById('fontSizeInput');
@@ -66,50 +118,3 @@ italicButton.addEventListener('click', () => {
 });
 colorSelect.addEventListener('change', () => { updateCanvas() });
 //drawButton.addEventListener('click', () => { updateCanvas() });
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-if (isMobile) {
-    // Populate font list with pre-defined font families
-    const fontFamilies = [
-        'Arial',
-        'Times New Roman',
-        'Courier New',
-        'Verdana',
-        'Helvetica',
-        'Tahoma',
-        'Comic Sans MS'
-        // ... Add more font families as needed
-    ];
-
-    fontFamilies.forEach(font => {
-        const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
-        const option = document.createElement('option');
-        const truncatedText = sampleText.substring(0, 18); // Max length 26 characters
-        option.textContent = font + truncatedText;
-        option.style.fontFamily = font + ', sans-serif';
-        option.style.fontSize = "16px"
-        option.value = font;
-        fontSelect.appendChild(option);
-    });
-} else {
-    // Use the queryLocalFonts approach
-    async function logFontData() {
-        try {
-            const availableFonts = await window.queryLocalFonts();
-            availableFonts.forEach(fontData => {
-                const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
-                const option = document.createElement('option');
-                const truncatedText = sampleText.substring(0, 18); // Max length 26 characters
-                option.textContent = fontData.family + truncatedText;
-                option.style.fontFamily = fontData.family + ', sans-serif';
-                option.style.fontSize = "16px"
-                option.value = fontData.family;
-                fontSelect.appendChild(option);
-            });
-        } catch (err) {
-            console.error(err.name, err.message);
-        }
-    }
-
-    logFontData();
-}

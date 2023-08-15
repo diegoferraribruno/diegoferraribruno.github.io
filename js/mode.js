@@ -46,10 +46,12 @@ async function modeTo(qual) {
     switch (qual) {
         case "texto":
             mode = qual;
+            startTexto()
             iD("fontStrokeColor").style.backgroundColor = strokeColor
             iD("fontStrokeColor").value = strokeColor
             iD("fontEstrokeColor").style.backgroundColor = estrokeColor
             iD("fontEstrokeColor").value = estrokeColor
+
             break
         case "FX":
             canvasFront.classList.remove("esconde")
