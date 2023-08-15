@@ -670,7 +670,7 @@ function handleUp(evt) {
         updateCanvas(x, y)
         context.drawImage(canvasFront, 0, 0)
 
-        swapImg = canvas.toDataURL('image/png');
+        swapImg = canvasFront.toDataURL('image/png');
         swapImg.onload =
 
             Historia(swapImg)

@@ -40,13 +40,13 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
         ctxF.shadowOffsetY = 0; // integer
 
         // Blurring effect to the shadow, the larger the value, the greater the blur.
-        ctxF.shadowBlur = 10; // integer
-        ctxF.fillStyle = "#ffffffee";
+        ctxF.shadowBlur = 6; // integer
+        ctxF.fillStyle = "#fffffff5";
     }
     else {
         ctxF.fillStyle = selectedColor;
     }
-    ctxF.fillText(text, x, y - fontSize / 2);
+    ctxF.fillText(text, redondo(x), redondo(y - fontSize / 2));
     ctxF.restore()
 }
 
@@ -67,8 +67,7 @@ italicButton.addEventListener('click', () => {
 colorSelect.addEventListener('change', () => { updateCanvas() });
 //drawButton.addEventListener('click', () => { updateCanvas() });
 
-const fontFamilyList = ["Raleway",
-    "Montserrat",
+const fontFamilyList = [
     'Arial',
     'Times New Roman',
     'Courier New',
@@ -82,8 +81,12 @@ function getAvailableFonts() {
     console.log(fontFamilyList)
 
     fontFamilyList.forEach(font => {
+        const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
         const option = document.createElement('option');
-        option.textContent = font;
+        const truncatedText = sampleText.substring(0, 18); // Max length 26 characters
+        option.textContent = font + truncatedText;
+        option.style.fontFamily = font + ', sans-serif';
+        option.style.fontSize = "16px"
         option.value = font;
         fontSelect.appendChild(option);
     });
