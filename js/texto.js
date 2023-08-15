@@ -7,6 +7,7 @@ var textostarted = false
 
 function startTexto() {
     if (textostarted) return;
+    textInput.value = "Texto"
     textostarted = true
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
@@ -64,12 +65,14 @@ const italicButton = document.getElementById('italicButton');
 const colorSelect = document.getElementById('colorSelect');
 const drawButton = document.getElementById('drawButton');
 
+var isBold = false
+var isItalic = false
+var fontSize = fontSizeInput.value;
+
 function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     const text = textInput.value;
     const selectedFont = fontSelect.value;
-    const fontSize = fontSizeInput.value;
-    const isBold = boldButton.classList.contains('active');
-    const isItalic = italicButton.classList.contains('active');
+
     const selectedColor = colorSelect.value;
     const textradius = text.length * fontSize / 2
     ctxF.save()
@@ -107,14 +110,38 @@ textInput.addEventListener('input', () => {
     updateCanvas();
 });
 fontSelect.addEventListener('input', () => { updateCanvas() });
-fontSizeInput.addEventListener('input', () => { updateCanvas() });
+fontSizeInput.addEventListener('input', () => {
+    fontSize = fontSizeInput.value;
+    updateCanvas()
+});
 boldButton.addEventListener('click', () => {
-    boldButton.classList.toggle('active');
+    isBold = !isBold
+    if (isBold) {
+        boldButton.innerHTML = "<span class='icon2 minicheck'></span>"
+    } else {
+        boldButton.innerHTML = ""
+    }
     updateCanvas();
 });
 italicButton.addEventListener('click', () => {
-    italicButton.classList.toggle('active');
+    isItalic = !isItalic
+    if (isItalic) {
+        italicButton.innerHTML = "<span class='icon2 minicheck'></span>"
+    } else {
+        italicButton.innerHTML = ""
+    }
     updateCanvas();
 });
 colorSelect.addEventListener('change', () => { updateCanvas() });
 //drawButton.addEventListener('click', () => { updateCanvas() });
+
+function changeFontUp() {
+    fontSize = Math.floor(fontSizeInput.value) + 1
+    fontSizeInput.value = fontSize
+    updateCanvas();
+}
+function changeFontDown() {
+    fontSize = Math.floor(fontSizeInput.value) - 1
+    fontSizeInput.value = fontSize
+    updateCanvas();
+}

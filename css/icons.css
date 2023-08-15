@@ -405,6 +405,6 @@
     background-position-x: -1548px;
 }
 
-.active {
-    content: "<span class='icon2 minicheck'></span>";
+.right {
+    float: right;
 }

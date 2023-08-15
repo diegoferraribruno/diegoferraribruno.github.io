@@ -98,7 +98,18 @@ function startup() {
         event.preventDefault()
         zoomMinus()
         //console.dir(event)
+
+      } else if (keyCtrl && event.key === "s") {
+        event.preventDefault()
+        mostraMenu("salvar")
+        //console.dir(event)
+
+      } else if (keyCtrl && event.key === "o") {
+        event.preventDefault()
+        mostraMenu("imagem")
+        //console.dir(event)
       }
+
       if (event.key === "Enter" && mode == "texto") {
         textToHistory();
       }

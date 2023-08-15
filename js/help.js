@@ -2,6 +2,10 @@ let shortcuts = {
     "en": {
 
         "All modes": {
+            "Ctrl + +": "Zoom In",
+            "Ctrl + -": "zoom Out",
+            "Ctrl + O": "Opens the load/import file menu",
+            "Ctrl + S": "Opens the save/export menu",
             "Ctrl + C": "copy full canvas if nothing is selected",
             "Ctrl + V": "enter paste mode with the last copied (or selected) image to be drawn when touch or click ends over the canvas",
             "Ctrl + X": "same as copy, but makes a hole at the selection area",
@@ -44,6 +48,10 @@ let shortcuts = {
     },
     "pt_BR": {
         "Em todos os Modos": {
+            "Ctrl + +": "Aproxima o zoom",
+            "Ctrl + -": "Distancia o zoom",
+            "Ctrl + O": "Abre o men de carregar/importar arquivo",
+            "Ctrl + S": "Abre o menu de salvar/exportar arquivo",
             "Ctrl + C": `Copia o quadro todo para o ${textos[language]["99"]} caso nada esteja selecionado`,
             "Ctrl + V": "Entra no modo colar com a ultima imagem copiada(ou selecionada) para ser desenhada na posição do fim do click ou toque",
             "Ctrl + X": "O mesmo que copiar mas deixa um buraco na área selecionada",

@@ -1,6 +1,8 @@
 let vers = [{
-    versao: "7.4",
+    versao: "7.5",
     notas: [
+        "modo Texto",
+        "mais atalhos Ctrl+,-,o,s",
         "mode de Cor A -> B. Troca as cores enquanto você pinta",
         "Pintura com luz refeito",
         "new keyboard shortcuts - novos atalhos de teclado",
