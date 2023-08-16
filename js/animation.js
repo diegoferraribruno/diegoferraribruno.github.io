@@ -127,6 +127,8 @@ function play() {
         iD("play()").innerHTML = ' <span onmousedown="stop()" class="icon stopicon"></span>'
         clearInterval(inter);
         canvasFront.classList.remove("esconde")
+
+        canvasFront.style.zIndex = 3
         ctxF.globalAlpha = 1;
         ctxF.globalCompositeOperation = 'destination-over'
         if (nightmode) {
@@ -155,6 +157,9 @@ function stop() {
     ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasFront.style.backgroundColor = "transparent"
     iD("play()").innerHTML = '<span class="icon playicon"></span>'
+    if (context.globalCompositeOperation == "destination-over") {
+        canvasFront.style.zIndex = -1
+    }
 }
 
 let playerimg = new Image()

@@ -11,7 +11,7 @@ function mudaCorQ(q = 0, valor) {
 
     setStrokeColor();
     criaPaleta();
-    if (rainbowAB){rainbow("ab",false)}
+    if (rainbowAB) { rainbow("ab", false) }
 
 }
 function mudaCorD(q = 0, valor) {
@@ -41,15 +41,15 @@ function switchEstroke() {
     mudaCor(strokeColor, true)
     estrokeColor = old
     iD("salvaCor2").style.backgroundColor = old
-    if (rainbowAB){rainbow("ab",false)}
-    
+    if (rainbowAB) { rainbow("ab", false) }
+
 }
 function mudaCor(valor, bloquinho = false) {
-   
+
     if (bloquinho) {
         estrokeColor = strokeColor
         iD("salvaCor2").style.backgroundColor = estrokeColor
-        
+
     }
     if (valor == "P") {
         hsla[0] = 0;
@@ -79,12 +79,12 @@ function mudaCor(valor, bloquinho = false) {
     if (bloquinho) {
         hslaToRgba()
         changeColorMode()
-      //  rainbowABcolors = [toHSLAObjectAB(strokeColor), toHSLAObjectAB(estrokeColor)]
+        //  rainbowABcolors = [toHSLAObjectAB(strokeColor), toHSLAObjectAB(estrokeColor)]
 
-      
+
     }
-    if (rainbowAB == true){
-        rainbow("ab",false)
+    if (rainbowAB == true) {
+        rainbow("ab", false)
     }
     // iD("mostraCor").style.backgroundColor = strokeColor;
     //iD("mostraCor2").style.backgroundColor =
@@ -110,7 +110,7 @@ const toHslaObject = (hslaStr) => {
     hsla[1] = saturation;
     hsla[2] = lightness;
     hsla[3] = alpha;
-    return { hue, saturation, lightness , alpha};
+    return { hue, saturation, lightness, alpha };
 
 
 };
@@ -177,6 +177,10 @@ function setStrokeColor() {
     }
     iD("rainbowAB").style.background = `linear-gradient(145deg, ${strokeColor},${estrokeColor})`
     changeBrush()
+    iD("fontStrokeColor").style.backgroundColor = strokeColor
+    iD("fontStrokeColor").value = strokeColor
+    iD("fontEstrokeColor").style.backgroundColor = estrokeColor
+    iD("fontEstrokeColor").value = estrokeColor
 
 }
 
@@ -372,8 +376,8 @@ let rainbowAB = false
 let rainbowABcolors
 const toHSLAObjectAB = hslaStr => {
     const [hue, saturation, lightness, alpha] = hslaStr
-    .match(/[\d\.]+/g)
-    .map(Number);
+        .match(/[\d\.]+/g)
+        .map(Number);
     return { hue, saturation, lightness, alpha };
 };
 
@@ -383,67 +387,69 @@ var lightAbigger = false
 var alphaAbigger = false
 var colorABdist = 20
 
-function abDistanceChange(value){colorABdist = value; updateAbBar (value)}
-function updateAbBar (value){
-        iD("abbar").setAttribute("style", `width:${value*3}px; background:linear-gradient(90deg, ${strokeColor},${estrokeColor});display: inline-block; height: 20px; border-radius: 10px;`);}
-        
+function abDistanceChange(value) { colorABdist = value; updateAbBar(value) }
+function updateAbBar(value) {
+    iD("abbar").setAttribute("style", `width:${value * 3}px; background:linear-gradient(90deg, ${strokeColor},${estrokeColor});display: inline-block; height: 20px; border-radius: 10px;`);
+}
+
 function rainbow(ab = false, bloquinho = true) {
     if (ab == "ab") {
         if (rainbowInk == true) {
             rainbowInk = false
-           
+
         }
-        if(bloquinho){rainbowAB = !rainbowAB}
+        if (bloquinho) { rainbowAB = !rainbowAB }
         rainbowABcolors = [toHSLAObjectAB(strokeColor), toHSLAObjectAB(estrokeColor)]
         let difAB0 = rainbowABcolors[0].hue - rainbowABcolors[1].hue
         let difAB1 = rainbowABcolors[0].saturation - rainbowABcolors[1].saturation
         let difAB2 = rainbowABcolors[0].lightness - rainbowABcolors[1].lightness
-        let difAB3  = rainbowABcolors[0].alpha - rainbowABcolors[1].alpha
+        let difAB3 = rainbowABcolors[0].alpha - rainbowABcolors[1].alpha
 
-        if (difAB0 > 180 || difAB0 < -180){
+        if (difAB0 > 180 || difAB0 < -180) {
             hueinvert = true
-        }else{ 
+        } else {
             hueinvert = false
         }
-        if(difAB0 > 0){
-            
-            colorincrease = -difAB0/colorABdist
-           if (hueinvert) {colorincrease*=-1}
+        if (difAB0 > 0) {
+
+            colorincrease = -difAB0 / colorABdist
+            if (hueinvert) { colorincrease *= -1 }
             colorAbigger = true
-        }else{
-            colorincrease = difAB0/colorABdist
-         if (hueinvert) {colorincrease*=-1}
+        } else {
+            colorincrease = difAB0 / colorABdist
+            if (hueinvert) { colorincrease *= -1 }
             colorAbigger = false
         }
 
-        if(difAB1>0 ){
-            lightnessincrease = -difAB1/colorABdist
+        if (difAB1 > 0) {
+            lightnessincrease = -difAB1 / colorABdist
             lightAbigger = true
-        }else{
-            lightnessincrease = difAB1/colorABdist
+        } else {
+            lightnessincrease = difAB1 / colorABdist
             lightAbigger = false
         }
 
-        if( difAB2> 0){
+        if (difAB2 > 0) {
             satAbigger = true
-            satincrease = -difAB2/colorABdist
-        }else{satAbigger = false
-            satincrease = difAB2/colorABdist
+            satincrease = -difAB2 / colorABdist
+        } else {
+            satAbigger = false
+            satincrease = difAB2 / colorABdist
         }
-        if(difAB3>0 ){
+        if (difAB3 > 0) {
             alphaAbigger = true
-            alphaincrease = -difAB3/colorABdist
-        }else{
+            alphaincrease = -difAB3 / colorABdist
+        } else {
             alphaAbigger = false
-            alphaincrease = difAB3/colorABdist
+            alphaincrease = difAB3 / colorABdist
         }
-        
+
         if (rainbowAB == true) {
             iD("rainbowAB").innerHTML = '<span class="icon2 minicheck">a-b</span>'
 
             Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + " a-b<br>" + alerts[language][7])
-           iD("menuAB").classList.add("aparece")
-           updateAbBar(colorABdist)
+            iD("menuAB").classList.add("aparece")
+            updateAbBar(colorABdist)
 
         } else {
             iD("rainbowAB").innerHTML = 'a-b'
