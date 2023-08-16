@@ -233,11 +233,10 @@ a:visited {
 
 #bio2 {
     font-size: small;
-    padding: 8px;
+    padding: 12px;
     margin: auto;
-    color: white;
-    background-color: black;
-    border: #dfb000 4px dashed;
+    background-color: rgb(223, 223, 223);
+    border: #6c878b 2px dashed;
     border-radius: 8px;
 }
 

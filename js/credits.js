@@ -6,17 +6,31 @@ function apoio() {
             case "pt_BR":
                 apoioHTML = `<center>
                 <span onClick='cancela("conteudo")' style=' float:right'class='close'></span>
-            <a href="https://github.com/sponsors/diegoferraribruno"><img src="img/githubsponsors.png"style="display:block; float:left"></a><br><br>
-Este website é um projeto de
-<a href="https://github.com/diegoferraribruno"> código livre</a> em constante evolução.<br><br>
-           <img src="img/pix.png" onclick="copyPix()" style="display:block; float:right">
-           Se desejar contribuir financeiramente com seu desenvolvedor, você pode via:</b>
+            <a href="https://github.com/sponsors/diegoferraribruno"><img src="img/githubsponsors.png"style="display:block; float:left"></a><br>
+            <h1>Contribua</h1>
+            <br>
+            Se desejar contribuir financeiramente com o desenvolvedor deste projeto de
+            <a href="https://github.com/diegoferraribruno"> código livre</a><br>
+            <img src="img/pix.png" onclick="copyPix()" style="display:block; float:right">            
+           você pode fazê-lo via:</b>
            <a href="https://github.com/sponsors/diegoferraribruno"> Github Sponsors</a> ou fazendo um PIX para:<br>
-           <input type="text" size="26" value="f6aecef5-e60b-408e-97e1-30ee3927c0c0" id="myInput" readonly>
+           <input type="text" size="26" value="f6aecef5-e60b-408e-97e1-30ee3927c0c0" id="myInput" style="width:180px;" onfocus="copyPix()" readonly>
            
            <br><br>
-           Ajude também a divulguar:</b><br>
-           https://diegoferraribruno.github.io<br><br>
+           Ajude também a divulguar:</b><br>          <span class="share__list" onclick="clicklink()">
+           <span class="socialicon shareicon"></span>
+
+           <span class="share__link  share__link--facebook socialicon ficon"></span>
+
+           <span class="share__link share__link--twitter socialicon xicon"></span>
+
+           <span class="share__link share__link--linkedin socialicon inicon"></span>
+
+           <span class="share__link share__link--mail socialicon mailicon"></span>
+
+           <span class="share__link share__link--whatsapp socialicon zapicon"></span>
+       </span>
+           https://diegoferraribruno.github.io<br>
            Grato pela sua atenção<br><br>
            </div>
            <div id="bio2"></div></center>`
@@ -26,18 +40,29 @@ Este website é um projeto de
                 break;
             case "en":
                 apoioHTML = `<center>
+                <a href="https://github.com/sponsors/diegoferraribruno"><img src="img/githubsponsors.png"style="display:block; float:left"></a>
                 <span onClick='cancela("conteudo")' class='close'></span>
-                <a href="https://github.com/sponsors/diegoferraribruno"><img src="img/githubsponsors.png"style="display:block; float:left"></a><br><br>
-    This is an
-    <a href="https://github.com/diegoferraribruno">  Open Source Project</a> in constant evolution.<br><br>
-               <img src="img/pix.png" onclick="copyPix()" style="display:block; float:right">
-               If you want to contribute, you may do it by</b>
-               <a href="https://github.com/sponsors/diegoferraribruno"> Github Sponsors</a> or doing a PIX (Brazil) to this key:<br>
-               <input type="text" size="26" value="f6aecef5-e60b-408e-97e1-30ee3927c0c0" id="myInput" readonly>
-               
-               <br><br>
-               Help also spreading the word about this.</b><br>
-               https://diegoferraribruno.github.io<br><br>
+                <h1> contribute</h1>
+                If you want to contribute with this
+                <a href="https://github.com/diegoferraribruno">  Open Source Project</a>, 
+                you may do it by</b>
+                <a href="https://github.com/sponsors/diegoferraribruno"> Github Sponsors</a> 
+                <img src="img/pix.png" onclick="copyPix()" style="display:block; float:right">
+                <br><br>Doing a PIX (Brazil) to this key:<br>
+                <input type="text" size="26" value="f6aecef5-e60b-408e-97e1-30ee3927c0c0" id="myInput" style="width:180px;" onfocus="copyPix()" readonly>
+                <br>Or just sharing:<br>
+                <span class="share__list" onclick="clicklink(event)">
+                    <span class="socialicon shareicon"></span>
+                    <span class="share__link  share__link--facebook socialicon ficon"></span>
+
+                    <span class="share__link share__link--twitter socialicon xicon"></span>
+
+                    <span class="share__link share__link--linkedin socialicon inicon"></span>
+
+                    <span class="share__link share__link--mail socialicon mailicon"></span>
+                    
+                    <span class="share__link share__link--whatsapp socialicon zapicon"></span>
+                </span> https://diegoferraribruno.github.io<br>
                Thanks for you suport!<br><br>
                </div>
                <div id="bio2"></div></center>`
@@ -85,12 +110,15 @@ var usuarios = [{
 }]
 
 
+var pageUrl = "https://diegoferraribruno.github.io"
+var pageTitle = "Yoga Art - Draw, animate, mandala and more"
 
 function setShareLinks() {
-    var pageUrl = "https://diegoferraribruno.github.io"
-    var pageTitle = encodeURIComponent(document.title);
 
-    iD("menuyoga").addEventListener('click', function (event) {
+    iD("menuyoga").addEventListener('click', clicklink)
+}
+function clicklink(event) {
+    {
         //console.log(event)
         let url = null;
         console.log(event.target)
@@ -119,7 +147,7 @@ function setShareLinks() {
             socialWindow(url, 570, 450);
         }
 
-    }, false);
+    }
 }
 
 function socialWindow(url, width, height) {

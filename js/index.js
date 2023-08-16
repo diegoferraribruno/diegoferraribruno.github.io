@@ -105,7 +105,7 @@ function criaConteudo() {
         conteudo.id = "conteudo"
         conteudo.classList.add("day")
         conteudo.classList.add("fundobranco")
-        document.body.appendChild(conteudo)
+        iD("menus").appendChild(conteudo)
     } else {
         cancela("conteudo")
     }

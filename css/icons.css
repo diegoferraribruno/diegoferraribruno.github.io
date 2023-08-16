@@ -416,13 +416,12 @@
 
 .share__list {
     display: block;
-    float: left;
-    margin: 4px;
+    margin: 8px;
 }
 
 .share__link {
     background-color: #eeeeeebb;
-    border-radius: 16px;
+    border-radius: 32px;
 }
 
 code {
