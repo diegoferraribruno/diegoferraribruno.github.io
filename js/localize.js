@@ -220,7 +220,8 @@ let textos = {
         "101": "Ajuda",
         '102': 'Novo pincel de recorte',
         '103': 'Pancheta de recortes esta vazia, use a ferramenta de seleção para copiar algo',
-        '104': 'Manter proporção'
+        '104': 'Manter proporção',
+        '105': 'Liberte sua mente'
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -325,7 +326,8 @@ let textos = {
         '101': "Help",
         '102': "New Brush from Cipboard",
         '103': "Clipobard is Empty, use the selection tool to copy something",
-        '104': "Keep proportion"
+        '104': "Keep proportion",
+        "105": "Free your mind"
     }
 }
 var titles = {

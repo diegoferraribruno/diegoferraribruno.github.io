@@ -109,11 +109,24 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
 textInput.addEventListener('input', () => {
     updateCanvas();
 });
-fontSelect.addEventListener('input', () => { updateCanvas() });
+fontSelect.addEventListener('input', () => { updateCanvas(); addFavFont(); });
 fontSizeInput.addEventListener('input', () => {
     fontSize = fontSizeInput.value;
     updateCanvas()
 });
+function addFavFont(lst = fontSelect) {
+    var selected = new Array();
+    var options = lst.getElementsByTagName("option");
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].selected) {
+            selected.push(options[i]);
+            lst.removeChild(options[i]);
+        }
+    }
+    for (var i = 0; i < selected.length; i++) {
+        lst.insertBefore(selected[i], options[0]);
+    }
+};
 boldButton.addEventListener('click', () => {
     isBold = !isBold
     if (isBold) {

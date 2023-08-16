@@ -92,7 +92,7 @@ function handleKeyUp(evt) {
 function handleKeys(evt) {
     let activeEl = document.activeElement
     if (activeEl.type != "text") {
-
+        iD("console").innerHTML = evt.key
         if (evt.keyCode === 90) {
             keyZ = true
         }
@@ -125,6 +125,18 @@ function handleKeys(evt) {
         if (evt.code === "AltRight" || evt.code === "AltLeft") {
             keyAlt = true
         }
+        if (evt.key === 'VolumeDown') {
+            redoT();
+            evt.preventDefault();
+            // process logic of volume-down
+
+        } else if (evt.key === 'VolumeUp') {
+            // process logic of volume-up
+            evt.preventDefault();
+            undoT()
+
+        }
+
     }
 }
 
