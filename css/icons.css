@@ -408,3 +408,70 @@
 .right {
     float: right;
 }
+
+.share__wrapper {
+    display: flex;
+    margin: 2rem 0;
+}
+
+.share__list {
+    display: block;
+    float: left;
+    margin: 4px;
+}
+
+.share__link {
+    background-color: #eeeeeebb;
+    border-radius: 16px;
+}
+
+code {
+    background-color: #eee;
+    padding: 0 3px 0 3px;
+}
+
+.notes {
+    width: 100%;
+    margin: 0 0 20px 0;
+}
+
+
+.socialicon {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-image: url("./../img/socialicons7.png");
+    filter: drop-shadow(0px 0px 1px white);
+    margin-bottom: -10px;
+    margin-top: -10px;
+
+    transform: scale(0.8);
+}
+
+.shareicon {
+    background-position-x: 0px;
+}
+
+.ficon {
+    background-position-x: -36px;
+}
+
+.xicon {
+    background-position-x: -72px;
+}
+
+.inicon {
+    background-position-x: -108px;
+}
+
+.mailicon {
+    background-position-x: -144px;
+}
+
+.zapicon {
+    background-position-x: -180px;
+}
+
+.threadsicon {
+    background-position-x: -216px;
+}

@@ -1,7 +1,8 @@
 let vers = [{
     versao: "7.5",
     notas: [
-        "modo Texto",
+        "nova área de colabore e compartillhe",
+        "modo Texto, com menu de fontes dinamico",
         "mais atalhos Ctrl+,-,o,s",
         "mode de Cor A -> B. Troca as cores enquanto você pinta",
         "Pintura com luz refeito",
@@ -412,4 +413,4 @@ function textao() {
 }
 textao()
 iD("versoes").innerHTML = lavem
-document.title = "Desenho " + vers[0].versao
+document.title = "Yoga Art " + vers[0].versao

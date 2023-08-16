@@ -122,8 +122,10 @@ function startup() {
       }*/
     }
 
-  }
 
+
+  }
+  setShareLinks();
   ZOOMf(2)
   setTimeout(() => {
     ZOOMf(1)

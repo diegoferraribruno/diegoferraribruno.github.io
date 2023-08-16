@@ -398,7 +398,9 @@ var titles = {
         "dinamicBrush": "Tamanho dinamico",
         "rainbow": "Tinta Arco-íris",
         "glow": "Desenho com luz",
-        "mirror": "Desenho espelhado"
+        "mirror": "Desenho espelhado",
+        "help2": "Ajuda",
+        "help": "Ajuda"
     },
     "en": {
 
@@ -468,7 +470,9 @@ var titles = {
         "dinamicBrush": "Dinamic size",
         "rainbow": "Rainbow Ink",
         "glow": "Glowing in the dark mode",
-        "mirror": "Mirror mode"
+        "mirror": "Mirror mode",
+        "help2": "Help",
+        "help": "Help"
 
     }
 }
