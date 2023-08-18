@@ -678,14 +678,12 @@ function handleUp(evt) {
 
 
     }
+
     if (mode == "texto") {
         updateCanvas(x, y)
         context.drawImage(canvasFront, 0, 0)
+        setTimeout(() => { Historia() }, 50)
 
-        swapImg = canvas.toDataURL('image/png');
-        swapImg.onload =
-
-            Historia(swapImg)
     }
     else if (isDrawing && !isGrabing) {
         if (keyCtrl) {

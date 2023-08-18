@@ -190,7 +190,7 @@ function startup() {
 
   setTimeout(() => {
     canvas.addEventListener("pointerdown", handleStart);
-    canvas.addEventListener("pointerup", handleUp);
+    //canvas.addEventListener("pointerup", handleUp);
     // iD("canvas_div2").addEventListener("pointerup", handleUp);
 
     canvas.addEventListener("pointercancel", handleCancel);
