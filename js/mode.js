@@ -65,7 +65,7 @@ async function modeTo(qual) {
             mode = qual;
             break;
         case "redimensionar":
-
+            qualityAlert()
             mode = qual;
             break;
         case "selecionar":
@@ -78,6 +78,8 @@ async function modeTo(qual) {
             mode = qual;
             break;
         case "rotacionar":
+            mode = qual;
+            qualityAlert()
             break;
         case "zoomx":
             mode = "zoomx"
@@ -136,4 +138,14 @@ async function modeTo(qual) {
         case _:
             break;
     }
+}
+
+function qualityAlert() {
+    setTimeout(() => Alert(`
+    <span class="iconsmall alerticon"></span><span class="icon2 blur"></span>
+     ${textos[language]["58"]}<span class="bot" onmousedown="cloneFrame()"> <span class="icon cloneframeicon"></span>
+    <txt name="27">Duplicate frame
+    </txt>
+    </span>
+    `, 5), 200)
 }

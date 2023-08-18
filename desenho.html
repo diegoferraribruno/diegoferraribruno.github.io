@@ -38,7 +38,7 @@
                     <span class="icon2 foldericon"></span>
                 </span>
 
-                <span id="canvasmenu" title="Propriedades do desenho" class="mais" onclick="mostraMenu('tamanho')">
+                <span id="canvasmenu" title="Propriedades do desenho" class="mais" onclick="mostraMenu('quadro')">
                     <span class="icon2 frameicon"></span>
                 </span>
                 <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
@@ -201,7 +201,7 @@
             <div id="menutamanho" class="fundobranco submenu">
 
                 <span class="botao">
-                    <span class="icon2 frameicon"></span>
+
                     <span class="close" title="fechar menu tamanho da tela" onmousedown="removeClass()"></span>
                     <txt name="19">Tamanho do quadro</txt>
                     <!--txt name="9">Tamanho atual:</txt><br>
@@ -222,72 +222,76 @@
                 </span-->
 
 
-                    <span class="botao" style="font-size: 0.6em; display:block; height: 210px; " title="formatos"
-                        id="formatos2">
-
-                        <div
-                            style="display: block; overflow: scroll; height: 114px; width: 220px; -ms-overflow-style: auto; 
+                    <span class="botao"
+                        style="font-size: 0.8em; display: block; overflow: scroll; height: 114px; width: 220px; -ms-overflow-style: auto; 
                     scrollbar-width: thin; margin-bottom: 10px; border: darkgrey solid 1px; 
-                    background-color: #ffffff22; border-radius: 8px; margin-right: auto; margin-left: auto;margin-top: 4px;">
+                    background-color: #ffffff22; border-radius: 8px; margin-right: auto; margin-left: auto;margin-top: 4px;" title="
+                        formatos" id="formatos2">
 
-                            <span onmousedown="tamanho3(32,32)">32x32
-                                <span
-                                    style="border: 2px solid gray; width: 4px; height: 4px; display: inline-block;"></span>
-                            </span>
-                            <span onmousedown="tamanho3(64,64)">64x64
-                                <span
-                                    style="border: 2px solid gray; width: 7px; height: 7px; display: inline-block;"></span>
-                            </span><br>
-                            <span onmousedown="tamanho3(128,128)">128x128
-                                <span
-                                    style="border: 2px solid gray; width: 12px; height: 12px; display: inline-block;"></span>
-                            </span><br>
-                            <span onmousedown="tamanho3(320,320)">320x320
-                                <span
-                                    style="border: 2px solid gray; width: 16px; height: 16px; display: inline-block;"></span>
-                            </span><br>
-                            <span onmousedown="tamanho3(640,640)"> SD: 640x640
-                                <span
-                                    style="border: 2px solid gray; width: 20px; height: 20px; display: inline-block;"></span>
-                            </span><br>
-                            <span onmousedown="tamanho3(640,360)"> SD: 640x360
-                                <span
-                                    style="border: 2px solid gray; width: 20px; height: 12px; display: inline-block;"></span>
-                            </span><br>
-                            <span onmousedown="tamanho3(1280,720)">1280x720*
-                                <span
-                                    style="border: 2px solid gray; width: 32px; height: 18px; display: inline-block;"></span>
-                            </span><br>
-                            <span onmousedown="tamanho3(1920,1080)">1920x1080*
-                                <span
-                                    style="border: 2px solid gray; width: 40px; height: 22px; display: inline-block;"></span>
-                            </span><br>
-                            <span onmousedown="tamanho3(1080,1080)">Ig:1080x1080*
-                                <span
-                                    style="border: 2px solid gray; width: 22px; height: 22px; display: inline-block;"></span>
-                            </span><br>
-                            <span onmousedown="tamanho3(3508,2480)">A4 300dpi 3508x2480
-                                <span
-                                    style="border: 2px solid gray; width: 35px; height: 24px; display: inline-block;"></span>
-                            </span><br>
-                            <span onmousedown="tamanho3(2480,3508)">A4 300dpi 2480x3508
-                                <span
-                                    style="border: 2px solid gray; width: 24px; height: 35px; display: inline-block;"></span>
-                            </span>
-                        </div>
-                        <txt name="10">Largura: </txt><input id="largura2" type="number" maxlength="4" max="1920"
-                            value="320" style="width:60px; padding: 4px;" /> px
-                        <br>
-                        <txt name="11">Altura:</txt> <input id="altura2" type="number" maxlength="4" max="1920"
-                            value="320" style="width:60px;padding: 4px;" /> px
-                        <span onmousedown="tamanho2()" class="mais"
-                            style=" float: left; position: relative; margin-top: -40px; margin-left: 260px; text-align: center; width: 36px; height: 36px;">
-                            <span class="icon coresicon"> </span>
+                        <span onmousedown=" tamanho3(32,32)" id="32x32">32x32
+                            <span
+                                style="border: 2px solid gray; width: 4px; height: 4px; display: inline-block;"></span>
                         </span>
+                        <span onmousedown="tamanho3(64,64)" id="64x64">64x64
+                            <span
+                                style="border: 2px solid gray; width: 7px; height: 7px; display: inline-block;"></span>
+                        </span><br>
+                        <span onmousedown="tamanho3(128,128)" id="128x128">128x128
+                            <span
+                                style="border: 2px solid gray; width: 12px; height: 12px; display: inline-block;"></span>
+                        </span><br>
+                        <span onmousedown="tamanho3(320,320)" id="320x320">320x320
+                            <span
+                                style="border: 2px solid gray; width: 16px; height: 16px; display: inline-block;"></span>
+                        </span><br>
+                        <span onmousedown="tamanho3(640,640)" id="640x640"> SD: 640x640
+                            <span
+                                style="border: 2px solid gray; width: 20px; height: 20px; display: inline-block;"></span>
+                        </span><br>
+                        <span onmousedown="tamanho3(640,360)" id="640x360"> SD: 640x360
+                            <span
+                                style="border: 2px solid gray; width: 20px; height: 12px; display: inline-block;"></span>
+                        </span><br>
+                        <span onmousedown="tamanho3(1280,720)" id="1280x720*">HD: 1280x720
+                            <span
+                                style="border: 2px solid gray; width: 32px; height: 18px; display: inline-block;"></span>
+                        </span><br>
+                        <span onmousedown="tamanho3(1920,1080)" id="1920x1080">FHD: 1920x1080
+                            <span
+                                style="border: 2px solid gray; width: 40px; height: 22px; display: inline-block;"></span>
+                        </span><br>
+                        <span onmousedown="tamanho3(1080,1080)" id="1080x1080">Ig:1080x1080
+                            <span
+                                style="border: 2px solid gray; width: 22px; height: 22px; display: inline-block;"></span>
+                        </span><br>
+                        <span onmousedown="tamanho3(3508,2480)" id="3508x2480">A4 300dpi 3508x2480
+                            <span
+                                style="border: 2px solid gray; width: 35px; height: 24px; display: inline-block;"></span>
+                        </span><br>
+                        <span onmousedown="tamanho3(2480,3508)" id="2480x3508">A4 300dpi 2480x3508
+                            <span
+                                style="border: 2px solid gray; width: 24px; height: 35px; display: inline-block;"></span>
+                        </span>
+
                     </span>
-                    <span id="recortar2" class="botao" onclick="modeTo('recortar')"><img src="img/crop.png">
-                        <txt name="12">recorte manual</txt>
+                    <txt name="10">Largura: </txt><input id="largura2" type="number" maxlength="4" max="1920"
+                        value="320" style="width:60px; padding: 4px;" /> px
+                    <br>
+                    <txt name="11">Altura:</txt> <input id="altura2" type="number" maxlength="4" max="1920" value="320"
+                        style="width:60px;padding: 4px;" /> px
+                    <span onmousedown="tamanho2()" class="mais"
+                        style=" float: left; position: relative; margin-top: -40px; margin-left: 260px; text-align: center; width: 36px; height: 36px;">
+                        <span class="icon2 canvassizeicon"></span>
                     </span>
+                </span>
+                <span id="recortar2" class="botao" onclick="modeTo('recortar')">
+                    <span class="icon2 cropicon"></span>
+                    <txt name="12">recorte manual</txt>
+                </span>
+                <span id="redimensionar2" class="botao" onclick="modeTo('redimensionar')"><span
+                        class="icon2 scaleicon"></span>
+                    <txt name="86">recorte manual</txt>
+                </span>
 
             </div>
 
@@ -444,11 +448,13 @@
                 </span>
             </div>
             <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto;">
-                <span class="botao" onclick="mostracarregando()">
+                <span class="botao">
                     <span title="fechar" onmousedown="removeClass()" class="close"></span>
+                    <span onclick="mostraMenu('tamanho')">
+                        <span class="icon2 canvassizeicon"></span>
 
-                    <span class="icon2 frameicon"></span>
-                    <txt name="19">tamanho do quadro</txt>
+                        <txt name="19">tamanho do quadro</txt>
+                    </span>
                 </span>
                 <span id="oculos" class="botao">
                     <span class="icon2 sharpnessicon"></span>
@@ -600,7 +606,7 @@
                         title="Enviar Arquivo de imagem" /><!-- name='files[]' multiple futurEiMPLEMENT-->
                     <span onmousedown="readURL2()" class="bloquinho">🔗</span>
                     <br>
-                    <span class="icon2 scaleicon"></span>
+                    <span class="icon2 canvassizeicon"></span>
                     <label class="toggle"> <input type="checkbox" id="ajustar" checked="true">
                         <span class="knob"></span>
                     </label>
@@ -732,7 +738,7 @@
                 <span class="botao">
                     <span class="icon2 saveicon"></span>
                     <txt name="44">Título:</txt> <input id="filename" type="text" alt="Nome do arquivo"
-                        placeholder="Nome do arquivo" value="desenho" onfocus="this.value=''">
+                        placeholder="Nome do arquivo" value="desenho" onfocus="this.value=''" style="width: 180px;">
                     <span class="close" title="fechar menu apagar" onmousedown="removeClass()"></span>
                 </span>
                 <span class="botao" onclick="export2txt()">
@@ -740,7 +746,7 @@
                     <span class="icon projecticon"></span>
                 </span>
                 <span class="botao" onclick="salvaImagem()">
-                    <txt name="43">Salvar quadro atual</txt>.png
+                    <txt name="43">Salvar quadro atual</txt> .png
                     <span class="icon2 frameicon"></span>
                 </span>
                 <span class="botao">
@@ -810,12 +816,15 @@
                 </span>
                 <span class="botao">
 
+                    <span class="icon2 canvassizeicon"></span>
                     <txt name="87">scale all?</txt>
                     <label class="toggle">
                         <input type="checkbox" id="scaleall">
                         <span class="knob"></span>
                     </label><br>
-                    <span class="icon alerticon"></span>
+                    <span class="iconsmall alerticon"></span>
+
+
                     <txt name="88">Salvar antes?</txt>
                     <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">
                         <span class="icon2 saveicon"></span></span>
@@ -931,15 +940,6 @@
                         <span class="knob"></span>
                     </label>
                 </span>
-                <span id="rotaciona" class="botao" onclick="">
-                    <span class="iconsmall alerticon"></span>
-                    <txt name="58">A imagem irá perder definição, sugestão: duplique o quadro antes de
-                        rotacionar
-                    </txt><span class="bot" onmousedown="cloneFrame()"> <span class="icon cloneframeicon"></span>
-                        <txt name="27">Duplicate frame
-                        </txt>
-                    </span>
-                </span>
 
             </div>
             <span id="menuyoga" class="submenu fundobranco"
@@ -991,10 +991,12 @@
                 <br>
 
 
-                <span class=" botao" style="font-size: 0.8em; display: flex;" title="Modos de arte">
-
+                <span class=" botao" style="font-size: 0.8em; display: flex;">
+                    <span class="mais" onclick="mostraMenu('tamanho')">
+                        <span class="icon2 canvassizeicon" title="Tamanho do Quadro"></span>
+                    </span>
                     <img src="img/rainbowmandalab.png" onclick="Mandala(),  rainbow(), glow(), setStrokeSize(12)"
-                        class="mais">
+                        class="mais" title="Mandala de luz">
 
                     <span id="imagem" title="Carregar projeto ou imagem" class="mais"
                         onmousedown="mostraMenu('imagem')">

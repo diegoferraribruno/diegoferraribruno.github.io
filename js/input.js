@@ -226,6 +226,8 @@ function handleStart(evt) {
             }
             if ((evt.pointerType == "touch" || evt.pressure == 0.5) && dinamicBrush === true) {
                 // strange if bellow wtf?!
+
+
                 if (lastPressure < 1) { lastPressure = 1 }
                 if (lastPressure > strokemax) { lastPressure = strokemax }
 
@@ -465,10 +467,10 @@ function handleMove(evt) {
                 if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true && !keyCtrl) {
                     let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2);
                     if (pressure > lastPressure) {
-                        lastPressure += 0.05
+                        lastPressure += 0.05 + strokemax / 100
                     }
                     else {
-                        lastPressure -= 0.05
+                        lastPressure -= 0.05 + strokemax / 100
                     }
 
                     if (lastPressure < 1) { lastPressure = 1 }
@@ -778,11 +780,9 @@ function handleUp(evt) {
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(canvasRender, redondo(x - canvasRender.width / 2), redondo(y - canvasRender.height / 2))
+        setTimeout(() => { Historia() }, 50)
 
-        swapImg = canvas.toDataURL('image/png');
-        swapImg.onload =
 
-            Historia(swapImg)
 
         // comando = ["s", "source-over", swapImg, 0, 0, canvas.width, canvas.height];
         // comandos[workingframe].push(comando)
@@ -790,6 +790,7 @@ function handleUp(evt) {
         //saveFrame()
         //desenha("move", x - origin.x, y - origin.y)
         movendo = false
+
         // modeTo("move")
     } else if (rotacionar == true) {
         rotacionar = false

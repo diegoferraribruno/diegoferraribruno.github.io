@@ -242,19 +242,17 @@ var openFile = function (event) {
 
         }
         adicionaQuadro()
-        setTimeout(() => {
-
-            for (i = 0; i < animacao.length; i++) {
-                setTimeout(() => {
-                    nextFrame()
-                }, 200 * i)
-            }
-
-
-            scrollFilme(len - 1)
-        }
-
-            , 1000)
+        /*  setTimeout(() => {
+  
+              for (i = 0; i < animacao.length; i++) {
+                  setTimeout(() => {
+                      nextFrame()
+                  }, 200 * i)
+              }
+              scrollFilme(len - 1)
+          }
+  
+              , 1000)*/
         let lenc = projeto["clipboard"].length
         clipboard = []
         for (i = 0; i < lenc; i++) {
@@ -320,59 +318,6 @@ var openFile = function (event) {
                 iD("pinceis2").prepend(favBrushButton)
             }
         }, 300)
-
-        /* setTimeout(() => {
-             //comandosb
-             let len = projeto["animacao"].length
-             animacao = []
-             for (i = 0; i < len; i++) {
-                 //workingframe = i
-                 animacao[i] = []
-                 let newimg = projeto["animacao"][i]
-                 animacao[i].push(newimg)
-                // animacao[workingframe] = canvas.toDataURL('image/png')
-                 //saveFrame()
-                  adicionaQuadro()
-     
-             }
-             if (i > 1) {
-     
-                 for (i = 0; i <= len; i++) {
-                     setTimeout(() => {
-                         //   favBrush(newBrushes[0].key)
-                         nextFrame()
-                     }, 400 * (i + 2))
-                 }
-             } else {
-                 setTimeout(() => {
-                  //   comandosExec()
-                     setTimeout(() => { Historia() }, 200)
-                 }, 600)
-             }
-             //changeBrush()
-     
-             if (
-     
-                 projeto["preferences"]["pixelGood"] == false
-             ) {
-                 pixelGood = false
-             } else {
-                 pixelGood = true
-             }
-     
-             if (
-                 projeto["preferences"]["dinamicBrush"] == true) {
-                 dinamicBrush = true
-             } else {
-                 dinamicBrush = false
-                 iD("dinamicBrush").checked = false
-             }
-     
-         }, 400 * (lenb + 2))*/
-        /*   setTimeout(() => {
-               favBrush('1-6-hsla(0,0%,0%,1)');
-           }
-               , 1000 * (lenb + 3))*/
     }
     reader.readAsText(input.files[0]);
 };

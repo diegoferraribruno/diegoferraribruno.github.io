@@ -281,7 +281,7 @@ let textos = {
         "55": "Erease all animation",
         "56": "Remove current frame",
         "57": "Rotate canvas",
-        "58": "Image will loose definition. <br>Sugestion: duplicate frame before rotating",
+        "58": "Image will loose definition. <br>Sugestion: duplicate the frame before",
         "59": "Brightness",
         "60": "Manual exposure Mode",
         "61": "exposureTime",

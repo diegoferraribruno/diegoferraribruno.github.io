@@ -11,7 +11,7 @@ function startup() {
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     night()
   }
-  setTimeout(() => { toggleDinamicBrush(), yoga() }, 1200)
+  setTimeout(() => { toggleDinamicBrush(), yoga() }, 500)
   window.addEventListener("resize", checkOrientation, false);
   window.addEventListener("orientationchange", checkOrientation, false);
   iD('inputSprite').addEventListener('change', importSprite);
