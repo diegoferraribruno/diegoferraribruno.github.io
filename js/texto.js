@@ -9,9 +9,34 @@ function startTexto() {
     if (textostarted) return;
     textInput.value = "Texto"
     textostarted = true
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|/i.test(navigator.userAgent);
+    const supportsQueryLocalFonts = 'fonts' in document;
+    if (isMobile && !supportsQueryLocalFonts) {
+        defaultFonts()
+    } else {
+        // Use the queryLocalFonts approach
+        async function logFontData() {
+            try {
+                const availableFonts = await window.queryLocalFonts();
+                availableFonts.forEach(fontData => {
+                    const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
+                    const option = document.createElement('option');
+                    const truncatedText = sampleText.substring(0, 18); // Max length 26 characters
+                    option.textContent = fontData.family + truncatedText;
+                    option.style.fontFamily = fontData.family + ', sans-serif';
+                    option.style.fontSize = "16px"
+                    option.value = fontData.family;
+                    fontSelect.appendChild(option);
+                });
+            } catch (err) {
+                defaultFonts()
+                console.error(err.name, err.message);
+            }
+        }
 
-    if (isMobile) {
+        logFontData();
+    }
+    function defaultFonts() {
         // Populate font list with pre-defined font families
         const fontFamilies = [
             'Arial',
@@ -34,27 +59,6 @@ function startTexto() {
             option.value = font;
             fontSelect.appendChild(option);
         });
-    } else {
-        // Use the queryLocalFonts approach
-        async function logFontData() {
-            try {
-                const availableFonts = await window.queryLocalFonts();
-                availableFonts.forEach(fontData => {
-                    const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
-                    const option = document.createElement('option');
-                    const truncatedText = sampleText.substring(0, 18); // Max length 26 characters
-                    option.textContent = fontData.family + truncatedText;
-                    option.style.fontFamily = fontData.family + ', sans-serif';
-                    option.style.fontSize = "16px"
-                    option.value = fontData.family;
-                    fontSelect.appendChild(option);
-                });
-            } catch (err) {
-                console.error(err.name, err.message);
-            }
-        }
-
-        logFontData();
     }
 }
 const textInput = document.getElementById('textInput');

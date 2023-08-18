@@ -124,7 +124,6 @@ function importSprite(e) {
             setTimeout(() => {
                 adicionaQuadro()
                 removeClass()
-                iD("carregando").style.display = "none"
                 iD("contador").innerHTML = workingframe;
             }, 500)
         }
@@ -176,7 +175,6 @@ function importSpriteUrl() {
                 setTimeout(() => {
                     adicionaQuadro()
                     removeClass()
-                    iD("carregando").style.display = "none"
                     iD("contador").innerHTML = workingframe;
                 }, 500)
             }
@@ -184,10 +182,7 @@ function importSpriteUrl() {
     }
 }
 
-function mostracarregando() {
-    removeClass()
-    iD("carregando").style.display = "grid"
-}
+
 var projeto
 let customBr = []
 var numero
@@ -278,18 +273,13 @@ var openFile = function (event) {
         await recreateCustomBrush()
         let lenb = projeto["newBrushes"].length
         setTimeout(() => {
-            //console.log(projeto, "projeto okkkkk")
             let brushNames = projeto["newBrushes"]
             let lenb = brushNames.length
-            // console.log(brushNames)
-            iD("carregando").style.display = "none"
             let len = projeto["animacao"].length
             iD("pinceis2").innerHTML = ""
             Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>" + lenb + '<span class="icon pintaricon"></span> x <br>' + len + "  <span class='icon2 frameicon'></span>  x ", len * 2)
             for (i = 0; i < lenb; i++) {
                 let brushs = brushNames[i].split("-")
-                //  console.log(brushs)
-
                 changedBrush = false;
                 strokeColor = parseInt(brushs[3])
                 strokeHeight = parseInt(brush[2])
@@ -328,12 +318,6 @@ var openFile = function (event) {
                     favBrushButton.innerHTML += "<span style='display:block; position:relative; margin-top:-40px; margin-right:auto; margin-left:auto; text-aling:center; color: #000000cc; font-size:0.75em;'>" + strokeWidth + "</span>"
                 }
                 iD("pinceis2").prepend(favBrushButton)
-
-
-
-
-                // setTimeout(() => setStrokeColor(brush[3]), 120)
-                //setTimeout(() => setStrokeSize(brush[2]), 80)
             }
         }, 300)
 

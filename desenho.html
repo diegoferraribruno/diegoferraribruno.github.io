@@ -38,7 +38,7 @@
                     <span class="icon2 foldericon"></span>
                 </span>
 
-                <span id="canvasmenu" title="Propriedades do desenho" class="mais" onclick="mostraMenu('quadro')">
+                <span id="canvasmenu" title="Propriedades do desenho" class="mais" onclick="mostraMenu('tamanho')">
                     <span class="icon2 frameicon"></span>
                 </span>
                 <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
@@ -111,7 +111,7 @@
 
                 <label for="textInput"> <span class="icon textoicon"></span>
                 </label>
-                <input type="text" id="textInput" /><span class="iconsmall lixeiraicon"
+                <input type="text" id="textInput" style="width: 200px;" /> <span class="iconsmall lixeiraicon"
                     onclick="clearTextInput()"></span>
 
                 <br>
@@ -200,10 +200,11 @@
 
             <div id="menutamanho" class="fundobranco submenu">
 
-                <span class="botao"><span class="icon2 frameicon"></span><span class="close"
-                        title="fechar menu tamanho da tela" onmousedown="removeClass()"></span>
-
-                    <txt name="9">Tamanho atual:</txt><br>
+                <span class="botao">
+                    <span class="icon2 frameicon"></span>
+                    <span class="close" title="fechar menu tamanho da tela" onmousedown="removeClass()"></span>
+                    <txt name="19">Tamanho do quadro</txt>
+                    <!--txt name="9">Tamanho atual:</txt><br>
                     <txt name="10">Largura: </txt><input id="largura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px; padding: 4px;" /> px <span title="margem a esquerda">➡️<input id="offsetx"
                             type="number" maxlength="4" max="1920" value="0" style="width:60px; padding: 4px;"
@@ -213,43 +214,80 @@
                         style="width:60px;padding: 4px;" /> px <span title="margem acima">⬇️<input id="offsety"
                             type="number" maxlength="4" max="1920" value="0" style="width:60px; padding: 4px;"
                             onchange="precut()" />
-                        type="number" maxlength="4" max="1910" value="0" style="width:60px; padding: 4px;" />
                     </span><br>
                     <div onmousedown="tamanho()" class="bot"
                         style="position: absolute; color: white; font-family: Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; margin-top: -36px; right: 10px; text-align: center;">
                         ok
                     </div>
+                </span-->
 
-                </span>
 
+                    <span class="botao" style="font-size: 0.6em; display:block; height: 210px; " title="formatos"
+                        id="formatos2">
 
-                <span class="botao" style="font-size: 0.8em;" title="formatos" id=" formatos">
-                    <span onmousedown="tamanho(32,32)">32x32
-                        <span style="border: 1px solid gray; width: 4px; height: 4px; display: inline-block;"></span>
+                        <div
+                            style="display: block; overflow: scroll; height: 114px; width: 220px; -ms-overflow-style: auto; 
+                    scrollbar-width: thin; margin-bottom: 10px; border: darkgrey solid 1px; 
+                    background-color: #ffffff22; border-radius: 8px; margin-right: auto; margin-left: auto;margin-top: 4px;">
+
+                            <span onmousedown="tamanho3(32,32)">32x32
+                                <span
+                                    style="border: 2px solid gray; width: 4px; height: 4px; display: inline-block;"></span>
+                            </span>
+                            <span onmousedown="tamanho3(64,64)">64x64
+                                <span
+                                    style="border: 2px solid gray; width: 7px; height: 7px; display: inline-block;"></span>
+                            </span><br>
+                            <span onmousedown="tamanho3(128,128)">128x128
+                                <span
+                                    style="border: 2px solid gray; width: 12px; height: 12px; display: inline-block;"></span>
+                            </span><br>
+                            <span onmousedown="tamanho3(320,320)">320x320
+                                <span
+                                    style="border: 2px solid gray; width: 16px; height: 16px; display: inline-block;"></span>
+                            </span><br>
+                            <span onmousedown="tamanho3(640,640)"> SD: 640x640
+                                <span
+                                    style="border: 2px solid gray; width: 20px; height: 20px; display: inline-block;"></span>
+                            </span><br>
+                            <span onmousedown="tamanho3(640,360)"> SD: 640x360
+                                <span
+                                    style="border: 2px solid gray; width: 20px; height: 12px; display: inline-block;"></span>
+                            </span><br>
+                            <span onmousedown="tamanho3(1280,720)">1280x720*
+                                <span
+                                    style="border: 2px solid gray; width: 32px; height: 18px; display: inline-block;"></span>
+                            </span><br>
+                            <span onmousedown="tamanho3(1920,1080)">1920x1080*
+                                <span
+                                    style="border: 2px solid gray; width: 40px; height: 22px; display: inline-block;"></span>
+                            </span><br>
+                            <span onmousedown="tamanho3(1080,1080)">Ig:1080x1080*
+                                <span
+                                    style="border: 2px solid gray; width: 22px; height: 22px; display: inline-block;"></span>
+                            </span><br>
+                            <span onmousedown="tamanho3(3508,2480)">A4 300dpi 3508x2480
+                                <span
+                                    style="border: 2px solid gray; width: 35px; height: 24px; display: inline-block;"></span>
+                            </span><br>
+                            <span onmousedown="tamanho3(2480,3508)">A4 300dpi 2480x3508
+                                <span
+                                    style="border: 2px solid gray; width: 24px; height: 35px; display: inline-block;"></span>
+                            </span>
+                        </div>
+                        <txt name="10">Largura: </txt><input id="largura2" type="number" maxlength="4" max="1920"
+                            value="320" style="width:60px; padding: 4px;" /> px
+                        <br>
+                        <txt name="11">Altura:</txt> <input id="altura2" type="number" maxlength="4" max="1920"
+                            value="320" style="width:60px;padding: 4px;" /> px
+                        <span onmousedown="tamanho2()" class="mais"
+                            style=" float: left; position: relative; margin-top: -40px; margin-left: 260px; text-align: center; width: 36px; height: 36px;">
+                            <span class="icon coresicon"> </span>
+                        </span>
                     </span>
-                    <span onmousedown="tamanho(64,64)">64x64
-                        <span style="border: 1px solid gray; width: 7px; height: 7px; display: inline-block;"></span>
+                    <span id="recortar2" class="botao" onclick="modeTo('recortar')"><img src="img/crop.png">
+                        <txt name="12">recorte manual</txt>
                     </span>
-                    <span onmousedown="tamanho(128,128)">128x128
-                        <span style="border: 1px solid gray; width: 12px; height: 12px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho(640,360)">SD: 640x360
-                        <span style="border: 1px solid gray; width: 16px; height: 9px; display: inline-block;"></span>
-                    </span>
-                    <span onmousedown="tamanho(1280,720)">HD: 1280x720*
-                        <span style="border: 1px solid gray; width: 32px; height: 18px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho(1920,1080)"> FullHD:1920x1080*
-                        <span style="border: 1px solid gray; width: 44px; height: 25px; display: inline-block;"></span>
-                    </span>
-                    <span onmousedown="tamanho(1080,1080)">Ig:1080x1080*
-                        <span style="border: 1px solid gray; width: 25px; height: 25px; display: inline-block;"></span>
-                    </span>
-                    <br>* <txt name="13">limite 30 quadros</txt><br>
-                </span>
-                <span id="recortar2" class="botao" onclick="modeTo('recortar')"><img src="img/crop.png">
-                    <txt name="12">recorte manual</txt>
-                </span>
 
             </div>
 
@@ -904,8 +942,7 @@
                 </span>
 
             </div>
-
-            <div id="menuyoga" class="submenu fundobranco"
+            <span id="menuyoga" class="submenu fundobranco"
                 style="background-image: url('img/splash.png');background-size: cover; text-shadow: 1px 1px #000; color: #fff; ">
 
                 <span class="close" onmousedown="removeClass()"></span>
@@ -918,15 +955,15 @@
                         Diego Ferrari Bruno<br>
                         <txt name="75">apresenta</txt>
                         <!--span style=" font-size: smaller; font-weight: 400;" id="apresenta" title="apresenta">
-                            </span-->
+                    </span-->
                     </span>
                 </a><br><br>
                 <span id="apptitle"
                     style="font-family: 'Times New Roman', Times, serif; font-weight: 900; font-size: larger;">
                     Yoga Art 7</span><br>
                 <img src="img/lovepix.gif" onclick=" criaConteudo(),
-                    apoio()" style="display: block; position: absolute; right: 10px; top:56px; border: solid 1px rgb(90, 90, 90); 
-                    transform: scale(0.8);">
+            apoio()" style="display: block; position: absolute; right: 10px; top:56px; border: solid 1px rgb(90, 90, 90); 
+            transform: scale(0.8);">
                 <br>
                 <span id="yogapose"
                     style="background-image:url(img/yoga.png); width:64px; height:77px; display: inline-block; margin-top: -20px;"
@@ -974,7 +1011,7 @@
 
                 </span>
 
-            </div>
+            </span>
             <div id="menucamconfig" class="fundobranco submenu" style="opacity:0.8; background-color: #ffffff00;">
                 <span class="botao">
                     <span id="recMotion2" title="Gravar automaticamente" class="bot" style="font-size: medium;">
@@ -1091,58 +1128,7 @@
     <div id="carregando" class="carregandoa fundobranco">
         <div id="carregandob" class="fundobranco">
 
-            <span class="botao" style="font-size: 0.6em; display:block; height: 210px; " title="formatos"
-                id="formatos2">
-                <txt name="19">Tamanho do quadro</txt>
-                <div
-                    style="display: block; overflow: scroll; height: 114px; width: 220px; -ms-overflow-style: auto; 
-                    scrollbar-width: thin; margin-bottom: 10px; border: darkgrey solid 1px; 
-                    background-color: #ffffff22; border-radius: 8px; margin-right: auto; margin-left: auto;margin-top: 4px;">
-
-                    <span onmousedown="tamanho3(32,32)">32x32
-                        <span style="border: 2px solid gray; width: 4px; height: 4px; display: inline-block;"></span>
-                    </span>
-                    <span onmousedown="tamanho3(64,64)">64x64
-                        <span style="border: 2px solid gray; width: 7px; height: 7px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho3(128,128)">128x128
-                        <span style="border: 2px solid gray; width: 12px; height: 12px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho3(320,320)">320x320
-                        <span style="border: 2px solid gray; width: 16px; height: 16px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho3(640,640)"> SD: 640x640
-                        <span style="border: 2px solid gray; width: 20px; height: 20px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho3(640,360)"> SD: 640x360
-                        <span style="border: 2px solid gray; width: 20px; height: 12px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho3(1280,720)">1280x720*
-                        <span style="border: 2px solid gray; width: 32px; height: 18px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho3(1920,1080)">1920x1080*
-                        <span style="border: 2px solid gray; width: 40px; height: 22px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho3(1080,1080)">Ig:1080x1080*
-                        <span style="border: 2px solid gray; width: 22px; height: 22px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho3(3508,2480)">A4 300dpi 3508x2480
-                        <span style="border: 2px solid gray; width: 35px; height: 24px; display: inline-block;"></span>
-                    </span><br>
-                    <span onmousedown="tamanho3(2480,3508)">A4 300dpi 2480x3508
-                        <span style="border: 2px solid gray; width: 24px; height: 35px; display: inline-block;"></span>
-                    </span>
-                </div>
-                <txt name="10">Largura: </txt><input id="largura2" type="number" maxlength="4" max="1920" value="320"
-                    style="width:60px; padding: 4px;" /> px
-                <br>
-                <txt name="11">Altura:</txt> <input id="altura2" type="number" maxlength="4" max="1920" value="320"
-                    style="width:60px;padding: 4px;" /> px
-                <span onmousedown="tamanho2()" class="mais"
-                    style=" float: left; position: relative; margin-top: -40px; margin-left: 260px; text-align: center; width: 36px; height: 36px;">
-                    <span class="icon coresicon"> </span>
-                </span>
-            </span>
+            Carregando...
         </div>
     </div>
     <div id="menualerta" class="submenu fundobranco">

@@ -1,6 +1,9 @@
 
 function yoga() {
-    mostraMenu("yoga")
+
+    removeClass()
+    quem = iD("menuyoga");
+    quem.classList.toggle("aparece");
     yogaChange()
     setTimeout(() => { yoga() }, 1800000)
     //setTimeout(() => { document.getElementById("menuyoga").classList.remove("aparece") }, 60000)

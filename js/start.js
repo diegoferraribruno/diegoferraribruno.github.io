@@ -11,7 +11,6 @@ function startup() {
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     night()
   }
-
   setTimeout(() => { toggleDinamicBrush(), yoga() }, 1200)
   window.addEventListener("resize", checkOrientation, false);
   window.addEventListener("orientationchange", checkOrientation, false);
@@ -276,7 +275,7 @@ function wheel(e) {
 }
 
 function loading() {
-  setTimeout(() => { removeElement("carregandoa") }, 10000)
+  setTimeout(() => { removeElement("carregando") }, 1000)
 }
 
 
