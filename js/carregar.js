@@ -242,17 +242,17 @@ var openFile = function (event) {
 
         }
         adicionaQuadro()
-        /*  setTimeout(() => {
-  
-              for (i = 0; i < animacao.length; i++) {
-                  setTimeout(() => {
-                      nextFrame()
-                  }, 200 * i)
-              }
-              scrollFilme(len - 1)
-          }
-  
-              , 1000)*/
+        setTimeout(() => {
+
+            for (i = 0; i < animacao.length; i++) {
+                setTimeout(() => {
+                    nextFrame()
+                }, 200 * i)
+            }
+            scrollFilme(len - 1)
+        }
+
+            , 1000)
         let lenc = projeto["clipboard"].length
         clipboard = []
         for (i = 0; i < lenc; i++) {
