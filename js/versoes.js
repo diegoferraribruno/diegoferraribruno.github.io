@@ -1,6 +1,8 @@
 let vers = [{
-    versao: "7.5",
+    versao: "7.8",
     notas: [
+        "Texto funcionando no modo infinito",
+        "nova tela de abertura",
         "nova área de colabore e compartillhe",
         "modo Texto, com menu de fontes dinamico",
         "mais atalhos Ctrl+,-,o,s",
