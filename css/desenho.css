@@ -946,7 +946,6 @@ input[type="range"] {
 }
 
 #menuhelp {
-    text-align: left;
     font-size: medium;
     margin: 6px;
 }
@@ -982,9 +981,9 @@ input[type="range"] {
 
 }
 
-.console{
-    display: block; 
-    position: absolute; 
-    bottom: 0px; 
+.console {
+    display: block;
+    position: absolute;
+    bottom: 0px;
     left: 100px;
 }

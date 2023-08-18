@@ -96,9 +96,7 @@ let help = iD("helpcontent")
 
 function Help() {
     help.innerHTML = `<span class="botao" onclick="localize()">
-    <span id="localize2" title="change language" class="mais">
-        🇧🇷 
-    </span> <txt name="97">${textos[language]["97"]}</txt> </span>
+   <txt name="97">${textos[language]["97"]}</txt> </span>
     <span class="botao" onclick="shortCuts()">
     <span class="icon ctrlicon"></span> <span class="icon alticon"></span>  <txt name="100">${textos[language]["100"]}</txt>
     </span>
