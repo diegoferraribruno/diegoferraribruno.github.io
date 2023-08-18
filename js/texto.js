@@ -158,3 +158,6 @@ function changeFontDown() {
     fontSizeInput.value = fontSize
     updateCanvas();
 }
+function clearTextInput() {
+    textInput.value = ""
+}
