@@ -106,7 +106,17 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
         ctxF.fillStyle = selectedColor;
     }
     ctxF.fillText(text, redondo(x), redondo(y - fontSize / 2));
+    if (tilepaint) {
+        fillInfinity(text, redondo(x), redondo(y - fontSize / 2))
+    }
+
     ctxF.restore()
+}
+function fillInfinity(text, x, y) {
+    ctxF.fillText(text, x + canvas.width, y);
+    ctxF.fillText(text, x - canvas.width, y);
+    ctxF.fillText(text, x, y - canvas.width);
+    ctxF.fillText(text, x, y + canvas.width);
 }
 
 

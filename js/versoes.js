@@ -205,7 +205,7 @@ let vers = [{
     notas: [
         "🎚️ Transparencia do quadro",
         "📷 menu camera",
-        '<span class="icon alerticon"> mudança no sistema de alerta',
+        '<span class="icon alerticon"></span> mudança no sistema de alerta',
         "📷 + 🎞️ camera faz sequencia de quadros conforme o click",
         "(sem quadros brancos)",
         "🎞️  Exporta Gif Animado (<img src='img/crop.png'>recortado inclusive) ",
@@ -282,8 +282,7 @@ let vers = [{
     notas: [
         "19/03/2023",
         "Novo estilo de pintura e pinceis",
-        '< a href = "http://tricedesigns.com/sketching-with-html5-canvas-and-brush-images/" target = "blank" >' +
-        'com códigos de Andrew Trice</a >  ',
+        '< a href = "http://tricedesigns.com/sketching-with-html5-canvas-and-brush-images/" target = "blank" >com códigos de Andrew Trice</a >  ' +
         "menu apagar junto do menu pincel."]
 },
 {
