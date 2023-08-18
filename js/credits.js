@@ -6,32 +6,25 @@ function apoio() {
             case "pt_BR":
                 apoioHTML = `<center>
                 <span onClick='cancela("conteudo")' style=' float:right'class='close'></span>
-            <a href="https://github.com/sponsors/diegoferraribruno"><img src="img/githubsponsors.png"style="display:block; float:left"></a><br>
+            <a href="https://github.com/sponsors/diegoferraribruno"><img src="img/githubsponsors.png"style="display:block; float:left"></a>
             <h1>Contribua</h1>
-            <br>
-            Se desejar contribuir financeiramente com o desenvolvedor deste projeto de
-            <a href="https://github.com/diegoferraribruno"> código livre</a><br>
+            com o desenvolvedor deste projeto de
+            <a href="https://github.com/diegoferraribruno"> código livre</a>.
             <img src="img/pix.png" onclick="copyPix()" style="display:block; float:right">            
-           você pode fazê-lo via:</b>
-           <a href="https://github.com/sponsors/diegoferraribruno"> Github Sponsors</a> ou fazendo um PIX para:<br>
+           Você pode fazê-lo via:</b>
+           <a href="https://github.com/sponsors/diegoferraribruno"> Github Sponsors</a><br> ou fazendo um PIX para:<br>
            <input type="text" size="26" value="f6aecef5-e60b-408e-97e1-30ee3927c0c0" id="myInput" style="width:180px;" onfocus="copyPix()" readonly>
-           
-           <br><br>
+           <br>
            Ajude também a divulguar:</b><br>          <span class="share__list" onclick="clicklink()">
            <span class="socialicon shareicon"></span>
-
            <span class="share__link  share__link--facebook socialicon ficon"></span>
-
            <span class="share__link share__link--twitter socialicon xicon"></span>
-
            <span class="share__link share__link--linkedin socialicon inicon"></span>
-
            <span class="share__link share__link--mail socialicon mailicon"></span>
-
            <span class="share__link share__link--whatsapp socialicon zapicon"></span>
        </span>
            https://diegoferraribruno.github.io<br>
-           Grato pela sua atenção<br><br>
+           Grato pela sua atenção<br>
            </div>
            <div id="bio2"></div></center>`
                 iD("conteudo").innerHTML = apoioHTML
@@ -54,13 +47,9 @@ function apoio() {
                 <span class="share__list" onclick="clicklink(event)">
                     <span class="socialicon shareicon"></span>
                     <span class="share__link  share__link--facebook socialicon ficon"></span>
-
                     <span class="share__link share__link--twitter socialicon xicon"></span>
-
                     <span class="share__link share__link--linkedin socialicon inicon"></span>
-
                     <span class="share__link share__link--mail socialicon mailicon"></span>
-                    
                     <span class="share__link share__link--whatsapp socialicon zapicon"></span>
                 </span> https://diegoferraribruno.github.io<br>
                Thanks for you suport!<br><br>
