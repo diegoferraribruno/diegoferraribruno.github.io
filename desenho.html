@@ -85,9 +85,8 @@
 
                 <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
                     alt="ferramenta de seleção">
-                    <span class="icon selecticon"></span></span>
-                <span id="paste" class="mais" title="paste" class="mais" onclick="modeTo('paste')">
-                    <span class="icon clipboardicon"></span>
+                    <span class="icon clipboardicon"> <span class="icon selecticon"></span></span>
+                
                 </span>
 
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')"><span
@@ -624,7 +623,7 @@
                     <label class="toggle">
                         <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
                         <span class="knob"></span>
-                    </label>
+                    </label><br>
                     <txt name="32">Auto detectar quadros </txt>
                     <label class="toggle">
                         <input type="checkbox" id="autodetectar" onchange="hidecustom()" checked="true">
@@ -847,7 +846,7 @@
 
             </div>
             <div id="menupaste" class="fundobranco submenu">
-                <span class="botao"> <span class="close" onmousedown="removeClass()"></span>
+                <!--span class="botao"> <span class="close" onmousedown="removeClass()"></span>
                     <span class="icon clipboardicon"></span> <span class="title"> Clipboard</span></span>
 
                 <span class="icon2 rotateicon"></span>
@@ -868,21 +867,26 @@
                 </span><br><br>
                 <span style="display: block; width: 320px; max-height: 160px; overflow: auto;">
                     <span id="clipboard"></span>
-                </span>
+                </span-->
 
             </div>
 
             <div id="menuselecionar" class="fundobranco submenu">
                 <span class="botao">
                     <span class="close" onmousedown="removeClass()"></span>
-
+                    <span id="selecionar2" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
+                    alt="ferramenta de seleção">
+                   <span class="icon selecticon"></span>
+                
+                </span>
                     <span id="copy" class="mais" title="copy" onclick="copySelection()">
                         <span class="icon copyicon"></span>
                     </span>
                     <span id="cut" class="mais" title="cut" onclick="copySelection('cut')">
                         <span class="icon cuticon"></span>
                     </span>
-                    <span id="paste2" class="mais" title="paste" onclick="modeTo('paste')">
+                    <span id="paste" class="mais" onclick="toPaste()">
+
                         <span class="icon pasteicon"></span>
                     </span>
                 </span>
@@ -895,6 +899,26 @@
                         <input type="checkbox" id="retangularselection">
                         <span class="knob"></span>
                     </label>
+                </span>
+
+                <span class="icon2 rotateicon"></span>
+                <input id="canvasfrontdeg" type="number" maxlength="3" max="360" value="0" step="6"
+                    style="width:60px; height:26px; padding: 4px; margin-top: 4px;" class="floatleft"
+                    onchange="transformClip()" />
+                <span class="icon2 scaleicon"></span>
+                <input id="canvasfrontscale" type="number" maxlength="3" max="400" value="100" step="1"
+                    style="width:60px; height:26px; padding: 4px; margin-top: 4px;" class="floatleft"
+                    onchange="transformClip()" /><span
+                    style="width:30px; height:26px; padding: 4px; margin-top: 4px; font-weight: 700;"
+                    class="floatleft">%</span>
+                <span class="mais" onclick="flipClip()">
+                    <span id="mirror2" class="iconsmall mirroricon"></span>
+                </span>
+                <span class="mais" onmousedown="limpar('clipboard')">
+                    <span id="lixeira" class="iconsmall lixeiraicon"></span>
+                </span><br><br>
+                <span style="display: block; width: 320px; max-height: 160px; overflow: auto;">
+                    <span id="clipboard"></span>
                 </span>
 
             </div>

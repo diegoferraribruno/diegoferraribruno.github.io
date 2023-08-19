@@ -24,6 +24,7 @@ ctxF.drawImage(canvas, 0, 0)
 canvasFront.style.position = "absolute"
 canvasFront.style.marginTop = "0px"
 canvasFront.style.marginLeft = -canvas.width + "px"
+canvasFront.style.backgroundColor = "pink"
 canvasFront.classList.add("cursor") // importante!
 ctxF.imageSmoothingEnabled = false
 iD("canvas_div").appendChild(canvasFront)

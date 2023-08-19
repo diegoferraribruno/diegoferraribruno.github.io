@@ -115,6 +115,7 @@ function copySelection(newfr = false) {
       ctxR.setTransform(1, 0, 0, 1, 0, 0);
       ctxR.clearRect(0, 0, rotationsize, rotationsize);
       transformClip()
+      updateClipboard()
 
     }
   
@@ -227,8 +228,14 @@ function changeImage2(n) {
     transformClip()
     setTimeout(() => { updateClipboard() }, 10)
   }
+ toPaste()
 }
 
+function toPaste(){
+  updateClipboard();
+  transformClip();
+  mode = 'paste';
+}
 
 function clearClipboard() {
   let len = clipboard.length

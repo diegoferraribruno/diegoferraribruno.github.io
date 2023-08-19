@@ -169,7 +169,7 @@ function tamanho3(W = iD("largura2").value, H = iD("altura2").value) {
     iD("largura2").value = W
     iD("altura2").value = H
 }
-function tamanho(W = iD("largura").value, H = iD("altura").value) {
+function tamanho(W = iD("largura2").value, H = iD("altura2").value) {
 
     canvasBack = iD("canvasBack")
     canvasDiv.style.width = W + "px"; //add 30px for scroll
@@ -189,7 +189,7 @@ function tamanho(W = iD("largura").value, H = iD("altura").value) {
     if (W < screen.width || H < screen.height) {
         ZOOMf(2)
     } else {
-        ZOOMf(0)
+        ZOOMf(1)
     }
     canvasFront.style.marginLeft = -W + "px"
 
