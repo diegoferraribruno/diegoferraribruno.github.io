@@ -1,40 +1,66 @@
-var texto = {
+var textConfig = {
     value: "hello",
-    font: "times new Roman",
-    size: "20px",
-}
+    font: "Times New Roman",
+    size: 16
+};
+
 var textostarted = false;
 let supportsFontQuery = false;
-
+const dropdown = document.querySelector('.custom-dropdown');
+const dropdownOptions = document.querySelector('.dropdown-options');
 
 function startTexto() {
     if (textostarted) return;
-    textInput.value = "Texto"
-    textostarted = true
+    textostarted = true;
+    textInput.addEventListener('input', () => {
+        textConfig.value = textInput.value;
+        updateCanvas();
+    });
+    fontSizeInput.addEventListener('input', () => {
+        fontSize = fontSizeInput.value;
+        textConfig.size = `${fontSize}px`;
+        updateCanvas();
+    });
+
+    textInput.value = textConfig.value
 
     if ('queryLocalFonts' in window) {
         supportsFontQuery = true;
-        console.log("true FDP")
+        console.log("true FDP");
     }
+
     if (isMobile || !supportsFontQuery) {
-        defaultFonts()
+        defaultFonts();
     } else {
         // Use the queryLocalFonts approach
         async function logFontData() {
             try {
+                const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
+                const truncatedText = sampleText.substring(0, 18);
                 const availableFonts = await window.queryLocalFonts();
+                let lastfont = ""
                 availableFonts.forEach(fontData => {
-                    const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
-                    const option = document.createElement('option');
-                    const truncatedText = sampleText.substring(0, 18); // Max length 26 characters
-                    option.textContent = fontData.family + truncatedText;
-                    option.style.fontFamily = fontData.family + ', sans-serif';
-                    option.style.fontSize = "16px"
-                    option.value = fontData.family;
-                    fontSelect.appendChild(option);
+                    if (fontData.family != lastfont) {
+                        lastfont = fontData.family
+                        const option = document.createElement('div');
+                        option.id = fontData.family
+                        option.classList.add('dropdown-option');
+                        option.textContent = fontData.family + truncatedText;
+                        option.style.fontFamily = fontData.family + ', sans-serif';
+                        option.style.fontSize = '16px';
+                        option.addEventListener('click', () => {
+                            console.log('Font selected:', fontData.family);
+                            textConfig.font = fontData.family
+                            updateCanvas(); toggleFont();
+                            // Perform your action when font is selected
+                        });
+
+                        dropdownOptions.appendChild(option);
+                    }
+
                 });
             } catch (err) {
-                defaultFonts()
+                defaultFonts();
                 console.error(err.name, err.message);
             }
         }
@@ -67,20 +93,42 @@ function startTexto() {
             // ... Add more font families as needed
         ];
 
+
+
         fontFamilies.forEach(font => {
-            const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
-            const option = document.createElement('option');
-            const truncatedText = sampleText.substring(0, 18); // Max length 26 characters
-            option.textContent = font + truncatedText;
+            const option = document.createElement('div');
+            option.classList.add('dropdown-option');
+            option.textContent = font;
+            option.id = font
             option.style.fontFamily = font + ', sans-serif';
-            option.style.fontSize = "16px"
-            option.value = font;
-            fontSelect.appendChild(option);
+            option.style.fontSize = '16px';
+            option.addEventListener('click', () => {
+                console.log('Font selected:', font);
+                textConfig.font = font
+                updateCanvas(); toggleFont()
+                // Perform your action when font is selected
+            });
+            dropdownOptions.appendChild(option);
+
         });
     }
+
+    dropdown.addEventListener('click', () => {
+        dropdownOptions.classList.toggle('esconde');
+    });
+
+    // Close options when clicking outside the dropdown
+    document.addEventListener('click', event => {
+        if (!dropdown.contains(event.target)) {
+            dropdownOptions.classList.remove('esconde');
+        }
+    });
+
+
 }
+
+
 const textInput = document.getElementById('textInput');
-const fontSelect = document.getElementById('fontSelect');
 const fontSizeInput = document.getElementById('fontSizeInput');
 const boldButton = document.getElementById('boldButton');
 const italicButton = document.getElementById('italicButton');
@@ -93,8 +141,7 @@ var fontSize = fontSizeInput.value;
 
 function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     const text = textInput.value;
-    const selectedFont = fontSelect.value;
-
+    const selectedFont = textConfig.font
     const selectedColor = colorSelect.value;
     const textradius = text.length * fontSize / 2 //might be usefull in the future
     ctxF.save()
@@ -141,24 +188,18 @@ function fillInfinity(text, x, y) {
 textInput.addEventListener('input', () => {
     updateCanvas();
 });
-fontSelect.addEventListener('input', () => { updateCanvas(); addFavFont(); });
 fontSizeInput.addEventListener('input', () => {
     fontSize = fontSizeInput.value;
     updateCanvas()
 });
-function addFavFont(lst = fontSelect) {
-    var selected = new Array();
-    var options = lst.getElementsByTagName("option");
-    for (var i = 0; i < options.length; i++) {
-        if (options[i].selected) {
-            selected.push(options[i]);
-            lst.removeChild(options[i]);
-        }
+
+function toggleFont(id = textConfig.font) {
+    removeClass("selectedFont");
+    let selected = iD(id)
+    if (selected) {
+        iD(id).classList.toggle("selectedFont");
     }
-    for (var i = 0; i < selected.length; i++) {
-        lst.insertBefore(selected[i], options[0]);
-    }
-};
+}
 boldButton.addEventListener('click', () => {
     isBold = !isBold
     if (isBold) {

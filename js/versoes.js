@@ -1,6 +1,13 @@
 let vers = [{
+    versao: "8",
+    notas: [
+        "Novo menu de fontes e Texto",
+        "Novo preview de pincel na posição correta",
+    ]
+}, {
     versao: "7.8",
     notas: [
+        "menu de seleção unido ao menu clipboard",
         "Texto funcionando no modo infinito",
         "nova tela de abertura",
         "nova área de colabore e compartillhe",

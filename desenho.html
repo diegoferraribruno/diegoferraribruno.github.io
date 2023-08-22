@@ -109,8 +109,8 @@
 
                 <label for="textInput"> <span class="icon textoicon"></span>
                 </label>
-                <input type="text" id="textInput" style="width: 200px;" /> <span class="iconsmall lixeiraicon"
-                    onclick="clearTextInput()"></span>
+                <input type="text" id="textInput" style="width: 200px; margin-top: 11px; margin-bottom: -4px;" /> <span
+                    class="iconsmall lixeiraicon" onclick="clearTextInput()"></span>
 
                 <br>
                 <br>
@@ -118,8 +118,17 @@
                 <input type="number" id="fontSizeInput" min="6" max="200" value="16" style="width: 50px;" />
                 <span onmousedown="changeFontUp()" class="icon plusicon right"></span>
                 <span onmousedown="changeFontDown()" class="icon minusicon right"></span>
-                <span id="boldButton" class="mais icon boldicon" style="margin-right: 8px; margin-left: 50px;"></span>
-                <span id="italicButton" class="mais icon italicicon"></span>
+                <div class="custom-dropdown">
+                    <div class="dropdown-header">
+                        <span class="mais icon fonticon" style="margin-left: 8px; margin-top: -16px;"></span><br>
+
+                    </div>
+                    <div class="dropdown-options esconde">
+                        <!-- Options will be dynamically added here -->
+                    </div>
+                </div>
+                <span id="boldButton" class="mais icon boldicon" style="margin-right: 8px; margin-left: 53px;"></span>
+                <span id="italicButton" class="mais icon italicicon" style="margin-left: 4px;"></span></span>
                 <br>
                 <label for="colorSelect"><span class="iconsmall coresicon"></span></label>
                 <select id="colorSelect">
@@ -130,11 +139,7 @@
 
                 </select>
 
-                <label for="fontSelect"><span class="icon fonticon"
-                        style="position: absolute; margin-top: -20px; margin-left: 4px;"></span></label>
-                <select id="fontSelect" style="margin: 8px;">
-                    <!-- Options will be dynamically added through JavaScript -->
-                </select>
+
 
                 <!--button id="drawButton">Draw</button-->
             </div>
