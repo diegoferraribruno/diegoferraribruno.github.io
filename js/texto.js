@@ -1,5 +1,5 @@
 var textConfig = {
-    value: "hello",
+    value: "Hello World",
     font: "Times New Roman",
     size: 16
 };
@@ -10,6 +10,41 @@ const dropdown = document.querySelector('.custom-dropdown');
 const dropdownOptions = document.querySelector('.dropdown-options');
 
 function startTexto() {
+    (function (document) {
+        var width;
+        var body = document.body;
+
+        var container = document.createElement('span');
+        container.innerHTML = Array(100).join('wi');
+        container.style.cssText = [
+            'position:absolute',
+            'width:auto',
+            'font-size:128px',
+            'left:-99999px'
+        ].join(' !important;');
+
+        var getWidth = function (fontFamily) {
+            container.style.fontFamily = fontFamily;
+
+            body.appendChild(container);
+            width = container.clientWidth;
+            body.removeChild(container);
+
+            return width;
+        };
+
+        // Pre compute the widths of monospace, serif & sans-serif
+        // to improve performance.
+        var monoWidth = getWidth('monospace');
+        var serifWidth = getWidth('serif');
+        var sansWidth = getWidth('sans-serif');
+
+        window.isFontAvailable = function (font) {
+            return monoWidth !== getWidth(font + ',monospace') ||
+                sansWidth !== getWidth(font + ',sans-serif') ||
+                serifWidth !== getWidth(font + ',serif');
+        };
+    })(document);
     if (textostarted) return;
     textostarted = true;
     textInput.addEventListener('input', () => {
@@ -27,15 +62,16 @@ function startTexto() {
     if ('queryLocalFonts' in window) {
         supportsFontQuery = true;
     }
+    const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
+    const truncatedText = sampleText.substring(0, 18);
 
     if (isMobile || !supportsFontQuery) {
         defaultFonts();
     } else {
         // Use the queryLocalFonts approach
+        defaultFonts();
         async function logFontData() {
             try {
-                const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
-                const truncatedText = sampleText.substring(0, 18);
                 const availableFonts = await window.queryLocalFonts();
                 let lastfont = ""
                 availableFonts.forEach(fontData => {
@@ -57,12 +93,13 @@ function startTexto() {
                     }
 
                 });
+
             } catch (err) {
                 defaultFonts();
                 console.error(err.name, err.message);
             }
         }
-
+        //  defaultFonts();
         logFontData();
     }
     function defaultFonts() {
@@ -127,56 +164,19 @@ function startTexto() {
             'Ubuntu Mono',
             'Verdana'
         ];
-        (function (document) {
-            var width;
-            var body = document.body;
-
-            var container = document.createElement('span');
-            container.innerHTML = Array(100).join('wi');
-            container.style.cssText = [
-                'position:absolute',
-                'width:auto',
-                'font-size:128px',
-                'left:-99999px'
-            ].join(' !important;');
-
-            var getWidth = function (fontFamily) {
-                container.style.fontFamily = fontFamily;
-
-                body.appendChild(container);
-                width = container.clientWidth;
-                body.removeChild(container);
-
-                return width;
-            };
-
-            // Pre compute the widths of monospace, serif & sans-serif
-            // to improve performance.
-            var monoWidth = getWidth('monospace');
-            var serifWidth = getWidth('serif');
-            var sansWidth = getWidth('sans-serif');
-
-            window.isFontAvailable = function (font) {
-                return monoWidth !== getWidth(font + ',monospace') ||
-                    sansWidth !== getWidth(font + ',sans-serif') ||
-                    serifWidth !== getWidth(font + ',serif');
-            };
-        })(document);
-
 
         fontFamilies.forEach(font => {
             if (isFontAvailable(font)) {
 
                 const option = document.createElement('div');
-                option.classList.add('dropdown-option');
-                option.textContent = font;
                 option.id = font
+                option.classList.add('dropdown-option');
+                option.textContent = font + truncatedText;
                 option.style.fontFamily = font + ', sans-serif';
                 option.style.fontSize = '16px';
                 option.addEventListener('click', () => {
-                    console.log('Font selected:', font);
                     textConfig.font = font
-                    updateCanvas(); toggleFont()
+                    updateCanvas(); toggleFont();
                     // Perform your action when font is selected
                 });
                 dropdownOptions.appendChild(option);
