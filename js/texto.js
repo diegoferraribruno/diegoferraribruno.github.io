@@ -3,15 +3,20 @@ var texto = {
     font: "times new Roman",
     size: "20px",
 }
-var textostarted = false
+var textostarted = false;
+let supportsFontQuery = false;
+
 
 function startTexto() {
     if (textostarted) return;
     textInput.value = "Texto"
     textostarted = true
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|/i.test(navigator.userAgent);
-    const supportsQueryLocalFonts = 'fonts' in document;
-    if (isMobile && !supportsQueryLocalFonts) {
+
+    if ('queryLocalFonts' in window) {
+        supportsFontQuery = true;
+        console.log("true FDP")
+    }
+    if (isMobile || !supportsFontQuery) {
         defaultFonts()
     } else {
         // Use the queryLocalFonts approach
@@ -45,7 +50,20 @@ function startTexto() {
             'Verdana',
             'Helvetica',
             'Tahoma',
-            'Comic Sans MS'
+            'Comic Sans MS',
+            'Georgia',
+            'Palatino Linotype',
+            'Trebuchet MS',
+            'Lucida Sans Unicode',
+            'Lucida Grande',
+            'Century Gothic',
+            'Bookman Old Style',
+            'Arial Black',
+            'Arial Narrow',
+            'Impact',
+            'Garamond',
+            'Lucida Console',
+            'Courier'
             // ... Add more font families as needed
         ];
 
@@ -78,7 +96,7 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     const selectedFont = fontSelect.value;
 
     const selectedColor = colorSelect.value;
-    const textradius = text.length * fontSize / 2
+    const textradius = text.length * fontSize / 2 //might be usefull in the future
     ctxF.save()
     ctxF.textAlign = "center";
     ctxF.clearRect(0, 0, canvas.width, canvas.height);

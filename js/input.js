@@ -466,30 +466,8 @@ function handleMove(evt) {
                     }
                 }
                 if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true && !keyCtrl) {
-                    let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2);
-                    if (pressure > lastPressure) {
-                        lastPressure += 0.05 + strokemax / 100
-                    }
-                    else {
-                        lastPressure -= 0.05 + strokemax / 100
-                    }
-
-                    if (lastPressure < 1) { lastPressure = 1 }
-                    if (lastPressure > strokemax) { lastPressure = strokemax }
-
+                    drawCursor()
                     iD("console2").innerHTML = " pressure/speed: " + lastPressure
-                    createNewBrush(lastbrush, lastPressure, color).then(
-
-                        desenha(
-                            "brush",
-                            context.globalCompositeOperation,
-                            x,
-                            y,
-                            origin.x,
-                            origin.y,
-                            lastPressure
-                        )
-                    )
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5 && !keyCtrl) {
                         let pressure = (evt.pressure * 3 + 1) * strokeScale
@@ -520,6 +498,7 @@ function handleMove(evt) {
                         )
                     }
                 }
+
             }
         }
     } else if (isPicking) {
@@ -610,7 +589,7 @@ function handleMove(evt) {
                 ctxF.setTransform(1, 0, 0, 1, 0, 0);
                 ctxF.clearRect(0, 0, canvas.width, canvas.height);
                 if (dinamicBrush) {
-                    ctxF.drawImage(brushCanva, x - (strokeWidth * lastPressure / 2), y - (strokeHeight * lastPressure / 2));
+                    drawCursor()
 
                 } else {
 
@@ -651,6 +630,31 @@ function handleMove(evt) {
         ctxF.clearRect(0, 0, canvas.width, canvas.height);
         ctxF.drawImage(canvasRender, redondo(x - canvasRender.width / 2), redondo(y - canvasRender.height / 2))
     }
+    function drawCursor() {
+        let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2);
+        if (pressure > lastPressure) {
+            lastPressure += 0.05 + strokemax / 100
+        }
+        else {
+            lastPressure -= 0.05 + strokemax / 100
+        }
+
+        if (lastPressure < 1) { lastPressure = 1 }
+        if (lastPressure > strokemax) { lastPressure = strokemax }
+
+        createNewBrush(lastbrush, lastPressure, color).then(
+
+            desenha(
+                "brush",
+                context.globalCompositeOperation,
+                x,
+                y,
+                origin.x,
+                origin.y,
+                lastPressure
+            )
+        )
+    }
 
 
 }
@@ -686,7 +690,6 @@ function handleUp(evt) {
         updateCanvas(x, y)
         context.drawImage(canvasFront, 0, 0)
         setTimeout(() => { Historia() }, 50)
-
     }
     else if (isDrawing && !isGrabing) {
         if (keyCtrl) {

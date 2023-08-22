@@ -36,6 +36,10 @@ brush.onload = function () {
 newBrush.src = brush.src
 var dinamicBrush = false
 
+function updateBrushSize() {
+    iD("brushSize").src = brushCanva.toDataURL('image/png');
+}
+
 function customBrushColor() {
     custombrushcolor = !custombrushcolor
 }
@@ -197,6 +201,7 @@ async function createNewBrush(numero = lastbrush, tam = strokeScale, cor = strok
 function changeBrush(numero = lastbrush, tam = strokeScale, cor = strokeColor) {
     lastbrush = numero
     createNewBrush(numero, tam, cor)
+    updateBrushSize()
     /* if (dinamicBrush === false) {
          addFavBrush()
      }*/

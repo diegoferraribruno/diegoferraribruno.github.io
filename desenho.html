@@ -86,7 +86,6 @@
                 <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
                     alt="ferramenta de seleção">
                     <span class="icon clipboardicon"> <span class="icon selecticon"></span></span>
-                
                 </span>
 
                 <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')"><span
@@ -344,8 +343,12 @@
                         style="width: 50px; margin-left: 8px">x
                 </span>
                 <span class="botao light" onmousedown="removeClass()"
-                    style="background-color: #ffffff22; max-height: 220px;"><canvas id="brushCanva" width="40px"
-                        height="40px"></canvas><span class="close"></span>
+                    style="background-color: #ffffff22; max-height: 220px;">
+                    <img src="" id="brushSize">
+                    <div style="display:block; height: 160px; width: 320px;">
+                        <canvas id="brushCanva" width="40px" height="40px" style="display: none;">
+                    </div>
+                    </canvas><span class="close"></span>
                 </span>
             </div>
             <!--div id="menuapagar" class="fundobranco submenu">
@@ -875,10 +878,9 @@
                 <span class="botao">
                     <span class="close" onmousedown="removeClass()"></span>
                     <span id="selecionar2" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
-                    alt="ferramenta de seleção">
-                   <span class="icon selecticon"></span>
-                
-                </span>
+                        alt="ferramenta de seleção">
+                        <span class="icon selecticon"></span>
+                    </span>
                     <span id="copy" class="mais" title="copy" onclick="copySelection()">
                         <span class="icon copyicon"></span>
                     </span>
