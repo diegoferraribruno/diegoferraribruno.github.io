@@ -26,7 +26,6 @@ function startTexto() {
 
     if ('queryLocalFonts' in window) {
         supportsFontQuery = true;
-        console.log("true FDP");
     }
 
     if (isMobile || !supportsFontQuery) {
@@ -49,7 +48,6 @@ function startTexto() {
                         option.style.fontFamily = fontData.family + ', sans-serif';
                         option.style.fontSize = '16px';
                         option.addEventListener('click', () => {
-                            console.log('Font selected:', fontData.family);
                             textConfig.font = fontData.family
                             updateCanvas(); toggleFont();
                             // Perform your action when font is selected
@@ -72,43 +70,111 @@ function startTexto() {
         const fontFamilies = [
             'Arial',
             'Times New Roman',
+            'Courier',
             'Courier New',
+            'Georgia',
             'Verdana',
             'Helvetica',
-            'Tahoma',
             'Comic Sans MS',
-            'Georgia',
             'Palatino Linotype',
-            'Trebuchet MS',
             'Lucida Sans Unicode',
-            'Lucida Grande',
-            'Century Gothic',
             'Bookman Old Style',
             'Arial Black',
             'Arial Narrow',
             'Impact',
             'Garamond',
             'Lucida Console',
-            'Courier'
-            // ... Add more font families as needed
+            "Helvetica Neue",
+            "Arial",
+            "Georgia",
+            "Times New Roman",
+            "San Francisco",
+            "Avenir",
+            "Verdana",
+            "Copperplate",
+            "Optima",
+            "Palatino",
+            "Courier New",
+            "Roboto",
+            "Noto Sans",
+            "Droid Sans",
+            "Cabin",
+            "Source Sans Pro",
+            "Open Sans",
+            "Lato",
+            "Ubuntu",
+            "Oswald",
+            "Roboto Condensed",
+            "Montserrat",
+            "Calibri",
+            "Segoe UI",
+            "Tahoma",
+            "Lucida Grande",
+            "Lucida Sans",
+            "Trebuchet MS",
+            "Century Gothic",
+            "Fira Sans",
+            "DejaVu Sans",
+            "Ubuntu Condensed",
+            "Ubuntu Mono",
+            "DejaVu Serif",
+            "DejaVu Sans Mono",
+            "Frank Ruhl Libre"
         ];
+        (function (document) {
+            var width;
+            var body = document.body;
 
+            var container = document.createElement('span');
+            container.innerHTML = Array(100).join('wi');
+            container.style.cssText = [
+                'position:absolute',
+                'width:auto',
+                'font-size:128px',
+                'left:-99999px'
+            ].join(' !important;');
+
+            var getWidth = function (fontFamily) {
+                container.style.fontFamily = fontFamily;
+
+                body.appendChild(container);
+                width = container.clientWidth;
+                body.removeChild(container);
+
+                return width;
+            };
+
+            // Pre compute the widths of monospace, serif & sans-serif
+            // to improve performance.
+            var monoWidth = getWidth('monospace');
+            var serifWidth = getWidth('serif');
+            var sansWidth = getWidth('sans-serif');
+
+            window.isFontAvailable = function (font) {
+                return monoWidth !== getWidth(font + ',monospace') ||
+                    sansWidth !== getWidth(font + ',sans-serif') ||
+                    serifWidth !== getWidth(font + ',serif');
+            };
+        })(document);
 
 
         fontFamilies.forEach(font => {
-            const option = document.createElement('div');
-            option.classList.add('dropdown-option');
-            option.textContent = font;
-            option.id = font
-            option.style.fontFamily = font + ', sans-serif';
-            option.style.fontSize = '16px';
-            option.addEventListener('click', () => {
-                console.log('Font selected:', font);
-                textConfig.font = font
-                updateCanvas(); toggleFont()
-                // Perform your action when font is selected
-            });
-            dropdownOptions.appendChild(option);
+            if (isFontAvailable(font)) {
+
+                const option = document.createElement('div');
+                option.classList.add('dropdown-option');
+                option.textContent = font;
+                option.id = font
+                option.style.fontFamily = font + ', sans-serif';
+                option.style.fontSize = '16px';
+                option.addEventListener('click', () => {
+                    console.log('Font selected:', font);
+                    textConfig.font = font
+                    updateCanvas(); toggleFont()
+                    // Perform your action when font is selected
+                });
+                dropdownOptions.appendChild(option);
+            }
 
         });
     }
