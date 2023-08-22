@@ -104,6 +104,7 @@ function startTexto() {
             'Palatino Linotype',
             'Roboto',
             'Roboto Condensed',
+            'Roboto Mono',
             'San Francisco',
             'Segoe UI',
             'Source Sans Pro',
