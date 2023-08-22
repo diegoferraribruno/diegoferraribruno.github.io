@@ -125,9 +125,9 @@ function startup() {
 
   }
   setShareLinks();
-  ZOOMf(2)
+  //ZOOMf(2)
   setTimeout(() => {
-    ZOOMf(1)
+    ZOOMf(2)
     setTimeout(() => {
       modeTo("pintar")
       removeClass();
