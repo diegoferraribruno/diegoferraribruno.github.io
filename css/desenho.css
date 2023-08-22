@@ -1001,7 +1001,7 @@ input[type="range"] {
 .dropdown-options {
     display: block;
     position: fixed;
-    top: 110px;
+    top: 28%;
     background-color: rgba(255, 255, 255, 0.681);
     border: 1px solid #ccc;
     max-height: 200px;
