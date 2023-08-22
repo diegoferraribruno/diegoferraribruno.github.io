@@ -10,13 +10,16 @@ const dropdown = document.querySelector('.custom-dropdown');
 const dropdownOptions = document.querySelector('.dropdown-options');
 
 const fontFamilies = [
+    'Amatic SC',
     'Arial',
     'Arial Black',
     'Arial Narrow',
     'Avenir',
+    'Avenir Next',
     'Bookman Old Style',
     'Bitter',
     'Cabin',
+    'Caveat',
     'Calibri',
     'Century Gothic',
     'Comic Sans MS',
@@ -27,6 +30,7 @@ const fontFamilies = [
     'DejaVu Sans',
     'DejaVu Sans Mono',
     'DejaVu Serif',
+    'Dancing Script',
     'Droid Sans',
     'Exo',
     'Fira Sans',
@@ -36,6 +40,7 @@ const fontFamilies = [
     'Helvetica',
     'Helvetica Neue',
     'Impact',
+    'Indie Flower',
     'Lato',
     'Lobster',
     'Lora',
@@ -58,17 +63,23 @@ const fontFamilies = [
     'Roboto',
     'Roboto Condensed',
     'Roboto Mono',
+    'Roboto Slab',
     'San Francisco',
     'Segoe UI',
     'Source Sans Pro',
+    'Source Serif Pro',
     'Tahoma',
     'Times New Roman',
     'Trebuchet MS',
     'Ubuntu',
     'Ubuntu Condensed',
     'Ubuntu Mono',
-    'Verdana'
+    'Verdana',
+    'Pacifico',
+    'Permanent Marker',
+    'Slabo'
 ];
+
 
 
 function startTexto() {
