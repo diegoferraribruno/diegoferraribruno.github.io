@@ -92,7 +92,8 @@ function handleKeyUp(evt) {
 }
 function handleKeys(evt) {
     let activeEl = document.activeElement
-    if (activeEl.type != "text") {
+
+    if (activeEl.type != "text" && mode != "texto") {
         iD("console").innerHTML = evt.key
         if (evt.keyCode === 90) {
             keyZ = true
@@ -137,6 +138,19 @@ function handleKeys(evt) {
             undoT()
 
         }
+
+    } else if (!iD("dropdown-options").classList.contains("esconde") && activeEl.type != "text") {
+        const dropdown = document.querySelector(".dropdown-options");
+        const options = Array.from(dropdown.children);
+        const keyPressed = evt.key.toLowerCase();
+        const optionStartingWithKey = options.find(option =>
+            option.id.toLowerCase().startsWith(keyPressed)
+        );
+
+        if (optionStartingWithKey) {
+            optionStartingWithKey.scrollIntoView({ behavior: "smooth" });
+        }
+
 
     }
 }

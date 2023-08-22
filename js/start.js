@@ -34,7 +34,7 @@ function startup() {
     }
     let activeEl = document.activeElement
     // console.log(event.key)
-    if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
+    if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && iD("dropdown-options").classList.contains("esconde") && activeEl.type != "text") {
       if (mode != "emoji" && keyCtrl == false && keyAlt == false) {
         if (event.key === "Enter" && mode == "recortar") {
           cortar();

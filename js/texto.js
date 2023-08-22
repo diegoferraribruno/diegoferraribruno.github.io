@@ -9,6 +9,68 @@ let supportsFontQuery = false;
 const dropdown = document.querySelector('.custom-dropdown');
 const dropdownOptions = document.querySelector('.dropdown-options');
 
+const fontFamilies = [
+    'Arial',
+    'Arial Black',
+    'Arial Narrow',
+    'Avenir',
+    'Bookman Old Style',
+    'Bitter',
+    'Cabin',
+    'Calibri',
+    'Century Gothic',
+    'Comic Sans MS',
+    'Copperplate',
+    'Courier',
+    'Courier New',
+    'Crimson Text',
+    'DejaVu Sans',
+    'DejaVu Sans Mono',
+    'DejaVu Serif',
+    'Droid Sans',
+    'Exo',
+    'Fira Sans',
+    'Frank Ruhl Libre',
+    'Garamond',
+    'Georgia',
+    'Helvetica',
+    'Helvetica Neue',
+    'Impact',
+    'Lato',
+    'Lobster',
+    'Lora',
+    'Lucida Console',
+    'Lucida Grande',
+    'Lucida Sans',
+    'Montserrat',
+    'Muli',
+    'Noto Sans',
+    'Open Sans',
+    'Optima',
+    'Oswald',
+    'Palatino',
+    'Palatino Linotype',
+    'Playfair Display',
+    'Poppins',
+    'PT Sans',
+    'Quicksand',
+    'Raleway',
+    'Roboto',
+    'Roboto Condensed',
+    'Roboto Mono',
+    'San Francisco',
+    'Segoe UI',
+    'Source Sans Pro',
+    'Tahoma',
+    'Times New Roman',
+    'Trebuchet MS',
+    'Ubuntu',
+    'Ubuntu Condensed',
+    'Ubuntu Mono',
+    'Verdana'
+];
+
+
 function startTexto() {
     (function (document) {
         var width;
@@ -68,102 +130,51 @@ function startTexto() {
     if (isMobile || !supportsFontQuery) {
         defaultFonts();
     } else {
+        function addFontToList(newFont) {
+            const lowerCasefontFamilies = fontFamilies.map(font => font.toLowerCase());
+            const lowerCaseNewFont = newFont.toLowerCase();
+
+            if (!lowerCasefontFamilies.includes(lowerCaseNewFont)) {
+                const newIndex = lowerCasefontFamilies.findIndex(font => font > lowerCaseNewFont);
+                if (newIndex === -1) {
+                    // Append the new font to the end of the list
+                    fontFamilies.push(newFont);
+                } else {
+                    // Insert the new font at the appropriate position
+                    fontFamilies.splice(newIndex, 0, newFont);
+                }
+                console.log(`${newFont} has been added to the list.`);
+            } else {
+                console.log(`${newFont} already exists in the list.`);
+            }
+        }
         // Use the queryLocalFonts approach
-        defaultFonts();
         async function logFontData() {
             try {
                 const availableFonts = await window.queryLocalFonts();
                 let lastfont = ""
                 availableFonts.forEach(fontData => {
                     if (fontData.family != lastfont) {
-                        lastfont = fontData.family
-                        const option = document.createElement('div');
-                        option.id = fontData.family
-                        option.classList.add('dropdown-option');
-                        option.textContent = fontData.family + truncatedText;
-                        option.style.fontFamily = fontData.family + ', sans-serif';
-                        option.style.fontSize = '16px';
-                        option.addEventListener('click', () => {
-                            textConfig.font = fontData.family
-                            updateCanvas(); toggleFont();
-                            // Perform your action when font is selected
-                        });
+                        addFontToList(fontData.family)
 
-                        dropdownOptions.appendChild(option);
+                        // Perform your action when font is selected
+
+
                     }
-
                 });
 
-            } catch (err) {
-                defaultFonts();
-                console.error(err.name, err.message);
             }
+
+            catch (err) {
+                console.error(err.name, err.message);
+
+            } finally { defaultFonts(); }
         }
         //  defaultFonts();
         logFontData();
     }
     function defaultFonts() {
         // Populate font list with pre-defined font families
-        const fontFamilies = [
-            'Arial',
-            'Arial Black',
-            'Arial Narrow',
-            'Avenir',
-            'Bookman Old Style',
-            'Bitter',
-            'Cabin',
-            'Calibri',
-            'Century Gothic',
-            'Comic Sans MS',
-            'Copperplate',
-            'Courier',
-            'Courier New',
-            'Crimson Text',
-            'DejaVu Sans',
-            'DejaVu Sans Mono',
-            'DejaVu Serif',
-            'Droid Sans',
-            'Exo',
-            'Fira Sans',
-            'Frank Ruhl Libre',
-            'Garamond',
-            'Georgia',
-            'Helvetica',
-            'Helvetica Neue',
-            'Impact',
-            'Lato',
-            'Lobster',
-            'Lora',
-            'Lucida Console',
-            'Lucida Grande',
-            'Lucida Sans',
-            'Montserrat',
-            'Muli',
-            'Noto Sans',
-            'Open Sans',
-            'Optima',
-            'Oswald',
-            'Palatino',
-            'Palatino Linotype',
-            'Playfair Display',
-            'Poppins',
-            'PT Sans',
-            'Quicksand',
-            'Raleway',
-            'Roboto',
-            'Roboto Condensed',
-            'Roboto Mono',
-            'San Francisco',
-            'Segoe UI',
-            'Source Sans Pro',
-            'Tahoma',
-            'Times New Roman',
-            'Trebuchet MS',
-            'Ubuntu',
-            'Ubuntu Condensed',
-            'Ubuntu Mono',
-            'Verdana'
-        ];
 
         fontFamilies.forEach(font => {
             if (isFontAvailable(font)) {
