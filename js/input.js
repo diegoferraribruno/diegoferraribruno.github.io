@@ -713,6 +713,8 @@ function handleUp(evt) {
 
         }
         isDrawing = false;
+
+        lastPressure = 1
         // swapImg = canvasFront.toDataURL('image/png');
         /* if (isGlowing === true && context.globalCompositeOperation != "destination-out"){
           context.globalCompositeOperation = 'lighter'
