@@ -1,6 +1,9 @@
 let vers = [{
-    versao: "8",
+    versao: "8.4",
     notas: [
+        "Atalho M para modo Mirror(espelho) e atalho V para moVer",
+        "Atalho T para ferramenta de texto",
+        "ajuste para velocidade do movimento X expessura do pincel.",
         "Novo menu de fontes e Texto",
         "Novo preview de pincel na posição correta",
     ]

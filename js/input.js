@@ -190,6 +190,9 @@ function handleStart(evt) {
             isSelecting2 = true;
             currentPath.push([offsetX, offsetY]);
 
+        } else if (mode == "texto") {
+            const input = document.getElementById("textInput");
+            input.blur();
         } else if (mode === "recortar") {
             canvasFront.classList.remove("esconde")
             isSelecting = true;
@@ -647,10 +650,10 @@ function handleMove(evt) {
     function drawCursor() {
         let pressure = ((positivo(origin.x - x) + positivo(origin.y - y)) / 2);
         if (pressure > lastPressure) {
-            lastPressure += 0.05 + strokemax / 100
+            lastPressure += 0.05 + strokemax / 50
         }
         else {
-            lastPressure -= 0.05 + strokemax / 100
+            lastPressure -= 0.05 + strokemax / 20
         }
 
         if (lastPressure < 1) { lastPressure = 1 }

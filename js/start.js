@@ -32,10 +32,20 @@ function startup() {
       //pasteSelection()
       mode = "paste"
     }
+    if (event.key === "Escape") {
+      removeClass();
+      window.parent.focus()
+      if (mode == "texto") {
+        iD("dropdown-options").classList.add("esconde")
+      }
+    }
     let activeEl = document.activeElement
-    // console.log(event.key)
-    if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && iD("dropdown-options").classList.contains("esconde") && activeEl.type != "text") {
+    if (activeEl.tagName != "INPUT" && activeEl.tagName != "EMOJI-PICKER" && activeEl.type != "text") {
       if (mode != "emoji" && keyCtrl == false && keyAlt == false) {
+        if ((mode == "texto" && !iD("dropdown-options").classList.contains("esconde"))) {
+
+          return
+        }
         if (event.key === "Enter" && mode == "recortar") {
           cortar();
         } else if (event.key === "Enter" && mode == "cam") {
@@ -48,9 +58,6 @@ function startup() {
           prev_frame()
         } else if (event.key === "Escape" && mode == "cam") {
           removeVideo();
-        } else if (event.key === "Escape") {
-          removeClass();
-          window.parent.focus()
         } else if (event.key === "z") {
           zoom2x()
         } else if (event.key === "p" || event.key === "b") {
@@ -64,9 +71,9 @@ function startup() {
         } else if (event.key === "c") {
           mostraMenu("cores")
         } else if (event.key === "v") {
-          Mirror()
-        } else if (event.key === "m") {
           modeTo("move")
+        } else if (event.key === "m") {
+          Mirror()
         } else if (event.key === "*") {
           Mandala()
         } else if (event.key === "d") {
@@ -83,6 +90,10 @@ function startup() {
           lixeira()
         } else if (event.key === "t") {
           modeTo("texto")
+          event.preventDefault()
+          const input = document.getElementById("textInput");
+          input.focus();
+          input.select();
         }
       } else if (keyAlt == true) {
         if (event.key === "+") {

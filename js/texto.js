@@ -154,9 +154,9 @@ function startTexto() {
                     // Insert the new font at the appropriate position
                     fontFamilies.splice(newIndex, 0, newFont);
                 }
-                console.log(`${newFont} has been added to the list.`);
+                // console.log(`${newFont} has been added to the list.`);
             } else {
-                console.log(`${newFont} already exists in the list.`);
+                //  console.log(`${newFont} already exists in the list.`);
             }
         }
         // Use the queryLocalFonts approach
@@ -214,7 +214,7 @@ function startTexto() {
     // Close options when clicking outside the dropdown
     document.addEventListener('click', event => {
         if (!dropdown.contains(event.target)) {
-            dropdownOptions.classList.remove('esconde');
+            dropdownOptions.classList.add('esconde');
         }
     });
 
