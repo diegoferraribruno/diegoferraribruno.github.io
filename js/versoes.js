@@ -1,6 +1,7 @@
 let vers = [{
-    versao: "8.4",
+    versao: "8.5",
     notas: [
+        "google fonts",
         "Atalho M para modo Mirror(espelho) e atalho V para moVer",
         "Atalho T para ferramenta de texto",
         "ajuste para velocidade do movimento X expessura do pincel.",

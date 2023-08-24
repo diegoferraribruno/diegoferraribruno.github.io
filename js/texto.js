@@ -179,6 +179,7 @@ function startTexto() {
             catch (err) {
                 console.error(err.name, err.message);
 
+
             } finally { defaultFonts(); }
         }
         //  defaultFonts();
@@ -189,19 +190,7 @@ function startTexto() {
 
         fontFamilies.forEach(font => {
             if (isFontAvailable(font)) {
-
-                const option = document.createElement('div');
-                option.id = font
-                option.classList.add('dropdown-option');
-                option.textContent = font + truncatedText;
-                option.style.fontFamily = font + ', sans-serif';
-                option.style.fontSize = '16px';
-                option.addEventListener('click', () => {
-                    textConfig.font = font
-                    updateCanvas(); toggleFont();
-                    // Perform your action when font is selected
-                });
-                dropdownOptions.appendChild(option);
+                createNewButton(font, truncatedText)
             }
 
         });
@@ -219,6 +208,25 @@ function startTexto() {
     });
 
 
+}
+function createNewButton(font, truncatedText) {
+    const option = document.createElement('div');
+    font = font.replace(/\+/g, ' ');
+    option.id = font
+    option.classList.add('dropdown-option');
+    option.textContent = font + " " + truncatedText
+    option.style.fontFamily = font
+    option.style.fontSize = '16px';
+    option.addEventListener('click', () => {
+        textConfig.font = font
+        updateCanvas(); toggleFont();
+        // Perform your action when font is selected
+    });
+    if (truncatedText[0] == "G") {
+        dropdownOptions.insertBefore(option, dropdownOptions.firstChild);
+    } else {
+        dropdownOptions.appendChild(option);
+    }
 }
 
 
@@ -330,6 +338,10 @@ function clearTextInput() {
 }
 
 function loadFont(fontName = "roboto") {
+    if (iD(fontName)) {
+        Alert(fontName + " already loaded", 2);
+        return
+    }
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = `https://fonts.googleapis.com/css2?family=${fontName}`;
@@ -342,30 +354,37 @@ function loadFont(fontName = "roboto") {
 let fontTry = 0
 function checkFontLoaded(fontName) {
     setTimeout(() => {
-        const isFontLoaded = document.fonts.check(`1em '${fontName}'`);
+        // fontName = fontName.replace(/\+/g, ' ');
+        if (isFontAvailable(fontName)) {
+            fontName = fontName.replace(/\+/g, ' ');
+            Alert(fontName + " loaded", 2)
 
-        if (isFontLoaded) {
-            Alert(fontName + " loaded", 0.5)
-            fontFamilies.unshift(0, fontName)
+            fontFamilies.push(fontName)
             console.log(`${fontName} font is loaded.`);
+
             // Populate font list with pre-defined font families
-            while (dropdownOptions.firstChild) {
+            /*while (dropdownOptions.firstChild) {
                 dropdownOptions.removeChild(dropdownOptions.firstChild);
-            }
-            startTexto()
-            textConfig.font = fontName
-            toggleFont(fontName)
+            }*/
+            setTimeout(() => {
+                //  startTexto();
+                createNewButton(fontName, "Google Font")
+                textConfig.font = fontName;
+                toggleFont(fontName);
+                updateCanvas()
+                dropdownOptions.classList.remove("esconde")
+            }, 100)
+
+
 
         } else {
             fontTry++
-            if (fontTry > 10) {
-                Alert("it is taking to long to load that font.. try again")
+            if (fontTry > 6) {
+                Alert(`it is taking to long to load ${fontName} .. try another one`)
                 fontTry = 0
 
-
             } else {
-
-                console.log(`${fontName} font is not yet loaded.`);
+                //     console.log(`${fontName} font is not yet loaded.`);
                 checkFontLoaded(fontName, 0.5)
             }
             // Handle the case where the font is not loaded yet
@@ -376,29 +395,36 @@ function checkFontLoaded(fontName) {
 
 
 const availableFonts = [
-    "roboto",
-    "open+sans",
-    "lato",
-    "Quicksand",
-    "Pacifico",
+    "Select To load",
+    "Acme",
+    "Aclonica",
+    "Alegreya+Sans+SC",
     "Amatic+SC",
-    "Indie+Flower",
-    "Fredoka+One",
-    "Caveat",
-    "Satisfy",
-    "Roboto+Condensed",
-    "Dancing+Script",
-    "Raleway",
-    "Comfortaa",
+    "Archivo",
+    "Baloo",
+    "Barlow",
+    "Bebas+Neue",
     "Cabin+Sketch",
+    "Caveat",
+    "Changa",
+    "Comfortaa",
+    "Crimson+Pro",
+    "Dancing+Script",
+    "Fredoka+One",
+    "Indie+Flower",
     "Josefin+Sans",
-    "Shadows+Into+Light",
-    "Permanent+Marker",
-    "Rock+Salt",
     "Mansalva",
     "Nunito",
-    "Alegreya+Sans+SC",
-    "Crimson+Pro"
+    "Open+Sans",
+    "Pacifico",
+    "Permanent+Marker",
+    "Quicksand",
+    "Raleway",
+    "Roboto",
+    "Roboto+Condensed",
+    "Rock+Salt",
+    "Satisfy",
+    "Shadows+Into+Light"
 ];
 
 // You can create a dropdown/select element to allow the user to choose a font

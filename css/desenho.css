@@ -1002,7 +1002,7 @@ input[type="range"] {
     display: block;
     position: fixed;
     top: 38%;
-    background-color: rgba(141, 141, 141, 0.8);
+    background-color: rgba(185, 185, 185, 0.9);
     border: 1px solid #ccc;
     max-height: 200px;
     overflow-y: auto;
