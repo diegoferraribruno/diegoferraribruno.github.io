@@ -338,23 +338,29 @@ function clearTextInput() {
 }
 
 function loadFont(fontName = "roboto") {
-    if (iD(fontName)) {
+    if (!iD(fontName.replace(/\+/g, ' '))) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = `https://fonts.googleapis.com/css2?family=${fontName}`;
+        document.head.appendChild(link);
+        Alert("loading Google font: " + fontName)
+        setTimeout(() => { checkFontLoaded(fontName) })
+    } else {
+        fontName = fontName.replace(/\+/g, ' ')
+        textConfig.font = fontName
         Alert(fontName + " already loaded", 2);
+        toggleFont(fontName);
+        updateCanvas()
+        //  dropdownOptions.classList.remove("esconde")
         return
     }
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = `https://fonts.googleapis.com/css2?family=${fontName}`;
-    document.head.appendChild(link);
-    Alert("loading Google font: " + fontName)
-    setTimeout(() => { checkFontLoaded(fontName) })
 
 }
 
 let fontTry = 0
 function checkFontLoaded(fontName) {
     setTimeout(() => {
-        // fontName = fontName.replace(/\+/g, ' ');
+
         if (isFontAvailable(fontName)) {
             fontName = fontName.replace(/\+/g, ' ');
             Alert(fontName + " loaded", 2)
@@ -362,12 +368,7 @@ function checkFontLoaded(fontName) {
             fontFamilies.push(fontName)
             console.log(`${fontName} font is loaded.`);
 
-            // Populate font list with pre-defined font families
-            /*while (dropdownOptions.firstChild) {
-                dropdownOptions.removeChild(dropdownOptions.firstChild);
-            }*/
             setTimeout(() => {
-                //  startTexto();
                 createNewButton(fontName, "Google Font")
                 textConfig.font = fontName;
                 toggleFont(fontName);
@@ -384,10 +385,8 @@ function checkFontLoaded(fontName) {
                 fontTry = 0
 
             } else {
-                //     console.log(`${fontName} font is not yet loaded.`);
                 checkFontLoaded(fontName, 0.5)
             }
-            // Handle the case where the font is not loaded yet
         }
     }, 1000)
 }
