@@ -135,7 +135,7 @@ function startTexto() {
     if ('queryLocalFonts' in window) {
         supportsFontQuery = true;
     }
-    const sampleText = " - AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
+    const sampleText = "AaÃáÁâÂàÀçÇéÉêÊíÍóÓôÔúÚñÑ"; // Add more characters as needed
     const truncatedText = sampleText.substring(0, 18);
 
     if (isMobile || !supportsFontQuery) {
@@ -214,7 +214,7 @@ function createNewButton(font, truncatedText) {
     font = font.replace(/\+/g, ' ');
     option.id = font
     option.classList.add('dropdown-option');
-    option.textContent = font + " " + truncatedText
+    option.textContent = font + " - " + truncatedText
     option.style.fontFamily = font
     option.style.fontSize = '16px';
     option.addEventListener('click', () => {
@@ -411,19 +411,34 @@ const availableFonts = [
     "Dancing+Script",
     "Fredoka+One",
     "Indie+Flower",
+    "Inter",
     "Josefin+Sans",
+    "Lato",
     "Mansalva",
+    "Merriweather",
+    "Montserrat",
+    "Noto+Sans",
+    "Noto+Serif",
     "Nunito",
     "Open+Sans",
+    "Oswald",
     "Pacifico",
     "Permanent+Marker",
+    "Playfair+Display",
+    "Poppins",
+    "PT+Sans",
     "Quicksand",
     "Raleway",
     "Roboto",
     "Roboto+Condensed",
+    "Roboto+Slab",
     "Rock+Salt",
     "Satisfy",
-    "Shadows+Into+Light"
+    "Shadows+Into+Light",
+    "Source+Sans+Pro",
+    "Source+Serif+Pro",
+    "Work+Sans",
+
 ];
 
 // You can create a dropdown/select element to allow the user to choose a font
