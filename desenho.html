@@ -107,17 +107,22 @@
             <div id="menutexto" class="submenu fundobranco">
                 <span class="close" title="fechar" onmousedown="removeClass()"></span>
 
-                <label for="textInput"> <span class="icon textoicon"></span>
+                <label for="textInput"> <span class="icon textoicon"></span><br>
+
                 </label>
                 <input type="text" id="textInput" style="width: 200px; margin-top: 11px; margin-bottom: -4px;" /> <span
                     class="iconsmall lixeiraicon" onclick="clearTextInput()"></span>
 
                 <br>
+                Google Fonts: <select id="fontSelect">
+                    <!-- Font options will be dynamically added using JavaScript -->
+                </select>
                 <br>
                 <label for="fontSizeInput"><span class="iconsmall fontsizeicon"></span></label>
                 <input type="number" id="fontSizeInput" min="6" max="200" value="16" style="width: 50px;" />
                 <span onmousedown="changeFontUp()" class="icon plusicon right"></span>
                 <span onmousedown="changeFontDown()" class="icon minusicon right"></span>
+
                 <div class="custom-dropdown">
                     <div class="dropdown-header">
                         <span class="mais icon fonticon" style="margin-left: 8px; margin-top: -16px;"></span><br>
@@ -138,7 +143,6 @@
                     <option value="white">White</option>
 
                 </select>
-
 
 
                 <!--button id="drawButton">Draw</button-->

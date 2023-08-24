@@ -328,3 +328,90 @@ function changeFontDown() {
 function clearTextInput() {
     textInput.value = ""
 }
+
+function loadFont(fontName = "roboto") {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${fontName}`;
+    document.head.appendChild(link);
+    Alert("loading Google font: " + fontName)
+    setTimeout(() => { checkFontLoaded(fontName) })
+
+}
+
+let fontTry = 0
+function checkFontLoaded(fontName) {
+    setTimeout(() => {
+        const isFontLoaded = document.fonts.check(`1em '${fontName}'`);
+
+        if (isFontLoaded) {
+            Alert(fontName + " loaded", 0.5)
+            fontFamilies.unshift(0, fontName)
+            console.log(`${fontName} font is loaded.`);
+            // Populate font list with pre-defined font families
+            while (dropdownOptions.firstChild) {
+                dropdownOptions.removeChild(dropdownOptions.firstChild);
+            }
+            startTexto()
+            textConfig.font = fontName
+            toggleFont(fontName)
+
+        } else {
+            fontTry++
+            if (fontTry > 10) {
+                Alert("it is taking to long to load that font.. try again")
+                fontTry = 0
+
+
+            } else {
+
+                console.log(`${fontName} font is not yet loaded.`);
+                checkFontLoaded(fontName, 0.5)
+            }
+            // Handle the case where the font is not loaded yet
+        }
+    }, 1000)
+}
+
+
+
+const availableFonts = [
+    "roboto",
+    "open+sans",
+    "lato",
+    "Quicksand",
+    "Pacifico",
+    "Amatic+SC",
+    "Indie+Flower",
+    "Fredoka+One",
+    "Caveat",
+    "Satisfy",
+    "Roboto+Condensed",
+    "Dancing+Script",
+    "Raleway",
+    "Comfortaa",
+    "Cabin+Sketch",
+    "Josefin+Sans",
+    "Shadows+Into+Light",
+    "Permanent+Marker",
+    "Rock+Salt",
+    "Mansalva",
+    "Nunito",
+    "Alegreya+Sans+SC",
+    "Crimson+Pro"
+];
+
+// You can create a dropdown/select element to allow the user to choose a font
+const fontSelect = document.getElementById('fontSelect'); // Make sure to have an element with the id 'fontSelect'
+
+availableFonts.forEach(font => {
+    const option = document.createElement('option');
+    option.value = font;
+    option.textContent = font;
+    fontSelect.appendChild(option);
+});
+
+fontSelect.addEventListener('change', function () {
+    const selectedFont = fontSelect.value;
+    loadFont(selectedFont);
+});
