@@ -178,7 +178,7 @@ function handleStart(evt) {
             origin.x = redondo(origin.x)
             origin.y = redondo(origin.y)
         }
-        if (textBrush) {
+        if (textBrush && mode == "texto") {
             mouse.x = origin.x;
             mouse.y = origin.y;
             position.x = origin.x;

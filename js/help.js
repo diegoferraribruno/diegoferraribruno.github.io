@@ -107,6 +107,9 @@ function Help() {
     </span>
     <span id="info" title="Informações" class="botao" onmousedown="mostraMenu('info')"><span
     class="icon infoicon"></span> <txt name="82">${textos[language][82]}</txt></span>
+    <span class="botao" onclick="FAQ()">
+    <span class="icon2 helpicon" ></span> FAQ - perguntas frequentes
+    </span>
     `
 }
 
@@ -126,4 +129,20 @@ function shortCuts() {
 }
 function videoTutorial() {
     help.innerHTML = '<span class="icon playicon"></span><span class="title" em breve<br> Video tutorial<br> comming soon<br></span>'
+}
+function FAQ() {
+    help.innerHTML = ""
+    let question = faq[language]
+    Object.keys(question).forEach((key, index) => {
+        help.innerHTML += `<span class="icon2 helpicon"></span><h3>${key}</h3><hr>${faq[language][key]}`
+    })
+}
+const faq = {
+    "en": {
+        "Can not draw!": `Possibly you are on eraser mode<span class="iconsmall eraseicon"></span> or in drawing behind mode. If that is the case, click on <span class="icon2small paintundericon"></span> it will turn like this: <span class="icon2small paintovericon"></span>`
+    },
+    "pt_BR": {
+        "Não consigo desenhar": `Possivelmente você está no modo apagar<span class="iconsmall eraseicon"></span> ou no modo desenhar por trás. Se esse for o caso, click no botão <span class="icon2small paintundericon"></span> e ele mudará para isto: <span class="icon2small paintovericon"></span>`
+    }
+
 }
