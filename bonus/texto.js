@@ -239,17 +239,35 @@ function createNewButton(font, truncatedText) {
 }
 
 
-
+var selectedColor = colorSelect.value;
 
 function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     const text = textInput.value;
     const selectedFont = textConfig.font
-    const selectedColor = colorSelect.value;
+
     const textradius = text.length * fontSize / 2 //might be usefull in the future
+
     ctxF.save()
     ctxF.textAlign = "center";
     ctxF.clearRect(0, 0, canvas.width, canvas.height);
     ctxF.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize}px ${selectedFont}, sans-serif`;
+    checkColorMode()
+    ctxF.fillText(text, redondo(x), redondo(y - fontSize / 2));
+    if (tilepaint) {
+        fillInfinity(text, redondo(x), redondo(y - fontSize / 2))
+    }
+
+    ctxF.restore()
+}
+function fillInfinity(text, x, y) {
+    ctxF.fillText(text, x + canvas.width, y);
+    ctxF.fillText(text, x - canvas.width, y);
+    ctxF.fillText(text, x, y - canvas.width);
+    ctxF.fillText(text, x, y + canvas.width);
+}
+
+function checkColorMode() {
+    selectedColor = colorSelect.value;
     if (rainbowAB) {
         gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
         gradient.addColorStop("0", strokeColor);
@@ -272,27 +290,7 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     else {
         ctxF.fillStyle = selectedColor;
     }
-    if (textBrush) {
-        ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2));
-
-    } else {
-        ctxF.fillText(text, redondo(x), redondo(y - fontSize / 2));
-
-    }
-    if (tilepaint) {
-        fillInfinity(text, redondo(x), redondo(y - fontSize / 2))
-    }
-
-    ctxF.restore()
 }
-function fillInfinity(text, x, y) {
-    ctxF.fillText(text, x + canvas.width, y);
-    ctxF.fillText(text, x - canvas.width, y);
-    ctxF.fillText(text, x, y - canvas.width);
-    ctxF.fillText(text, x, y + canvas.width);
-}
-
-
 textInput.addEventListener('input', () => {
     updateCanvas();
 });
@@ -472,20 +470,18 @@ fontSelect.addEventListener('change', function () {
     loadFont(selectedFont);
 });
 
-//Text Brush area
+
 
 var position = { x: 0, y: window.innerHeight / 2 };
 var textCounter = 0;
 var angleDistortion = 6;
-var textSpacing = 1.4
+var textSpacing = 1.2
 // Drawing variables
 var mouse = { x: 0, y: 0, down: false }
 
-var textBrush = false
-
+var textBrush = true
 function drawText() {
-    const selectedColor = colorSelect.value
-    const text = textConfig.value + "  "
+    const text = textConfig.value + " "
     if (textBrush) {
         var d = distance(position, mouse) - 4;
         var fontSize2 = fontSize - 4 + d / 2;
@@ -493,35 +489,14 @@ function drawText() {
         var stepSize = textWidth(letter, fontSize2) * textSpacing;
 
         if (d > stepSize * textSpacing) {
+            checkColorMode()
             var angle = Math.atan2(mouse.y - position.y, mouse.x - position.x);
-            context.save();
-            context.translate(position.x, position.y);
-            context.rotate(angle);
-            context.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}, sans-serif`;
-            if (rainbowAB) {
-                gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
-                gradient.addColorStop("0", strokeColor);
-                gradient.addColorStop("1.0", estrokeColor);
-                // Fill with gradient
-                context.fillStyle = gradient;
-            } else if (isGlowing) {
-                context.shadowColor = strokeColor; // string
-
-                // Horizontal distance of the shadow, in relation to the text.
-                context.shadowOffsetX = 0; // integer
-
-                // Vertical distance of the shadow, in relation to the text.
-                context.shadowOffsetY = 0; // integer
-
-                // Blurring effect to the shadow, the larger the value, the greater the blur.
-                context.shadowBlur = 6; // integer
-                context.fillStyle = "#fffffff5";
-            }
-            else {
-                context.fillStyle = selectedColor;
-            }
-            context.fillText(letter, 0, 0);
-            context.restore();
+            ctxF.font = fontSize2 / 2 + "px " + textConfig.font;
+            ctxF.save();
+            ctxF.translate(position.x, position.y);
+            ctxF.rotate(angle);
+            ctxF.fillText(letter, 0, 0);
+            ctxF.restore();
             textCounter++;
             if (textCounter > text.length - 1) {
                 textCounter = 0;
@@ -549,10 +524,10 @@ function distance(pt, pt2) {
 }
 
 function textWidth(string, size) {
-    context.font = size + "px " + textConfig.font;
+    ctxF.font = size + "px " + textConfig.font;
     if (ctxF.fillText) {
         return ctxF.measureText(string).width * textSpacing;
-    } else if (context.mozDrawText) {
+    } else if (ctxF.mozDrawText) {
         return ctxF.mozMeasureText(string) * textSpacing;
     }
 
@@ -561,7 +536,7 @@ function textWidth(string, size) {
 function toggleTextBrush() {
     textBrush = !textBrush
     if (textBrush == true) {
-        iD("textBrush").innerHTML = "<span class='icon2 check'></span>"
+        iD("textBrush").innerHTML = "<span class='icon2 minicheck'></span>"
 
     } else {
         iD("textBrush").innerHTML = ""

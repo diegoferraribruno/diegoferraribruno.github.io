@@ -50,6 +50,7 @@ let dinamicInk = false
 let lastInk = 1
 let rainbowInk = false
 let redimensionar = false
+let isTexting = false
 
 function handleKeyUp(evt) {
 
@@ -177,7 +178,15 @@ function handleStart(evt) {
             origin.x = redondo(origin.x)
             origin.y = redondo(origin.y)
         }
-        if (mode === "selecionar") {
+        if (textBrush) {
+            mouse.x = origin.x;
+            mouse.y = origin.y;
+            position.x = origin.x;
+            position.y = origin.y;
+            drawText();
+            isTexting = true
+        }
+        else if (mode === "selecionar") {
             canvasFront.classList.remove("esconde")
             isSelecting2 = true;
             cropStart.x = origin.x
@@ -338,6 +347,7 @@ function handleMove(evt) {
         x = redondo(x)
         y = redondo(y)
     }
+
     if (isSelecting2) {
         canvasFront.classList.remove("esconde")
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
@@ -355,7 +365,13 @@ function handleMove(evt) {
 
         }
     } if (mode == "texto") {
-        updateCanvas(x, y)
+        if (textBrush && isTexting) {
+            mouse.x = x;
+            mouse.y = y;
+            drawText();
+        } else {
+            updateCanvas(x, y)
+        }
     } else if (mode == "recortar") {
         canvasFront.classList.remove("esconde")
         if (isSelecting === true) {
@@ -702,9 +718,13 @@ function handleUp(evt) {
 
 
     }
-
     if (mode == "texto") {
-        updateCanvas(x, y)
+        if (!isTexting) {
+            updateCanvas(x, y)
+        } else {
+            textCounter = 0;
+            isTexting = false
+        }
         context.drawImage(canvasFront, 0, 0)
         setTimeout(() => { Historia() }, 50)
     }

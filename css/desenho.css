@@ -1022,3 +1022,9 @@ input[type="range"] {
 .selectedFont {
     background-color: #9dc0dc;
 }
+
+input,
+select {
+    border-radius: 8px;
+    padding: 4px;
+}

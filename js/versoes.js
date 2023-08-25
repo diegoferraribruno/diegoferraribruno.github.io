@@ -1,6 +1,7 @@
 let vers = [{
     versao: "8.5",
     notas: [
+        "draw text from https://codepen.io/tholman/pen/DByKvO",
         "google fonts",
         "Atalho M para modo Mirror(espelho) e atalho V para moVer",
         "Atalho T para ferramenta de texto",

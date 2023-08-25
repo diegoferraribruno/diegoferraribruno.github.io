@@ -107,14 +107,18 @@
             <div id="menutexto" class="submenu fundobranco">
                 <span class="close" title="fechar" onmousedown="removeClass()"></span>
 
-                <span class="mais icon textoicon"></span>
+                <span class="mais" onclick="toggleTextBrush()" style="float: left;"><span class="icon textoicon"
+                        style="margin-left: -4px;"><span class="iconsmall pintaricon" id="textBrush"
+                            style="margin-left: 12px;"></span></span></span>
 
                 </label>
-                <input type="text" id="textInput" style="width: 180px; margin-top: 11px; margin-bottom: 10px;" /> <span
-                    class="iconsmall lixeiraicon" onclick="clearTextInput()"></span>
+                <input type="text" id="textInput" style="width: 180px; margin-top: 11px; margin-bottom: 10px;" />
+                <span class="iconsmall lixeiraicon" onclick="clearTextInput()"></span>
 
 
-                <small>Google Fonts:</small> <select id="fontSelect" style="width: 140px; margin-bottom: 10px;">
+
+                <small>Google
+                    Fonts:</small> <select id="fontSelect" style="width: 140px; margin-bottom: 10px;">
                     <!-- Font options will be dynamically added using JavaScript -->
                 </select>
                 <br>
@@ -125,14 +129,14 @@
 
                 <div class="custom-dropdown">
                     <div class="dropdown-header">
-                        <span class="mais icon fonticon" style="margin-left: 8px; margin-top: -16px;"></span><br>
+                        <span class="mais icon fonticon" style="margin-left: 5px; margin-top: -23px;"></span><br>
 
                     </div>
                     <div id="dropdown-options" class="dropdown-options esconde">
                         <!-- Options will be dynamically added here -->
                     </div>
                 </div>
-                <span id="boldButton" class="mais icon boldicon" style="margin-right: 8px; margin-left: 53px;"></span>
+                <span id="boldButton" class="mais icon boldicon" style="margin-right: 8px; margin-left: 52px;"></span>
                 <span id="italicButton" class="mais icon italicicon" style="margin-left: 4px;"></span></span>
                 <br>
                 <label for="colorSelect"><span class="iconsmall coresicon"></span></label>
