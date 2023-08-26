@@ -268,18 +268,28 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
         // Blurring effect to the shadow, the larger the value, the greater the blur.
         ctxF.shadowBlur = 6; // integer
         ctxF.fillStyle = "#fffffff5";
+    }else if (rainbowInk) {
+        ctxF.fillStyle = strokeColor;
+
     }
     else {
         ctxF.fillStyle = selectedColor;
     }
     if (textBrush) {
+    
         ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2));
+        if (tilepaint){
+            ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2)+canvas.height);
+            ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2)-canvas.height);
+            ctxF.fillText(text[0], redondo(x)+canvas.width, redondo(y - fontSize / 2));
+            ctxF.fillText(text[0], redondo(x)-canvas.width, redondo(y - fontSize / 2));
 
+        }
     } else {
         ctxF.fillText(text, redondo(x), redondo(y - fontSize / 2));
 
     }
-    if (tilepaint) {
+    if (tilepaint && !textBrush) {
         fillInfinity(text, redondo(x), redondo(y - fontSize / 2))
     }
 
@@ -484,43 +494,73 @@ var mouse = { x: 0, y: 0, down: false }
 var textBrush = false
 
 function drawText() {
-    const selectedColor = colorSelect.value
+    
+    var selectedColor = colorSelect.value
+    if (rainbowInk) {
+        value = hsla[0] + 3
+        if (value > 360) { value = 0 }
+        mudaCorD(0, value)
+        selectedColor = strokeColor
+    }
     const text = textConfig.value + "  "
     if (textBrush) {
         var d = distance(position, mouse) - 4;
         var fontSize2 = fontSize - 4 + d / 2;
         var letter = text[textCounter];
         var stepSize = textWidth(letter, fontSize2) * textSpacing;
+function drawrotate(){
+    context.rotate(angle);
+    context.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}, sans-serif`;
+    if (rainbowAB) {
+        gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop("0", strokeColor);
+        gradient.addColorStop("1.0", estrokeColor);
+        // Fill with gradient
+        context.fillStyle = gradient;
+    } else if (isGlowing) {
+        context.shadowColor = strokeColor; // string
 
+        // Horizontal distance of the shadow, in relation to the text.
+        context.shadowOffsetX = 0; // integer
+
+        // Vertical distance of the shadow, in relation to the text.
+        context.shadowOffsetY = 0; // integer
+
+        // Blurring effect to the shadow, the larger the value, the greater the blur.
+        context.shadowBlur = 6; // integer
+        context.fillStyle = "#fffffff5";
+    }
+    else {
+        context.fillStyle = selectedColor;
+    }
+    context.fillText(letter, 0, 0);
+}
         if (d > stepSize * textSpacing) {
             var angle = Math.atan2(mouse.y - position.y, mouse.x - position.x);
             context.save();
             context.translate(position.x, position.y);
-            context.rotate(angle);
-            context.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}, sans-serif`;
-            if (rainbowAB) {
-                gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
-                gradient.addColorStop("0", strokeColor);
-                gradient.addColorStop("1.0", estrokeColor);
-                // Fill with gradient
-                context.fillStyle = gradient;
-            } else if (isGlowing) {
-                context.shadowColor = strokeColor; // string
+            drawrotate()
+            if (tilepaint){
+                context.restore();
+                context.save()
+                context.translate(position.x-canvas.width, position.y);
+                drawrotate()
+            context.restore();
 
-                // Horizontal distance of the shadow, in relation to the text.
-                context.shadowOffsetX = 0; // integer
+            context.save()
+             context.translate(position.x+canvas.width, position.y);
+             drawrotate()
+            context.restore();
 
-                // Vertical distance of the shadow, in relation to the text.
-                context.shadowOffsetY = 0; // integer
-
-                // Blurring effect to the shadow, the larger the value, the greater the blur.
-                context.shadowBlur = 6; // integer
-                context.fillStyle = "#fffffff5";
+            context.save()
+      context.translate(position.x, position.y+canvas.height);
+      drawrotate()
+            context.restore();
+            context.save()
+            context.translate(position.x, position.y-canvas.height);
+            drawrotate()
+    
             }
-            else {
-                context.fillStyle = selectedColor;
-            }
-            context.fillText(letter, 0, 0);
             context.restore();
             textCounter++;
             if (textCounter > text.length - 1) {

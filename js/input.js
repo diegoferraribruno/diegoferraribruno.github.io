@@ -368,6 +368,11 @@ function handleMove(evt) {
         if (textBrush && isTexting) {
             mouse.x = x;
             mouse.y = y;
+            if (rainbowInk) {
+                value = hsla[0] + 3
+                if (value > 360) { value = 0 }
+                mudaCorD(0, value)
+            }
             drawText();
         } else {
             updateCanvas(x, y)
