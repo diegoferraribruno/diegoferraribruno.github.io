@@ -253,7 +253,7 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     ctxF.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize}px ${selectedFont}, sans-serif`;
     checkColorMode()
     ctxF.fillText(text, redondo(x), redondo(y - fontSize / 2));
-    if (tilepaint) {
+    if (infinitypaint) {
         fillInfinity(text, redondo(x), redondo(y - fontSize / 2))
     }
 

@@ -268,7 +268,7 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
         // Blurring effect to the shadow, the larger the value, the greater the blur.
         ctxF.shadowBlur = 6; // integer
         ctxF.fillStyle = "#fffffff5";
-    }else if (rainbowInk) {
+    } else if (rainbowInk) {
         ctxF.fillStyle = strokeColor;
 
     }
@@ -276,20 +276,20 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
         ctxF.fillStyle = selectedColor;
     }
     if (textBrush) {
-    
+
         ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2));
-        if (tilepaint){
-            ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2)+canvas.height);
-            ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2)-canvas.height);
-            ctxF.fillText(text[0], redondo(x)+canvas.width, redondo(y - fontSize / 2));
-            ctxF.fillText(text[0], redondo(x)-canvas.width, redondo(y - fontSize / 2));
+        if (infinitypaint) {
+            ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2) + canvas.height);
+            ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2) - canvas.height);
+            ctxF.fillText(text[0], redondo(x) + canvas.width, redondo(y - fontSize / 2));
+            ctxF.fillText(text[0], redondo(x) - canvas.width, redondo(y - fontSize / 2));
 
         }
     } else {
         ctxF.fillText(text, redondo(x), redondo(y - fontSize / 2));
 
     }
-    if (tilepaint && !textBrush) {
+    if (infinitypaint && !textBrush) {
         fillInfinity(text, redondo(x), redondo(y - fontSize / 2))
     }
 
@@ -494,7 +494,7 @@ var mouse = { x: 0, y: 0, down: false }
 var textBrush = false
 
 function drawText() {
-    
+
     var selectedColor = colorSelect.value
     if (rainbowInk) {
         value = hsla[0] + 3
@@ -508,58 +508,58 @@ function drawText() {
         var fontSize2 = fontSize - 4 + d / 2;
         var letter = text[textCounter];
         var stepSize = textWidth(letter, fontSize2) * textSpacing;
-function drawrotate(){
-    context.rotate(angle);
-    context.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}, sans-serif`;
-    if (rainbowAB) {
-        gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
-        gradient.addColorStop("0", strokeColor);
-        gradient.addColorStop("1.0", estrokeColor);
-        // Fill with gradient
-        context.fillStyle = gradient;
-    } else if (isGlowing) {
-        context.shadowColor = strokeColor; // string
+        function drawrotate() {
+            context.rotate(angle);
+            context.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}, sans-serif`;
+            if (rainbowAB) {
+                gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
+                gradient.addColorStop("0", strokeColor);
+                gradient.addColorStop("1.0", estrokeColor);
+                // Fill with gradient
+                context.fillStyle = gradient;
+            } else if (isGlowing) {
+                context.shadowColor = strokeColor; // string
 
-        // Horizontal distance of the shadow, in relation to the text.
-        context.shadowOffsetX = 0; // integer
+                // Horizontal distance of the shadow, in relation to the text.
+                context.shadowOffsetX = 0; // integer
 
-        // Vertical distance of the shadow, in relation to the text.
-        context.shadowOffsetY = 0; // integer
+                // Vertical distance of the shadow, in relation to the text.
+                context.shadowOffsetY = 0; // integer
 
-        // Blurring effect to the shadow, the larger the value, the greater the blur.
-        context.shadowBlur = 6; // integer
-        context.fillStyle = "#fffffff5";
-    }
-    else {
-        context.fillStyle = selectedColor;
-    }
-    context.fillText(letter, 0, 0);
-}
+                // Blurring effect to the shadow, the larger the value, the greater the blur.
+                context.shadowBlur = 6; // integer
+                context.fillStyle = "#fffffff5";
+            }
+            else {
+                context.fillStyle = selectedColor;
+            }
+            context.fillText(letter, 0, 0);
+        }
         if (d > stepSize * textSpacing) {
             var angle = Math.atan2(mouse.y - position.y, mouse.x - position.x);
             context.save();
             context.translate(position.x, position.y);
             drawrotate()
-            if (tilepaint){
+            if (infinitypaint) {
                 context.restore();
                 context.save()
-                context.translate(position.x-canvas.width, position.y);
+                context.translate(position.x - canvas.width, position.y);
                 drawrotate()
-            context.restore();
+                context.restore();
 
-            context.save()
-             context.translate(position.x+canvas.width, position.y);
-             drawrotate()
-            context.restore();
+                context.save()
+                context.translate(position.x + canvas.width, position.y);
+                drawrotate()
+                context.restore();
 
-            context.save()
-      context.translate(position.x, position.y+canvas.height);
-      drawrotate()
-            context.restore();
-            context.save()
-            context.translate(position.x, position.y-canvas.height);
-            drawrotate()
-    
+                context.save()
+                context.translate(position.x, position.y + canvas.height);
+                drawrotate()
+                context.restore();
+                context.save()
+                context.translate(position.x, position.y - canvas.height);
+                drawrotate()
+
             }
             context.restore();
             textCounter++;

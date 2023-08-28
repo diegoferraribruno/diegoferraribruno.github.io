@@ -32,7 +32,7 @@ const images = []
 var videoStream;
 var origin = { x: canvas.width / 2, y: canvas.height / 2 };
 var pixelGood = false
-let tilepaint = false
+let infinitypaint = false
 
 var audio2 = new Audio('./audio/back_001.wav');
 var audio = new Audio('./audio/switch12.wav');
@@ -41,9 +41,9 @@ audio2.volume = 0.4;
 
 let myImg = document.createElement("img");
 
-function tilePaint() {
-    tilepaint = !tilepaint
-    if (tilepaint == true) {
+function infinitypaint() {
+    infinitypaint = !infinitypaint
+    if (infinitypaint == true) {
         iD("infinity").innerHTML = '<span class="icon infinityicon"><span class="icon2 minicheck"></span></span>'
 
         Alert('<span title="infinity" class="emoji " id="emo -♾️">♾️</span> ' + alerts[language][6] + "<br>" + alerts[language][7])
@@ -164,7 +164,7 @@ async function desenha(
         let dif = historia[workingframe].length - undoLevel
         for (i = dif; i < historia[workingframe].length; i++) { historia[workingframe].pop() }
         undoLevel = 0
-       // console.log("daqui pra frente..")
+        // console.log("daqui pra frente..")
     }
     switch (CMD) {
         case "CB":
@@ -190,7 +190,7 @@ async function desenha(
             autoCrop(X, Y, strokeWidth * strokeScale, strokeHeight * strokeScale)
             let newStrokeWidth = strokeWidth * strokeScale
             let newStrokeHeight = strokeHeight * strokeScale
-            if (tilepaint == true) {
+            if (infinitypaint == true) {
                 // console.log(X, Y, eoY, eoY)
                 if (X < newStrokeWidth / 2 && Y < newStrokeHeight) { //top left
                     setTimeout(() => {
@@ -316,7 +316,7 @@ async function desenha(
             context.fillText(eoX, X, Y)
 
             // comandos[workingframe].push(comando)
-            if (tilepaint == true) {
+            if (infinitypaint == true) {
                 // console.log(X, Y, eoY, eoY)
                 if (X < eoY / 2 && Y < eoY / 2) { //top left
                     setTimeout(() => {

@@ -22,7 +22,7 @@ const art = {
     sounds: {},
     images: {},
     pixelGood: false,
-    tilePaint: true,
+    infinitypaint: true,
     frame: {
         0: {
             layer: {
