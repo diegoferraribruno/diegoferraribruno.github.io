@@ -41,7 +41,7 @@ audio2.volume = 0.4;
 
 let myImg = document.createElement("img");
 
-function infinitypaint() {
+function infinityPaint() {
     infinitypaint = !infinitypaint
     if (infinitypaint == true) {
         iD("infinity").innerHTML = '<span class="icon infinityicon"><span class="icon2 minicheck"></span></span>'

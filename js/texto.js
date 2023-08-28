@@ -1,5 +1,5 @@
 var textConfig = {
-    value: "Hello World",
+    value: ["H", "e", "l", "l", "o", " ", "W", "o", "r", "l", "d", " ", " ", "😃", " "],
     font: "Times New Roman",
     size: 16
 };
@@ -59,6 +59,8 @@ const fontFamilies = [
     'Montserrat',
     'Muli',
     'Noto Sans',
+    "Noto Emoji",
+    "Noto Color Emoji",
     'Open Sans',
     'Optima',
     'Oswald',
@@ -90,7 +92,9 @@ const fontFamilies = [
 ];
 
 
-
+function arrayToString(array) {
+    return array.join('');
+}
 function startTexto() {
     (function (document) {
         var width;
@@ -130,7 +134,10 @@ function startTexto() {
     if (textostarted) return;
     textostarted = true;
     textInput.addEventListener('input', () => {
-        textConfig.value = textInput.value;
+
+        const resultArray = transformStringToArray(textInput.value).filter(item => item.trim() !== ""); // Filter out empty and whitespace strings
+        resultArray.push(" ")
+        textConfig.value = resultArray
         updateCanvas();
     });
     fontSizeInput.addEventListener('input', () => {
@@ -139,7 +146,7 @@ function startTexto() {
         updateCanvas();
     });
 
-    textInput.value = textConfig.value
+    textInput.value = arrayToString(textConfig.value)
 
     if ('queryLocalFonts' in window) {
         supportsFontQuery = true;
@@ -218,6 +225,26 @@ function startTexto() {
 
 
 }
+function transformStringToArray(inputString) {
+    const array = [];
+    let currentIndex = 0;
+
+    while (currentIndex < inputString.length) {
+        const currentChar = inputString[currentIndex];
+        const charCode = currentChar.charCodeAt(0);
+
+        if (charCode >= 55356 && charCode <= 55357) {
+            const surrogatePair = inputString.substring(currentIndex, currentIndex + 2);
+            array.push(surrogatePair);
+            currentIndex += 2;
+        } else {
+            array.push(currentChar);
+            currentIndex++;
+        }
+    }
+
+    return array;
+}
 function createNewButton(font, truncatedText) {
     const option = document.createElement('div');
     font = font.replace(/\+/g, ' ');
@@ -239,17 +266,14 @@ function createNewButton(font, truncatedText) {
 }
 
 
-
-
 function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     const text = textInput.value;
-    const selectedFont = textConfig.font
     const selectedColor = colorSelect.value;
     const textradius = text.length * fontSize / 2 //might be usefull in the future
     ctxF.save()
     ctxF.textAlign = "center";
     ctxF.clearRect(0, 0, canvas.width, canvas.height);
-    ctxF.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize}px ${selectedFont}, sans-serif`;
+    ctxF.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize}px ${textConfig.font}, sans-serif`;
     if (rainbowAB) {
         gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
         gradient.addColorStop("0", strokeColor);
@@ -445,6 +469,8 @@ const availableFonts = [
     "Montserrat",
     "Noto+Sans",
     "Noto+Serif",
+    "Noto+Emoji",
+    "Noto+Color+Emoji",
     "Nunito",
     "Open+Sans",
     "Oswald",
@@ -502,7 +528,7 @@ function drawText() {
         mudaCorD(0, value)
         selectedColor = strokeColor
     }
-    const text = textConfig.value + "  "
+    const text = textConfig.value
     if (textBrush) {
         var d = distance(position, mouse) - 4;
         var fontSize2 = fontSize - 4 + d / 2;
@@ -540,8 +566,8 @@ function drawText() {
             context.save();
             context.translate(position.x, position.y);
             drawrotate()
+            context.restore();
             if (infinitypaint) {
-                context.restore();
                 context.save()
                 context.translate(position.x - canvas.width, position.y);
                 drawrotate()
@@ -559,9 +585,60 @@ function drawText() {
                 context.save()
                 context.translate(position.x, position.y - canvas.height);
                 drawrotate()
+                context.restore();
+            } else if (mandala) {
+                context.save();
+                context.translate(position.x, position.y);
+                drawrotate()
+                context.restore();
+                ctxR.clearRect(0, 0, canvas.width, canvas.height);
+                ctxR.save();
+                ctxR.translate(position.x, position.y);
+                ctxR.rotate(angle);
+
+                ctxR.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}, sans-serif`;
+                if (rainbowAB) {
+                    gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
+                    gradient.addColorStop("0", strokeColor);
+                    gradient.addColorStop("1.0", estrokeColor);
+                    // Fill with gradient
+                    ctxR.fillStyle = gradient;
+                } else if (isGlowing) {
+                    ctxR.shadowColor = strokeColor; // string
+
+                    // Horizontal distance of the shadow, in relation to the text.
+                    ctxR.shadowOffsetX = 0; // integer
+
+                    // Vertical distance of the shadow, in relation to the text.
+                    ctxR.shadowOffsetY = 0; // integer
+
+                    // Blurring effect to the shadow, the larger the value, the greater the blur.
+                    ctxR.shadowBlur = 6; // integer
+                    ctxR.fillStyle = "#fffffff5";
+                }
+                else {
+                    ctxR.fillStyle = selectedColor;
+                }
+                ctxR.fillText(letter, 0, 0);
+                ctxR.restore();
+                _start = 0;
+
+                for (var i = 0; i < slices; i++) {
+                    _start += _angle;
+                    ctxF.globalAlpha = 1;
+                    ctxF.save()
+                    // canvasFront.globalCompositeOperation = "source-out"
+
+                    origin.x = canvas.width / 2;
+                    origin.y = canvas.height / 2
+
+                    ctxF.translate(origin.x, origin.y)
+                    ctxF.rotate(_start);
+                    ctxF.drawImage(canvasRender, -origin.x, -origin.y)
+                    ctxF.restore()
+                }
 
             }
-            context.restore();
             textCounter++;
             if (textCounter > text.length - 1) {
                 textCounter = 0;
@@ -569,7 +646,6 @@ function drawText() {
             //console.log (position.x + Math.cos( angle ) * stepSize)
             position.x = position.x + Math.cos(angle) * stepSize;
             position.y = position.y + Math.sin(angle) * stepSize;
-
         }
     }
 }

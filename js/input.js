@@ -179,6 +179,7 @@ function handleStart(evt) {
             origin.y = redondo(origin.y)
         }
         if (textBrush && mode == "texto") {
+            canvasFront.classList.remove("esconde")
             mouse.x = origin.x;
             mouse.y = origin.y;
             position.x = origin.x;
