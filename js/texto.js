@@ -231,32 +231,16 @@ function textInputer() {
     textConfig.value = resultArray
     updateCanvas();
 }
+
+// Define the emoji regex pattern
+
+
 function transformStringToArray(inputString) {
-    const array = [];
-    let currentIndex = 0;
-
-    while (currentIndex < inputString.length) {
-        const currentChar = inputString[currentIndex];
-        const codePoint = inputString.codePointAt(currentIndex);
-
-        // Check if the current character is part of an emoji
-        if (
-            (codePoint >= 128512 && codePoint <= 129535) || // Emoticons and pictographs
-            (codePoint >= 129296 && codePoint <= 129535) || // Additional emoticons
-            (codePoint >= 128640 && codePoint <= 128767) || // Miscellaneous symbols and pictographs
-            (codePoint >= 128992 && codePoint <= 129279)    // Dingbats
-        ) {
-            const emoji = String.fromCodePoint(codePoint);
-            array.push(emoji);
-            currentIndex += emoji.length;
-        } else {
-            array.push(currentChar);
-            currentIndex++;
-        }
-    }
-
-    return array;
+    const resultArray = inputString.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[^\uD800-\uDFFF]|\s/gu);
+    return resultArray;
 }
+// Convert surrogate pairs to emoji characters
+
 function createNewButton(font, truncatedText) {
     const option = document.createElement('div');
     font = font.replace(/\+/g, ' ');
@@ -285,7 +269,7 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     ctxF.save()
     ctxF.textAlign = "center";
     ctxF.clearRect(0, 0, canvas.width, canvas.height);
-    ctxF.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize}px ${textConfig.font}, sans-serif`;
+    ctxF.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize}px ${textConfig.font}`;
     if (rainbowAB) {
         gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
         gradient.addColorStop("0", strokeColor);
