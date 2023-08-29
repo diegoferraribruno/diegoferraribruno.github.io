@@ -297,12 +297,12 @@ function updateCanvas(x = canvas.width / 2, y = canvas.height / 2) {
     }
     if (textBrush) {
 
-        ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2));
+        ctxF.fillText(textConfig.value[0], redondo(x), redondo(y - fontSize / 2));
         if (infinitypaint) {
-            ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2) + canvas.height);
-            ctxF.fillText(text[0], redondo(x), redondo(y - fontSize / 2) - canvas.height);
-            ctxF.fillText(text[0], redondo(x) + canvas.width, redondo(y - fontSize / 2));
-            ctxF.fillText(text[0], redondo(x) - canvas.width, redondo(y - fontSize / 2));
+            ctxF.fillText(textConfig.value[0], redondo(x), redondo(y - fontSize / 2) + canvas.height);
+            ctxF.fillText(textConfig.value[0], redondo(x), redondo(y - fontSize / 2) - canvas.height);
+            ctxF.fillText(textConfig.value[0], redondo(x) + canvas.width, redondo(y - fontSize / 2));
+            ctxF.fillText(textConfig.value[0], redondo(x) - canvas.width, redondo(y - fontSize / 2));
 
         }
     } else {
