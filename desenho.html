@@ -112,7 +112,8 @@
                             style="margin-left: 12px;"></span></span></span>
 
                 </label>
-                <input type="text" id="textInput" style="width: 180px; margin-top: 11px; margin-bottom: 10px;" />
+                <input type="text" id="textInput" style="width: 180px; margin-top: 11px; margin-bottom: 10px;"
+                    class="one" /><button class="first-btn">😋</button>
                 <span class="iconsmall lixeiraicon" onclick="clearTextInput()"></span>
 
 
@@ -1219,6 +1220,25 @@
     <script src="js/gif/LZWEncoder.js"></script>
     <script src="js/gif/NeuQuant.js"></script>
     <script src="js/gif/GIFEncoder.js"></script>
+    <script src="js/vanillaEmojiPicker.js"></script>
+    <script>
+
+        new EmojiPicker({
+            trigger: [
+                {
+                    selector: '.first-btn',
+                    insertInto: ['.one', '.two'] // '.selector' can be used without array
+                },
+                /*   {
+                       selector: '.second-btn',
+                       insertInto: '.two'
+                   }*/
+            ],
+            closeButton: true,
+            //specialButtons: green
+        });
+
+    </script>
 </body>
 
 </html>

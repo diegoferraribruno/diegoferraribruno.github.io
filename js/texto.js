@@ -135,11 +135,11 @@ function startTexto() {
     textostarted = true;
     textInput.addEventListener('input', () => {
 
-        const resultArray = transformStringToArray(textInput.value).filter(item => item.trim() !== ""); // Filter out empty and whitespace strings
-        resultArray.push(" ")
-        textConfig.value = resultArray
-        updateCanvas();
+        textInputer()
     });
+    textInput.addEventListener('focus', () => {
+        textInputer()
+    })
     fontSizeInput.addEventListener('input', () => {
         fontSize = fontSizeInput.value;
         textConfig.size = `${fontSize}px`;
@@ -225,18 +225,30 @@ function startTexto() {
 
 
 }
+function textInputer() {
+    const resultArray = transformStringToArray(textInput.value).filter(item => item.trim() !== ""); // Filter out empty and whitespace strings
+    resultArray.push(" ")
+    textConfig.value = resultArray
+    updateCanvas();
+}
 function transformStringToArray(inputString) {
     const array = [];
     let currentIndex = 0;
 
     while (currentIndex < inputString.length) {
         const currentChar = inputString[currentIndex];
-        const charCode = currentChar.charCodeAt(0);
+        const codePoint = inputString.codePointAt(currentIndex);
 
-        if (charCode >= 55356 && charCode <= 55357) {
-            const surrogatePair = inputString.substring(currentIndex, currentIndex + 2);
-            array.push(surrogatePair);
-            currentIndex += 2;
+        // Check if the current character is part of an emoji
+        if (
+            (codePoint >= 128512 && codePoint <= 129535) || // Emoticons and pictographs
+            (codePoint >= 129296 && codePoint <= 129535) || // Additional emoticons
+            (codePoint >= 128640 && codePoint <= 128767) || // Miscellaneous symbols and pictographs
+            (codePoint >= 128992 && codePoint <= 129279)    // Dingbats
+        ) {
+            const emoji = String.fromCodePoint(codePoint);
+            array.push(emoji);
+            currentIndex += emoji.length;
         } else {
             array.push(currentChar);
             currentIndex++;
@@ -536,7 +548,7 @@ function drawText() {
         var stepSize = textWidth(letter, fontSize2) * textSpacing;
         function drawrotate() {
             context.rotate(angle);
-            context.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}, sans-serif`;
+            context.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}`;
             if (rainbowAB) {
                 gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
                 gradient.addColorStop("0", strokeColor);
@@ -596,7 +608,7 @@ function drawText() {
                 ctxR.translate(position.x, position.y);
                 ctxR.rotate(angle);
 
-                ctxR.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}, sans-serif`;
+                ctxR.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}`;
                 if (rainbowAB) {
                     gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
                     gradient.addColorStop("0", strokeColor);
