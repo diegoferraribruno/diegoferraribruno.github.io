@@ -37,7 +37,7 @@ function readURL() {
 
         image.onload = function () {
             if (iD("pagebg").checked) {
-                iD("tela").style.backgroundImage = "url(" + reader.result + ")";
+                iD("canvas_window").style.backgroundImage = "url(" + reader.result + ")";
             } else {
 
                 if (image.width > canvas.width) {

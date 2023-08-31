@@ -148,7 +148,7 @@ function night() {
 function Fundo(qual) {
     let alvo = canvasDiv
     if (iD("pagebg").checked == true) {
-        alvo = iD("tela")
+        alvo = iD("canvas_window")
     }
     if (qual === "img") {
         var item = prompt(
