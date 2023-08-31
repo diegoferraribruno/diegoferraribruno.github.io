@@ -1,5 +1,5 @@
 var textConfig = {
-    value: ["H", "e", "l", "l", "o", " ", "W", "o", "r", "l", "d", " ", " ", "😃", " "],
+    value: ["H", "e", "l", "l", "o", " ", "W", "o", "r", "l", "d", " ", "😃", " "],
     font: "Times New Roman",
     size: 16
 };
@@ -509,7 +509,7 @@ fontSelect.addEventListener('change', function () {
 var position = { x: 0, y: window.innerHeight / 2 };
 var textCounter = 0;
 var angleDistortion = 6;
-var textSpacing = 1.4
+var textSpacing = 1.6
 // Drawing variables
 var mouse = { x: 0, y: 0, down: false }
 
@@ -663,9 +663,9 @@ function distance(pt, pt2) {
 function textWidth(string, size) {
     context.font = size + "px " + textConfig.font;
     if (ctxF.fillText) {
-        return ctxF.measureText(string).width * textSpacing;
+        return ctxF.measureText(string).width * textSpacing + size / 16;
     } else if (context.mozDrawText) {
-        return ctxF.mozMeasureText(string) * textSpacing;
+        return ctxF.mozMeasureText(string) * textSpacing + size / 16;
     }
 
 };
