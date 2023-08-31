@@ -1023,7 +1023,8 @@ input[type="range"] {
     background-color: #9dc0dc;
 }
 
-input,
+input[type=text],
+input[type=number],
 select {
     border-radius: 8px;
     padding: 4px;
