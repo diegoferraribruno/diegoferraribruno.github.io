@@ -4,32 +4,32 @@ var monstros = {
 function newMonster(id) {
 
     let modelo = {
-        
-            top: 400,
-            left:  Math.random()*300,
-            width: 160,
-            height: 160,
-            scale: 0.25,
-            speed: 2.5,
-            estado: ["deboas", "persegue"],
-            frame: 0,
-            keys: {
-                ArrowUp: false,
-                ArrowRight: false,
-                ArrowDown: false,
-                ArrowLeft: false,
-            
+
+        top: 400,
+        left: Math.random() * 300,
+        width: 160,
+        height: 160,
+        scale: 0.25,
+        speed: 2.5,
+        estado: ["deboas", "persegue"],
+        frame: 0,
+        keys: {
+            ArrowUp: false,
+            ArrowRight: false,
+            ArrowDown: false,
+            ArrowLeft: false,
+
+        }
     }
-}
     monstros[id] = modelo;
-    monstros[id].left =  Math.random()* 1920
-    monstros[id].speed =  Math.random()* 4
-    
-    monstros[id].top =  Math.random()* 600 + 320 
+    monstros[id].left = Math.random() * 1920
+    monstros[id].speed = Math.random() * 4
+
+    monstros[id].top = Math.random() * 600 + 320
     let monstroimg = document.createElement("img")
-    monstroimg.src = "/game/monstro"+ id +".png"
+    monstroimg.src = "/game/monstro" + id + ".png"
     let monstro = document.createElement("div")
-    monstro.id = "monstro"+ id
+    monstro.id = "monstro" + id
     monstro.style.display = "block"
     monstro.style.position = "absolute"
     monstro.style.scale = 0.5
@@ -39,7 +39,7 @@ function newMonster(id) {
     iD("game").appendChild(monstro)
 
     monstroimg.onload = function () {
-        let monstr = iD("monstro"+ id)
+        let monstr = iD("monstro" + id)
         monstr.style.width = monstroimg.height + "px"
         monstr.style.height = monstroimg.height + "px"
         monstro.width = monstroimg.width
@@ -48,14 +48,14 @@ function newMonster(id) {
         monstr.style.backgroundImage = "url('" + monstroimg.src + "')"
     }
 }
-for (let i=0; i<4; i++){newMonster(i)}
+for (let i = 0; i < 4; i++) { newMonster(i) }
 
 var bot = 0
 function movebot(inter) {
-    iD("monstro2").style.filter = "drop-shadow(2px 2px 4px red) hue-rotate("+Math.random()* 375+"deg)"
+    iD("monstro2").style.filter = "drop-shadow(2px 2px 4px red) hue-rotate(" + Math.random() * 375 + "deg)"
     bot++
-    if(bot >= 4){bot = 0}
-    console.log("!bot move", bot)
+    if (bot >= 4) { bot = 0 }
+    // console.log("!bot move", bot)
     setTimeout(() => {
         if (gamestate == "play") {
             let parado = Math.random() < 0.3 ? false : true;
@@ -78,14 +78,14 @@ function movebot(inter) {
         inter = Math.random() * 1000
         movebot(inter)
         // send = true;
-    
+
     }, inter)
 }
 
 movebot(1000)
 
 function autoMoveMonstro(id) {
- 
+
     let monster = monstros[id]
     if (monster.keys.ArrowDown == true && monster.top - monster.height / 2 >= player.top - player.height) {
 
@@ -117,16 +117,16 @@ function autoMoveMonstro(id) {
 var audio1 = new Audio('./game/jumpscare1.ogg');
 var audio2 = new Audio('./game/jumpscare2.ogg');
 var audio3 = new Audio('./game/jumpscare3.ogg');
-var audios = {0:audio1, 1:audio1, 2:audio2, 3:audio3}
+var audios = { 0: audio1, 1: audio1, 2: audio2, 3: audio3 }
 
 let pegou = false
 function frontMoveMonstro(id, move) {
     let monster = monstros[id]
-    let avatar = iD("monstro"+id)
-   
+    let avatar = iD("monstro" + id)
+
     if (avatar != null) {
         let newmonstro = {
-            left: monster.left + (move.x *monster.speed),
+            left: monster.left + (move.x * monster.speed),
             top: monster.top + (move.y * monster.speed),
             width: monster.height,
             height: monster.height
@@ -168,7 +168,7 @@ function frontMoveMonstro(id, move) {
 
             setTimeout(() => {
                 avatar.classList.remove("jumpscare")
-               avatar.style.scale = 0.5
+                avatar.style.scale = 0.5
                 // iD("monstro").style.zIndex = 0
                 monster.keys.ArrowDown = true
                 monster.keys.ArrowRight = true
@@ -178,7 +178,7 @@ function frontMoveMonstro(id, move) {
             }, 1000)
 
         }
-}
+    }
 
 }
 function insideYMonstro(quem = user) {
@@ -210,36 +210,36 @@ let doMonsterCollide = function (rect1, rectb) {
 //anima
 setInterval(animaMonstro, 160)
 function animaMonstro() {
-    for (i=0; i<4;i++){
+    for (i = 0; i < 4; i++) {
         let monster = monstros[i]
-    let position = 320 * monster.frame
-    let monstr = iD("monstro"+i)
-    monstr.style.backgroundPosition = `-${position}px 0px`;
-    monstr.style.rotate = -20 * monster.frame + "deg"
-    monster.frame++
-    if (monster.frame > 2) { monster.frame = 0 }
+        let position = 320 * monster.frame
+        let monstr = iD("monstro" + i)
+        monstr.style.backgroundPosition = `-${position}px 0px`;
+        monstr.style.rotate = -20 * monster.frame + "deg"
+        monster.frame++
+        if (monster.frame > 2) { monster.frame = 0 }
     }
 }
 
 setInterval(moveMonstro, 15)
 function moveMonstro() {
-    for (let i=0; i<4; i++){
-    let move = { x: 0, y: 0 }
-    let monster = monstros[i]
+    for (let i = 0; i < 4; i++) {
+        let move = { x: 0, y: 0 }
+        let monster = monstros[i]
 
-    if (monster.keys.ArrowUp == true && monster.keys.ArrowDown == false) {
-        move.y = -1
-    }
-    if (monster.keys.ArrowUp == false && monster.keys.ArrowDown == true) {
-        move.y = 1
-    }
-    if (monster.keys.ArrowRight == true && monster.keys.ArrowLeft == false) {
-        move.x = 1
-    }
-    if (monster.keys.ArrowRight == false && monster.keys.ArrowLeft == true) {
-        move.x = -1
-    }
+        if (monster.keys.ArrowUp == true && monster.keys.ArrowDown == false) {
+            move.y = -1
+        }
+        if (monster.keys.ArrowUp == false && monster.keys.ArrowDown == true) {
+            move.y = 1
+        }
+        if (monster.keys.ArrowRight == true && monster.keys.ArrowLeft == false) {
+            move.x = 1
+        }
+        if (monster.keys.ArrowRight == false && monster.keys.ArrowLeft == true) {
+            move.x = -1
+        }
 
-    frontMoveMonstro(i,move)
-}
+        frontMoveMonstro(i, move)
+    }
 }

@@ -88,7 +88,7 @@ function mouse_down(e) {
     if (t == "player") {
         seguemouse = true
     }
-   // console.log(t)
+    // console.log(t)
 }
 
 function mouse_up(event) {
@@ -436,7 +436,7 @@ function frontEnd(move) {
                         newUser.left =
                             user.left + move.x * speed;
                         newUser.top = user.top + move.y * speed / 1.4;
-                    //    console.log(true)
+                        //    console.log(true)
                         colidiu = true;
                     }
                 }
@@ -496,7 +496,7 @@ function playershake() {
 }
 //const nuvens = setInterval(moveBG, 200)
 var map = {
-    x: 400*9,
+    x: 400 * 9,
     y: 430 * 3
 }
 
@@ -547,18 +547,18 @@ var linha = 0
 var coluna = 0
 var coliders = [[], [], []]
 var layer = 0
-
 function alignBlocos() {
+    let start = { x: 1100, y: 1550 }
     for (i in blocos) {
-        if (i == 4 || i == 8) { linha++; coluna = 0 }
+        if (i == 4 || i == 9) { linha++; coluna = 0 }
         if (blocos[i].id) {
-            let sobra = 1200
-            let esq = (coluna * 420) + sobra
-            let topo = 1550
-            /*  let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 400 }
-              blocosX.push(bloco)*/
+            let sobra = 40
+            let esq = start.x + (coluna * 340) + sobra
+            let topo = 1550 //-280 + (linha * 380) 
+            let bloco = { id: blocos[i].id, left: esq, top: topo, width: 320, height: 340 }
+            blocosX.push(bloco)
             // coliders.push(bloco)
-            blocos[i].setAttribute("style", "left:" + esq + "px; top:" + topo + "px; position:absolute; display:block")
+            blocos[i].setAttribute("style", "left:" + esq + "px; top:" + topo + "px")
         }
         coluna++
     }
@@ -738,7 +738,7 @@ function criaImagem(x) {
     img.classList.add("mini2")
 
     let floor = parseInt(x / 6)
-  
+
     img.style.top = (floor * 400) + 56 + "px"
 
     img.style.left = 400 * x + 350 - (floor * 6 * 400) + "px"

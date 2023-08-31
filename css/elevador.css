@@ -19,6 +19,7 @@ body {
     margin-top: -96px;
     margin-left: -10px;
 }
+
 #zumbi {
     width: 128px;
     height: 200px;
@@ -237,4 +238,8 @@ body {
     ;
 
 
+}
+
+#destaque {
+    background-image: url("/img/yogaart.png");
 }
