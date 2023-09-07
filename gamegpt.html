@@ -113,7 +113,13 @@
         canvas.addEventListener('mousedown', () => {
             isMoving = true;
         });
+        canvas.addEventListener('touchstart', () => {
+            isMoving = true;
+        });
 
+        canvas.addEventListener('touchend', () => {
+            isMoving = false;
+        });
         canvas.addEventListener('mouseup', () => {
             isMoving = false;
         });
@@ -122,8 +128,13 @@
             mouseX = e.clientX - canvas.getBoundingClientRect().left + camera.x;
             mouseY = e.clientY - canvas.getBoundingClientRect().top + camera.y;
             if (isMoving) {
-                const mouseX = e.clientX - canvas.getBoundingClientRect().left + camera.x;
-                const mouseY = e.clientY - canvas.getBoundingClientRect().top + camera.y;
+                movePlayer()
+            }
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            mouseX = e.clientX - canvas.getBoundingClientRect().left + camera.x;
+            mouseY = e.clientY - canvas.getBoundingClientRect().top + camera.y;
+            if (isMoving) {
                 movePlayer()
             }
         });
