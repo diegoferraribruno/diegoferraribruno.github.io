@@ -131,6 +131,7 @@ function startTexto() {
                 serifWidth !== getWidth(font + ',serif');
         };
     })(document);
+    loadGreetings()
     if (textostarted) return;
     textostarted = true;
     textInput.addEventListener('input', () => {
@@ -221,10 +222,22 @@ function startTexto() {
         if (!dropdown.contains(event.target)) {
             dropdownOptions.classList.add('esconde');
         }
+
+
+        // Close the dropdown if the user clicks outside of it
+        /*    if (!event.target.matches('.dropbtn')) {
+                const drop = iD("greetingsDropdown");
+    
+                if (drop.style.display === "block") {
+                    drop.style.display = "none";
+                }
+    
+            }*/
     });
 
 
 }
+
 function textInputer() {
     const resultArray = transformStringToArray(textInput.value).filter(item => item.trim() !== ""); // Filter out empty and whitespace strings
     resultArray.push(" ")
@@ -618,15 +631,14 @@ function drawText() {
                 ctxR.fillText(letter, 0, 0);
                 ctxR.restore();
                 _start = 0;
+                origin.x = canvas.width / 2;
+                origin.y = canvas.height / 2
 
                 for (var i = 0; i < slices; i++) {
                     _start += _angle;
                     ctxF.globalAlpha = 1;
                     ctxF.save()
                     // canvasFront.globalCompositeOperation = "source-out"
-
-                    origin.x = canvas.width / 2;
-                    origin.y = canvas.height / 2
 
                     ctxF.translate(origin.x, origin.y)
                     ctxF.rotate(_start);
@@ -678,5 +690,88 @@ function toggleTextBrush() {
     } else {
         iD("textBrush").innerHTML = ""
 
+    }
+}
+//let language = "en"
+const seasonalGreetings = {
+    "en": [
+        "🥳 Happy Birthday 🎂",
+        "Merry Christmas 🎄",
+        "Happy New Year 🎉",
+        "Happy Halloween 🎃",
+        "Happy Thanksgiving 🦃",
+        "Happy Valentine's Day 💘",
+        "Happy Easter 🐣",
+        "Happy Fourth of July 🇺🇸",
+        "Happy Hanukkah 🕎",
+        "Happy Diwali 🪔",
+        "Happy St. Patrick's Day ☘️",
+        "Happy Independence Day 🎆",
+        "Happy Labor Day 🛠️",
+        "Happy Veterans Day 🇺🇸",
+        "Happy Mother's Day 👩‍👧‍👦",
+        "Happy Father's Day 👨‍👧‍👦",
+        "Happy Anniversary 💑",
+        "Happy Graduation 🎓",
+        "Happy Retirement 🎈",
+        "Happy Spring 🌸",
+        "Happy Summer ☀️",
+        "Happy Fall 🍂",
+        "Happy Winter ❄️",
+        "Happy Chinese New Year 🧧"
+    ], "pt_BR": [
+        "🥳 Feliz Aniversário 🎂",
+        "Feliz Natal 🎄",
+        "Feliz Ano Novo 🎉",
+        "Feliz Halloween 🎃",
+        "Feliz Dia de Ação de Graças 🦃",
+        "Feliz Dia dos Namorados 💘",
+        "Feliz Páscoa 🐣",
+        "Feliz Quatro de Julho 🇺🇸",
+        "Feliz Hanukkah 🕎",
+        "Feliz Diwali 🪔",
+        "Feliz Dia de São Patrício ☘️",
+        "Feliz Dia da Independência 🎆",
+        "Feliz Dia do Trabalho 🛠️",
+        "Feliz Dia dos Veteranos 🇺🇸",
+        "Feliz Dia das Mães 👩‍👧‍👦",
+        "Feliz Dia dos Pais 👨‍👧‍👦",
+        "Feliz Aniversário de Casamento 💑",
+        "Feliz Formatura 🎓",
+        "Feliz Aposentadoria 🎈",
+        "Feliz Primavera 🌸",
+        "Feliz Verão ☀️",
+        "Feliz Outono 🍂",
+        "Feliz Inverno ❄️",
+        "Feliz Ano Novo Chinês 🧧"
+    ]
+}
+function loadGreetings() {
+    const greet = seasonalGreetings[language]
+    const len = greet.length
+    const drop = iD("greetingsDropdown")
+    drop.innerHTML = ""
+    for (i = 0; i < len; i++) {
+        let opt = document.createElement("div")
+
+        opt.setAttribute("onclick", "changeText('" + seasonalGreetings[language][i] + "')")
+
+        opt.innerHTML = seasonalGreetings[language][i]
+        drop.appendChild(opt)
+    }
+}
+function changeText(value) {
+    textInput.value = value
+
+    textInputer()
+    toggleDropdown()
+}
+
+function toggleDropdown() {
+    const dropdown = document.getElementById("greetingsDropdown");
+    if (dropdown.style.display === "none") {
+        dropdown.style.display = "block"
+    } else {
+        dropdown.style.display = "none"
     }
 }
