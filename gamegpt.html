@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Simple Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            background-color: #ccc;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const player = {
+            x: 50,
+            y: 50,
+            speed: 2,
+            radius: 10
+        };
+
+        const camera = {
+            x: 0,
+            y: 0,
+            width: canvas.width,
+            height: canvas.height,
+            boundingBox: {
+                left: canvas.width * 0.3,
+                right: canvas.width * 0.7,
+                top: canvas.height * 0.3,
+                bottom: canvas.height * 0.7
+            }
+        };
+
+        const elements = []; // Array to store other elements
+
+        // Add some random elements to the scene
+        for (let i = 0; i < 10; i++) {
+            elements.push({
+                x: Math.random() * 500,
+                y: Math.random() * 500,
+                size: Math.random() * 20 + 10
+            });
+        }
+
+        function updateCamera() {
+            // Calculate the camera's position to keep the player centered
+            camera.x = player.x - camera.width / 2;
+            camera.y = player.y - camera.height / 2;
+
+            // Check if the player is near the edges of the bounding box
+            if (player.x < camera.boundingLeft) {
+                camera.x = player.x - camera.boundingLeft;
+            } else if (player.x > camera.boundingRight) {
+                camera.x = player.x - (camera.width - camera.boundingRight);
+            }
+
+            if (player.y < camera.boundingTop) {
+                camera.y = player.y - camera.boundingTop;
+            } else if (player.y > camera.boundingBottom) {
+                camera.y = player.y - (camera.height - camera.boundingBottom);
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Translate the canvas to adjust for the camera position
+            ctx.save();
+            ctx.translate(-camera.x, -camera.y);
+
+            // Draw other elements in the scene
+            ctx.fillStyle = 'green';
+            elements.forEach(element => {
+                ctx.fillRect(element.x, element.y, element.size, element.size);
+            });
+
+            // Draw the player at its world position
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+            ctx.closePath();
+
+            // Restore the canvas transformation
+            ctx.restore();
+        }
+
+        function gameLoop() {
+            updateCamera();
+            draw();
+            if (isMoving) {
+                movePlayer()
+            }
+            requestAnimationFrame(gameLoop);
+
+        }
+
+        let isMoving = false;
+        var mouseX = 0
+        var mouseY = 0
+        canvas.addEventListener('mousedown', () => {
+            isMoving = true;
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isMoving = false;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX - canvas.getBoundingClientRect().left + camera.x;
+            mouseY = e.clientY - canvas.getBoundingClientRect().top + camera.y;
+            if (isMoving) {
+                const mouseX = e.clientX - canvas.getBoundingClientRect().left + camera.x;
+                const mouseY = e.clientY - canvas.getBoundingClientRect().top + camera.y;
+                movePlayer()
+            }
+        });
+        function movePlayer() {
+
+            const angle = Math.atan2(mouseY - player.y, mouseX - player.x);
+            player.x += Math.cos(angle) * player.speed;
+            player.y += Math.sin(angle) * player.speed;
+
+        }
+        gameLoop();
+    </script>
+</body>
+
+</html>
