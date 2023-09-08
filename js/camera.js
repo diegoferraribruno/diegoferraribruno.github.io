@@ -438,9 +438,9 @@ async function initializeCamera() {
                 }
             }
             //end automenu
-        } catch {
+        } catch (err) {
             iD("camoptions").innerHTML = "Sinto muito.<br>Seu navegador não possui a função de acesso aos recursos avançados.<br>Use o Google Chrome para usar este menu e mudar as configurações da camera"
-
+            console.log(err)
         }
 
     } catch (err) {
