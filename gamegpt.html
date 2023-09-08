@@ -101,25 +101,30 @@
             updateCamera();
             draw();
             if (isMoving) {
-                movePlayer()
+                movePlayer();
             }
             requestAnimationFrame(gameLoop);
-
         }
 
         let isMoving = false;
-        var mouseX = 0
-        var mouseY = 0
+        var mouseX = 0;
+        var mouseY = 0;
+
         canvas.addEventListener('mousedown', () => {
             isMoving = true;
         });
-        canvas.addEventListener('touchstart', () => {
+
+        canvas.addEventListener('touchstart', (e) => {
             isMoving = true;
+            const touch = e.touches[0];
+            mouseX = touch.clientX - canvas.getBoundingClientRect().left + camera.x;
+            mouseY = touch.clientY - canvas.getBoundingClientRect().top + camera.y;
         });
 
         canvas.addEventListener('touchend', () => {
             isMoving = false;
         });
+
         canvas.addEventListener('mouseup', () => {
             isMoving = false;
         });
@@ -128,23 +133,25 @@
             mouseX = e.clientX - canvas.getBoundingClientRect().left + camera.x;
             mouseY = e.clientY - canvas.getBoundingClientRect().top + camera.y;
             if (isMoving) {
-                movePlayer()
+                movePlayer();
             }
         });
-        canvas.addEventListener('touchmove', (e) => {
-            mouseX = e.clientX - canvas.getBoundingClientRect().left + camera.x;
-            mouseY = e.clientY - canvas.getBoundingClientRect().top + camera.y;
-            if (isMoving) {
-                movePlayer()
-            }
-        });
-        function movePlayer() {
 
+        canvas.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            mouseX = touch.clientX - canvas.getBoundingClientRect().left + camera.x;
+            mouseY = touch.clientY - canvas.getBoundingClientRect().top + camera.y;
+            if (isMoving) {
+                movePlayer();
+            }
+        });
+
+        function movePlayer() {
             const angle = Math.atan2(mouseY - player.y, mouseX - player.x);
             player.x += Math.cos(angle) * player.speed;
             player.y += Math.sin(angle) * player.speed;
-
         }
+
         gameLoop();
     </script>
 </body>
