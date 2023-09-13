@@ -146,9 +146,9 @@ body {
 
 .fundobranco {
     min-height: 42px;
-    background-color: #eeeeeeee;
+    background-color: #eeeeee;
     border-radius: 8px;
-    border: solid 1px #55555555;
+    border: solid 1px #555555;
     padding: 4px;
     display: inline-block;
     margin-bottom: 4px;
@@ -166,7 +166,7 @@ body {
     height: 26px;
     border-style: solid;
     border-radius: 20px;
-    border-color: #55555555;
+    border-color: #555555;
     border-width: thin;
     background-color: #ddddddee;
     display: inline-block;
@@ -438,7 +438,7 @@ input[type="range"] {
 }
 
 .light {
-    background-color: #eeeeee66;
+    background-color: #eeeeee;
     color: #000000;
     /*  animation: animatelight 0.3s;*/
 }
@@ -523,7 +523,7 @@ input[type="range"] {
     min-height: 34px;
     max-height: 360px;
     padding-top: 4px;
-    border-bottom: solid 1px #55555555;
+    border-bottom: solid 1px #555555;
     background-color: none;
     margin-left: auto;
     margin-right: auto;
@@ -541,7 +541,7 @@ input[type="range"] {
     min-height: 34px;
     max-height: 360px;
     padding-top: 4px;
-    border: solid 1px #55555555;
+    border: solid 1px #555555;
     background-color: none;
     margin-left: auto;
     margin-right: auto;
@@ -553,13 +553,13 @@ input[type="range"] {
 }
 
 .botao:hover {
-    background-color: #eeeeee22;
+    background-color: #eeeeee;
 }
 
 
 
 .botao:hover {
-    background-color: #eeeeee22;
+    background-color: #eeeeee;
 }
 
 #menuinfo {
@@ -1046,9 +1046,7 @@ select {
 
 /* Style the dropdown content (hidden by default) */
 .dropdown-content {
-
     position: absolute;
-    background-color: #f1f1f1;
     min-width: 160px;
     z-index: 1;
     max-height: 80px;
