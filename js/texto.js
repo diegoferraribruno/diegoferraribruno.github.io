@@ -547,11 +547,8 @@ function drawText() {
             context.rotate(angle);
             context.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}`;
             if (rainbowAB) {
-                gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
-                gradient.addColorStop("0", strokeColor);
-                gradient.addColorStop("1.0", estrokeColor);
-                // Fill with gradient
-                context.fillStyle = gradient;
+                isRainbowAB()
+                context.fillStyle = strokeColor;
             } else if (isGlowing) {
                 context.shadowColor = strokeColor; // string
 
@@ -607,11 +604,8 @@ function drawText() {
 
                 ctxR.font = `${isBold ? 'bold' : ''} ${isItalic ? 'italic' : ''} ${fontSize2 / textSpacing}px ${textConfig.font}`;
                 if (rainbowAB) {
-                    gradient = ctxF.createLinearGradient(0, 0, canvas.width, 0);
-                    gradient.addColorStop("0", strokeColor);
-                    gradient.addColorStop("1.0", estrokeColor);
-                    // Fill with gradient
-                    ctxR.fillStyle = gradient;
+                    isRainbowAB()
+                    ctxR.fillStyle = strokeColor;
                 } else if (isGlowing) {
                     ctxR.shadowColor = strokeColor; // string
 

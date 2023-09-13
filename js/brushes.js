@@ -419,3 +419,85 @@ var Trig = {
 
 
 var oldBrush = [lastbrush, strokeScale, strokeColor, globalComposite]
+
+
+function isRainbowAB() {
+    if (rainbowAB) {
+        let value = hsla[0] + colorincrease
+        if (value > 360) { value -= 360 }
+        else if (value < 0) { value = 360 - value }
+        if (hueinvert) {
+            if (colorAbigger && value > rainbowABcolors[1].hue && value < rainbowABcolors[0].hue) {
+                colorincrease = -1 * colorincrease
+                value = hsla[0] - colorincrease
+            } else if (colorAbigger == false &&
+                value > +rainbowABcolors[0].hue && value < +rainbowABcolors[1].hue) {
+                colorincrease = -1 * colorincrease
+                value = hsla[0] + colorincrease
+            }
+        } else {
+            if (colorAbigger && (value > +rainbowABcolors[0].hue || value < rainbowABcolors[1].hue)) {
+                colorincrease = -1 * colorincrease
+                value = hsla[0] + colorincrease
+            }
+            else if (colorAbigger == false && (value < +rainbowABcolors[0].hue || value > +rainbowABcolors[1].hue)) {
+                colorincrease = -1 * colorincrease
+                value = hsla[0] + colorincrease
+            }
+        }
+
+
+        mudaCorD(0, value)
+
+        value = hsla[1] + satincrease
+        if (satAbigger) {
+            if (value > +rainbowABcolors[0].saturation || value < +rainbowABcolors[1].hue) {
+                satincrease = -1 * satincrease
+                value = hsla[1] + satincrease
+            }
+        } else {
+            if (value < +rainbowABcolors[0].saturation || value > +rainbowABcolors[1].hue) {
+                satincrease = -1 * satincrease
+                value = hsla[1] + satincrease
+            }
+        }
+        mudaCorD(1, value)
+        if (+rainbowABcolors[0].lightness != +rainbowABcolors[1].lightness) {
+
+            value = hsla[2] + lightnessincrease
+            if (lightAbigger) {
+                if (value > +rainbowABcolors[0].lightness || value < +rainbowABcolors[1].lightness) {
+                    lightnessincrease = -1 * lightnessincrease
+                    value = hsla[2] + lightnessincrease
+
+
+                }
+            } else {
+                if (value < +rainbowABcolors[0].lightness || value > +rainbowABcolors[1].lightness) {
+                    lightnessincrease = -1 * lightnessincrease
+                    value = hsla[2] + lightnessincrease
+
+                }
+            }
+            mudaCorD(2, value)
+        }
+
+        if (+rainbowABcolors[0].alpha != +rainbowABcolors[1].alpha) {
+            value = hsla[3] + alphaincrease
+
+            if (alphaAbigger) {
+                if (value > +rainbowABcolors[0].alpha || value < + rainbowABcolors[1].alpha) {
+                    alphaincrease = -1 * alphaincrease
+                    value = hsla[3] + alphaincrease
+
+                }
+            } else {
+                if (value < +rainbowABcolors[0].alpha || value > +rainbowABcolors[1].alpha) {
+                    alphaincrease = -1 * alphaincrease
+                    value = hsla[3] + alphaincrease
+                }
+            }
+            mudaCorD(3, value)
+        }
+    }
+}
