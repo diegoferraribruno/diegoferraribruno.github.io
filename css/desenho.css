@@ -552,12 +552,10 @@ input[type="range"] {
     overflow: auto;
 }
 
-.botao:hover {
+/*.botao:hover {
     background-color: #eeeeee;
     color: #222222;
-}
-
-
+}*/
 
 .botao:hover {
     background-color: #eeeeee;
