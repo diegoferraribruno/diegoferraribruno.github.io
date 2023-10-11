@@ -449,14 +449,16 @@ function handleMove(evt) {
                             )
                         )
                     } else {
-                        desenha(
-                            "brush",
-                            context.globalCompositeOperation,
-                            x,
-                            y,
-                            origin.x,
-                            origin.y,
-                            1
+                        createNewBrush(lastbrush, 1, color).then(
+                            desenha(
+                                "brush",
+                                context.globalCompositeOperation,
+                                x,
+                                y,
+                                origin.x,
+                                origin.y,
+                                1
+                            )
                         )
                     }
                 }
