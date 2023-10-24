@@ -121,6 +121,7 @@ var inter
 
 function play() {
     Historia()
+    playing = 0;
     oldMode = mode;
     mode = "play";
     if (animacao.length > 1) {
