@@ -121,7 +121,6 @@ var inter
 
 function play() {
     Historia()
-    playing = 0;
     oldMode = mode;
     mode = "play";
     if (animacao.length > 1) {
@@ -139,7 +138,7 @@ function play() {
         }
         inter = setInterval(() => {
             playing++;
-            if (playing == animacao.length) {
+            if (playing >= animacao.length) {
                 playing = 0
             }
             playerPlay(playing);
