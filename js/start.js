@@ -245,7 +245,7 @@ function flipClip() {
   isFlip = !isFlip
   transformClip()
   if (isFlip) {
-    iD("mirror2").innerHTML = `<span class="icon2 minicheck"></span>`
+    iD("mirror2").innerHTML = `<span class="minicheck"></span>`
   } else {
     iD("mirror2").innerHTML = ``
   }

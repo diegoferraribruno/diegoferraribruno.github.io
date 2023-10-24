@@ -313,7 +313,7 @@ function toggleFont(id = textConfig.font) {
 boldButton.addEventListener('click', () => {
     isBold = !isBold
     if (isBold) {
-        boldButton.innerHTML = "<span class='icon2 minicheck'></span>"
+        boldButton.innerHTML = "<span class='minicheck'></span>"
         textInput.style.fontWeight = "bold"
         dropdownOptions.style.fontWeight = "bold"
 
@@ -327,7 +327,7 @@ boldButton.addEventListener('click', () => {
 italicButton.addEventListener('click', () => {
     isItalic = !isItalic
     if (isItalic) {
-        italicButton.innerHTML = "<span class='icon2 minicheck'></span>"
+        italicButton.innerHTML = "<span class='minicheck'></span>"
         textInput.style.fontStyle = "italic"
         dropdownOptions.style.fontStyle = "italic"
 
@@ -539,7 +539,7 @@ function textWidth(string, size) {
 function toggleTextBrush() {
     textBrush = !textBrush
     if (textBrush == true) {
-        iD("textBrush").innerHTML = "<span class='icon2 minicheck'></span>"
+        iD("textBrush").innerHTML = "<span class='minicheck'></span>"
 
     } else {
         iD("textBrush").innerHTML = ""

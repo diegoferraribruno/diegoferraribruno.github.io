@@ -44,7 +44,7 @@ let myImg = document.createElement("img");
 function infinityPaint() {
     infinitypaint = !infinitypaint
     if (infinitypaint == true) {
-        iD("infinity").innerHTML = '<span class="icon infinityicon"><span class="icon2 minicheck"></span></span>'
+        iD("infinity").innerHTML = '<span class="icon infinityicon"><span class="minicheck"></span></span>'
 
         Alert('<span title="infinity" class="emoji " id="emo -♾️">♾️</span> ' + alerts[language][6] + "<br>" + alerts[language][7])
     } else {
@@ -60,7 +60,7 @@ function setCenter() {
 function Mirror() {
     mirror = !mirror
     if (mirror == true) {
-        iD("mirror").innerHTML = '<span class="icon mirroricon"><span class="icon2 minicheck"></span></span>'
+        iD("mirror").innerHTML = '<span class="icon mirroricon"><span class="minicheck"></span></span>'
         setCenter()
         drawVerticalLine()
         Alert(`  <span id="mirror2" title="mirror" class="mais"
@@ -83,7 +83,7 @@ function drawVerticalLine() {
 function Mandala() {
     mandala = !mandala
     if (mandala == true) {
-        iD("mandala").innerHTML = '<span class="icon mandalaicon"><span class="icon2 minicheck"></span></span>'
+        iD("mandala").innerHTML = '<span class="icon mandalaicon"><span class="minicheck"></span></span>'
         setCenter()
         mostraMenu("mandala")
         drawSlices()

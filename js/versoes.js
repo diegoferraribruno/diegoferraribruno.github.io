@@ -9,7 +9,7 @@ let vers = [{
         "Menu greetings do texto começa escondido",
         "icons light background color even in darkmode"
     ]
-}{
+}, {
     versao: "8.5",
     notas: [
         "draw text from https://codepen.io/tholman/pen/DByKvO",

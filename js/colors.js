@@ -355,7 +355,7 @@ function changeColorMode(qual = colormode) {
 function glow() {
     isGlowing = !isGlowing
     if (isGlowing === true) {
-        iD("glow").innerHTML = '<span class="icon2 minicheck"></span>'
+        iD("glow").innerHTML = '<span class="minicheck"></span>'
 
         ctxF.globalCompositeOperation = 'lighter'
         //context.globalCompositeOperation = 'lighter'
@@ -445,7 +445,7 @@ function rainbow(ab = false, bloquinho = true) {
         }
 
         if (rainbowAB == true) {
-            iD("rainbowAB").innerHTML = '<span class="icon2 minicheck">a-b</span>'
+            iD("rainbowAB").innerHTML = '<span class="minicheck">a-b</span>'
 
             Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + " a-b<br>" + alerts[language][7])
             iD("menuAB").classList.add("aparece")
@@ -463,7 +463,7 @@ function rainbow(ab = false, bloquinho = true) {
         mudaCorQ(1, 100)
 
         if (rainbowInk == true) {
-            iD("rainbow").innerHTML = '<span class="icon2 minicheck"></span>'
+            iD("rainbow").innerHTML = '<span class="minicheck"></span>'
 
             Alert(`<span id="glow" title="glow" class="mais selected" onmousedown="glow()" style="background-image: url('/img/rainbowink.png'); color: #ffffff01;">.</span>` + alerts[language][28] + "<br>" + alerts[language][7])
         } else {

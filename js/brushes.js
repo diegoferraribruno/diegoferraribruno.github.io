@@ -47,7 +47,7 @@ function customBrushColor() {
 function toggleDinamicBrush() {
     dinamicBrush = !dinamicBrush
     if (dinamicBrush == true) {
-        iD("dinamicbrush").innerHTML = '<span class="icon dinamicbrushicon"><span class="icon2 minicheck"></span></span>'
+        iD("dinamicbrush").innerHTML = '<span class="icon dinamicbrushicon"><span class="minicheck"></span></span>'
         Alert('<span title="dinamicbrush" class="dinamicbrush"> </span> ' + alerts[language][25] + "<br>" + alerts[language][7])
     } else {
         iD("dinamicbrush").innerHTML = '<span class="icon dinamicbrushicon"></span>'
