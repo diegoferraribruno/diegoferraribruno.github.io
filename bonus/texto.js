@@ -214,7 +214,10 @@ function startTexto() {
         if (!dropdown.contains(event.target)) {
             dropdownOptions.classList.add('esconde');
         }
-    });
+    }
+    );
+
+    toggleDropdown()
 
 
 }

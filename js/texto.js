@@ -753,6 +753,8 @@ function loadGreetings() {
         opt.innerHTML = seasonalGreetings[language][i]
         drop.appendChild(opt)
     }
+
+    toggleDropdown()
 }
 function changeText(value) {
     textInput.value = value

@@ -4,15 +4,16 @@
     width: 36px;
     height: 36px;
     background-image: url("./../img/iconsleft.png");
-    filter: drop-shadow(0px 0px 1px white);
+    background-color: rgb(224, 224, 224);
+    border-radius: 32px;
 }
 
 .iconsmall {
     display: inline-block;
     width: 36px;
     height: 36px;
+    background-color: rgb(224, 224, 224);
     background-image: url("./../img/iconsleft.png");
-    filter: drop-shadow(0px 0px 1px white);
     transform: scale(0.6);
     margin-bottom: -10px;
     margin-top: -10px;

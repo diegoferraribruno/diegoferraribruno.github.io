@@ -95,7 +95,9 @@ function handleKeys(evt) {
     let activeEl = document.activeElement
 
     if (activeEl.type != "text" && mode != "texto") {
-        iD("console").innerHTML = evt.key
+        if (consoleDiv) {
+            iD("console").innerHTML = evt.key
+        }
         if (evt.keyCode === 90) {
             keyZ = true
         }
@@ -165,8 +167,9 @@ function handleStart(evt) {
     if (!spaceKey) {
         evt.preventDefault();
         removeClass();
-        iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + evt.pressure
-
+        if (consoleDiv) {
+            iD("console").innerHTML = "width: " + evt.width + " height : " + evt.height + " pressure: " + evt.pressure
+        }
         changedBrush = false;
         offsetX = canvas.getBoundingClientRect().left;
         offsetY = canvas.getBoundingClientRect().top;
@@ -277,7 +280,9 @@ function handleStart(evt) {
 
                 if (dinamicBrush === true && evt.pressure != 0.5) {
                     lastPressure = evt.pressure + 1
-                    iD("console2").innerHTML = "pen pressure " + evt.pressure
+                    if (consoleDiv) {
+                        iD("console2").innerHTML = "pen pressure " + evt.pressure
+                    }
                     if (lastPressure < 1) { lastPressure = 1 }
                     if (lastPressure > strokemax) { lastPressure = strokemax }
 
@@ -429,14 +434,18 @@ function handleMove(evt) {
                 isRainbowAB()
                 if ((evt.pointerType == "touch" || (evt.pointerType == "mouse" && evt.pressure == 0.5)) && dinamicBrush === true && !keyCtrl) {
                     drawCursor()
-                    iD("console2").innerHTML = " pressure/speed: " + lastPressure
+                    if (consoleDiv) {
+                        iD("console2").innerHTML = " pressure/speed: " + lastPressure
+                    }
                 } else {
                     if (dinamicBrush === true && evt.pressure != 0.5 && !keyCtrl) {
                         let pressure = (evt.pressure * 3 + 1) * strokeScale
                         lastPressure = pressure
                         if (lastPressure < 1) { lastPressure = 1 }
                         if (lastPressure > strokemax) { lastPressure = strokemax }
-                        iD("console").innerHTML = "PEN width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
+                        if (consoleDiv) {
+                            iD("console").innerHTML = "PEN width: " + evt.width + " height : " + evt.height + " pressure: " + pressure + " Lastpressure: " + lastPressure;
+                        }
                         createNewBrush(lastbrush, lastPressure, color).then(
                             desenha(
                                 "brush",

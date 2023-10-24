@@ -387,7 +387,7 @@ var lightAbigger = false
 var alphaAbigger = false
 var colorABdist = 20
 
-function abDistanceChange(value) { colorABdist = value; updateAbBar(value) }
+function abDistanceChange(value) { colorABdist = 100 - value; updateAbBar(value) }
 function updateAbBar(value) {
     iD("abbar").setAttribute("style", `width:${value * 3}px; background:linear-gradient(90deg, ${strokeColor},${estrokeColor});display: inline-block; height: 20px; border-radius: 10px;`);
 }

@@ -94,6 +94,8 @@ function startup() {
           const input = document.getElementById("textInput");
           input.focus();
           input.select();
+        } else if (event.key == "i") {
+          toggleConsole()
         }
       } else if (keyAlt == true) {
         if (event.key === "+") {

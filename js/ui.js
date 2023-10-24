@@ -36,7 +36,6 @@ function toggleConsole() {
     console.log("console")
     consoleDiv = !consoleDiv
     if (consoleDiv == true) {
-
         iD("console").classList.remove("esconde")
         iD("console2").classList.remove("esconde")
     } else {

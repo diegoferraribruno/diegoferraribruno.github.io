@@ -1,4 +1,15 @@
 let vers = [{
+    versao: "8.9",
+    notas: [
+        "tela inicial sem splash",
+        "Pressao de caneta (tablet) funciona apenas no Google Chrome.",
+        "i shortcut for console hide and DOM update only if console is on",
+        "animation was not playing if frames were deleted (fixed)",
+        "Mudança na cor AB ainda necessita melhorarias...",
+        "Menu greetings do texto começa escondido",
+        "icons light background color even in darkmode"
+    ]
+}{
     versao: "8.5",
     notas: [
         "draw text from https://codepen.io/tholman/pen/DByKvO",
