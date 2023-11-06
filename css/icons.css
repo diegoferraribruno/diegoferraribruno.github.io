@@ -4,8 +4,8 @@
     width: 36px;
     height: 36px;
     background-image: url("./../img/iconsleft.png");
-    background-color: rgb(224, 224, 224);
-    border-radius: 36px;
+
+
 }
 
 .iconsmall {
@@ -212,8 +212,8 @@
     width: 36px;
     height: 36px;
     background-image: url("./../img/icon2.png");
-    background-color: rgb(224, 224, 224);
-    border-radius: 36px;
+
+
 
 }
 
@@ -407,7 +407,7 @@
     width: 36px;
     height: 36px;
     background-image: url("./../img/minicheck.png");
-    border-radius: 36px;
+
 }
 
 .canvassizeicon {
@@ -449,8 +449,8 @@ code {
     width: 36px;
     height: 36px;
     background-image: url("./../img/socialicons7.png");
-    background-color: rgb(224, 224, 224);
-    border-radius: 36px;
+
+
     margin-bottom: -10px;
     margin-top: -10px;
 

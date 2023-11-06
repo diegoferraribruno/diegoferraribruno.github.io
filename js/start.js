@@ -226,6 +226,7 @@ function startup() {
 
     // limpaCabeca();
     apresenta()
+    changeColorMode('hsla')
   }, 1000);
   setTimeout(() => localize(), 200)
   if (/^pt\b/.test(navigator.language)) {

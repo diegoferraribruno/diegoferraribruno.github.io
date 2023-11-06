@@ -60,7 +60,7 @@ setTimeout(() => {
     criaAnime();
     setTimeout(() => {
         Historia()
-        limpaAnime()
+        // limpaAnime()
     }, 350)
 }, 200)
 
