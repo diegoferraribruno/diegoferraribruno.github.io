@@ -397,8 +397,8 @@ function drawBrush2(GCO, x1, y1, x2, y2, strokeScale, cont = ctxF) {
             x = redondo(x)
             y = redondo(y)
         }
-        if (x < 1) { x = 1 }
-        if (y < 1) { y = 1 }
+        if (newStrokeWidth < 1) { newStrokeWidth = 1 }
+        if (newStrokeHeight < 1) { newStrokeHeight = 1 }
         cont.drawImage(brushCanva, x, y, newStrokeWidth, newStrokeHeight);
     }
 }
