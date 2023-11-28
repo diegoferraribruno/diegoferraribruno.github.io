@@ -9,7 +9,7 @@ let swaps = new Array()
 let posicoes = new Array(0)
 var executing = false
 var undoLevel = -1
-var historia = [[], []]
+var historia = [[[], []]]
 var historiaLimite = 8
 
 function drawTo(GCO = context.globalCompositeOperation,
@@ -27,7 +27,7 @@ function goback(pos = undoLevel) {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, canvas.width, canvas.height);
     var imageFrame = new Image;
-    imageFrame.src = historia[workingframe][pos]
+    imageFrame.src = historia[current][workingframe][pos]
     let oldGCO = context.globalCompositeOperation
     setTimeout(() => drawTo("source-over",
         imageFrame,
@@ -42,7 +42,7 @@ function goback(pos = undoLevel) {
 }
 
 function undo() {
-    let lenH = historia[workingframe].length;
+    let lenH = historia[current][workingframe].length;
     undoLevel--
     if (undoLevel < 0) {
         undoLevel = lenH - 1
@@ -51,7 +51,7 @@ function undo() {
 
 }
 function redo() {
-    let lenH = historia[workingframe].length;
+    let lenH = historia[current][workingframe].length;
     undoLevel++
     if (undoLevel > lenH - 1) {
         undoLevel = lenH - 1
@@ -68,7 +68,7 @@ function undoTEnd() {
     desfazendo = false
 }
 /*function undo() {
-    let len = historia[workingframe].length;
+    let len = historia[current][workingframe].length;
     if (undoLevel < len - 1) {
         undoLevel++
         pos = len - undoLevel - 1
@@ -98,7 +98,7 @@ function undoing() {
 }
 
 /*function redo() {
-    let len = historia[workingframe].length;
+    let len = historia[current][workingframe].length;
     if (undoLevel > 0) {
         undoLevel--
         goback(len - undoLevel - 1)
@@ -109,14 +109,14 @@ function undoing() {
 }
 */
 function Historia(imagem = canvas.toDataURL('image/png')) {
-    if (!historia[workingframe]) {
-        historia[workingframe] = []
-        historia[workingframe].push(imagem)
+    if (!historia[current][workingframe]) {
+        historia[current][workingframe] = []
+        historia[current][workingframe].push(imagem)
     } else {
-        let len = historia[workingframe].length
-        if (len > historiaLimite) historia[workingframe].shift()
-        if (String(historia[workingframe][len - 1]) != String(imagem)) { historia[workingframe].push(imagem) }
-        animacao[workingframe] = imagem
+        let len = historia[current][workingframe].length
+        if (len > historiaLimite) historia[current][workingframe].shift()
+        if (String(historia[current][workingframe][len - 1]) != String(imagem)) { historia[current][workingframe].push(imagem) }
+        layers[current][workingframe] = imagem
     }
     setTimeout(() => {
         adicionaQuadro();

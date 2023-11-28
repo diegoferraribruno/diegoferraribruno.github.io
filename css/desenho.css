@@ -611,7 +611,7 @@ input[type="range"] {
     text-shadow: -2px 0 rgb(61, 61, 61), 0 2px #3f3f3f, 2px 0 #383838, 0 -2px #2c2c2c;
     display: block;
     position: absolute;
-    font-size: 26px;
+    font-size: 14px;
     z-index: 3001;
     width: 36px;
     text-align: center;

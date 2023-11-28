@@ -102,24 +102,37 @@ function importSprite(e) {
             let largura = iD("larguraS").value
             let altura = iD("alturaS").value
             let auto = iD("autodetectar").checked
+            let lay
             if (auto === false) {
-                quadros = iD("fnumber").value
+                //quadros = iD("fnumber").value
                 tamanho(largura, altura)
+
+                quadros = imagem.width / largura
+                lay = imagem.height / altura
+                for (l = 0; l < lay; l++) {
+                    layers.push([])
+                    historia.push([])
+                }
+                // tamanho(largura, altura)
             } else {
                 quadros = imagem.width / imagem.height
-                tamanho(imagem.height, imagem.height)
+                // tamanho(imagem.height, imagem.height)
             }
-            for (i = 0; i < quadros; i++) {
-                workingframe = i
-                context.setTransform(1, 0, 0, 1, 0, 0);
-                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-                context.drawImage(imagem, i * canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
-                let swapImg = canvas.toDataURL('image/png');
-                blobb = dataURItoBlob(swapImg)
-                animacao[i] = swapImg
-                historia[i] = []
-                historia[i].push(swapImg)
+            for (l = 0; l < lay; l++) {
+                current = l
+                for (i = 0; i < quadros; i++) {
 
+                    workingframe = i
+                    context.setTransform(1, 0, 0, 1, 0, 0);
+                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                    context.drawImage(imagem, i * canvas.width, l * canvas.height, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+                    let swapImg = canvas.toDataURL('image/png');
+                    blobb = dataURItoBlob(swapImg)
+                    layers[l][i] = swapImg
+                    historia[l][i] = []
+                    historia[l][i].push(swapImg)
+
+                }
             }
             setTimeout(() => {
                 adicionaQuadro()
@@ -153,24 +166,30 @@ function importSpriteUrl() {
                 let largura = iD("larguraS").value
                 let altura = iD("alturaS").value
                 let auto = iD("autodetectar").checked
+                let lay
                 if (auto === false) {
-                    quadros = iD("fnumber").value
+                    //quadros = iD("fnumber").value
                     tamanho(largura, altura)
+                    quadros = imagem.width / largura
+                    lay = imagem.height / altura
                 } else {
                     tamanho(imagem.height, imagem.height)
                     quadros = imagem.width / imagem.height
 
                 }
-                for (i = 0; i < quadros; i++) {
-                    workingframe = i
-                    context.setTransform(1, 0, 0, 1, 0, 0);
-                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-                    context.drawImage(imagem, i * canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
-                    let swapImg = canvas.toDataURL('image/png');
-                    blobb = dataURItoBlob(swapImg)
-                    animacao[i] = swapImg
-                    historia[i] = []
-                    historia[i].push(swapImg)
+                for (l = 0; l < lay; l++) {
+                    current = l
+                    for (i = 0; i < quadros; i++) {
+                        workingframe = i
+                        context.setTransform(1, 0, 0, 1, 0, 0);
+                        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                        context.drawImage(imagem, i * canvas.width, 0, imagem.width, imagem.height, 0, 0, imagem.width, imagem.height);
+                        let swapImg = canvas.toDataURL('image/png');
+                        blobb = dataURItoBlob(swapImg)
+                        layers[current][i] = swapImg
+                        historia[current][i] = []
+                        historia[current][i].push(swapImg)
+                    }
                 }
                 setTimeout(() => {
                     adicionaQuadro()
@@ -227,24 +246,24 @@ var openFile = function (event) {
         removeClass()
         newBrushes = {}
         projeto = JSON.parse(reader.result)
-
         tamanho(projeto["canvasInfo"]["width"], projeto["canvasInfo"]["height"])
+        //FIX
         let len = projeto["animacao"].length
-        animacao = []
+        layers[current] = []
         for (i = 0; i < len; i++) {
             workingframe = i
-            animacao[i] = []
+            layers[current][i] = []
             let newimg = projeto["animacao"][i]
-            animacao[i].push(newimg)
-            historia[i] = []
-            historia[i].push(newimg)
+            layers[current][i].push(newimg)
+            historia[current][i] = []
+            historia[current][i].push(newimg)
 
 
         }
         adicionaQuadro()
         setTimeout(() => {
 
-            for (i = 0; i < animacao.length; i++) {
+            for (i = 0; i < layers[current].length; i++) {
                 setTimeout(() => {
                     nextFrame()
                 }, 200 * i)
@@ -273,7 +292,7 @@ var openFile = function (event) {
         setTimeout(() => {
             let brushNames = projeto["newBrushes"]
             let lenb = brushNames.length
-            let len = projeto["animacao"].length
+            let len = projeto["animacao"].length //FIX
             iD("pinceis2").innerHTML = ""
             Alert(alerts[language][22] + "<br>" + alerts[language][17] + "<br>" + lenb + '<span class="icon pintaricon"></span> x <br>' + len + "  <span class='icon2 frameicon'></span>  x ", len * 2)
             for (i = 0; i < lenb; i++) {

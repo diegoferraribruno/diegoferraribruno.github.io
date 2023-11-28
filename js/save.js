@@ -27,12 +27,14 @@ var cont
 var spritao = new Image();
 
 async function export_anim() {
-    if (animacao.length > 1) {
+
+    if (layers[current].length > 1) {
 
 
         Historia()
 
-        let len = animacao.length
+        let lin = layers.length
+        let len = layers[current].length
         if (len == 0) {
             Alert(alerts[language][0] + " " + alerts[language][19])
             return
@@ -45,39 +47,42 @@ async function export_anim() {
 
         let exp = document.createElement("canvas")
         exp.width = canvas.width * len
-        exp.height = canvas.height
+        exp.height = canvas.height * lin
         exp.id = "exp";
         exp.style.visibility = "hidden"
         exp.style.position = "absolute"
         iD("tela").appendChild(exp);
         cont = iD("exp").getContext("2d");
+        for (l = 0; l < lin; l++) {
 
-        for (i = 0; i < len; i++) {
-            blob = dataURItoBlob(animacao[i]);
-            let imagem = new Image();
-            imagem.src = URL.createObjectURL(blob);
-            let pos = i * canvas.width
-            imagem.onload = function () {
-                cont.globalCompositeOperation = "source-over"
-                cont.drawImage(imagem, 0, 0, imagem.width, imagem.height, pos, 0, imagem.width, imagem.height);
-                if (iD("unir").checked && background_anim == true) {
-                    if (!iD("sobrepor").checked) {
-                        cont.globalCompositeOperation = "destination-over"
-                        cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
+            for (i = 0; i < len; i++) {
+                blob = dataURItoBlob(layers[l][i]);
+                let imagem = new Image();
+                imagem.src = URL.createObjectURL(blob);
+                let posx = i * canvas.width
+                let posy = l * canvas.height
+                imagem.onload = function () {
+                    cont.globalCompositeOperation = "source-over"
+                    cont.drawImage(imagem, 0, 0, imagem.width, imagem.height, posx, posy, imagem.width, imagem.height);
+                    if (iD("unir").checked && background_anim == true) {
+                        if (!iD("sobrepor").checked) {
+                            cont.globalCompositeOperation = "destination-over"
+                            cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
 
-                    } else {
-                        cont.globalCompositeOperation = "source-under"
-                        cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
-                        cont.globalCompositeOperation = "destination-over"
+                        } else {
+                            cont.globalCompositeOperation = "source-under"
+                            cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
+                            cont.globalCompositeOperation = "destination-over"
+                        }
+
                     }
-
                 }
             }
         }
 
 
         setTimeout(() => {
-            let fname = iD("filename").value + animacao.length
+            let fname = iD("filename").value + layers[current].length
             var dataURL = iD("exp")
                 .toDataURL("image/png")
                 .replace("image/png", "image/octet-stream");
@@ -99,7 +104,7 @@ async function export_anim() {
                         encoder.setDelay(1000 / fps);
                         console.log(encoder.start())
 
-                        for (i = 0; i < animacao.length; i++) {
+                        for (i = 0; i < layers[current].length; i++) {
                             if (isGlowing) {
                                 cont.fillStyle = "rgb(10,10,10)"
                             } else {
@@ -180,7 +185,7 @@ function export2txt() {
             "canvasInfo": canvasInfo,
             "newBrushes": brushes,
             "customBrushes": customBrushes,
-            "animacao": animacao,
+            "animacao": layers[current],
             "clipboard": clipboard,
             "favoritas": favoritas,
             "preferences": { "pixelGood": pixelGood, "dinamicBrush": dinamicBrush }

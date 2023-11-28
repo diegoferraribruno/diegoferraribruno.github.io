@@ -1,5 +1,7 @@
+var layers = [[]]
 
-var animacao = []
+var current = 0
+var animacao = [[]]
 var anime = iD("anime")
 var fps = 8
 var ghostframes = true
@@ -16,6 +18,26 @@ var anime_menu = {
     'lixeira()': ['<span class="icon lixeiraicon"></span>', "Arraste um quadro para apaga-lo"]
 }
 
+function changeLayer(val) {
+    current = val
+    workingframe = 0
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    let swapImg = canvasFront.toDataURL('image/png');
+    if (layers.length <= val) {
+        layers.push([])
+        historia.push([])
+        layers[val][0] = swapImg
+        historia[val][0] = []
+        historia[val][0].push(swapImg)
+        /*  let empt = [swapImg]
+          layers[current] = []
+          layers[current].push(swapImg)*/
+        //s layers[current][workingframe].push(swapImg)
+        //Historia()
+    }
+    changeFrame(workingframe)
+    adicionaQuadro();
+}
 function criaAnime() {
 
     var uiFilme = iD('ui_filme')
@@ -37,11 +59,9 @@ function criaAnime() {
     anime.innerHTML += `<span id="animebot" title="configurar animação" class="bot" onclick="mostraMenu('anime')"> <span class="bot"> <span class="icon configtimeicon"></span></span>
     </span>`
 
-
-
-    contador.innerHTML = workingframe
     contador.id = "contador"
     contador.setAttribute("style", "color:white; z-index:8")
+    contador.innerHTML = current + "-" + workingframe
     ui.classList.add("bot", "shadow")
     ui.title = 'Quadros da animação toque para mostrar/esconder'
     ui.setAttribute("onclick", "limpaAnime()")
@@ -100,18 +120,13 @@ function newFrame() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     workingframe++
     swapImg = canvas.toDataURL('image/png');
-    animacao.splice(workingframe, 0, swapImg);
-    let work = []
-    // comandos.splice(workingframe, 0, work);
+    layers[current].splice(workingframe, 0, swapImg);
     ctxF.setTransform(1, 0, 0, 1, 0, 0);
     ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    //comandos[workingframe] = []
-    //changeBrush()
-    // convertToImg()
     changeFrame(workingframe)
-    iD("contador").innerHTML = workingframe
+    iD("contador").innerHTML = current + "-" + workingframe
 
 }
 
@@ -123,7 +138,7 @@ function play() {
     Historia()
     oldMode = mode;
     mode = "play";
-    if (animacao.length > 1) {
+    if (layers[current].length > 1) {
         iD("play()").innerHTML = ' <span onmousedown="stop()" class="icon stopicon"></span>'
         clearInterval(inter);
         canvasFront.classList.remove("esconde")
@@ -138,7 +153,7 @@ function play() {
         }
         inter = setInterval(() => {
             playing++;
-            if (playing >= animacao.length) {
+            if (playing >= layers[current].length) {
                 playing = 0
             }
             playerPlay(playing);
@@ -168,7 +183,7 @@ function playerPlay(frame) {
     ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
     canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    playerimg.src = animacao[frame]
+    playerimg.src = layers[current][frame]
     ctxF.drawImage(playerimg, 0, 0)
 }
 
@@ -181,12 +196,12 @@ function changeFrame(frame) {
     context.globalCompositeOperation = "source-over"
     canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
     canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    iD("contador").innerHTML = workingframe;
+    iD("contador").innerHTML = current + "-" + workingframe
 
     if (frame > 2) {
         let old3 = frame - 3;
         var image3 = new Image;
-        image3.src = animacao[old3]
+        image3.src = layers[current][old3]
         image3.onload = function () {
             canvasBack.ctx.globalAlpha = 0.1
             canvasBack.ctx.drawImage(image3, 0, 0, canvasBack.width, canvasBack.height)
@@ -195,7 +210,7 @@ function changeFrame(frame) {
     if (frame > 1) {
         let old2 = frame - 2
         var image2 = new Image;
-        image2.src = animacao[old2]
+        image2.src = layers[current][old2]
         image2.onload = function () {
             canvasBack.ctx.globalAlpha = 0.15
             canvasBack.ctx.drawImage(image2, 0, 0, canvasBack.width, canvasBack.height)
@@ -204,7 +219,7 @@ function changeFrame(frame) {
     if (frame > 0) {
         let old1 = frame - 1;
         var image1 = new Image;
-        image1.src = animacao[old1]
+        image1.src = layers[current][old1]
         image1.onload = function () {
 
             canvasBack.ctx.globalAlpha = 0.2
@@ -215,10 +230,10 @@ function changeFrame(frame) {
         iD("bplayer0").style.backgroundImage = 'url("' + backgroundSprite.src + '")'
         iD("bplayer0").style.backgroundPositionX = - canvas.width * workingframe + "px"
     }
-    if (frame < animacao.length - 1) {
+    if (frame < layers[current].length - 1) {
         let old4 = frame + 1;
         var image4 = new Image;
-        image4.src = animacao[old4]
+        image4.src = layers[current][old4]
         image4.onload = function () {
             canvasBack.ctx.globalAlpha = 0.05
             canvasBack.ctx.drawImage(image4, 0, 0, canvasBack.width, canvasBack.height)
@@ -226,7 +241,7 @@ function changeFrame(frame) {
     }
 
     var imageFrame = new Image;
-    imageFrame.src = animacao[frame]
+    imageFrame.src = layers[current][frame]
     context.globalAlpha = 1
     imageFrame.onload = function () {
 
@@ -242,13 +257,13 @@ function resetFrame() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     var imageFrame = new Image;
-    imageFrame.src = animacao[workingframe]
+    imageFrame.src = layers[current][workingframe]
     context.drawImage(imageFrame, 0, 0, canvasBack.width, canvasBack.height)
 }
 
 function nextFrame() {
     Historia()
-    let len = animacao.length
+    let len = layers[current].length
     if (len > 1) {
         workingframe++
         if (workingframe >= len) {
@@ -262,7 +277,7 @@ function nextFrame() {
 }
 function prev_frame() {
     Historia()
-    let len = animacao.length
+    let len = layers[current].length
     if (len > 1) {
         workingframe--
         if (workingframe < 0) {
@@ -270,7 +285,7 @@ function prev_frame() {
             if (workingframe < 0) { workingframe = 0 }
         }
         changeFrame(workingframe)
-        iD("contador").innerHTML = workingframe
+        iD("contador").innerHTML = current + "-" + workingframe
     } else {
         Alert(alerts[language][0])
     }
@@ -299,16 +314,16 @@ function removeFrame() {
 
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    animacao.splice(workingframe, 1)
-    historia.splice(workingframe, 1)
-    if (animacao.length > 0) {
+    layers[current].splice(workingframe, 1)
+    historia[current].splice(workingframe, 1)
+    if (layers[current].length > 0) {
         workingframe--
         if (workingframe < 0) {
-            workingframe = animacao.length - 1
+            workingframe = layers[current].length - 1
             if (workingframe < 0) { workingframe = 0 }
         }
         changeFrame(workingframe)
-        iD("contador").innerHTML = workingframe
+        iD("contador").innerHTML = current + "-" + workingframe
 
     } else {
 
@@ -320,8 +335,8 @@ function removeFrame() {
 }
 function cloneFrame(frame = workingframe) {
     workingframe = frame + 1
-    animacao.splice(workingframe, 0, animacao[frame]);
-    historia.splice(workingframe, 0, historia[frame]);
+    layers[current].splice(workingframe, 0, layers[current][frame]);
+    historia[current].splice(workingframe, 0, historia[current][frame]);
     changeFrame(workingframe)
     adicionaQuadro()
     Alert('<span class="icon cloneframeicon"></span>' + alerts[language][1] + " " + frame + " " + alerts[language][10])
@@ -354,7 +369,7 @@ async function adicionaQuadro() {
     filme.innerHTML = ""
     let newFilme = document.createElement("div")
     newFilme.id = "filme"
-    animSize = animacao.length
+    animSize = layers[current].length
     for (i = 0; i < animSize; i++) {
         let cont = document.createElement("div")
         cont.id = i
@@ -363,7 +378,7 @@ async function adicionaQuadro() {
         cont.addEventListener("drop", drop);
         let thumb = document.createElement("div")
         thumb.innerHTML = i
-        thumb.style.backgroundImage = 'url("' + animacao[i] + '")';
+        thumb.style.backgroundImage = 'url("' + layers[current][i] + '")';
 
         thumb.id = i + "thumb"
         thumb.classList.add("thumb")
@@ -401,7 +416,7 @@ var image2 = new Image;
 function dragStart(event) {
     if (event.target.id[0] != "c") {
         dataTransfer = parseInt(event.target.id, 10);
-        image2.src = animacao[dataTransfer]
+        image2.src = layers[current][dataTransfer]
     }
     else {
         dataTransfer = event.target.id
@@ -431,13 +446,13 @@ function drop(event) {
         if (toContainer.id == "lixeira()" || toContainer.id == "lixeira") {
 
             console.log(dataTransfer)
-            historia.splice(dataTransfer, 1);
-            animacao.splice(dataTransfer, 1);
+            historia[current].splice(dataTransfer, 1);
+            layers[current].splice(dataTransfer, 1);
             context.setTransform(1, 0, 0, 1, 0, 0);
             context.clearRect(0, 0, context.canvas.width, context.canvas.height);
             workingframe = 0
-            if (animacao.length == 0) {
-                animacao[workingframe] = []
+            if (layers[current].length == 0) {
+                layers[current][workingframe] = []
                 Historia()
             }
 
@@ -492,8 +507,8 @@ function swapL() {
     if (b < 0) {
         b = comandos.length - 1
     }
-    moveObjectAtIndex(animacao, a, b)
-    moveObjectAtIndex(historia, a, b)
+    moveObjectAtIndex(layers[current], a, b)
+    moveObjectAtIndex(historia[current], a, b)
 
     changeFrame(b)
     adicionaQuadro()
@@ -503,12 +518,12 @@ function swapL() {
 function swapR() {
     let a = workingframe
     let b = workingframe + 1
-    if (b >= animacao.length) {
+    if (b >= layers[current].length) {
         b = 0
     }
 
-    moveObjectAtIndex(animacao, a, b)
-    moveObjectAtIndex(historia, a, b)
+    moveObjectAtIndex(layers[current], a, b)
+    moveObjectAtIndex(historia[current], a, b)
     changeFrame(b)
     adicionaQuadro()
 }
@@ -523,8 +538,8 @@ function moveObjectAtIndex(arr, indexA, indexB) {
 
 
 function swapItems(a = Number, b = Number) {
-    comandos[a] = historia.splice(b, 1, comandos[a])[0];
-    animacao[a] = animacao.splice(b, 1, animacao[a])[0];
+    comandos[a] = historia[current].splice(b, 1, comandos[a])[0];
+    layers[current][a] = layers[current].splice(b, 1, layers[current][a])[0];
     changeFrame(b)
     adicionaQuadro()
 }

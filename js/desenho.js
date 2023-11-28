@@ -161,8 +161,8 @@ async function desenha(
 ) {
     //let  comando =[]
     if (undoLevel != 0) {
-        let dif = historia[workingframe].length - undoLevel
-        for (i = dif; i < historia[workingframe].length; i++) { historia[workingframe].pop() }
+        let dif = historia[current][workingframe].length - undoLevel
+        for (i = dif; i < historia[current][workingframe].length; i++) { historia[current][workingframe].pop() }
         undoLevel = 0
         // console.log("daqui pra frente..")
     }
@@ -449,13 +449,13 @@ function limpar(what) {
         createNewBrush()
 
         if (what == "animacao") {
-            if (animacao.length > 0) {
+            if (layers[current].length > 0) {
                 let confirma2 = confirm(
                     "🗑 🎞️ Apagar toda a animação? \n(impossível desfazer)"
                 );
                 if (confirma2 === true) {
-                    animacao = []
-                    historia = []
+                    layers[current] = []
+                    historia[current] = []
                     workingframe = 0
                     iD("bplayer0").style.backgroundImage = 'none'
                     canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);

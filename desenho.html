@@ -584,7 +584,9 @@
                     <txt name="28">Mudar ordem do quadro</txt>
 
                     <span class="bot" onmousedown="swapR()"><span class="icon swaprighticon"></span></span>
-
+                </span>
+                <span>change spritesheet line <input type="number" id="layernumber" min="0" step="1" value="0"
+                        onchange="changeLayer(this.value)" style="width: 50px; margin-left: 8px">
                 </span>
             </div>
 
@@ -1191,7 +1193,6 @@
         style="visibility: hidden; position: absolute; left:0px;"></canvas>
     <script type="text/javascript" src="js/iD.js"></script>
     <!--script type="text/javascript" src="js/scale.js"></script-->
-    <script type="text/javascript" src="js/core.js"></script>
     <script type="text/javascript" src="js/localize.js"></script>
     <script type="text/javascript" src="js/yoga.js"></script>
     <script type="text/javascript" src="js/input.js"></script>
