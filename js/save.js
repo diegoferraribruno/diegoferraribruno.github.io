@@ -54,27 +54,29 @@ async function export_anim() {
         iD("tela").appendChild(exp);
         cont = iD("exp").getContext("2d");
         for (l = 0; l < lin; l++) {
-
+            len = layers[l].length
             for (i = 0; i < len; i++) {
-                blob = dataURItoBlob(layers[l][i]);
-                let imagem = new Image();
-                imagem.src = URL.createObjectURL(blob);
-                let posx = i * canvas.width
-                let posy = l * canvas.height
-                imagem.onload = function () {
-                    cont.globalCompositeOperation = "source-over"
-                    cont.drawImage(imagem, 0, 0, imagem.width, imagem.height, posx, posy, imagem.width, imagem.height);
-                    if (iD("unir").checked && background_anim == true) {
-                        if (!iD("sobrepor").checked) {
-                            cont.globalCompositeOperation = "destination-over"
-                            cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
+                if (layers[l][i]) {
+                    blob = dataURItoBlob(layers[l][i]);
+                    let imagem = new Image();
+                    imagem.src = URL.createObjectURL(blob);
+                    let posx = i * canvas.width
+                    let posy = l * canvas.height
+                    imagem.onload = function () {
+                        cont.globalCompositeOperation = "source-over"
+                        cont.drawImage(imagem, 0, 0, imagem.width, imagem.height, posx, posy, imagem.width, imagem.height);
+                        if (iD("unir").checked && background_anim == true) {
+                            if (!iD("sobrepor").checked) {
+                                cont.globalCompositeOperation = "destination-over"
+                                cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
 
-                        } else {
-                            cont.globalCompositeOperation = "source-under"
-                            cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
-                            cont.globalCompositeOperation = "destination-over"
+                            } else {
+                                cont.globalCompositeOperation = "source-under"
+                                cont.drawImage(backgroundSprite, 0, 0, exp.width, exp.height)
+                                cont.globalCompositeOperation = "destination-over"
+                            }
+
                         }
-
                     }
                 }
             }

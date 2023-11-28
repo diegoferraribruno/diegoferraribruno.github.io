@@ -19,6 +19,7 @@ var anime_menu = {
 }
 
 function changeLayer(val) {
+    Historia()
     current = val
     workingframe = 0
     context.clearRect(0, 0, canvas.width, canvas.height)
@@ -33,7 +34,7 @@ function changeLayer(val) {
           layers[current] = []
           layers[current].push(swapImg)*/
         //s layers[current][workingframe].push(swapImg)
-        //Historia()
+        Historia()
     }
     changeFrame(workingframe)
     adicionaQuadro();
