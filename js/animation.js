@@ -30,10 +30,6 @@ function changeLayer(val) {
         layers[val][0] = swapImg
         historia[val][0] = []
         historia[val][0].push(swapImg)
-        /*  let empt = [swapImg]
-          layers[current] = []
-          layers[current].push(swapImg)*/
-        //s layers[current][workingframe].push(swapImg)
         Historia()
     }
     changeFrame(workingframe)
