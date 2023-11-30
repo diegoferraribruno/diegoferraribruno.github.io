@@ -1,4 +1,10 @@
 let vers = [{
+    versao: "9.1.0",
+    notas: [
+        "Novo menu Sprite sheet - carregar animação",
+        "Importação de sequencia de imagens também na vertical, calculando o numero de quadros pelo tamanho da imagem e do quadro pré-definido",
+    ]
+}, {
     versao: "8.9",
     notas: [
         "tela inicial sem splash",
