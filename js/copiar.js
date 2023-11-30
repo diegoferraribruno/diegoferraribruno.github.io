@@ -6,7 +6,7 @@ let selecionado = false
 function drawSelection() {
   selecionado = true
   ctxF.clearRect(0, 0, canvas.width, canvas.height);
- 
+
 
   for (const path of selectionPaths) {
     ctxF.beginPath();
@@ -17,8 +17,8 @@ function drawSelection() {
       ctxF.lineTo(path[i][0], path[i][1]);
     }
     ctxF.closePath();
-    ctxF.fillStyle = '#ff000066'; 
-    ctxF.fill(); 
+    ctxF.fillStyle = '#ff000066';
+    ctxF.fill();
   }
 
   if (currentPath.length > 1) {
@@ -31,7 +31,7 @@ function drawSelection() {
     }
     ctxF.closePath();
     ctxF.fillStyle = '#ff000066';
-    ctxF.strokeStyle = '#ffffff88'; 
+    ctxF.strokeStyle = '#ffffff88';
     ctxF.lineWidth = 1;
     ctxF.fill();
 
@@ -96,7 +96,7 @@ function copySelection(newfr = false) {
         }
         ctxR.closePath();
         ctxR.fillStyle = '#000000';
-        ctxR.fill(); 
+        ctxR.fill();
       }
 
     }
@@ -118,7 +118,7 @@ function copySelection(newfr = false) {
       updateClipboard()
 
     }
-  
+
     if (newfr == "cut") {
       context.globalCompositeOperation = 'destination-out'; // Set global composite operation to destination-out
 
@@ -228,13 +228,17 @@ function changeImage2(n) {
     transformClip()
     setTimeout(() => { updateClipboard() }, 10)
   }
- toPaste()
+  toPaste()
 }
 
-function toPaste(){
+function toPaste(cola = false) {
   updateClipboard();
   transformClip();
   mode = 'paste';
+  if (cola == true) {
+    drawTo()
+    Historia()
+  }
 }
 
 function clearClipboard() {
@@ -245,13 +249,13 @@ function clearClipboard() {
     if (n < len) {
       clipboard.splice(n, 1);
       if (n == 0) { n = 1 }
-      dataTransfer = "c" + (n - 1)
+      dataTransfer = ""
       updateClipboard()
       Alert('<span class="icon clipboardicon"></span><span style="display:block; float:left; margin:4px">' + n + '<span class="icon lixeiraicon"></span>')
 
     } else {
       clipboard = []
-      dataTransfer = 0
+      dataTransfer = ""
       updateClipboard()
     }
 

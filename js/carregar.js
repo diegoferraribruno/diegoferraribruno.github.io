@@ -102,6 +102,7 @@ function importSprite(e) {
             let largura = iD("larguraS").value
             let altura = iD("alturaS").value
             let auto = iD("autodetectar").checked
+
             let lay
             if (auto === false) {
                 //quadros = iD("fnumber").value
@@ -109,17 +110,20 @@ function importSprite(e) {
 
                 quadros = imagem.width / largura
                 lay = imagem.height / altura
-                for (l = 0; l < lay; l++) {
+                for (l = 0; l < lay - 1; l++) { //we already have layer 0 so no need to add all
                     layers.push([])
                     historia.push([])
                 }
                 // tamanho(largura, altura)
             } else {
                 quadros = imagem.width / imagem.height
+                lay = imagem.height / altura
                 // tamanho(imagem.height, imagem.height)
             }
+            let startline = current
             for (l = 0; l < lay; l++) {
-                current = l
+                //changeLayer(l + startline)
+                current = l + startline
                 for (i = 0; i < quadros; i++) {
 
                     workingframe = i
@@ -128,16 +132,16 @@ function importSprite(e) {
                     context.drawImage(imagem, i * canvas.width, l * canvas.height, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
                     let swapImg = canvas.toDataURL('image/png');
                     blobb = dataURItoBlob(swapImg)
-                    layers[l][i] = swapImg
-                    historia[l][i] = []
-                    historia[l][i].push(swapImg)
+                    layers[current][i] = swapImg
+                    historia[current][i] = []
+                    historia[current][i].push(swapImg)
 
                 }
             }
             setTimeout(() => {
                 adicionaQuadro()
                 removeClass()
-                iD("contador").innerHTML = workingframe;
+                iD("contador").innerHTML = current + "-" + workingframe;
             }, 500)
         }
     }

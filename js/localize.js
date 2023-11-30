@@ -221,7 +221,8 @@ let textos = {
         '102': 'Novo pincel de recorte',
         '103': 'Pancheta de recortes esta vazia, use a ferramenta de seleção para copiar algo',
         '104': 'Manter proporção',
-        '105': 'Liberte sua mente'
+        '105': 'Liberte sua mente',
+        '106': 'Adicione uma nova linha para nao sobrepor sua animação'
     },
     "en": {
         "1": "Touch a painted area to pick it's color",
@@ -327,7 +328,8 @@ let textos = {
         '102': "New Brush from Cipboard",
         '103': "Clipobard is Empty, use the selection tool to copy something",
         '104': "Keep proportion",
-        "105": "Free your mind"
+        "105": "Free your mind",
+        "106": "Add a new line before so it won't draw over your current animation"
     }
 }
 var titles = {

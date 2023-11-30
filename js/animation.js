@@ -20,21 +20,34 @@ var anime_menu = {
 
 function changeLayer(val) {
     Historia()
-    current = val
-    workingframe = 0
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    let swapImg = canvasFront.toDataURL('image/png');
-    if (layers.length <= val) {
-        layers.push([])
-        historia.push([])
-        layers[val][0] = swapImg
-        historia[val][0] = []
-        historia[val][0].push(swapImg)
-        Historia()
-    }
-    changeFrame(workingframe)
-    adicionaQuadro();
+    if (layers[current].length != 0) {
+
+        current = val
+        workingframe = 0
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        let swapImg = canvasFront.toDataURL('image/png');
+        if (layers.length <= val) {
+            layers.push([])
+            historia.push([])
+            layers[val][0] = swapImg
+            historia[val][0] = []
+            historia[val][0].push(swapImg)
+            //  Historia()
+        }
+        changeFrame(workingframe)
+        adicionaQuadro();
+    } else { Alert("Empty timeline") }
 }
+
+function changeLayerButton(direction) {
+    let test = current + direction
+    if (test >= 0) {
+
+        iD("layernumber").value = test
+        changeLayer(test)
+    }
+}
+
 function criaAnime() {
 
     var uiFilme = iD('ui_filme')
@@ -423,6 +436,7 @@ function dragStart(event) {
 }
 
 function dragEnd(event) {
+    setTimeout(() => { dataTransfer = "" }, 50)
 }
 
 function dragOver(event) {
@@ -439,7 +453,7 @@ function dragOver(event) {
 function drop(event) {
     event.preventDefault()
     const toContainer = event.currentTarget;
-    if (dataTransfer[0] != "c") {
+    if (dataTransfer[0] !== "c") {
         if (toContainer.id == "lixeira()" || toContainer.id == "lixeira") {
 
             console.log(dataTransfer)
@@ -477,12 +491,13 @@ function drop(event) {
             changeFrame(workingframe)
 
         }
-    } else {
+    } else if (dataTransfer[0] === "c") {
         if (toContainer.id == "lixeira()") {
             clearClipboard()
         }
 
     }
+    setTimeout(() => { dataTransfer = "" }, 200)
 }
 
 function ghost() {

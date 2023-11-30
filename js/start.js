@@ -22,6 +22,7 @@ function startup() {
     emojipicker();
   });*/
   Fundo("none")
+  hidecustom() // this is for the loading sprite sheet fields
   counter = setInterval(() => undoing(), 600)
   window.onkeydown = function (event) {
     if (event.ctrlKey && event.key === 'c') {
@@ -209,13 +210,14 @@ function startup() {
     // canvas.addEventListener("pointermove", handleMove);
     win.addEventListener("pointerleave", handleEnd);
     canvas.addEventListener("dragover", dragOver);
-    canvas.addEventListener("drop", drop);
+    canvas.addEventListener("drop", drop2);
     canvas.addEventListener("dragover", dragOver);
     // canvas.addEventListener('touchmove', (e) => handleTouch(e))
     win.addEventListener('wheel', (e) => wheel(e))
     win.addEventListener("pointerup", handleUp);
 
     win.addEventListener("pointermove", handleMove);
+    //win.addEventListener("drop", drop2);
 
 
     iD("lixeira()").addEventListener("drop", drop);
@@ -241,6 +243,38 @@ function startup() {
 var canvasFrontDeg = 0
 var canvasFrontScale = 100
 var isFlip = false
+
+
+function drop2(event) {
+  event.preventDefault();
+
+  if (event.dataTransfer.files.length > 0 && dataTransfer[0] == "c") {
+    // Handle file drop
+    for (let i = 0; i < event.dataTransfer.files.length; i++) {
+      let img = new Image();
+      img.src = URL.createObjectURL(event.dataTransfer.files[i]);
+      img.onload = function () {
+
+        canvasRender.width = img.width;
+        canvasRender.height = img.height;
+
+        // Draw the image on the canvas
+        ctxR.drawImage(img, 0, 0);
+
+        // Get the Data URL from the canvas
+        let dataURL = canvasRender.toDataURL();
+
+        // Now, dataURL contains the same format as canvas.toDataURL()
+        clipboard.push(dataURL);
+        modeTo('selecionar')
+        updateClipboard()
+        setTimeout(() =>
+          changeImage2(clipboard.length - 1)
+          , 10)
+      };
+    }
+  }
+}
 
 function flipClip() {
   isFlip = !isFlip
