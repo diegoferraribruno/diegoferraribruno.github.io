@@ -587,6 +587,8 @@
                 </span>
                 <span>change spritesheet line <input type="number" id="layernumber" min="0" step="1" value="0"
                         onchange="changeLayer(this.value)" style="width: 50px; margin-left: 8px">
+                    <span onmousedown="changeLayerButton(1)" class="icon plusicon"></span>
+                    <span onmousedown="changeLayerButton(-1)" class="icon minusicon"></span>
                 </span>
             </div>
 
@@ -618,7 +620,6 @@
                     </label>
                     <input id="inputTxt" type="file" accept='.txt' onchange='openFile(event)'>
                 </span>
-
                 <span class="botao"><span class="icon2 frameicon"></span>
                     <txt name="29">Carregar imagen</txt>
                     <label for="input" class="custom-button">
@@ -634,9 +635,46 @@
                     </label>
                     <txt name="30">Ajustar tela ao tamanho da imagem</txt><br>
                 </span>
-                <span class="botao"> <span class="icon addframeicon"></span>
+                <span class="botao" onmousedown="mostraMenu('spritesheet')">
+                    <span class="icon ghosticon"></span>
                     <txt name="31">Enviar uma animação</txt><br>
 
+                </span>
+
+            </div>
+            <div id="menuspritesheet" class="fundobranco submenu">
+
+                <span class="botao">
+                    <span class="icon ghosticon"></span>
+                    <txt name="31">Enviar uma animação</txt><br>
+
+                    <span id="custom" class="esconde">
+                        <!--txt name="35">quantidade de quadros</txt><input type="number" id="fnumber" min="1" max="30"
+                            step="1" value="2" style="width: 40px; margin-left: 8px"><br-->
+                        <txt name="36"> largura:</txt> <input id="larguraS" type="number" maxlength="4" max="1920"
+                            value="32" style="width:60px; padding: 4px;" />
+                        px
+                        <txt name="37">altura:</txt> <input id="alturaS" type="number" maxlength="4" max="1920"
+                            value="32" style="width:60px;padding: 4px;" />px<br>
+                    </span>
+                    <txt name="32">Auto detectar quadros </txt>
+                    <label class="toggle">
+                        <input type="checkbox" id="autodetectar" onchange="hidecustom()">
+                        <span class="knob"></span>
+                    </label>
+                    <label for="inputSprite" class="custom-button">
+                        <txt name="85">Seu arquivo</txt>
+                    </label>
+                    <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" />
+                    <span onmousedown="importSpriteUrl()" class="bloquinho">🔗</span>
+                </span>
+                <span class="botao">
+                    <span onmousedown="changeLayerButton(1)" class="icon plusicon"></span>
+
+                    <txt name="106">This will draw over the current timeline so add a new line before</txt> <br>
+                </span>
+
+                <span class="botao">
                     <txt name="33">carregar como plano de fundo?</txt>
                     <label class="toggle">
                         <input type="checkbox" id="loadBackgroundAnimation">
@@ -647,27 +685,7 @@
                     <label class="toggle">
                         <input type="checkbox" id="sobrepor" onchange="sobreporFundo()">
                         <span class="knob"></span>
-                    </label><br>
-                    <txt name="32">Auto detectar quadros </txt>
-                    <label class="toggle">
-                        <input type="checkbox" id="autodetectar" onchange="hidecustom()" checked="true">
-                        <span class="knob"></span>
                     </label>
-                    <br>
-                    <span id="custom" class="esconde">
-                        <!--txt name="35">quantidade de quadros</txt><input type="number" id="fnumber" min="1" max="30"
-                            step="1" value="2" style="width: 40px; margin-left: 8px"><br-->
-                        <txt name="36"> largura:</txt> <input id="larguraS" type="number" maxlength="4" max="1920"
-                            value="32" style="width:60px; padding: 4px;" />
-                        pixels<br>
-                        <txt name="37">altura:</txt> <input id="alturaS" type="number" maxlength="4" max="1920"
-                            value="32" style="width:60px;padding: 4px;" /> pixels<br>
-                    </span>
-                    <label for="inputSprite" class="custom-button">
-                        <txt name="85">Seu arquivo</txt>
-                    </label>
-                    <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" />
-                    <span onmousedown="importSpriteUrl()" class="bloquinho">🔗</span>
                 </span>
             </div>
             <div id="menucam" class="submenu fundobranco">
@@ -908,7 +926,7 @@
                     <span id="cut" class="mais" title="cut" onclick="copySelection('cut')">
                         <span class="icon cuticon"></span>
                     </span>
-                    <span id="paste" class="mais" onclick="toPaste()">
+                    <span id="paste" class="mais" onclick="toPaste(true)">
 
                         <span class="icon pasteicon"></span>
                     </span>
