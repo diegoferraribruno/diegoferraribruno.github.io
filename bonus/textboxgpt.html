@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+
+        #textInput {
+            width: 100%;
+            height: 100px; /* Adjust the height as needed */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+    <textarea id="textInput" placeholder="Enter text"></textarea>
+    <select id="alignmentSelect">
+        <option value="left">Left</option>
+        <option value="center">Center</option>
+        <option value="right">Right</option>
+        <option value="justify">Justify</option>
+    </select>
+    <button onclick="addText()">Add Text</button>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        let textX = 10;
+        let textY = 50;
+        let boxWidth = 200;
+        let boxHeight = 100;
+        let selectedAlignment = 'left';
+
+        function drawBox() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#eee';
+            ctx.fillRect(textX, textY, boxWidth, boxHeight);
+            ctx.strokeRect(textX, textY, boxWidth, boxHeight);
+        }
+
+      function addText() {
+    const text = document.getElementById('textInput').value;
+    const alignment = document.getElementById('alignmentSelect').value;
+
+    selectedAlignment = alignment;
+
+    drawBox();
+
+    ctx.fillStyle = '#000';
+    ctx.font = '14px Arial';
+
+    const words = text.split('\n'); // Split text into lines
+
+    for (let i = 0; i < words.length; i++) {
+        const line = words[i];
+
+        if (alignment === 'left') {
+            ctx.textAlign = 'left';
+            ctx.fillText(line, textX + 10, textY + 20 + i * 20, boxWidth - 20);
+        } else if (alignment === 'center') {
+            ctx.textAlign = 'center';
+            ctx.fillText(line, textX + boxWidth / 2, textY + 20 + i * 20, boxWidth);
+        } else if (alignment === 'right') {
+            ctx.textAlign = 'right';
+            ctx.fillText(line, textX + boxWidth - 10, textY + 20 + i * 20, boxWidth - 20);
+        } else if (alignment === 'justify') {
+            // Implement justify as before, if needed
+        }
+    }
+}
+
+        drawBox();
+    </script>
+</body>
+</html>
+

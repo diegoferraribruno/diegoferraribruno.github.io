@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resizable Text Box</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="200"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const box = {
+            x: 50,
+            y: 50,
+            width: 200,
+            height: 100, // Increased height
+            isResizing: false,
+            cursorX: 0,
+            text: "",
+            cursorBlink: true
+        };
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fillRect(box.x, box.y, box.width, box.height);
+
+            if (box.isResizing) {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(box.x + box.width - 5, box.y + box.height - 5, 10, 10);
+            }
+
+            if (box.cursorBlink) {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(box.x + 2 + box.cursorX, box.y + 2, 2, box.height - 4);
+            }
+
+            ctx.fillStyle = '#000';
+            ctx.font = '14px Arial';
+            const lines = box.text.split('\n');
+            for (let i = 0; i < lines.length; i++) {
+                ctx.fillText(lines[i], box.x + 5, box.y + 20 + (i * 20)); // Increased line height
+            }
+        }
+
+        function resizeBox(e) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            if (box.isResizing) {
+                box.width = mouseX - box.x;
+                box.height = mouseY - box.y;
+                draw();
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            if (mouseX >= box.x + box.width - 10 && mouseX <= box.x + box.width && mouseY >= box.y + box.height - 10 && mouseY <= box.y + box.height) {
+                box.isResizing = true;
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            box.isResizing = false;
+            draw();
+        });
+
+        canvas.addEventListener('mousemove', resizeBox);
+
+        setInterval(() => {
+            box.cursorBlink = !box.cursorBlink;
+            draw();
+        }, 500);
+
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            if (mouseX >= box.x && mouseX <= box.x + box.width && mouseY >= box.y && mouseY <= box.y + box.height) {
+                const lines = box.text.split('\n');
+                let offsetY = mouseY - box.y;
+                let lineIndex = Math.floor(offsetY / 20); // Line height is 20
+                if (lineIndex >= lines.length) {
+                    lineIndex = lines.length - 1;
+                }
+                box.cursorX = ctx.measureText(lines[lineIndex].slice(0, box.cursorX)).width;
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const lines = box.text.split('\n');
+                let currentLineIndex = Math.floor(box.cursorX / box.width * lines[0].length);
+                const currentLine = lines[0].substring(0, currentLineIndex);
+                const nextLine = lines[0].substring(currentLineIndex);
+                lines[0] = currentLine;
+                lines.splice(1, 0, nextLine);
+                box.cursorX = 0;
+                box.text = lines.join('\n');
+            } else if (e.key.length === 1) {
+                const lines = box.text.split('\n');
+                const currentLineIndex = Math.floor(box.cursorX / box.width * lines[0].length);
+                const currentLine = lines[0].substring(0, currentLineIndex);
+                const nextLine = lines[0].substring(currentLineIndex);
+                lines[0] = currentLine + e.key + nextLine;
+                box.cursorX += ctx.measureText(e.key).width;
+                box.text = lines.join('\n');
+            }
+            draw();
+        });
+
+        draw();
+    </script>
+</body>
+</html>
+

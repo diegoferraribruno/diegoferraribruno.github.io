@@ -94,6 +94,9 @@ async function export_anim() {
             spritao.src = dataURL
             spritao.onload = function () {
 
+                window.top.postMessage({id:"1",
+                img:dataURL}, '*')
+
                 if (iD("gif").checked) {
                     exp.width = canvas.width
                     exp.height = canvas.height
@@ -131,6 +134,8 @@ async function export_anim() {
         Alert("animação muito curta para exporatr um gif animado.")
     }
 }
+
+
 function confirmLink(url) {
     if (url == "apoio.html") {
         criaConteudo()

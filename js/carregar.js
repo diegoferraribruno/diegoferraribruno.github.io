@@ -5,6 +5,8 @@ input2.addEventListener('change', readURL, true);
 var imagem = new Image;
 var backgroundSprite = new Image;
 
+
+
 function handleFiles(e) {
 
     imagem = new Image;
@@ -146,6 +148,66 @@ function importSprite(e) {
         }
     }
 }
+
+
+function importSpriteRraomip(imagem) {
+        if (iD("loadBackgroundAnimation").checked) {
+            background_anim = true
+            backgroundSprite.src = URL.createObjectURL(e.img);
+            backgroundSprite.onload = function () {
+                changeBackGroundAnimation(workingframe)
+            }
+        } else {
+            let quadros = 1
+            let largura = iD("larguraS").value
+            let altura = iD("alturaS").value
+            let auto = iD("autodetectar").checked
+
+            let lay
+            if (auto === false) {
+                //quadros = iD("fnumber").value
+                tamanho(largura, altura)
+
+                quadros = imagem.width / largura
+                lay = imagem.height / altura
+                for (l = 0; l < lay - 1; l++) { //we already have layer 0 so no need to add all
+                    layers.push([])
+                    historia.push([])
+                }
+                // tamanho(largura, altura)
+            } else {
+                quadros = imagem.width / imagem.height
+                lay = imagem.height / altura
+                // tamanho(imagem.height, imagem.height)
+            }
+            let startline = current
+            for (l = 0; l < lay; l++) {
+                //changeLayer(l + startline)
+                current = l + startline
+                for (i = 0; i < quadros; i++) {
+
+                    workingframe = i
+                    context.setTransform(1, 0, 0, 1, 0, 0);
+                    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                    context.drawImage(imagem, i * canvas.width, l * canvas.height, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+                    let swapImg = canvas.toDataURL('image/png');
+                    blobb = dataURItoBlob(swapImg)
+                    layers[current][i] = swapImg
+                    historia[current][i] = []
+                    historia[current][i].push(swapImg)
+
+                }
+            }
+            setTimeout(() => {
+                adicionaQuadro()
+                removeClass()
+                iD("contador").innerHTML = current + "-" + workingframe;
+            }, 500)
+        }
+    }
+
+
+
 function importSpriteUrl() {
     var item = prompt(
         "endereço da imagem ",

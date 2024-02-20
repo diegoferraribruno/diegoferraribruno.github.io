@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resizable Text Box</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="200"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const box = {
+            x: 50,
+            y: 50,
+            width: 200,
+            height: 30,
+            isResizing: false,
+            cursorX: 0,
+            text: "",
+            cursorBlink: true
+        };
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fillRect(box.x, box.y, box.width, box.height);
+
+            if (box.isResizing) {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(box.x + box.width - 5, box.y + box.height - 5, 10, 10);
+            }
+
+            if (box.cursorBlink) {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(box.x + 2, box.y + 2, 2, box.height - 4);
+            }
+
+            ctx.fillStyle = '#000';
+            ctx.font = '14px Arial';
+            ctx.fillText(box.text, box.x + 5, box.y + 20);
+        }
+
+        function resizeBox(e) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            if (box.isResizing) {
+                box.width = mouseX - box.x;
+                box.height = mouseY - box.y;
+                draw();
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            if (mouseX >= box.x + box.width - 10 && mouseX <= box.x + box.width && mouseY >= box.y + box.height - 10 && mouseY <= box.y + box.height) {
+                box.isResizing = true;
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            box.isResizing = false;
+            draw();
+        });
+
+        canvas.addEventListener('mousemove', resizeBox);
+
+        setInterval(() => {
+            box.cursorBlink = !box.cursorBlink;
+            draw();
+        }, 500);
+
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            if (mouseX >= box.x && mouseX <= box.x + box.width && mouseY >= box.y && mouseY <= box.y + box.height) {
+                box.cursorX = mouseX - box.x;
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key.length === 1) {
+                box.text = box.text.substring(0, box.cursorX) + e.key + box.text.substring(box.cursorX);
+                box.cursorX++;
+                draw();
+            }
+        });
+
+        draw();
+    </script>
+</body>
+</html>
+
