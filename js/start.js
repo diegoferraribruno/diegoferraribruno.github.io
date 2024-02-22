@@ -302,7 +302,9 @@ function wheel(e) {
       adjustZoom(-1 * e.deltaY, null, e.clientX, e.clientY);
     } else {
       e.preventDefault();
-      canvasFrontScale += redondo(e.deltaY / 100);
+      let val = e.deltaY > 0 ? 1 : -1;
+
+      canvasFrontScale += val;
       if (canvasFrontScale > 400) {
         canvasFrontScale = 400;
       } else if (canvasFrontScale < 1) {
