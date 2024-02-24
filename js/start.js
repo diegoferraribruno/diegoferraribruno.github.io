@@ -114,7 +114,11 @@ function startup() {
         } else if (event.key === "+") {
           newFrame();
         } else if (event.key === "Delete") {
-          lixeira();
+          if (mode == "selecionar") {
+            deleteSelection();
+          } else {
+            lixeira();
+          }
         } else if (event.key === "t") {
           modeTo("texto");
           event.preventDefault();
