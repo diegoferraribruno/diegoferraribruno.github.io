@@ -234,7 +234,7 @@ function updateClipboard() {
     let newthumb = new Image();
     newthumb.src = clipboard[i];
     newthumb.id = "c" + i;
-    dataTransfer = newthumb.id;
+    //dataTransfer = newthumb.id;
     newthumb.classList.add("quadrofilme2", "cursorcopy");
     if (newthumb.id == dataTransfer) {
       newthumb.classList.add("wc");
@@ -248,7 +248,8 @@ function updateClipboard() {
 
 function changeImage2(n) {
   dataTransfer = "c" + n;
-  iD(dataTransfer).classList.add("wC");
+  console.log("DT" + dataTransfer)
+  iD(dataTransfer).classList.add("wc");
   image2.src = clipboard[n];
   image2.onload = function () {
     transformClip();
@@ -268,27 +269,24 @@ function toPaste(cola = false) {
     Historia();
   }
 }
-
 function clearClipboard() {
   let len = clipboard.length;
   let n;
   if (len > 0) {
-    n = dataTransfer.replace(/^\D+/g, ""); // get number from string
-    if (n < len) {
-      clipboard.splice(n, 1);
-      if (n == 0) {
-        n = 1;
-      }
-      dataTransfer = "";
+    // Extract the index from the dataTransfer variable
+    n = parseInt(dataTransfer.replace(/^\D+/g, "")); // get number from string and convert to integer
+    if (!isNaN(n) && n >= 0 && n < len) {
+      clipboard.splice(n, 1); // Remove the image at index n
+      dataTransfer = ""; // Reset dataTransfer
       updateClipboard();
       Alert(
         '<span class="icon clipboardicon"></span><span style="display:block; float:left; margin:4px">' +
-          n +
-          '<span class="icon lixeiraicon"></span>'
+        (n + 1) + // Increment n by 1 to match human counting
+        '<span class="icon lixeiraicon"></span>'
       );
     } else {
-      clipboard = [];
-      dataTransfer = "";
+      clipboard = []; // Empty the clipboard
+      dataTransfer = ""; // Reset dataTransfer
       updateClipboard();
     }
   } else {

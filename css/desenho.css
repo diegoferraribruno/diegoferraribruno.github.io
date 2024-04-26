@@ -786,10 +786,10 @@ input[type="range"] {
     max-height: 36px;
     margin-top: -1px;
     margin-left: -2px;
+    transform: scale(1.2);
     /*  background-size: 40px 40px;
     background-clip: padding-box;
     background-position: center;*/
-
 }
 
 .hidden {
