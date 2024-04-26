@@ -361,9 +361,21 @@ function handleMove(evt) {
 
         drawSelection();
         if (iD("retangularselection").checked == true) {
-            cropEnd.x = x
-            cropEnd.y = y
-            desenhaRetangulo();
+            let sqr = iD("squareselection").checked
+            if (keyCtrl || sqr) {
+                let width = (x - cropStart.x);
+                let height = (y - cropStart.y);
+                let size = Math.max(width, height);
+                size = Math.floor(size / 16) * 16;
+                cropEnd.x = cropStart.x + size
+                cropEnd.y = cropStart.y + size
+                desenhaRetangulo()
+
+            } else {
+                cropEnd.x = x
+                cropEnd.y = y
+                desenhaRetangulo();
+            }
         } else {
 
             const { offsetX, offsetY } = evt;
@@ -734,8 +746,20 @@ function handleUp(evt) {
         selectionPaths.push(currentPath);
         currentPath = [];
         mostraMenu("selecionar")
-        cropEnd.x = x
-        cropEnd.y = y
+        let sqr = iD("squareselection").checked
+        if (keyCtrl || sqr) {
+            console.log("control")
+            let width = (x - cropStart.x);
+            let height = (y - cropStart.y);
+            let size = Math.max(width, height);
+            size = Math.floor(size / 16) * 16;
+            cropEnd.x = cropStart.x + size
+            cropEnd.y = cropStart.y + size
+        } else {
+
+            cropEnd.x = x
+            cropEnd.y = y
+        }
 
     } else if (movendo == true) {
         if (selecionado) {

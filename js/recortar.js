@@ -220,17 +220,27 @@ function desenhaRetangulo(x0 = cropStart.x, y0 = cropStart.y, x1 = cropEnd.x, y1
     ctxF.beginPath();
     ctxF.strokeStyle = '#ffffff88'; // Set stroke color with opacity
     ctxF.lineWidth = 1;
-
+    let w = x1 - x0
+    let h = y1 - y0
     ctxF.rect(
         x0,
         y0,
-        (x1 - x0),
-        (y1 - y0)
+        w,
+        h
     );
-
     ctxF.stroke();
     ctxF.fillStyle = cor; // Set fill color with opacity
     ctxF.fill();
+
+    ctxF.setLineDash([0, 0]);
+    ctxF.font = '16px Sans-serif';
+    let text = w + "px X " + h + "px"
+    ctxF.strokeStyle = 'black';
+    ctxF.lineWidth = 2;
+    ctxF.strokeText(text, x0, y0);
+
+    ctxF.fillStyle = "#fff"; // Set fill color with opacity
+    ctxF.fillText(text, x0, y0);
 
 
 }
