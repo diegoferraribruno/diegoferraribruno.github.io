@@ -1,6 +1,6 @@
-var layers = [[]];
-
+var lines = [[]];
 var current = 0;
+var currentLayer = 0
 var animacao = [[]];
 var anime = iD("anime");
 var fps = 8;
@@ -27,18 +27,18 @@ var anime_menu = {
   ],
 };
 
-function changeLayer(val) {
+function changeLine(val) {
   Historia();
-  if (layers[current].length != 0) {
+  if (lines[current].length != 0) {
     current = val;
     workingframe = 0;
     context.clearRect(0, 0, canvas.width, canvas.height);
     let swapImg = canvasFront.toDataURL("image/png");
-    if (layers.length <= val) {
+    if (lines.length <= val) {
       swapImg = canvas.toDataURL("image/png");
-      layers.push([]);
+      lines.push([]);
       historia.push([]);
-      layers[val][0] = swapImg;
+      lines[val][0] = swapImg;
       historia[val][0] = [];
       historia[val][0].push(swapImg);
       //  Historia()
@@ -50,12 +50,12 @@ function changeLayer(val) {
   }
 }
 
-function changeLayerButton(direction) {
+function changeLineButton(direction) {
   let test = current + direction;
   if (test >= 0) {
     Alert(alerts[language][33] + " " + test);
     iD("layernumber").value = test;
-    changeLayer(test);
+    changeLine(test);
   }
 }
 
@@ -134,7 +134,7 @@ function newFrame() {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   workingframe++;
   swapImg = canvas.toDataURL("image/png");
-  layers[current].splice(workingframe, 0, swapImg);
+  lines[current].splice(workingframe, 0, swapImg);
   ctxF.setTransform(1, 0, 0, 1, 0, 0);
   ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
   context.setTransform(1, 0, 0, 1, 0, 0);
@@ -150,7 +150,7 @@ function play() {
   Historia();
   oldMode = mode;
   mode = "play";
-  if (layers[current].length > 1) {
+  if (lines[current].length > 1) {
     iD("play()").innerHTML =
       ' <span onmousedown="stop()" class="icon stopicon"></span>';
     clearInterval(inter);
@@ -166,7 +166,7 @@ function play() {
     }
     inter = setInterval(() => {
       playing++;
-      if (playing >= layers[current].length) {
+      if (playing >= lines[current].length) {
         playing = 0;
       }
       playerPlay(playing);
@@ -195,7 +195,7 @@ function playerPlay(frame) {
   ctxF.clearRect(0, 0, context.canvas.width, context.canvas.height);
   canvasBack.ctx.setTransform(1, 0, 0, 1, 0, 0);
   canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
-  playerimg.src = layers[current][frame];
+  playerimg.src = lines[current][frame];
   ctxF.drawImage(playerimg, 0, 0);
 }
 
@@ -213,7 +213,7 @@ function changeFrame(frame) {
   if (frame > 2) {
     let old3 = frame - 3;
     var image3 = new Image();
-    image3.src = layers[current][old3];
+    image3.src = lines[current][old3];
     image3.onload = function () {
       canvasBack.ctx.globalAlpha = 0.1;
       canvasBack.ctx.drawImage(
@@ -228,7 +228,7 @@ function changeFrame(frame) {
   if (frame > 1) {
     let old2 = frame - 2;
     var image2 = new Image();
-    image2.src = layers[current][old2];
+    image2.src = lines[current][old2];
     image2.onload = function () {
       canvasBack.ctx.globalAlpha = 0.15;
       canvasBack.ctx.drawImage(
@@ -243,7 +243,7 @@ function changeFrame(frame) {
   if (frame > 0) {
     let old1 = frame - 1;
     var image1 = new Image();
-    image1.src = layers[current][old1];
+    image1.src = lines[current][old1];
     image1.onload = function () {
       canvasBack.ctx.globalAlpha = 0.2;
       canvasBack.ctx.drawImage(
@@ -261,10 +261,10 @@ function changeFrame(frame) {
     iD("bplayer0").style.backgroundPositionX =
       -canvas.width * workingframe + "px";
   }
-  if (frame < layers[current].length - 1) {
+  if (frame < lines[current].length - 1) {
     let old4 = frame + 1;
     var image4 = new Image();
-    image4.src = layers[current][old4];
+    image4.src = lines[current][old4];
     image4.onload = function () {
       canvasBack.ctx.globalAlpha = 0.05;
       canvasBack.ctx.drawImage(
@@ -278,7 +278,7 @@ function changeFrame(frame) {
   }
 
   var imageFrame = new Image();
-  imageFrame.src = layers[current][frame];
+  imageFrame.src = lines[current][frame];
   context.globalAlpha = 1;
   imageFrame.onload = function () {
     context.drawImage(imageFrame, 0, 0, imageFrame.width, imageFrame.height);
@@ -294,13 +294,13 @@ function resetFrame() {
   context.setTransform(1, 0, 0, 1, 0, 0);
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   var imageFrame = new Image();
-  imageFrame.src = layers[current][workingframe];
+  imageFrame.src = lines[current][workingframe];
   context.drawImage(imageFrame, 0, 0, canvasBack.width, canvasBack.height);
 }
 
 function nextFrame() {
   Historia();
-  let len = layers[current].length;
+  let len = lines[current].length;
   if (len > 1) {
     workingframe++;
     if (workingframe >= len) {
@@ -313,7 +313,7 @@ function nextFrame() {
 }
 function prev_frame() {
   Historia();
-  let len = layers[current].length;
+  let len = lines[current].length;
   if (len > 1) {
     workingframe--;
     if (workingframe < 0) {
@@ -355,12 +355,12 @@ function changeFPSdown() {
 function removeFrame() {
   context.setTransform(1, 0, 0, 1, 0, 0);
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  layers[current].splice(workingframe, 1);
+  lines[current].splice(workingframe, 1);
   historia[current].splice(workingframe, 1);
-  if (layers[current].length > 0) {
+  if (lines[current].length > 0) {
     workingframe--;
     if (workingframe < 0) {
-      workingframe = layers[current].length - 1;
+      workingframe = lines[current].length - 1;
       if (workingframe < 0) {
         workingframe = 0;
       }
@@ -378,19 +378,19 @@ function removeLine() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     historia.splice(current, 1);
-    layers.splice(current, 1);
-    if (layers.length == 0) {
-      layers.push([]);
+    lines.splice(current, 1);
+    if (lines.length == 0) {
+      lines.push([]);
       historia.push([]);
       swapImg = canvas.toDataURL("image/png");
-      layers[0][0] = swapImg;
+      lines[0][0] = swapImg;
       historia[0][0] = [];
       historia[0][0].push(swapImg);
       //  Historia()
     }
     current--;
     if (current < 0) {
-      current = layers.length - 1;
+      current = lines.length - 1;
       workingframe = 0;
     } //  adicionaQuadro();
 
@@ -400,17 +400,17 @@ function removeLine() {
 }
 function cloneFrame(frame = workingframe) {
   workingframe = frame + 1;
-  layers[current].splice(workingframe, 0, layers[current][frame]);
+  lines[current].splice(workingframe, 0, lines[current][frame]);
   historia[current].splice(workingframe, 0, historia[current][frame]);
   changeFrame(workingframe);
   adicionaQuadro();
   Alert(
     '<span class="icon cloneframeicon"></span>' +
-      alerts[language][1] +
-      " " +
-      frame +
-      " " +
-      alerts[language][10]
+    alerts[language][1] +
+    " " +
+    frame +
+    " " +
+    alerts[language][10]
   );
 }
 
@@ -438,8 +438,9 @@ async function adicionaQuadro() {
   filme.innerHTML = "";
   let newFilme = document.createElement("div");
   newFilme.id = "filme";
-  animSize = layers[current].length;
+  animSize = lines[current].length;
   for (i = 0; i < animSize; i++) {
+
     let cont = document.createElement("div");
     cont.id = i;
     cont.classList.add("quadrofilme", "light");
@@ -447,7 +448,7 @@ async function adicionaQuadro() {
     cont.addEventListener("drop", drop);
     let thumb = document.createElement("div");
     thumb.innerHTML = i;
-    thumb.style.backgroundImage = 'url("' + layers[current][i] + '")';
+    thumb.style.backgroundImage = 'url("' + lines[current][i] + '")';
 
     thumb.id = i + "thumb";
     thumb.classList.add("thumb");
@@ -458,9 +459,24 @@ async function adicionaQuadro() {
         workingframe = changeToFrame;
         changeFrame(workingframe);
       }
+      toggleLayers()
     });
     thumb.addEventListener("dragstart", dragStart);
     thumb.addEventListener("dragend", dragEnd);
+    //let layers = lines[current][i].length
+    //layer miniatures
+    for (l = 1; l < 3; l++) {
+      let contl = document.createElement("div");
+      contl.id = i + "_" + l;
+      contl.addEventListener("click", function (event) {
+        selectLayer(contl.id)
+      })
+      contl.classList.add("light", "thumbf");
+      contl.setAttribute("style", `margin-top:${-30 * l}px`)
+      contl.innerHTML = l
+      cont.appendChild(contl);
+
+    }
     cont.appendChild(thumb);
     newFilme.appendChild(cont);
   }
@@ -476,6 +492,30 @@ function scrollFilme(onde = workingframe) {
     thum.classList.add("wf");
   }
 }
+
+function selectLayer(l = "1_1") {
+  var elements = document.querySelectorAll('.thumbf');
+
+  // Iterate over the selected elements
+  elements.forEach(function (element) {
+    // Toggle the class "hideanime2"
+    element.classList.remove('selected');
+  });
+  let curentl = document.getElementById(l)
+  curentl.classList.add("selected")
+  currentLayer = + l[2]
+  Alert("Layer: " + l[2])
+}
+function toggleLayers(l = 0) {
+  var elements = document.querySelectorAll('.thumbf');
+
+  // Iterate over the selected elements
+  elements.forEach(function (element) {
+    // Toggle the class "hideanime2"
+    element.classList.toggle('hideanime2');
+  });
+}
+
 function lixeira() {
   mostraMenu("lixeira");
 }
@@ -484,7 +524,7 @@ var image2 = new Image();
 function dragStart(event) {
   if (event.target.id[0] != "c") {
     dataTransfer = parseInt(event.target.id, 10);
-    image2.src = layers[current][dataTransfer];
+    image2.src = lines[current][dataTransfer];
   } else {
     dataTransfer = event.target.id;
     image2.src = clipboard[parseInt(dataTransfer, 10)];
@@ -519,12 +559,12 @@ function drop(event) {
     if (toContainer.id == "lixeira()" || toContainer.id == "lixeira") {
       console.log(dataTransfer);
       historia[current].splice(dataTransfer, 1);
-      layers[current].splice(dataTransfer, 1);
+      lines[current].splice(dataTransfer, 1);
       context.setTransform(1, 0, 0, 1, 0, 0);
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
       workingframe = 0;
-      if (layers[current].length == 0) {
-        layers[current][workingframe] = [];
+      if (lines[current].length == 0) {
+        lines[current][workingframe] = [];
         Historia();
       }
 
@@ -546,9 +586,9 @@ function drop(event) {
     } else if (toContainer !== dataTransfer) {
       Alert(
         '<span class="icon filmicon"></span>  ' +
-          dataTransfer +
-          " 🔄 " +
-          toContainer.id,
+        dataTransfer +
+        " 🔄 " +
+        toContainer.id,
         1.5
       );
       swapItems(toContainer.id, dataTransfer);
@@ -571,17 +611,17 @@ function ghost() {
     canvasBack.classList.remove("esconde");
     Alert(
       '<span class="icon ghosticon"></span>' +
-        alerts[language][30] +
-        " " +
-        alerts[language][7]
+      alerts[language][30] +
+      " " +
+      alerts[language][7]
     );
   } else {
     canvasBack.classList.add("esconde");
     Alert(
       '<span class="icon ghosticon"></span>' +
-        alerts[language][30] +
-        " " +
-        alerts[language][8]
+      alerts[language][30] +
+      " " +
+      alerts[language][8]
     );
   }
 }
@@ -592,7 +632,7 @@ function swapL() {
   if (b < 0) {
     b = comandos.length - 1;
   }
-  moveObjectAtIndex(layers[current], a, b);
+  moveObjectAtIndex(lines[current], a, b);
   moveObjectAtIndex(historia[current], a, b);
 
   changeFrame(b);
@@ -602,11 +642,11 @@ function swapL() {
 function swapR() {
   let a = workingframe;
   let b = workingframe + 1;
-  if (b >= layers[current].length) {
+  if (b >= lines[current].length) {
     b = 0;
   }
 
-  moveObjectAtIndex(layers[current], a, b);
+  moveObjectAtIndex(lines[current], a, b);
   moveObjectAtIndex(historia[current], a, b);
   changeFrame(b);
   adicionaQuadro();
@@ -624,7 +664,7 @@ function moveObjectAtIndex(arr, indexA, indexB) {
 
 function swapItems(a = Number, b = Number) {
   comandos[a] = historia[current].splice(b, 1, comandos[a])[0];
-  layers[current][a] = layers[current].splice(b, 1, layers[current][a])[0];
+  lines[current][a] = lines[current].splice(b, 1, lines[current][a])[0];
   changeFrame(b);
   adicionaQuadro();
 }
@@ -636,3 +676,6 @@ function compara(a, b) {
     return false;
   }
 }
+
+//layers should be inside of lines 
+setTimeout(() => { Alert("Layers are still beeing implemented use it the app as they do not exist") }, 5000)

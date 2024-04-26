@@ -116,7 +116,7 @@ function Historia(imagem = canvas.toDataURL('image/png')) {
         let len = historia[current][workingframe].length
         if (len > historiaLimite) historia[current][workingframe].shift()
         if (String(historia[current][workingframe][len - 1]) != String(imagem)) { historia[current][workingframe].push(imagem) }
-        layers[current][workingframe] = imagem
+        lines[current][workingframe] = imagem
     }
     setTimeout(() => {
         adicionaQuadro();

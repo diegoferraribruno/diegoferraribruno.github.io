@@ -1,5 +1,13 @@
 let vers = [
   {
+    versao: "9.4",
+    notas: [
+      "Implementando Camadas (Layers)",
+      "mudei layers por lines no código todo",
+      "criei thumbnails para alguns layers ficticios mas ainda nao funcionam e também uma camada de canvas por baixo"
+    ],
+  },
+  {
     versao: "9.3.0",
     notas: [
       "aquarela brush mode (desabilitado ainda)",
@@ -180,8 +188,8 @@ let vers = [
     versao: "2.2.1",
     notas: [
       'Localization!<span style="display:inline-block; position:relative; font-size:16px; width:30px; height:30px; top: -6px;">' +
-        '🇬🇧<span style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 18px;">' +
-        "🇧🇷</span></span> (Not this text yet...)",
+      '🇬🇧<span style="display:inline-block; position:relative; margin-left: -24px; top:5px; font-size: 18px;">' +
+      "🇧🇷</span></span> (Not this text yet...)",
       "!Desfazer e reafazer funcionando para cada quadro!",
       "Player agora utiliza o canvas do cursor para mostar a animação",
       "atalhos no teclado: Delete (quadro), + Novo quadro, Espaço (play7stop), setas para os lados trocam o quadro da animação",
@@ -232,8 +240,8 @@ let vers = [
       "🧽 alerta para modo apagador ativado",
       "♾️ Modo de pintura Infinito (t ile-map, backgrounds, pintura de ladrilho)",
       "<span class='icon custombrushicon'></span>" +
-        "função de pincel personalizado. transforma sua arte em um pincel." +
-        "<br>(dica abuse da transparencia 💧 e apagador 🧽 para criar belos pincéis ;)",
+      "função de pincel personalizado. transforma sua arte em um pincel." +
+      "<br>(dica abuse da transparencia 💧 e apagador 🧽 para criar belos pincéis ;)",
       "😍 modulo do emoji-picker incorporado ao codigo e tambem com tile paint",
     ],
   },
@@ -338,7 +346,7 @@ let vers = [
       "19/03/2023",
       "Novo estilo de pintura e pinceis",
       '< a href = "http://tricedesigns.com/sketching-with-html5-canvas-and-brush-images/" target = "blank" >com códigos de Andrew Trice</a >  ' +
-        "menu apagar junto do menu pincel.",
+      "menu apagar junto do menu pincel.",
     ],
   },
   {
@@ -425,7 +433,7 @@ let vers = [
     versao: "0.4 (01/23)",
     notas: [
       '-reduzida a quantifdade de "desfazer" disponiveis porem salvaremos uma imagem que sera carregada' +
-        'ao fundo o que pode influenciar na qualidade do projeto final.vamos ao teste."}',
+      'ao fundo o que pode influenciar na qualidade do projeto final.vamos ao teste."}',
     ],
   },
   {

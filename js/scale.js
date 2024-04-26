@@ -6,11 +6,11 @@ function doubleImageSize() {
     const canvasHeight = canvas.height * 2;
     tamanho(canvasWidth, canvasHeight);
 
-    let len = layers[current].length
+    let len = lines[current].length
     for (i = 0; i < len; i++) {
         workingframe = i
         const sourceImage = new Image()
-        sourceImage.src = layers[current][workingframe]
+        sourceImage.src = lines[current][workingframe]
         sourceImage.onload = function () {
 
             ctxR.setTransform(1, 0, 0, 1, 0, 0);

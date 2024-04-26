@@ -19,8 +19,8 @@ window.onmessage = function (e) {
 
 async function export_animBack(code = "playercom") {
   Historia();
-  let lin = layers.length;
-  let len = layers[current].length;
+  let lin = lines.length;
+  let len = lines[current].length;
   Alert(alerts[language][21] + "<br>" + alerts[language][17]);
 
   let exp = document.createElement("canvas");
@@ -32,10 +32,10 @@ async function export_animBack(code = "playercom") {
   iD("tela").appendChild(exp);
   cont = iD("exp").getContext("2d");
   for (l = 0; l < lin; l++) {
-    len = layers[l].length;
+    len = lines[l].length;
     for (i = 0; i < len; i++) {
-      if (layers[l][i]) {
-        blob = dataURItoBlob(layers[l][i]);
+      if (lines[l][i]) {
+        blob = dataURItoBlob(lines[l][i]);
         let imagem = new Image();
         imagem.src = URL.createObjectURL(blob);
         let posx = i * canvas.width;
@@ -151,15 +151,15 @@ createFloatingButtons();
 
 function export_toEditor(quem) {
   Historia();
-  let lin = layers.length;
-  let len = layers[current].length;
+  let lin = lines.length;
+  let len = lines[current].length;
   Alert(alerts[language][21] + "<br>" + quem + "to Game");
   if (quem == "spritesheet") {
     for (let l = 0; l < lin; l++) {
-      len = layers[l].length;
+      len = lines[l].length;
       for (let i = 0; i < len; i++) {
-        if (layers[l][i]) {
-          let blob = dataURItoBlob(layers[l][i]);
+        if (lines[l][i]) {
+          let blob = dataURItoBlob(lines[l][i]);
           window.top.postMessage({ com: "toEditor", id: game, img: blob }, "*");
           console.log(quem + " sent to editor");
         }
@@ -167,14 +167,14 @@ function export_toEditor(quem) {
     }
   } else if (quem == "timeline") {
     for (let i = 0; i < len; i++) {
-      if (layers[current][i]) {
-        let blob = dataURItoBlob(layers[current][i]);
+      if (lines[current][i]) {
+        let blob = dataURItoBlob(lines[current][i]);
         window.top.postMessage({ com: "toEditor", id: game, img: blob }, "*");
         console.log(quem + " sent to editor");
       }
     }
   } else if (quem == "singleframe") {
-    let blob = dataURItoBlob(layers[current][workingframe]);
+    let blob = dataURItoBlob(lines[current][workingframe]);
     window.top.postMessage({ com: "toEditor", id: game, img: blob }, "*");
     console.log(quem + " sent to editor");
   }
@@ -202,7 +202,7 @@ function importSpriteRraomip(imagem, w, h) {
       lay = imagem.height / altura;
       for (l = 0; l < lay - 1; l++) {
         //we already have layer 0 so no need to add all
-        layers.push([]);
+        lines.push([]);
         historia.push([]);
       }
       // tamanho(largura, altura)
@@ -213,7 +213,7 @@ function importSpriteRraomip(imagem, w, h) {
     }
     let startline = current;
     for (l = 0; l < lay; l++) {
-      //changeLayer(l + startline)
+      //changeLine(l + startline)
       current = l + startline;
       for (i = 0; i < quadros; i++) {
         workingframe = i;
@@ -232,13 +232,13 @@ function importSpriteRraomip(imagem, w, h) {
         );
         let swapImg = canvas.toDataURL("image/png");
         blobb = dataURItoBlob(swapImg);
-        layers[current][i] = swapImg;
+        lines[current][i] = swapImg;
         historia[current][i] = [];
         historia[current][i].push(swapImg);
       }
     }
     setTimeout(() => {
-      changeLayer(0);
+      changeLine(0);
       adicionaQuadro();
       removeClass();
       iD("contador").innerHTML = current + "-" + workingframe;

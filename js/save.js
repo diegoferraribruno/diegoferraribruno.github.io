@@ -28,13 +28,13 @@ var spritao = new Image();
 
 async function export_anim() {
 
-    if (layers[current].length > 1) {
+    if (lines[current].length > 1) {
 
 
         Historia()
 
-        let lin = layers.length
-        let len = layers[current].length
+        let lin = lines.length
+        let len = lines[current].length
         if (len == 0) {
             Alert(alerts[language][0] + " " + alerts[language][19])
             return
@@ -54,10 +54,10 @@ async function export_anim() {
         iD("tela").appendChild(exp);
         cont = iD("exp").getContext("2d");
         for (l = 0; l < lin; l++) {
-            len = layers[l].length
+            len = lines[l].length
             for (i = 0; i < len; i++) {
-                if (layers[l][i]) {
-                    blob = dataURItoBlob(layers[l][i]);
+                if (lines[l][i]) {
+                    blob = dataURItoBlob(lines[l][i]);
                     let imagem = new Image();
                     imagem.src = URL.createObjectURL(blob);
                     let posx = i * canvas.width
@@ -84,7 +84,7 @@ async function export_anim() {
 
 
         setTimeout(() => {
-            let fname = iD("filename").value + layers[current].length
+            let fname = iD("filename").value + lines[current].length
             var dataURL = iD("exp")
                 .toDataURL("image/png")
                 .replace("image/png", "image/octet-stream");
@@ -94,8 +94,10 @@ async function export_anim() {
             spritao.src = dataURL
             spritao.onload = function () {
 
-                window.top.postMessage({id:"1",
-                img:dataURL}, '*')
+                window.top.postMessage({
+                    id: "1",
+                    img: dataURL
+                }, '*')
 
                 if (iD("gif").checked) {
                     exp.width = canvas.width
@@ -109,7 +111,7 @@ async function export_anim() {
                         encoder.setDelay(1000 / fps);
                         console.log(encoder.start())
 
-                        for (i = 0; i < layers[current].length; i++) {
+                        for (i = 0; i < lines[current].length; i++) {
                             if (isGlowing) {
                                 cont.fillStyle = "rgb(10,10,10)"
                             } else {
@@ -192,7 +194,7 @@ function export2txt() {
             "canvasInfo": canvasInfo,
             "newBrushes": brushes,
             "customBrushes": customBrushes,
-            "animacao": layers[current],
+            "animacao": lines[current],
             "clipboard": clipboard,
             "favoritas": favoritas,
             "preferences": { "pixelGood": pixelGood, "dinamicBrush": dinamicBrush }

@@ -79,10 +79,10 @@ function startup() {
           prev_frame();
         } else if (event.key === "ArrowUp") {
           event.preventDefault();
-          changeLayerButton(-1);
+          changeLineButton(-1);
         } else if (event.key === "ArrowDown") {
           event.preventDefault();
-          changeLayerButton(1);
+          changeLineButton(1);
         } else if (event.key === "Escape" && mode == "cam") {
           removeVideo();
         } else if (event.key === "z") {

@@ -40,7 +40,7 @@ function redimendionarAnima(newWidth, newHeight) {
 
   if (iD("scaleall").checked) {
     let frame = 0;
-    let len = layers[current].length;
+    let len = lines[current].length;
     canvasFront.width = newWidth;
     canvasFront.height = newHeight;
     canvasBack.width = newWidth;
@@ -65,7 +65,7 @@ function redimendionarAnima(newWidth, newHeight) {
 
       imagem.width = newWidth;
       imagem.height = newHeight;
-      blob = dataURItoBlob(layers[current][frame]);
+      blob = dataURItoBlob(lines[current][frame]);
       imagem.src = URL.createObjectURL(blob);
       imagem.onload = function () {
         ctxF.setTransform(1, 0, 0, 1, 0, 0);
@@ -89,9 +89,9 @@ comandos[workingframe].push(comando)
     /*
                 setTimeout(() => {
                     let len = newAnima.length
-                    layers[current].length = 0
+                    lines[current].length = 0
                     for (i = 0; i < len; i++) {
-                        layers[current].push(newAnima[i])
+                        lines[current].push(newAnima[i])
                     }
                     setTimeout(function () {
                         setTimeout(() => { adicionaQuadro() }, 30)
@@ -152,7 +152,7 @@ function resizeCanvas(newWidth, newHeight) {
       context.imageSmoothingEnabled = false;
       if (iD("scaleall").checked) {
         tamanho(newWidth, newHeight);
-        var len = layers[current].length;
+        var len = lines[current].length;
         setTimeout(() => {
           changeFrame(workingframe);
         }, 400 + 100 * len);
@@ -177,7 +177,7 @@ function updateHeightField() {
 
 function flipFrame() {
   const sourceImage = new Image();
-  sourceImage.src = layers[current][workingframe];
+  sourceImage.src = lines[current][workingframe];
   sourceImage.onload = () => {
     ctxF.clearRect(0, 0, canvasFront.width, canvasFront.height);
     ctxF.save();

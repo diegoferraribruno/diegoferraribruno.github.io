@@ -68,7 +68,7 @@ function cortar(autoCortar = false) {
         changeGCO("source-over");
         context.imageSmoothingEnabled = false;
         tamanho(W, H)
-        //   var len = layers[current].length
+        //   var len = lines[current].length
         cortarAnima(x1, y1, x0, y0)
         //setTimeout(() => { prev_frame() }, 600 + (50 * len))
         //changeGCO(oldGCO);
@@ -101,7 +101,7 @@ function cortarAnima(x0, y0, x1, y1) {
     }
         , 10)
 
-    let len = layers[current].length
+    let len = lines[current].length
 
     for (i = 0; i <= len; i++) {
         if (i < len) {
@@ -118,9 +118,9 @@ function cortarAnima(x0, y0, x1, y1) {
 
     setTimeout(() => {
         let len = newAnima.length
-        layers[current].length = 0
+        lines[current].length = 0
         for (i = 0; i < len; i++) {
-            layers[current].push(newAnima[i])
+            lines[current].push(newAnima[i])
         }
         setTimeout(function () {
             setTimeout(() => { adicionaQuadro() }, 30)
@@ -141,7 +141,7 @@ function framesToCanvas(x0, y0, x1, y1, frame = 0) {
         let H = y1 - y0
         let imageFrame = new Image;
 
-        imageFrame.src = layers[current][frame]
+        imageFrame.src = lines[current][frame]
         imageFrame.onload = function () {
 
             //context.globalAlpha = 0.1

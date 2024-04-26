@@ -1,185 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <link rel="stylesheet" type="text/css" href="css/desenho.css" />
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <link rel="stylesheet" type="text/css" href="css/icons.css" />
-    <link rel="stylesheet" type="text/css" href="css/game.css" />
-    <title>Yoga Art 8</title>
-  </head>
 
-  <body class="naotoque" style="cursor: pointer">
-    <div id="canvas_window" class="hideScroll" style="top: 120px; left: 0px">
-      <div id="canvas_div2">
-        <div id="canvas_div">
-          <canvas
-            id="canvas"
-            width="320px"
-            height="320px"
-            oncontextmenu="return false;"
-          >
-            Sinto muito, talvez haja uma incompatibilidade com seu navegador ou
-            está offline e algo não carregou como deveria...<br />
-          </canvas>
-        </div>
+<head>
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" type="text/css" href="css/desenho.css" />
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <link rel="stylesheet" type="text/css" href="css/icons.css" />
+  <link rel="stylesheet" type="text/css" href="css/game.css" />
+  <title>Yoga Art 8</title>
+</head>
+
+<body class="naotoque" style="cursor: pointer">
+  <div id="canvas_window" class="hideScroll" style="top: 120px; left: 0px">
+    <div id="canvas_div2">
+      <div id="canvas_div">
+        <canvas id="canvasB" width="320px" height="320px" oncontextmenu="return false;"
+          style="border: #f00 solid 1px; position: absolute; z-index: -3;">
+          Sinto muito, talvez haja uma incompatibilidade com seu navegador ou
+          está offline e algo não carregou como deveria... this is for displaying back layers<br />
+        </canvas>
+        <canvas id="canvas" width="320px" height="320px" oncontextmenu="return false;">
+          Sinto muito, talvez haja uma incompatibilidade com seu navegador ou
+          está offline e algo não carregou como deveria...<br />
+        </canvas>
       </div>
     </div>
-    <div id="tela" style="overflow-y: hidden" class="naotoque">
-      <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
-        <div id="ferramentas" class="ferramentas">
-          <span id="yoga" onmousedown="yoga()" class="mais"
-            ><span class="icon2 yogaicon"></span
-          ></span>
-          <span
-            id="help"
-            title="help"
-            class="mais selected"
-            onmousedown="modeTo('help')"
-          >
-            <span class="icon2 helpicon"></span
-          ></span>
-          <span
-            id="salvar"
-            title="salvar imagem"
-            class="mais"
-            onclick="mostraMenu('salvar')"
-          >
-            <span class="icon2 saveicon"></span
-          ></span>
-          <span
-            id="imagem"
-            title="adicionar imagem"
-            class="mais"
-            onmousedown="mostraMenu('imagem')"
-          >
-            <span class="icon2 foldericon"></span>
-          </span>
+  </div>
+  <div id="tela" style="overflow-y: hidden" class="naotoque">
+    <div id="desenho_div" style="overflow-y: hidden" class="naotoque">
+      <div id="ferramentas" class="ferramentas">
+        <span id="yoga" onmousedown="yoga()" class="mais"><span class="icon2 yogaicon"></span></span>
+        <span id="help" title="help" class="mais selected" onmousedown="modeTo('help')">
+          <span class="icon2 helpicon"></span></span>
+        <span id="salvar" title="salvar imagem" class="mais" onclick="mostraMenu('salvar')">
+          <span class="icon2 saveicon"></span></span>
+        <span id="imagem" title="adicionar imagem" class="mais" onmousedown="mostraMenu('imagem')">
+          <span class="icon2 foldericon"></span>
+        </span>
 
-          <span
-            id="canvasmenu"
-            title="Propriedades do desenho"
-            class="mais"
-            onclick="mostraMenu('quadro')"
-          >
-            <span class="icon2 frameicon"></span>
-          </span>
-          <span
-            id="undo"
-            title="desfazer"
-            class="mais"
-            onmousedown="undoT()"
-            onmouseup="undoTEnd()"
-            onmouseleave="undoTEnd()"
-            ><span class="icon2 undoicon"></span
-          ></span>
-          <span
-            id="redo"
-            title="refazer"
-            class="mais"
-            onmousedown="redoT()"
-            onmouseup="redoTEnd()"
-            onmouseleave="redoTEnd()"
-            ><span class="icon2 redoicon"></span
-          ></span>
-        </div>
+        <span id="canvasmenu" title="Propriedades do desenho" class="mais" onclick="mostraMenu('quadro')">
+          <span class="icon2 frameicon"></span>
+        </span>
+        <span id="undo" title="desfazer" class="mais" onmousedown="undoT()" onmouseup="undoTEnd()"
+          onmouseleave="undoTEnd()"><span class="icon2 undoicon"></span></span>
+        <span id="redo" title="refazer" class="mais" onmousedown="redoT()" onmouseup="redoTEnd()"
+          onmouseleave="redoTEnd()"><span class="icon2 redoicon"></span></span>
+      </div>
 
-        <div id="ferramentas3" class="ferramentas">
-          <span
-            id="night"
-            class="mais"
-            onmousedown="night()"
-            title="modo escuro / claro"
-          >
-            <span class="icon2 nighticon"></span>
-          </span>
-          <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')"
-            ><span class="icon2 cameraicon"></span
-          ></span>
-          <span id="FX" title="filtros" class="mais" onclick="modeTo('FX')"
-            ><span class="icon2 fxicon"></span>
-          </span>
-          <span
-            id="rotacionar"
-            onmousedown="modeTo('rotacionar')"
-            class="mais"
-            alt="rotacionar o quado"
-          >
-            <span class="icon2 rotateicon"></span
-          ></span>
-          <span
-            id="move"
-            onmousedown="modeTo('move')"
-            class="mais"
-            alt="mover o quadro"
-          >
-            <span class="icon2 moveicon"></span>
-          </span>
-          <span id="recortar" class="mais" onclick="modeTo('recortar')"
-            ><span class="icon2 cropicon"></span
-          ></span>
-          <span
-            id="redimensionar"
-            class="mais"
-            onclick="modeTo('redimensionar')"
-            ><span class="icon2 scaleicon"></span>
-          </span>
-        </div>
+      <div id="ferramentas3" class="ferramentas">
+        <span id="night" class="mais" onmousedown="night()" title="modo escuro / claro">
+          <span class="icon2 nighticon"></span>
+        </span>
+        <span id="cam" title="foto" class="mais" onmousedown="modeTo('cam')"><span
+            class="icon2 cameraicon"></span></span>
+        <span id="FX" title="filtros" class="mais" onclick="modeTo('FX')"><span class="icon2 fxicon"></span>
+        </span>
+        <span id="rotacionar" onmousedown="modeTo('rotacionar')" class="mais" alt="rotacionar o quado">
+          <span class="icon2 rotateicon"></span></span>
+        <span id="move" onmousedown="modeTo('move')" class="mais" alt="mover o quadro">
+          <span class="icon2 moveicon"></span>
+        </span>
+        <span id="recortar" class="mais" onclick="modeTo('recortar')"><span class="icon2 cropicon"></span></span>
+        <span id="redimensionar" class="mais" onclick="modeTo('redimensionar')"><span class="icon2 scaleicon"></span>
+        </span>
+      </div>
 
-        <div id="ferramentas2" class="ferramentas">
-          <span
-            id="pintar"
-            title="pintar"
-            class="mais selected"
-            onmousedown="modeTo('pintar')"
-          >
-            <span class="icon pintaricon"></span>
-          </span>
-          <span onmousedown="backPaint()" class="mais" id="globalComposite">
-            <span class="icon2 paintovericon"></span>
-          </span>
-          <span
-            id="apagar"
-            title="Apagar"
-            class="mais"
-            onmousedown="modeTo('apagar')"
-            ><span class="icon eraseicon"></span
-          ></span>
+      <div id="ferramentas2" class="ferramentas">
+        <span id="pintar" title="pintar" class="mais selected" onmousedown="modeTo('pintar')">
+          <span class="icon pintaricon"></span>
+        </span>
+        <span onmousedown="backPaint()" class="mais" id="globalComposite">
+          <span class="icon2 paintovericon"></span>
+        </span>
+        <span id="apagar" title="Apagar" class="mais" onmousedown="modeTo('apagar')"><span
+            class="icon eraseicon"></span></span>
 
-          <span
-            id="cores"
-            title="cores"
-            class="mais"
-            onmousedown="mostraMenu('cores')"
-            ><span class="icon coresicon"></span
-          ></span>
+        <span id="cores" title="cores" class="mais" onmousedown="mostraMenu('cores')"><span
+            class="icon coresicon"></span></span>
 
-          <span
-            id="selecionar"
-            title="selecionar"
-            onmousedown="modeTo('selecionar')"
-            class="mais"
-            alt="ferramenta de seleção"
-          >
-            <span class="icon clipboardicon">
-              <span class="icon selecticon"></span
-            ></span>
-          </span>
+        <span id="selecionar" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
+          alt="ferramenta de seleção">
+          <span class="icon clipboardicon">
+            <span class="icon selecticon"></span></span>
+        </span>
 
-          <span
-            id="zoomx"
-            title="Ampliar"
-            class="mais"
-            onmousedown="modeTo('zoomx')"
-            ><span class="icon zoomicon"></span>
-            <span
-              id="x1"
-              style="
+        <span id="zoomx" title="Ampliar" class="mais" onmousedown="modeTo('zoomx')"><span class="icon zoomicon"></span>
+          <span id="x1" style="
                 font-size: 0.6em;
                 display: block;
                 position: absolute;
@@ -188,250 +96,144 @@
                 font-weight: 700;
                 text-align: center;
                 color: #fff;
-              "
-              >1x
-            </span>
+              ">1x
           </span>
-          <span
-            id="texto"
-            class="mais"
-            title="texto"
-            class="mais"
-            onclick="modeTo('texto')"
-          >
-            <span class="icon textoicon"></span>
-          </span>
-        </div>
-
-        <div id="anime" class="ferramentas"></div>
-        <div id="ui_filme"></div>
+        </span>
+        <span id="texto" class="mais" title="texto" class="mais" onclick="modeTo('texto')">
+          <span class="icon textoicon"></span>
+        </span>
       </div>
-      <div id="menus">
-        <div id="menutexto" class="submenu fundobranco">
-          <span class="close" title="fechar" onmousedown="removeClass()"></span>
 
-          <span class="mais" onclick="toggleTextBrush()" style="float: left"
-            ><span class="icon textoicon" style="margin-left: -4px"
-              ><span
-                class="iconsmall pintaricon"
-                id="textBrush"
-                style="margin-left: 12px"
-              ></span></span
-          ></span>
+      <div id="anime" class="ferramentas"></div>
+      <div id="ui_filme"></div>
+    </div>
+    <div id="menus">
+      <div id="menutexto" class="submenu fundobranco">
+        <span class="close" title="fechar" onmousedown="removeClass()"></span>
 
-          <input
-            type="text"
-            id="textInput"
-            style="width: 180px; margin-top: 11px; margin-bottom: 10px"
-            class="one"
-          /><button class="first-btn">😋</button>
-          <button onclick="toggleDropdown()" class="mais .dropbtn">🎉</button>
-          <div
-            id="greetingsDropdown"
-            class="dropdown-content fundobranco"
-            style="display: block"
-          ></div>
-          <span class="iconsmall lixeiraicon" onclick="clearTextInput()"></span>
+        <span class="mais" onclick="toggleTextBrush()" style="float: left"><span class="icon textoicon"
+            style="margin-left: -4px"><span class="iconsmall pintaricon" id="textBrush"
+              style="margin-left: 12px"></span></span></span>
 
-          <small>Google Fonts:</small>
-          <select id="fontSelect" style="width: 140px; margin-bottom: 10px">
-            <!-- Font options will be dynamically added using JavaScript -->
-          </select>
-          <br />
-          <label for="fontSizeInput"
-            ><span class="iconsmall fontsizeicon"></span
-          ></label>
-          <input
-            type="number"
-            id="fontSizeInput"
-            min="6"
-            max="200"
-            value="16"
-            style="width: 50px"
-          />
-          <span onmousedown="changeFontUp()" class="icon plusicon right"></span>
-          <span
-            onmousedown="changeFontDown()"
-            class="icon minusicon right"
-          ></span>
+        <input type="text" id="textInput" style="width: 180px; margin-top: 11px; margin-bottom: 10px"
+          class="one" /><button class="first-btn">😋</button>
+        <button onclick="toggleDropdown()" class="mais .dropbtn">🎉</button>
+        <div id="greetingsDropdown" class="dropdown-content fundobranco" style="display: block"></div>
+        <span class="iconsmall lixeiraicon" onclick="clearTextInput()"></span>
 
-          <div class="custom-dropdown">
-            <div class="dropdown-header">
-              <span
-                class="mais icon fonticon"
-                style="margin-left: 5px; margin-top: -23px"
-              ></span
-              ><br />
-            </div>
-            <div id="dropdown-options" class="dropdown-options esconde">
-              <!-- Options will be dynamically added here -->
-            </div>
+        <small>Google Fonts:</small>
+        <select id="fontSelect" style="width: 140px; margin-bottom: 10px">
+          <!-- Font options will be dynamically added using JavaScript -->
+        </select>
+        <br />
+        <label for="fontSizeInput"><span class="iconsmall fontsizeicon"></span></label>
+        <input type="number" id="fontSizeInput" min="6" max="200" value="16" style="width: 50px" />
+        <span onmousedown="changeFontUp()" class="icon plusicon right"></span>
+        <span onmousedown="changeFontDown()" class="icon minusicon right"></span>
+
+        <div class="custom-dropdown">
+          <div class="dropdown-header">
+            <span class="mais icon fonticon" style="margin-left: 5px; margin-top: -23px"></span><br />
           </div>
-          <span
-            id="boldButton"
-            class="mais icon boldicon"
-            style="margin-right: 8px; margin-left: 52px"
-          ></span>
-          <span
-            id="italicButton"
-            class="mais icon italicicon"
-            style="margin-left: 4px"
-          ></span>
-          <br />
-          <label for="colorSelect"
-            ><span class="iconsmall coresicon"></span
-          ></label>
-          <select id="colorSelect">
-            <option
-              id="fontStrokeColor"
-              style="display: block; color: #fff"
-              value="#ff005544"
-            >
-              A
-            </option>
-            <option
-              id="fontEstrokeColor"
-              style="display: block; color: #fff"
-              value="#ff005544"
-            >
-              B
-            </option>
-            <option
-              value="black"
-              style="display: block; background-color: #000; color: #fff"
-            >
-              Black
-            </option>
-            <option value="white">White</option>
-          </select>
+          <div id="dropdown-options" class="dropdown-options esconde">
+            <!-- Options will be dynamically added here -->
+          </div>
+        </div>
+        <span id="boldButton" class="mais icon boldicon" style="margin-right: 8px; margin-left: 52px"></span>
+        <span id="italicButton" class="mais icon italicicon" style="margin-left: 4px"></span>
+        <br />
+        <label for="colorSelect"><span class="iconsmall coresicon"></span></label>
+        <select id="colorSelect">
+          <option id="fontStrokeColor" style="display: block; color: #fff" value="#ff005544">
+            A
+          </option>
+          <option id="fontEstrokeColor" style="display: block; color: #fff" value="#ff005544">
+            B
+          </option>
+          <option value="black" style="display: block; background-color: #000; color: #fff">
+            Black
+          </option>
+          <option value="white">White</option>
+        </select>
 
-          <!--button id="drawButton">Draw</button-->
-        </div>
-        <div id="menumandala" class="submenu fundobranco">
-          <span class="close" title="fechar" onmousedown="removeClass()"></span>
-          <span class="icon mandalaicon"></span>
-          <txt name="94">Fatias da mandala</txt><br />
-          <input
-            id="mandalabar"
-            type="number"
-            min="2"
-            max="32"
-            value="24"
-            step="1"
-            style="width: 160px"
-            onchange="mandalaSlices(this.value)"
-          /><br />
-        </div>
-        <div id="menuAB" class="submenu fundobranco">
-          <span class="close" title="fechar" onmousedown="removeClass()"></span>
-          A to B gradient brush
-          <!--txt name="94">Fatias da mandala</txt><br-->
-          <input
-            id="abdistance"
-            type="range"
-            min="1"
-            max="95"
-            value="20"
-            step="1"
-            style="width: 160px"
-            onchange="abDistanceChange(this.value)"
-          /><br />
-          <span
-            id="abbar"
-            style="
+        <!--button id="drawButton">Draw</button-->
+      </div>
+      <div id="menumandala" class="submenu fundobranco">
+        <span class="close" title="fechar" onmousedown="removeClass()"></span>
+        <span class="icon mandalaicon"></span>
+        <txt name="94">Fatias da mandala</txt><br />
+        <input id="mandalabar" type="number" min="2" max="32" value="24" step="1" style="width: 160px"
+          onchange="mandalaSlices(this.value)" /><br />
+      </div>
+      <div id="menuAB" class="submenu fundobranco">
+        <span class="close" title="fechar" onmousedown="removeClass()"></span>
+        A to B gradient brush
+        <!--txt name="94">Fatias da mandala</txt><br-->
+        <input id="abdistance" type="range" min="1" max="95" value="20" step="1" style="width: 160px"
+          onchange="abDistanceChange(this.value)" /><br />
+        <span id="abbar" style="
               display: inline-block;
               height: 20px;
               width: 100px;
               border-radius: 10px;
-            "
-          ></span>
-        </div>
-        <div id="menupicker" class="submenu fundobranco">
-          <span
-            class="close"
-            title="fechar menu tamanho da tela"
-            onmousedown="removeClass()"
-          ></span>
-          <span class="icon pickericon"></span>
-          <txt name="1"
-            >Toque numa área pintada<br />
-            para capturar uma cor</txt
-          >
-        </div>
-        <div id="menumove" class="submenu fundobranco">
-          <span class="close" title="fechar" onmousedown="removeClass()"></span>
-          <img
-            src="img/movearrow.png"
-            style="width: 28px; height: 28px; margin-top: 4px"
-          />
-          <txt name="77"> mover o quadro</txt>
-        </div>
+            "></span>
+      </div>
+      <div id="menupicker" class="submenu fundobranco">
+        <span class="close" title="fechar menu tamanho da tela" onmousedown="removeClass()"></span>
+        <span class="icon pickericon"></span>
+        <txt name="1">Toque numa área pintada<br />
+          para capturar uma cor</txt>
+      </div>
+      <div id="menumove" class="submenu fundobranco">
+        <span class="close" title="fechar" onmousedown="removeClass()"></span>
+        <img src="img/movearrow.png" style="width: 28px; height: 28px; margin-top: 4px" />
+        <txt name="77"> mover o quadro</txt>
+      </div>
 
-        <div id="menuinfo" class="submenu fundobranco">
-          <span class="fundobranco">
-            <span class="close" onmousedown="removeClass()"> </span>
-            <span
-              style="
+      <div id="menuinfo" class="submenu fundobranco">
+        <span class="fundobranco">
+          <span class="close" onmousedown="removeClass()"> </span>
+          <span style="
                 display: block;
                 position: relative;
                 float: left;
                 font-size: 32px;
                 margin-right: 4px;
-              "
-              onmousedown="toggleConsole()"
-            >
-              <span class="icon infoicon"></span
-            ></span>
-            <span class="iconsmall alerticon"></span>
-            <txt name="3"><b>Atenção!</b></txt
-            ><br />
-            <txt name="4">
-              Este é um App de diversão! <br />
-              durante o processo de criação e exportação, a imagem perderá
-              qualidade!<br />
-              Dito isto, espero que você se divirta!<br
-            /></txt>
-          </span>
-          <span class="fundobranco">
-            <txt name="5">Feito por:</txt>
-            <a href="https://diegoferraribruno.github.io/"
-              >Diego Ferrari Bruno</a
-            >
-            <txt name="6"> com códigos de:</txt>
-            <a
-              href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/"
-              target="_blank"
-            >
-              Lei Mao</a
-            >,
-            <a href="https://github.com/doug2k1/javascript-camera">
-              Douglas Matoso</a
-            >,
-            <a
-              href="http://tricedesigns.com/sketching-with-html5-canvas-and-brush-images/"
-              target="blank"
-              >Andrew Trice</a
-            >
-            <txt name="7">e uma turma aí do</txt>
-            <a href="http://stackoverflow.com" target="_blank">
-              stackOverflow!</a
-            >🥰
-            <h3>
-              <txt name="8">Mudanças nas versões:</txt>
-            </h3>
-            <div id="versoes"></div>
-          </span>
-        </div>
+              " onmousedown="toggleConsole()">
+            <span class="icon infoicon"></span></span>
+          <span class="iconsmall alerticon"></span>
+          <txt name="3"><b>Atenção!</b></txt><br />
+          <txt name="4">
+            Este é um App de diversão! <br />
+            durante o processo de criação e exportação, a imagem perderá
+            qualidade!<br />
+            Dito isto, espero que você se divirta!<br /></txt>
+        </span>
+        <span class="fundobranco">
+          <txt name="5">Feito por:</txt>
+          <a href="https://diegoferraribruno.github.io/">Diego Ferrari Bruno</a>
+          <txt name="6"> com códigos de:</txt>
+          <a href="https://leimao.github.io/blog/HTML-Canvas-Mouse-Touch-Drawing/" target="_blank">
+            Lei Mao</a>,
+          <a href="https://github.com/doug2k1/javascript-camera">
+            Douglas Matoso</a>,
+          <a href="http://tricedesigns.com/sketching-with-html5-canvas-and-brush-images/" target="blank">Andrew
+            Trice</a>
+          <txt name="7">e uma turma aí do</txt>
+          <a href="http://stackoverflow.com" target="_blank">
+            stackOverflow!</a>🥰
+          <h3>
+            <txt name="8">Mudanças nas versões:</txt>
+          </h3>
+          <div id="versoes"></div>
+        </span>
+      </div>
 
-        <div id="menutamanho" class="fundobranco submenu">
-          <span class="botao">
-            <span
-              class="close"
-              title="fechar menu tamanho da tela"
-              onmousedown="removeClass()"
-            ></span>
-            <txt name="19">Tamanho do quadro</txt>
-            <!--txt name="9">Tamanho atual:</txt><br>
+      <div id="menutamanho" class="fundobranco submenu">
+        <span class="botao">
+          <span class="close" title="fechar menu tamanho da tela" onmousedown="removeClass()"></span>
+          <txt name="19">Tamanho do quadro</txt>
+          <!--txt name="9">Tamanho atual:</txt><br>
                     <txt name="10">Largura: </txt><input id="largura" type="number" maxlength="4" max="1920" value="320"
                         style="width:60px; padding: 4px;" /> px <span title="margem a esquerda">➡️<input id="offsetx"
                             type="number" maxlength="4" max="1920" value="0" style="width:60px; padding: 4px;"
@@ -448,9 +250,7 @@
                     </div>
                 </span-->
 
-            <span
-              class="botao"
-              style="
+          <span class="botao" style="
                 font-size: 0.8em;
                 display: block;
                 overflow: scroll;
@@ -465,158 +265,98 @@
                 margin-right: auto;
                 margin-left: auto;
                 margin-top: 4px;
-              "
-              title="
-                        formatos"
-              id="formatos2"
-            >
-              <span onmousedown=" tamanho3(32,32)" id="32x32"
-                >32x32
-                <span
-                  style="
+              " title="
+                        formatos" id="formatos2">
+            <span onmousedown=" tamanho3(32,32)" id="32x32">32x32
+              <span style="
                     border: 2px solid gray;
                     width: 4px;
                     height: 4px;
                     display: inline-block;
-                  "
-                ></span>
-              </span>
-              <span onmousedown="tamanho3(64,64)" id="64x64"
-                >64x64
-                <span
-                  style="
+                  "></span>
+            </span>
+            <span onmousedown="tamanho3(64,64)" id="64x64">64x64
+              <span style="
                     border: 2px solid gray;
                     width: 7px;
                     height: 7px;
                     display: inline-block;
-                  "
-                ></span> </span
-              ><br />
-              <span onmousedown="tamanho3(128,128)" id="128x128"
-                >128x128
-                <span
-                  style="
+                  "></span> </span><br />
+            <span onmousedown="tamanho3(128,128)" id="128x128">128x128
+              <span style="
                     border: 2px solid gray;
                     width: 12px;
                     height: 12px;
                     display: inline-block;
-                  "
-                ></span> </span
-              ><br />
-              <span onmousedown="tamanho3(320,320)" id="320x320"
-                >320x320
-                <span
-                  style="
+                  "></span> </span><br />
+            <span onmousedown="tamanho3(320,320)" id="320x320">320x320
+              <span style="
                     border: 2px solid gray;
                     width: 16px;
                     height: 16px;
                     display: inline-block;
-                  "
-                ></span> </span
-              ><br />
-              <span onmousedown="tamanho3(640,640)" id="640x640">
-                SD: 640x640
-                <span
-                  style="
+                  "></span> </span><br />
+            <span onmousedown="tamanho3(640,640)" id="640x640">
+              SD: 640x640
+              <span style="
                     border: 2px solid gray;
                     width: 20px;
                     height: 20px;
                     display: inline-block;
-                  "
-                ></span> </span
-              ><br />
-              <span onmousedown="tamanho3(640,360)" id="640x360">
-                SD: 640x360
-                <span
-                  style="
+                  "></span> </span><br />
+            <span onmousedown="tamanho3(640,360)" id="640x360">
+              SD: 640x360
+              <span style="
                     border: 2px solid gray;
                     width: 20px;
                     height: 12px;
                     display: inline-block;
-                  "
-                ></span> </span
-              ><br />
-              <span onmousedown="tamanho3(1280,720)" id="1280x720*"
-                >HD: 1280x720
-                <span
-                  style="
+                  "></span> </span><br />
+            <span onmousedown="tamanho3(1280,720)" id="1280x720*">HD: 1280x720
+              <span style="
                     border: 2px solid gray;
                     width: 32px;
                     height: 18px;
                     display: inline-block;
-                  "
-                ></span> </span
-              ><br />
-              <span onmousedown="tamanho3(1920,1080)" id="1920x1080"
-                >FHD: 1920x1080
-                <span
-                  style="
+                  "></span> </span><br />
+            <span onmousedown="tamanho3(1920,1080)" id="1920x1080">FHD: 1920x1080
+              <span style="
                     border: 2px solid gray;
                     width: 40px;
                     height: 22px;
                     display: inline-block;
-                  "
-                ></span> </span
-              ><br />
-              <span onmousedown="tamanho3(1080,1080)" id="1080x1080"
-                >Ig:1080x1080
-                <span
-                  style="
+                  "></span> </span><br />
+            <span onmousedown="tamanho3(1080,1080)" id="1080x1080">Ig:1080x1080
+              <span style="
                     border: 2px solid gray;
                     width: 22px;
                     height: 22px;
                     display: inline-block;
-                  "
-                ></span> </span
-              ><br />
-              <span onmousedown="tamanho3(3508,2480)" id="3508x2480"
-                >A4 300dpi 3508x2480
-                <span
-                  style="
+                  "></span> </span><br />
+            <span onmousedown="tamanho3(3508,2480)" id="3508x2480">A4 300dpi 3508x2480
+              <span style="
                     border: 2px solid gray;
                     width: 35px;
                     height: 24px;
                     display: inline-block;
-                  "
-                ></span> </span
-              ><br />
-              <span onmousedown="tamanho3(2480,3508)" id="2480x3508"
-                >A4 300dpi 2480x3508
-                <span
-                  style="
+                  "></span> </span><br />
+            <span onmousedown="tamanho3(2480,3508)" id="2480x3508">A4 300dpi 2480x3508
+              <span style="
                     border: 2px solid gray;
                     width: 24px;
                     height: 35px;
                     display: inline-block;
-                  "
-                ></span>
-              </span>
+                  "></span>
             </span>
-            <txt name="10">Largura: </txt
-            ><input
-              id="largura2"
-              type="number"
-              maxlength="4"
-              max="1920"
-              value="320"
-              style="width: 60px; padding: 4px"
-            />
-            px
-            <br />
-            <txt name="11">Altura:</txt>
-            <input
-              id="altura2"
-              type="number"
-              maxlength="4"
-              max="1920"
-              value="320"
-              style="width: 60px; padding: 4px"
-            />
-            px
-            <span
-              onmousedown="tamanho2()"
-              class="mais"
-              style="
+          </span>
+          <txt name="10">Largura: </txt><input id="largura2" type="number" maxlength="4" max="1920" value="320"
+            style="width: 60px; padding: 4px" />
+          px
+          <br />
+          <txt name="11">Altura:</txt>
+          <input id="altura2" type="number" maxlength="4" max="1920" value="320" style="width: 60px; padding: 4px" />
+          px
+          <span onmousedown="tamanho2()" class="mais" style="
                 float: left;
                 position: relative;
                 margin-top: -40px;
@@ -624,14 +364,13 @@
                 text-align: center;
                 width: 36px;
                 height: 36px;
-              "
-            >
-              <span class="icon2 canvassizeicon"></span>
-            </span>
+              ">
+            <span class="icon2 canvassizeicon"></span>
           </span>
-        </div>
+        </span>
+      </div>
 
-        <!--div id="menuemoji" class="fundobranco submenu menu">
+      <!--div id="menuemoji" class="fundobranco submenu menu">
                 <emoji-picker id="emojipicker" class="fundobranco"></emoji-picker>
                 <span class="botao"> <span class="bot" onclick="emojipicker()" title="selecione seu emoji">😍</span>
                     ↕️<input type="range" id="emosize" name="strokeSize" min="16" max="320" step="8"
@@ -643,98 +382,53 @@
                     <span id="emoExemplo">😍</span></span>
             </div-->
 
-        <div id="menupintar" class="fundobranco submenu menu">
-          <span class="botao" style="display: inline-flex">
-            <span id="dinamicbrush" class="mais" onclick="toggleDinamicBrush()">
-              <span class="icon dinamicbrushicon"></span>
-            </span>
-            <span id="infinity" class="mais" onclick="infinityPaint()">
-              <span class="icon infinityicon"></span
-            ></span>
-            <span
-              id="mandala"
-              title="mandala"
-              class="mais"
-              onmousedown="Mandala()"
-              ><span class="icon mandalaicon"></span
-            ></span>
-            <span id="mirror" title="mirror" class="mais" onmousedown="Mirror()"
-              ><span class="icon mirroricon"></span
-            ></span>
-            <span class="mais" onmousedown="mostraSubMenu('custombrush')">
-              <span class="icon custombrushicon"></span
-            ></span>
-            <!--span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span-->
-            <span title="fechar" onmousedown="removeClass()" class="close">
-            </span>
+      <div id="menupintar" class="fundobranco submenu menu">
+        <span class="botao" style="display: inline-flex">
+          <span id="dinamicbrush" class="mais" onclick="toggleDinamicBrush()">
+            <span class="icon dinamicbrushicon"></span>
           </span>
-          <div class="botao" id="pinceis"></div>
-          <div class="botao" id="pinceis2"></div>
-          <span class="botao">
-            <span
-              style="
+          <span id="infinity" class="mais" onclick="infinityPaint()">
+            <span class="icon infinityicon"></span></span>
+          <span id="mandala" title="mandala" class="mais" onmousedown="Mandala()"><span
+              class="icon mandalaicon"></span></span>
+          <span id="mirror" title="mirror" class="mais" onmousedown="Mirror()"><span
+              class="icon mirroricon"></span></span>
+          <span class="mais" onmousedown="mostraSubMenu('custombrush')">
+            <span class="icon custombrushicon"></span></span>
+          <!--span id="emoji" title="pintar emoji" class="mais selected" onmousedown="modeTo('emoji')">😍</span-->
+          <span title="fechar" onmousedown="removeClass()" class="close">
+          </span>
+        </span>
+        <div class="botao" id="pinceis"></div>
+        <div class="botao" id="pinceis2"></div>
+        <span class="botao">
+          <span style="
                 display: block;
                 float: right;
                 margin-right: 8px;
                 width: 30px;
                 padding-top: -12px;
                 font-size: 24px;
-              "
-              onclick="addFavBrushPin()"
-              ><span class="icon pinicon"></span>
-            </span>
-            <input
-              type="number"
-              id="tpx"
-              min="1"
-              max="100"
-              step="1"
-              value="1"
-              onchange="setStrokeSize(this.value)"
-              style="width: 50px; margin-left: 8px"
-            />
+              " onclick="addFavBrushPin()"><span class="icon pinicon"></span>
+          </span>
+          <input type="number" id="tpx" min="1" max="100" step="1" value="1" onchange="setStrokeSize(this.value)"
+            style="width: 50px; margin-left: 8px" />
 
-            <input
-              type="range"
-              id="strokeSize"
-              name="strokeSize"
-              min="0"
-              max="26"
-              step="1"
-              oninput="strokeSizeRange(this.value)"
-              value="6"
-              width="200px"
-            />
-            <br />
-            <span class="iconsmall dinamicbrushicon"></span> max<input
-              type="number"
-              id="tpx2"
-              min="1"
-              max="6"
-              step="0.1"
-              value="3"
-              onchange="setStrokeMax(this.value)"
-              style="width: 50px; margin-left: 8px"
-            />x
-          </span>
-          <span
-            class="botao light"
-            onmousedown="removeClass()"
-            style="background-color: #ffffff22; max-height: 220px"
-          >
-            <img src="" id="brushSize" />
-            <div style="display: block; height: 160px; width: 320px">
-              <canvas
-                id="brushCanva"
-                width="40px"
-                height="40px"
-                style="display: none"
-              ></canvas>
-            </div>
-            <span class="close"></span>
-          </span>
-        </div>
-        <!--div id="menuapagar" class="fundobranco submenu">
+          <input type="range" id="strokeSize" name="strokeSize" min="0" max="26" step="1"
+            oninput="strokeSizeRange(this.value)" value="6" width="200px" />
+          <br />
+          <span class="iconsmall dinamicbrushicon"></span> max<input type="number" id="tpx2" min="1" max="6" step="0.1"
+            value="3" onchange="setStrokeMax(this.value)" style="width: 50px; margin-left: 8px" />x
+        </span>
+        <span class="botao light" onmousedown="removeClass()" style="background-color: #ffffff22; max-height: 220px">
+          <img src="" id="brushSize" />
+          <div style="display: block; height: 160px; width: 320px">
+            <canvas id="brushCanva" width="40px" height="40px" style="display: none"></canvas>
+          </div>
+          <span class="close"></span>
+        </span>
+      </div>
+      <!--div id="menuapagar" class="fundobranco submenu">
                 <span class="botao" title="fechar menu apagar" onmousedown="removeClass()"><span
                         class="icon eraseicon"></span>
                     <txt name="14">Apagador</txt>
@@ -753,219 +447,106 @@
                     💧<input type="range" id="transparenciaE" name="transparencia" min="0.1" max="1"
                         oninput="mudaCorAlpha()" step="0.1" value="1"></div>
             </div-->
-        <div id="menucores" class="submenu fundobranco">
-          <span class="botao" style="display: inline-flex">
-            <span
-              title="Pega cor"
-              id="picker"
-              class="mais"
-              onmousedown="modeTo('picker')"
-            >
-              <span class="icon pickericon"></span
-            ></span>
-            <span
-              id="glow"
-              title="glow"
-              class="mais selected icon2 glowicon"
-              onmousedown="glow()"
-            >
-            </span>
-            <span
-              id="rainbow"
-              title="rainbow"
-              class="mais selected icon2 rainbowicon"
-              onmousedown="rainbow()"
-            ></span>
-            <span
-              id="rainbowAB"
-              title="rainbow"
-              class="mais"
-              style="color: #fff"
-              onmousedown="rainbow('ab')"
-              >a-b</span
-            >
-            <span
-              title="preencher"
-              id="preencher"
-              onmousedown="mostraMenu('preencher')"
-              class="mais"
-              style="float: left"
-            >
-              <span class="icon2 bucketicon"></span
-            ></span>
-            <span title="fechar" onmousedown="removeClass()" class="close">
-            </span>
+      <div id="menucores" class="submenu fundobranco">
+        <span class="botao" style="display: inline-flex">
+          <span title="Pega cor" id="picker" class="mais" onmousedown="modeTo('picker')">
+            <span class="icon pickericon"></span></span>
+          <span id="glow" title="glow" class="mais selected icon2 glowicon" onmousedown="glow()">
+          </span>
+          <span id="rainbow" title="rainbow" class="mais selected icon2 rainbowicon" onmousedown="rainbow()"></span>
+          <span id="rainbowAB" title="rainbow" class="mais" style="color: #fff" onmousedown="rainbow('ab')">a-b</span>
+          <span title="preencher" id="preencher" onmousedown="mostraMenu('preencher')" class="mais" style="float: left">
+            <span class="icon2 bucketicon"></span></span>
+          <span title="fechar" onmousedown="removeClass()" class="close">
+          </span>
 
-            <!--img src="img/dinamicInk.png" style="margin-left: 4px;"><label class="toggle"> <input
+          <!--img src="img/dinamicInk.png" style="margin-left: 4px;"><label class="toggle"> <input
                     type="checkbox" id="dinamicInk" onchange="toggleDinamicInk()"
                     style="width: 50px; margin-left: 8px">
                 <span class="knob"></span>
-            </label--> </span
-          ><br />
-          <div id="paleta" class="fundobranco glow"></div>
-          <div id="menu" class="fundobranco glow">
-            <span
-              style="display: block; float: left; height: 120px; width: 40px"
-            >
-              <span
-                onclick="changeType()"
-                class="mais icon2small numbericon"
-              ></span>
-              <span
-                onclick="changeColorMode('rgba')"
-                class="mais icon2small fxicon"
-                style="color: #fff"
-                >rgba</span
-              >
-              <span
-                onclick="changeColorMode('hsla')"
-                class="mais icon2small fxicon"
-                style="color: #fff"
-                >hsla</span
-              >
-              <span
-                onclick="changeColorMode('hex')"
-                class="mais icon2small fxicon"
-                style="color: #fff"
-                >hex</span
-              >
-            </span>
-            <span id="colorcontrol" class="colormenu"></span>
+            </label--> </span><br />
+        <div id="paleta" class="fundobranco glow"></div>
+        <div id="menu" class="fundobranco glow">
+          <span style="display: block; float: left; height: 120px; width: 40px">
+            <span onclick="changeType()" class="mais icon2small numbericon"></span>
+            <span onclick="changeColorMode('rgba')" class="mais icon2small fxicon" style="color: #fff">rgba</span>
+            <span onclick="changeColorMode('hsla')" class="mais icon2small fxicon" style="color: #fff">hsla</span>
+            <span onclick="changeColorMode('hex')" class="mais icon2small fxicon" style="color: #fff">hex</span>
+          </span>
+          <span id="colorcontrol" class="colormenu"></span>
 
-            <span
-              id="salvaCor"
-              onmousedown="salvaCor()"
-              title="Favoritar"
-              class="mais"
-            >
-              <span
-                class="icon pinicon"
-                style="position: absolute; margin-left: 80px; margin-top: -10px"
-              >
-              </span
-              ><span
-                style="
+          <span id="salvaCor" onmousedown="salvaCor()" title="Favoritar" class="mais">
+            <span class="icon pinicon" style="position: absolute; margin-left: 80px; margin-top: -10px">
+            </span><span style="
                   position: absolute;
                   margin-left: -4px;
                   margin-top: 0px;
                   font-size: medium;
-                "
-                >A
-              </span>
+                ">A
             </span>
-            <span
-              class="icon2 swapicon"
-              style="
+          </span>
+          <span class="icon2 swapicon" style="
                 transform: scale(0.6);
                 margin: -4px;
                 color: #fff;
                 float: right;
-              "
-              onmousedown="switchEstroke()"
-            ></span>
-            <span
-              id="salvaCor2"
-              onmousedown="switchEstroke()"
-              title=" old stroke"
-              class="mais"
-              style="float: right; height: 26px; width: 26px; margin-top: 4px"
-              ><span
-                style="
+              " onmousedown="switchEstroke()"></span>
+          <span id="salvaCor2" onmousedown="switchEstroke()" title=" old stroke" class="mais"
+            style="float: right; height: 26px; width: 26px; margin-top: 4px"><span style="
                   margin-left: -5px;
                   color: #fff;
                   position: absolute;
                   font-size: 18px;
-                "
-                >B</span
-              >
-            </span>
-          </div>
-          <div id="paleta2" class="fundobranco glow">
-            <txt name="15">Use a taxinha para guardar sua cor.</txt>
-          </div>
-          <div id="paleta3" class="fundobranco glow"></div>
+                ">B</span>
+          </span>
         </div>
-        <div
-          id="menucustombrush"
-          class="fundobranco submenu naotoque"
-          style="text-align: center; height: auto"
-        >
-          <div class="botao">
-            <span
-              title="fechar"
-              onmousedown="mostraSubMenu('custombrush')"
-              class="close"
-            ></span>
-            <span
-              id="criaCustom"
-              class="icon2 frameicon"
-              onmousedown="criaCustom()"
-            ></span>
-            <span class="bot" onmousedown="criaCustom()"
-              ><span class="icon custombrushicon"></span>
-            </span>
-            <txt name="17" onmousedown="criaCustom()">quadro como pincel</txt>
-          </div>
-          <div class="botao" id="criaCustom2" onmousedown="criaCustom(true)">
-            <span class="icon clipboardicon"></span
-            ><span class="bot"><span class="icon custombrushicon"></span></span>
-            <txt name="102">clipboard como pincel</txt>
-          </div>
+        <div id="paleta2" class="fundobranco glow">
+          <txt name="15">Use a taxinha para guardar sua cor.</txt>
+        </div>
+        <div id="paleta3" class="fundobranco glow"></div>
+      </div>
+      <div id="menucustombrush" class="fundobranco submenu naotoque" style="text-align: center; height: auto">
+        <div class="botao">
+          <span title="fechar" onmousedown="mostraSubMenu('custombrush')" class="close"></span>
+          <span id="criaCustom" class="icon2 frameicon" onmousedown="criaCustom()"></span>
+          <span class="bot" onmousedown="criaCustom()"><span class="icon custombrushicon"></span>
+          </span>
+          <txt name="17" onmousedown="criaCustom()">quadro como pincel</txt>
+        </div>
+        <div class="botao" id="criaCustom2" onmousedown="criaCustom(true)">
+          <span class="icon clipboardicon"></span><span class="bot"><span class="icon custombrushicon"></span></span>
+          <txt name="102">clipboard como pincel</txt>
+        </div>
 
-          <div class="botao" id="pinceis3"></div>
-          <txt name="16"> use this brush color</txt>
+        <div class="botao" id="pinceis3"></div>
+        <txt name="16"> use this brush color</txt>
+        <label class="toggle">
+          <input id="custombrushcolor" type="checkbox" checked onchange="customBrushColor()" />
+          <span class="knob"></span>
+        </label>
+      </div>
+      <div id="menuconfiguracoes" class="fundobranco submenu naotoque" style="text-align: center; height: auto">
+        <span title="fechar" onmousedown="removeClass()" class="close"></span>
+      </div>
+      <div id="menuquadro" class="fundobranco submenu naotoque" style="text-align: center; height: auto">
+        <span class="botao">
+          <span title="fechar" onmousedown="removeClass()" class="close"></span>
+          <span onclick="mostraMenu('tamanho')">
+            <span class="icon2 canvassizeicon"></span>
+
+            <txt name="19">tamanho do quadro</txt>
+          </span>
+        </span>
+        <span id="oculos" class="botao">
+          <span class="icon2 sharpnessicon"></span>
+          <txt name="79">nitidez</txt>
           <label class="toggle">
-            <input
-              id="custombrushcolor"
-              type="checkbox"
-              checked
-              onchange="customBrushColor()"
-            />
+            <input id="pixel" type="checkbox" value="true" checked onchange="pixel()" />
             <span class="knob"></span>
           </label>
-        </div>
-        <div
-          id="menuconfiguracoes"
-          class="fundobranco submenu naotoque"
-          style="text-align: center; height: auto"
-        >
-          <span title="fechar" onmousedown="removeClass()" class="close"></span>
-        </div>
-        <div
-          id="menuquadro"
-          class="fundobranco submenu naotoque"
-          style="text-align: center; height: auto"
-        >
-          <span class="botao">
-            <span
-              title="fechar"
-              onmousedown="removeClass()"
-              class="close"
-            ></span>
-            <span onclick="mostraMenu('tamanho')">
-              <span class="icon2 canvassizeicon"></span>
-
-              <txt name="19">tamanho do quadro</txt>
-            </span>
-          </span>
-          <span id="oculos" class="botao">
-            <span class="icon2 sharpnessicon"></span>
-            <txt name="79">nitidez</txt>
-            <label class="toggle">
-              <input
-                id="pixel"
-                type="checkbox"
-                value="true"
-                checked
-                onchange="pixel()"
-              />
-              <span class="knob"></span>
-            </label>
-          </span>
-          <span class="botao">
-            <span class="mais"
-              ><span
-                style="
+        </span>
+        <span class="botao">
+          <span class="mais"><span style="
                   position: relative;
                   width: 32px;
                   display: inline-block;
@@ -974,11 +555,8 @@
                   top: 0px;
                   padding-top: 0px;
                   font-size: 20px;
-                "
-                ><span class="icon2 frameicon"></span
-              ></span>
-              <span
-                style="
+                "><span class="icon2 frameicon"></span></span>
+            <span style="
                   color: white;
                   position: absolute;
                   opacity: 0.5;
@@ -987,182 +565,84 @@
                   top: -5px;
                   left: 3px;
                   font-size: 20px;
-                "
-                ><span class="icon2 frameicon"></span
-              ></span>
-            </span>
-            <txt name="20">Transparencia do quadro</txt>
-            <input
-              type="number"
-              id="canvasOpacity"
-              name="transparencia"
-              min="0.01"
-              max="1"
-              oninput="canvasOpacity(this.value)"
-              step="0.01"
-              value="1"
-              style="width: 46px"
-            />
+                "><span class="icon2 frameicon"></span></span>
           </span>
-          <span class="botao">
-            <span class="bot">
-              <span class="icon2 undoicon"></span>
-            </span>
-            <txt name="95">max undo level</txt>
-            <input
-              type="number"
-              id="undolevel"
-              name="undolevel"
-              min="1"
-              max="16"
-              oninput="historiaLimiteChange(this.value)"
-              step="1"
-              value="10"
-              style="width: 46px"
-            />
+          <txt name="20">Transparencia do quadro</txt>
+          <input type="number" id="canvasOpacity" name="transparencia" min="0.01" max="1"
+            oninput="canvasOpacity(this.value)" step="0.01" value="1" style="width: 46px" />
+        </span>
+        <span class="botao">
+          <span class="bot">
+            <span class="icon2 undoicon"></span>
           </span>
+          <txt name="95">max undo level</txt>
+          <input type="number" id="undolevel" name="undolevel" min="1" max="16"
+            oninput="historiaLimiteChange(this.value)" step="1" value="10" style="width: 46px" />
+        </span>
 
-          <span id="fundo falso" class="botao">
-            <txt name="22">Adicionar Fundo falso:</txt><br />
-            <txt name="76">como fundo do app?</txt>
-            <label class="toggle">
-              <input id="pagebg" type="checkbox" /><span
-                class="knob"
-              ></span> </label
-            ><br />
-            <span
-              onmousedown="Fundo('black')"
-              class="bloquinho"
-              style="background-color: hsla(0, 100%, 0%, 1)"
-              >&nbsp;
-            </span>
-            <span
-              onmousedown="Fundo('white')"
-              class="bloquinho"
-              style="background-color: hsla(0, 100%, 100%, 1)"
-              >&nbsp;
-            </span>
-            <span
-              onmousedown="Fundo('img/grid.png')"
-              class="bloquinho"
-              style="background-image: url('./img/grid.png')"
-              >.</span
-            >
-            <span
-              onmousedown="Fundo('img/grid2.png')"
-              class="bloquinho"
-              style="
+        <span id="fundo falso" class="botao">
+          <txt name="22">Adicionar Fundo falso:</txt><br />
+          <txt name="76">como fundo do app?</txt>
+          <label class="toggle">
+            <input id="pagebg" type="checkbox" /><span class="knob"></span> </label><br />
+          <span onmousedown="Fundo('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">&nbsp;
+          </span>
+          <span onmousedown="Fundo('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">&nbsp;
+          </span>
+          <span onmousedown="Fundo('img/grid.png')" class="bloquinho"
+            style="background-image: url('./img/grid.png')">.</span>
+          <span onmousedown="Fundo('img/grid2.png')" class="bloquinho" style="
                 background-image: url('./img/grid2.png');
                 background-color: #fff;
-              "
-              >&nbsp;</span
-            >
-            <span
-              onmousedown="Fundo('img/grid3.png')"
-              class="bloquinho"
-              style="background-image: url('./img/grid3.png')"
-              >&nbsp;</span
-            >
-            <span onmousedown="Fundo('img')" class="bloquinho">🔗</span>
-            <span
-              onmousedown="Fundo('clipboard')"
-              class="icon clipboardicon bloquinho"
-            ></span>
-            <span
-              onmousedown="Fundo('none')"
-              class="bloquinho close"
-              style="background-color: hsla(0, 100%, 100%, 0)"
-              >-
-            </span>
-
-            <span>
-              <label for="input2" class="custom-button">
-                <txt name="85">Seu arquivo</txt>
-              </label>
-              <input
-                type="file"
-                id="input2"
-                accept=".png, .jpg, .jpeg, .gif .bmp"
-              />
-              <br />
-            </span>
-          </span>
-        </div>
-        <div id="menupreencher" class="fundobranco submenu">
-          <span class="botao" onmousedown="removeClass()">
-            <span class="mais"><span class="icon2 bucketicon"></span></span>
-            <txt name="23" class="title">Preencher tudo </txt
-            ><span class="close"></span>
-          </span>
-          <span width="140px" style="margin: 8px 80px; display: block">
-            <span
-              onmousedown="mudaCorBG('black')"
-              class="bloquinho"
-              style="background-color: hsla(0, 100%, 0%, 1)"
-            >
-            </span>
-            <span
-              onmousedown="mudaCorBG('white')"
-              class="bloquinho"
-              style="background-color: hsla(0, 100%, 100%, 1)"
-            >
-            </span>
-            <span
-              onmousedown="mudaCorBG('strokeColor')"
-              id="preenchercor"
-              class="bloquinho"
-              style="background-color: rgba(158, 239, 129, 0.28)"
-            >
-            </span>
-            <span
-              title="cores"
-              class="bot"
-              onmousedown="mostraMenu('cores')"
-              style="background-color: rgba(247, 161, 165, 0.15)"
-              ><span class="icon coresicon"></span
-            ></span>
-          </span>
-        </div>
-        <div id="menuanime" class="fundobranco submenu">
-          <span class="botao"
-            ><span
-              class="close"
-              title="fechar menu enviar imagem"
-              onmousedown="removeClass()"
-            >
-            </span>
-            <span class="icon configtimeicon"></span>
-            <txt name="24"> Velocidade da Animação</txt> <br /><small>
-              <txt name="25">Quadros Por Segundo</txt> </small
-            ><br />
-            <input
-              type="number"
-              id="fpsnumber"
-              min="1"
-              max="60"
-              step="1"
-              value="8"
-              onchange="changeFPS(this.value)"
-              style="width: 50px; margin-left: 8px"
-            />
-            <span
-              onmousedown="changeFPSup()"
-              class="icon plusicon"
-              style="float: right"
-            ></span>
-            <span
-              onmousedown="changeFPSdown()"
-              class="icon minusicon"
-              style="float: right"
-            ></span>
-            <span
-              onmousedown="play()"
-              class="icon playicon"
-              style="float: right"
-            ></span>
+              ">&nbsp;</span>
+          <span onmousedown="Fundo('img/grid3.png')" class="bloquinho"
+            style="background-image: url('./img/grid3.png')">&nbsp;</span>
+          <span onmousedown="Fundo('img')" class="bloquinho">🔗</span>
+          <span onmousedown="Fundo('clipboard')" class="icon clipboardicon bloquinho"></span>
+          <span onmousedown="Fundo('none')" class="bloquinho close" style="background-color: hsla(0, 100%, 100%, 0)">-
           </span>
 
-          <!--span class="botao" onmousedown="cloneFrame()"> <span class="icon cloneframeicon"></span>
+          <span>
+            <label for="input2" class="custom-button">
+              <txt name="85">Seu arquivo</txt>
+            </label>
+            <input type="file" id="input2" accept=".png, .jpg, .jpeg, .gif .bmp" />
+            <br />
+          </span>
+        </span>
+      </div>
+      <div id="menupreencher" class="fundobranco submenu">
+        <span class="botao" onmousedown="removeClass()">
+          <span class="mais"><span class="icon2 bucketicon"></span></span>
+          <txt name="23" class="title">Preencher tudo </txt><span class="close"></span>
+        </span>
+        <span width="140px" style="margin: 8px 80px; display: block">
+          <span onmousedown="mudaCorBG('black')" class="bloquinho" style="background-color: hsla(0, 100%, 0%, 1)">
+          </span>
+          <span onmousedown="mudaCorBG('white')" class="bloquinho" style="background-color: hsla(0, 100%, 100%, 1)">
+          </span>
+          <span onmousedown="mudaCorBG('strokeColor')" id="preenchercor" class="bloquinho"
+            style="background-color: rgba(158, 239, 129, 0.28)">
+          </span>
+          <span title="cores" class="bot" onmousedown="mostraMenu('cores')"
+            style="background-color: rgba(247, 161, 165, 0.15)"><span class="icon coresicon"></span></span>
+        </span>
+      </div>
+      <div id="menuanime" class="fundobranco submenu">
+        <span class="botao"><span class="close" title="fechar menu enviar imagem" onmousedown="removeClass()">
+          </span>
+          <span class="icon configtimeicon"></span>
+          <txt name="24"> Velocidade da Animação</txt> <br /><small>
+            <txt name="25">Quadros Por Segundo</txt>
+          </small><br />
+          <input type="number" id="fpsnumber" min="1" max="60" step="1" value="8" onchange="changeFPS(this.value)"
+            style="width: 50px; margin-left: 8px" />
+          <span onmousedown="changeFPSup()" class="icon plusicon" style="float: right"></span>
+          <span onmousedown="changeFPSdown()" class="icon minusicon" style="float: right"></span>
+          <span onmousedown="play()" class="icon playicon" style="float: right"></span>
+        </span>
+
+        <!--span class="botao" onmousedown="cloneFrame()"> <span class="icon cloneframeicon"></span>
                     <txt name="27">Duplicar o quadro</txt>
                 </span>
                 <span class="botao"> <span class="mais"><span class="icon ghosticon"></span></span>
@@ -1172,291 +652,151 @@
                         <span class="knob"></span>
                     </label>
                 </span-->
-          <span class="botao">
-            <span class="bot" onmousedown="swapL()"
-              ><span class="icon swaplefticon"></span
-            ></span>
-            <txt name="28">Mudar ordem do quadro</txt>
+        <span class="botao">
+          <span class="bot" onmousedown="swapL()"><span class="icon swaplefticon"></span></span>
+          <txt name="28">Mudar ordem do quadro</txt>
 
-            <span class="bot" onmousedown="swapR()"
-              ><span class="icon swaprighticon"></span
-            ></span>
+          <span class="bot" onmousedown="swapR()"><span class="icon swaprighticon"></span></span>
+        </span>
+        <span class="botao">
+          <span class="icon ghosticon"></span>
+          <span>
+            <txt name="107">Animation line</txt>:
+            <input type="number" id="layernumber" min="0" step="1" value="0" onchange="changeLine(this.value)"
+              style="width: 50px; margin-left: 8px" />
+            <span onmousedown="changeLineButton(1)" class="icon plusicon" style="float: right"></span>
+            <span onmousedown="changeLineButton(-1)" class="icon minusicon" style="float: right"></span>
           </span>
-          <span class="botao">
-            <span class="icon ghosticon"></span>
-            <span>
-              <txt name="107">Animation line</txt>:
-              <input
-                type="number"
-                id="layernumber"
-                min="0"
-                step="1"
-                value="0"
-                onchange="changeLayer(this.value)"
-                style="width: 50px; margin-left: 8px"
-              />
-              <span
-                onmousedown="changeLayerButton(1)"
-                class="icon plusicon"
-                style="float: right"
-              ></span>
-              <span
-                onmousedown="changeLayerButton(-1)"
-                class="icon minusicon"
-                style="float: right"
-              ></span>
-            </span>
-          </span>
-        </div>
+        </span>
+      </div>
 
-        <div id="menuzoomx" class="fundobranco submenu">
+      <div id="menuzoomx" class="fundobranco submenu">
+        <span class="close" title="fechar" onmousedown="removeClass()"></span>
+        <span onmousedown="scrollMoveCanva(-20,0)"><span class="icon2 lefticon"></span></span>
+        <span onmousedown="scrollMoveCanva(0,-20)"><span class="icon2 upicon"></span></span>
+        <span onmousedown="scrollMoveCanva(0,20)"><span class="icon2 downicon"></span></span>
+        <span onmousedown="scrollMoveCanva(20,0)"><span class="icon2 righticon"></span></span>
+        <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="resetZoom()">
+          <span class="icon zoomicon"></span><span class="textOver">1x</span></span>
+        <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoomMinus()"><span
+            class="icon zoomicon"></span><span class="textOver">-</span></span>
+        <span id="zoom2xbot" title="Ampliar" class="bot" onmousedown="zoom2x(1)"><span
+            class="icon zoomicon"></span><span class="textOver">+</span></span>
+      </div>
+      <div id="menuimagem" class="fundobranco submenu">
+        <span class="botao">
+          <span class="icon2 foldericon"> </span>
+          <txt name="98" class="title"> Carregue sua arte</txt>
           <span class="close" title="fechar" onmousedown="removeClass()"></span>
-          <span onmousedown="scrollMoveCanva(-20,0)"
-            ><span class="icon2 lefticon"></span
-          ></span>
-          <span onmousedown="scrollMoveCanva(0,-20)"
-            ><span class="icon2 upicon"></span
-          ></span>
-          <span onmousedown="scrollMoveCanva(0,20)"
-            ><span class="icon2 downicon"></span
-          ></span>
-          <span onmousedown="scrollMoveCanva(20,0)"
-            ><span class="icon2 righticon"></span
-          ></span>
-          <span
-            id="zoom2xbot"
-            title="Ampliar"
-            class="bot"
-            onmousedown="resetZoom()"
-          >
-            <span class="icon zoomicon"></span
-            ><span class="textOver">1x</span></span
-          >
-          <span
-            id="zoom2xbot"
-            title="Ampliar"
-            class="bot"
-            onmousedown="zoomMinus()"
-            ><span class="icon zoomicon"></span
-            ><span class="textOver">-</span></span
-          >
-          <span
-            id="zoom2xbot"
-            title="Ampliar"
-            class="bot"
-            onmousedown="zoom2x(1)"
-            ><span class="icon zoomicon"></span
-            ><span class="textOver">+</span></span
-          >
-        </div>
-        <div id="menuimagem" class="fundobranco submenu">
-          <span class="botao">
-            <span class="icon2 foldericon"> </span>
-            <txt name="98" class="title"> Carregue sua arte</txt>
-            <span
-              class="close"
-              title="fechar"
-              onmousedown="removeClass()"
-            ></span>
-          </span>
-          <span class="botao">
-            <span class="icon projecticon"></span>
-            <txt name="50"> Caregar projeto</txt> .txt
-            <label for="inputTxt" class="custom-button">
-              <txt name="85">Seu arquivo</txt>
-            </label>
-            <input
-              id="inputTxt"
-              type="file"
-              accept=".txt"
-              onchange="openFile(event)"
-            />
-          </span>
-          <span class="botao"
-            ><span class="icon2 frameicon"></span>
-            <txt name="29">Carregar imagen</txt>
-            <label for="input" class="custom-button">
-              <txt name="85">Seu arquivo</txt>
-            </label>
-            <input
-              type="file"
-              id="input"
-              accept=".png, .jpg, .jpeg, .gif .bmp"
-              title="Enviar Arquivo de imagem"
-            /><!-- name='files[]' multiple futurEiMPLEMENT-->
-            <span onmousedown="readURL2()" class="bloquinho">🔗</span>
-            <br />
-            <span class="icon2 canvassizeicon"></span>
-            <label class="toggle">
-              <input type="checkbox" id="ajustar" checked="true" />
-              <span class="knob"></span>
-            </label>
-            <txt name="30">Ajustar tela ao tamanho da imagem</txt><br />
-          </span>
-          <span class="botao" onmousedown="mostraMenu('spritesheet')">
-            <span class="icon ghosticon"></span>
-            <txt name="31">Enviar uma animação</txt><br />
-          </span>
-        </div>
-        <div id="menuspritesheet" class="fundobranco submenu">
-          <span class="botao">
-            <span class="icon ghosticon"></span>
-            <txt name="31">Enviar uma animação</txt><br />
+        </span>
+        <span class="botao">
+          <span class="icon projecticon"></span>
+          <txt name="50"> Caregar projeto</txt> .txt
+          <label for="inputTxt" class="custom-button">
+            <txt name="85">Seu arquivo</txt>
+          </label>
+          <input id="inputTxt" type="file" accept=".txt" onchange="openFile(event)" />
+        </span>
+        <span class="botao"><span class="icon2 frameicon"></span>
+          <txt name="29">Carregar imagen</txt>
+          <label for="input" class="custom-button">
+            <txt name="85">Seu arquivo</txt>
+          </label>
+          <input type="file" id="input" accept=".png, .jpg, .jpeg, .gif .bmp"
+            title="Enviar Arquivo de imagem" /><!-- name='files[]' multiple futurEiMPLEMENT-->
+          <span onmousedown="readURL2()" class="bloquinho">🔗</span>
+          <br />
+          <span class="icon2 canvassizeicon"></span>
+          <label class="toggle">
+            <input type="checkbox" id="ajustar" checked="true" />
+            <span class="knob"></span>
+          </label>
+          <txt name="30">Ajustar tela ao tamanho da imagem</txt><br />
+        </span>
+        <span class="botao" onmousedown="mostraMenu('spritesheet')">
+          <span class="icon ghosticon"></span>
+          <txt name="31">Enviar uma animação</txt><br />
+        </span>
+      </div>
+      <div id="menuspritesheet" class="fundobranco submenu">
+        <span class="botao">
+          <span class="icon ghosticon"></span>
+          <txt name="31">Enviar uma animação</txt><br />
 
-            <span id="custom" class="esconde">
-              <!--txt name="35">quantidade de quadros</txt><input type="number" id="fnumber" min="1" max="30"
+          <span id="custom" class="esconde">
+            <!--txt name="35">quantidade de quadros</txt><input type="number" id="fnumber" min="1" max="30"
                             step="1" value="2" style="width: 40px; margin-left: 8px"><br-->
-              <txt name="36"> largura:</txt>
-              <input
-                id="larguraS"
-                type="number"
-                maxlength="4"
-                max="1920"
-                value="32"
-                style="width: 60px; padding: 4px"
-              />
-              px
-              <txt name="37">altura:</txt>
-              <input
-                id="alturaS"
-                type="number"
-                maxlength="4"
-                max="1920"
-                value="32"
-                style="width: 60px; padding: 4px"
-              />px<br />
-            </span>
-            <txt name="32">Auto detectar quadros </txt>
-            <label class="toggle">
-              <input
-                type="checkbox"
-                id="autodetectar"
-                onchange="hidecustom()"
-              />
-              <span class="knob"></span>
-            </label>
-            <label for="inputSprite" class="custom-button">
-              <txt name="85">Seu arquivo</txt>
-            </label>
-            <input
-              type="file"
-              id="inputSprite"
-              accept=".png, .jpg, .jpeg, .gif .bmp"
-            />
-            <span onmousedown="importSpriteUrl()" class="bloquinho">🔗</span>
+            <txt name="36"> largura:</txt>
+            <input id="larguraS" type="number" maxlength="4" max="1920" value="32" style="width: 60px; padding: 4px" />
+            px
+            <txt name="37">altura:</txt>
+            <input id="alturaS" type="number" maxlength="4" max="1920" value="32"
+              style="width: 60px; padding: 4px" />px<br />
           </span>
-          <span class="botao">
-            <span
-              onmousedown="changeLayerButton(1)"
-              class="icon plusicon"
-            ></span>
+          <txt name="32">Auto detectar quadros </txt>
+          <label class="toggle">
+            <input type="checkbox" id="autodetectar" onchange="hidecustom()" />
+            <span class="knob"></span>
+          </label>
+          <label for="inputSprite" class="custom-button">
+            <txt name="85">Seu arquivo</txt>
+          </label>
+          <input type="file" id="inputSprite" accept=".png, .jpg, .jpeg, .gif .bmp" />
+          <span onmousedown="importSpriteUrl()" class="bloquinho">🔗</span>
+        </span>
+        <span class="botao">
+          <span onmousedown="changeLineButton(1)" class="icon plusicon"></span>
 
-            <txt name="106"
-              >This will draw over the current timeline so add a new line
-              before</txt
-            >
-            <br />
-          </span>
+          <txt name="106">This will draw over the current timeline so add a new line
+            before</txt>
+          <br />
+        </span>
 
-          <span class="botao">
-            <txt name="33">carregar como plano de fundo?</txt>
-            <label class="toggle">
-              <input type="checkbox" id="loadBackgroundAnimation" />
-              <span class="knob"></span>
-            </label>
-            <br />
-            <txt name="34">sobrepor plano de fundo</txt>
-            <label class="toggle">
-              <input type="checkbox" id="sobrepor" onchange="sobreporFundo()" />
-              <span class="knob"></span>
-            </label>
-          </span>
+        <span class="botao">
+          <txt name="33">carregar como plano de fundo?</txt>
+          <label class="toggle">
+            <input type="checkbox" id="loadBackgroundAnimation" />
+            <span class="knob"></span>
+          </label>
+          <br />
+          <txt name="34">sobrepor plano de fundo</txt>
+          <label class="toggle">
+            <input type="checkbox" id="sobrepor" onchange="sobreporFundo()" />
+            <span class="knob"></span>
+          </label>
+        </span>
+      </div>
+      <div id="menucam" class="submenu fundobranco">
+        <span title="espelhar a camera" class="bot" onmousedown="flipCamera()">
+          <span class="icon selfieicon"></span></span>
+        <span id="btnChangeCam" title="Trocar camera" class="bot" onmousedown="changeCamera()">
+          <span class="icon changecam1"></span>
+        </span>
+
+        <span id="stopMotion" title="Modo de captura" class="bot" onmousedown="stopMotion()">
+          <span class="icon filmicon"></span>
+        </span>
+
+        <span title="Ajustes da camera" class="bot" onmousedown="mostraSubMenu('camconfig')">
+          <span class="icon camconfigicon"></span></span>
+        <span id="recMotion" title="Gravar automaticamente" class="bot" style="font-size: medium"
+          onmousedown="recMotion()">
+          <span class="icon recicon"></span></span><input id="times" type="number" value="8" min="2" step="1" max="24"
+          size="2" style="width: 42px" />
+
+        <span class="close" title="fechar camera" onmousedown="modeTo('cam')"></span><br />
+        <select id="select" class="esconde" onchange="trocaCamera()"></select>
+        <div id="zoomDiv" class="botao3">
+          <label for="zoom">Zoom</label>
+          <input type="range" id="zoom" title="Zoom" name="zoom" min="0.1" max="1" step="0.1" value="1" />
         </div>
-        <div id="menucam" class="submenu fundobranco">
-          <span
-            title="espelhar a camera"
-            class="bot"
-            onmousedown="flipCamera()"
-          >
-            <span class="icon selfieicon"></span
-          ></span>
-          <span
-            id="btnChangeCam"
-            title="Trocar camera"
-            class="bot"
-            onmousedown="changeCamera()"
-          >
-            <span class="icon changecam1"></span>
-          </span>
-
-          <span
-            id="stopMotion"
-            title="Modo de captura"
-            class="bot"
-            onmousedown="stopMotion()"
-          >
-            <span class="icon filmicon"></span>
-          </span>
-
-          <span
-            title="Ajustes da camera"
-            class="bot"
-            onmousedown="mostraSubMenu('camconfig')"
-          >
-            <span class="icon camconfigicon"></span
-          ></span>
-          <span
-            id="recMotion"
-            title="Gravar automaticamente"
-            class="bot"
-            style="font-size: medium"
-            onmousedown="recMotion()"
-          >
-            <span class="icon recicon"></span></span
-          ><input
-            id="times"
-            type="number"
-            value="8"
-            min="2"
-            step="1"
-            max="24"
-            size="2"
-            style="width: 42px"
-          />
-
-          <span
-            class="close"
-            title="fechar camera"
-            onmousedown="modeTo('cam')"
-          ></span
-          ><br />
-          <select id="select" class="esconde" onchange="trocaCamera()"></select>
-          <div id="zoomDiv" class="botao3">
-            <label for="zoom">Zoom</label>
-            <input
-              type="range"
-              id="zoom"
-              title="Zoom"
-              name="zoom"
-              min="0.1"
-              max="1"
-              step="0.1"
-              value="1"
-            />
-          </div>
-        </div>
-        <div id="menuFX" class="fundobranco submenu">
-          <span class="botao" id="fx0"
-            ><span
-              title="fechar efeitos"
-              onmousedown="removeClass()"
-              class="close"
-            ></span
-            ><span class="icon2 fxicon"></span>
-            <txt name="83" class="title">Filtros</txt>
-          </span>
-          <div
-            style="
+      </div>
+      <div id="menuFX" class="fundobranco submenu">
+        <span class="botao" id="fx0"><span title="fechar efeitos" onmousedown="removeClass()" class="close"></span><span
+            class="icon2 fxicon"></span>
+          <txt name="83" class="title">Filtros</txt>
+        </span>
+        <div style="
               display: block;
               overflow: scroll;
               min-height: 40px;
@@ -1469,286 +809,174 @@
               border-radius: 8px;
               margin-right: auto;
               margin-left: auto;
-            "
-          >
-            <span class="botao" onclick="FX(1)" id="fx1">
-              <span class="icon2 invert"></span>
-              <txt name="39">Invertido</txt>
-            </span>
-            <span class="botao" id="fx2">
-              <span class="icon2 blur"></span>
-              <input
-                id="blurBar"
-                type="range"
-                min="0"
-                max="10"
-                step="0.1"
-                onchange="FX(2)"
-              />
-              <txt name="40">Desfoque</txt>
-            </span>
-            <span class="botao" id="fx3">
-              <span class="icon2 grayscale"></span>
-              <input
-                id="grayscaleBar"
-                title="escala de cinza"
-                type="range"
-                min="0"
-                max="1"
-                step="0.1"
-                onchange="FX(3)"
-              />
-              grayscale
-            </span>
-            <span class="botao" id="fx4">
-              <span class="icon2 sepia"></span>
-              <input
-                id="sepiaBar"
-                type="range"
-                min="0"
-                max="100"
-                step="10"
-                onchange="FX(4)"
-              />
-              <txt name="41">Sepia</txt>
-            </span>
+            ">
+          <span class="botao" onclick="FX(1)" id="fx1">
+            <span class="icon2 invert"></span>
+            <txt name="39">Invertido</txt>
+          </span>
+          <span class="botao" id="fx2">
+            <span class="icon2 blur"></span>
+            <input id="blurBar" type="range" min="0" max="10" step="0.1" onchange="FX(2)" />
+            <txt name="40">Desfoque</txt>
+          </span>
+          <span class="botao" id="fx3">
+            <span class="icon2 grayscale"></span>
+            <input id="grayscaleBar" title="escala de cinza" type="range" min="0" max="1" step="0.1" onchange="FX(3)" />
+            grayscale
+          </span>
+          <span class="botao" id="fx4">
+            <span class="icon2 sepia"></span>
+            <input id="sepiaBar" type="range" min="0" max="100" step="10" onchange="FX(4)" />
+            <txt name="41">Sepia</txt>
+          </span>
 
-            <span class="botao" id="fx5">
-              <span class="icon2 contrast"></span>
-              <input
-                id="contrastBar"
-                type="range"
-                min="0"
-                max="300"
-                step="10"
-                onchange="FX(5)"
-              />
-              <txt name="42">Contraste</txt>
-            </span>
-            <span class="botao" id="fx6">
-              <span class="icon2 brightness"></span>
-              <input
-                id="brightnessBar"
-                type="range"
-                min="0"
-                max="300"
-                step="10"
-                onchange="FX(6)"
-              />
-              <txt name="59">Brightness</txt>
-            </span>
-            <span class="botao" id="fx7">
-              <span class="icon2 lumakey"></span>
-              <input
-                id="lumakeyBar"
-                type="range"
-                min="0"
-                max="255"
-                step="5"
-                value="220"
-                onchange="FX(7)"
-              />
-              <txt name="84">Apagar o branco</txt>
-            </span>
-            <span class="botao" id="fx8"
-              ><span class="icon2 hue-rotate"></span>
-              <input
-                id="hue-rotateBar"
-                type="range"
-                min="0"
-                max="355"
-                step="5"
-                onchange="FX(8)"
-              />
-              <txt name="91">hue</txt>
-            </span>
-          </div>
-          <span id="confirmFX" class="esconde"
-            >aplicar o efeito <br />
-            <span onClick="cancelaFX()" class="shadow">
-              <span class="icon closeicon"></span>
-            </span>
-            <div class="shadow" onClick="applyFX(1)">
-              <txt name="39"> invert</txt> <span class="icon2 check"></span>
-            </div>
+          <span class="botao" id="fx5">
+            <span class="icon2 contrast"></span>
+            <input id="contrastBar" type="range" min="0" max="300" step="10" onchange="FX(5)" />
+            <txt name="42">Contraste</txt>
+          </span>
+          <span class="botao" id="fx6">
+            <span class="icon2 brightness"></span>
+            <input id="brightnessBar" type="range" min="0" max="300" step="10" onchange="FX(6)" />
+            <txt name="59">Brightness</txt>
+          </span>
+          <span class="botao" id="fx7">
+            <span class="icon2 lumakey"></span>
+            <input id="lumakeyBar" type="range" min="0" max="255" step="5" value="220" onchange="FX(7)" />
+            <txt name="84">Apagar o branco</txt>
+          </span>
+          <span class="botao" id="fx8"><span class="icon2 hue-rotate"></span>
+            <input id="hue-rotateBar" type="range" min="0" max="355" step="5" onchange="FX(8)" />
+            <txt name="91">hue</txt>
           </span>
         </div>
-        <div class="fundobranco submenu" id="menusalvar">
-          <span class="botao">
-            <span class="icon2 saveicon"></span>
-            <txt name="44">Título:</txt>
-            <input
-              id="filename"
-              type="text"
-              alt="Nome do arquivo"
-              placeholder="Nome do arquivo"
-              value="desenho"
-              onfocus="this.value=''"
-              style="width: 180px"
-            />
-            <span
-              class="close"
-              title="fechar menu apagar"
-              onmousedown="removeClass()"
-            ></span>
+        <span id="confirmFX" class="esconde">aplicar o efeito <br />
+          <span onClick="cancelaFX()" class="shadow">
+            <span class="icon closeicon"></span>
           </span>
-          <span class="botao" onclick="export2txt()">
-            <txt name="49">Exportar projeto </txt> .txt
-            <span class="icon projecticon"></span>
-          </span>
-          <span class="botao" onclick="salvaImagem()">
-            <txt name="43">Salvar quadro atual</txt> .png
-            <span class="icon2 frameicon"></span>
-          </span>
-          <span class="botao">
-            <span class="icon filmicon" onclick="export_anim()"></span>
-            <txt name="46">Exportar Gif animado</txt> .gif
-            <label class="toggle">
-              <input type="checkbox" id="gif" checked="true" />
-              <span class="knob"></span>
-            </label>
-            <br />
-            <txt name="45">Exportar sequencia de quadros</txt> .png
-            <label class="toggle">
-              <input type="checkbox" id="seq" checked="true" />
-              <span class="knob"></span>
-            </label>
-            <br />
-            <txt name="47">Unir quadro com fundo</txt>
-            <label class="toggle">
-              <input type="checkbox" id="unir" />
-              <span class="knob"></span>
-            </label>
-          </span>
-          <!--span class="botao">
+          <div class="shadow" onClick="applyFX(1)">
+            <txt name="39"> invert</txt> <span class="icon2 check"></span>
+          </div>
+        </span>
+      </div>
+      <div class="fundobranco submenu" id="menusalvar">
+        <span class="botao">
+          <span class="icon2 saveicon"></span>
+          <txt name="44">Título:</txt>
+          <input id="filename" type="text" alt="Nome do arquivo" placeholder="Nome do arquivo" value="desenho"
+            onfocus="this.value=''" style="width: 180px" />
+          <span class="close" title="fechar menu apagar" onmousedown="removeClass()"></span>
+        </span>
+        <span class="botao" onclick="export2txt()">
+          <txt name="49">Exportar projeto </txt> .txt
+          <span class="icon projecticon"></span>
+        </span>
+        <span class="botao" onclick="salvaImagem()">
+          <txt name="43">Salvar quadro atual</txt> .png
+          <span class="icon2 frameicon"></span>
+        </span>
+        <span class="botao">
+          <span class="icon filmicon" onclick="export_anim()"></span>
+          <txt name="46">Exportar Gif animado</txt> .gif
+          <label class="toggle">
+            <input type="checkbox" id="gif" checked="true" />
+            <span class="knob"></span>
+          </label>
+          <br />
+          <txt name="45">Exportar sequencia de quadros</txt> .png
+          <label class="toggle">
+            <input type="checkbox" id="seq" checked="true" />
+            <span class="knob"></span>
+          </label>
+          <br />
+          <txt name="47">Unir quadro com fundo</txt>
+          <label class="toggle">
+            <input type="checkbox" id="unir" />
+            <span class="knob"></span>
+          </label>
+        </span>
+        <!--span class="botao">
                     <span class="icon filmicon" onclick="export_animBack()"></span>
                     <txt name="45">Exportar sequencia de quadros</txt>
                  
                 </span-->
-        </div>
+      </div>
 
-        <div id="menurecortar" class="fundobranco submenu">
-          <span class="botao"
-            ><span class="close" onmousedown="removeClass()"></span>
-            <span class="icon alerticon"></span>
-            <txt name="88">Salvar antes?</txt>
-            <span
-              id="salvar"
-              title="salvar imagem"
-              class="bot"
-              onclick="mostraMenu('salvar')"
-            >
-              <span class="icon2 saveicon"></span>
-            </span>
+      <div id="menurecortar" class="fundobranco submenu">
+        <span class="botao"><span class="close" onmousedown="removeClass()"></span>
+          <span class="icon alerticon"></span>
+          <txt name="88">Salvar antes?</txt>
+          <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">
+            <span class="icon2 saveicon"></span>
           </span>
-          <span
-            id="autorecortarbot"
-            title="Recotar automaticamente"
-            class="botao"
-            onclick="cortar(true)"
-            ><img src="img/crop.png" />
-            <txt name="51"> Recortar automaticamente </txt
-            ><span
-              style="
+        </span>
+        <span id="autorecortarbot" title="Recotar automaticamente" class="botao" onclick="cortar(true)"><img
+            src="img/crop.png" />
+          <txt name="51"> Recortar automaticamente </txt><span style="
                 display: inline-block;
                 width: 12px;
                 height: 12px;
                 border: green dashed 2px;
-              "
-            ></span>
-          </span>
+              "></span>
+        </span>
 
-          <span
-            id="recortarbot"
-            title="Recotar para seleção"
-            class="botao"
-            onclick="cortar()"
-            ><img src="img/crop.png" />
-            <txt name="52"> Recortar para seleção</txt>
-            <span
-              style="
+        <span id="recortarbot" title="Recotar para seleção" class="botao" onclick="cortar()"><img src="img/crop.png" />
+          <txt name="52"> Recortar para seleção</txt>
+          <span style="
                 display: inline-block;
                 width: 20px;
                 height: 12px;
                 border: red dashed 2px;
-              "
-            ></span>
-          </span>
-        </div>
+              "></span>
+        </span>
+      </div>
 
-        <div id="menuhelp" class="fundobranco submenu">
-          <span class="botao">
-            <span class="icon2 helpicon"></span>
-            <txt name="101" class="title">Ajuda</txt>
-            <span
-              title="fechar"
-              onmousedown="removeClass()"
-              class="close"
-            ></span>
-          </span>
-          <span id="helpcontent" class="botao"> </span>
-        </div>
+      <div id="menuhelp" class="fundobranco submenu">
+        <span class="botao">
+          <span class="icon2 helpicon"></span>
+          <txt name="101" class="title">Ajuda</txt>
+          <span title="fechar" onmousedown="removeClass()" class="close"></span>
+        </span>
+        <span id="helpcontent" class="botao"> </span>
+      </div>
 
-        <div id="menuredimensionar" class="fundobranco submenu">
-          <span class="botao">
-            <span class="close" onmousedown="removeClass()"></span>
-            <span class="icon2 scaleicon"></span>
-            <txt name="86">Scale canvas</txt>
-            <!--span class="bot" onclick="doubleImageSize()">2x</span-->
-          </span>
-          <span class="botao">
-            <span class="icon2 canvassizeicon"></span>
-            <txt name="87">scale all?</txt>
-            <label class="toggle">
-              <input type="checkbox" id="scaleall" />
-              <span class="knob"></span> </label
-            ><br />
-            <span class="iconsmall alerticon"></span>
+      <div id="menuredimensionar" class="fundobranco submenu">
+        <span class="botao">
+          <span class="close" onmousedown="removeClass()"></span>
+          <span class="icon2 scaleicon"></span>
+          <txt name="86">Scale canvas</txt>
+          <!--span class="bot" onclick="doubleImageSize()">2x</span-->
+        </span>
+        <span class="botao">
+          <span class="icon2 canvassizeicon"></span>
+          <txt name="87">scale all?</txt>
+          <label class="toggle">
+            <input type="checkbox" id="scaleall" />
+            <span class="knob"></span> </label><br />
+          <span class="iconsmall alerticon"></span>
 
-            <txt name="88">Salvar antes?</txt>
-            <span
-              id="salvar"
-              title="salvar imagem"
-              class="bot"
-              onclick="mostraMenu('salvar')"
-            >
-              <span class="icon2 saveicon"></span
-            ></span>
-          </span>
-          <span
-            id="redimensionarbot"
-            title="Recotar automaticamente"
-            class="botao"
-          >
-            scale by center?
-            <label class="toggle">
-              <input type="checkbox" id="scalecenter" />
-              <span class="knob"></span> </label
-            ><br />
-            <txt name="104">proporcao</txt>
-            <label class="toggle">
-              <input type="checkbox" id="cadeado" />
-              <span class="knob"></span> </label
-            ><br />
-            Width :
-            <input
-              type="number"
-              id="canvasWidth"
-              value="320"
-              style="width: 80px"
-            />
-            Height:
-            <input
-              type="number"
-              id="canvasHeight"
-              value="320"
-              style="width: 80px"
-            />
-            <button id="resizeButton">OK</button><br />
-          </span>
-        </div>
-        <div id="menupaste" class="fundobranco submenu">
-          <!--span class="botao"> <span class="close" onmousedown="removeClass()"></span>
+          <txt name="88">Salvar antes?</txt>
+          <span id="salvar" title="salvar imagem" class="bot" onclick="mostraMenu('salvar')">
+            <span class="icon2 saveicon"></span></span>
+        </span>
+        <span id="redimensionarbot" title="Recotar automaticamente" class="botao">
+          scale by center?
+          <label class="toggle">
+            <input type="checkbox" id="scalecenter" />
+            <span class="knob"></span> </label><br />
+          <txt name="104">proporcao</txt>
+          <label class="toggle">
+            <input type="checkbox" id="cadeado" />
+            <span class="knob"></span> </label><br />
+          Width :
+          <input type="number" id="canvasWidth" value="320" style="width: 80px" />
+          Height:
+          <input type="number" id="canvasHeight" value="320" style="width: 80px" />
+          <button id="resizeButton">OK</button><br />
+        </span>
+      </div>
+      <div id="menupaste" class="fundobranco submenu">
+        <!--span class="botao"> <span class="close" onmousedown="removeClass()"></span>
                     <span class="icon clipboardicon"></span> <span class="title"> Clipboard</span></span>
 
                 <span class="icon2 rotateicon"></span>
@@ -1770,569 +998,383 @@
                 <span style="display: block; width: 320px; max-height: 160px; overflow: auto;">
                     <span id="clipboard"></span>
                 </span-->
-        </div>
+      </div>
 
-        <div id="menuselecionar" class="fundobranco submenu">
-          <span class="botao">
-            <span class="close" onmousedown="removeClass()"></span>
-            <span
-              id="selecionar2"
-              title="selecionar"
-              onmousedown="modeTo('selecionar')"
-              class="mais"
-              alt="ferramenta de seleção"
-            >
-              <span class="icon selecticon"></span>
-            </span>
-            <span id="copy" class="mais" title="copy" onclick="copySelection()">
-              <span class="icon copyicon"></span>
-            </span>
-            <span
-              id="cut"
-              class="mais"
-              title="cut"
-              onclick="copySelection('cut')"
-            >
-              <span class="icon cuticon"></span>
-            </span>
-            <span id="paste" class="mais" onclick="toPaste(true)">
-              <span class="icon pasteicon"></span>
-            </span>
-            <span id="paste" class="mais" onclick="deleteSelection()">
-              <span class="icon lixeiraicon"></span>
-            </span>
+      <div id="menuselecionar" class="fundobranco submenu">
+        <span class="botao">
+          <span class="close" onmousedown="removeClass()"></span>
+          <span id="selecionar2" title="selecionar" onmousedown="modeTo('selecionar')" class="mais"
+            alt="ferramenta de seleção">
+            <span class="icon selecticon"></span>
           </span>
-          <span id="recortarbot" title="Seleção retangular" class="botao">
-            <txt name="89"> Seleção retangular</txt>
-            <span
-              style="
+          <span id="copy" class="mais" title="copy" onclick="copySelection()">
+            <span class="icon copyicon"></span>
+          </span>
+          <span id="cut" class="mais" title="cut" onclick="copySelection('cut')">
+            <span class="icon cuticon"></span>
+          </span>
+          <span id="paste" class="mais" onclick="toPaste(true)">
+            <span class="icon pasteicon"></span>
+          </span>
+          <span id="paste" class="mais" onclick="deleteSelection()">
+            <span class="icon lixeiraicon"></span>
+          </span>
+        </span>
+        <span id="recortarbot" title="Seleção retangular" class="botao">
+          <txt name="89"> Seleção retangular</txt>
+          <span style="
                 display: inline-block;
                 width: 20px;
                 height: 12px;
                 border: red dashed 1px;
-              "
-            ></span>
+              "></span>
 
-            <label class="toggle">
-              <input type="checkbox" id="retangularselection" />
-              <span class="knob"></span>
-            </label>
-          </span>
+          <label class="toggle">
+            <input type="checkbox" id="retangularselection" />
+            <span class="knob"></span>
+          </label>
+        </span>
 
-          <span class="icon2 rotateicon"></span>
-          <input
-            id="canvasfrontdeg"
-            type="number"
-            maxlength="3"
-            max="360"
-            value="0"
-            step="6"
-            style="width: 60px; height: 26px; padding: 4px; margin-top: 4px"
-            class="floatleft"
-            onchange="transformClip()"
-          />
-          <span class="icon2 scaleicon"></span>
-          <input
-            id="canvasfrontscale"
-            type="number"
-            maxlength="3"
-            max="400"
-            value="100"
-            step="1"
-            style="width: 60px; height: 26px; padding: 4px; margin-top: 4px"
-            class="floatleft"
-            onchange="transformClip()"
-          /><span
-            style="
+        <span class="icon2 rotateicon"></span>
+        <input id="canvasfrontdeg" type="number" maxlength="3" max="360" value="0" step="6"
+          style="width: 60px; height: 26px; padding: 4px; margin-top: 4px" class="floatleft"
+          onchange="transformClip()" />
+        <span class="icon2 scaleicon"></span>
+        <input id="canvasfrontscale" type="number" maxlength="3" max="400" value="100" step="1"
+          style="width: 60px; height: 26px; padding: 4px; margin-top: 4px" class="floatleft"
+          onchange="transformClip()" /><span style="
               width: 30px;
               height: 26px;
               padding: 4px;
               margin-top: 4px;
               font-weight: 700;
-            "
-            class="floatleft"
-            >%</span
-          >
-          <span class="mais" onclick="flipClip()">
-            <span id="mirror2" class="iconsmall mirroricon"></span>
-          </span>
-          <span class="mais" onmousedown="limpar('clipboard')">
-            <span id="lixeira" class="iconsmall lixeiraicon"></span> </span
-          ><br /><br />
-          <span
-            style="
+            " class="floatleft">%</span>
+        <span class="mais" onclick="flipClip()">
+          <span id="mirror2" class="iconsmall mirroricon"></span>
+        </span>
+        <span class="mais" onmousedown="limpar('clipboard')">
+          <span id="lixeira" class="iconsmall lixeiraicon"></span> </span><br /><br />
+        <span style="
               display: block;
               width: 320px;
               max-height: 160px;
               overflow: auto;
-            "
-          >
-            <span id="clipboard"></span>
-          </span>
-        </div>
+            ">
+          <span id="clipboard"></span>
+        </span>
+      </div>
 
-        <div id="menulixeira" class="fundobranco submenu">
-          <div class="botao">
-            <span class="icon alerticon"></span>
-            <txt name="53" class="title"> impossivel desfazer</txt>
-            <span class="close" onmousedown="removeClass()"></span>
-          </div>
-
-          <div class="botao" onclick="limpar('quadro'), removeClass()">
-            <span class="icon eraseicon"></span>
-            <span class="icon2 frameicon"></span>
-            <txt name="54">limpar quadro </txt>
-          </div>
-          <span class="botao" onmousedown="removeFrame()">
-            <span class="icon lixeiraicon"></span>
-            <span class="icon2 animationframeicon"></span>
-            <txt name="56">Remover quadro atual </txt>
-          </span>
-          <span class="botao" onmousedown="removeLine()">
-            <span class="icon lixeiraicon"></span>
-            <span class="icon filmicon"></span>
-            <txt name="108">Remover linha de animação </txt>
-          </span>
-          <div class="botao" onclick="limpar('animacao'), removeClass()">
-            <span class="icon lixeiraicon"></span>
-            <span class="icon filmicon"></span>
-            <txt name="55">Apagar toda a animação</txt>
-          </div>
-        </div>
-
-        <div id="menurotacionar" class="fundobranco submenu">
-          <span id="rotacionar" class="botao title"
-            ><span class="close" onmousedown="removeClass()"></span>
-            <span class="icon2 rotateicon"></span>
-            <txt name="57">Rotacionar a tela</txt>
-          </span>
-          <span id="rotaciona" class="botao" onclick="">
-            <txt name="78">Rotacionar pelo centro da tela?</txt>
-            <label class="toggle">
-              <input type="checkbox" id="rotatecenter" />
-              <span class="knob"></span>
-            </label>
-          </span>
-          <span id="flip" class="botao" onclick="flipFrame()">
-            <span class="icon mirroricon"></span>
-            <txt name="109">Flip Frame</txt>
-          </span>
-        </div>
-        <span id="menuyoga" class="submenu fundobranco">
+      <div id="menulixeira" class="fundobranco submenu">
+        <div class="botao">
+          <span class="icon alerticon"></span>
+          <txt name="53" class="title"> impossivel desfazer</txt>
           <span class="close" onmousedown="removeClass()"></span>
-          <a
-            href="index.html"
-            style="font-size: medium; height: 32px; vertical-align: middle"
-          >
-            <img
-              src="favicon.ico"
-              style="
+        </div>
+
+        <div class="botao" onclick="limpar('quadro'), removeClass()">
+          <span class="icon eraseicon"></span>
+          <span class="icon2 frameicon"></span>
+          <txt name="54">limpar quadro </txt>
+        </div>
+        <span class="botao" onmousedown="removeFrame()">
+          <span class="icon lixeiraicon"></span>
+          <span class="icon2 animationframeicon"></span>
+          <txt name="56">Remover quadro atual </txt>
+        </span>
+        <span class="botao" onmousedown="removeLine()">
+          <span class="icon lixeiraicon"></span>
+          <span class="icon filmicon"></span>
+          <txt name="108">Remover linha de animação </txt>
+        </span>
+        <div class="botao" onclick="limpar('animacao'), removeClass()">
+          <span class="icon lixeiraicon"></span>
+          <span class="icon filmicon"></span>
+          <txt name="55">Apagar toda a animação</txt>
+        </div>
+      </div>
+
+      <div id="menurotacionar" class="fundobranco submenu">
+        <span id="rotacionar" class="botao title"><span class="close" onmousedown="removeClass()"></span>
+          <span class="icon2 rotateicon"></span>
+          <txt name="57">Rotacionar a tela</txt>
+        </span>
+        <span id="rotaciona" class="botao" onclick="">
+          <txt name="78">Rotacionar pelo centro da tela?</txt>
+          <label class="toggle">
+            <input type="checkbox" id="rotatecenter" />
+            <span class="knob"></span>
+          </label>
+        </span>
+        <span id="flip" class="botao" onclick="flipFrame()">
+          <span class="icon mirroricon"></span>
+          <txt name="109">Flip Frame</txt>
+        </span>
+      </div>
+      <span id="menuyoga" class="submenu fundobranco">
+        <span class="close" onmousedown="removeClass()"></span>
+        <a href="index.html" style="font-size: medium; height: 32px; vertical-align: middle">
+          <img src="favicon.ico" style="
                 width: 36px;
                 height: 36px;
                 margin-bottom: 2px;
                 float: left;
                 margin-left: 20px;
                 margin-top: 8px;
-              "
-            />
-          </a>
-          <a href="index.html">
-            <span
-              style="
+              " />
+        </a>
+        <a href="index.html">
+          <span style="
                 display: inline-block;
                 font-size: medium;
                 line-height: 16px;
                 margin-top: 6px;
-              "
-            >
-              Diego Ferrari Bruno<br />
-              <txt name="75">apresenta</txt>
-              <!--span style=" font-size: smaller; font-weight: 400;" id="apresenta" title="apresenta">
+              ">
+            Diego Ferrari Bruno<br />
+            <txt name="75">apresenta</txt>
+            <!--span style=" font-size: smaller; font-weight: 400;" id="apresenta" title="apresenta">
                     </span-->
-            </span> </a
-          ><br /><br />
-          <span
-            id="apptitle"
-            style="
+          </span> </a><br /><br />
+        <span id="apptitle" style="
               font-family: 'Times New Roman', Times, serif;
               font-weight: 900;
               font-size: larger;
-            "
-          >
-            Yoga Art 8</span
-          ><br />
-          <img
-            src="img/lovepix.gif"
-            onclick=" criaConteudo(),
-            apoio()"
-            style="
+            ">
+          Yoga Art 8</span><br />
+        <img src="img/lovepix.gif" onclick=" criaConteudo(),
+            apoio()" style="
               display: block;
               position: absolute;
               right: 10px;
               top: 56px;
               border: solid 1px rgb(90, 90, 90);
               transform: scale(0.8);
-            "
-          />
-          <br />
-          <span
-            id="yogapose"
-            style="
+            " />
+        <br />
+        <span id="yogapose" style="
               background-image: url(img/yoga.png);
               width: 64px;
               height: 77px;
               display: inline-block;
               margin-top: -20px;
-            "
-            onClick="yogaChange()"
-          >
+            " onClick="yogaChange()">
+        </span>
+        <br />
+
+        <txt name="105">Free your mind</txt><br />
+        <br />
+
+        <span class="botao" style="font-size: 0.8em; display: flex">
+          <span class="mais" onclick="mostraMenu('tamanho')">
+            <span class="icon2 canvassizeicon" title="Tamanho do Quadro"></span>
           </span>
-          <br />
+          <img src="img/rainbowmandalab.png" onclick="Mandala(),  rainbow(), glow(), setStrokeSize(12)" class="mais"
+            title="Mandala de luz" />
 
-          <txt name="105">Free your mind</txt><br />
-          <br />
-
-          <span class="botao" style="font-size: 0.8em; display: flex">
-            <span class="mais" onclick="mostraMenu('tamanho')">
-              <span
-                class="icon2 canvassizeicon"
-                title="Tamanho do Quadro"
-              ></span>
-            </span>
-            <img
-              src="img/rainbowmandalab.png"
-              onclick="Mandala(),  rainbow(), glow(), setStrokeSize(12)"
-              class="mais"
-              title="Mandala de luz"
-            />
-
-            <span
-              id="imagem"
-              title="Carregar projeto ou imagem"
-              class="mais"
-              onmousedown="mostraMenu('imagem')"
-            >
-              <span class="icon2 foldericon"></span>
-            </span>
-            <span
-              id="localize"
-              title="change language"
-              class="mais"
-              onclick="localize()"
-            >
-              <span class="icon2 bricon"></span>
-            </span>
-            <span
-              id="info"
-              title="Informações"
-              class="mais"
-              onmousedown="mostraMenu('info')"
-              ><span class="icon infoicon"></span
-            ></span>
-
-            <span
-              id="help2"
-              title="help"
-              class="mais selected"
-              onmousedown="modeTo('help')"
-            >
-              <span class="icon2 helpicon"></span>
-            </span>
+          <span id="imagem" title="Carregar projeto ou imagem" class="mais" onmousedown="mostraMenu('imagem')">
+            <span class="icon2 foldericon"></span>
           </span>
-          <span class="share__list">
-            <span class="socialicon shareicon"></span>
+          <span id="localize" title="change language" class="mais" onclick="localize()">
+            <span class="icon2 bricon"></span>
+          </span>
+          <span id="info" title="Informações" class="mais" onmousedown="mostraMenu('info')"><span
+              class="icon infoicon"></span></span>
 
-            <span
-              class="share__link share__link--facebook socialicon ficon"
-            ></span>
-
-            <span
-              class="share__link share__link--twitter socialicon xicon"
-            ></span>
-
-            <span
-              class="share__link share__link--linkedin socialicon inicon"
-            ></span>
-
-            <span
-              class="share__link share__link--mail socialicon mailicon"
-            ></span>
-
-            <span
-              class="share__link share__link--whatsapp socialicon zapicon"
-            ></span>
+          <span id="help2" title="help" class="mais selected" onmousedown="modeTo('help')">
+            <span class="icon2 helpicon"></span>
           </span>
         </span>
-        <div
-          id="menucamconfig"
-          class="fundobranco submenu"
-          style="opacity: 0.8; background-color: #ffffff00"
-        >
-          <span class="botao">
-            <span
-              id="recMotion2"
-              title="Gravar automaticamente"
-              class="bot"
-              style="font-size: medium"
-            >
-              <span class="icon recicon"></span>
-            </span>
-            <txt name="96">capture interval</txt><br />
-            <input
-              id="setRecInterval"
-              title="setRecInterval"
-              type="number"
-              min="0.5"
-              max="10"
-              step="0.5"
-              value="1"
-              onchange="changeRecSpeed(this.value)"
-            />s
-            <span
-              class="close"
-              title="fechar cam config"
-              onmousedown="mostraSubMenu('camconfig')"
-            ></span>
+        <span class="share__list">
+          <span class="socialicon shareicon"></span>
+
+          <span class="share__link share__link--facebook socialicon ficon"></span>
+
+          <span class="share__link share__link--twitter socialicon xicon"></span>
+
+          <span class="share__link share__link--linkedin socialicon inicon"></span>
+
+          <span class="share__link share__link--mail socialicon mailicon"></span>
+
+          <span class="share__link share__link--whatsapp socialicon zapicon"></span>
+        </span>
+      </span>
+      <div id="menucamconfig" class="fundobranco submenu" style="opacity: 0.8; background-color: #ffffff00">
+        <span class="botao">
+          <span id="recMotion2" title="Gravar automaticamente" class="bot" style="font-size: medium">
+            <span class="icon recicon"></span>
           </span>
-          <div id="camoptions">
-            <div id="brightnessDiv" class="botao3">
-              <label for="brightness">
-                <txt name="59">Brightness / brilho</txt>
-              </label>
-              <input
-                id="brightness"
-                title="brightness"
-                type="range"
-                min="0"
-                max="255"
-                step="1"
-              />
-            </div>
-
-            <div id="isoDiv" class="botao3">
-              <label for="iso">ISO</label>
-              <input
-                id="iso"
-                title="iso"
-                type="range"
-                min="100"
-                max="1200"
-                step="100"
-              />
-            </div>
-
-            <div id="exposureTimeDiv" class="botao3">
-              <label class="toggle">
-                <input id="exposureMode" type="checkbox" />
-                <span class="knob"></span>
-              </label>
-              <txt name="60">Manual exposureMode</txt><br />
-              <label for="exposureTime">
-                <txt name="61">exposureTime</txt>
-              </label>
-              <input
-                id="exposureTime"
-                title="exposureTime"
-                type="range"
-                min="3"
-                max="2047"
-                step="1"
-              />
-              <div id="exposureCompensationDiv">
-                <label for="exposureCompensation">
-                  <txt name="62">Exposure compensation</txt>
-                </label>
-                <input
-                  id="exposureCompensation"
-                  title="exposureCompensation"
-                  type="range"
-                  min="0"
-                  max="255"
-                  step="1"
-                />
-              </div>
-            </div>
-
-            <div id="saturationDiv" class="botao3">
-              <label for="saturation">
-                <txt name="63">saturation</txt>
-              </label>
-              <input
-                id="saturation"
-                title="saturation"
-                type="range"
-                min="0"
-                max="255"
-                step="1"
-              />
-            </div>
-            <div id="contrastDiv" class="botao3">
-              <label for="contrast">
-                <txt name="64">contrast</txt>
-              </label>
-              <input
-                id="contrast"
-                title="contrast"
-                type="range"
-                min="0"
-                max="255"
-                step="1"
-              />
-            </div>
-            <div id="sharpnessDiv" class="botao3" style="display: inline-block">
-              <label for="sharpness">
-                <txt name="65">sharpness</txt>
-              </label>
-              <input
-                id="sharpness"
-                title="sharpness"
-                type="range"
-                min="0"
-                max="255"
-                step="1"
-              />
-            </div>
-            <div id="whiteBalanceDiv" class="botao3">
-              <label class="toggle">
-                <input id="whiteBalanceMode" type="checkbox" />
-                <span class="knob"></span>
-              </label>
-              <txt name="70"> Manual white Balance / color</txt><br />
-              <div id="colorTemperatureDiv">
-                <label for="colorTemperature">
-                  <txt name="71">colorTemperature</txt>
-                </label>
-                <input
-                  id="colorTemperature"
-                  title="colorTemperature"
-                  type="range"
-                  min="2000"
-                  max="6500"
-                  step="1"
-                />
-              </div>
-              <label for="whiteBalace">
-                <txt name="72">white balace </txt>
-              </label>
-              <input id="whiteBalace" title="whiteBalace" type="range" />
-            </div>
-            <div id="focusDistanceDiv" class="botao3">
-              <label class="toggle">
-                <input id="focusMode" type="checkbox" />
-                <span class="knob"></span>
-              </label>
-              <txt name="73">Manual focusMode</txt><br />
-              <label for="focusDistance">
-                <txt name="66">focusDistance</txt>
-              </label>
-              <input
-                id="focusDistance"
-                title="focusDistance"
-                type="range"
-                min="0"
-                max="250"
-                step="0.1"
-              />
-            </div>
-            <div id="panDiv" class="botao3">
-              <label for="pan">
-                <txt name="68">Pan</txt>
-              </label>
-              <input id="pan" title="Pan" type="range" />
-              <div id="tiltDiv" class="botao3"></div>
-              <label for="tilt">
-                <txt name="69">Tilt</txt>
-              </label>
-              <input id="tilt" title="Tilt" type="range" />
-            </div>
-            <div id="zoomDiv" class="botao3">
-              <label for="zoom">Zoom</label>
-              <input id="zoom" title="Zoom" type="range" />
-            </div>
-            <div id="comumConstraints" class="botao3"></div>
+          <txt name="96">capture interval</txt><br />
+          <input id="setRecInterval" title="setRecInterval" type="number" min="0.5" max="10" step="0.5" value="1"
+            onchange="changeRecSpeed(this.value)" />s
+          <span class="close" title="fechar cam config" onmousedown="mostraSubMenu('camconfig')"></span>
+        </span>
+        <div id="camoptions">
+          <div id="brightnessDiv" class="botao3">
+            <label for="brightness">
+              <txt name="59">Brightness / brilho</txt>
+            </label>
+            <input id="brightness" title="brightness" type="range" min="0" max="255" step="1" />
           </div>
+
+          <div id="isoDiv" class="botao3">
+            <label for="iso">ISO</label>
+            <input id="iso" title="iso" type="range" min="100" max="1200" step="100" />
+          </div>
+
+          <div id="exposureTimeDiv" class="botao3">
+            <label class="toggle">
+              <input id="exposureMode" type="checkbox" />
+              <span class="knob"></span>
+            </label>
+            <txt name="60">Manual exposureMode</txt><br />
+            <label for="exposureTime">
+              <txt name="61">exposureTime</txt>
+            </label>
+            <input id="exposureTime" title="exposureTime" type="range" min="3" max="2047" step="1" />
+            <div id="exposureCompensationDiv">
+              <label for="exposureCompensation">
+                <txt name="62">Exposure compensation</txt>
+              </label>
+              <input id="exposureCompensation" title="exposureCompensation" type="range" min="0" max="255" step="1" />
+            </div>
+          </div>
+
+          <div id="saturationDiv" class="botao3">
+            <label for="saturation">
+              <txt name="63">saturation</txt>
+            </label>
+            <input id="saturation" title="saturation" type="range" min="0" max="255" step="1" />
+          </div>
+          <div id="contrastDiv" class="botao3">
+            <label for="contrast">
+              <txt name="64">contrast</txt>
+            </label>
+            <input id="contrast" title="contrast" type="range" min="0" max="255" step="1" />
+          </div>
+          <div id="sharpnessDiv" class="botao3" style="display: inline-block">
+            <label for="sharpness">
+              <txt name="65">sharpness</txt>
+            </label>
+            <input id="sharpness" title="sharpness" type="range" min="0" max="255" step="1" />
+          </div>
+          <div id="whiteBalanceDiv" class="botao3">
+            <label class="toggle">
+              <input id="whiteBalanceMode" type="checkbox" />
+              <span class="knob"></span>
+            </label>
+            <txt name="70"> Manual white Balance / color</txt><br />
+            <div id="colorTemperatureDiv">
+              <label for="colorTemperature">
+                <txt name="71">colorTemperature</txt>
+              </label>
+              <input id="colorTemperature" title="colorTemperature" type="range" min="2000" max="6500" step="1" />
+            </div>
+            <label for="whiteBalace">
+              <txt name="72">white balace </txt>
+            </label>
+            <input id="whiteBalace" title="whiteBalace" type="range" />
+          </div>
+          <div id="focusDistanceDiv" class="botao3">
+            <label class="toggle">
+              <input id="focusMode" type="checkbox" />
+              <span class="knob"></span>
+            </label>
+            <txt name="73">Manual focusMode</txt><br />
+            <label for="focusDistance">
+              <txt name="66">focusDistance</txt>
+            </label>
+            <input id="focusDistance" title="focusDistance" type="range" min="0" max="250" step="0.1" />
+          </div>
+          <div id="panDiv" class="botao3">
+            <label for="pan">
+              <txt name="68">Pan</txt>
+            </label>
+            <input id="pan" title="Pan" type="range" />
+            <div id="tiltDiv" class="botao3"></div>
+            <label for="tilt">
+              <txt name="69">Tilt</txt>
+            </label>
+            <input id="tilt" title="Tilt" type="range" />
+          </div>
+          <div id="zoomDiv" class="botao3">
+            <label for="zoom">Zoom</label>
+            <input id="zoom" title="Zoom" type="range" />
+          </div>
+          <div id="comumConstraints" class="botao3"></div>
         </div>
       </div>
     </div>
-    <div id="carregando" class="carregandoa fundobranco">
-      <div id="carregandob" class="fundobranco">Carregando...</div>
-    </div>
-    <div id="menualerta" class="submenu fundobranco">
-      <span class="botao" onmousedown="closeAlert()">
-        <span class="close"> </span>
-        <span id="alertconteudo">
-          <txt name="2">
-            Toque numa área pintada<br />
-            para capturar uma cor
-          </txt>
-        </span>
+  </div>
+  <div id="carregando" class="carregandoa fundobranco">
+    <div id="carregandob" class="fundobranco">Carregando...</div>
+  </div>
+  <div id="menualerta" class="submenu fundobranco">
+    <span class="botao" onmousedown="closeAlert()">
+      <span class="close"> </span>
+      <span id="alertconteudo">
+        <txt name="2">
+          Toque numa área pintada<br />
+          para capturar uma cor
+        </txt>
       </span>
-    </div>
-    <div id="console" class="console esconde">console</div>
-    <div
-      id="console2"
-      class="console esconde"
-      style="position: absolute; bottom: 18px"
-    >
-      console
-    </div>
-    <canvas
-      id="canvasV"
-      width="428px"
-      height="320px"
-      onmousemove="cursorMove(event)"
-      style="visibility: hidden; position: absolute; left: 0px"
-    ></canvas>
-    <script type="text/javascript" src="js/iD.js"></script>
-    <!--script type="text/javascript" src="js/scale.js"></script-->
-    <script type="text/javascript" src="js/localize.js"></script>
-    <script type="text/javascript" src="js/yoga.js"></script>
-    <script type="text/javascript" src="js/input.js"></script>
-    <script type="text/javascript" src="js/camera.js"></script>
-    <script type="text/javascript" src="js/undo.js"></script>
-    <script type="text/javascript" src="js/desenho.js"></script>
-    <script type="text/javascript" src="js/mode.js"></script>
-    <script type="text/javascript" src="js/ui.js"></script>
-    <script type="text/javascript" src="js/recortar.js"></script>
-    <script type="text/javascript" src="js/copiar.js"></script>
-    <script type="text/javascript" src="js/redimensionar.js"></script>
-    <script type="text/javascript" src="js/brushes.js"></script>
-    <script type="text/javascript" src="js/colors.js"></script>
-    <script type="text/javascript" src="js/zoom.js"></script>
-    <script type="text/javascript" src="js/versoes.js"></script>
-    <script type="text/javascript" src="js/start.js"></script>
-    <script type="text/javascript" src="js/animation.js"></script>
-    <script type="text/javascript" src="js/save.js"></script>
-    <script type="text/javascript" src="js/credits.js"></script>
-    <script type="text/javascript" src="js/carregar.js"></script>
-    <script type="text/javascript" src="js/FX.js"></script>
-    <script type="text/javascript" src="js/texto.js"></script>
-    <script type="text/javascript" src="js/help.js"></script>
-    <script type="text/javascript" src="js/rraomippcom.js"></script>
-    <!-- codigos que nao tenho parte-->
-    <!--script type="module" src="js/emoji-picker-element/index.js"></script-->
-    <!--script type="text/javascript" src="js/emoji.js"></script-->
-    <!-- para exportar gifs animados-->
-    <script src="js/gif/b64.js"></script>
-    <script src="js/gif/LZWEncoder.js"></script>
-    <script src="js/gif/NeuQuant.js"></script>
-    <script src="js/gif/GIFEncoder.js"></script>
-    <script src="js/vanillaEmojiPicker.js"></script>
-    <script>
-      new EmojiPicker({
-        trigger: [
-          {
-            selector: ".first-btn",
-            insertInto: [".one", ".two"], // '.selector' can be used without array
-          },
-          /*   {
-                       selector: '.second-btn',
-                       insertInto: '.two'
-                   }*/
-        ],
-        closeButton: true,
-        //specialButtons: green
-      });
-    </script>
-  </body>
+    </span>
+  </div>
+  <div id="console" class="console esconde">console</div>
+  <div id="console2" class="console esconde" style="position: absolute; bottom: 18px">
+    console
+  </div>
+  <canvas id="canvasV" width="428px" height="320px" onmousemove="cursorMove(event)"
+    style="visibility: hidden; position: absolute; left: 0px"></canvas>
+  <script type="text/javascript" src="js/iD.js"></script>
+  <!--script type="text/javascript" src="js/scale.js"></script-->
+  <script type="text/javascript" src="js/localize.js"></script>
+  <script type="text/javascript" src="js/yoga.js"></script>
+  <script type="text/javascript" src="js/input.js"></script>
+  <script type="text/javascript" src="js/camera.js"></script>
+  <script type="text/javascript" src="js/undo.js"></script>
+  <script type="text/javascript" src="js/desenho.js"></script>
+  <script type="text/javascript" src="js/mode.js"></script>
+  <script type="text/javascript" src="js/ui.js"></script>
+  <script type="text/javascript" src="js/recortar.js"></script>
+  <script type="text/javascript" src="js/copiar.js"></script>
+  <script type="text/javascript" src="js/redimensionar.js"></script>
+  <script type="text/javascript" src="js/brushes.js"></script>
+  <script type="text/javascript" src="js/colors.js"></script>
+  <script type="text/javascript" src="js/zoom.js"></script>
+  <script type="text/javascript" src="js/versoes.js"></script>
+  <script type="text/javascript" src="js/start.js"></script>
+  <script type="text/javascript" src="js/animation.js"></script>
+  <script type="text/javascript" src="js/save.js"></script>
+  <script type="text/javascript" src="js/credits.js"></script>
+  <script type="text/javascript" src="js/carregar.js"></script>
+  <script type="text/javascript" src="js/FX.js"></script>
+  <script type="text/javascript" src="js/texto.js"></script>
+  <script type="text/javascript" src="js/help.js"></script>
+  <script type="text/javascript" src="js/rraomippcom.js"></script>
+  <!-- codigos que nao tenho parte-->
+  <!--script type="module" src="js/emoji-picker-element/index.js"></script-->
+  <!--script type="text/javascript" src="js/emoji.js"></script-->
+  <!-- para exportar gifs animados-->
+  <script src="js/gif/b64.js"></script>
+  <script src="js/gif/LZWEncoder.js"></script>
+  <script src="js/gif/NeuQuant.js"></script>
+  <script src="js/gif/GIFEncoder.js"></script>
+  <script src="js/vanillaEmojiPicker.js"></script>
+  <script>
+    new EmojiPicker({
+      trigger: [
+        {
+          selector: ".first-btn",
+          insertInto: [".one", ".two"], // '.selector' can be used without array
+        },
+        /*   {
+                     selector: '.second-btn',
+                     insertInto: '.two'
+                 }*/
+      ],
+      closeButton: true,
+      //specialButtons: green
+    });
+  </script>
+</body>
+
 </html>

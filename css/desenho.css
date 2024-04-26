@@ -735,6 +735,22 @@ input[type="range"] {
     cursor: grab;
 }
 
+.thumbf {
+    width: 32px;
+    height: 26px;
+    /*display: block;*/
+    background-size: cover;
+    color: rgb(0, 0, 0);
+    font-size: small;
+    font-weight: 600;
+    text-shadow: -1px 0 #ffffff, 0 1px #ffffff, 1px 0 #ffffff, 0 -1px #ffffff;
+    background-color: #4CAF50;
+    text-align: center;
+    position: absolute;
+    margin-top: -24px;
+    cursor: grab;
+}
+
 .newthumb {
     width: 32px;
     height: 32px;

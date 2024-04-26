@@ -48,18 +48,18 @@ function infinityPaint() {
 
     Alert(
       '<span title="infinity" class="emoji " id="emo -♾️">♾️</span> ' +
-        alerts[language][6] +
-        "<br>" +
-        alerts[language][7]
+      alerts[language][6] +
+      "<br>" +
+      alerts[language][7]
     );
   } else {
     iD("infinity").innerHTML = '<span class="icon infinityicon"></span>';
 
     Alert(
       ' <span title="infinity" class="emoji " id="emo -♾️">♾️</span> ' +
-        alerts[language][6] +
-        "<br>" +
-        alerts[language][8]
+      alerts[language][6] +
+      "<br>" +
+      alerts[language][8]
     );
   }
 }
@@ -77,9 +77,9 @@ function Mirror() {
     Alert(
       `  <span id="mirror2" title="mirror" class="mais"
         style="background-image: url('/img/mirror.png'); color: #ffffff01;">.</span>` +
-        alerts[language][29] +
-        "<br>" +
-        alerts[language][7]
+      alerts[language][29] +
+      "<br>" +
+      alerts[language][7]
     );
   } else {
     iD("mirror").innerHTML = '<span class="icon mirroricon"></span>';
@@ -88,9 +88,9 @@ function Mirror() {
     Alert(
       `  <span id="mirror2" title="mirror" class="mais" 
         style="background-image: url('/img/mirror.png'); color: #ffffff01;">.</span>` +
-        alerts[language][29] +
-        "<br>" +
-        alerts[language][8]
+      alerts[language][29] +
+      "<br>" +
+      alerts[language][8]
     );
   }
 }
@@ -111,9 +111,9 @@ function Mandala() {
     drawSlices();
     Alert(
       '<span title="mandala" class="emoji " id="emo -♾️">⚛️</span> ' +
-        alerts[language][24] +
-        "<br>" +
-        alerts[language][7]
+      alerts[language][24] +
+      "<br>" +
+      alerts[language][7]
     );
   } else {
     canvasBack.ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -121,9 +121,9 @@ function Mandala() {
 
     Alert(
       ' <span title="mandala" class="emoji " id="emo -♾️">⚛️</span> ' +
-        alerts[language][24] +
-        "<br>" +
-        alerts[language][8]
+      alerts[language][24] +
+      "<br>" +
+      alerts[language][8]
     );
   }
 }
@@ -589,12 +589,12 @@ function limpar(what) {
     createNewBrush();
 
     if (what == "animacao") {
-      if (layers[current].length > 0) {
+      if (lines[current].length > 0) {
         let confirma2 = confirm(
           "🗑 🎞️ Apagar toda a animação? \n(impossível desfazer)"
         );
         if (confirma2 === true) {
-          layers[current] = [];
+          lines[current] = [];
           historia[current] = [];
           workingframe = 0;
           iD("bplayer0").style.backgroundImage = "none";
