@@ -736,9 +736,9 @@ input[type="range"] {
 }
 
 .thumbf {
+    display: none;
     width: 32px;
     height: 26px;
-    /*display: block;*/
     background-size: cover;
     color: rgb(0, 0, 0);
     font-size: small;
