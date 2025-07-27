@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUNNY bUNNY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 10px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+        .mode-selector {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .mode-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+        .mode-btn.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        .mode-btn:not(.active) {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        .canvas-container {
+            position: relative;
+            margin: 20px auto;
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            background: #f8f9fa;
+            overflow: hidden;
+            width: 320px;
+            height: 320px;
+        }
+        #canvas {
+            display: block;
+            cursor: crosshair;
+            background: transparent;
+        }
+        .controls {
+            margin: 15px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .btn-primary { background: linear-gradient(45deg, #3498db, #2980b9); color: white; }
+        .btn-success { background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; }
+        .btn-warning { background: linear-gradient(45deg, #f39c12, #e67e22); color: white; }
+        .btn-danger { background: linear-gradient(45deg, #e74c3c, #c0392b); color: white; }
+        .btn-secondary { background: linear-gradient(45deg, #95a5a6, #7f8c8d); color: white; }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .letter-selector {
+            display: block;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            max-height: 150px;
+            overflow: auto;
+            padding: 6px;
+        }
+        .letter-btn {
+            border: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #4a5568;
+        }
+        .letter-btn:hover, .letter-btn.active {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            transform: scale(1.1);
+        }
+        .letter-btn.completed {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+        }
+        .current-letter {
+            font-size: 4em;
+            color: #3498db;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .status, .feedback {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        .success { color: #38a169; }
+        .error { color: #e53e3e; }
+        .info { color: #3182ce; }
+        .hidden { display: none; }
+        .stroke-list {
+            text-align: left;
+            max-height: 150px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        .recording-indicator {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .recording-indicator.active { display: flex; }
+        .pulse {
+            width: 12px;
+            height: 12px;
+            background: #e74c3c;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        @keyframes celebration {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .celebrate { animation: celebration 0.6s ease-in-out; }
+        
+        .popup-menu {
+            position: absolute;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8);
+            transition: all 0.2s ease;
+        }
+
+        .popup-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .popup-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s ease;
+            font-size: 14px;
+        }
+
+        .popup-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .popup-menu-item:hover {
+            background: #f5f5f5;
+        }
+
+        .popup-menu-item.move-left {
+            color: #2196F3;
+        }
+
+        .popup-menu-item.move-right {
+            color: #2196F3;
+        }
+
+        .popup-menu-item.rename {
+            color: #FF9800;
+        }
+
+        .popup-menu-item.delete {
+            color: #f44336;
+        }
+
+        .popup-menu-item.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .popup-menu-item.disabled:hover {
+            background: transparent;
+        }
+
+        .menu-icon {
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            display: none;
+        }
+        .floating{
+            position: fixed;
+            bottom: 10px;
+            left: auto;
+            width: 320px;
+            height: 220px;
+            z-index: 999;
+            background: #f5f5f5;
+            border-radius: 20px;
+            border-color: #2980b9;
+            border-width: 2px;
+            border-style: dashed;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="intro" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:9999; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:20px;">
+  <h2 style="font-size:2em;">🐇💌 Mensagem do Funny Bunny</h2>
+  <p style="font-size:1.2em; max-width:500px;">Seu coelhinho passou o dia sozinho… mas deixou um recado para você!<br><br>
+  Ajude-o a completar seus pulinhos pelo caminho desenhado. A cada trajeto correto, uma parte da mensagem será revelada – mas atenção: ela está escondida nos cocôs de coelho 💩!</p>
+  <button onclick="startGame()" class="btn-primary" style="margin-top:20px;">Começar 🐾</button>
+</div>
+
+    <div class="container">
+        <h1>🐇FUNNY💩BUNNY</h1>
+        <H4>a handwriting game</H4>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="setMode('play')">🎮 Jogar</button>
+            <button class="mode-btn" onclick="setMode('create')">🐇💩 Criar</button>
+        </div>      
+        
+        <div class="canvas-container">
+            <canvas id="canvas" width="320" height="320"></canvas>
+        </div>
+         <div id="playMode">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="feedback" id="feedback">Escolha uma arte e comece a desenhar!</div>
+        </div>
+        <div class="controls" id="playControls">
+            <button class="btn-secondary" onclick="recomecar()">recomeçar</button>
+            <button class="btn-success hidden" onclick="nextLetter()" id="nextBtn">Próximo</button>
+         </div>
+
+        <div class="controls hidden" id="createControls">
+            <div style="margin: 10px 0;">
+                <button class="btn-warning" onclick="toggleEraseMode()" id="eraseModeBtn">Modo Apagar</button>
+                
+                <label>Tamanho: </label>
+                <input type="range" id="eraseRadiusSlider" min="10" max="50" value="25" 
+                oninput="updateEraseRadius(this.value)" style="width: 100px;">
+                <span id="eraseRadiusValue">25px</span>
+                <button class="btn-danger" onclick="newLetter()">🗑️Apagar tudo</button>
+        </div>
+         <div style="margin: 10px 0;">
+            <button class="btn-warning" onclick="promptForKeystroke()">Nova arte</button>
+            <button class="btn-warning" onclick="newAlphabet('a')">a-z</button>
+            <button class="btn-warning" onclick="newAlphabet('A')">A-Z</button>
+        </div>
+            <div class="letter-selector" id="letterSelector"></div>
+            
+           <div style="display: block; margin-top: 15px;">
+            <button class="btn-primary" onclick="exportJSON()">Exportar</button>
+            <button class="btn-primary" onclick="document.getElementById('importFile').click()">Importar</button>
+</div>
+            <br />
+           <div style="display: block; margin-top: 15px;">
+           <button class="btn-success" onclick="exportAllLetters()">Código-fonte</button>  
+           <button onclick="toggleManualImport()" class="btn-success">Colar</button>
+        </div>
+            <input type="file" id="importFile" accept=".json" style="display:none" />
+              <div id="menucolar">
+                  <div id="manualImportArea" class="floating" style="display:none; margin-top:10px;">
+                      <textarea id="manualImportText" placeholder="Cole o conteúdo JSON aqui..." 
+                      style="width:100%; height:100px;"></textarea>
+                      <button onclick="processManualImport()">Importar Texto</button>
+                       <button class="copy-btn" onclick="setHidden('manualImportArea')">fechar</button>
+                    </div>
+            </div>
+          <div class="output-area floating" id="outputArea" style="display: none;">
+              <h4>Código gerado</h4>
+              <div id="generatedCode" style="display: block; height: 100px; overflow: auto;"></div>
+              <button class="copy-btn" onclick="copyToClipboard()">Copiar o Código</button>
+              <button class="copy-btn" onclick="setHidden('outputArea')">fechar</button>
+            </div>
+         <div id="createMode" class="hidden">
+            
+           
+            <div class="current-letter hidden" id="currentLetter">a</div>
+             <div class="stroke-list hidden" id="strokeList">
+                    <div><strong>Arte Atual:</strong> <span id="statusLetter">a</span></div>
+            <h4>Traços Gravados:<span id="strokeCount">0</span></h4>
+            <div id="strokes">Nenhum traço gravado ainda</div>
+        </div>
+            <div class="recording-indicator hidden" id="recordingIndicator">
+                <div class="pulse"></div>
+                <span>Gravando traço... Desenhe no canvas</span>
+            </div>
+          
+       
+        </div>
+
+      </div>
+
+     
+    </div>
+ <div class="popup-overlay" id="popupOverlay"></div>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let currentMode = 'play';
+        let currentLetter = 'a';
+        let isDrawing = false;
+        let isRecording = false;
+        let currentStroke = [];
+        let currentPath = [];
+        let completedSegments = [];
+        let showingGuide = false;
+      
+        let currentPathIndex = 0;
+        let pathStarted = false;
+        let pathDirection = 1;
+
+        let isEraseMode = false;
+        let eraseRadius = 25;
+       
+        let longPressTimer = null;
+        let isLongPress = false;
+        let currentPopupMenu = null;
+
+        // Animation variables
+        let segmentRevealStep = 5;
+let currentRevealPoints = segmentRevealStep;
+let animationInProgress = false;
+        let animationSegmentIndex = 0;
+        let animationPath = [];
+        let animationPointIndex = 0;
+        let animationFrameId = null;
+
+let letterPaths = {
+ "a": [
+                {
+                    "points": [
+                        {"x": 60, "y": 200},
+                        {"x": 140, "y": 60},
+                       
+                    ],
+                    "color": "#514a00ff"
+                },
+               {
+                    "points": [
+                     
+                        {"x": 140, "y": 60},
+                        {"x": 220, "y": 200}
+                    ],
+                    "color": "#514a00ff"
+                },
+                {
+                    "points": [
+                        {"x": 60, "y": 160},
+                        {"x": 220, "y": 160},
+                    ],
+                    "color": "#514a00ff"
+                }
+            ]
+ }
+ 
+        let strokeColors = ['#554726', '#554726', '#554726', '#554726', '#554726'];
+        let colorIndex = 0;
+
+        // Bunny animation functions
+// Bunny animation functions
+        function flattenSegment(segment, pointsPerSegment = 3) {
+            const points = segment.points;
+            if (points.length < 2) return points;
+            
+            const flat = [];
+            
+            // Add first point
+            flat.push({x: points[0].x, y: points[0].y});
+            
+            // Interpolate between each consecutive pair of points
+            for (let i = 0; i < points.length - 1; i++) {
+                const start = points[i];
+                const end = points[i + 1];
+                
+                // Calculate distance to determine how many interpolation points we need
+                const distance = Math.sqrt((end.x - start.x) ** 2 + (end.y - start.y) ** 2);
+                const numPoints = Math.max(1, Math.floor(distance / 8)); // One point every 8 pixels
+                
+                for (let j = 1; j <= numPoints; j++) {
+                    const t = j / numPoints;
+                    const x = start.x + (end.x - start.x) * t;
+                    const y = start.y + (end.y - start.y) * t;
+                    flat.push({x: Math.round(x), y: Math.round(y)});
+                }
+            }
+            
+            return flat;
+        }
+
+
+        function drawBunny(x, y) {
+            ctx.font = "30px serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("🐰", x, y);
+        }
+
+        function drawDashedPath(points, upToIndex) {
+            ctx.beginPath();
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.setLineDash([1, 10]);
+            ctx.strokeStyle = "#4a5568";
+            if (upToIndex > 0) {
+                ctx.moveTo(points[0].x, points[0].y);
+                for (let i = 1; i < upToIndex; i++) {
+                    ctx.lineTo(points[i].x, points[i].y);
+                }
+                ctx.stroke();
+            }
+            ctx.setLineDash([]);
+        }
+/*
+        function animateSegment() {
+            if (!animationInProgress) return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawLines();
+            
+            // Draw completed segments
+            for (let i = 0; i < animationSegmentIndex; i++) {
+                if (letterPaths[currentLetter][i]) {
+                    const segment = letterPaths[currentLetter][i];
+                    ctx.strokeStyle = segment.color;
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([]);
+                    ctx.beginPath();
+                    ctx.moveTo(segment.points[0].x, segment.points[0].y);
+                    for (let j = 1; j < segment.points.length; j++) {
+                        ctx.lineTo(segment.points[j].x, segment.points[j].y);
+                    }
+                    ctx.stroke();
+                }
+            }
+            
+            drawDashedPath(animationPath, animationPointIndex);
+            
+            if (animationPointIndex < animationPath.length) {
+                drawBunny(animationPath[animationPointIndex].x, animationPath[animationPointIndex].y);
+                animationPointIndex++;
+                animationFrameId = setTimeout(animateSegment, 100);
+            } else {
+                animationSegmentIndex++;
+                if (animationSegmentIndex < letterPaths[currentLetter].length) {
+                    animationPath = flattenSegment(letterPaths[currentLetter][animationSegmentIndex]);
+                    animationPointIndex = 0;
+                    animationFrameId = setTimeout(animateSegment, 500);
+                } else {
+                    // Animation complete
+                    drawBunny(animationPath[animationPath.length - 1].x, animationPath[animationPath.length - 1].y);
+                    animationInProgress = false;
+                    setTimeout(() => {
+                        //drawLetter();
+                        showFeedback('Agora é sua vez! Siga o coelhinho! 🐰', 'info');
+                    }, 2000);
+                }
+            }
+        }*/
+       // Replace the animateSegment function with this updated version:
+function animateSegment() {
+    if (!animationInProgress) return;
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawLines();
+    
+    // Draw completed segments
+    for (let i = 0; i < animationSegmentIndex; i++) {
+        if (letterPaths[currentLetter][i]) {
+            const segment = letterPaths[currentLetter][i];
+            ctx.strokeStyle = segment.color;
+            ctx.lineWidth = 3;
+            ctx.setLineDash([]);
+            ctx.beginPath();
+            ctx.moveTo(segment.points[0].x, segment.points[0].y);
+            for (let j = 1; j < segment.points.length; j++) {
+                ctx.lineTo(segment.points[j].x, segment.points[j].y);
+            }
+            ctx.stroke();
+        }
+    }
+    
+    // Only draw the current segment being animated
+    drawDashedPath(animationPath, animationPointIndex);
+    
+    if (animationPointIndex < animationPath.length) {
+        drawBunny(animationPath[animationPointIndex].x, animationPath[animationPointIndex].y);
+        animationPointIndex++;
+        animationFrameId = setTimeout(animateSegment, 100);
+    } else {
+        // Current segment animation complete - wait for user input
+        drawBunny(animationPath[animationPath.length - 1].x, animationPath[animationPath.length - 1].y);
+        animationInProgress = false;
+        showFeedback(`Agora é sua vez! Siga o coelhinho! Traço ${animationSegmentIndex + 1}/${letterPaths[currentLetter].length} 🐰`, 'info');
+    }
+}
+/*
+        function showBunnyAnimation() {
+            if (animationInProgress) {
+                // Stop current animation
+                if (animationFrameId) {
+                    clearTimeout(animationFrameId);
+                }
+                animationInProgress = false;
+                drawLetter();
+                return;
+            }
+
+            if (!letterPaths[currentLetter] || letterPaths[currentLetter].length === 0) {
+                showFeedback('Nenhum caminho para o coelhinho seguir!', 'error');
+                return;
+            }
+
+            animationInProgress = true;
+            animationSegmentIndex = 0;
+            animationPath = flattenSegment(letterPaths[currentLetter][0]);
+            animationPointIndex = 0;
+            
+            showFeedback('O coelhinho está mostrando o caminho! 🐰✨', 'info');
+            animateSegment();
+        }
+*/
+// Replace the showBunnyAnimation function with this updated version:
+function showBunnyAnimation() {
+    if (animationInProgress) {
+        // Stop current animation
+        if (animationFrameId) {
+            clearTimeout(animationFrameId);
+        }
+        animationInProgress = false;
+        drawLetter();
+        return;
+    }
+
+    if (!letterPaths[currentLetter] || letterPaths[currentLetter].length === 0) {
+        showFeedback('Nenhum caminho para o coelhinho seguir!', 'error');
+        return;
+    }
+
+    // Start with the current path index (which segment user needs to trace next)
+    animationInProgress = true;
+    animationSegmentIndex = currentPathIndex;
+    animationPath = flattenSegment(letterPaths[currentLetter][currentPathIndex]);
+    animationPointIndex = 0;
+    
+    showFeedback(`O coelhinho está mostrando o traço ${currentPathIndex + 1}! 🐰✨`, 'info');
+    animateSegment();
+}
+
+
+        function updateEraseRadius(value) {
+            eraseRadius = parseInt(value);
+            document.getElementById('eraseRadiusValue').textContent = value + 'px';
+        }
+
+        function initCanvas() {
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+            document.addEventListener('keydown', handleKeyPress);
+            
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            generateLetterButtons();
+            selectLetter('a');
+            startRecording();
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            
+            if (e.type === 'touchstart') {
+                startDrawing({offsetX: x, offsetY: y});
+            } else if (e.type === 'touchmove') {
+                draw({offsetX: x, offsetY: y});
+            }
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === '1' && currentMode === 'create' && isRecording && currentStroke.length > 0) {
+                e.preventDefault();
+                finishStroke();
+                setTimeout(() => startRecording(), 100);
+            }
+        }
+        
+        function finishStroke() {
+            if (currentStroke.length < 2) return;
+            
+            if (!letterPaths[currentLetter]) {
+                letterPaths[currentLetter] = [];
+            }
+            
+            letterPaths[currentLetter].push({
+                points: currentStroke,
+                color: strokeColors[colorIndex % strokeColors.length]
+            });
+            
+            colorIndex++;
+            isRecording = false;
+            document.getElementById('recordingIndicator').classList.remove('active');
+            
+            updateStrokeList();
+            updateLetterButton();
+            setTimeout(() => startRecording(), 100);
+        }
+       
+        function startDrawing(e) {
+            if (animationInProgress) return; // Don't allow drawing during animation
+            
+            isDrawing = true;
+            const point = {x: Math.round(e.offsetX), y: Math.round(e.offsetY)};
+            
+            if (currentMode === 'create') {
+                if (isEraseMode) {
+                    erasePointsNearCursor(point);
+                    return;
+                }
+                
+                if (!isRecording) return;
+                currentStroke = [point];
+                ctx.strokeStyle = strokeColors[colorIndex % strokeColors.length];
+                ctx.beginPath();
+                ctx.moveTo(point.x, point.y);
+            } else {
+                currentPath = [point];
+            }
+        }
+
+        function draw(e) {
+            if (!isDrawing || animationInProgress) return;
+            
+            const point = {x: Math.round(e.offsetX), y: Math.round(e.offsetY)};
+            
+            if (currentMode === 'create') {
+                if (isEraseMode) {
+                    erasePointsNearCursor(point);
+                    return;
+                }
+                
+                if (!isRecording) return;
+                
+                if (currentStroke.length > 0) {
+                    const lastPoint = currentStroke[currentStroke.length - 1];
+                    const dist = distance(point, lastPoint);
+                    if (dist < 8) return;
+                }
+                
+                currentStroke.push(point);
+                ctx.lineTo(point.x, point.y);
+                ctx.stroke();
+            } else {
+                currentPath.push(point);
+                ctx.strokeStyle = '#4a5568';
+                ctx.lineWidth = 4;
+                
+                if (currentPath.length > 1) {
+                    const prevPoint = currentPath[currentPath.length - 2];
+                    ctx.beginPath();
+                    ctx.moveTo(prevPoint.x, prevPoint.y);
+                    ctx.lineTo(point.x, point.y);
+                    ctx.stroke();
+                }
+                checkProgress();
+            }
+        }
+
+        function toggleEraseMode() {
+            if (currentMode !== 'create') return;
+            
+            isEraseMode = !isEraseMode;
+            const btn = document.getElementById('eraseModeBtn');
+            
+            if (isEraseMode) {
+                btn.textContent = '✏️ Modo Desenhar';
+                btn.className = 'btn-success';
+                canvas.style.cursor = 'crosshair';
+                showFeedback('Modo Apagar ativado! Clique nos pontos para apagá-los 🗑️', 'info');
+                isRecording = false;
+                document.getElementById('recordingIndicator').classList.remove('active');
+            } else {
+                btn.textContent = '🗑️ Modo Apagar';
+                btn.className = 'btn-warning';
+                canvas.style.cursor = 'crosshair';
+                showFeedback('Modo Desenhar ativado! Continue desenhando ✏️', 'info');
+                startRecording();
+            }
+        }
+
+        function erasePointsNearCursor(cursorPoint) {
+            if (!letterPaths[currentLetter]) {
+                showFeedback('Nenhum desenho na arte"'+ currentLetter +'"!', 'info');
+                return;
+            }
+            let pointsErased = false;
+            
+            letterPaths[currentLetter].forEach((stroke, strokeIndex) => {
+                if (!stroke.points) return;
+                
+                const originalLength = stroke.points.length;
+                stroke.points = stroke.points.filter(point => 
+                    distance(point, cursorPoint) > eraseRadius
+                );
+                
+                if (stroke.points.length !== originalLength) {
+                    pointsErased = true;
+                }
+                
+                if (stroke.points.length < 2) {
+                    letterPaths[currentLetter].splice(strokeIndex, 1);
+                }
+            });
+            
+            if (pointsErased) {
+                redrawCanvas();
+                updateStrokeList();
+                
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.arc(cursorPoint.x, cursorPoint.y, eraseRadius, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                setTimeout(() => redrawCanvas(), 100);
+            }
+        }
+
+        function stopDrawing() {
+            if (isDrawing) {
+                isDrawing = false;
+                if (currentMode === 'create') {
+                    finishStroke();
+                } else {
+                    validatePath();
+                }
+            }
+        }
+
+        function drawLines() {
+            ctx.fillStyle = '#b8cfffff';
+            ctx.fillRect(0, 60, 320, 1);
+            ctx.fillRect(0, 100, 320, 1);
+            ctx.fillRect(0, 160, 320, 1);
+            ctx.fillRect(0, 200, 320, 1);
+            ctx.fillRect(0, 260, 320, 1);
+            ctx.fillRect(0, 300, 320, 1);
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawLines();
+            if (currentMode === 'create') {
+                currentStroke = [];
+                redrawCanvas();
+            } else {
+                currentPath = [];
+                completedSegments = [];
+                updateProgress();
+            }
+        }
+
+        function redrawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawLines();
+            
+            if (letterPaths[currentLetter]) {
+                letterPaths[currentLetter].forEach((stroke, index) => {
+                    ctx.strokeStyle = stroke.color;
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+                    for (let i = 1; i < stroke.points.length; i++) {
+                        ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+                    }
+                    ctx.stroke();
+                });
+            }
+        }
+      
+        function drawLetter() {
+            if (animationInProgress) return; // Don't interfere with animation
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawLines();
+            
+            const paths = letterPaths[currentLetter];
+            if (!paths) return;
+            
+            if (showingGuide) {
+                const currentPath = paths[currentPathIndex];
+                if (currentPath && currentPath.points && currentPath.points.length > 1) {
+                    setTimeout(() => {
+                        ctx.strokeStyle = currentPath.color;
+                        ctx.lineWidth = 3;
+                        ctx.setLineDash([1, 15]);
+                        ctx.beginPath();
+                        ctx.moveTo(currentPath.points[0].x, currentPath.points[0].y);
+                        for (let i = 1; i < currentPath.points.length; i++) {
+                            ctx.lineTo(currentPath.points[i].x, currentPath.points[i].y);
+                        }
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                        
+                        // Draw animated bunny at start point instead of green circle
+                        drawBunny(currentPath.points[0].x, currentPath.points[0].y);
+                        
+                        // Draw directional arrows along the path
+                        drawDirectionalArrows(currentPath.points, currentPath.color);
+                        
+                        // Draw end bunny (smaller) instead of red circle
+                        ctx.font = "20px serif";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "middle";
+                        const lastPoint = currentPath.points[currentPath.points.length - 1];
+                        ctx.fillText("🐰", lastPoint.x, lastPoint.y);
+                        ctx.font = "30px serif"; // Reset font size
+                    }, 50);
+                }
+            }
+            
+            // Draw completed segments
+            completedSegments.forEach(index => {
+                if (index < paths.length) {
+                    drawCompletedSegment(index);
+                }
+            });
+            
+        }
+
+        function drawDirectionalArrows(points, color) {
+            if (points.length < 2) return;
+            
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2;
+            
+            const arrowCount = Math.min(3, Math.floor(points.length / 5));
+            for (let i = 1; i <= arrowCount; i++) {
+                const pointIndex = Math.floor((points.length - 1) * (i / (arrowCount + 1)));
+                if (pointIndex > 0 && pointIndex < points.length - 1) {
+                    const point = points[pointIndex];
+                    const prevPoint = points[pointIndex - 1];
+                    
+                    const dx = point.x - prevPoint.x;
+                    const dy = point.y - prevPoint.y;
+                    const angle = Math.atan2(dy, dx);
+                    
+                    drawArrow(point.x, point.y, angle, 12, color);
+                }
+            }
+        }
+
+        function drawArrow(x, y, angle, size, color) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-size, -size/2);
+            ctx.lineTo(-size/2, 0);
+            ctx.lineTo(-size, size/2);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.restore();
+        }
+
+        function drawCompletedSegment(index) {
+            const path = letterPaths[currentLetter][index];
+            ctx.strokeStyle = '#00005599';
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.moveTo(path.points[0].x, path.points[0].y);
+            for (let i = 1; i < path.points.length; i++) {
+                ctx.lineTo(path.points[i].x, path.points[i].y);
+            }
+            ctx.stroke();
+        }
+/*
+        function validatePath() {
+            if (currentPath.length < 10) return;
+            
+            const paths = letterPaths[currentLetter];
+            if (!paths || paths.length === 0) return;
+            
+            const targetPath = paths[currentPathIndex];
+            if (!targetPath) return;
+            
+            const isValid = validateSinglePath(currentPath, targetPath.points);
+            
+            if (isValid) {
+    currentRevealPoints += segmentRevealStep;
+    const segment = paths[currentPathIndex];
+    const totalPoints = segment.points.length;
+
+    if (currentRevealPoints >= totalPoints) {
+        currentPathIndex++;
+        currentRevealPoints = segmentRevealStep;
+
+        if (currentPathIndex < paths.length) {
+            animationSegmentIndex = currentPathIndex;
+        }
+    }
+
+    if (currentPathIndex < paths.length) {
+        animationInProgress = true;
+        const nextSegment = paths[currentPathIndex];
+        animationPath = flattenSegment(nextSegment, currentRevealPoints);
+        animationPointIndex = 0;
+        setTimeout(() => animateSegment(), 500);
+    }
+
+                if (!completedSegments.includes(currentPathIndex)) {
+                    completedSegments.push(currentPathIndex);
+                    drawCompletedSegment(currentPathIndex);
+                }
+                
+                currentPathIndex++;
+                setTimeout(() => {
+    animationSegmentIndex = 0;
+    animationInProgress = true;
+    animationPath = flattenSegment(letterPaths[currentLetter][0]);
+    animationPointIndex = 0;
+    animateSegment();
+}, 300);
+
+                pathStarted = false;
+                
+                if (currentPathIndex >= paths.length) {
+                    showFeedback('Perfeito! Você completou "'+ currentLetter +'"! 🎉', 'success');
+                    document.querySelector('.container').classList.add('celebrate');
+                    setTimeout(() => {
+                        document.querySelector('.container').classList.remove('celebrate');
+                        document.getElementById('nextBtn').classList.remove('hidden');
+                    }, 250);
+                } else {
+                    showFeedback(`Ótimo! Agora desenhe o próximo traço (${currentPathIndex + 1}/${paths.length}) 🌟`, 'success');
+                    setTimeout(() => drawLetter(), 200);
+                }
+            } else if (pathStarted) {
+                const feedback = getValidationFeedback(currentPath, targetPath.points);
+                showFeedback(feedback, 'error');
+            }
+            
+            updateProgress();
+        }
+*/
+
+// Replace the validatePath function with this updated version:
+function validatePath() {
+    if (currentPath.length < 10) return;
+    
+    const paths = letterPaths[currentLetter];
+    if (!paths || paths.length === 0) return;
+    
+    const targetPath = paths[currentPathIndex];
+    if (!targetPath) return;
+    
+    const isValid = validateSinglePath(currentPath, targetPath.points);
+    
+    if (isValid) {
+        if (!completedSegments.includes(currentPathIndex)) {
+            completedSegments.push(currentPathIndex);
+            drawCompletedSegment(currentPathIndex);
+        }
+        
+        currentPathIndex++;
+        pathStarted = false;
+        
+        if (currentPathIndex >= paths.length) {
+            showFeedback('Perfeito! Você completou "'+ currentLetter +'"! 🎉', 'success');
+            document.querySelector('.container').classList.add('celebrate');
+            setTimeout(() => {
+                document.querySelector('.container').classList.remove('celebrate');
+                document.getElementById('nextBtn').classList.remove('hidden');
+            }, 250);
+        } else {
+            showFeedback(`Ótimo! Próximo traço (${currentPathIndex + 1}/${paths.length}) 🌟`, 'success');
+            // Start animation for the next segment after a brief delay
+            setTimeout(() => {
+                animationInProgress = true;
+                animationSegmentIndex = currentPathIndex;
+                animationPath = flattenSegment(letterPaths[currentLetter][currentPathIndex]);
+                animationPointIndex = 0;
+                animateSegment();
+            }, 300);
+        }
+    } else if (pathStarted) {
+        const feedback = getValidationFeedback(currentPath, targetPath.points);
+        showFeedback(feedback, 'error');
+    }
+    
+    updateProgress();
+}
+
+
+
+
+        function checkPathDirection(userPath, startTarget, endTarget, startTolerance, endTolerance, minProgressPoints) {
+            let startFound = false;
+            let endFound = false;
+            let startIndex = -1;
+            let endIndex = -1;
+            let progressPoints = 0;
+            
+            for (let i = 0; i < Math.min(userPath.length, 15); i++) {
+                if (distance(userPath[i], startTarget) < startTolerance) {
+                    startFound = true;
+                    startIndex = i;
+                    pathStarted = true;
+                    break;
+                }
+            }
+            
+            if (!startFound) return false;
+            
+            for (let i = startIndex + minProgressPoints; i < userPath.length; i++) {
+                if (distance(userPath[i], endTarget) < endTolerance) {
+                    endFound = true;
+                    endIndex = i;
+                    progressPoints = endIndex - startIndex;
+                    break;
+                }
+            }
+            
+            return startFound && endFound && progressPoints >= minProgressPoints;
+        }
+
+        function validateSinglePath(userPath, targetPoints) {
+            if (userPath.length < 5 || targetPoints.length < 2) return false;
+            
+            const startPoint = targetPoints[0];
+            const endPoint = targetPoints[targetPoints.length - 1];
+            const startTolerance = 30;
+            const endTolerance = 35;
+            const middleTolerance = 40;
+            const minProgressPoints = Math.floor(userPath.length * 0.3);
+            
+            const forwardValid = checkPathWithMiddlePoints(userPath, targetPoints, startTolerance, endTolerance, middleTolerance, minProgressPoints);
+            const reverseValid = checkPathWithMiddlePoints(userPath, [...targetPoints].reverse(), startTolerance, endTolerance, middleTolerance, minProgressPoints);
+            
+            return forwardValid || reverseValid;
+        }
+
+        function checkPathWithMiddlePoints(userPath, targetPoints, startTolerance, endTolerance, middleTolerance, minProgressPoints) {
+            if (targetPoints.length < 2) return false;
+            
+            const startPoint = targetPoints[0];
+            const endPoint = targetPoints[targetPoints.length - 1];
+            
+            let startFound = false;
+            let startIndex = -1;
+            
+            for (let i = 0; i < Math.min(userPath.length, 15); i++) {
+                if (distance(userPath[i], startPoint) < startTolerance) {
+                    startFound = true;
+                    startIndex = i;
+                    pathStarted = true;
+                    break;
+                }
+            }
+            
+            if (!startFound) return false;
+            
+            let endFound = false;
+            let endIndex = -1;
+            
+            for (let i = startIndex + minProgressPoints; i < userPath.length; i++) {
+                if (distance(userPath[i], endPoint) < endTolerance) {
+                    endFound = true;
+                    endIndex = i;
+                    break;
+                }
+            }
+            
+            if (!endFound) return false;
+            
+            const middlePointsValid = validateMiddlePoints(
+                userPath.slice(startIndex, endIndex + 1), 
+                targetPoints, 
+                middleTolerance
+            );
+            
+            return middlePointsValid;
+        }
+
+        function validateMiddlePoints(userPathSegment, targetPoints, tolerance) {
+            if (targetPoints.length <= 2) return true;
+            
+            const checkpoints = createPathCheckpoints(targetPoints, 3);
+            let passedCheckpoints = 0;
+            
+            for (const checkpoint of checkpoints) {
+                if (userPassedThroughPoint(userPathSegment, checkpoint, tolerance)) {
+                    passedCheckpoints++;
+                }
+            }
+            
+            const requiredCheckpoints = Math.max(1, Math.floor(checkpoints.length * 0.7));
+            return passedCheckpoints >= requiredCheckpoints;
+        }
+
+        function createPathCheckpoints(targetPoints, minCheckpoints) {
+            if (targetPoints.length <= 2) return [];
+            
+            const checkpoints = [];
+            const totalPoints = targetPoints.length;
+            
+            const numCheckpoints = Math.max(minCheckpoints, Math.min(6, Math.floor(totalPoints / 3)));
+            
+            for (let i = 1; i < numCheckpoints + 1; i++) {
+                const ratio = i / (numCheckpoints + 1);
+                const pointIndex = Math.floor(ratio * (totalPoints - 1));
+                
+                if (pointIndex > 0 && pointIndex < totalPoints - 1) {
+                    checkpoints.push({
+                        point: targetPoints[pointIndex],
+                        index: pointIndex,
+                        ratio: ratio
+                    });
+                }
+            }
+            
+            return checkpoints;
+        }
+
+        function userPassedThroughPoint(userPath, checkpoint, tolerance) {
+            const targetPoint = checkpoint.point;
+            
+            for (const userPoint of userPath) {
+                if (distance(userPoint, targetPoint) < tolerance) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        function distance(p1, p2) {
+            return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+        }
+
+        function showGuide() {
+            showingGuide = !showingGuide;
+            drawLetter();
+            showFeedback(showingGuide ? 'Guia mostrado! Siga os caminhos do coelhinho 🐰' : 'Guia escondido! Tente sozinho 💪', 'info');
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback ${type}`;
+        }
+
+        function recomecar() {
+            // Stop any running animation
+            if (animationInProgress) {
+                if (animationFrameId) {
+                    clearTimeout(animationFrameId);
+                }
+                animationInProgress = false;
+            }
+            
+            currentPathIndex = 0;
+            pathStarted = false;
+            completedSegments = [];
+            selectLetter(currentLetter);
+        }
+
+        function updateProgress() {
+            const totalPaths = letterPaths[currentLetter] ? letterPaths[currentLetter].length : 1;
+            const progress = (currentPathIndex / totalPaths) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function checkProgress() {
+            updateProgress();
+        }
+/*
+        function selectLetter(letter) {
+            if (isLongPress) return;
+            
+            // Stop any running animation
+            if (animationInProgress) {
+                if (animationFrameId) {
+                    clearTimeout(animationFrameId);
+                }
+                animationInProgress = false;
+            }
+            
+            currentLetter = letter;
+            currentPathIndex = 0;
+            pathStarted = false;
+            
+            if (currentMode === 'create') {
+                document.getElementById('currentLetter').textContent = letter;
+                document.getElementById('statusLetter').textContent = letter;
+                redrawCanvas();
+                updateStrokeList();
+            } else {
+                completedSegments = [];
+                showingGuide = false;
+                updateProgress();
+                drawLetter();
+          setTimeout(() => {
+    animationSegmentIndex = 0;
+    animationInProgress = true;
+    animationPath = flattenSegment(letterPaths[letter][0]);
+    animationPointIndex = 0;
+    animateSegment();
+}, 300);
+
+                const pathCount = letterPaths[letter] ? letterPaths[letter].length : 0;
+                showFeedback(`Desenhe: ${letter}! (${pathCount} traço${pathCount !== 1 ? 's' : ''})`, 'info');
+            }
+            
+            document.querySelectorAll('.letter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.letter === letter) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            colorIndex = 0;
+        
+
+    if (currentMode === 'play') {
+    setTimeout(() => {
+        animationSegmentIndex = 0;
+        animationInProgress = true;
+        animationPath = flattenSegment(letterPaths[letter][0]);
+        animationPointIndex = 0;
+        animateSegment();
+    }, 300);
+}
+}
+*/
+
+// Replace the selectLetter function with this updated version:
+function selectLetter(letter) {
+    if (isLongPress) return;
+    
+    // Stop any running animation
+    if (animationInProgress) {
+        if (animationFrameId) {
+            clearTimeout(animationFrameId);
+        }
+        animationInProgress = false;
+    }
+    
+    currentLetter = letter;
+    currentPathIndex = 0;
+    pathStarted = false;
+    
+    if (currentMode === 'create') {
+        document.getElementById('currentLetter').textContent = letter;
+        document.getElementById('statusLetter').textContent = letter;
+        redrawCanvas();
+        updateStrokeList();
+    } else {
+        completedSegments = [];
+        showingGuide = false;
+        updateProgress();
+        drawLetter();
+        
+        // Start animation for the first segment
+        setTimeout(() => {
+            animationInProgress = true;
+            animationSegmentIndex = 0;
+            animationPath = flattenSegment(letterPaths[letter][0]);
+            animationPointIndex = 0;
+            animateSegment();
+        }, 300);
+
+        const pathCount = letterPaths[letter] ? letterPaths[letter].length : 0;
+        showFeedback(`Desenhe: ${letter}! (${pathCount} traço${pathCount !== 1 ? 's' : ''})`, 'info');
+    }
+    
+    document.querySelectorAll('.letter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.letter === letter) {
+            btn.classList.add('active');
+        }
+    });
+    
+    colorIndex = 0;
+}
+        
+
+        function getValidationFeedback(userPath, targetPoints) {
+            const startPoint = targetPoints[0];
+            const endPoint = targetPoints[targetPoints.length - 1];
+            
+            let startReached = false;
+            let endReached = false;
+            
+            for (const point of userPath) {
+                if (distance(point, startPoint) < 30) startReached = true;
+                if (distance(point, endPoint) < 35) endReached = true;
+            }
+            
+            if (!startReached) {
+                return 'Comece pelo coelhinho grande! 🐰';
+            } else if (!endReached) {
+                return 'Continue até o coelhinho pequeno! 🐰';
+            } else {
+                return 'Siga o caminho mais de perto! Passe pelo meio do traço 🎯';
+            }
+        }
+
+        function nextLetter() {
+            document.getElementById('nextBtn').classList.add('hidden');
+            const letters = Object.keys(letterPaths);
+            const currentIndex = letters.indexOf(currentLetter);
+            const nextIndex = (currentIndex + 1) % letters.length;
+            selectLetter(letters[nextIndex]);
+        }
+
+        function generateLetterButtons() {
+            const letterSelector = document.getElementById('letterSelector');
+            letterSelector.innerHTML = '';
+           
+            Object.keys(letterPaths).forEach((letter, index) => {
+                const button = document.createElement('button');
+                button.className = 'letter-btn';
+                button.dataset.letter = letter;
+                button.textContent = letter;
+               
+                if (letter === currentLetter) {
+                    button.classList.add('active');
+                }
+               
+                button.addEventListener('mousedown', (e) => handleMouseDown(e, letter));
+                button.addEventListener('mouseup', (e) => handleMouseUp(e, letter));
+                button.addEventListener('mouseleave', () => handleMouseLeave(letter));
+                
+                button.addEventListener('touchstart', (e) => handleTouchStart(e, letter));
+                button.addEventListener('touchend', (e) => handleTouchEnd(e, letter));
+                
+                letterSelector.appendChild(button);
+            });
+        }
+
+        function promptForKeystroke() {
+            const newKey = prompt(`Escolha o nome da arte para adicionar depois de "${currentLetter}":`);
+
+            if (!newKey) {
+                alert("Nenhuma letra digitada, operação cancelada.");
+                return;
+            }
+
+            if (letterPaths.hasOwnProperty(newKey)) {
+                alert(`"${newKey}" já existe.`);
+                return;
+            }
+
+            const newLetterPaths = {};
+            let inserted = false;
+
+            for (const key in letterPaths) {
+                newLetterPaths[key] = letterPaths[key];
+
+                if (key === currentLetter){
+                    newLetterPaths[newKey] = [];
+                    inserted = true;
+                }
+            }
+
+            if (!inserted) {
+                alert(`"${currentLetter}" não encontrada. Adicionando "${newKey}" ao final.`);
+                newLetterPaths[newKey] = [];
+            }
+            letterPaths = newLetterPaths;
+            generateLetterButtons();
+        }
+
+        function handleMouseDown(e, letter) {
+            e.preventDefault();
+            isLongPress = false;
+            
+            const button = e.target;
+            button.classList.add('pressed');
+            
+            longPressTimer = setTimeout(() => {
+                isLongPress = true;
+                showPopupMenu(e, letter);
+            }, 500);
+        }
+
+        function handleMouseUp(e, letter) {
+            clearTimeout(longPressTimer);
+            
+            const button = e.target;
+            button.classList.remove('pressed');
+            
+            if (!isLongPress) {
+                setTimeout(() => selectLetter(letter), 50);
+            }
+        }
+
+        function handleMouseLeave(letter) {
+            clearTimeout(longPressTimer);
+            const button = document.querySelector(`[data-letter="${letter}"]`);
+            button.classList.remove('pressed');
+        }
+
+        function handleTouchStart(e, letter) {
+            handleMouseDown(e, letter);
+        }
+
+        function handleTouchEnd(e, letter) {
+            e.preventDefault();
+            handleMouseUp(e, letter);
+        }
+
+        function showPopupMenu(e, letter) {
+            hidePopupMenu();
+            
+            const menu = createPopupMenu(letter);
+            document.body.appendChild(menu);
+            
+            const rect = e.target.getBoundingClientRect();
+            const menuRect = menu.getBoundingClientRect();
+            
+            let left = rect.left;
+            let top = rect.bottom + 5;
+            
+            if (left + menuRect.width > window.innerWidth) {
+                left = window.innerWidth - menuRect.width - 10;
+            }
+            if (top + menuRect.height > window.innerHeight) {
+                top = rect.top - menuRect.height - 5;
+            }
+            
+            menu.style.left = left + 'px';
+            menu.style.top = top + 'px';
+            
+            setTimeout(() => menu.classList.add('show'), 10);
+            
+            document.getElementById('popupOverlay').style.display = 'block';
+            document.getElementById('popupOverlay').onclick = hidePopupMenu;
+            
+            currentPopupMenu = menu;
+        }
+
+        function createPopupMenu(letter) {
+            const menu = document.createElement('div');
+            menu.className = 'popup-menu';
+            
+            const keys = Object.keys(letterPaths);
+            const currentIndex = keys.indexOf(letter);
+            
+            const moveLeftItem = document.createElement('div');
+            moveLeftItem.className = `popup-menu-item move-left ${currentIndex === 0 ? 'disabled' : ''}`;
+            moveLeftItem.innerHTML = '<span class="menu-icon">&lt;</span>Mover para esquerda';
+            if (currentIndex > 0) {
+                moveLeftItem.onclick = () => moveKey(letter, -1);
+            }
+            menu.appendChild(moveLeftItem);
+            
+            const moveRightItem = document.createElement('div');
+            moveRightItem.className = `popup-menu-item move-right ${currentIndex === keys.length - 1 ? 'disabled' : ''}`;
+            moveRightItem.innerHTML = '<span class="menu-icon">&gt;</span>Mover para direita';
+            if (currentIndex < keys.length - 1) {
+                moveRightItem.onclick = () => moveKey(letter, 1);
+            }
+            menu.appendChild(moveRightItem);
+            
+            const renameItem = document.createElement('div');
+            renameItem.className = 'popup-menu-item rename';
+            renameItem.innerHTML = '<span class="menu-icon">✏️</span>Renomear';
+            renameItem.onclick = () => renameKey(letter);
+            menu.appendChild(renameItem);
+            
+            const deleteItem = document.createElement('div');
+            deleteItem.className = 'popup-menu-item delete';
+            deleteItem.innerHTML = '<span class="menu-icon">🗑️</span>Excluir';
+            deleteItem.onclick = () => deleteKey(letter);
+            menu.appendChild(deleteItem);
+            
+            return menu;
+        }
+
+        function hidePopupMenu() {
+            if (currentPopupMenu) {
+                currentPopupMenu.classList.remove('show');
+                setTimeout(() => {
+                    if (currentPopupMenu && currentPopupMenu.parentNode) {
+                        currentPopupMenu.parentNode.removeChild(currentPopupMenu);
+                    }
+                    currentPopupMenu = null;
+                }, 200);
+            }
+            document.getElementById('popupOverlay').style.display = 'none';
+        }
+
+        function moveKey(letter, direction) {
+            const keys = Object.keys(letterPaths);
+            const currentIndex = keys.indexOf(letter);
+            const newIndex = currentIndex + direction;
+            
+            if (newIndex >= 0 && newIndex < keys.length) {
+                const newLetterPaths = {};
+                const newKeys = [...keys];
+                
+                [newKeys[currentIndex], newKeys[newIndex]] = [newKeys[newIndex], newKeys[currentIndex]];
+                
+                newKeys.forEach(key => {
+                    newLetterPaths[key] = letterPaths[key];
+                });
+                
+                letterPaths = newLetterPaths;
+                generateLetterButtons();
+            }
+            
+            hidePopupMenu();
+        }
+
+        function renameKey(oldKey) {
+            const newKey = prompt(`Renomear "${oldKey}" para:`, oldKey);
+            
+            if (newKey && newKey.trim() && newKey !== oldKey) {
+                const trimmedKey = newKey.trim();
+                
+                if (letterPaths.hasOwnProperty(trimmedKey)) {
+                    alert('Uma arte com este nome já existe!');
+                    return;
+                }
+                
+                const newLetterPaths = {};
+                Object.keys(letterPaths).forEach(key => {
+                    if (key === oldKey) {
+                        newLetterPaths[trimmedKey] = letterPaths[key];
+                    } else {
+                        newLetterPaths[key] = letterPaths[key];
+                    }
+                });
+                
+                letterPaths = newLetterPaths;
+                
+                if (currentLetter === oldKey) {
+                    currentLetter = trimmedKey;
+                }
+                
+                generateLetterButtons();
+            }
+            
+            hidePopupMenu();
+        }
+
+        function deleteKey(letter) {
+            if (Object.keys(letterPaths).length === 1) {
+                alert('Não é possível excluir a última arte!');
+                hidePopupMenu();
+                return;
+            }
+            
+            if (confirm(`Tem certeza que deseja excluir "${letter}"?`)) {
+                delete letterPaths[letter];
+                
+                if (currentLetter === letter) {
+                    currentLetter = Object.keys(letterPaths)[0];
+                }
+                
+                generateLetterButtons();
+            }
+            
+            hidePopupMenu();
+        }
+
+        function updateOrCreateLetterButton(key) {
+            let button = document.querySelector(`[data-letter="${key}"]`);
+            if (!button) {
+                button = document.createElement('button');
+                button.className = 'letter-btn';
+                button.dataset.letter = key;
+                button.textContent = key;
+                button.addEventListener('click', () => selectLetter(key));
+                document.getElementById('letterSelector').appendChild(button);
+            }
+            
+            document.querySelectorAll('.letter-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+
+        function startRecording() {
+            if (currentMode !== 'create') return;
+            isRecording = true;
+            currentStroke = [];
+            document.getElementById('recordingIndicator').classList.add('active');
+        }
+
+        function setMode(mode) {
+            // Stop any running animation when switching modes
+            if (animationInProgress) {
+                if (animationFrameId) {
+                    clearTimeout(animationFrameId);
+                }
+                animationInProgress = false;
+            }
+            
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (isEraseMode) {
+                isEraseMode = false;
+                const eraseModeBtn = document.getElementById('eraseModeBtn');
+                if (eraseModeBtn) {
+                    eraseModeBtn.textContent = '🗑️ Modo Apagar';
+                    eraseModeBtn.className = 'btn-warning';
+                }
+            }
+            
+            if (mode === 'play') {
+                document.getElementById('playMode').classList.remove('hidden');
+                document.getElementById('createMode').classList.add('hidden');
+                document.getElementById('playControls').classList.remove('hidden');
+                document.getElementById('createControls').classList.add('hidden');
+                document.getElementById('strokeList').classList.add('hidden');
+                showingGuide = false;
+                completedSegments = [];
+                drawLetter();
+                setTimeout(recomecar, 100);
+            } else {
+                document.getElementById('playMode').classList.add('hidden');
+                document.getElementById('createMode').classList.remove('hidden');
+                document.getElementById('playControls').classList.add('hidden');
+                document.getElementById('createControls').classList.remove('hidden');
+                document.getElementById('strokeList').classList.remove('hidden');
+                startRecording();
+                redrawCanvas();
+            }
+        }
+
+        function newLetter() {
+            if (letterPaths[currentLetter]) {
+                delete letterPaths[currentLetter];
+            }
+            colorIndex = 0;
+            clearCanvas();
+            updateStrokeList();
+            updateLetterButton();
+        }
+
+        function updateStrokeList() {
+            const strokesDiv = document.getElementById('strokes');
+            const strokeCount = document.getElementById('strokeCount');
+            
+            if (!letterPaths[currentLetter] || letterPaths[currentLetter].length === 0) {
+                strokesDiv.innerHTML = 'Nenhum traço gravado ainda';
+                strokeCount.textContent = '0';
+                return;
+            }
+            
+            strokeCount.textContent = letterPaths[currentLetter].length;
+            
+            let html = '';
+            letterPaths[currentLetter].forEach((stroke, index) => {
+                html += `<div style="color: ${stroke.color}">● Traço ${index + 1} (${stroke.points.length} pontos)</div>`;
+            });
+            
+            strokesDiv.innerHTML = html;
+        }
+
+        function updateLetterButton() {
+            const button = document.querySelector(`[data-letter="${currentLetter}"]`);
+            if (button) {
+                if (letterPaths[currentLetter] && letterPaths[currentLetter].length > 0) {
+                    button.classList.add('completed');
+                } else {
+                    button.classList.remove('completed');
+                }
+            }
+        }
+
+        function setHidden(obj){
+            document.getElementById(obj).style.display = 'none';
+        }
+
+        
+
+
+
+
+
+
+        // Replace the exportJSON function with this improved version:
+function exportJSON() {
+    try {
+        // Clean the data before exporting
+        const cleanedPaths = {};
+        Object.keys(letterPaths).forEach(key => {
+            if (letterPaths[key] && Array.isArray(letterPaths[key])) {
+                cleanedPaths[key] = letterPaths[key].map(stroke => ({
+                    points: stroke.points || [],
+                    color: stroke.color || '#514a00ee'
+                }));
+            }
+        });
+        
+        const dataStr = JSON.stringify(cleanedPaths, null, 2);
+        
+        // Create blob with explicit UTF-8 encoding
+        const blob = new Blob([dataStr], { 
+            type: "application/json;charset=utf-8" 
+        });
+        
+        // Use different download methods for mobile vs desktop
+        if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            // Mobile-friendly download
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "DesenheACoisa.json";
+            a.target = "_blank";
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } else {
+            // Desktop download
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "DesenheACoisa.json";
+            
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+        }
+        
+        alert("Arquivo exportado com sucesso!");
+        
+    } catch (error) {
+        console.error("Export failed:", error);
+        alert("Falha na exportação: " + error.message);
+    }
+}
+
+// Replace the file import event listener with this improved version:
+document.getElementById("importFile").addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    if (!file.name.toLowerCase().endsWith('.json') && file.type !== 'application/json') {
+        alert("Por favor, selecione um arquivo JSON válido.");
+        return;
+    }
+    
+    if (file.size > 5 * 1024 * 1024) {
+        alert("Arquivo muito grande. Máximo 5MB.");
+        return;
+    }
+    
+    const reader = new FileReader();
+    
+    reader.onerror = function() {
+        alert("Erro ao ler o arquivo.");
+    };
+    
+    reader.onload = function (e) {
+        try {
+            let result = e.target.result;
+            
+            // Remove BOM if present (common issue with mobile exports)
+            result = result.replace(/^\uFEFF/, '');
+            result = result.replace(/^\ufeff/, '');
+            
+            // Remove any invisible characters that might cause issues
+            result = result.replace(/[\u200B-\u200D\uFEFF]/g, '');
+            
+            // Trim whitespace
+            result = result.trim();
+            
+            if (!result || typeof result !== 'string') {
+                throw new Error("Conteúdo do arquivo inválido");
+            }
+           
+            const importedData = JSON.parse(result);
+            
+            if (!importedData || typeof importedData !== 'object') {
+                throw new Error("Estrutura de dados inválida");
+            }
+            
+            // Validate and clean imported data
+            const validatedData = {};
+            Object.keys(importedData).forEach(key => {
+                if (Array.isArray(importedData[key])) {
+                    validatedData[key] = importedData[key].map(stroke => ({
+                        points: Array.isArray(stroke.points) ? stroke.points : [],
+                        color: stroke.color || '#514a00ee'
+                    }));
+                }
+            });
+            
+            // Clear the file input
+            event.target.value = '';
+            
+            // Update letterPaths
+            letterPaths = validatedData;
+            generateLetterButtons();
+            
+            const firstKey = Object.keys(letterPaths)[0];
+            if (firstKey) {
+                selectLetter(firstKey);
+            }
+            
+            alert("Importação bem-sucedida!");
+            
+        } catch (err) {
+            console.error("Import failed:", err);
+            alert("Falha ao importar JSON: " + err.message + "\nTente usar a opção 'Colar' para importar manualmente.");
+        }
+    };
+    
+    // Read as text with UTF-8 encoding
+    reader.readAsText(file, 'UTF-8');
+});
+
+// Replace the processManualImport function with this improved version:
+function processManualImport() {
+    let text = document.getElementById("manualImportText").value;
+    
+    if (!text || !text.trim()) {
+        alert("Cole o conteúdo JSON na área de texto.");
+        return;
+    }
+    
+    try {
+        // Clean the text input similar to file import
+        text = text.replace(/^\uFEFF/, '');
+        text = text.replace(/^\ufeff/, '');
+        text = text.replace(/[\u200B-\u200D\uFEFF]/g, '');
+        text = text.trim();
+        
+        const importedData = JSON.parse(text);
+        
+        if (!importedData || typeof importedData !== 'object') {
+            throw new Error("Estrutura de dados inválida");
+        }
+        
+        // Validate and clean imported data
+        const validatedData = {};
+        Object.keys(importedData).forEach(key => {
+            if (Array.isArray(importedData[key])) {
+                validatedData[key] = importedData[key].map(stroke => ({
+                    points: Array.isArray(stroke.points) ? stroke.points : [],
+                    color: stroke.color || '#514a00ee'
+                }));
+            }
+        });
+        
+        letterPaths = validatedData;
+        generateLetterButtons();
+        
+        const firstKey = Object.keys(letterPaths)[0];
+        if (firstKey) {
+            selectLetter(firstKey);
+        }
+        
+        alert("Importação manual bem-sucedida!");
+        document.getElementById("manualImportText").value = '';
+        toggleManualImport();
+        
+    } catch (err) {
+        console.error("Manual import failed:", err);
+        alert("JSON inválido: " + err.message);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function copyToClipboard() {
+            const code = document.getElementById('generatedCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Code copied to clipboard! You can now replace the letterPaths in your handwriting game.');
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Code copied to clipboard!');
+            });
+        }
+/*
+        document.getElementById("importFile").addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!file.name.toLowerCase().endsWith('.json') && file.type !== 'application/json') {
+                alert("Por favor, selecione um arquivo JSON válido.");
+                return;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) {
+                alert("Arquivo muito grande. Máximo 5MB.");
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onerror = function() {
+                alert("Erro ao ler o arquivo.");
+            };
+            
+            reader.onload = function (e) {
+                try {
+                    const result = e.target.result.replace(/^\uFEFF/, '');
+                    if (!result || typeof result !== 'string') {
+                        throw new Error("Conteúdo do arquivo inválido");
+                    }
+                   
+                    const importedData = JSON.parse(result);
+                    
+                    if (!importedData || typeof importedData !== 'object') {
+                        throw new Error("Estrutura de dados inválida");
+                    }
+                    
+                    event.target.value = '';
+                    
+                    Object.assign(letterPaths, importedData);
+                    generateLetterButtons();
+                    selectLetter(Object.keys(letterPaths)[0] || 'a');
+                    alert("Importação bem-sucedida!");
+                    
+                } catch (err) {
+                    console.error("Import failed:", err);
+                    alert("Falha ao importar JSON: " + err.message);
+                }
+            };
+            
+            reader.readAsText(file, 'UTF-8');
+        });
+*/
+        function exportAllLetters() {
+            if (Object.keys(letterPaths).length === 0) {
+                alert('No letters recorded yet!');
+                return;
+            }
+            
+            const exportedPaths = {};
+            
+            Object.keys(letterPaths).forEach(letter => {
+                exportedPaths[letter] = letterPaths[letter].map(stroke => ({
+                    points: stroke.points,
+                    color: stroke.color
+                }));
+            });
+            
+            const codeOutput = `${JSON.stringify(exportedPaths, null, 2)}`;
+            
+            document.getElementById('generatedCode').textContent = codeOutput;
+            document.getElementById('outputArea').style.display = 'block';
+            
+            document.getElementById('outputArea').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleManualImport() {
+            const area = document.getElementById("manualImportArea");
+            area.style.display = area.style.display === "none" ? "block" : "none";
+        }
+/*
+function processManualImport() {
+    const text = document.getElementById("manualImportText").value.trim();
+    if (!text) {
+        alert("Cole o conteúdo JSON na área de texto.");
+        return;
+    }
+    
+    try {
+        const importedData = JSON.parse(text);
+        Object.assign(letterPaths, importedData);
+        generateLetterButtons();
+        selectLetter(Object.keys(letterPaths)[0] || 'a');
+        alert("Importação manual bem-sucedida!");
+        document.getElementById("manualImportText").value = '';
+        toggleManualImport();
+    } catch (err) {
+        alert("JSON inválido: " + err.message);
+    }
+}*/
+
+// Call this to add the manual import option
+
+        initCanvas();
+        
+function newAlphabet(lowercase){
+    let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+     
+    for(i in alphabet){
+        if(lowercase == "a"){
+
+            updateOrCreateLetterButton(alphabet[i])
+        }
+        else if(lowercase == "A"){
+            var upperCase = alphabet[i]
+            updateOrCreateLetterButton( upperCase.toUpperCase())
+        }
+ 
+    }            
+}
+
+function forca(){
+    const palavras = ["banana", "macaco", "floresta"]
+    let palavradavez = palavras[0]
+    let letradavez = prompt("qual a letra?")
+    if  ( letterPaths(letradavez)){
+        selectLetter(letradavez)
+    }else{
+        alert("letra inexistente no repertorio. favor criar letra antes ou carregar arquivo com alfabeto completo")
+    }
+ 
+}
+function startGame() {
+    document.getElementById("intro").style.display = "none";
+    setMode('play');
+}
+
+    </script>
+</body>
+</html>
