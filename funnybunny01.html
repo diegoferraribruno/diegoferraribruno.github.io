@@ -30,7 +30,6 @@
         }
         h1 {
             color: #4a5568;
-            margin-bottom: 20px;
             font-size: 1.6em;
         }
         .mode-selector {
@@ -373,6 +372,7 @@
 
      
     </div>
+    
  <div class="popup-overlay" id="popupOverlay"></div>
     <script>
         const canvas = document.getElementById('canvas');
@@ -971,77 +971,7 @@ function showBunnyAnimation() {
             }
             ctx.stroke();
         }
-/*
-        function validatePath() {
-            if (currentPath.length < 10) return;
-            
-            const paths = letterPaths[currentLetter];
-            if (!paths || paths.length === 0) return;
-            
-            const targetPath = paths[currentPathIndex];
-            if (!targetPath) return;
-            
-            const isValid = validateSinglePath(currentPath, targetPath.points);
-            
-            if (isValid) {
-    currentRevealPoints += segmentRevealStep;
-    const segment = paths[currentPathIndex];
-    const totalPoints = segment.points.length;
 
-    if (currentRevealPoints >= totalPoints) {
-        currentPathIndex++;
-        currentRevealPoints = segmentRevealStep;
-
-        if (currentPathIndex < paths.length) {
-            animationSegmentIndex = currentPathIndex;
-        }
-    }
-
-    if (currentPathIndex < paths.length) {
-        animationInProgress = true;
-        const nextSegment = paths[currentPathIndex];
-        animationPath = flattenSegment(nextSegment, currentRevealPoints);
-        animationPointIndex = 0;
-        setTimeout(() => animateSegment(), 500);
-    }
-
-                if (!completedSegments.includes(currentPathIndex)) {
-                    completedSegments.push(currentPathIndex);
-                    drawCompletedSegment(currentPathIndex);
-                }
-                
-                currentPathIndex++;
-                setTimeout(() => {
-    animationSegmentIndex = 0;
-    animationInProgress = true;
-    animationPath = flattenSegment(letterPaths[currentLetter][0]);
-    animationPointIndex = 0;
-    animateSegment();
-}, 300);
-
-                pathStarted = false;
-                
-                if (currentPathIndex >= paths.length) {
-                    showFeedback('Perfeito! Você completou "'+ currentLetter +'"! 🎉', 'success');
-                    document.querySelector('.container').classList.add('celebrate');
-                    setTimeout(() => {
-                        document.querySelector('.container').classList.remove('celebrate');
-                        document.getElementById('nextBtn').classList.remove('hidden');
-                    }, 250);
-                } else {
-                    showFeedback(`Ótimo! Agora desenhe o próximo traço (${currentPathIndex + 1}/${paths.length}) 🌟`, 'success');
-                    setTimeout(() => drawLetter(), 200);
-                }
-            } else if (pathStarted) {
-                const feedback = getValidationFeedback(currentPath, targetPath.points);
-                showFeedback(feedback, 'error');
-            }
-            
-            updateProgress();
-        }
-*/
-
-// Replace the validatePath function with this updated version:
 function validatePath() {
     if (currentPath.length < 10) return;
     
@@ -1271,67 +1201,7 @@ function validatePath() {
         function checkProgress() {
             updateProgress();
         }
-/*
-        function selectLetter(letter) {
-            if (isLongPress) return;
-            
-            // Stop any running animation
-            if (animationInProgress) {
-                if (animationFrameId) {
-                    clearTimeout(animationFrameId);
-                }
-                animationInProgress = false;
-            }
-            
-            currentLetter = letter;
-            currentPathIndex = 0;
-            pathStarted = false;
-            
-            if (currentMode === 'create') {
-                document.getElementById('currentLetter').textContent = letter;
-                document.getElementById('statusLetter').textContent = letter;
-                redrawCanvas();
-                updateStrokeList();
-            } else {
-                completedSegments = [];
-                showingGuide = false;
-                updateProgress();
-                drawLetter();
-          setTimeout(() => {
-    animationSegmentIndex = 0;
-    animationInProgress = true;
-    animationPath = flattenSegment(letterPaths[letter][0]);
-    animationPointIndex = 0;
-    animateSegment();
-}, 300);
 
-                const pathCount = letterPaths[letter] ? letterPaths[letter].length : 0;
-                showFeedback(`Desenhe: ${letter}! (${pathCount} traço${pathCount !== 1 ? 's' : ''})`, 'info');
-            }
-            
-            document.querySelectorAll('.letter-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.letter === letter) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            colorIndex = 0;
-        
-
-    if (currentMode === 'play') {
-    setTimeout(() => {
-        animationSegmentIndex = 0;
-        animationInProgress = true;
-        animationPath = flattenSegment(letterPaths[letter][0]);
-        animationPointIndex = 0;
-        animateSegment();
-    }, 300);
-}
-}
-*/
-
-// Replace the selectLetter function with this updated version:
 function selectLetter(letter) {
     if (isLongPress) return;
     
@@ -1774,13 +1644,6 @@ function selectLetter(letter) {
         }
 
         
-
-
-
-
-
-
-        // Replace the exportJSON function with this improved version:
 function exportJSON() {
     try {
         // Clean the data before exporting
@@ -1971,16 +1834,6 @@ function processManualImport() {
 
 
 
-
-
-
-
-
-
-
-
-
-
         function copyToClipboard() {
             const code = document.getElementById('generatedCode').textContent;
             navigator.clipboard.writeText(code).then(() => {
@@ -1995,56 +1848,7 @@ function processManualImport() {
                 alert('Code copied to clipboard!');
             });
         }
-/*
-        document.getElementById("importFile").addEventListener("change", (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            if (!file.name.toLowerCase().endsWith('.json') && file.type !== 'application/json') {
-                alert("Por favor, selecione um arquivo JSON válido.");
-                return;
-            }
-            
-            if (file.size > 5 * 1024 * 1024) {
-                alert("Arquivo muito grande. Máximo 5MB.");
-                return;
-            }
-            
-            const reader = new FileReader();
-            
-            reader.onerror = function() {
-                alert("Erro ao ler o arquivo.");
-            };
-            
-            reader.onload = function (e) {
-                try {
-                    const result = e.target.result.replace(/^\uFEFF/, '');
-                    if (!result || typeof result !== 'string') {
-                        throw new Error("Conteúdo do arquivo inválido");
-                    }
-                   
-                    const importedData = JSON.parse(result);
-                    
-                    if (!importedData || typeof importedData !== 'object') {
-                        throw new Error("Estrutura de dados inválida");
-                    }
-                    
-                    event.target.value = '';
-                    
-                    Object.assign(letterPaths, importedData);
-                    generateLetterButtons();
-                    selectLetter(Object.keys(letterPaths)[0] || 'a');
-                    alert("Importação bem-sucedida!");
-                    
-                } catch (err) {
-                    console.error("Import failed:", err);
-                    alert("Falha ao importar JSON: " + err.message);
-                }
-            };
-            
-            reader.readAsText(file, 'UTF-8');
-        });
-*/
+
         function exportAllLetters() {
             if (Object.keys(letterPaths).length === 0) {
                 alert('No letters recorded yet!');
@@ -2072,28 +1876,7 @@ function processManualImport() {
             const area = document.getElementById("manualImportArea");
             area.style.display = area.style.display === "none" ? "block" : "none";
         }
-/*
-function processManualImport() {
-    const text = document.getElementById("manualImportText").value.trim();
-    if (!text) {
-        alert("Cole o conteúdo JSON na área de texto.");
-        return;
-    }
-    
-    try {
-        const importedData = JSON.parse(text);
-        Object.assign(letterPaths, importedData);
-        generateLetterButtons();
-        selectLetter(Object.keys(letterPaths)[0] || 'a');
-        alert("Importação manual bem-sucedida!");
-        document.getElementById("manualImportText").value = '';
-        toggleManualImport();
-    } catch (err) {
-        alert("JSON inválido: " + err.message);
-    }
-}*/
 
-// Call this to add the manual import option
 
         initCanvas();
         
@@ -2128,7 +1911,64 @@ function startGame() {
     document.getElementById("intro").style.display = "none";
     setMode('play');
 }
+// Add this function to import JSON from URL
+async function importFromURL(url) {
+    try {
+        showFeedback('Carregando dados da URL...', 'info');
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const importedData = await response.json();
+        
+        if (!importedData || typeof importedData !== 'object') {
+            throw new Error("Estrutura de dados inválida");
+        }
+        
+        // Validate and clean imported data
+        const validatedData = {};
+        Object.keys(importedData).forEach(key => {
+            if (Array.isArray(importedData[key])) {
+                validatedData[key] = importedData[key].map(stroke => ({
+                    points: Array.isArray(stroke.points) ? stroke.points : [],
+                    color: stroke.color || '#514a00ee'
+                }));
+            }
+        });
+        
+        // Update letterPaths
+        letterPaths = validatedData;
+        generateLetterButtons();
+        
+        const firstKey = Object.keys(letterPaths)[0];
+        if (firstKey) {
+            selectLetter(firstKey);
+        }
+        
+        showFeedback(`Importação bem-sucedida! ${Object.keys(validatedData).length} arte(s) carregada(s)`, 'success');
+        setMode('play')
+    } catch (error) {
+        console.error("URL import failed:", error);
+        showFeedback(`Falha ao importar da URL: ${error.message}`, 'error');
+    }
+}
 
+// Function to import the specific fbmsg.json file
+function importFunnyBunnyMessage() {
+    const url = 'https://diegoferraribruno.github.io/fbmsg.json';
+    importFromURL(url);
+}
+ setTimeout(importFunnyBunnyMessage(),1000)
+ 
+
+// Add this button to your create controls section (add this to the HTML where other buttons are)
+// You can add this button in the create controls area:
+/*
+<button class="btn-success" onclick="importFunnyBunnyMessage()">🐰💌 Carregar Mensagem</button>
+*/
     </script>
 </body>
 </html>
