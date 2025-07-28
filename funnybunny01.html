@@ -67,7 +67,7 @@
         }
         #canvas {
             display: block;
-            cursor: crosshair;
+            cursor:none;
             background: transparent;
         }
         .controls {
@@ -277,14 +277,38 @@
             border-style: dashed;
             padding: 10px;
         }
+      
+canvas:hover{
+    cursor: none;
+}
+
+#cursor {
+pointer-events: none;
+position: absolute; 
+  display: block;
+  font-size: 24px;
+}
+#bhead{
+    display: block;
+    margin-left: -6px;
+    margin-top: -40px;
+    z-index: -1;
+    
+}
+        
     </style>
 </head>
 <body>
     <div id="intro" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:9999; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:20px;">
   <h2 style="font-size:2em;">🐇💌 Mensagem do Funny Bunny</h2>
-  <p style="font-size:1.2em; max-width:500px;">Seu coelhinho passou o dia sozinho… mas deixou um recado para você!<br><br>
-  Ajude-o a completar seus pulinhos pelo caminho desenhado. A cada trajeto correto, uma parte da mensagem será revelada – mas atenção: ela está escondida nos cocôs de coelho 💩!</p>
+  <p style="font-size:1.2em; max-width:500px;">Seu coelhinho passou o dia sozinho… e aprendeu a escrever!<br><br>
+  Ajude-o a completar seus pulinhos pelo caminho desenhado e descubra a mensagem nos cocôs de coelho 💩!</p>
   <button onclick="startGame()" class="btn-primary" style="margin-top:20px;">Começar 🐾</button>
+
+<P>O crie seu proprio caminho!
+    
+            <button class="mode-btn" onclick="setMode('create')">🐇💩 Criar</button>
+</P>
 </div>
 
     <div class="container">
@@ -374,6 +398,7 @@
     </div>
     
  <div class="popup-overlay" id="popupOverlay"></div>
+ <div id="cursor"><div id="bboddy">🐇</div><div id="bhead">🐰</div></div>
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
@@ -406,6 +431,8 @@ let animationInProgress = false;
         let animationPointIndex = 0;
         let animationFrameId = null;
 
+let userDrawnPaths = []; // Store all user paths for current letter
+let currentUserPath = []; // Current path being drawn
 let letterPaths = {
  "a": [
                 {
@@ -437,8 +464,15 @@ let letterPaths = {
         let strokeColors = ['#554726', '#554726', '#554726', '#554726', '#554726'];
         let colorIndex = 0;
 
+document.addEventListener('mousemove', function(e) {
+  const cursorElement = document.getElementById('cursor');
+  if (cursorElement) { // Check if the element exists before trying to modify it
+    cursorElement.style.left = e.pageX-26 + 'px';
+    cursorElement.style.top = e.pageY-22+'px';
+  }
+});
+
         // Bunny animation functions
-// Bunny animation functions
         function flattenSegment(segment, pointsPerSegment = 3) {
             const points = segment.points;
             if (points.length < 2) return points;
@@ -554,104 +588,6 @@ function animateSegment() {
     }
 }
 
-// Also update the draw function to properly clear previous timeouts:
-function draw(e) {
-    if (!isDrawing) return;
-    
-    const point = {x: Math.round(e.offsetX), y: Math.round(e.offsetY)};
-    
-    if (currentMode === 'create') {
-        if (isEraseMode) {
-            erasePointsNearCursor(point);
-            return;
-        }
-        
-        if (!isRecording) return;
-        
-        if (currentStroke.length > 0) {
-            const lastPoint = currentStroke[currentStroke.length - 1];
-            const dist = distance(point, lastPoint);
-            if (dist < 8) return;
-        }
-        
-        currentStroke.push(point);
-        ctx.lineTo(point.x, point.y);
-        ctx.stroke();
-    } else {
-        currentPath.push(point);
-        
-        ctx.strokeStyle = '#4a5568';
-        ctx.lineWidth = 4;
-        
-        if (currentPath.length > 1) {
-            const prevPoint = currentPath[currentPath.length - 2];
-            ctx.beginPath();
-            ctx.moveTo(prevPoint.x, prevPoint.y);
-            ctx.lineTo(point.x, point.y);
-            ctx.stroke();
-        }
-        
-        // Check if user drawing has caught up with the bunny
-        if (checkIfReachedBunny(point)) {
-            // Clear any existing timeout to prevent speed accumulation
-            if (animationFrameId) {
-                clearTimeout(animationFrameId);
-                animationFrameId = null;
-            }
-            
-            stopDrawing();
-            // Add a small delay before restarting to prevent immediate re-triggering
-            setTimeout(() => {
-                if (!isDrawing) { // Only restart if user isn't still drawing
-                    startDrawing(point);
-                }
-            }, 50);
-        }
-        
-        // Check progress regardless of animation state
-        checkProgress();
-    }
-}
-// Replace the startDrawing function with this updated version:
-function startDrawing(e) {
-    isDrawing = true;
-    const point = {x: Math.round(e.offsetX), y: Math.round(e.offsetY)};
-    
-    if (currentMode === 'create') {
-        if (isEraseMode) {
-            erasePointsNearCursor(point);
-            return;
-        }
-        
-        if (!isRecording) return;
-        currentStroke = [point];
-        ctx.strokeStyle = strokeColors[colorIndex % strokeColors.length];
-        ctx.beginPath();
-        ctx.moveTo(point.x, point.y);
-    } else {
-        // In play mode, allow drawing even during animation
-        currentPath = [point];
-        // Clear any previous user strokes from the current drawing attempt
-        if (animationInProgress) {
-            // Redraw everything to clear previous user attempts
-            setTimeout(() => animateSegment(), 0);
-        }
-    }
-}
-
-
-// Replace the stopDrawing function with this updated version:
-function stopDrawing() {
-    if (isDrawing) {
-        isDrawing = false;
-        if (currentMode === 'create') {
-            finishStroke();
-        } else {
-            // In play mode, validate the path even during animation
-            validatePath();
-        }
-    }
-}
 
 // Check if user drawing has reached the bunny (only while bunny is moving)
 function checkIfReachedBunny(userPoint) {
@@ -667,109 +603,6 @@ function checkIfReachedBunny(userPoint) {
     return distanceToBunny < 8 && currentPath.length >= 4;
 }
 
-// Replace the validatePath function with this updated version:
-function validatePath() {
-    if (currentPath.length < 5) return; // Reduced minimum length since we're auto-stopping
-    
-    const paths = letterPaths[currentLetter];
-    if (!paths || paths.length === 0) return;
-    
-    const targetPath = paths[currentPathIndex];
-    if (!targetPath) return;
-    
-    const isValid = validateSinglePath(currentPath, targetPath.points);
-    
-    if (isValid) {
-        if (!completedSegments.includes(currentPathIndex)) {
-            completedSegments.push(currentPathIndex);
-        }
-        
-        currentPathIndex++;
-        pathStarted = false;
-        currentPath = []; // Clear the current path
-        
-        // Stop current animation
-        if (animationFrameId) {
-            clearTimeout(animationFrameId);
-        }
-        
-        if (currentPathIndex >= paths.length) {
-            // All segments completed
-            animationInProgress = false;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawLines();
-            
-            // Draw all completed segments
-            for (let i = 0; i < paths.length; i++) {
-                const segment = paths[i];
-                ctx.strokeStyle = segment.color;
-                ctx.lineWidth = 3;
-                ctx.setLineDash([]);
-                ctx.beginPath();
-                ctx.moveTo(segment.points[0].x, segment.points[0].y);
-                for (let j = 1; j < segment.points.length; j++) {
-                    ctx.lineTo(segment.points[j].x, segment.points[j].y);
-                }
-                ctx.stroke();
-            }
-            
-            showFeedback('Perfeito! Você completou "'+ currentLetter +'"! 🎉', 'success');
-            document.querySelector('.container').classList.add('celebrate');
-            setTimeout(() => {
-                document.querySelector('.container').classList.remove('celebrate');
-                document.getElementById('nextBtn').classList.remove('hidden');
-            }, 250);
-        } else {
-            // Start animation for the next segment immediately
-            showFeedback(`Ótimo! Próximo traço (${currentPathIndex + 1}/${paths.length}) 🌟`, 'success');
-            setTimeout(() => {
-                animationInProgress = true;
-                animationSegmentIndex = currentPathIndex;
-                animationPath = flattenSegment(letterPaths[currentLetter][currentPathIndex]);
-                animationPointIndex = 0;
-                animateSegment();
-            }, 20); // Short delay to show success message
-        }
-    } else {
-        // Path is invalid - give feedback but allow user to continue or restart
-        if (pathStarted) {
-            const feedback = getValidationFeedback(currentPath, targetPath.points);
-            showFeedback(feedback + ' Tente novamente! 🔄', 'error');
-        }
-        // Clear the invalid path and let user start over
-        currentPath = [];
-    }
-    
-    updateProgress();
-}
-
-// Replace the recomecar function with this updated version:
-function recomecar() {
-    // Stop any running animation
-    if (animationInProgress) {
-        if (animationFrameId) {
-            clearTimeout(animationFrameId);
-        }
-        animationInProgress = false;
-    }
-    
-    currentPathIndex = 0;
-    pathStarted = false;
-    completedSegments = [];
-    currentPath = []; // Clear current drawing
-    
-    // Restart from the beginning
-    setTimeout(() => {
-        animationInProgress = true;
-        animationSegmentIndex = 0;
-        animationPath = flattenSegment(letterPaths[currentLetter][0]);
-        animationPointIndex = 0;
-        animateSegment();
-    }, 100);
-    
-    updateProgress();
-    showFeedback(`Reiniciando ${currentLetter}! Siga o coelhinho! 🐰`, 'info');
-}
 
 // Update the clearCanvas function to work better with concurrent drawing:
 function clearCanvas() {
@@ -876,17 +709,17 @@ function clearCanvas() {
             const btn = document.getElementById('eraseModeBtn');
             
             if (isEraseMode) {
-                btn.textContent = '✏️ Modo Desenhar';
+                btn.textContent = '💩';
                 btn.className = 'btn-success';
-                canvas.style.cursor = 'crosshair';
-                showFeedback('Modo Apagar ativado! Clique nos pontos para apagá-los 🗑️', 'info');
+               // canvas.style.cursor = 'crosshair';
+                showFeedback('Modo limpeza ativado! Clique nos 💩 para apagá-los 🗑️', 'info');
                 isRecording = false;
                 document.getElementById('recordingIndicator').classList.remove('active');
             } else {
-                btn.textContent = '🗑️ Modo Apagar';
+                btn.textContent = '🗑️';
                 btn.className = 'btn-warning';
-                canvas.style.cursor = 'crosshair';
-                showFeedback('Modo Desenhar ativado! Continue desenhando ✏️', 'info');
+               // canvas.style.cursor = 'crosshair';
+                showFeedback('Modo comunicar ativado! Continue 💩' ,' info');
                 startRecording();
             }
         }
@@ -950,8 +783,12 @@ function clearCanvas() {
             
             if (letterPaths[currentLetter]) {
                 letterPaths[currentLetter].forEach((stroke, index) => {
-                    ctx.strokeStyle = stroke.color;
                     ctx.lineWidth = 3;
+                    ctx.lineWidth = 3;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.setLineDash([1, 10]);
+                    ctx.strokeStyle = "#4a5568";
                     ctx.beginPath();
                     ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
                     for (let i = 1; i < stroke.points.length; i++) {
@@ -1233,55 +1070,6 @@ function clearCanvas() {
             updateProgress();
         }
 
-function selectLetter(letter) {
-    if (isLongPress) return;
-    
-    // Stop any running animation
-    if (animationInProgress) {
-        if (animationFrameId) {
-            clearTimeout(animationFrameId);
-        }
-        animationInProgress = false;
-    }
-    
-    currentLetter = letter;
-    currentPathIndex = 0;
-    pathStarted = false;
-    
-    if (currentMode === 'create') {
-        document.getElementById('currentLetter').textContent = letter;
-        document.getElementById('statusLetter').textContent = letter;
-        redrawCanvas();
-        updateStrokeList();
-    } else {
-        completedSegments = [];
-        showingGuide = false;
-        updateProgress();
-        drawLetter();
-        
-        // Start animation for the first segment
-        setTimeout(() => {
-            animationInProgress = true;
-            animationSegmentIndex = 0;
-            animationPath = flattenSegment(letterPaths[letter][0]);
-            animationPointIndex = 0;
-            animateSegment();
-        }, 300);
-
-        const pathCount = letterPaths[letter] ? letterPaths[letter].length : 0;
-        showFeedback(`Desenhe: ${letter}! (${pathCount} traço${pathCount !== 1 ? 's' : ''})`, 'info');
-    }
-    
-    document.querySelectorAll('.letter-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.letter === letter) {
-            btn.classList.add('active');
-        }
-    });
-    
-    colorIndex = 0;
-}
-        
 
         function getValidationFeedback(userPath, targetPoints) {
             const startPoint = targetPoints[0];
@@ -1986,6 +1774,398 @@ async function importFromURL(url) {
         showFeedback(`Falha ao importar da URL: ${error.message}`, 'error');
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Replace the startDrawing function with this updated version:
+function startDrawing(e) {
+    isDrawing = true;
+    const point = {x: Math.round(e.offsetX), y: Math.round(e.offsetY)};
+    
+    if (currentMode === 'create') {
+        if (isEraseMode) {
+            erasePointsNearCursor(point);
+            return;
+        }
+        
+        if (!isRecording) return;
+        currentStroke = [point];
+        ctx.strokeStyle = strokeColors[colorIndex % strokeColors.length];
+        ctx.beginPath();
+        ctx.moveTo(point.x, point.y);
+    } else {
+        // In play mode, start recording user path
+        currentUserPath = [point];
+        currentPath = [point];
+        // Clear any previous user strokes from the current drawing attempt
+        if (animationInProgress) {
+            // Redraw everything to clear previous user attempts
+            setTimeout(() => animateSegment(), 0);
+        }
+    }
+}
+
+// Replace the draw function with this updated version:
+function draw(e) {
+    if (!isDrawing) return;
+    
+    const point = {x: Math.round(e.offsetX), y: Math.round(e.offsetY)};
+    
+    if (currentMode === 'create') {
+        if (isEraseMode) {
+            erasePointsNearCursor(point);
+            return;
+        }
+        
+        if (!isRecording) return;
+        
+        if (currentStroke.length > 0) {
+            const lastPoint = currentStroke[currentStroke.length - 1];
+            const dist = distance(point, lastPoint);
+            if (dist < 8) return;
+        }
+       
+        currentStroke.push(point);
+        ctx.lineTo(point.x, point.y);
+        ctx.stroke();
+    } else {
+        // Record user path
+        currentUserPath.push(point);
+        currentPath.push(point);
+        
+        ctx.strokeStyle = '#4a5568';
+        ctx.lineWidth = 4;
+        
+        if (currentPath.length > 1) {
+            const prevPoint = currentPath[currentPath.length - 2];
+            ctx.beginPath();
+            ctx.moveTo(prevPoint.x, prevPoint.y);
+            ctx.lineTo(point.x, point.y);
+            ctx.stroke();
+        }
+        
+        // Check if user drawing has caught up with the bunny
+        if (checkIfReachedBunny(point)) {
+            // Clear any existing timeout to prevent speed accumulation
+            if (animationFrameId) {
+                clearTimeout(animationFrameId);
+                animationFrameId = null;
+            }
+            
+            stopDrawing();
+            // Add a small delay before restarting to prevent immediate re-triggering
+            setTimeout(() => {
+                if (!isDrawing) { // Only restart if user isn't still drawing
+                    startDrawing(point);
+                }
+            }, 50);
+        }
+        
+        // Check progress regardless of animation state
+        checkProgress();
+    }
+}
+
+// Replace the stopDrawing function with this updated version:
+function stopDrawing() {
+    if (isDrawing) {
+        isDrawing = false;
+        if (currentMode === 'create') {
+            finishStroke();
+        } else {
+            // Store the user's completed path
+            if (currentUserPath.length > 0) {
+                userDrawnPaths.push([...currentUserPath]);
+                currentUserPath = [];
+            }
+            // In play mode, validate the path even during animation
+            validatePath();
+        }
+    }
+}
+
+// Add this new function to show the comparison
+function showUserPathComparison() {
+    if (!letterPaths[currentLetter] || userDrawnPaths.length === 0) return;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawLines();
+    
+    // Draw the target paths (correct paths) in green
+    letterPaths[currentLetter].forEach((segment, index) => {
+      //  ctx.strokeStyle = '#27ae60'; // Green for correct path
+        ctx.lineWidth = 6;
+        ctx.globalAlpha = 0.7;
+        ctx.setLineDash([1,12]);
+        ctx.beginPath();
+        ctx.moveTo(segment.points[0].x, segment.points[0].y);
+        for (let j = 1; j < segment.points.length; j++) {
+            ctx.lineTo(segment.points[j].x, segment.points[j].y);
+        }
+        ctx.stroke();
+    });
+    
+    // Draw user's paths in red
+    userDrawnPaths.forEach((userPath, index) => {
+        if (userPath.length > 1) {
+           // ctx.strokeStyle = '#e74c3c'; // Red for user path
+            ctx.lineWidth = 4;
+            ctx.globalAlpha = 0.8;
+            ctx.setLineDash([2, 5]); // Dashed line for user path
+            ctx.beginPath();
+            ctx.moveTo(userPath[0].x, userPath[0].y);
+            for (let i = 1; i < userPath.length; i++) {
+                ctx.lineTo(userPath[i].x, userPath[i].y);
+            }
+            ctx.stroke();
+        }
+    });
+    
+    // Reset drawing settings
+    ctx.globalAlpha = 1;
+    ctx.setLineDash([]);
+    
+    // Add legend
+    ctx.font = "14px Arial";
+    ctx.textAlign = "left";
+    
+    // Green legend
+   // ctx.fillStyle = '#27ae60';
+    ctx.fillRect(10, 10, 20, 3);
+    //ctx.fillStyle = '#2c3e50';
+    ctx.fillText('Modelo', 35, 20);
+    
+    // Red legend  
+    //ctx.fillStyle = '#e74c3c';
+    ctx.fillRect(10, 30, 20, 3);
+    //ctx.fillStyle = '#2c3e50';
+    ctx.fillText('Seu desenho', 35, 40);
+    
+    // Show feedback
+    showFeedback('Comparação: Verde = modelo, Vermelho = seu desenho 📊', 'info');
+}
+
+// Replace the validatePath function with this updated version:
+function validatePath() {
+    if (currentPath.length < 5) return;
+    
+    const paths = letterPaths[currentLetter];
+    if (!paths || paths.length === 0) return;
+    
+    const targetPath = paths[currentPathIndex];
+    if (!targetPath) return;
+    
+    const isValid = validateSinglePath(currentPath, targetPath.points);
+    
+    if (isValid) {
+        if (!completedSegments.includes(currentPathIndex)) {
+            completedSegments.push(currentPathIndex);
+        }
+        
+        currentPathIndex++;
+        pathStarted = false;
+        currentPath = [];
+        
+        // Stop current animation
+        if (animationFrameId) {
+            clearTimeout(animationFrameId);
+        }
+        
+        if (currentPathIndex >= paths.length) {
+            // All segments completed - show comparison after delay
+            animationInProgress = false;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawLines();
+            
+            // Draw all completed segments
+            for (let i = 0; i < paths.length; i++) {
+                const segment = paths[i];
+                ctx.strokeStyle = segment.color;
+                ctx.lineWidth = 3;
+                ctx.setLineDash([]);
+                ctx.beginPath();
+                ctx.moveTo(segment.points[0].x, segment.points[0].y);
+                for (let j = 1; j < segment.points.length; j++) {
+                    ctx.lineTo(segment.points[j].x, segment.points[j].y);
+                }
+                ctx.stroke();
+            }
+            
+            showFeedback('Perfeito! Você completou "'+ currentLetter +'"! 🎉', 'success');
+            document.querySelector('.container').classList.add('celebrate');
+            
+            // Show comparison after 1 second
+            setTimeout(() => {
+                showUserPathComparison();
+                document.querySelector('.container').classList.remove('celebrate');
+                document.getElementById('nextBtn').classList.remove('hidden');
+            }, 1000);
+            
+        } else {
+            // Start animation for the next segment immediately
+            showFeedback(`Ótimo! Próximo traço (${currentPathIndex + 1}/${paths.length}) 🌟`, 'success');
+            setTimeout(() => {
+                animationInProgress = true;
+                animationSegmentIndex = currentPathIndex;
+                animationPath = flattenSegment(letterPaths[currentLetter][currentPathIndex]);
+                animationPointIndex = 0;
+                animateSegment();
+            }, 20);
+        }
+    } else {
+        // Path is invalid - give feedback but allow user to continue or restart
+        if (pathStarted) {
+            const feedback = getValidationFeedback(currentPath, targetPath.points);
+            showFeedback(feedback + ' Tente novamente! 🔄', 'error');
+        }
+        // Clear the invalid path and let user start over
+        currentPath = [];
+    }
+    
+    updateProgress();
+}
+
+// Replace the selectLetter function to reset user paths:
+function selectLetter(letter) {
+    if (isLongPress) return;
+    
+    // Stop any running animation
+    if (animationInProgress) {
+        if (animationFrameId) {
+            clearTimeout(animationFrameId);
+        }
+        animationInProgress = false;
+    }
+    
+    currentLetter = letter;
+    currentPathIndex = 0;
+    pathStarted = false;
+    
+    // Reset user drawn paths for new letter
+    userDrawnPaths = [];
+    currentUserPath = [];
+    
+    if (currentMode === 'create') {
+        document.getElementById('currentLetter').textContent = letter;
+        document.getElementById('statusLetter').textContent = letter;
+        redrawCanvas();
+        updateStrokeList();
+    } else {
+        completedSegments = [];
+        showingGuide = false;
+        updateProgress();
+        drawLetter();
+        
+        // Start animation for the first segment
+        setTimeout(() => {
+            animationInProgress = true;
+            animationSegmentIndex = 0;
+            animationPath = flattenSegment(letterPaths[letter][0]);
+            animationPointIndex = 0;
+            animateSegment();
+        }, 300);
+
+        const pathCount = letterPaths[letter] ? letterPaths[letter].length : 0;
+        showFeedback(`Desenhe: ${letter}! (${pathCount} traço${pathCount !== 1 ? 's' : ''})`, 'info');
+    }
+    
+    document.querySelectorAll('.letter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.letter === letter) {
+            btn.classList.add('active');
+        }
+    });
+    
+    colorIndex = 0;
+}
+
+// Replace the recomecar function to reset user paths:
+function recomecar() {
+    // Stop any running animation
+    if (animationInProgress) {
+        if (animationFrameId) {
+            clearTimeout(animationFrameId);
+        }
+        animationInProgress = false;
+    }
+    
+    currentPathIndex = 0;
+    pathStarted = false;
+    completedSegments = [];
+    currentPath = [];
+    
+    // Reset user drawn paths
+    userDrawnPaths = [];
+    currentUserPath = [];
+    
+    // Restart from the beginning
+    setTimeout(() => {
+        animationInProgress = true;
+        animationSegmentIndex = 0;
+        animationPath = flattenSegment(letterPaths[currentLetter][0]);
+        animationPointIndex = 0;
+        animateSegment();
+    }, 100);
+    
+    updateProgress();
+    showFeedback(`Reiniciando ${currentLetter}! Siga o coelhinho! 🐰`, 'info');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Function to import the specific fbmsg.json file
 function importFunnyBunnyMessage() {
