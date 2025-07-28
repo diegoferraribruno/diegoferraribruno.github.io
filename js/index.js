@@ -27,7 +27,7 @@ function createAvatar(id = 0, onde = "bio2") {
 }
 
 var menu = [{ url: "desenho.html", icon: "🎨", title: "Desenho" },
-{ url: "funnybunny01.html", icon: "🐇", title: "Funny Bunny Game" }
+{ url: "funnybunny01.html", icon: "🐇", title: "Funny Bunny Game" },
 { url: "index.html", icon: "😆", title: "principal" },
 { url: "apoio.html", icon: "💸", title: "Apoio" },
 { url: "alfabeto.html", icon: "🔫", title: "jogo alfabeto" },
