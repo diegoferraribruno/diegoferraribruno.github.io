@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Centro - Jogo Emocional</title>
+  <style>
+    html, body {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+      #insight-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  display: block;
+  transform: translate(-50%, -50%);
+  max-width: 80vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+  background:#ffffffee; 
+  color: #111;
+  font-size: 1.2em;
+  border-radius: 12px;
+  text-align: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+#insight-box.hide {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+}
+
+#insight-box button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  font-size: 1em;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#autor{
+  display: block;
+  text-align: right;
+  margin-right: 20px;
+  font-style: italic;
+}
+  </style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="insight-box" class="hide">
+  <div id="insight-text"></div>
+  <div id="autor">Jesus</div>
+  <button onclick="hideInsight()">Continuar</button>
+</div>
+
+<script>
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let center = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  r: 20,
+  emoji: '🧘',
+  emotionLevel: 1,
+  colorHue: 240,
+  insight: null,
+  insightTimer: 0
+};
+
+let velocity = { x: 0, y: 0 };
+let maxSpeed = 2;
+let emotions = [];
+let insights = [];
+let frame = 0;
+let recentSpeedAvg = 0;
+
+const emotionPool = [
+  { emoji: '🧘', intensity: 0, hue: 240 },
+  { emoji: '🙂', intensity: 0, hue: 200 },
+  { emoji: '😌', intensity: 0, hue: 180 },
+  { emoji: '😶', intensity: 1, hue: 160 },
+  { emoji: '😐', intensity: 1, hue: 140 },
+  { emoji: '😕', intensity: 2, hue: 100 },
+  { emoji: '😢', intensity: 3, hue: 60 },
+  { emoji: '😠', intensity: 3, hue: 40 },
+  { emoji: '😭', intensity: 4, hue: 20 },
+  { emoji: '😡', intensity: 4, hue: 10 },
+  { emoji: '💔', intensity: 5, hue: 0 },
+  { emoji: '😱', intensity: 5, hue: 300 }
+];
+
+const mastersWisdom = [
+  // BUDA
+  {
+    name: "Buda",
+    icon: "🧘",
+    theme: "Impermanência e Libertação do Sofrimento",
+    quotes: [
+      "A dor é inevitável, mas o sofrimento é opcional.",
+      "Todo sofrimento vem do apego àquilo que é impermanente.",
+      "Quando olhamos para os cinco agregados - forma, sensação, percepção, formações mentais e consciência - onde está esse 'eu' que sofre?",
+      "O sofrimento surge da ilusão de separação. Quando vemos através desta ilusão...",
+      "Em minha investigação, descobri que aquilo que chamamos 'eu' é uma construção.",
+      "A compaixão nasce quando reconhecemos que todos os seres estão apenas esquecidos de sua verdadeira natureza.",
+      "O despertar não é conquistar algo novo, mas reconhecer o que sempre foi verdadeiro."
+    ]
+  },
+
+  // JESUS
+  {
+    name: "Jesus",
+    icon: "❤️",
+    theme: "Amor Incondicional e Unidade Divina",
+    quotes: [
+      "Ame seus inimigos e ore por aqueles que os perseguem.",
+      "O Reino dos Céus está dentro de vocês.",
+      "O Pai e eu somos um.",
+      "Quando o homem compreende que não está separado da Fonte, que é filho da mesma essência divina, toda busca externa perde sentido.",
+      "O amor não é algo que conquistamos - é o que somos.",
+      "O que observo é que o coração humano busca constantemente algo fora de si mesmo quando o Reino já habita dentro dele.",
+      "Descobrimos que nunca estivemos separados. O Reino sempre esteve aqui, no coração da experiência presente."
+    ]
+  },
+
+  // KRISHNAMURTI
+  {
+    name: "Krishnamurti",
+    icon: "🧠",
+    theme: "Percepção Direta e Liberdade Mental",
+    quotes: [
+      "A capacidade de observar sem avaliar é a mais alta forma de inteligência humana.",
+      "O homem cria sistemas, métodos, tradições... e depois se torna escravo deles. A própria busca pode ser o obstáculo.",
+      "No momento em que dizemos 'somos amor' ou 'somos um', já criamos uma divisão.",
+      "A verdadeira percepção acontece quando essa divisão se dissolve completamente - sem método, sem prática, sem tempo.",
+      "Há o observador que diz isso e o observado. A verdadeira percepção acontece quando essa divisão se dissolve completamente.",
+      "Essa descoberta não pode ser um resultado de esforço ou tempo. É uma percepção imediata, quando a mente para de projetar e simplesmente é.",
+      "A verdadeira liberdade começa quando percebemos que não somos nossos pensamentos."
+    ]
+  },
+
+  // KEN WILBER
+  {
+    name: "Ken Wilber",
+    icon: "🌱",
+    theme: "Evolução da Consciência e Integração",
+    quotes: [
+      "O desenvolvimento da consciência é um processo de transcender e incluir.",
+      "A consciência pode ter insights profundos nos estágios superiores, mas ainda assim pode regredir.",
+      "A integração requer tanto transcendência quanto inclusão.",
+      "Há uma diferença entre dissolução temporária e estabilização dessa compreensão.",
+      "Uma percepção que pode se manifestar em diferentes profundidades e níveis de estabilidade.",
+      "Honrando tanto a dimensão transcendente quanto a evolução da consciência através do tempo.",
+      "A consciência evolui em espirais, sempre retornando aos mesmos temas em níveis mais profundos."
+    ]
+  },
+
+  // ALAN WATTS
+  {
+    name: "Alan Watts",
+    icon: "🎭",
+    theme: "Leveza e o Jogo Sagrado da Existência",
+    quotes: [
+      "A vida é um jogo cujo objetivo é descobrir que é um jogo.",
+      "É como tentar morder os próprios dentes, não acham? O ego quer 'conseguir' o desapego.",
+      "Quanto mais tentamos agarrar essa compreensão, mais ela escapa!",
+      "É como tentar segurar água com as mãos abertas - só funciona quando relaxamos completamente.",
+      "A água não 'tenta' ser molhada, as árvores não 'praticam' crescer.",
+      "O despertar pode ser nossa natureza mais natural - só precisamos parar de interferir.",
+      "Quando deixamos de levar o ego tão a sério, descobrimos uma leveza profunda."
+    ]
+  },
+
+  // MOOJI
+  {
+    name: "Mooji",
+    icon: "👁️",
+    theme: "Investigação Direta do Ser",
+    quotes: [
+      "Você não é uma pessoa que tem consciência. Você é a consciência na qual a pessoa aparece.",
+      "Este mesmo que busca, este mesmo que sofre, este mesmo que quer se libertar... ele é real?",
+      "Quando vocês param e realmente olham - sem conceitos, sem história - quem está aí?",
+      "Deixem-me perguntar: quem vai 'parar de interferir'? Quem vai 'praticar' ou 'não praticar'?",
+      "Quando realmente investigamos este 'eu', descobrimos que ele nunca teve existência independente.",
+      "Para quem é a liberação?",
+      "Quando relaxamos completamente, descobrimos que aquilo que sempre procuramos... somos nós mesmos.",
+      "Não como pessoa, mas como a própria consciência na qual todas as experiências aparecem e desaparecem."
+    ]
+  },
+
+  // CONCLUSÃO UNIFICADA
+  {
+    name: "Todos os Mestres",
+    icon: "🌟",
+    theme: "Sabedoria Unificada",
+    quotes: [
+      "A verdade para a qual todos apontamos transcende palavras e conceitos.",
+      "O sofrimento humano nasce da ilusão fundamental de separação.",
+      "Nunca houve alguém para ser liberado, pois nunca houve uma prisão real.",
+      "A separação é uma miragem da mente.",
+      "O que somos essencialmente - consciência pura, amor incondicional, presença infinita - nunca nasceu e nunca morrerá.",
+      "Nunca foi tocado pelo sofrimento e nunca precisou de salvação.",
+      "A compaixão nasce naturalmente desta compreensão.",
+      "O despertar não é conquistar algo novo, mas reconhecer o que sempre foi verdadeiro.",
+      "Todos os seres, em sua busca e sofrimento, estão apenas esquecidos de sua verdadeira natureza."
+    ]
+  }
+];
+
+// Função para buscar citações por mestre
+function getQuotesByMaster(masterName) {
+  return mastersWisdom.find(master => master.name === masterName);
+}
+
+// Função para buscar citações por tema
+function getQuotesByTheme(theme) {
+  return mastersWisdom.filter(master => 
+    master.theme.toLowerCase().includes(theme.toLowerCase())
+  );
+}
+
+// Função para obter uma citação aleatória
+function getRandomQuote() {
+  const randomMaster = mastersWisdom[Math.floor(Math.random() * mastersWisdom.length)];
+  const randomQuote = randomMaster.quotes[Math.floor(Math.random() * randomMaster.quotes.length)];
+  return {
+    master: randomMaster.name,
+    icon: randomMaster.icon,
+    theme: randomMaster.theme,
+    quote: randomQuote
+  };
+}
+
+// Função para obter todas as citações em formato linear
+function getAllQuotes() {
+  const allQuotes = [];
+  mastersWisdom.forEach(master => {
+    master.quotes.forEach(quote => {
+      allQuotes.push({
+        master: master.name,
+        icon: master.icon,
+        theme: master.theme,
+        quote: quote
+      });
+    });
+  });
+  return allQuotes;
+}
+
+// Função para buscar citações por palavra-chave
+function searchQuotes(keyword) {
+  return getAllQuotes().filter(item => 
+    item.quote.toLowerCase().includes(keyword.toLowerCase()) ||
+    item.theme.toLowerCase().includes(keyword.toLowerCase())
+  );
+}
+
+// Exemplos de uso:
+console.log("Citação de Buda:", getQuotesByMaster("Buda"));
+console.log("Citação aleatória:", getRandomQuote());
+console.log("Busca por 'amor':", searchQuotes("amor"));
+
+/*
+  "Tudo já está aqui.",
+  "Você não é seus pensamentos.",
+  "O agora é o único tempo real.",
+  "Sofrimento nasce do apego.",
+  "O vazio é paz disfarçada.",
+  "Você já é completo.",
+  "Quem é você sem suas certezas?",
+  "O dedo aponta para a lua, mas não é a lua.",
+  "Nada é permanente.",
+  "Você é feito do mesmo código do universo.",
+  "A vida é um jogo, descubra que é um jogo.",
+  "A mente cria os muros do eu e do não-eu.",
+  "A aversão também é apego disfarçado.",
+  "Cortar lenha, carregar água.",
+  "Às vezes, tudo que precisamos é respirar fundo.",
+  "O vazio não é ausência. É espaço para o todo.",
+  "Desejar o que não se tem, apegar-se ao que se tem: raízes do sofrimento.",
+  "Quem sofre? Quem percebe?",
+  "A memória é o retorno do personagem.",
+  "Você pode pintar sua realidade dentro de si."*/
+
+
+function spawnEmotion() {
+  if (center.emoji === '🧘' && velocity.x === 0 && velocity.y === 0 && isDragging == false) return;
+
+  const possible = emotionPool.filter(e => {
+    if (center.emotionLevel === 5) return e.intensity >= 3;
+    if (center.emotionLevel === 4) return e.intensity >= 2;
+    if (center.emotionLevel === 3) return e.intensity >= 1;
+    if (center.emotionLevel <= 2) return true;
+  });
+  const emotion = possible[Math.floor(Math.random() * possible.length)];
+
+  const side = ['top', 'bottom', 'left', 'right'][Math.floor(Math.random() * 4)];
+  let x, y;
+  if (side === 'top')    { x = Math.random() * canvas.width; y = -30; }
+  if (side === 'bottom') { x = Math.random() * canvas.width; y = canvas.height + 30; }
+  if (side === 'left')   { x = -30; y = Math.random() * canvas.height; }
+  if (side === 'right')  { x = canvas.width + 30; y = Math.random() * canvas.height; }
+
+  const speed = 0.5 + emotion.intensity * 0.5;
+  const dx = center.x - x + (Math.random() - 0.5) * 80;
+  const dy = center.y - y + (Math.random() - 0.5) * 80;
+  const dist = Math.hypot(dx, dy);
+  const vx = dx / dist * speed;
+  const vy = dy / dist * speed;
+
+  emotions.push({ x, y, r: 18, vx, vy, ...emotion });
+}
+
+function spawnInsight() {
+  const msg = getRandomQuote()
+  
+  insights.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: 20,
+    text: msg.quote,
+    autor:msg.master
+  });
+}
+
+function spawnInsightBox(msg, master) {
+
+  const box = document.getElementById('insight-box');
+  const text = document.getElementById('insight-text');
+    const autor = document.getElementById('autor');
+
+  text.innerText =  '"'+msg+'"';
+  autor.innerText = master // "indefinido";
+  box.classList.remove('hide');
+
+  // Ocultar após 7 segundos, a menos que o usuário clique em "Continuar"
+  clearTimeout(box.dataset.timeout);
+  box.dataset.timeout = setTimeout(() => {
+    hideInsight();
+  }, 7000);
+}
+
+function hideInsight() {
+  const box = document.getElementById('insight-box');
+  box.classList.add('hide');
+  center.emoji = '🧘'
+}
+
+function drawCenter() {
+  ctx.font = `${center.r * 1.5}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(center.emoji, center.x, center.y);
+
+  if (center.insightTimer > 0 && center.insight) {
+
+  }
+}
+
+function drawEmotions() {
+  for (let e of emotions) {
+    ctx.font = '24px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(e.emoji, e.x, e.y);
+  }
+}
+
+function drawInsights() {
+  for (let i of insights) {
+    ctx.beginPath();
+    ctx.arc(i.x, i.y, i.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+    ctx.stroke();
+  }
+}
+
+function updateEmotions() {
+  for (let i = emotions.length - 1; i >= 0; i--) {
+    const e = emotions[i];
+    e.x += e.vx;
+    e.y += e.vy;
+
+    const dx = center.x - e.x;
+    const dy = center.y - e.y;
+    const dist = Math.hypot(dx, dy);
+
+    const isInvulnerable = center.emoji === '🧘' && velocity.x === 0 && velocity.y === 0 && isDragging == false;
+
+    if (!isInvulnerable && dist < center.r + e.r) {
+      center.emoji = e.emoji;
+      center.colorHue = e.hue;
+      if (e.intensity >= 3) {
+        center.r = Math.min(100, center.r + 2);
+      } else {
+        center.r = Math.max(10, center.r - 1);
+      }
+      center.emotionLevel = e.intensity;
+      emotions.splice(i, 1);
+    }
+
+    if (e.x < -50 || e.x > canvas.width + 50 || e.y < -50 || e.y > canvas.height + 50) {
+      emotions.splice(i, 1);
+    }
+  }
+}
+
+function updateInsights() {
+  for (let i = insights.length - 1; i >= 0; i--) {
+    const ins = insights[i];
+    const dx = center.x - ins.x;
+    const dy = center.y - ins.y;
+    const dist = Math.hypot(dx, dy);
+    if (dist < center.r + ins.r) {
+      center.insight = ins.text;
+      center.insightTimer = 800;
+      spawnInsightBox(ins.text, ins.autor)
+      insights.splice(i, 1);
+    }
+  }
+  if (center.insightTimer > 0) center.insightTimer--;
+}
+
+function updateCenter() {
+  center.x += velocity.x;
+  center.y += velocity.y;
+  center.x = Math.max(center.r, Math.min(canvas.width - center.r, center.x));
+  center.y = Math.max(center.r, Math.min(canvas.height - center.r, center.y));
+
+  const speed = Math.hypot(velocity.x, velocity.y);
+  recentSpeedAvg = recentSpeedAvg * 0.95 + speed * 0.05;
+}
+
+function loop() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (frame % (20 + center.emotionLevel * 10) === 0) spawnEmotion();
+  if (frame % 500 === 0) spawnInsight();
+
+  document.body.style.backgroundColor = `hsl(${center.colorHue}, 50%, 18%)`;
+
+  drawCenter();
+  drawEmotions();
+  drawInsights();
+  updateEmotions();
+  updateInsights();
+  updateCenter();
+  frame++;
+}
+setInterval(() => loop(), 1000 / 60);
+
+const keys = {};
+window.addEventListener('keydown', e => keys[e.key] = true);
+window.addEventListener('keyup', e => keys[e.key] = false);
+
+function handleInput() {
+  velocity.x = 0;
+  velocity.y = 0;
+  if (keys['ArrowUp'] || keys['w']) velocity.y = -maxSpeed;
+  if (keys['ArrowDown'] || keys['s']) velocity.y = maxSpeed;
+  if (keys['ArrowLeft'] || keys['a']) velocity.x = -maxSpeed;
+  if (keys['ArrowRight'] || keys['d']) velocity.x = maxSpeed;
+}
+
+
+let isDragging = false;
+let lastTouch = null;
+
+canvas.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  lastTouch = { x: e.clientX, y: e.clientY };
+});
+
+canvas.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    const dx = e.clientX - lastTouch.x;
+    const dy = e.clientY - lastTouch.y;
+    center.x += dx;
+    center.y += dy;
+    lastTouch = { x: e.clientX, y: e.clientY };
+  }
+});
+
+canvas.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+canvas.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 1) {
+    isDragging = true;
+    lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+});
+
+canvas.addEventListener('touchmove', (e) => {
+  if (isDragging && e.touches.length === 1) {
+    const dx = e.touches[0].clientX - lastTouch.x;
+    const dy = e.touches[0].clientY - lastTouch.y;
+    center.x += dx;
+    center.y += dy;
+    lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+});
+
+canvas.addEventListener('touchend', () => {
+  isDragging = false;
+});
+
+
+setInterval(handleInput, 16);
+loop();
+</script>
+</body>
+</html>
