@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Centro - Jogo Emocional</title>
+  <title>Medite</title>
   <style>
     html, body {
       margin: 0;
@@ -11,7 +11,7 @@
     canvas {
       display: block;
     }
-      #insight-box {
+   #insight-box {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -28,40 +28,73 @@
   text-align: center;
   z-index: 9999;
   opacity: 1;
-  transition: opacity 0.5s ease;
+  transition: all 0.5s ease; /* Usamos 'all' para aplicar o efeito em todas as propriedades */
+  
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3); /* Sombra de toda a caixa */
+   transition: background 0.3s ease, color 0.3s ease; /* Efeito ao passar o mouse sobre o botão */  
+  animation-duration: 6s;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
+  animation-name: colorChange;
 }
 
 #insight-box.hide {
   display: none;
   opacity: 0;
-  transition: opacity 0.5s ease;
-
+  transition: all 0.5s ease; /* Usamos 'all' para aplicar o efeito em todas as propriedades */
 }
 
 #insight-box button {
   margin-top: 15px;
   padding: 8px 16px;
   font-size: 1em;
-  background: #111;
+  background: #7d7d7d; /* Cor de fundo mais escuro para um botão */
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 16px;
   cursor: pointer;
+  font-style: italic;
+  
+  transition: background 0.3s ease, color 0.3s ease; /* Efeito ao passar o mouse sobre o botão */  
+  animation-duration: 6s;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
+  animation-name: colorChange;
 }
-#autor{
+
+@keyframes colorChange {
+  0% {background: #ffffff; color: #4573bc;}
+  100% {background: #ffffffa0; color: #90a3d5;}
+}
+#insight-box button:hover {
+  background: #2196f3; /* Cor mais clara para um efeito de hover */
+  color: white;
+}
+#autor {
   display: block;
   text-align: right;
   margin-right: 20px;
   font-style: italic;
+  
+  transition: color 0.3s ease; /* Efeito ao passar o mouse sobre o autor */
 }
+#autor:hover {
+  color: #f44336; /* Cor mais vibrante para um efeito de hover */
+}
+#emoji{
+    font-size: xx-large;
+}
+
   </style>
 </head>
 <body>
 <canvas id="game"></canvas>
 <div id="insight-box" class="hide">
+  <div id="emoji">Jesus</div>
+
   <div id="insight-text"></div>
   <div id="autor">Jesus</div>
-  <button onclick="hideInsight()">Continuar</button>
+  <button onclick="hideInsight()">Seguir...</button>
 </div>
 
 <script>
@@ -87,6 +120,9 @@ let emotions = [];
 let insights = [];
 let frame = 0;
 let recentSpeedAvg = 0;
+let target = { x: center.x, y: center.y };
+let currentHue = center.colorHue;
+let targetHue = center.colorHue;
 
 const emotionPool = [
   { emoji: '🧘', intensity: 0, hue: 240 },
@@ -97,8 +133,8 @@ const emotionPool = [
   { emoji: '😕', intensity: 2, hue: 100 },
   { emoji: '😢', intensity: 3, hue: 60 },
   { emoji: '😠', intensity: 3, hue: 40 },
-  { emoji: '😭', intensity: 4, hue: 20 },
-  { emoji: '😡', intensity: 4, hue: 10 },
+  { emoji: '😭', intensity: 4, hue: 180 },
+  { emoji: '😡', intensity: 4, hue: 360 },
   { emoji: '💔', intensity: 5, hue: 0 },
   { emoji: '😱', intensity: 5, hue: 300 }
 ];
@@ -107,13 +143,13 @@ const mastersWisdom = [
   // BUDA
   {
     name: "Buda",
-    icon: "🧘",
+    emoji: "☸︎",
     theme: "Impermanência e Libertação do Sofrimento",
     quotes: [
       "A dor é inevitável, mas o sofrimento é opcional.",
       "Todo sofrimento vem do apego àquilo que é impermanente.",
       "Quando olhamos para os cinco agregados - forma, sensação, percepção, formações mentais e consciência - onde está esse 'eu' que sofre?",
-      "O sofrimento surge da ilusão de separação. Quando vemos através desta ilusão...",
+      "O sofrimento surge da ilusão de separação. Quando vemos através desta ilusão, o sofimento cessa.",
       "Em minha investigação, descobri que aquilo que chamamos 'eu' é uma construção.",
       "A compaixão nasce quando reconhecemos que todos os seres estão apenas esquecidos de sua verdadeira natureza.",
       "O despertar não é conquistar algo novo, mas reconhecer o que sempre foi verdadeiro."
@@ -123,7 +159,7 @@ const mastersWisdom = [
   // JESUS
   {
     name: "Jesus",
-    icon: "❤️",
+    emoji: "❤️",
     theme: "Amor Incondicional e Unidade Divina",
     quotes: [
       "Ame seus inimigos e ore por aqueles que os perseguem.",
@@ -139,7 +175,7 @@ const mastersWisdom = [
   // KRISHNAMURTI
   {
     name: "Krishnamurti",
-    icon: "🧠",
+    emoji: "🧠",
     theme: "Percepção Direta e Liberdade Mental",
     quotes: [
       "A capacidade de observar sem avaliar é a mais alta forma de inteligência humana.",
@@ -155,7 +191,7 @@ const mastersWisdom = [
   // KEN WILBER
   {
     name: "Ken Wilber",
-    icon: "🌱",
+    emoji: "🌱",
     theme: "Evolução da Consciência e Integração",
     quotes: [
       "O desenvolvimento da consciência é um processo de transcender e incluir.",
@@ -171,7 +207,7 @@ const mastersWisdom = [
   // ALAN WATTS
   {
     name: "Alan Watts",
-    icon: "🎭",
+    emoji: "🎭",
     theme: "Leveza e o Jogo Sagrado da Existência",
     quotes: [
       "A vida é um jogo cujo objetivo é descobrir que é um jogo.",
@@ -187,7 +223,7 @@ const mastersWisdom = [
   // MOOJI
   {
     name: "Mooji",
-    icon: "👁️",
+    emoji: "👁️",
     theme: "Investigação Direta do Ser",
     quotes: [
       "Você não é uma pessoa que tem consciência. Você é a consciência na qual a pessoa aparece.",
@@ -203,10 +239,11 @@ const mastersWisdom = [
 
   // CONCLUSÃO UNIFICADA
   {
-    name: "Todos os Mestres",
-    icon: "🌟",
+    name: "Mestre Cósmico",
+    emoji: "🌟",
     theme: "Sabedoria Unificada",
     quotes: [
+      "Por vezes, tudo que precisamos é parar e observar os sentimentos e pensamentos.",
       "A verdade para a qual todos apontamos transcende palavras e conceitos.",
       "O sofrimento humano nasce da ilusão fundamental de separação.",
       "Nunca houve alguém para ser liberado, pois nunca houve uma prisão real.",
@@ -215,7 +252,42 @@ const mastersWisdom = [
       "Nunca foi tocado pelo sofrimento e nunca precisou de salvação.",
       "A compaixão nasce naturalmente desta compreensão.",
       "O despertar não é conquistar algo novo, mas reconhecer o que sempre foi verdadeiro.",
-      "Todos os seres, em sua busca e sofrimento, estão apenas esquecidos de sua verdadeira natureza."
+      "Todos os seres, em sua busca e sofrimento, estão apenas esquecidos de sua verdadeira natureza.",
+      "Tudo já está aqui.",
+      "Você não é seus pensamentos.",
+      "O agora é o único tempo real.",
+      "Sofrimento nasce do apego.",
+      "O vazio é paz disfarçada.",
+      "Você já é completo.",
+      "Quem é você sem suas certezas?",
+      "O dedo aponta para a lua, mas não é a lua.",
+      "Nada é permanente.",
+      "Você é feito do mesmo código do universo.",
+      "A vida é um jogo, descubra que é um jogo.",
+      "A mente cria os muros do eu e do não-eu.",
+      "A aversão também é apego disfarçado.",
+     "Às vezes, tudo que precisamos é respirar fundo.",
+      "O vazio não é ausência. É espaço para o todo.",
+      "Desejar o que não se tem, apegar-se ao que se tem: raízes do sofrimento.",
+      "Quem sofre? Quem percebe?",
+      "A memória é o retorno do personagem.",
+      "Você pode pintar sua realidade dentro de si.",
+      "Um abraço profundo pode suspender o fluxo mental, trazendo clareza, mas não muda o mundo — muda a perspectiva.",
+      "A mente é como uma gaiola — confortável, mas ilusória. A liberdade está na consciência de que não há gaiola.",
+      "O sofrimento pode ser o catalisador do despertar espiritual.",
+      "Despertar é reconhecer-se como o ator, o diretor e o palco da própria vida.",
+      "O medo do desconhecido nos mantém em rotinas infelizes e repetitivas.",
+      "Não é preciso coragem para abandonar o medo — é preciso apenas deixá-lo ir.",
+      "Sentimentos devem ser bússolas, não objetivos. Sofrer é insistir no que não está alinhado com o ser.",
+      "A verdadeira paz é suave como o pôr do sol, não um prazer intenso e passageiro.",
+      "O círculo com ponto representa a mente cercando a consciência — mas tudo já é agora e completo.",
+      "A vida é um jogo cósmico de esconde-esconde. Encontrar-se é redescobrir a si mesmo no outro.",
+      "A gratidão, o amor e o riso são expressões do universo se reconhecendo.",
+      "Liberdade verdadeira é poder se perder e se reencontrar sem culpa ou apego.",
+      "O arquétipo do sábio é acessado apenas após vivência genuína — não por repetir frases feitas.",
+      "A empatia nos lembra que todos agem por medo ou amor, e merecem compreensão.",
+      "O perdão é reconhecer que ninguém erra por maldade, mas por ignorância."
+
     ]
   }
 ];
@@ -238,7 +310,7 @@ function getRandomQuote() {
   const randomQuote = randomMaster.quotes[Math.floor(Math.random() * randomMaster.quotes.length)];
   return {
     master: randomMaster.name,
-    icon: randomMaster.icon,
+    emoji: randomMaster.emoji,
     theme: randomMaster.theme,
     quote: randomQuote
   };
@@ -251,7 +323,7 @@ function getAllQuotes() {
     master.quotes.forEach(quote => {
       allQuotes.push({
         master: master.name,
-        icon: master.icon,
+        emoji: master.emoji,
         theme: master.theme,
         quote: quote
       });
@@ -272,28 +344,6 @@ function searchQuotes(keyword) {
 console.log("Citação de Buda:", getQuotesByMaster("Buda"));
 console.log("Citação aleatória:", getRandomQuote());
 console.log("Busca por 'amor':", searchQuotes("amor"));
-
-/*
-  "Tudo já está aqui.",
-  "Você não é seus pensamentos.",
-  "O agora é o único tempo real.",
-  "Sofrimento nasce do apego.",
-  "O vazio é paz disfarçada.",
-  "Você já é completo.",
-  "Quem é você sem suas certezas?",
-  "O dedo aponta para a lua, mas não é a lua.",
-  "Nada é permanente.",
-  "Você é feito do mesmo código do universo.",
-  "A vida é um jogo, descubra que é um jogo.",
-  "A mente cria os muros do eu e do não-eu.",
-  "A aversão também é apego disfarçado.",
-  "Cortar lenha, carregar água.",
-  "Às vezes, tudo que precisamos é respirar fundo.",
-  "O vazio não é ausência. É espaço para o todo.",
-  "Desejar o que não se tem, apegar-se ao que se tem: raízes do sofrimento.",
-  "Quem sofre? Quem percebe?",
-  "A memória é o retorno do personagem.",
-  "Você pode pintar sua realidade dentro de si."*/
 
 
 function spawnEmotion() {
@@ -332,17 +382,20 @@ function spawnInsight() {
     y: Math.random() * canvas.height,
     r: 20,
     text: msg.quote,
-    autor:msg.master
+    autor:msg.master,
+    emoji:msg.emoji
   });
 }
 
-function spawnInsightBox(msg, master) {
+function spawnInsightBox(msg, master, emo) {
 
   const box = document.getElementById('insight-box');
   const text = document.getElementById('insight-text');
-    const autor = document.getElementById('autor');
+  const autor = document.getElementById('autor');
+  const emoji = document.getElementById('emoji');
 
   text.innerText =  '"'+msg+'"';
+  emoji.innerText =  emo;
   autor.innerText = master // "indefinido";
   box.classList.remove('hide');
 
@@ -356,18 +409,17 @@ function spawnInsightBox(msg, master) {
 function hideInsight() {
   const box = document.getElementById('insight-box');
   box.classList.add('hide');
-  center.emoji = '🧘'
+
+  center.emoji = '🧘',
+  center.emotionLevel = 1,
+  target.x = center.x
+  target.y = center.y
 }
 
 function drawCenter() {
-  ctx.font = `${center.r * 1.5}px sans-serif`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(center.emoji, center.x, center.y);
+  drawIten(center)
 
-  if (center.insightTimer > 0 && center.insight) {
-
-  }
+  
 }
 
 function drawEmotions() {
@@ -380,13 +432,28 @@ function drawEmotions() {
 }
 
 function drawInsights() {
-  for (let i of insights) {
-    ctx.beginPath();
-    ctx.arc(i.x, i.y, i.r, 0, Math.PI * 2);
-    ctx.fillStyle = 'white';
-    ctx.fill();
-    ctx.stroke();
+  for(let i of insights) {
+   drawIten(i)
   }
+}
+function drawIten(i){
+       ctx.beginPath();
+    
+    // Cria um grau radial
+    var gradient = ctx.createRadialGradient(i.x, i.y, i.r * 0.1, i.x, i.y, i.r);
+    gradient.addColorStop(0, 'rgba(255, 255, 255, .5)'); // Cor no centro do círculo
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)'); // Fade out gradualmente para transparência
+    
+    ctx.arc(i.x, i.y, i.r*4, 0, Math.PI * 2);
+    ctx.fillStyle = gradient;
+    ctx.globalAlpha = 1; // Define a opacidade globalmente
+    ctx.fill();
+    const emoji = i.emoji
+   // console.log("emojis "+emoji)
+    ctx.font = 24+i.r/2+'px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(emoji, i.x, i.y);
 }
 
 function updateEmotions() {
@@ -403,7 +470,7 @@ function updateEmotions() {
 
     if (!isInvulnerable && dist < center.r + e.r) {
       center.emoji = e.emoji;
-      center.colorHue = e.hue;
+      targetHue = e.hue;
       if (e.intensity >= 3) {
         center.r = Math.min(100, center.r + 2);
       } else {
@@ -428,13 +495,13 @@ function updateInsights() {
     if (dist < center.r + ins.r) {
       center.insight = ins.text;
       center.insightTimer = 800;
-      spawnInsightBox(ins.text, ins.autor)
+      spawnInsightBox(ins.text, ins.autor, ins.emoji)
       insights.splice(i, 1);
     }
   }
   if (center.insightTimer > 0) center.insightTimer--;
 }
-
+/*
 function updateCenter() {
   center.x += velocity.x;
   center.y += velocity.y;
@@ -444,13 +511,15 @@ function updateCenter() {
   const speed = Math.hypot(velocity.x, velocity.y);
   recentSpeedAvg = recentSpeedAvg * 0.95 + speed * 0.05;
 }
-
+*/
 function loop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (frame % (20 + center.emotionLevel * 10) === 0) spawnEmotion();
   if (frame % 500 === 0) spawnInsight();
 
-  document.body.style.backgroundColor = `hsl(${center.colorHue}, 50%, 18%)`;
+  const hueSpeed = 0.05; // quanto menor, mais suave
+    currentHue += (targetHue - currentHue) * hueSpeed;
+    document.body.style.backgroundColor = `hsl(${currentHue},${70-center.emotionLevel*10}%, ${70-center.emotionLevel*10}%)`;
 
   drawCenter();
   drawEmotions();
@@ -460,6 +529,49 @@ function loop() {
   updateCenter();
   frame++;
 }
+
+function updateCenter() {
+  const dx = target.x - center.x;
+  const dy = target.y - center.y;
+  const dist = Math.hypot(dx, dy);
+
+  if (dist > 2) {
+    const intensityPenalty = center.emotionLevel*1.2; // quanto maior o nível, mais lento
+    const maxSpeed = 4 - intensityPenalty; // velocidade máxima com penalidade
+    const accel = 8 * (1 - center.emotionLevel * 0.1); // aceleração reduzida com intensidade
+
+    const normX = dx / dist;
+    const normY = dy / dist;
+
+    velocity.x += normX * accel;
+    velocity.y += normY * accel;
+    isDragging = true;
+
+    // limitar velocidade
+    const vMag = Math.hypot(velocity.x, velocity.y);
+    if (vMag > maxSpeed) {
+      velocity.x = (velocity.x / vMag) * maxSpeed;
+      velocity.y = (velocity.y / vMag) * maxSpeed;
+    }
+  } else {
+    velocity.x *= 0.8;
+    velocity.y *= 0.8;
+    isDragging = false;
+  }
+
+  center.x += velocity.x;
+  center.y += velocity.y;
+
+  center.x = Math.max(center.r, Math.min(canvas.width - center.r, center.x));
+  center.y = Math.max(center.r, Math.min(canvas.height - center.r, center.y));
+
+  const speed = Math.hypot(velocity.x, velocity.y);
+  recentSpeedAvg = recentSpeedAvg * 0.95 + speed * 0.05;
+}
+
+
+setInterval(handleInput, 16);
+
 setInterval(() => loop(), 1000 / 60);
 
 const keys = {};
@@ -469,10 +581,10 @@ window.addEventListener('keyup', e => keys[e.key] = false);
 function handleInput() {
   velocity.x = 0;
   velocity.y = 0;
-  if (keys['ArrowUp'] || keys['w']) velocity.y = -maxSpeed;
-  if (keys['ArrowDown'] || keys['s']) velocity.y = maxSpeed;
-  if (keys['ArrowLeft'] || keys['a']) velocity.x = -maxSpeed;
-  if (keys['ArrowRight'] || keys['d']) velocity.x = maxSpeed;
+  if (keys['ArrowUp'] || keys['w']) {velocity.y = -maxSpeed; target.y = center.y-10}
+  if (keys['ArrowDown'] || keys['s']) {velocity.y = maxSpeed;target.y = center.y+10}
+  if (keys['ArrowLeft'] || keys['a']) {velocity.x = -maxSpeed;target.x = center.x-10}
+  if (keys['ArrowRight'] || keys['d']) {velocity.x = maxSpeed;target.x = center.x+10}
 }
 
 
@@ -483,7 +595,7 @@ canvas.addEventListener('mousedown', (e) => {
   isDragging = true;
   lastTouch = { x: e.clientX, y: e.clientY };
 });
-
+/*
 canvas.addEventListener('mousemove', (e) => {
   if (isDragging) {
     const dx = e.clientX - lastTouch.x;
@@ -493,7 +605,7 @@ canvas.addEventListener('mousemove', (e) => {
     lastTouch = { x: e.clientX, y: e.clientY };
   }
 });
-
+*/
 canvas.addEventListener('mouseup', () => {
   isDragging = false;
 });
@@ -505,6 +617,22 @@ canvas.addEventListener('touchstart', (e) => {
   }
 });
 
+canvas.addEventListener('mousemove', (e) => {
+    isDragging = true;
+
+  target.x = e.clientX;
+  target.y = e.clientY;
+   lastTouch = { x: e.clientX, y: e.clientY };
+});
+
+canvas.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 1) {
+    target.x = e.touches[0].clientX;
+    target.y = e.touches[0].clientY;
+  }
+});
+
+/*
 canvas.addEventListener('touchmove', (e) => {
   if (isDragging && e.touches.length === 1) {
     const dx = e.touches[0].clientX - lastTouch.x;
@@ -514,12 +642,16 @@ canvas.addEventListener('touchmove', (e) => {
     lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
   }
 });
-
+*/
 canvas.addEventListener('touchend', () => {
   isDragging = false;
 });
-
-
+function endGame(){
+  setTimeout(()=>{spawnInsightBox( "Antes da iluminação: cortar lenha, carregar água. Depois  da iluminação: cortar lenha, carregar água.",
+    "provérbio Zen", "Às vezes, a unica saída é parar de jogar.");endGame()},200*1000)
+//  spawnInsightBox("Chega de buscar e bora viver?", "O tempo", `O fim da busca`)
+}
+endGame()
 setInterval(handleInput, 16);
 loop();
 </script>
