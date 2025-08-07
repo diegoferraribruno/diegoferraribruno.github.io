@@ -738,6 +738,7 @@ renderer.domElement.addEventListener('touchstart', (e) => {
 }, { passive: false });
 
 renderer.domElement.addEventListener('touchmove', (e) => {
+    e.preventDefault();
     for (let touch of e.touches) {
         if (touch.identifier === leftFingerId && leftStart) {
             const dx = touch.clientX - leftStart.x;
