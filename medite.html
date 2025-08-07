@@ -66,6 +66,11 @@
   0% {background: #ffffff; color: #4573bc;}
   100% {background: #ffffffa0; color: #90a3d5;}
 }
+@keyframes colorChange {
+  0% {background: #0000009a; color: #ffffff;}
+  80% {background: #0000009a; color: #ffffff;}
+  100% {background: #00000000; color: #90a3d5;}
+}
 #insight-box button:hover {
   background: #2196f3; /* Cor mais clara para um efeito de hover */
   color: white;
@@ -375,6 +380,7 @@ function spawnEmotion() {
 }
 
 function spawnInsight() {
+  if ( insights.length>3) return
   const msg = getRandomQuote()
   
   insights.push({
@@ -399,6 +405,10 @@ function spawnInsightBox(msg, master, emo) {
   autor.innerText = master // "indefinido";
   box.classList.remove('hide');
 
+  center.emoji = '🧘',
+  center.emotionLevel = 1,
+  target.x = center.x
+  target.y = center.y
   // Ocultar após 7 segundos, a menos que o usuário clique em "Continuar"
   clearTimeout(box.dataset.timeout);
   box.dataset.timeout = setTimeout(() => {
@@ -409,11 +419,8 @@ function spawnInsightBox(msg, master, emo) {
 function hideInsight() {
   const box = document.getElementById('insight-box');
   box.classList.add('hide');
-
-  center.emoji = '🧘',
-  center.emotionLevel = 1,
-  target.x = center.x
-  target.y = center.y
+  let endbutton = document.getElementById('endbutton')
+  if( endbutton) endbutton.remove()
 }
 
 function drawCenter() {
@@ -424,7 +431,10 @@ function drawCenter() {
 
 function drawEmotions() {
   for (let e of emotions) {
-    ctx.font = '24px sans-serif';
+    const centerx = canvas.width/2
+    const centery = canvas.height/2
+    let esize =  50-Math.floor(Math.abs(centerx-e.x + centery-e.y)/20) 
+    ctx.font = esize+'px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(e.emoji, e.x, e.y);
@@ -440,17 +450,17 @@ function drawIten(i){
        ctx.beginPath();
     
     // Cria um grau radial
-    var gradient = ctx.createRadialGradient(i.x, i.y, i.r * 0.1, i.x, i.y, i.r);
+    var gradient = ctx.createRadialGradient(i.x, i.y, i.r * 0.1, i.x, i.y, i.r*2);
     gradient.addColorStop(0, 'rgba(255, 255, 255, .5)'); // Cor no centro do círculo
     gradient.addColorStop(1, 'rgba(255, 255, 255, 0)'); // Fade out gradualmente para transparência
     
-    ctx.arc(i.x, i.y, i.r*4, 0, Math.PI * 2);
+    ctx.arc(i.x, i.y, i.r*6, 0, Math.PI * 4);
     ctx.fillStyle = gradient;
     ctx.globalAlpha = 1; // Define a opacidade globalmente
     ctx.fill();
     const emoji = i.emoji
    // console.log("emojis "+emoji)
-    ctx.font = 24+i.r/2+'px sans-serif';
+    ctx.font = 32+i.r+'px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(emoji, i.x, i.y);
@@ -472,13 +482,14 @@ function updateEmotions() {
       center.emoji = e.emoji;
       targetHue = e.hue;
       if (e.intensity >= 3) {
-        center.r = Math.min(100, center.r + 2);
-      } else {
+        center.r = Math.min(100, center.r + 3);
+      } else if (center.r > 24){
         center.r = Math.max(10, center.r - 1);
       }
       center.emotionLevel = e.intensity;
       emotions.splice(i, 1);
-    }
+    }else if(isInvulnerable){center.r = Math.max(10, center.r - 0.005);}
+    
 
     if (e.x < -50 || e.x > canvas.width + 50 || e.y < -50 || e.y > canvas.height + 50) {
       emotions.splice(i, 1);
@@ -519,8 +530,9 @@ function loop() {
 
   const hueSpeed = 0.05; // quanto menor, mais suave
     currentHue += (targetHue - currentHue) * hueSpeed;
-    document.body.style.backgroundColor = `hsl(${currentHue},${70-center.emotionLevel*10}%, ${70-center.emotionLevel*10}%)`;
+    document.body.style.backgroundColor = `hsl(${currentHue},95%, ${10-center.emotionLevel}%)`;
 
+  animate(frame)
   drawCenter();
   drawEmotions();
   drawInsights();
@@ -572,7 +584,7 @@ function updateCenter() {
 
 setInterval(handleInput, 16);
 
-setInterval(() => loop(), 1000 / 60);
+setInterval(() => loop(), 10);
 
 const keys = {};
 window.addEventListener('keydown', e => keys[e.key] = true);
@@ -648,12 +660,73 @@ canvas.addEventListener('touchend', () => {
 });
 function endGame(){
   setTimeout(()=>{spawnInsightBox( "Antes da iluminação: cortar lenha, carregar água. Depois  da iluminação: cortar lenha, carregar água.",
-    "provérbio Zen", "Às vezes, a unica saída é parar de jogar.");endGame()},200*1000)
+    "provérbio Zen", "Zen");endGame()},120*1000)
+    let endbutton = document.getElementById('endbutton')
+  if( endbutton) endbutton.remove()
+    endButton =  document.createElement("button")
+    endButton.innerText = "encerrar a busca."
+    endButton.id = "endbutton"
+    document.getElementById("insight-box").appendChild(endButton)
 //  spawnInsightBox("Chega de buscar e bora viver?", "O tempo", `O fim da busca`)
 }
+let stars = [];
+function createStarfield() {
+  const ctx = canvas.getContext('2d');
+
+  // Resize canvas and regenerate stars
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = [];
+    for (let i = 0; i < 300; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5 + 0.5,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  // Add resize event listener and initialize
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Start animation
+  requestAnimationFrame(animate);
+}
+
+
+// Animation loop
+ function animate(time) {
+    // Clear canvas with black background
+    ctx.fillStyle = 'black';
+   // ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw and animate stars
+    stars.forEach(star => {
+      const opacity = 0.8 + 0.5 * Math.sin(star.phase + time * 0.02);
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+      ctx.fill();
+    });
+
+    // Request next frame
+    
+  }
+
+
+// Call the function after DOM is loaded
+document.addEventListener('DOMContentLoaded', createStarfield);
 endGame()
 setInterval(handleInput, 16);
 loop();
+
+
+
+
+
 </script>
 </body>
 </html>
