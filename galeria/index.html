@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Arte Virtual 3D</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            z-index: 1000;
+            min-width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .menu-item {
+            background: rgba(240, 240, 240, 0.8);
+            color: #333;
+            border: none;
+            padding: 12px 20px;
+            margin: 5px 0;
+            border-radius: 15px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            color: white;
+            font-size: 12px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #artwork-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: pointer;
+        }
+
+        #artwork-viewer img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .crosshair {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .crosshair::before,
+        .crosshair::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .crosshair::before {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            transform: translateY(-50%);
+        }
+
+        .crosshair::after {
+            left: 50%;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            transform: translateX(-50%);
+        }
+
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            z-index: 100;
+        }
+        #menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Ocultar menu inicialmente */
+#menu {
+    display: none;
+}
+
+/* Joystick */
+#joystick-base {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    z-index: 1000;
+    touch-action: none;
+    display: none;
+}
+#joystick-stick {
+    width: 60px;
+    height: 60px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    pointer-events: none;
+}
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="loading">Carregando galeria...</div>
+        
+        <div class="crosshair"></div>
+        
+        <div id="menu">
+            <!--button class="menu-item" onclick="goToFloor(1)">Andar 1 - Galeria</button>
+            <button class="menu-item" onclick="goToFloor(2)">Andar 2 - Jogos</button>
+            <button class="menu-item" onclick="goToFloor(3)">Andar 3 - Experimental</button-->
+            <button class="menu-item" onclick="resetCamera()">Voltar ao Centro</button>
+        </div>
+<button id="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+<div id="joystick-base"><div id="joystick-stick"></div></div>
+
+        <div id="controls">
+            <div>WASD: Mover | Mouse: Olhar | Clique: Interagir</div>
+            <div>Shift: Correr | Ctrl: Devagar</div>
+        </div>
+
+        <div id="artwork-viewer" onclick="closeArtworkViewer()">
+            <img id="artwork-image" src="">
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Configuração da cena
+        let scene, camera, renderer, controls;
+        let artworks = [];
+        let raycaster, mouse;
+        let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+        let canJump = false, velocity = new THREE.Vector3(), direction = new THREE.Vector3();
+        let prevTime = performance.now();
+        let isRunning = false, isSlow = false;
+
+        // Configurações de movimento
+        const SPEED = 300.0;
+        const JUMP_VELOCITY = 100;
+        const GRAVITY = 9.8 * 100;
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.style.display = (menu.style.display === 'none') ? 'block' : 'none';
+}
+init();
+//preloadHighResImages();
+animate();
+        function init() {
+            // Cena
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0xffffff, 0, 120);
+
+            // Câmera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.set(0, 10, -62);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0xf0f0f0);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.physicallyCorrectLights = true;
+renderer.useLegacyLights = false;
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+scene.environment = pmremGenerator.fromScene(scene).texture;
+document.getElementById('container').appendChild(renderer.domElement);
+            // Raycaster para interações
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            createEnvironment();
+            createLighting();
+            createArtworks();
+            setupControls();
+            
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function createEnvironment() {
+            // Chão
+            const floorGeometry = new THREE.PlaneGeometry(200, 200);
+            const floorMaterial = new THREE.MeshLambertMaterial({ color: 0xf0f0f0 });
+            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+            floor.rotation.x = -Math.PI / 2;
+            floor.receiveShadow = true;
+            scene.add(floor);
+
+            // Teto
+            const ceilingGeometry = new THREE.PlaneGeometry(200, 200);
+            const ceilingMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff" });
+            const ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial);
+            ceiling.rotation.x = -Math.PI / 2;
+
+            ceiling.position.y = 50;
+            scene.add(ceiling);
+ createGlassTotem()
+            // Paredes
+            createWalls();
+        }
+
+        function createWalls() {
+            const wallMaterial = new THREE.MeshLambertMaterial({ color: 0xf0f0f0 });
+            
+            // Parede frontal
+            const frontWallGeometry = new THREE.PlaneGeometry(200, 30);
+            const frontWall = new THREE.Mesh(frontWallGeometry, wallMaterial);
+            frontWall.position.set(0, 15, -100);
+            scene.add(frontWall);
+
+            // Parede traseira
+            const backWall = new THREE.Mesh(frontWallGeometry, wallMaterial);
+            backWall.position.set(0, 15, 100);
+            backWall.rotation.y = Math.PI;
+            scene.add(backWall);
+
+            // Parede esquerda
+            const sideWallGeometry = new THREE.PlaneGeometry(200, 30);
+            const leftWall = new THREE.Mesh(sideWallGeometry, wallMaterial);
+            leftWall.position.set(-100, 15, 0);
+            leftWall.rotation.y = Math.PI / 2;
+            scene.add(leftWall);
+
+            // Parede direita
+            const rightWall = new THREE.Mesh(sideWallGeometry, wallMaterial);
+            rightWall.position.set(100, 15, 0);
+            rightWall.rotation.y = -Math.PI / 2;
+            scene.add(rightWall);
+const loader = new THREE.TextureLoader();
+const textures = [];
+
+for (let i = 32; i < 36; i++) {
+    const tex = loader.load(`thumbs/image${i}.png`);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    textures.push(tex);
+}
+
+const materials = textures.map(tex => new THREE.MeshLambertMaterial({ map: tex }));
+
+// Geometria padrão
+const innerWallGeometry = new THREE.PlaneGeometry(100, 80);
+
+// Parede frontal 2
+const ffrontWall = new THREE.Mesh(innerWallGeometry, materials[0]);
+ffrontWall.position.set(0, 40, -50);
+ffrontWall.rotation.y = -Math.PI;
+scene.add(ffrontWall);
+
+// Parede traseira 2
+const bbackWall = new THREE.Mesh(innerWallGeometry, materials[1]);
+bbackWall.position.set(0, 40, 50);
+bbackWall.rotation.y = 0; // ou 2*Math.PI, sem efeito visual
+scene.add(bbackWall);
+
+// Parede esquerda 2
+const lleftWall = new THREE.Mesh(innerWallGeometry, materials[2]);
+lleftWall.position.set(-50, 40, 0);
+lleftWall.rotation.y = -Math.PI / 2;
+scene.add(lleftWall);
+
+// Parede direita 2
+const rrightWall = new THREE.Mesh(innerWallGeometry, materials[3]);
+rrightWall.position.set(50, 40, 0);
+rrightWall.rotation.y = Math.PI / 2;
+scene.add(rrightWall);
+        }
+        function createLighting() {
+            // Luz ambiente suave
+          const hemiLight = new THREE.HemisphereLight(0xffffff, 0x888888, 0.6);
+scene.add(hemiLight);
+            scene.add(hemiLight);
+
+            // Luzes direcionais para iluminação homogênea
+const light1 = new THREE.DirectionalLight(0xffffff, 0.3);
+const light2 = new THREE.DirectionalLight(0xffffff, 0.3);
+const light3 = new THREE.DirectionalLight(0xffffff, 0.3);
+
+            light1.position.set(50, 10, 50);
+            light1.castShadow = false;
+            light1.shadow.mapSize.width = 2048;
+            light1.shadow.mapSize.height = 2048;
+            scene.add(light1);
+
+            light2.position.set(-50, 50, -50);
+            scene.add(light2);
+
+            light3.position.set(0, 50, 0);
+            scene.add(light3);
+
+            // Luzes pontuais para destacar as obras
+            for (let i = 0; i < 8; i++) {
+                const spotLight = new THREE.SpotLight(0xffffff, 0.5);
+                const angle = (i / 8) * Math.PI * 2;
+                spotLight.position.set(Math.cos(angle) * 60, 25, Math.sin(angle) * 60);
+                spotLight.target.position.set(Math.cos(angle) * 80, 15, Math.sin(angle) * 80);
+                scene.add(spotLight);
+                scene.add(spotLight.target);
+            }
+        }
+
+        function createArtworks() {
+            const positions = [
+    // 🟦 Parede frontal (8 quadros)
+    { x: -70, y: 15, z: -99, rotY: 0 },
+    { x: -50, y: 15, z: -99, rotY: 0 },
+    { x: -30, y: 15, z: -99, rotY: 0 },
+    { x: -10, y: 15, z: -99, rotY: 0 },
+    { x: 10, y: 15, z: -99, rotY: 0 },
+    { x: 30, y: 15, z: -99, rotY: 0 },
+    { x: 50, y: 15, z: -99, rotY: 0 },
+    { x: 70, y: 15, z: -99, rotY: 0 },
+
+    // 🟥 Parede traseira (8 quadros)
+    { x: -70, y: 15, z: 99, rotY: Math.PI },
+    { x: -50, y: 15, z: 99, rotY: Math.PI },
+    { x: -30, y: 15, z: 99, rotY: Math.PI },
+    { x: -10, y: 15, z: 99, rotY: Math.PI },
+    { x: 10, y: 15, z: 99, rotY: Math.PI },
+    { x: 30, y: 15, z: 99, rotY: Math.PI },
+    { x: 50, y: 15, z: 99, rotY: Math.PI },
+    { x: 70, y: 15, z: 99, rotY: Math.PI },
+
+    // 🟩 Parede esquerda (7 quadros)
+    { x: -99, y: 15, z: -70, rotY: Math.PI / 2 },
+    { x: -99, y: 15, z: -50, rotY: Math.PI / 2 },
+    { x: -99, y: 15, z: -30, rotY: Math.PI / 2 },
+    { x: -99, y: 15, z: -10, rotY: Math.PI / 2 },
+    { x: -99, y: 15, z: 10, rotY: Math.PI / 2 },
+    { x: -99, y: 15, z: 30, rotY: Math.PI / 2 },
+    { x: -99, y: 15, z: 50, rotY: Math.PI / 2 },
+    { x: -99, y: 15, z: 70, rotY: Math.PI / 2 },
+
+
+    // 🟨 Parede direita (7 quadros)
+    { x: 99, y: 15, z: -70, rotY: -Math.PI / 2 },
+    { x: 99, y: 15, z: -50, rotY: -Math.PI / 2 },
+    { x: 99, y: 15, z: -30, rotY: -Math.PI / 2 },
+    { x: 99, y: 15, z: -10, rotY: -Math.PI / 2 },
+    { x: 99, y: 15, z: 10, rotY: -Math.PI / 2 },
+    { x: 99, y: 15, z: 30, rotY: -Math.PI / 2 },
+    { x: 99, y: 15, z: 50, rotY: -Math.PI / 2 },
+    { x: 99, y: 15, z: 70, rotY: -Math.PI / 2 },
+
+];
+
+
+            for (let i = 0; i < 32; i++) {
+                createArtworkFrame(positions[i], i);
+            }
+        }
+
+        function createArtworkFrame(position, index) {
+            // Frame da obra
+            const frameGeometry = new THREE.BoxGeometry(14, 11, 0.5);
+            const frameMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 });
+            const frame = new THREE.Mesh(frameGeometry, frameMaterial);
+            frame.position.set(position.x, position.y, position.z);
+            frame.rotation.y = position.rotY;
+            frame.castShadow = true;
+            scene.add(frame);
+
+            // Canvas da obra (placeholder)
+            const canvasGeometry = new THREE.PlaneGeometry(13, 10);
+      const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load(`./thumbs/image${index}.png`);
+
+const canvasMaterial = new THREE.MeshBasicMaterial({ 
+    map: texture,
+    transparent: false
+});
+            const canvas = new THREE.Mesh(canvasGeometry, canvasMaterial);
+            canvas.position.copy(frame.position);
+            canvas.rotation.copy(frame.rotation);
+            
+            // Posicionar o canvas ligeiramente à frente do frame
+            const offset = new THREE.Vector3(0, 0, 0.3);
+            offset.applyEuler(new THREE.Euler(0, position.rotY, 0));
+            canvas.position.add(offset);
+            
+            canvas.userData = { 
+                isArtwork: true, 
+                index: index,
+                thumbnailUrl: `thumb${index}.png`,
+                fullUrl: `image${index}.png`
+            };
+            
+            scene.add(canvas);
+            artworks.push(canvas);
+
+            // Placa informativa
+            createInfoPlate(position, index);
+        }
+
+        function createInfoPlate(position, index) {
+            const plateGeometry = new THREE.PlaneGeometry(5, 2);
+            const plateMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
+            const plate = new THREE.Mesh(plateGeometry, plateMaterial);
+            
+            plate.position.set(position.x, position.y - 8, position.z);
+            plate.rotation.y = position.rotY;
+            
+            const offset = new THREE.Vector3(0, 0, 0.1);
+            offset.applyEuler(new THREE.Euler(0, position.rotY, 0));
+            plate.position.add(offset);
+            
+            scene.add(plate);
+        }
+
+        function setupControls() {
+            document.addEventListener('keydown', onKeyDown);
+            document.addEventListener('keyup', onKeyUp);
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('click', onMouseClick);
+            document.addEventListener('pointerlockchange', onPointerLockChange);
+
+            // Request pointer lock on click
+            renderer.domElement.addEventListener('click', () => {
+                renderer.domElement.requestPointerLock();
+            });
+        }
+
+        function onKeyDown(event) {
+            switch (event.code) {
+                case 'KeyW':
+                case 'ArrowUp':
+                    moveForward = true;
+                    break;
+                case 'KeyS':
+                case 'ArrowDown':
+                    moveBackward = true;
+                    break;
+                case 'KeyA':
+                case 'ArrowLeft':
+                    moveLeft = true;
+                    break;
+                case 'KeyD':
+                case 'ArrowRight':
+                    moveRight = true;
+                    break;
+                case 'ShiftLeft':
+                    isRunning = true;
+                    break;
+                case 'ControlLeft':
+                    isSlow = true;
+                    break;
+                case 'Space':
+                    if (canJump) velocity.y += JUMP_VELOCITY;
+                    canJump = false;
+                    break;
+                
+            }
+        }
+
+        function onKeyUp(event) {
+            switch (event.code) {
+                case 'KeyW':
+                case 'ArrowUp':
+                    moveForward = false;
+                    break;
+                case 'KeyS':
+                case 'ArrowDown':
+                    moveBackward = false;
+                    break;
+                case 'KeyA':
+                case 'ArrowLeft':
+                    moveLeft = false;
+                    break;
+                case 'KeyD':
+                case 'ArrowRight':
+                    moveRight = false;
+                    break;
+                case 'ShiftLeft':
+                    isRunning = false;
+                    break;
+                case 'ControlLeft':
+                    isSlow = false;
+                    break;
+            }
+        }
+
+        function onMouseMove(event) {
+            if (document.pointerLockElement === renderer.domElement) {
+                const euler = new THREE.Euler(0, 0, 0, 'YXZ');
+                euler.setFromQuaternion(camera.quaternion);
+                euler.y -= event.movementX * 0.005;
+                euler.x -= event.movementY * 0.005;
+                euler.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, euler.x));
+                camera.quaternion.setFromEuler(euler);
+            }
+        }
+
+        function onMouseClick(event) {
+          /*  if (document.pointerLockElement !== renderer.domElement) return;
+            
+            mouse.x = 0;
+            mouse.y = 0;
+            raycaster.setFromCamera(mouse, camera);
+            
+            const intersects = raycaster.intersectObjects(artworks);
+            if (intersects.length > 0) {
+                const artwork = intersects[0].object;
+                if (artwork.userData.isArtwork) {
+                    showArtwork(artwork.userData.index);
+                }
+            }*/
+        }
+
+        function onPointerLockChange() {
+            // Handle pointer lock changes if needed
+        }
+/*const preloadHighResImages = () => {
+    for (let i = 0; i < 20; i++) {
+        const img = new Image();
+        img.src = `./highres/image${i}.png`;
+    }
+};*/
+        function showArtwork(index) {
+            const viewer = document.getElementById('artwork-viewer');
+            const image = document.getElementById('artwork-image');
+            
+            // Para demonstração, usar uma imagem placeholder
+            // Substitua pela sua lógica de carregamento de imagens
+            image.src = `./highres/image${index}.png`;
+            viewer.style.display = 'flex';
+        }
+
+        function closeArtworkViewer() {
+            document.getElementById('artwork-viewer').style.display = 'none';
+        }
+
+        function goToFloor(floor) {
+            switch(floor) {
+                case 1:
+                    // Já estamos na galeria
+                    break;
+                case 2:
+                    alert('Andar 2 - Jogos (em desenvolvimento)');
+                    break;
+                case 3:
+                    alert('Andar 3 - Experimental (em desenvolvimento)');
+                    break;
+            }
+        }
+
+        function resetCamera() {
+            camera.position.set(0, 12, 60);
+            camera.rotation.set(0, Math.PI, 0);
+            velocity.set(0, 0, 0);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const oldcampos = {x:camera.position.x, z:camera.position.z}
+            const time = performance.now();
+            const delta = (time - prevTime) / 1000;
+            
+            // Aplicar gravidade
+            velocity.y -= GRAVITY * delta;
+            
+            // Movimento
+            direction.z = Number(moveForward) - Number(moveBackward);
+            direction.x = Number(moveRight) - Number(moveLeft);
+            direction.normalize();
+            
+            let speed = SPEED;
+            if (isRunning) speed *= 2;
+            if (isSlow) speed *= 0.3;
+            
+            if (moveForward || moveBackward) velocity.z -= direction.z * speed * delta;
+            if (moveLeft || moveRight) velocity.x -= direction.x * speed * delta;
+            
+            // Aplicar movimento na direção da câmera
+            const forward = new THREE.Vector3();
+            camera.getWorldDirection(forward);
+            forward.y = 0;
+            forward.normalize();
+            
+            const right = new THREE.Vector3();
+            right.crossVectors(forward, camera.up).normalize();
+            
+            const movement = new THREE.Vector3();
+            movement.addScaledVector(forward, -velocity.z * delta);
+            movement.addScaledVector(right, -velocity.x * delta);
+            movement.y = velocity.y * delta;
+            
+            camera.position.add(movement);
+            
+            // Verificar colisão com o chão
+            if (camera.position.y < 12) {
+                velocity.y = 0;
+                camera.position.y = 12;
+                canJump = true;
+            }
+const innerMin = -52;
+const innerMax = 52;
+
+// Se entrou na área interna, limitamos eixo a eixo para permitir deslizamento
+if (camera.position.x > innerMin && camera.position.x < innerMax &&
+    camera.position.z > innerMin && camera.position.z < innerMax) {
+
+    // Se vindo pelo eixo X, bloqueia X
+    if (oldcampos.x <= innerMin || oldcampos.x >= innerMax) {
+        camera.position.x = oldcampos.x;
+    }
+
+    // Se vindo pelo eixo Z, bloqueia Z
+    if (oldcampos.z <= innerMin || oldcampos.z >= innerMax) {
+        camera.position.z = oldcampos.z;
+    }
+    
+}
+// Sempre limitar a sala externa
+camera.position.x = Math.max(-90, Math.min(90, camera.position.x));
+camera.position.z = Math.max(-90, Math.min(90, camera.position.z));
+            // Reduzir velocidade por atrito
+            velocity.x -= velocity.x * 10.0 * delta;
+            velocity.z -= velocity.z * 10.0 * delta;
+            
+            prevTime = time;
+            renderer.render(scene, camera);
+        }
+
+        // Redimensionamento
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        let lastTouch = null;
+
+
+const joystick = document.getElementById('joystick-base');
+const stick = document.getElementById('joystick-stick');
+let joystickActive = false;
+let center = { x: 0, y: 0 };
+
+let leftFingerId = null;
+let rightFingerId = null;
+let leftStart = null;
+let rightStart = null;
+
+renderer.domElement.addEventListener('touchstart', (e) => {
+    for (let touch of e.changedTouches) {
+        if (touch.clientX < window.innerWidth / 2 && leftFingerId === null) {
+            leftFingerId = touch.identifier;
+            leftStart = { x: touch.clientX, y: touch.clientY };
+            joystick.style.display = 'block';
+            joystick.style.left = `${leftStart.x - 60}px`;
+            joystick.style.top = `${leftStart.y - 60}px`;
+            stick.style.left = `30px`;
+            stick.style.top = `30px`;
+        } else if (touch.clientX >= window.innerWidth / 2 && rightFingerId === null) {
+            rightFingerId = touch.identifier;
+            rightStart = { x: touch.clientX, y: touch.clientY };
+        }
+    }
+}, { passive: false });
+
+renderer.domElement.addEventListener('touchmove', (e) => {
+    for (let touch of e.touches) {
+        if (touch.identifier === leftFingerId && leftStart) {
+            const dx = touch.clientX - leftStart.x;
+            const dy = touch.clientY - leftStart.y;
+            const dist = Math.min(Math.sqrt(dx * dx + dy * dy), 40);
+            const angle = Math.atan2(dy, dx);
+            const x = Math.cos(angle) * dist;
+            const y = Math.sin(angle) * dist;
+            stick.style.left = `${30 + x}px`;
+            stick.style.top = `${30 + y}px`;
+
+            direction.x = x / 40;
+            direction.z = y / 40;
+            direction.normalize();
+
+            moveForward = direction.z < -0.2;
+            moveBackward = direction.z > 0.2;
+            moveLeft = direction.x < -0.2;
+            moveRight = direction.x > 0.2;
+        }
+
+        if (touch.identifier === rightFingerId && rightStart) {
+            const dx = touch.clientX - rightStart.x;
+            const dy = touch.clientY - rightStart.y;
+
+            const yaw = dx * 0.005;
+            const pitch = dy * 0.005;
+
+            const euler = new THREE.Euler(0, 0, 0, 'YXZ');
+            euler.setFromQuaternion(camera.quaternion);
+            euler.y -= yaw;
+            euler.x -= pitch;
+            euler.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, euler.x));
+            camera.quaternion.setFromEuler(euler);
+
+            rightStart = { x: touch.clientX, y: touch.clientY };
+        }
+    }
+}, { passive: false });
+
+renderer.domElement.addEventListener('touchend', (e) => {
+    for (let touch of e.changedTouches) {
+        if (touch.identifier === leftFingerId) {
+            leftFingerId = null;
+            leftStart = null;
+            joystick.style.display = 'none';
+            moveForward = moveBackward = moveLeft = moveRight = false;
+        }
+        if (touch.identifier === rightFingerId) {
+            rightFingerId = null;
+            rightStart = null;
+        }
+    }
+}, { passive: false });
+
+
+
+function createGlassTotem() {
+    // BASE PRETA
+    const baseGeometry = new THREE.BoxGeometry(14, 2, 2);
+    const baseMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+    const base = new THREE.Mesh(baseGeometry, baseMaterial);
+    base.position.set(0, 1, -80);
+    scene.add(base);
+
+    // PAINEL DE "VIDRO" - SIMULAÇÃO VISUAL
+    const glassGeometry = new THREE.BoxGeometry(14, 20, 0.5);
+
+  const glassMaterial = new THREE.MeshPhysicalMaterial({
+      side: THREE.DoubleSide,
+    color: 0xffffff,
+    roughness: 0.05,
+    transmission: 1.0,
+    transparent: true,
+    opacity: 0.9,
+    metalness: 0.5,
+    clearcoat: 0.5,
+    reflectivity: 0.5,
+});
+
+
+    const glass = new THREE.Mesh(glassGeometry, glassMaterial);
+    glass.position.set(0, 11, -80);
+    scene.add(glass);
+
+    /*// PLANO COLORIDO ATRÁS DO VIDRO (para que a refração apareça)
+    const bgGeometry = new THREE.PlaneGeometry(20, 20);
+    const bgMaterial = new THREE.MeshStandardMaterial({ color: 0x8888ff });
+    const bg = new THREE.Mesh(bgGeometry, bgMaterial);
+    bg.position.set(0, 11, -80);
+    //scene.add(bg);
+*/
+    // TEXTO
+    const loader = new THREE.FontLoader();
+    loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+        const textGeometry = new THREE.TextGeometry(
+            "Synthetic Anatomy\n\nEsta galeria explora\ncomo a IA imagina\nformas humanas.\n\nThis Gallery expores\nhow AI imagine\nthe human form.\n\nDiego Ferrari Bruno\n\n\nImages: Fooocus\ngalery: Claude + ChatGPT\n\n08/2025",
+            {
+                font: font,
+                size: 0.6,
+                height: 0.05,
+                curveSegments: 12,
+            }
+        );
+        textGeometry.center();
+
+        const textMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
+        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+        textMesh.position.set(0, 12, -79.6); // levemente à frente
+        scene.add(textMesh);
+    });
+}
+
+
+
+    </script>
+</body>
+</html>
